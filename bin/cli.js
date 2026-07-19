@@ -23,7 +23,12 @@ const SKILL_DIR = path.join(
   "sheleg-design",
 );
 const SKILL_SLUG = "sheleg-design";
-const FILES = ["SKILL.md", "SHELEG_DESIGN.md"];
+const FILES = [
+  "SKILL.md",
+  "SHELEG_DESIGN.md",
+  "styles/instrument-console.md",
+  "styles/editorial-luxury.md",
+];
 
 const pkg = require(path.join(__dirname, "..", "package.json"));
 
@@ -86,6 +91,7 @@ ${c("bold", "Default")}
 ${c("bold", "What it installs")}
   SKILL.md           the agent-facing skill (discovery + principles)
   SHELEG_DESIGN.md   the full reference (architecture, recipes, why it works)
+  styles/*.md        style packs (instrument-console, editorial-luxury)
 `);
 }
 
@@ -142,14 +148,17 @@ function main() {
 
   fs.mkdirSync(targetDir, { recursive: true });
   for (const f of FILES) {
-    fs.copyFileSync(path.join(SKILL_DIR, f), path.join(targetDir, f));
+    const dest = path.join(targetDir, f);
+    fs.mkdirSync(path.dirname(dest), { recursive: true });
+    fs.copyFileSync(path.join(SKILL_DIR, f), dest);
   }
 
   const rel = path.relative(cwd, targetDir) || ".";
   console.log(
     `\n${c("green", "✓")} ${c("bold", "SHELEG Design")} installed to ${c("blue", rel + "/")}\n` +
       `  ${c("dim", "SKILL.md")}          the agent skill\n` +
-      `  ${c("dim", "SHELEG_DESIGN.md")}  the full reference\n\n` +
+      `  ${c("dim", "SHELEG_DESIGN.md")}  the full reference\n` +
+      `  ${c("dim", "styles/")}           style packs (console / editorial)\n\n` +
       `Your Cursor / Claude agent can now discover the skill and build\n` +
       `cinematic, scroll-driven, particle-backed pages on its principles.\n\n` +
       `${c("dim", "Docs: " + pkg.homepage)}\n`,

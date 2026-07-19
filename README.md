@@ -84,10 +84,18 @@ curl -fsSL https://raw.githubusercontent.com/ssheleg/sheleg-design-skill/main/in
 |---|---|
 | `SKILL.md` | Agent-facing skill: discovery trigger, the principles, how to apply them, quick-reference rules, common mistakes |
 | `SHELEG_DESIGN.md` | The full reference: architecture, layer-by-layer mechanics with code, the exact morph math, the DOM↔WebGL projection bridge, a build-from-scratch recipe, and the "why it works" |
+| `styles/*.md` | Style packs — the visual identity layer: `instrument-console` (near-black console, electric-blue signal) and `editorial-luxury` (warm cream/espresso/sage, dossier motifs). Each locks palette, type, texture, motion tokens, motifs, and bans; the pack contract lets you author new styles |
 
 After installing, a Cursor or Claude agent in that project can discover the
 skill and use it when you ask it to build or upgrade a cinematic,
 scroll-driven, particle-backed page.
+
+## Style-agnostic motion, pluggable identity
+
+The motion methodology (one clock, layered responses, degrade-to-calm) is
+independent of the visual style. The look comes from a **style pack** the
+agent picks per project — dark instrument console or warm editorial luxury
+out of the box, or a new pack authored against the same contract.
 
 ## Stack-agnostic
 

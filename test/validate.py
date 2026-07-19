@@ -182,6 +182,14 @@ def validate_skills():
         (skills_dir / PLUGIN / "SHELEG_DESIGN.md").is_file(),
         f"{PLUGIN_DIR}/skills/{PLUGIN}/SHELEG_DESIGN.md: missing",
     )
+    styles_dir = skills_dir / PLUGIN / "styles"
+    packs = sorted(styles_dir.glob("*.md")) if styles_dir.is_dir() else []
+    check(len(packs) >= 2, f"{PLUGIN_DIR}/skills/{PLUGIN}/styles: expected >=2 style packs")
+    for pack in packs:
+        rel = pack.relative_to(ROOT)
+        text = read(pack) or ""
+        for section in ("## Register", "## Palette", "## Type", "## Motion tokens", "## Bans"):
+            check(section in text, f"{rel}: missing required section '{section}'")
 
 
 def validate_commands():

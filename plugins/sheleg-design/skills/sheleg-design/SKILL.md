@@ -41,9 +41,26 @@ system or copy isn't finished yet. Fix those first; motion amplifies weakness.
 5. **Degrade to calm.** Reduced-motion / coarse pointer / no-WebGL collapse to
    a static, fully-legible page. The effect is a bonus, never a dependency.
 
+## Style packs
+
+The motion methodology is style-agnostic; the visual identity comes from a
+style pack in [`styles/`](./styles/):
+
+| Pack | Look | Choose for |
+|---|---|---|
+| [`instrument-console`](./styles/instrument-console.md) | near-black aerospace console, one electric-blue signal, mono telemetry | technical / systems / infra products |
+| [`editorial-luxury`](./styles/editorial-luxury.md) | warm cream + espresso ink, sage accent, Fraunces/Newsreader, dossier motifs | editorial / research / premium B2B |
+
+Read the chosen pack in full before styling anything — it supplies the
+palette, type, texture, motion-token values, signature motifs, and bans.
+For a new style, author a new pack file with the same headings (Register /
+Palette / Type / Texture & surface / Motion tokens / Signature motifs /
+Micro-interactions / Bans); never invent token values ad hoc.
+
 ## How to Apply
 
-1. Visual system first (color, type, spacing, components).
+1. Visual system first: pick (or author) a style pack, apply its tokens as
+   the site-wide design tokens (color, type, spacing, components).
 2. Build bottom-up in the §11 layer order: scroll clock → smooth scroll →
    particle field → 2D fallback → DOM choreography → reveals → scrubbed
    instruments → optional DOM↔WebGL bridge. One small file per layer.

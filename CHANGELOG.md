@@ -4,6 +4,21 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2026-07-19
+
+### Added
+
+- **Style packs** (`styles/`): the motion methodology is now style-agnostic
+  and pairs with a chosen visual identity pack. Two packs ship:
+  `instrument-console` (near-black aerospace console, electric-blue signal
+  — the original reference style) and `editorial-luxury` (warm cream +
+  espresso + sage, Fraunces/Newsreader/JetBrains Mono, dossier motifs —
+  extracted from the prowl.chat production design system). Each pack locks
+  palette/type/texture/motion tokens, signature motifs, and bans; SKILL.md
+  documents the pack contract for authoring new styles.
+- Installers (npx CLI, install.sh) ship the `styles/` directory; validator
+  enforces >=2 packs with required sections.
+
 ## [0.3.0] - 2026-07-19
 
 ### Added
