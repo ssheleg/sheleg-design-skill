@@ -109,19 +109,6 @@ test on every push and PR. Versioning is semver; bump `marketplace.json` +
 `plugin.json` + `package.json` + `CHANGELOG.md` together — the validator
 enforces the sync.
 
-## По-русски (коротко)
-
-SHELEG Design — методология кинематографичных скролл-лендингов: один
-scroll-«клок» питает много дешёвых независимых слоёв (WebGL-частицы,
-2D-фоллбек, параллакс, scrub-инструменты, прогресс-рейл), каждый деградирует
-до спокойной статики. Ничего не кроссфейдится — формации «передислоцируются».
-Установка: `npx sheleg-design-skill` (авто-детект `.cursor`/`.claude`), либо
-плагин Claude Code — `/plugin marketplace add ssheleg/sheleg-design-skill`,
-затем `/plugin install sheleg-design@sheleg-design-skill` (даст команду
-`/sheleg-design`). Агент получает SKILL.md (принципы и порядок работы) и
-SHELEG_DESIGN.md (полный референс: архитектура, точная математика морфа,
-DOM↔WebGL-мост, рецепт сборки с нуля).
-
 ## License
 
 MIT © ssheleg
