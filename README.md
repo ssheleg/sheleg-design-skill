@@ -1,5 +1,8 @@
 # SHELEG Design — agent skill
 
+[![npm version](https://img.shields.io/npm/v/sheleg-design-skill)](https://www.npmjs.com/package/sheleg-design-skill)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
+
 > A motion + particle interface methodology for building cinematic,
 > scroll-driven landing pages — packaged as an installable agent skill for
 > Cursor and Claude.
