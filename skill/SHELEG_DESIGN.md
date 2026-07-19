@@ -158,7 +158,7 @@ to you" signal.
 
 ## 3. Layer 2 — Smooth scroll (one position per frame)
 
-**File:** `src/components/v2/motion/SmoothScroll.tsx`
+**File:** `src/components/motion/SmoothScroll.tsx`
 
 Lenis provides inertial scrolling, but the important move is **driving Lenis
 from the GSAP ticker** rather than its own rAF:
@@ -183,7 +183,7 @@ and keep native scroll. The store still runs, so the rail and nav stay in sync.
 
 ## 4. Layer 3 — The particle field (the scene-formation engine)
 
-**File:** `src/components/v2/webgl/SignalField.tsx`
+**File:** `src/components/webgl/SignalField.tsx`
 
 This is the showpiece: ~936 points (`24 × 13 × 3`) that narrate the page section
 by section. It is a single `THREE.Points` cloud whose target positions change
@@ -326,7 +326,7 @@ scrubbed scalar, scrolling back up rewinds the whole explosion frame-for-frame.
 
 ## 5. Layer 4 — The 2D fallback (SignalMesh)
 
-**File:** `src/components/v2/atmosphere/SignalMesh.tsx`
+**File:** `src/components/atmosphere/SignalMesh.tsx`
 
 Touch and no-WebGL clients get a canvas mesh: two depth layers of grid nodes
 with hairline links and traveling pulses, plus **stroke overlays** that fade in
@@ -399,18 +399,18 @@ particle "head" runs exactly where the line tip is being drawn.
 
 Three small components, one mechanism each, all reading the same clock.
 
-### FocalSpotlight — `src/components/v2/motion/FocalSpotlight.tsx`
+### FocalSpotlight — `src/components/motion/FocalSpotlight.tsx`
 An `IntersectionObserver` with a generous center band (`rootMargin: -22% 0 -22% 0`)
 toggles a `data-dim` attribute on sections outside the band. CSS dims them to
 62% opacity. The reader's eye is always pulled to the active section. The finale
 section is excluded (`:not(#finale)`) because it runs its own fade.
 
-### ParallaxDrift — `src/components/v2/motion/ParallaxDrift.tsx`
+### ParallaxDrift — `src/components/motion/ParallaxDrift.tsx`
 Wraps **at most one figure per viewport** in a GSAP `yPercent` scrub for a few
 percent of depth drift. Restraint is the rule: parallax on everything is nausea;
 parallax on the one hero figure is depth.
 
-### ScrollRail — `src/components/v2/atmosphere/ScrollRail.tsx`
+### ScrollRail — `src/components/atmosphere/ScrollRail.tsx`
 A right-edge hairline whose fill is scaled imperatively (`scaleY(global)`) and
 brightened by `velocity` — a live mission timeline, updated per frame with zero
 React renders. Act markers deep-link to their anchor sections and use the coarse
@@ -420,7 +420,7 @@ React renders. Act markers deep-link to their anchor sections and use the coarse
 
 ## 8. Layer 7 — Reveal primitives (act-themed entrances)
 
-**File:** `src/components/v2/design/Reveal.tsx`
+**File:** `src/components/design/Reveal.tsx`
 
 Entrances are not generic. Each narrative act has a reveal whose *physics* match
 its meaning — this is Disney's "staging" applied to a scroll page:
@@ -487,7 +487,7 @@ The non-negotiables (each learned from a real bug here):
 No component invents its own curve. Everything uses:
 
 - **`EASE = cubic-bezier(0.16, 1, 0.3, 1)`** (an easeOutExpo-like signature),
-  mirrored in CSS as `--v2-ease`.
+  mirrored in CSS as `--motion-ease`.
 - **`DUR`** — `fast 0.18` / `base 0.32` / `slow 0.55` / `epic 0.8` seconds.
 - **`STAGGER = 0.07`** — the standard interval between sibling reveals.
 
@@ -622,18 +622,18 @@ A pragmatic order that front-loads the parts everything else depends on.
 | Lazy GSAP + reduced-motion gate | `src/lib/motion/gsap-client.ts` |
 | DOM↔WebGL bridge | `src/lib/motion/field-sync.ts` |
 | Interactive field gestures | `src/lib/motion/use-section-field.ts` |
-| WebGL particle field | `src/components/v2/webgl/SignalField.tsx` |
-| 2D fallback field | `src/components/v2/atmosphere/SignalMesh.tsx` |
-| Field/fallback mode switch | `src/components/v2/atmosphere/AtmosphereField.tsx` |
-| Constellation SVG overlay | `src/components/v2/atmosphere/ConstellationOverlay.tsx` |
-| Progress rail | `src/components/v2/atmosphere/ScrollRail.tsx` |
-| Smooth scroll | `src/components/v2/motion/SmoothScroll.tsx` |
-| Attention dimming | `src/components/v2/motion/FocalSpotlight.tsx` |
-| Figure parallax | `src/components/v2/motion/ParallaxDrift.tsx` |
-| Reveal primitives | `src/components/v2/design/Reveal.tsx` |
-| Epilogue runway | `src/components/v2/sections/FinaleSectionV2.tsx` |
+| WebGL particle field | `src/components/webgl/SignalField.tsx` |
+| 2D fallback field | `src/components/atmosphere/SignalMesh.tsx` |
+| Field/fallback mode switch | `src/components/atmosphere/AtmosphereField.tsx` |
+| Constellation SVG overlay | `src/components/atmosphere/ConstellationOverlay.tsx` |
+| Progress rail | `src/components/atmosphere/ScrollRail.tsx` |
+| Smooth scroll | `src/components/motion/SmoothScroll.tsx` |
+| Attention dimming | `src/components/motion/FocalSpotlight.tsx` |
+| Figure parallax | `src/components/motion/ParallaxDrift.tsx` |
+| Reveal primitives | `src/components/design/Reveal.tsx` |
+| Epilogue runway | `src/components/sections/FinaleSection.tsx` |
 | Scrubbed instruments (examples) | `WhyNowChart.tsx`, `EcosystemDiagram.tsx`, `PinnedSteps.tsx` |
-| CSS tokens + all `v2-*` styles | `src/app/v2.css` |
+| CSS tokens + motion styles | `src/app/motion.css` |
 
 ---
 

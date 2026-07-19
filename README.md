@@ -64,7 +64,7 @@ npx sheleg-design-skill --help
 
 | File | Purpose |
 |---|---|
-| `SKILL.md` | Agent-facing skill: discovery trigger + the principles + how to apply them |
+| `SKILL.md` | Agent-facing skill: discovery trigger, the principles, how to apply them, quick-reference rules, common mistakes |
 | `SHELEG_DESIGN.md` | The full reference: architecture, layer-by-layer mechanics with code, the exact morph math, the DOM↔WebGL projection bridge, a build-from-scratch recipe, and the "why it works" |
 
 After installing, a Cursor or Claude agent in that project can discover the

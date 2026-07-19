@@ -1,85 +1,74 @@
 ---
 name: sheleg-design
-description: Use when building or upgrading a cinematic, scroll-driven landing page, marketing site, or hero experience — especially one with a particle/WebGL background, scroll-linked animation, parallax, pinned/scrubbed sections, or formation-changing motion. SHELEG Design is a motion + systems methodology: one scroll "clock" drives many cheap, layered, independently-degradable responses (a particle field, a 2D fallback, attention dimming, parallax, scrubbed instruments, a progress rail) so the page reads as a single precision instrument. Read this before designing the motion architecture of such a site; it pairs with a visual system, not replaces one.
+description: Use when building or upgrading a cinematic scroll-driven landing page, marketing site, or hero experience — a particle/WebGL background, scroll-linked animation, parallax, pinned or scrubbed sections, formation-morphing scenes — or when such a page feels busy or janky, or its motion layers drift out of sync with each other. Read before designing the motion architecture; pairs with an existing visual system, does not replace one.
 ---
 
 # SHELEG Design
 
-A methodology for landing pages that feel *alive* without feeling busy. Full
-reference (architecture, code-level mechanics, build-from-scratch recipe, file
-map, and the deeper "why") lives in [`SHELEG_DESIGN.md`](./SHELEG_DESIGN.md) next
-to this file — read it before implementing.
-
-## The thesis
+## Overview
 
 A page feels cinematic not from many animations, but from a **single source of
-truth** (scroll position) driving **many cheap, layered responses** that are
-individually quiet and collectively rich. Centralize scroll into one external
-store; let independent layers read it per frame and react in their own language.
-Nothing crossfades — things *redeploy*. Every layer degrades to a calm static
-state.
+truth** (measured scroll position) driving **many cheap, layered,
+independently-degradable responses**. Centralize scroll into one store; layers
+read it per frame and react in their own language. Nothing crossfades — things
+*redeploy*. Every layer degrades to a calm static state.
 
-## The five principles (apply in order)
+**REQUIRED REFERENCE:** read [`SHELEG_DESIGN.md`](./SHELEG_DESIGN.md) (same
+directory) before implementing — it holds the architecture, exact morph math,
+the DOM↔WebGL bridge, the build recipe (§11), and the file map.
 
-1. **One clock.** All motion derives from one measured scroll state. Layers never
-   measure scroll independently, so they can never drift out of phase.
-2. **Read per frame, notify rarely.** Hot consumers (WebGL/canvas/rail) read the
-   store imperatively each frame and cause zero React renders. Only coarse,
-   human-visible changes (the current "act"/section) notify the framework.
-3. **Hold, then redeploy.** Hold a formation steady for ~80% of a section, then
-   morph in a short, phase-staggered, arc-curved wave. Ban crossfades.
-4. **Earned motion.** Scrub belongs to instruments that narrate state over time
-   (charts, step flows). Hover/entrance motion stays sub-500ms and never gates
-   content visibility.
-5. **Degrade to calm.** `prefers-reduced-motion` / coarse pointer / no-WebGL all
-   collapse to a static, fully-legible page. The effect is a bonus, never a
-   dependency.
+## When to Use
 
-## How to use this skill
+- Landing/marketing/hero pages where motion is a stated goal
+- Particle or WebGL backgrounds tied to scroll; scenes that morph per section
+- Scroll-linked charts, step flows, progress rails, parallax
+- Existing scroll site that feels nervous, janky, or out of phase
 
-When asked to build or upgrade such a site:
+**Not for:** docs, dashboards, static content sites — or any page whose visual
+system or copy isn't finished yet. Fix those first; motion amplifies weakness.
 
-1. **Lay the visual system first** (color, type, spacing, components). Motion on
-   top of a weak visual system amplifies the weakness. SHELEG Design is the
-   motion layer — it assumes a visual foundation exists.
-2. **Build bottom-up following the layer order** in `SHELEG_DESIGN.md` §11:
-   the scroll clock → smooth scroll → particle field → 2D fallback → DOM
-   choreography → reveal primitives → scrubbed instruments → (optional) DOM↔WebGL
-   bridge. Each layer is a small, single-responsibility file reading the one clock.
-3. **Storyboard in data.** Express the narrative as a `SCENES` registry (one
-   `{ anchor, formation, focusX, energy }` per section). Iterate on the data
-   before touching render loops.
-4. **Pay the fallback + a11y tax in the same commit** as each layer, never at the
-   end. Every animated component ships its reduced-motion branch immediately.
-5. **Verify** with typecheck/lint/build, screenshots of each scene mid-hold and
-   mid-morph, a reduced-motion pass, and a narrow-viewport pass.
+## Core Pattern — five principles, in order
 
-## Non-negotiables (each prevents a real failure mode)
+1. **One clock.** All motion derives from one measured scroll state; no layer
+   measures scroll itself, so layers can never drift out of phase.
+2. **Read per frame, notify rarely.** Hot consumers (WebGL/canvas/rail) read
+   the store imperatively, zero framework renders; only coarse act/section
+   changes notify the framework.
+3. **Hold, then redeploy.** Hold a formation ~80% of a section, then morph in a
+   short, phase-staggered, arc-curved wave. Crossfades are banned.
+4. **Earned motion.** Scrub only for instruments that narrate state over time;
+   hover/entrance motion stays sub-500ms and never gates content.
+5. **Degrade to calm.** Reduced-motion / coarse pointer / no-WebGL collapse to
+   a static, fully-legible page. The effect is a bonus, never a dependency.
 
-- Centralize scroll in ONE store with two read paths: a live getter for
-  per-frame readers and a coarse subscription for framework-rendered UI.
-- Hold-then-morph (long hold, short smoothstepped tail) — constant morphing
-  reads as nervous; this is the single biggest "calm" lever.
-- Redeploy with a per-point phase-staggered, perpendicular-arc migration — this
-  is what makes a particle field read as premium rather than a screensaver.
-- Drive smooth scroll (e.g. Lenis) from the animation library's ticker so
-  scrubbed instruments and the particle field share one inertia.
-- Lazy-load heavy libs (GSAP/WebGL) out of the initial bundle; WebGL mounts one
-  frame after hydration paints.
-- One ease + a tiny duration/stagger token set for the whole site; no component
-  invents its own curve.
-- For scrubbed SVG: `ease: 'none'`, `pathLength={1}` to normalize paths, and
-  always kill timelines + triggers on cleanup.
-- Animate only `transform` and `opacity`; reserve scrub for genuine instruments.
+## How to Apply
 
-## When NOT to use it
+1. Visual system first (color, type, spacing, components).
+2. Build bottom-up in the §11 layer order: scroll clock → smooth scroll →
+   particle field → 2D fallback → DOM choreography → reveals → scrubbed
+   instruments → optional DOM↔WebGL bridge. One small file per layer.
+3. Storyboard in data: a `SCENES` registry (`{ anchor, formation, focusX,
+   energy }` per section); iterate on the data before touching render loops.
+4. Ship each layer's reduced-motion/fallback branch in the same commit.
+5. Verify: typecheck/lint/build; screenshot each scene mid-hold and mid-morph;
+   reduced-motion pass; narrow-viewport pass.
 
-Skip for static content sites, docs, dashboards, or anything where motion is not
-a goal. Do not bolt the particle field onto a page whose visual system or copy
-isn't finished — fix those first.
+## Quick Reference
 
----
+| Rule | Prevents |
+|---|---|
+| One scroll store, two read paths (live getter + coarse subscription) | layers drifting out of phase; render storms |
+| Long hold, short smoothstepped morph tail | nervous, constantly-moving page |
+| Per-point phase-staggered, perpendicular-arc migration | "screensaver" particle look |
+| Smooth scroll driven from the animation library's ticker | scrub and field on different inertia |
+| Lazy-load GSAP/WebGL; mount WebGL one frame after hydration | heavy initial bundle, hydration jank |
+| One ease + tiny duration/stagger token set site-wide | motion reading as many systems, not one |
+| Scrubbed SVG: `ease: 'none'`, `pathLength={1}`, kill timelines on cleanup | easing fighting scrub; leaked triggers |
+| Animate only `transform`/`opacity` | layout thrash |
 
-Read [`SHELEG_DESIGN.md`](./SHELEG_DESIGN.md) for the full architecture, code
-mechanics, the exact morph math, the DOM↔WebGL projection bridge, the
-build-from-scratch recipe, and the file map.
+## Common Mistakes
+
+- Paying the fallback/a11y tax "at the end" → it never ships. Same commit.
+- Parallax on everything → nausea. At most one drifting figure per viewport.
+- Scrub on hero/entrances → motion feels unearned; reserve scrub for
+  instruments.
