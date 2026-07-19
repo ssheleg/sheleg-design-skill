@@ -1,6 +1,7 @@
 # SHELEG Design — agent skill
 
 [![npm version](https://img.shields.io/npm/v/sheleg-design-skill)](https://www.npmjs.com/package/sheleg-design-skill)
+[![CI](https://github.com/ssheleg/sheleg-design-skill/actions/workflows/validate.yml/badge.svg)](https://github.com/ssheleg/sheleg-design-skill/actions/workflows/validate.yml)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 
 > A motion + particle interface methodology for building cinematic,
@@ -63,6 +64,20 @@ npx sheleg-design-skill --force
 npx sheleg-design-skill --help
 ```
 
+### Other install paths
+
+```bash
+# Claude Code plugin (adds the /sheleg-design command too)
+/plugin marketplace add ssheleg/sheleg-design-skill
+/plugin install sheleg-design@sheleg-design-skill
+
+# vercel-labs skills CLI (70+ agents)
+npx skills add ssheleg/sheleg-design-skill
+
+# POSIX fallback, no Node
+curl -fsSL https://raw.githubusercontent.com/ssheleg/sheleg-design-skill/main/install.sh | sh
+```
+
 ### What gets installed
 
 | File | Purpose |
@@ -85,6 +100,27 @@ applies to any stack that can render to a canvas/WebGL surface and read scroll.
 
 The installer is a single zero-dependency Node script, so `npx` runs instantly
 with no install step and no supply-chain surface.
+
+## Development
+
+`python3 test/validate.py` checks repo consistency (manifests, version sync,
+skill/command/rule front-matter, relative links); CI runs it plus a CLI smoke
+test on every push and PR. Versioning is semver; bump `marketplace.json` +
+`plugin.json` + `package.json` + `CHANGELOG.md` together — the validator
+enforces the sync.
+
+## По-русски (коротко)
+
+SHELEG Design — методология кинематографичных скролл-лендингов: один
+scroll-«клок» питает много дешёвых независимых слоёв (WebGL-частицы,
+2D-фоллбек, параллакс, scrub-инструменты, прогресс-рейл), каждый деградирует
+до спокойной статики. Ничего не кроссфейдится — формации «передислоцируются».
+Установка: `npx sheleg-design-skill` (авто-детект `.cursor`/`.claude`), либо
+плагин Claude Code — `/plugin marketplace add ssheleg/sheleg-design-skill`,
+затем `/plugin install sheleg-design@sheleg-design-skill` (даст команду
+`/sheleg-design`). Агент получает SKILL.md (принципы и порядок работы) и
+SHELEG_DESIGN.md (полный референс: архитектура, точная математика морфа,
+DOM↔WebGL-мост, рецепт сборки с нуля).
 
 ## License
 

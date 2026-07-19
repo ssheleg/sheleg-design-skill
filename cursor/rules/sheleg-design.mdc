@@ -1,0 +1,48 @@
+---
+description: Apply SHELEG Design when building or upgrading a cinematic scroll-driven landing page, hero, or particle/WebGL scroll experience — or when scroll motion feels busy, janky, or out of sync
+alwaysApply: false
+---
+
+# SHELEG Design — single-clock scroll motion
+
+A page feels cinematic from a **single source of truth** (measured scroll
+position) driving **many cheap, layered, independently-degradable responses** —
+not from many animations. If the project has the full skill installed
+(`.cursor/skills/sheleg-design/`), read its `SKILL.md` and `SHELEG_DESIGN.md`
+first; otherwise follow the contract below (self-contained on purpose).
+
+## Five principles, in order
+
+1. **One clock.** All motion derives from one measured scroll state in one
+   store; no layer measures scroll itself, so layers never drift out of phase.
+2. **Read per frame, notify rarely.** Hot consumers (WebGL/canvas/progress
+   rail) read the store imperatively with zero framework renders; only coarse
+   act/section changes notify the framework.
+3. **Hold, then redeploy.** Hold a formation ~80% of a section, then morph in
+   a short, phase-staggered, arc-curved wave. Crossfades between point sets
+   are banned.
+4. **Earned motion.** Scrub only for instruments that narrate state over time
+   (charts, step flows); hover/entrance motion stays sub-500ms and never
+   gates content visibility.
+5. **Degrade to calm.** `prefers-reduced-motion` / coarse pointer / no-WebGL
+   collapse to a static, fully-legible page. The effect is a bonus, never a
+   dependency.
+
+## Non-negotiables
+
+- One scroll store, two read paths: live getter for per-frame readers,
+  coarse subscription for framework-rendered UI.
+- Storyboard in data: a `SCENES` registry (`{ anchor, formation, focusX,
+  energy }` per section); iterate on data before render loops.
+- Smooth scroll (e.g. Lenis) driven from the animation library's ticker so
+  scrubbed instruments and the particle field share one inertia.
+- Lazy-load GSAP/WebGL out of the initial bundle; mount WebGL one frame
+  after hydration paints.
+- One ease + one small duration/stagger token set site-wide.
+- Scrubbed SVG: `ease: 'none'`, `pathLength={1}`, always kill timelines and
+  triggers on cleanup.
+- Animate only `transform` and `opacity`.
+- Every layer ships its reduced-motion/fallback branch in the same commit.
+- At most one parallax figure per viewport; no scrub on hero/entrances.
+- Visual system (color, type, spacing, components) is finished before any
+  motion work starts.

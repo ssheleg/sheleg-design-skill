@@ -1,0 +1,35 @@
+{
+  "name": "sheleg-design-skill",
+  "owner": {
+    "name": "ssheleg",
+    "url": "https://github.com/ssheleg"
+  },
+  "description": "SHELEG Design — a motion + systems methodology for cinematic, scroll-driven, particle-backed landing pages, packaged as an agent skill.",
+  "homepage": "https://github.com/ssheleg/sheleg-design-skill",
+  "repository": "https://github.com/ssheleg/sheleg-design-skill",
+  "plugins": [
+    {
+      "name": "sheleg-design",
+      "source": "./plugins/sheleg-design",
+      "description": "One scroll clock drives many cheap, layered, independently-degradable responses (WebGL particle field, 2D fallback, parallax, scrubbed instruments, progress rail) so a landing page reads as a single precision instrument. Skill + full architecture reference + /sheleg-design command.",
+      "version": "0.3.0",
+      "author": {
+        "name": "ssheleg"
+      },
+      "keywords": [
+        "design",
+        "motion",
+        "animation",
+        "particles",
+        "webgl",
+        "scroll",
+        "landing-page",
+        "gsap",
+        "three",
+        "claude-code",
+        "cursor"
+      ],
+      "category": "development"
+    }
+  ]
+}

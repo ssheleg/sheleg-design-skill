@@ -14,7 +14,14 @@
 const fs = require("fs");
 const path = require("path");
 
-const SKILL_DIR = path.join(__dirname, "..", "skill");
+const SKILL_DIR = path.join(
+  __dirname,
+  "..",
+  "plugins",
+  "sheleg-design",
+  "skills",
+  "sheleg-design",
+);
 const SKILL_SLUG = "sheleg-design";
 const FILES = ["SKILL.md", "SHELEG_DESIGN.md"];
 

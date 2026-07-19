@@ -1,6 +1,6 @@
 ---
 name: sheleg-design
-description: Use when building or upgrading a cinematic scroll-driven landing page, marketing site, or hero experience — a particle/WebGL background, scroll-linked animation, parallax, pinned or scrubbed sections, formation-morphing scenes — or when such a page feels busy or janky, or its motion layers drift out of sync with each other. Read before designing the motion architecture; pairs with an existing visual system, does not replace one.
+description: Use when building or upgrading a cinematic scroll-driven landing page, marketing site, or hero experience — a particle/WebGL background, scroll-linked animation, parallax, pinned or scrubbed sections, formation-morphing scenes — or when such a page feels busy or janky, or its motion layers drift out of sync. RU triggers - кинематографичный лендинг, скролл-анимация, лендинг с частицами. Pairs with an existing visual system, does not replace one.
 ---
 
 # SHELEG Design
