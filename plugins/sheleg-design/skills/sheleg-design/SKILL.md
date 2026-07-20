@@ -24,8 +24,11 @@ the DOM↔WebGL bridge, the build recipe (§11), and the file map.
 - Scroll-linked charts, step flows, progress rails, parallax
 - Existing scroll site that feels nervous, janky, or out of phase
 
-**Not for:** docs, dashboards, static content sites — or any page whose visual
-system or copy isn't finished yet. Fix those first; motion amplifies weakness.
+**Not for (the motion layer):** docs, dashboards, static content sites — or
+any page whose visual system or copy isn't finished yet. For dashboards,
+tools, and product UI, use the [`workbench`](./styles/workbench.md) style
+pack standalone: its tokens and atoms apply without the cinematic motion
+layer.
 
 ## Core Pattern — five principles, in order
 
@@ -50,6 +53,7 @@ style pack in [`styles/`](./styles/):
 |---|---|---|
 | [`instrument-console`](./styles/instrument-console.md) | near-black aerospace console, one electric-blue signal, mono telemetry | technical / systems / infra products |
 | [`editorial-luxury`](./styles/editorial-luxury.md) | warm cream + espresso ink, sage accent, Fraunces/Newsreader, dossier motifs | editorial / research / premium B2B |
+| [`workbench`](./styles/workbench.md) | quiet light/dark product UI: neutral grays, borders as elevation, one blue accent, mono data | dashboards / admin / internal & dev tools (standalone — no cinematic motion) |
 
 Read the chosen pack in full before styling anything — it supplies the
 palette, type, texture, motion-token values, signature motifs, and bans.

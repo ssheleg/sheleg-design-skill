@@ -11,7 +11,7 @@ SRC_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" 2>/dev/null && pwd)/plugins/sheleg
 
 mkdir -p "$TARGET" "$TARGET/styles"
 
-for f in SKILL.md SHELEG_DESIGN.md styles/instrument-console.md styles/editorial-luxury.md; do
+for f in SKILL.md SHELEG_DESIGN.md styles/instrument-console.md styles/editorial-luxury.md styles/workbench.md; do
   if [ -f "$SRC_DIR/$f" ]; then
     cp "$SRC_DIR/$f" "$TARGET/$f"
   elif command -v curl >/dev/null 2>&1; then

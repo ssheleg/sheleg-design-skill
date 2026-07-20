@@ -28,6 +28,7 @@ const FILES = [
   "SHELEG_DESIGN.md",
   "styles/instrument-console.md",
   "styles/editorial-luxury.md",
+  "styles/workbench.md",
 ];
 
 const pkg = require(path.join(__dirname, "..", "package.json"));

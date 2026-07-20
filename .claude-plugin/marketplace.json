@@ -12,7 +12,7 @@
       "name": "sheleg-design",
       "source": "./plugins/sheleg-design",
       "description": "One scroll clock drives many cheap, layered, independently-degradable responses (WebGL particle field, 2D fallback, parallax, scrubbed instruments, progress rail) so a landing page reads as a single precision instrument. Skill + full architecture reference + /sheleg-design command.",
-      "version": "0.4.0",
+      "version": "0.5.0",
       "author": {
         "name": "ssheleg"
       },

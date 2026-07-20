@@ -4,6 +4,19 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2026-07-20
+
+### Added
+
+- **`workbench` style pack** — quiet light+dark utilitarian product UI for
+  dashboards, admin panels, and internal/dev tools: neutral grays, borders
+  as elevation, one functional blue accent, system + mono type, canonical
+  atoms (status dot, chip, stat tile, sparkline), honest-state and
+  glanceability rules. Blended from the Builder Pro AI production design
+  system and GitHub-style border discipline. Usable standalone — SKILL.md
+  now routes dashboard/tool requests to this pack instead of excluding
+  them outright.
+
 ## [0.4.0] - 2026-07-19
 
 ### Added
