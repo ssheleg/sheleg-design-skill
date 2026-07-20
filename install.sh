@@ -9,9 +9,9 @@ RAW="https://raw.githubusercontent.com/ssheleg/sheleg-design-skill/main/plugins/
 TARGET="${1:-.cursor/skills/sheleg-design}"
 SRC_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" 2>/dev/null && pwd)/plugins/sheleg-design/skills/sheleg-design"
 
-mkdir -p "$TARGET" "$TARGET/styles"
+mkdir -p "$TARGET" "$TARGET/styles" "$TARGET/styles/tokens"
 
-for f in SKILL.md SHELEG_DESIGN.md styles/instrument-console.md styles/editorial-luxury.md styles/workbench.md; do
+for f in SKILL.md SHELEG_DESIGN.md styles/instrument-console.md styles/editorial-luxury.md styles/workbench.md styles/tokens/instrument-console.css styles/tokens/editorial-luxury.css styles/tokens/workbench.css; do
   if [ -f "$SRC_DIR/$f" ]; then
     cp "$SRC_DIR/$f" "$TARGET/$f"
   elif command -v curl >/dev/null 2>&1; then

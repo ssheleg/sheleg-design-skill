@@ -1,6 +1,6 @@
 ---
 name: sheleg-design
-description: Use when building or upgrading a cinematic scroll-driven landing page, marketing site, or hero experience — a particle/WebGL background, scroll-linked animation, parallax, pinned or scrubbed sections, formation-morphing scenes — or when such a page feels busy or janky, or its motion layers drift out of sync. RU triggers - кинематографичный лендинг, скролл-анимация, лендинг с частицами. Pairs with an existing visual system, does not replace one.
+description: Use when building or upgrading a cinematic scroll-driven landing page, marketing site, or hero experience (particle/WebGL background, scroll-linked animation, parallax, scrubbed sections) — when such a page feels busy or janky or its motion layers drift out of sync — or when styling product UI with its style packs - dashboards, admin panels, internal/dev tools, design tokens, light/dark themes. RU triggers - кинематографичный лендинг, скролл-анимация, лендинг с частицами, стиль дашборда, дизайн-токены, светлая/тёмная тема.
 ---
 
 # SHELEG Design
@@ -57,9 +57,12 @@ style pack in [`styles/`](./styles/):
 
 Read the chosen pack in full before styling anything — it supplies the
 palette, type, texture, motion-token values, signature motifs, and bans.
-For a new style, author a new pack file with the same headings (Register /
-Palette / Type / Texture & surface / Motion tokens / Signature motifs /
-Micro-interactions / Bans); never invent token values ad hoc.
+Each pack ships a ready-made token layer in `styles/tokens/<pack>.css` —
+copy that file verbatim instead of transcribing tables. For a new style,
+author a new pack file with the same headings (Register / Palette / Type /
+Texture & surface / Motion tokens / Signature motifs / Micro-interactions /
+Bans; skeleton: `templates/style-pack-template.md` in the repo) plus its
+`tokens/<pack>.css`; never invent token values ad hoc.
 
 ## How to Apply
 

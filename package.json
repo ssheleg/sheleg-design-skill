@@ -1,7 +1,7 @@
 {
   "name": "sheleg-design-skill",
-  "version": "0.5.0",
-  "description": "SHELEG Design — an agent skill for building cinematic, scroll-driven, particle-backed landing pages. Installs a SKILL.md + reference doc into your project so Cursor/Claude agents can build sites with a single-clock motion system, a scene-formation particle engine, and degrade-to-calm fallbacks.",
+  "version": "0.6.0",
+  "description": "SHELEG Design — an agent skill for cinematic scroll-driven landing pages AND product UI. Installs a SKILL.md + architecture reference + style packs (instrument-console dark, editorial-luxury warm, workbench light/dark for dashboards & tools) so Cursor/Claude agents build with a single-clock motion system and locked design tokens.",
   "bin": {
     "sheleg-design-skill": "bin/cli.js"
   },

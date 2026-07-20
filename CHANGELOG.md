@@ -4,6 +4,32 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0] - 2026-07-20
+
+### Added
+
+- Ready-made token layers `styles/tokens/<pack>.css` for all three packs
+  (copy verbatim instead of transcribing tables; workbench ships light +
+  `data-theme="dark"` twins). Validator requires a tokens file per pack.
+- Motion-flavor sections in the cinematic packs (particle tint/energy,
+  Reveal set, instrument styling per style).
+- Versioned release test scenarios (`test/scenarios.md`, T1–T6) encoding
+  the RED/GREEN history.
+- Validator installer-sync check (every bundle file shipped by install.sh;
+  npx CLI now walks the bundle at runtime — adding a pack no longer
+  touches installers) and a CI negative self-test (validator must FAIL on
+  a corrupted version).
+- Style-pack authoring skeleton `templates/style-pack-template.md`;
+  `/sheleg-design` accepts a pack name argument.
+
+### Fixed
+
+- Discovery gap: skill description (and Cursor rule) now trigger on
+  product-UI tasks — dashboards, admin tools, design tokens, light/dark
+  themes (EN + RU) — previously such tasks never loaded the skill.
+- Stale manifests: package.json / marketplace / plugin descriptions and
+  the Cursor rule now mention style packs incl. workbench.
+
 ## [0.5.0] - 2026-07-20
 
 ### Added

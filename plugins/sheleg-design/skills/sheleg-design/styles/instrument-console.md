@@ -14,6 +14,9 @@ does not.
 
 ## Palette
 
+Ready-made token layer: [`tokens/instrument-console.css`](./tokens/instrument-console.css)
+— copy it verbatim instead of transcribing this table.
+
 | Token | Value | Role |
 |---|---|---|
 | `--base` | `#05070a` | page field (near-black) |
@@ -64,6 +67,18 @@ The particle field, progress rail, and all instruments are tinted with
   off-band sections (attention spotlight).
 - Scrubbed SVG instruments (charts, step flows) drawn hairline-thin with
   mono annotations.
+
+## Motion flavor
+
+How this pack rides the SHELEG motion layer:
+
+- Particle field: single-hue `--accent` tint; SCENES `energy` 0.45–0.7,
+  climax only reaching 1.0; formations lean geometric (frame, lattice,
+  orbit, constellation, glyph).
+- Reveal set: full act-themed range — Scatter (problem acts), Lock
+  (control/system acts), Clip (headlines/panels), Pulse (climax).
+- Instruments: hairline-thin scrubbed SVG with mono annotations; progress
+  rail and act badge are first-class chrome.
 
 ## Micro-interactions
 

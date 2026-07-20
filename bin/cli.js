@@ -23,13 +23,22 @@ const SKILL_DIR = path.join(
   "sheleg-design",
 );
 const SKILL_SLUG = "sheleg-design";
-const FILES = [
-  "SKILL.md",
-  "SHELEG_DESIGN.md",
-  "styles/instrument-console.md",
-  "styles/editorial-luxury.md",
-  "styles/workbench.md",
-];
+const CORE_FILES = ["SKILL.md", "SHELEG_DESIGN.md"];
+
+// The bundle is everything under skill/ — walked at runtime so adding a
+// style pack or token file never requires touching the installer.
+function listBundleFiles() {
+  const out = [];
+  const walk = (dir, prefix) => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const rel = prefix ? `${prefix}/${entry.name}` : entry.name;
+      if (entry.isDirectory()) walk(path.join(dir, entry.name), rel);
+      else out.push(rel);
+    }
+  };
+  walk(SKILL_DIR, "");
+  return out.sort();
+}
 
 const pkg = require(path.join(__dirname, "..", "package.json"));
 
@@ -126,7 +135,7 @@ function main() {
   const targetDir = resolveTargetDir(opts, cwd);
 
   // Verify the bundle is intact before touching the filesystem.
-  for (const f of FILES) {
+  for (const f of CORE_FILES) {
     if (!fs.existsSync(path.join(SKILL_DIR, f))) {
       console.error(
         c("yellow", `Bundle is missing ${f}. This is a packaging bug.`),
@@ -135,7 +144,8 @@ function main() {
     }
   }
 
-  const existing = FILES.filter((f) =>
+  const files = listBundleFiles();
+  const existing = files.filter((f) =>
     fs.existsSync(path.join(targetDir, f)),
   );
   if (existing.length && !opts.force) {
@@ -148,7 +158,7 @@ function main() {
   }
 
   fs.mkdirSync(targetDir, { recursive: true });
-  for (const f of FILES) {
+  for (const f of files) {
     const dest = path.join(targetDir, f);
     fs.mkdirSync(path.dirname(dest), { recursive: true });
     fs.copyFileSync(path.join(SKILL_DIR, f), dest);

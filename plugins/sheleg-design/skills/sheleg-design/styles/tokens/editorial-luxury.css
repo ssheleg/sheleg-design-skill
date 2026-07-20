@@ -1,0 +1,53 @@
+/* SHELEG Design — Editorial Luxury token layer (origin: prowl.chat).
+   Copy verbatim; consume only var(--…) in components.
+   After any theme migration, sweep hardcoded hex/rgba literals. */
+:root {
+  --paper: #fbf6ec;
+  --paper-2: #f3ead9;
+  --paper-3: #ece0cb;
+  --espresso: #1b150e;
+  --espresso-2: #241c12;
+  --cream: #f4ecdc;
+  --ink: #241c14;
+  --ink-soft: #5b4f3d;
+  --ink-faint: #8a7c64;
+  --accent: #3f7d5f;
+  --accent-deep: #2f5e47;
+  --accent-dim: rgba(63, 125, 95, 0.12);
+  --accent-med: rgba(63, 125, 95, 0.34);
+  --accent-on-dark: #9fd9bc;
+  --terra: #b5623f;
+  --red: #a83a2b;
+  --hair: rgba(36, 28, 20, 0.13);
+  --hair-strong: rgba(36, 28, 20, 0.22);
+
+  --r: 14px;
+  --r-lg: 22px;
+  --r-xl: 30px;
+
+  --shadow-sm: 0 2px 10px -4px rgba(36, 28, 20, 0.16);
+  --shadow: 0 18px 50px -28px rgba(36, 28, 20, 0.3),
+    0 4px 14px -10px rgba(36, 28, 20, 0.18);
+  --shadow-lg: 0 36px 90px -44px rgba(36, 28, 20, 0.42),
+    0 8px 24px -16px rgba(36, 28, 20, 0.2);
+  --inset-hi: inset 0 1px 0 rgba(255, 251, 242, 0.7);
+
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --spring: cubic-bezier(0.32, 0.72, 0, 1);
+  --dur-brand: 0.7s;
+  --dur-fast: 0.18s;
+  --dur-base: 0.32s;
+  --dur-slow: 0.55s;
+  --dur-epic: 0.8s;
+  --stagger: 0.07s;
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Newsreader", Georgia, serif;
+  --font-data: "JetBrains Mono", ui-monospace, monospace;
+
+  --grain-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  background-color: var(--paper);
+  color: var(--ink);
+  color-scheme: light;
+}

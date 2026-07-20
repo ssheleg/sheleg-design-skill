@@ -17,6 +17,9 @@ cinematic noise).
 
 ## Palette
 
+Ready-made token layer: [`tokens/editorial-luxury.css`](./tokens/editorial-luxury.css)
+— copy it verbatim instead of transcribing this table.
+
 | Token | Value | Role |
 |---|---|---|
 | `--paper` | `#fbf6ec` | primary cream field |
@@ -72,6 +75,20 @@ sage accent brightens to `#9fd9bc`.
   `stroke-dashoffset`) — identical in plain and cinematic reveal paths,
   correct static final state under reduced-motion, **fail-open** if JS/CDN
   dies (content always visible).
+
+## Motion flavor
+
+How this pack rides the SHELEG motion layer (brand register only):
+
+- Reveals: 0.7s base with the pack ease; word-by-word title lighting and
+  `.reveal` sections; every reveal is fail-open (final state visible
+  without JS).
+- The sage "signal" motif is the scroll narrative: it travels raw inputs →
+  pipeline → deliverable; scrubbed instruments draw with it.
+- Particle field is optional here — if used, tint sage, low density, low
+  energy (≤0.6); artifact mock previews assembling on scroll are the
+  preferred spectacle.
+- Product register: SHELEG fast/base durations only, no cinematic motion.
 
 ## Micro-interactions
 

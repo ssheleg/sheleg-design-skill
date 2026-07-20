@@ -17,6 +17,10 @@ same tokens.
 
 ## Palette
 
+Ready-made token layer: [`tokens/workbench.css`](./tokens/workbench.css)
+(light `:root` + `data-theme="dark"` twin) — copy it verbatim instead of
+transcribing this table.
+
 | Token | Light | Dark | Role |
 |---|---|---|---|
 | `--bg` | `#f7f8fa` | `#0f1218` | app ground |

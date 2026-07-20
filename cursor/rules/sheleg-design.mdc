@@ -1,5 +1,5 @@
 ---
-description: Apply SHELEG Design when building or upgrading a cinematic scroll-driven landing page, hero, or particle/WebGL scroll experience — or when scroll motion feels busy, janky, or out of sync
+description: Apply SHELEG Design when building a cinematic scroll-driven landing page, hero, or particle/WebGL scroll experience — or when styling product UI (dashboards, admin, internal tools) with its style packs
 alwaysApply: false
 ---
 
@@ -9,9 +9,11 @@ A page feels cinematic from a **single source of truth** (measured scroll
 position) driving **many cheap, layered, independently-degradable responses** —
 not from many animations. If the project has the full skill installed
 (`.cursor/skills/sheleg-design/`), read its `SKILL.md`, `SHELEG_DESIGN.md`,
-and the chosen style pack in `styles/` (instrument-console — dark console;
-editorial-luxury — warm editorial) first; otherwise follow the contract
-below (self-contained on purpose).
+and the chosen style pack in `styles/` first (instrument-console — dark
+console; editorial-luxury — warm editorial; workbench — quiet light/dark
+product UI for dashboards and tools, used standalone without the cinematic
+motion layer); otherwise follow the contract below (self-contained on
+purpose).
 
 ## Five principles, in order
 

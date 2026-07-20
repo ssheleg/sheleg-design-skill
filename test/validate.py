@@ -190,6 +190,35 @@ def validate_skills():
         text = read(pack) or ""
         for section in ("## Register", "## Palette", "## Type", "## Motion tokens", "## Bans"):
             check(section in text, f"{rel}: missing required section '{section}'")
+        check(
+            (styles_dir / "tokens" / f"{pack.stem}.css").is_file(),
+            f"{rel}: missing ready-made token layer styles/tokens/{pack.stem}.css",
+        )
+
+
+def validate_installer_sync():
+    """Every file in the skill bundle must be shipped by install.sh; the npx
+    CLI walks the tree at runtime (check the walker exists)."""
+    skill_dir = ROOT / PLUGIN_DIR / "skills" / PLUGIN
+    bundle = sorted(
+        str(p.relative_to(skill_dir)) for p in skill_dir.rglob("*") if p.is_file()
+    )
+    cli = read(ROOT / "bin/cli.js") or ""
+    check(
+        "listBundleFiles" in cli,
+        "bin/cli.js: runtime bundle walker (listBundleFiles) missing",
+    )
+    sh = read(ROOT / "install.sh") or ""
+    match = re.search(r"^for f in (.+); do$", sh, re.MULTILINE)
+    if check(match is not None, "install.sh: 'for f in …' file list not found"):
+        listed = set(match.group(1).split())
+        for f in bundle:
+            check(f in listed, f"install.sh: bundle file '{f}' not in its file list")
+        for f in listed:
+            check(
+                (skill_dir / f).is_file(),
+                f"install.sh: lists '{f}' which does not exist in the bundle",
+            )
 
 
 def validate_commands():
@@ -256,6 +285,7 @@ def main():
     validate_skills()
     validate_commands()
     validate_cursor_rules()
+    validate_installer_sync()
     validate_links()
     if failures:
         for failure in failures:

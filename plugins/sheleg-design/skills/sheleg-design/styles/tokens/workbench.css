@@ -1,0 +1,58 @@
+/* SHELEG Design — Workbench token layer (light default + dark twin).
+   Copy verbatim; consume only var(--…) in components.
+   Theme switch: set data-theme="dark" on :root. */
+:root {
+  --bg: #f7f8fa;
+  --panel: #ffffff;
+  --panel-2: #f7f8fa;
+  --ink: #1a1f2b;
+  --muted: #5b6472;
+  --border: #e6e9ef;
+  --border-strong: #d7dce4;
+  --accent: #2f6feb;
+  --accent-weak: #eaf0fe;
+  --ok: #1a7f37;
+  --ok-weak: #e6f4ea;
+  --warn: #9a6700;
+  --warn-weak: #fff3d6;
+  --danger: #d1242f;
+  --danger-weak: #fde8e9;
+  --info: #2f6feb;
+  --info-weak: #eaf0fe;
+
+  --r-control: 6px;
+  --r-card: 10px;
+  --r-pill: 999px;
+
+  --shadow-1: 0 4px 16px -8px rgba(26, 31, 43, 0.18); /* overlays only */
+
+  --dur-state: 0.18s; /* meaningful state transitions, ease-out */
+  --dur-hover: 0.12s; /* background/border/color only */
+
+  --font-ui: -apple-system, "SF Pro", "Segoe UI", sans-serif;
+  --font-data: ui-monospace, "SF Mono", Menlo, monospace;
+
+  background-color: var(--bg);
+  color: var(--ink);
+  color-scheme: light dark;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0f1218;
+  --panel: #161b24;
+  --panel-2: #1b212c;
+  --ink: #e8ecf3;
+  --muted: #8a93a6;
+  --border: #232a36;
+  --border-strong: #2c3441;
+  --accent: #4b8bff;
+  --accent-weak: #1b2740;
+  --ok: #3fb960;
+  --ok-weak: #12281a;
+  --warn: #d9a93f;
+  --warn-weak: #2b2210;
+  --danger: #e5534b;
+  --danger-weak: #2d1517;
+  --info: #4b8bff;
+  --info-weak: #1b2740;
+}
