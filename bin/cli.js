@@ -169,7 +169,7 @@ function main() {
     `\n${c("green", "✓")} ${c("bold", "SHELEG Design")} installed to ${c("blue", rel + "/")}\n` +
       `  ${c("dim", "SKILL.md")}          the agent skill\n` +
       `  ${c("dim", "SHELEG_DESIGN.md")}  the full reference\n` +
-      `  ${c("dim", "styles/")}           style packs (console / editorial)\n\n` +
+      `  ${c("dim", "styles/")}           style packs (instrument-console / editorial-luxury / workbench)\n\n` +
       `Your Cursor / Claude agent can now discover the skill and build\n` +
       `cinematic, scroll-driven, particle-backed pages on its principles.\n\n` +
       `${c("dim", "Docs: " + pkg.homepage)}\n`,

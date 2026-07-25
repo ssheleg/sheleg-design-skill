@@ -65,9 +65,9 @@ jobs:
       - name: Post-release smoke test (npx from a clean cwd — the verify gate)
         run: |
           set -eu
-          export HOME="$(mktemp -d)"
           cd "$(mktemp -d)"
           npx --yes "github:ssheleg/sheleg-design-skill#${GITHUB_REF_NAME}"
-          test -f "$HOME/.claude/skills/sheleg-design/SKILL.md"
-          test -f "$HOME/.claude/commands/sheleg-design.md"
-          echo "OK: released $GITHUB_REF_NAME installs cleanly via npx"
+          test -f .cursor/skills/sheleg-design/SKILL.md
+          test -f .cursor/skills/sheleg-design/SHELEG_DESIGN.md
+          ls .cursor/skills/sheleg-design/styles/*.md >/dev/null
+          echo "OK: released $GITHUB_REF_NAME installs its bundle via npx"
