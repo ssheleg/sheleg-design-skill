@@ -48,8 +48,8 @@ jobs:
         run: |
           set -eu
           awk -v v="${{ steps.v.outputs.ver }}" '
-            $0 ~ "^## v" v "([^0-9]|$)" {f=1; next}
-            /^## v/ {f=0}
+            $0 ~ "^## \\[?" v "\\]?([^0-9]|$)" {f=1; next}
+            /^## / {f=0}
             f {print}
           ' CHANGELOG.md > /tmp/notes.md
           test -s /tmp/notes.md || { echo "no CHANGELOG section for v${{ steps.v.outputs.ver }}"; exit 1; }
