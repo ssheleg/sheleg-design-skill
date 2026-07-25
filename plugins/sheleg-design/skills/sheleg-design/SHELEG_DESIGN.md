@@ -526,7 +526,10 @@ text-equivalent in the DOM (e.g. the ecosystem stage keeps the diagram's
 
 A pragmatic order that front-loads the parts everything else depends on.
 
-1. **Lay the visual system first.** Implement `DESIGN.md`: near-black canvas,
+1. **Lay the visual system first.** Pick a style pack (`styles/<pack>.md` +
+   `styles/tokens/<pack>.css`) and implement ITS tokens verbatim — the pack is the
+   visual contract, this document is the motion/structure method. The
+   `instrument-console` pack, for example, gives: near-black canvas,
    one signal accent, hairline structure, mono telemetry labels, the panel /
    button / status-pill components. Motion on top of a weak visual system just
    amplifies the weakness.
@@ -638,6 +641,6 @@ A pragmatic order that front-loads the parts everything else depends on.
 ---
 
 *SHELEG Design is the motion + systems half of this site's identity; pair it
-with `DESIGN.md` for the visual half. The north star for both: it should feel
+with the chosen `styles/<pack>.md` for the visual half. The north star for both: it should feel
 like a precision instrument responding to your hand — authority through
 accuracy and restraint, not spectacle.*

@@ -117,6 +117,19 @@ test on every push and PR. Versioning is semver; bump `marketplace.json` +
 `plugin.json` + `package.json` + `CHANGELOG.md` together — the validator
 enforces the sync.
 
+## По-русски
+
+**sheleg-design** — методология SHELEG: кинематографичные скролл-лендинги (единые
+часы анимации, слоистая композиция, «degrade to calm» при снижении ресурсов) плюс
+**style packs** для продуктового UI. Метод — style-agnostic; визуальную систему
+задаёт выбранный пак (`styles/<pack>.md` + `styles/tokens/<pack>.css`):
+`instrument-console` (тёмная приборная панель), `editorial-luxury` (тёплая
+издательская), `workbench` (светлый рабочий интерфейс).
+
+Триггеры: «кинематографичный лендинг», «скролл-анимация», «лендинг с частицами»,
+«стиль дашборда», «дизайн-токены», «светлая/тёмная тема». Запуск — `/sheleg-design
+<что построить или улучшить>`. Установка — см. раздел Install выше.
+
 ## License
 
 MIT © ssheleg

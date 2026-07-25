@@ -4,6 +4,20 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0] - 2026-07-25
+
+Review pass.
+
+- **FIX: `SHELEG_DESIGN.md` pointed at a non-existent `DESIGN.md`** and hard-coded
+  the instrument-console palette in the build recipe, contradicting the
+  style-agnostic method — §11 now says to implement the chosen style pack's tokens.
+- **Toggleable release automation** (`.github/workflows/release.yml`, off unless
+  `RELEASE_ENABLED` is set): the repo shipped 0.2.0–0.6.0 with no tags and no
+  GitHub releases.
+- README gains a Russian section; `package.json` `files[]` ships `CHANGELOG.md`;
+  a stray untracked `.claude/skills/sheleg-design` plain copy was removed and
+  `.claude/` gitignored (it shadowed the plugin).
+
 ## [0.6.0] - 2026-07-20
 
 ### Added
