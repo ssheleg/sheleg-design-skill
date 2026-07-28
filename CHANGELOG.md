@@ -4,6 +4,60 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.0] - 2026-07-28
+
+Consistency pass over every file: the contradictions below were real and are
+fixed, and each one now has a validator or CI check so it cannot return.
+
+### Fixed
+
+- **The pack skeleton was unreachable from an installed skill.** `SKILL.md`
+  pointed at `templates/style-pack-template.md`, which `files[]` never shipped.
+  The skeleton now rides in the bundle as
+  `styles/STYLE_PACK_TEMPLATE.md`, kept byte-identical to `templates/`.
+- **`SKILL.md` listed 8 of the 10 pack headings** (no Motion flavor, no
+  Gotchas), so an authored pack would legitimately lose sections the packs and
+  the template both carry. The contract is now stated once and enforced.
+- **The motion-token contradiction.** `SHELEG_DESIGN.md` §10 declared one
+  site-wide ease while `editorial-luxury` and `workbench` legitimately override
+  it. §10 now states the defaults *and* that the pack wins; the packs say the
+  same from their side.
+- **Stagger drift inside the reference:** the Reveal table said 0.06s and the
+  GSAP recipe hard-coded 0.08 against a `STAGGER = 0.07` token; both now read
+  the token.
+- **`workbench.css` set `color-scheme: light dark`**, so a page forced to
+  `data-theme="dark"` still got UA controls and scrollbars from the OS
+  preference. Light `:root`, dark under the attribute; a reduced-motion block
+  zeroes the duration tokens.
+- **`--accent-dim` meant opposite things across packs** (a pressed darker blue
+  in `instrument-console`, a 12% tint in `editorial-luxury`). The tint is now
+  `--accent-weak`, matching `workbench`'s naming.
+- **`workbench.md` shipped prose where tokens belong** ("amber", "red",
+  "`#1a7f37`-family") — the table now carries the exact light/dark pairs from
+  the CSS, and `--info` is documented as deliberately the accent hue.
+- **CLI help still advertised two style packs** (the success message had been
+  fixed, the help text had not), and the bundle blurb omitted the token CSS.
+- **The Cursor rule promised product-UI guidance it never gave** — it now
+  carries a self-contained workbench contract for agents without the skill
+  installed.
+- README, `marketplace.json`, and the `/sheleg-design` command all described a
+  landing-page-only skill; all three now state the product-UI half.
+- Reference cleanups: ASCII architecture diagram re-aligned (the fan-out
+  connector was one column off the store box), `bias` added to the store
+  fields it lists, the `936 = 24 × 13 × 3` factorization disambiguated from
+  scene indices, and a product-specific closing-line example genericized.
+
+### Added
+
+- Validator (146 checks, was 101): the **whole** `.cursor/` mirror is compared
+  against the plugin bundle file-by-file in both directions (previously only
+  `SKILL.md`), the full ten-heading pack contract is enforced on every pack and
+  on the template, the shipped template must match `templates/`, and every pack
+  must be routed from the `SKILL.md` table and named in the CLI output.
+- CI installs through both channels and `diff -r`s the result against the
+  bundle, so a file that reaches one installer and not the other fails the run.
+- `test/scenarios.md` gains T7 (authoring a new pack against the contract).
+
 ## [0.8.0] - 2026-07-28
 
 ### Fixed

@@ -30,13 +30,15 @@ Ready-made token layer: [`tokens/editorial-luxury.css`](./tokens/editorial-luxur
 | `--cream` | `#f4ecdc` | ink on espresso |
 | `--ink` / `-soft` / `-faint` | `#241c14` / `#5b4f3d` / `#8a7c64` | text ramp on cream |
 | `--accent` (sage) / `-deep` | `#3f7d5f` / `#2f5e47` | THE single functional accent (links, CTA, "signal") |
+| `--accent-weak` / `-med` | `rgba(63,125,95,0.12)` / `…0.34` | accent tint fill / accent hairline |
+| `--accent-on-dark` | `#9fd9bc` | the accent brightened for espresso sections |
 | `--terra` | `#b5623f` | rare editorial highlight only |
 | `--red` | `#a83a2b` | negatives ONLY (comparison "without") |
 | `--hair` / `-strong` | `rgba(36,28,20,0.13)` / `rgba(36,28,20,0.22)` | hairline rules |
 
 Contrast: body on cream must clear 4.5:1 — `--ink` / `--ink-soft`, never
 `--ink-faint` for sustained reading. On espresso, text is `--cream` and the
-sage accent brightens to `#9fd9bc`.
+sage accent switches to `--accent-on-dark`.
 
 ## Type
 
@@ -57,7 +59,8 @@ sage accent brightens to `#9fd9bc`.
 ## Motion tokens
 
 - Ease `cubic-bezier(0.22, 1, 0.36, 1)` (ease-out-expo feel) — the one
-  site-wide curve for the SHELEG token set.
+  site-wide curve, **overriding** the SHELEG default `cubic-bezier(0.16, 1,
+  0.3, 1)`; the pack wins, per SHELEG_DESIGN §10.
 - Spring `cubic-bezier(0.32, 0.72, 0, 1)` — press/magnetic feedback only.
 - Base duration `0.7s` for brand-register reveals; product register stays in
   the SHELEG fast/base range (≤0.32s).

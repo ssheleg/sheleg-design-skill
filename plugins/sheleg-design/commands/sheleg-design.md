@@ -1,5 +1,5 @@
 ---
-description: Apply the SHELEG Design methodology (single-clock, layered, degrade-to-calm motion) to the current landing-page / hero / scroll-animation task
+description: Apply the SHELEG Design methodology (single-clock, layered, degrade-to-calm motion) to the current landing-page / hero / scroll-animation task — or its style packs to product UI (dashboards, admin, internal tools)
 argument-hint: [what to build or upgrade]
 ---
 
@@ -11,5 +11,8 @@ Invoke the `sheleg-design` skill and apply it to the current request.
   then proceed per the skill's "How to Apply" order. If the arguments name
   a style pack (instrument-console | editorial-luxury | workbench), use
   that pack without re-asking; otherwise pick per the SKILL.md table.
+- Product UI (dashboard, admin, internal/dev tool, design tokens, theming):
+  apply `styles/workbench.md` and its token CSS standalone — no scroll
+  clock, no particle field, no cinematic motion.
 - Follow the skill's non-negotiables (Quick Reference table) and ship every
   layer's reduced-motion/fallback branch in the same commit.

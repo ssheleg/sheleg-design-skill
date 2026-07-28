@@ -23,6 +23,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 PLUGIN = "sheleg-design"
 PLUGIN_DIR = f"plugins/{PLUGIN}"
+PACK_SECTIONS = ("## Register", "## Palette", "## Type", "## Motion tokens", "## Bans")
 
 failures = []
 checks = 0
@@ -202,29 +203,63 @@ def validate_skills():
         check(bool(fm.get("description")), f"{rel}/SKILL.md: missing description")
         desc = fm.get("description") or ""
         check_description_canon(rel, skill / "SKILL.md", desc)
-    # The Cursor channel ships its own copy of SKILL.md -- it must not drift.
-    mirror = ROOT / ".cursor" / "skills" / PLUGIN / "SKILL.md"
-    canonical = skills_dir / PLUGIN / "SKILL.md"
-    if check(mirror.is_file(), f".cursor/skills/{PLUGIN}/SKILL.md: missing"):
-        check(
-            read(mirror) == read(canonical),
-            f".cursor/skills/{PLUGIN}/SKILL.md: drifted from {PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md",
-        )
+    # The Cursor channel ships its own copy of the WHOLE bundle -- any file in
+    # it may drift (a stale pack or token layer there is otherwise invisible).
+    canonical_dir = skills_dir / PLUGIN
+    mirror_dir = ROOT / ".cursor" / "skills" / PLUGIN
+    if check(mirror_dir.is_dir(), f".cursor/skills/{PLUGIN}: missing"):
+        for src in sorted(p for p in canonical_dir.rglob("*") if p.is_file()):
+            rel_path = src.relative_to(canonical_dir)
+            mirror = mirror_dir / rel_path
+            if check(mirror.is_file(), f".cursor/skills/{PLUGIN}/{rel_path}: missing"):
+                check(
+                    read(mirror) == read(src),
+                    f".cursor/skills/{PLUGIN}/{rel_path}: drifted from {PLUGIN_DIR}/skills/{PLUGIN}/{rel_path}",
+                )
+        for extra in sorted(p for p in mirror_dir.rglob("*") if p.is_file()):
+            rel_path = extra.relative_to(mirror_dir)
+            check(
+                (canonical_dir / rel_path).is_file(),
+                f".cursor/skills/{PLUGIN}/{rel_path}: not in the plugin bundle",
+            )
     check(
         (skills_dir / PLUGIN / "SHELEG_DESIGN.md").is_file(),
         f"{PLUGIN_DIR}/skills/{PLUGIN}/SHELEG_DESIGN.md: missing",
     )
     styles_dir = skills_dir / PLUGIN / "styles"
-    packs = sorted(styles_dir.glob("*.md")) if styles_dir.is_dir() else []
+    template = styles_dir / "STYLE_PACK_TEMPLATE.md"
+    packs = sorted(p for p in styles_dir.glob("*.md") if p != template) if styles_dir.is_dir() else []
     check(len(packs) >= 2, f"{PLUGIN_DIR}/skills/{PLUGIN}/styles: expected >=2 style packs")
+    # SKILL.md tells authors to copy this skeleton, so it has to exist and carry
+    # every heading a real pack is held to -- otherwise the instruction dead-ends.
+    trel = f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/STYLE_PACK_TEMPLATE.md"
+    if check(template.is_file(), f"{trel}: missing"):
+        ttext = read(template) or ""
+        for section in PACK_SECTIONS:
+            check(section in ttext, f"{trel}: missing required section '{section}'")
+        check(
+            read(ROOT / "templates/style-pack-template.md") == ttext,
+            f"{trel}: drifted from templates/style-pack-template.md",
+        )
+    skill_text = read(skills_dir / PLUGIN / "SKILL.md") or ""
+    cli_text = read(ROOT / "bin/cli.js") or ""
     for pack in packs:
         rel = pack.relative_to(ROOT)
         text = read(pack) or ""
-        for section in ("## Register", "## Palette", "## Type", "## Motion tokens", "## Bans"):
+        for section in PACK_SECTIONS:
             check(section in text, f"{rel}: missing required section '{section}'")
         check(
             (styles_dir / "tokens" / f"{pack.stem}.css").is_file(),
             f"{rel}: missing ready-made token layer styles/tokens/{pack.stem}.css",
+        )
+        # A pack nobody is routed to is a pack that does not exist.
+        check(
+            f"styles/{pack.name}" in skill_text,
+            f"SKILL.md: style pack '{pack.stem}' is not linked from the pack table",
+        )
+        check(
+            pack.stem in cli_text,
+            f"bin/cli.js: style pack '{pack.stem}' is not named in the installer output",
         )
 
 

@@ -13,8 +13,8 @@
   --ink-faint: #8a7c64;
   --accent: #3f7d5f;
   --accent-deep: #2f5e47;
-  --accent-dim: rgba(63, 125, 95, 0.12);
-  --accent-med: rgba(63, 125, 95, 0.34);
+  --accent-weak: rgba(63, 125, 95, 0.12); /* tint fill (badges, wash) */
+  --accent-med: rgba(63, 125, 95, 0.34); /* hairline / border tint */
   --accent-on-dark: #9fd9bc;
   --terra: #b5623f;
   --red: #a83a2b;

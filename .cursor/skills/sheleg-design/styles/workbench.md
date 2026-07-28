@@ -30,15 +30,17 @@ transcribing this table.
 | `--muted` | `#5b6472` | `#8a93a6` | secondary text, labels, metadata |
 | `--border` / `-strong` | `#e6e9ef` / `#d7dce4` | `#232a36` / `#2c3441` | 1px lines / stronger edges |
 | `--accent` (`-weak`) | `#2f6feb` (`#eaf0fe`) | `#4b8bff` (`#1b2740`) | THE one accent + its tint |
-| `--ok` | `#1a7f37`-family green | brightened | done / healthy / success |
-| `--warn` | amber | brightened | needs a human / waiting (reserved) |
-| `--danger` | red | brightened | failed / error / incident |
-| `--info` | blue | brightened | running / working |
+| `--ok` (`-weak`) | `#1a7f37` (`#e6f4ea`) | `#3fb960` (`#12281a`) | done / healthy / success |
+| `--warn` (`-weak`) | `#9a6700` (`#fff3d6`) | `#d9a93f` (`#2b2210`) | needs a human / waiting (reserved) |
+| `--danger` (`-weak`) | `#d1242f` (`#fde8e9`) | `#e5534b` (`#2d1517`) | failed / error / incident |
+| `--info` (`-weak`) | `#2f6feb` (`#eaf0fe`) | `#4b8bff` (`#1b2740`) | running / working |
 
 Semantic colors are STATE ONLY, never decoration; each has a `-weak` tint
 for badge/banner fills. Amber is reserved for "a human is needed". A second
-accent hue is a design defect. Sequential data scales (heatmaps, charts)
-are tints of `--accent`, not a new hue.
+accent hue is a design defect — `--info` deliberately *is* the accent hue
+("running / working" is the product's own signal, not a new color).
+Sequential data scales (heatmaps, charts) are tints of `--accent`, not a new
+hue.
 
 ## Type
 
@@ -56,7 +58,7 @@ are tints of `--accent`, not a new hue.
 - **Elevation = border, not shadow**: layers separate via 1px `--border` +
   `--panel`/`--panel-2` steps. One soft shadow token exists, for true
   overlays (dialogs, popovers, menus) only.
-- Radii: 6px controls · 8–10px cards · 999px chips/pills. Nothing else.
+- Radii: `--r-control` 6px · `--r-card` 10px · `--r-pill` 999px. Nothing else.
 - 4px base grid; spacing steps 4/8/12/16/24/32; chips 2×8, dense rows
   8×12, cards 12–16. Compact by default.
 - Stat tiles: label 12px `--muted` + value 20–28px semibold tabular-nums
@@ -67,10 +69,12 @@ are tints of `--accent`, not a new hue.
 
 ## Motion tokens
 
-- 150–200ms, ease-out, and only where it carries meaning (state
-  transition, attention pull); nothing looping, nothing scroll-driven.
-- Hover/press transitions 120ms on background/border/color only — no
-  translate/bounce on controls.
+- `--dur-state` 0.18s with `--motion-ease` (`cubic-bezier(0.2, 0, 0, 1)`,
+  ease-out), and only where it carries meaning (state transition, attention
+  pull); nothing looping, nothing scroll-driven. This pack overrides the
+  SHELEG default ease/duration set — there is no `epic` tier here.
+- `--dur-hover` 0.12s on background/border/color only — no translate/bounce
+  on controls.
 - `prefers-reduced-motion` → transitions off; the UI is fully static-safe.
 
 ## Signature motifs

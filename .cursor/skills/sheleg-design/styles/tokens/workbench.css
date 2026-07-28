@@ -26,7 +26,8 @@
 
   --shadow-1: 0 4px 16px -8px rgba(26, 31, 43, 0.18); /* overlays only */
 
-  --dur-state: 0.18s; /* meaningful state transitions, ease-out */
+  --motion-ease: cubic-bezier(0.2, 0, 0, 1); /* ease-out; the only curve here */
+  --dur-state: 0.18s; /* meaningful state transitions */
   --dur-hover: 0.12s; /* background/border/color only */
 
   --font-ui: -apple-system, "SF Pro", "Segoe UI", sans-serif;
@@ -34,10 +35,11 @@
 
   background-color: var(--bg);
   color: var(--ink);
-  color-scheme: light dark;
+  color-scheme: light; /* the theme is explicit — never let the UA pick */
 }
 
 :root[data-theme="dark"] {
+  color-scheme: dark;
   --bg: #0f1218;
   --panel: #161b24;
   --panel-2: #1b212c;
@@ -55,4 +57,15 @@
   --danger-weak: #2d1517;
   --info: #4b8bff;
   --info-weak: #1b2740;
+}
+
+/* Light is the default register. To follow the OS instead, have the app set
+   data-theme="dark" from a prefers-color-scheme listener — keep one switch,
+   never two sources of truth for the theme. */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-state: 0s;
+    --dur-hover: 0s;
+  }
 }

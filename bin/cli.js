@@ -4,8 +4,9 @@
 /**
  * sheleg-design-skill installer.
  *
- * Copies the SHELEG Design skill bundle (SKILL.md + SHELEG_DESIGN.md) into the
- * current project so a Cursor / Claude agent can discover and apply it.
+ * Copies the SHELEG Design skill bundle (SKILL.md, SHELEG_DESIGN.md, the style
+ * packs and their token CSS) into the current project so a Cursor / Claude
+ * agent can discover and apply it.
  *
  * Zero dependencies on purpose: it must run instantly via `npx` with no install
  * step and no supply-chain surface.
@@ -99,9 +100,13 @@ ${c("bold", "Default")}
   otherwise creates .cursor/skills/${SKILL_SLUG}/.
 
 ${c("bold", "What it installs")}
-  SKILL.md           the agent-facing skill (discovery + principles)
-  SHELEG_DESIGN.md   the full reference (architecture, recipes, why it works)
-  styles/*.md        style packs (instrument-console, editorial-luxury)
+  SKILL.md              the agent-facing skill (discovery + principles)
+  SHELEG_DESIGN.md      the full reference (architecture, recipes, why it works)
+  styles/*.md           style packs: instrument-console (dark console),
+                        editorial-luxury (warm editorial), workbench
+                        (light/dark product UI, standalone)
+  styles/tokens/*.css   ready-made token layer per pack (copy verbatim)
+  styles/STYLE_PACK_TEMPLATE.md   skeleton for authoring a new pack
 `);
 }
 
@@ -169,9 +174,10 @@ function main() {
     `\n${c("green", "✓")} ${c("bold", "SHELEG Design")} installed to ${c("blue", rel + "/")}\n` +
       `  ${c("dim", "SKILL.md")}          the agent skill\n` +
       `  ${c("dim", "SHELEG_DESIGN.md")}  the full reference\n` +
-      `  ${c("dim", "styles/")}           style packs (instrument-console / editorial-luxury / workbench)\n\n` +
+      `  ${c("dim", "styles/")}           style packs + token CSS (instrument-console / editorial-luxury / workbench)\n\n` +
       `Your Cursor / Claude agent can now discover the skill and build\n` +
-      `cinematic, scroll-driven, particle-backed pages on its principles.\n\n` +
+      `cinematic, scroll-driven pages — or style product UI (dashboards,\n` +
+      `admin, internal tools) from the workbench pack — on its principles.\n\n` +
       `${c("dim", "Docs: " + pkg.homepage)}\n`,
   );
 }

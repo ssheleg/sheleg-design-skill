@@ -7,10 +7,13 @@ the DOM choreography, and the registration tricks that fuse them — so you can
 build new sites on the same principles and understand *why* each piece works.
 
 > SHELEG Design is the **motion + systems** layer. It assumes a **visual**
-> system already exists (color, type, elevation, components — the reference
-> implementation calls its visual layer "The Instrument Console": a near-black
-> aerospace console with one electric-blue signal accent). Build the visual
-> system first; layer SHELEG Design on top.
+> system already exists (color, type, elevation, components) — that half lives
+> in the style packs under [`styles/`](./styles/), one of which
+> (`instrument-console`) is the near-black aerospace console this document's
+> reference implementation used. Pick a pack, implement its
+> `styles/tokens/<pack>.css` verbatim, then layer SHELEG Design on top.
+> Where a pack's motion tokens differ from the defaults in §10, **the pack
+> wins** — it is the visual contract.
 
 ---
 
@@ -47,18 +50,18 @@ The five principles that make it work:
 ## 1. Architecture at a glance
 
 ```
-                         ┌─────────────────────────────┐
-   wheel / touch  ─────▶ │  Lenis smooth scroll         │  (SmoothScroll.tsx)
-                         │  driven by the GSAP ticker    │
-                         └──────────────┬───────────────┘
+                        ┌───────────────────────────────┐
+  wheel / touch  ─────▶ │  Lenis smooth scroll          │  (SmoothScroll.tsx)
+                        │  driven by the GSAP ticker    │
+                        └───────────────┬───────────────┘
                                         │ one scroll position / frame
                                         ▼
-                         ┌─────────────────────────────┐
-                         │  Scroll store (single clock) │  (scroll-progress.ts)
-                         │  global · act · form · focusX │
-                         │  velocity · finale            │
-                         └──────────────┬───────────────┘
-            per-frame reads (no React)  │  coarse "act" change → React
+                        ┌───────────────────────────────┐
+                        │  Scroll store (single clock)  │  (scroll-progress.ts)
+                        │  global · act · form · focusX │
+                        │  velocity · bias · finale     │
+                        └───────────────┬───────────────┘
+           per-frame reads (no React)   │   coarse "act" change → React
         ┌───────────────┬───────────────┼───────────────┬──────────────┐
         ▼               ▼               ▼               ▼              ▼
    SignalField     SignalMesh      FocalSpotlight   ParallaxDrift   ScrollRail
@@ -185,8 +188,8 @@ and keep native scroll. The store still runs, so the rail and nav stay in sync.
 
 **File:** `src/components/webgl/SignalField.tsx`
 
-This is the showpiece: ~936 points (`24 × 13 × 3`) that narrate the page section
-by section. It is a single `THREE.Points` cloud whose target positions change
+This is the showpiece: 936 points (a `24 × 13` grid × 3 depth layers — a count,
+not a scene index) that narrate the page section by section. It is a single `THREE.Points` cloud whose target positions change
 per scene. All motion is CPU positional lerp — cheap, deterministic, tinted only
 with the brand accent.
 
@@ -317,7 +320,7 @@ Past the waitlist, a dedicated `finale` scalar (0..1) drives an epilogue that is
   and trembles with rising amplitude; brightness and point size climb.
 - **Burst** (`finale 0.55 → 0.85`): every point flies out along a precomputed
   radial debris vector with a white-hot flash, then dims into an ember field.
-- The DOM **closing line** ("Join Nicegram") fades up from the afterglow.
+- The DOM **closing line** (the final CTA sentence) fades up from the afterglow.
 
 Because it is gated on the glyph actually holding (`finaleness`) and reads a
 scrubbed scalar, scrolling back up rewinds the whole explosion frame-for-frame.
@@ -431,7 +434,7 @@ its meaning — this is Disney's "staging" applied to a scroll page:
 | `LockReveal` | scales down a hair and snaps into place | **Control** — a part machined into a slot |
 | `ClipReveal` | mechanical left-to-right clip wipe | headlines, panels |
 | `PulseReveal` | a single soft pulse as it "acquires lock" | **Signal** — the waitlist climax |
-| `Stagger` / `StaggerItem` | children cascade with a 0.06s stagger | lists, readouts |
+| `Stagger` / `StaggerItem` | children cascade at the `STAGGER` token (0.07s) | lists, readouts |
 
 **Every reveal renders its final state plainly under `prefers-reduced-motion`** —
 the `useReducedMotion()` branch returns the plain tag. Entrances enhance; they
@@ -460,7 +463,7 @@ useLayoutEffect(() => {
     });
     tl.fromTo(lines,
       { strokeDasharray: 1, strokeDashoffset: 1 },   // pathLength={1} normalizes every path
-      { strokeDashoffset: 0, stagger: 0.08 });        // → one variable draws them all
+      { strokeDashoffset: 0, stagger: STAGGER });     // → one variable draws them all
     teardown = () => { tl.scrollTrigger?.kill(); tl.kill(); };  // ALWAYS kill on cleanup
     ScrollTrigger.refresh();
   });
@@ -484,15 +487,22 @@ The non-negotiables (each learned from a real bug here):
 ## 10. Cross-cutting rules
 
 ### Motion tokens — `src/lib/motion/tokens.ts`
-No component invents its own curve. Everything uses:
+No component invents its own curve. Everything reads one token set, and the
+**chosen style pack owns its values** — `styles/tokens/<pack>.css` is the
+source, `tokens.ts` mirrors it for JS-driven motion. The SHELEG defaults, used
+when a pack does not override them (they are `instrument-console`'s values):
 
 - **`EASE = cubic-bezier(0.16, 1, 0.3, 1)`** (an easeOutExpo-like signature),
-  mirrored in CSS as `--motion-ease`.
+  mirrored in CSS as `--motion-ease`. `editorial-luxury`, for example,
+  overrides it with `cubic-bezier(0.22, 1, 0.36, 1)` plus a spring for press
+  feedback; `workbench` runs a 0.12–0.18s ease-out set and no scroll motion
+  at all.
 - **`DUR`** — `fast 0.18` / `base 0.32` / `slow 0.55` / `epic 0.8` seconds.
 - **`STAGGER = 0.07`** — the standard interval between sibling reveals.
 
 One ease + a tiny duration set is what makes twelve independent animations feel
-like one designed system rather than twelve developers' defaults.
+like one designed system rather than twelve developers' defaults. Overriding
+the set per pack is fine; overriding it per component is the defect.
 
 ### The fallback policy (single source: `shouldReduceScenes()`)
 `gsap-client.ts` centralizes the decision: `prefers-reduced-motion` **or**
@@ -572,7 +582,7 @@ A pragmatic order that front-loads the parts everything else depends on.
 11. **Pay the fallback + a11y tax as you go**, not at the end. Every layer ships
     with its reduced-motion branch in the same commit.
 
-12. **Verify like the runbook:** `tsc --noEmit`, `eslint`, `build` clean;
+12. **Verify before calling it done:** `tsc --noEmit`, `eslint`, `build` clean;
     screenshot each scene mid-hold and mid-morph; emulate reduced-motion; check a
     ~390px viewport. Then deploy.
 

@@ -23,12 +23,14 @@ the DOM↔WebGL bridge, the build recipe (§11), and the file map.
 - Particle or WebGL backgrounds tied to scroll; scenes that morph per section
 - Scroll-linked charts, step flows, progress rails, parallax
 - Existing scroll site that feels nervous, janky, or out of phase
+- Product UI that needs a locked visual system: dashboards, admin panels,
+  internal/dev tools, design tokens, light/dark themes — style-pack only,
+  via [`workbench`](./styles/workbench.md) standalone
 
 **Not for (the motion layer):** docs, dashboards, static content sites — or
-any page whose visual system or copy isn't finished yet. For dashboards,
-tools, and product UI, use the [`workbench`](./styles/workbench.md) style
-pack standalone: its tokens and atoms apply without the cinematic motion
-layer.
+any page whose visual system or copy isn't finished yet. Product UI takes the
+style-pack half of this skill and none of the cinematic motion layer: the
+`workbench` tokens and atoms stand on their own.
 
 ## Core Pattern — five principles, in order
 
@@ -59,10 +61,11 @@ Read the chosen pack in full before styling anything — it supplies the
 palette, type, texture, motion-token values, signature motifs, and bans.
 Each pack ships a ready-made token layer in `styles/tokens/<pack>.css` —
 copy that file verbatim instead of transcribing tables. For a new style,
-author a new pack file with the same headings (Register / Palette / Type /
-Texture & surface / Motion tokens / Signature motifs / Micro-interactions /
-Bans; skeleton: `templates/style-pack-template.md` in the repo) plus its
-`tokens/<pack>.css`; never invent token values ad hoc.
+copy [`styles/STYLE_PACK_TEMPLATE.md`](./styles/STYLE_PACK_TEMPLATE.md) and
+keep every heading — Register / Palette / Type / Texture & surface / Motion
+tokens / Signature motifs / Motion flavor (cinematic packs only) /
+Micro-interactions / Bans / Gotchas — then author its `tokens/<pack>.css` in
+the same change; never invent token values ad hoc.
 
 ## How to Apply
 

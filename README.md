@@ -4,9 +4,9 @@
 [![CI](https://github.com/ssheleg/sheleg-design-skill/actions/workflows/validate.yml/badge.svg)](https://github.com/ssheleg/sheleg-design-skill/actions/workflows/validate.yml)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 
-> A motion + particle interface methodology for building cinematic,
-> scroll-driven landing pages — packaged as an installable agent skill for
-> Cursor and Claude.
+> A motion + particle interface methodology for cinematic, scroll-driven
+> landing pages, plus locked visual style packs for product UI — packaged as an
+> installable agent skill for Cursor and Claude.
 
 Install it into any project with one command:
 
@@ -14,8 +14,9 @@ Install it into any project with one command:
 npx sheleg-design-skill
 ```
 
-That drops a `SKILL.md` + `SHELEG_DESIGN.md` bundle into your project so your
-coding agent can discover the skill and build sites on its principles.
+That drops the skill bundle — `SKILL.md`, the `SHELEG_DESIGN.md` reference, the
+style packs and their ready-made token CSS — into your project so your coding
+agent can discover the skill and build on its principles.
 
 ## What is SHELEG Design?
 
@@ -84,18 +85,23 @@ curl -fsSL https://raw.githubusercontent.com/ssheleg/sheleg-design-skill/main/in
 |---|---|
 | `SKILL.md` | Agent-facing skill: discovery trigger, the principles, how to apply them, quick-reference rules, common mistakes |
 | `SHELEG_DESIGN.md` | The full reference: architecture, layer-by-layer mechanics with code, the exact morph math, the DOM↔WebGL projection bridge, a build-from-scratch recipe, and the "why it works" |
-| `styles/*.md` | Style packs — the visual identity layer: `instrument-console` (near-black console, electric-blue signal), `editorial-luxury` (warm cream/espresso/sage, dossier motifs), and `workbench` (quiet light/dark product UI for dashboards & tools, standalone). Each locks palette, type, texture, motion tokens, motifs, and bans; the pack contract lets you author new styles |
+| `styles/*.md` | Style packs — the visual identity layer: `instrument-console` (near-black console, electric-blue signal), `editorial-luxury` (warm cream/espresso/sage, dossier motifs), and `workbench` (quiet light/dark product UI for dashboards & tools, standalone). Each locks palette, type, texture, motion tokens, motifs, and bans |
+| `styles/tokens/*.css` | The ready-made token layer per pack — copied verbatim into a project instead of transcribing tables (workbench ships a light `:root` plus a `data-theme="dark"` twin) |
+| `styles/STYLE_PACK_TEMPLATE.md` | The pack contract as a skeleton, so a new style is authored against the same headings instead of invented ad hoc |
 
 After installing, a Cursor or Claude agent in that project can discover the
 skill and use it when you ask it to build or upgrade a cinematic,
-scroll-driven, particle-backed page.
+scroll-driven page — or to style product UI (dashboards, admin panels,
+internal tools) from the `workbench` pack, without any of the motion layer.
 
 ## Style-agnostic motion, pluggable identity
 
 The motion methodology (one clock, layered responses, degrade-to-calm) is
 independent of the visual style. The look comes from a **style pack** the
-agent picks per project — dark instrument console or warm editorial luxury
-out of the box, or a new pack authored against the same contract.
+agent picks per project — dark instrument console, warm editorial luxury, or
+quiet light/dark workbench out of the box, or a new pack authored against the
+same contract. Where a pack sets its own ease and durations, the pack wins;
+the motion layer never hard-codes a palette.
 
 ## Stack-agnostic
 
@@ -111,11 +117,18 @@ with no install step and no supply-chain surface.
 
 ## Development
 
-`python3 test/validate.py` checks repo consistency (manifests, version sync,
-skill/command/rule front-matter, relative links); CI runs it plus a CLI smoke
-test on every push and PR. Versioning is semver; bump `marketplace.json` +
-`plugin.json` + `package.json` + `CHANGELOG.md` together — the validator
-enforces the sync.
+`python3 test/validate.py` checks repo consistency: manifests, version sync,
+skill/command/rule front-matter and description canon, the full style-pack
+section contract, pack ↔ `SKILL.md` table ↔ CLI-help agreement, the bundled
+pack template against `templates/`, installer file lists, the whole
+`.cursor/` mirror against the plugin copy, and relative links. CI runs it
+plus a CLI smoke test on every push and PR, including a negative self-test
+(the validator must fail on a corrupted version).
+
+Versioning is semver; bump `marketplace.json` + `plugin.json` +
+`package.json` + `CHANGELOG.md` together — the validator enforces the sync.
+`test/scenarios.md` (T1–T7) is the behavioural harness: re-run the affected
+scenarios after any edit to `SKILL.md`, a pack, or the reference.
 
 ## What this gives you
 
@@ -136,7 +149,7 @@ nothing. This is the taste layer.
 
 ## Author
 
-Built by ssheleg — [svlab.online](https://svlab.online)
+Built by ssheleg — [sshlg.me](https://sshlg.me)
 
 - X / Twitter — [@fuck_this_year](https://x.com/fuck_this_year)
 - Telegram — [@sshlg](https://t.me/sshlg)

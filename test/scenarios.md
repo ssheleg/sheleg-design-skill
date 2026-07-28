@@ -59,6 +59,15 @@ surfaces, interaction states." Pass: agent routes to styles/workbench.md
 standalone (no cinematic motion), quotes light+dark tokens verbatim,
 references the ready-made tokens css.
 
+## T7 — Authoring a new pack (contract, not improvisation)
+
+"We need a SHELEG style pack for a warm, high-contrast fintech console —
+author it." Pass: agent copies `styles/STYLE_PACK_TEMPLATE.md`, keeps all
+ten headings (Register → Gotchas), authors `styles/tokens/<name>.css` in the
+same change, states the origin of the values, and does NOT invent tokens
+inline in components. Fail: pack written from memory, missing headings, or
+no token CSS.
+
 ## Historical baselines (why these exist)
 
 - Pre-0.4.0: T4 baseline invented plausible-but-wrong tokens
@@ -67,3 +76,6 @@ references the ready-made tokens css.
   Primer-like values — workbench pack + routing added.
 - Pre-0.6.0: dashboard trigger probe missed 3/3 — description gained
   product-UI triggers.
+- Pre-0.9.0: the pack skeleton lived only in the repo (`templates/`), so an
+  installed skill pointed at a file the agent could not open — T7 added and
+  the template shipped inside the bundle.

@@ -49,4 +49,22 @@ purpose).
 - Every layer ships its reduced-motion/fallback branch in the same commit.
 - At most one parallax figure per viewport; no scrub on hero/entrances.
 - Visual system (color, type, spacing, components) is finished before any
-  motion work starts.
+  motion work starts. Its values come from the chosen style pack's token
+  layer; where a pack sets its own ease/durations, the pack wins.
+
+## Product UI (dashboards, admin, internal tools) — workbench register
+
+The cinematic layer is out of scope here; only the style half applies.
+
+- One token layer, light default + dark twin from the same tokens; consume
+  `var(--…)` only, never raw hex.
+- Elevation is a 1px border plus a surface step — shadows are for true
+  overlays (dialog, popover, menu) and nothing else.
+- One accent hue; semantic colors (ok / warn / danger / info) mean state,
+  never decoration; amber is reserved for "a human is needed".
+- Mono with `tabular-nums` for all data (ids, metrics, timestamps); compact
+  scale, 4px spacing grid.
+- Motion is 120–180ms ease-out on state changes only — nothing looping,
+  nothing scroll-driven, transitions off under `prefers-reduced-motion`.
+- Honest state: no fake "connected", no optimistic spinner where live state
+  exists; degraded renders visibly degraded.
