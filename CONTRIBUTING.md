@@ -26,7 +26,7 @@ syntax check on the CLI.
 | `cursor/rules/sheleg-design.mdc` | Self-contained condensed rule — **no relative links** (it gets copied into foreign projects alone) |
 | `bin/cli.js`, `install.sh` | The two installers; both must ship the whole bundle |
 | `test/validate.py` | Structural gate |
-| `test/scenarios.md` | Behavioural harness (T1–T7) |
+| `test/scenarios.md` | Behavioral harness (T1–T7) |
 | `templates/style-pack-template.md` | Source of the shipped pack skeleton |
 
 Edit the canonical bundle, then copy the changed file into the `.cursor/`
@@ -49,7 +49,7 @@ drift.
 5. Mirror the new files into `.cursor/skills/sheleg-design/`, add them to the
    `install.sh` file list, and re-run the validator.
 6. Add or update a scenario in `test/scenarios.md` if the pack changes routing
-   behaviour.
+   behavior.
 
 Token naming is an interface across packs: `--accent-weak` is a tint,
 `--accent-dim`/`-deep` is a darker accent. Reusing a name for the opposite
@@ -60,7 +60,7 @@ meaning silently inverts anyone who switches packs.
 - `SKILL.md`'s front-matter `description` is discovery. It states **trigger
   conditions**, opens with "Use when", carries Russian aliases beside the
   English triggers, and stays under 1024 characters. All three are validated.
-- Any behavioural claim in `SKILL.md` or `SHELEG_DESIGN.md` must match the
+- Any behavioral claim in `SKILL.md` or `SHELEG_DESIGN.md` must match the
   packs and the CSS. Contradictions between files are the defect class this
   repo cares about most — see the 0.9.0 entry in the CHANGELOG for a full pass
   of them.

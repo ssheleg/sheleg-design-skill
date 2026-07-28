@@ -6,7 +6,7 @@
 
 An agent can generate a landing page in under a minute, and it will look like
 every other generated landing page: three cards, a gradient, a hero that does
-nothing. Ask it for a dashboard and you get a different flavour of the same
+nothing. Ask it for a dashboard and you get a different flavor of the same
 problem — invented colors, six accent hues, dark mode retrofitted later.
 
 This skill is the taste layer. It gives a coding agent **one motion
@@ -135,7 +135,7 @@ the screen you're about to build actually **contains**. If the
 real-world references for the target screen (signup, onboarding, paywall,
 pricing, checkout, dashboard, settings) before laying anything out.
 
-The division of labour keeps the result one system: references inform **layout,
+The division of labor keeps the result one system: references inform **layout,
 hierarchy and content order**; palette, type and motion stay the pack's. Setup
 is a Streamable HTTP MCP server plus a per-user token — keep it out of your
 repo. Entirely optional; without it the skill works from the pack alone.
@@ -155,7 +155,7 @@ runs it on each push and PR alongside a negative self-test (the validator must
 fail on a corrupted version) and installs the bundle through **both** installers,
 diffing the result against the source.
 
-`test/scenarios.md` (T1–T7) is the behavioural harness: fresh subagents given a
+`test/scenarios.md` (T1–T7) is the behavioral harness: fresh subagents given a
 task, checking that the skill is discovered, applied and quoted correctly.
 Re-run the affected scenarios after any edit to `SKILL.md`, a pack or the
 reference.
