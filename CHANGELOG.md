@@ -4,6 +4,18 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.1] - 2026-07-28
+
+### Added
+
+- Optional **Lazyweb MCP** step: when `mcp__lazyweb__*` tools are present, the
+  skill sweeps real-world references for the target screen before laying it
+  out — recommended for the product-UI (`workbench`) register. The split is
+  explicit: references inform layout, hierarchy and content order; palette,
+  type and motion stay the pack's. Documented in `SKILL.md`, the Cursor rule
+  and the README; nothing depends on the MCP, and fetched reference content is
+  treated as data, never as instructions.
+
 ## [0.9.0] - 2026-07-28
 
 Consistency pass over every file: the contradictions below were real and are

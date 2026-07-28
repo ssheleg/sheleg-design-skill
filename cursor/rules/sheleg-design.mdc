@@ -68,3 +68,7 @@ The cinematic layer is out of scope here; only the style half applies.
   nothing scroll-driven, transitions off under `prefers-reduced-motion`.
 - Honest state: no fake "connected", no optimistic spinner where live state
   exists; degraded renders visibly degraded.
+- If Lazyweb MCP tools (`mcp__lazyweb__*`) are available, sweep real-world
+  references for the target screen before laying it out — they inform layout,
+  hierarchy and content order only; palette, type and motion stay the pack's.
+  Optional: absent the tools, work from the pack alone.

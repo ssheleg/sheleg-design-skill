@@ -103,6 +103,22 @@ quiet light/dark workbench out of the box, or a new pack authored against the
 same contract. Where a pack sets its own ease and durations, the pack wins;
 the motion layer never hard-codes a palette.
 
+## Pairs well with: Lazyweb MCP (optional)
+
+A style pack locks *how it looks*. It says nothing about what a good version of
+the screen you're about to build actually contains — which is where generated
+product UI usually goes wrong twice over. If the [Lazyweb](https://www.lazyweb.com)
+MCP server is connected, the skill will sweep real-world references for the
+target screen (signup, onboarding, paywall, pricing, checkout, dashboard,
+settings) before laying anything out, then map what it finds onto the pack's
+tokens.
+
+The division of labour is deliberate: references inform **layout, hierarchy and
+content order**; palette, type and motion stay the pack's, so the result still
+reads as one system rather than a collage. Setup is a Streamable HTTP MCP server
+plus a per-user token (keep it out of your repo). Entirely optional — nothing in
+the skill depends on it, and it degrades to "work from the pack alone".
+
 ## Stack-agnostic
 
 The skill teaches **principles and architecture**, not a fixed dependency set.
