@@ -51,6 +51,9 @@ jobs:
           ' CHANGELOG.md > /tmp/notes.md
           test -s /tmp/notes.md || { echo "no CHANGELOG section for v${{ steps.v.outputs.ver }}"; exit 1; }
 
+      # --latest is unconditional: this workflow assumes tags are pushed in
+      # ascending order. Back-tagging an older version would mislabel it as
+      # the latest release — do that by hand with `--latest=false`.
       - name: Create the GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
