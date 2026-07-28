@@ -4,6 +4,19 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-07-28
+
+Open-source hygiene pass — the repo is public, so the files a first-time
+contributor looks for now exist.
+
+### Added
+- `SECURITY.md` — states plainly that `bin/cli.js` neither spawns processes nor
+  touches the network, and that `install.sh` **does** fetch over HTTPS when run
+  without a checkout, so the documented `curl … | sh` one-liner is named as the
+  trust decision it is, with two alternatives.
+- `CODE_OF_CONDUCT.md`, issue forms and a pull-request template.
+- README points at the security policy and the code of conduct.
+
 ## [1.0.0] - 2026-07-28
 
 First stable release. Nothing about the method changed — this marks the point

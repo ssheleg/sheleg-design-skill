@@ -160,7 +160,9 @@ task, checking that the skill is discovered, applied and quoted correctly.
 Re-run the affected scenarios after any edit to `SKILL.md`, a pack or the
 reference.
 
-Adding a style pack, or anything else: see [CONTRIBUTING.md](./CONTRIBUTING.md).
+Adding a style pack, or anything else: see [CONTRIBUTING.md](./CONTRIBUTING.md)
+and the [Code of Conduct](./CODE_OF_CONDUCT.md). To report a vulnerability, see
+[SECURITY.md](./SECURITY.md).
 
 ## Author
 
