@@ -4,6 +4,23 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.0] - 2026-07-28
+
+### Fixed
+- The Cursor channel copy of `SKILL.md` could drift from the plugin copy without
+  anything noticing. The validator now compares them and fails on drift.
+
+### Changed
+- `RU triggers - …` replaced with English-first pairs
+  (`"design tokens" / "дизайн-токены"`), so the description reads as English
+  with localized aliases.
+- README is English-only, with a plain statement of what the skill gives you and
+  an author/links block.
+
+### Added
+- Validator enforces the description canon: `Use when` opening, Russian trigger
+  aliases present, front-matter under 1024 characters.
+
 ## [0.7.0] - 2026-07-25
 
 Review pass.

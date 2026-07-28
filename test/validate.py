@@ -43,6 +43,33 @@ def read(path):
         return None
 
 
+
+def raw_front_matter(path) -> str:
+    """The front-matter block verbatim -- what an agent host actually loads."""
+    text = read(path) or ""
+    if not text.startswith("---"):
+        return ""
+    end = text.find("\n---", 3)
+    return "" if end == -1 else text[4:end]
+
+
+def check_description_canon(rel, path, desc: str) -> None:
+    """The three canon rules every skill description must satisfy."""
+    check(
+        desc.startswith("Use when"),
+        f"{rel}/SKILL.md: description must start with 'Use when' (canon)",
+    )
+    check(
+        bool(re.search(r"[а-яё]", desc, re.I)),
+        f"{rel}/SKILL.md: description must carry Russian trigger aliases beside the English ones (canon)",
+    )
+    raw = raw_front_matter(path)
+    check(
+        len(raw) <= 1024,
+        f"{rel}/SKILL.md: front-matter is {len(raw)} chars, must be under 1024 (canon)",
+    )
+
+
 def front_matter(path):
     """Parse a leading ----delimited front-matter block into a flat dict."""
     text = read(path)
@@ -174,9 +201,14 @@ def validate_skills():
         )
         check(bool(fm.get("description")), f"{rel}/SKILL.md: missing description")
         desc = fm.get("description") or ""
+        check_description_canon(rel, skill / "SKILL.md", desc)
+    # The Cursor channel ships its own copy of SKILL.md -- it must not drift.
+    mirror = ROOT / ".cursor" / "skills" / PLUGIN / "SKILL.md"
+    canonical = skills_dir / PLUGIN / "SKILL.md"
+    if check(mirror.is_file(), f".cursor/skills/{PLUGIN}/SKILL.md: missing"):
         check(
-            desc.startswith("Use when"),
-            f"{rel}/SKILL.md: description must start with 'Use when'",
+            read(mirror) == read(canonical),
+            f".cursor/skills/{PLUGIN}/SKILL.md: drifted from {PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md",
         )
     check(
         (skills_dir / PLUGIN / "SHELEG_DESIGN.md").is_file(),

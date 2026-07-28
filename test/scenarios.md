@@ -13,9 +13,10 @@ skill names only.
 
 MUST load sheleg-design: particle-hero landing; WebGL hero upgrade;
 scroll-narrative storyboard; "landing janky / layers out of sync";
-RU «кинематографичный лендинг с частицами»; quiet-light dashboard styling;
-admin design tokens light/dark; RU «спокойный светлый интерфейс для
-внутреннего инструмента».
+Russian-language phrasing of "cinematic particle landing"
+(«кинематографичный лендинг с частицами»); quiet-light dashboard styling;
+admin design tokens light/dark; Russian phrasing of "calm light UI for an
+internal tool" («спокойный светлый интерфейс для внутреннего инструмента»).
 MUST NOT load: charts-only dashboard build (dataviz), pricing-table
 redesign, three.js FPS drop, copywriting headline.
 

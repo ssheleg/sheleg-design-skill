@@ -117,18 +117,37 @@ test on every push and PR. Versioning is semver; bump `marketplace.json` +
 `plugin.json` + `package.json` + `CHANGELOG.md` together — the validator
 enforces the sync.
 
-## По-русски
+## What this gives you
 
-**sheleg-design** — методология SHELEG: кинематографичные скролл-лендинги (единые
-часы анимации, слоистая композиция, «degrade to calm» при снижении ресурсов) плюс
-**style packs** для продуктового UI. Метод — style-agnostic; визуальную систему
-задаёт выбранный пак (`styles/<pack>.md` + `styles/tokens/<pack>.css`):
-`instrument-console` (тёмная приборная панель), `editorial-luxury` (тёплая
-издательская), `workbench` (светлый рабочий интерфейс).
+An agent can generate a landing page in under a minute, and it will look like
+every other generated landing page: three cards, a gradient, a hero that does
+nothing. This is the taste layer.
 
-Триггеры: «кинематографичный лендинг», «скролл-анимация», «лендинг с частицами»,
-«стиль дашборда», «дизайн-токены», «светлая/тёмная тема». Запуск — `/sheleg-design
-<что построить или улучшить>`. Установка — см. раздел Install выше.
+- **A motion methodology, not a component dump.** Scroll-linked animation,
+  particle and WebGL backgrounds, parallax layers that stay in sync instead of
+  drifting apart as the page grows.
+- **Style packs for product UI** — dashboards, admin panels, internal and dev
+  tools — with design tokens and light/dark handled up front rather than
+  retrofitted.
+- **A diagnosis for pages that feel busy or janky**, naming which layer to cut
+  instead of telling you to "simplify".
+- **Stack-agnostic and dependency-free** — it is a way of building, not a
+  framework you now depend on.
+
+## Author
+
+Built by ssheleg — [svlab.online](https://svlab.online)
+
+- X / Twitter — [@fuck_this_year](https://x.com/fuck_this_year)
+- Telegram — [@sshlg](https://t.me/sshlg)
+
+Part of the [ssheleg skill family](https://github.com/ssheleg/sshlg-skills):
+`super-ux`, `task-pipeline`, `make-skill`, `sheleg-design`, `seo-aeo-audit`.
+One command installs all five for every agent you use:
+
+```bash
+npx sshlg-skills install
+```
 
 ## License
 

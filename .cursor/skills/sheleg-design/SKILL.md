@@ -1,6 +1,6 @@
 ---
 name: sheleg-design
-description: Use when building or upgrading a cinematic scroll-driven landing page, marketing site, or hero experience (particle/WebGL background, scroll-linked animation, parallax, scrubbed sections) — when such a page feels busy or janky or its motion layers drift out of sync — or when styling product UI with its style packs - dashboards, admin panels, internal/dev tools, design tokens, light/dark themes. RU triggers - кинематографичный лендинг, скролл-анимация, лендинг с частицами, стиль дашборда, дизайн-токены, светлая/тёмная тема.
+description: Use when building or upgrading a cinematic scroll-driven landing page, marketing site, or hero experience (particle/WebGL background, scroll-linked animation, parallax, scrubbed sections) — when such a page feels busy or janky or its motion layers drift out of sync — or when styling product UI with its style packs - dashboards, admin panels, internal/dev tools, design tokens, light/dark themes. Triggers - "cinematic landing" / "кинематографичный лендинг", "scroll animation" / "скролл-анимация", "particle landing" / "лендинг с частицами", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема".
 ---
 
 # SHELEG Design
