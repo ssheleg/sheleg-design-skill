@@ -1,14 +1,24 @@
 #!/usr/bin/env python3
 """Consistency validator for the sheleg-design-skill repo (stdlib only).
 
-Checks:
-  1. Manifests parse, required fields present, versions in sync with CHANGELOG.
-  2. Every skill has front-matter: name (matching its directory), description.
-  3. The reference doc SHELEG_DESIGN.md ships next to SKILL.md.
-  4. Every command has front-matter: description.
-  5. Every cursor rule (.mdc) has front-matter: alwaysApply, and description
-     unless alwaysApply is true.
-  6. Relative markdown links inside the repo resolve.
+The repo's defect class is contradiction *between* files, so every promise one
+file makes is checked against the file that has to keep it:
+
+  1. Manifests parse, required fields present, four-way version sync
+     (marketplace.json / plugin.json / package.json / CHANGELOG top entry).
+  2. Every skill has front-matter: name (matching its directory) + description,
+     and the description canon: opens with "Use when", carries Russian trigger
+     aliases, front-matter under 1024 characters.
+  3. The reference doc SHELEG_DESIGN.md ships next to SKILL.md, and the whole
+     .cursor/ mirror matches the plugin bundle file-by-file, both directions.
+  4. Every style pack carries the full section contract and a ready-made
+     tokens/<pack>.css, is routed from the SKILL.md table and named in the CLI
+     output; the shipped pack skeleton matches templates/.
+  5. Every command has front-matter: description.
+  6. Every cursor rule (.mdc) has front-matter: alwaysApply, and description
+     unless alwaysApply is true; no relative links (rules travel alone).
+  7. install.sh ships exactly the bundle, and bin/cli.js walks it at runtime.
+  8. Relative markdown links inside the repo resolve.
 
 Exit code 0 with "OK (<n> checks)" when clean; 1 with FAIL: lines otherwise.
 """

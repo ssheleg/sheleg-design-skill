@@ -7,10 +7,10 @@ name: release
 # project that copies this workflow decides for itself whether to arm it — no
 # code change needed to enable/disable, just the variable.
 #
-# This is the concrete instance of the generic `release` config declared in
-# plugins/sheleg-design/skills/sheleg-design-skill/pipeline.example.json (trigger:
-# tag; steps: GitHub release + npm publish; verify: CI + npx smoke + npm view).
-# npm publish stays a human 2FA step and is intentionally NOT run here.
+# Trigger: a v* tag. Steps: validate → check the tag against the manifests →
+# cut a GitHub release from the matching CHANGELOG section → smoke-test the
+# published tag through npx. `npm publish` stays a human 2FA step and is
+# intentionally NOT run here.
 
 on:
   push:
@@ -26,11 +26,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install jsonschema
-        run: python3 -m pip install --quiet jsonschema
-
       - name: Structural validator (gate the release on a valid repo)
-        run: python3 test/validate.py
+        run: python3 test/validate.py   # stdlib only — nothing to install
 
       - name: Derive version from tag
         id: v
@@ -65,9 +62,8 @@ jobs:
       - name: Post-release smoke test (npx from a clean cwd — the verify gate)
         run: |
           set -eu
+          BUNDLE="$GITHUB_WORKSPACE/plugins/sheleg-design/skills/sheleg-design"
           cd "$(mktemp -d)"
           npx --yes "github:ssheleg/sheleg-design-skill#${GITHUB_REF_NAME}"
-          test -f .cursor/skills/sheleg-design/SKILL.md
-          test -f .cursor/skills/sheleg-design/SHELEG_DESIGN.md
-          ls .cursor/skills/sheleg-design/styles/*.md >/dev/null
-          echo "OK: released $GITHUB_REF_NAME installs its bundle via npx"
+          diff -r "$BUNDLE" .cursor/skills/sheleg-design
+          echo "OK: released $GITHUB_REF_NAME installs its whole bundle via npx"

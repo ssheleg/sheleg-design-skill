@@ -1,6 +1,12 @@
 # sheleg-design-skill — canon sync (0.3.0)
 
-Date: 2026-07-19. Status: implemented.
+Date: 2026-07-19. Status: implemented, partly superseded — kept as the record
+of why the repo is laid out this way.
+
+**Superseded since:** the "no templates" decision below (0.5.0 → 0.9.0). The
+skill now ships one template, `styles/STYLE_PACK_TEMPLATE.md` — an authoring
+skeleton for style packs, not a project scaffold. It seeds nothing into a
+consuming project; the original intent (this skill is not a generator) holds.
 
 ## Goal
 
@@ -27,5 +33,6 @@ Bring the repo to the ssheleg skill-pipeline canon (reference:
 
 ## Out of scope
 
-- Templates (the skill seeds nothing into projects).
+- Project templates — the skill seeds no application code. (The pack-authoring
+  skeleton added later is documentation, not a scaffold; see the note above.)
 - Multiple skills/commands — one job, one skill.

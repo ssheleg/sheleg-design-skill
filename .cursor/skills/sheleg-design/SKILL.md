@@ -27,10 +27,10 @@ the DOM↔WebGL bridge, the build recipe (§11), and the file map.
   internal/dev tools, design tokens, light/dark themes — style-pack only,
   via [`workbench`](./styles/workbench.md) standalone
 
-**Not for (the motion layer):** docs, dashboards, static content sites — or
-any page whose visual system or copy isn't finished yet. Product UI takes the
-style-pack half of this skill and none of the cinematic motion layer: the
-`workbench` tokens and atoms stand on their own.
+**Never apply the cinematic motion layer to:** product UI, docs sites, static
+content sites — or any page whose visual system or copy isn't finished yet.
+Product UI takes the style-pack half and nothing else: the `workbench` tokens
+and atoms stand on their own.
 
 ## Core Pattern — five principles, in order
 

@@ -4,6 +4,48 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2026-07-28
+
+First stable release. Nothing about the method changed — this marks the point
+where the surfaces below are treated as a contract, and a second full pass over
+every file cleared the remaining inaccuracies.
+
+**What 1.0.0 promises.** The installed layout (`SKILL.md`, `SHELEG_DESIGN.md`,
+`styles/*.md`, `styles/tokens/*.css`, `styles/STYLE_PACK_TEMPLATE.md`), the
+ten-heading style-pack contract, the token names inside a pack, and the CLI
+flags are stable within 1.x. A pack may gain tokens; it will not silently
+change what an existing token means. Removing or renaming either is a major.
+
+### Fixed
+
+- `release.yml` pointed at `pipeline.example.json`, a file that has never
+  existed in this repo, and installed `jsonschema` for a validator whose first
+  line says stdlib-only. Both gone; its post-release smoke test now `diff -r`s
+  the whole installed bundle instead of checking three paths.
+- The CLI accepted a bare trailing `--dir` and silently fell back to
+  auto-detect — installing somewhere the caller did not ask for. `--dir`
+  without a path, an unknown flag, and `--dir` combined with
+  `--cursor`/`--claude` now print the reason and exit 2 (previously exit 0).
+- `SKILL.md` listed "dashboards" under *not for*, one line after listing
+  dashboards as a supported use — the exclusion is about the cinematic motion
+  layer, and now says so.
+- `SHELEG_DESIGN.md` §13 presented the reference implementation's Next.js paths
+  as if they were the reader's; it now says to port the split, not the strings.
+  The §9 snippet used `STAGGER` without showing where it comes from, §11 said
+  "port" a file no reader has, and the closing line still said "this site".
+- `npm test` ran `--help` and always passed. It runs the validator now.
+- The 0.3.0 design spec still declared templates out of scope; annotated with
+  what superseded it rather than quietly rewritten.
+
+### Added
+
+- `CONTRIBUTING.md`: repo layout, the canonical-bundle-vs-mirror rule, and a
+  step-by-step for authoring a style pack (including the cross-pack token
+  naming trap).
+- README rewritten for people arriving cold: what the problem is, the two
+  halves, the pack table, what installs where, and an honest development
+  section.
+
 ## [0.9.1] - 2026-07-28
 
 ### Added

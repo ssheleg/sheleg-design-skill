@@ -453,6 +453,8 @@ pinned three-step flow, the why-now chart) use one repeatable GSAP recipe.
 **Files:** `WhyNowChart.tsx`, `EcosystemDiagram.tsx`, `PinnedSteps.tsx`, `gsap-client.ts`
 
 ```ts
+import { STAGGER } from "@/lib/motion/tokens";   // §10 — never a literal here
+
 useLayoutEffect(() => {
   if (shouldReduceScenes()) return;          // static, fully-drawn fallback
   let teardown;
@@ -544,11 +546,11 @@ A pragmatic order that front-loads the parts everything else depends on.
    button / status-pill components. Motion on top of a weak visual system just
    amplifies the weakness.
 
-2. **Stand up the clock.** Port `scroll-progress.ts`: the `state` object, the
-   dual subscriptions (`getScrollState` for per-frame, `subscribeAct` for
-   React), the rAF `update()`, the 65%-viewport `measure()`, and the
+2. **Stand up the clock.** Write `scroll-progress.ts` (§2): the `state` object,
+   the dual subscriptions (`getScrollState` for per-frame, `subscribeAct` for
+   the framework), the rAF `update()`, the 65%-viewport `measure()`, and the
    `ResizeObserver` re-measure. Verify with a temporary readout of `global` /
-   `act` / `form`.
+   `act` / `form` before anything reads it.
 
 3. **Add smooth scroll.** `SmoothScroll.tsx` with Lenis on the GSAP ticker,
    feeding `setScrollVelocity`. Gate it behind `shouldReduceScenes()`.
@@ -625,7 +627,13 @@ A pragmatic order that front-loads the parts everything else depends on.
 
 ---
 
-## 13. File map (where each idea lives)
+## 13. File map (one file per idea)
+
+These are the reference implementation's paths (Next.js `src/`, one small file
+per layer). Port the **split**, not the strings: what matters is that the clock,
+the storyboard, the tokens, the fallback gate and each visual layer stay in
+separate files, so any one of them can be deleted without touching the others.
+Adapt the names to your framework's conventions.
 
 | Concern | File |
 |---|---|
@@ -650,7 +658,7 @@ A pragmatic order that front-loads the parts everything else depends on.
 
 ---
 
-*SHELEG Design is the motion + systems half of this site's identity; pair it
-with the chosen `styles/<pack>.md` for the visual half. The north star for both: it should feel
-like a precision instrument responding to your hand — authority through
-accuracy and restraint, not spectacle.*
+*SHELEG Design is the motion + systems half of a site's identity; pair it with
+the chosen `styles/<pack>.md` for the visual half. The north star for both: it
+should feel like a precision instrument responding to your hand — authority
+through accuracy and restraint, not spectacle.*

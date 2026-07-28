@@ -61,6 +61,7 @@ function parseArgs(argv) {
     force: false,
     help: false,
     version: false,
+    error: null, // set → print help and exit non-zero
   };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
@@ -69,12 +70,22 @@ function parseArgs(argv) {
     else if (a === "--force" || a === "-f") opts.force = true;
     else if (a === "--cursor") opts.flavor = "cursor";
     else if (a === "--claude") opts.flavor = "claude";
-    else if (a === "--dir") opts.target = argv[++i];
-    else if (a.startsWith("--dir=")) opts.target = a.slice("--dir=".length);
-    else {
-      console.error(c("yellow", `Unknown argument: ${a}`));
-      opts.help = true;
+    else if (a === "--dir") {
+      // A bare trailing --dir must fail loudly: silently falling back to
+      // auto-detect would install somewhere the caller did not ask for.
+      const value = argv[++i];
+      if (!value || value.startsWith("-")) opts.error = "--dir needs a path";
+      else opts.target = value;
+    } else if (a.startsWith("--dir=")) {
+      const value = a.slice("--dir=".length);
+      if (!value) opts.error = "--dir needs a path";
+      else opts.target = value;
+    } else {
+      opts.error = `unknown argument: ${a}`;
     }
+  }
+  if (opts.flavor && opts.target) {
+    opts.error = "--dir cannot be combined with --cursor / --claude";
   }
   return opts;
 }
@@ -100,13 +111,12 @@ ${c("bold", "Default")}
   otherwise creates .cursor/skills/${SKILL_SLUG}/.
 
 ${c("bold", "What it installs")}
-  SKILL.md              the agent-facing skill (discovery + principles)
-  SHELEG_DESIGN.md      the full reference (architecture, recipes, why it works)
-  styles/*.md           style packs: instrument-console (dark console),
-                        editorial-luxury (warm editorial), workbench
-                        (light/dark product UI, standalone)
-  styles/tokens/*.css   ready-made token layer per pack (copy verbatim)
-  styles/STYLE_PACK_TEMPLATE.md   skeleton for authoring a new pack
+  SKILL.md             the agent-facing skill (discovery + principles)
+  SHELEG_DESIGN.md     the full reference (architecture, recipes, why it works)
+  styles/              three style packs — instrument-console (dark console),
+                       editorial-luxury (warm editorial), workbench (light/dark
+                       product UI, standalone) — plus a ready-made token CSS
+                       per pack and STYLE_PACK_TEMPLATE.md for authoring more
 `);
 }
 
@@ -127,6 +137,11 @@ function resolveTargetDir(opts, cwd) {
 function main() {
   const opts = parseArgs(process.argv.slice(2));
 
+  if (opts.error) {
+    console.error(c("yellow", `sheleg-design-skill: ${opts.error}`));
+    printHelp();
+    process.exit(2);
+  }
   if (opts.version) {
     console.log(pkg.version);
     return;
