@@ -109,6 +109,7 @@ skills.
 |---|---|
 | `SKILL.md` | The agent-facing skill: discovery triggers, the principles, how to apply them, quick-reference rules, common mistakes |
 | `SHELEG_DESIGN.md` | The full reference: architecture, layer-by-layer mechanics with code, the exact morph math, the DOM↔WebGL projection bridge, a build-from-scratch recipe, and why each piece works |
+| `FIGMA_BRIDGE.md` | The design↔code contract: how a pack's tokens map onto Figma variable collections and modes, how to implement a design without importing raw values, and what cannot cross the border |
 | `styles/*.md` | The three style packs — palette, type, texture, motion tokens, motifs, bans, and the traps each one carries |
 | `styles/tokens/*.css` | The ready-made token layer per pack, copied verbatim instead of transcribed (workbench ships a light `:root` plus a `data-theme="dark"` twin) |
 | `styles/STYLE_PACK_TEMPLATE.md` | The pack contract as a skeleton, so a new style is authored against the same headings rather than improvised |
@@ -126,6 +127,22 @@ skills.
   to use Next.js + React + three / react-three-fiber + GSAP ScrollTrigger +
   Lenis, but the method applies to any stack that can render to a canvas and
   read scroll. It is a way of building, not a framework you now depend on.
+
+## Figma, in both directions
+
+Design files and design tokens are two encodings of one system, and the usual
+outcome is that they drift until nobody trusts either. The skill's rule is that
+**the pack is the source of truth on both sides**: publishing writes a pack's
+values into Figma variable collections; implementing a design maps the file's
+values *onto* the pack's tokens instead of inlining hexes.
+
+The bridge is specific because the traps are: `workbench`'s light and dark are
+two **modes of one collection**, while `editorial-luxury`'s espresso sections
+are surfaces and not a mode at all; Figma colors are 0..1 floats, not hex; and
+motion never crosses — Figma has no easing variable type, so the ease, durations
+and stagger stay code-only, and shadows are effect styles whose parts bind to
+variables. A value in a file with no matching token is either a gap in the pack
+or drift in the file — the one thing it is never is a literal in a component.
 
 ## Optional: Lazyweb MCP
 

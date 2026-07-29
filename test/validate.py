@@ -232,10 +232,18 @@ def validate_skills():
                 (canonical_dir / rel_path).is_file(),
                 f".cursor/skills/{PLUGIN}/{rel_path}: not in the plugin bundle",
             )
-    check(
-        (skills_dir / PLUGIN / "SHELEG_DESIGN.md").is_file(),
-        f"{PLUGIN_DIR}/skills/{PLUGIN}/SHELEG_DESIGN.md: missing",
-    )
+    # Companion docs ship with the bundle AND are reachable from SKILL.md --
+    # a reference nothing links to is a file the agent never opens.
+    skill_body = read(skills_dir / PLUGIN / "SKILL.md") or ""
+    for companion in ("SHELEG_DESIGN.md", "FIGMA_BRIDGE.md"):
+        if check(
+            (skills_dir / PLUGIN / companion).is_file(),
+            f"{PLUGIN_DIR}/skills/{PLUGIN}/{companion}: missing",
+        ):
+            check(
+                companion in skill_body,
+                f"SKILL.md: {companion} ships in the bundle but is not linked from SKILL.md",
+            )
     styles_dir = skills_dir / PLUGIN / "styles"
     template = styles_dir / "STYLE_PACK_TEMPLATE.md"
     packs = sorted(p for p in styles_dir.glob("*.md") if p != template) if styles_dir.is_dir() else []

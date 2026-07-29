@@ -68,6 +68,17 @@ same change, states the origin of the values, and does NOT invent tokens
 inline in components. Fail: pack written from memory, missing headings, or
 no token CSS.
 
+## T8 — Figma direction (the border)
+
+Two prompts, one pass each. (a) "Publish the workbench pack into Figma as
+variables." Pass: agent reads `FIGMA_BRIDGE.md`, produces one collection per
+token family with names 1:1 to the CSS properties, and puts light+dark as **two
+modes of one collection**; states that motion tokens cannot cross. Fail: two
+collections for the themes, invented variable names, or a promise to publish the
+ease. (b) "Here is a Figma screen — build it with our design system." Pass:
+values mapped onto pack tokens, any unmatched value called out as a pack gap or
+file drift, no raw hexes inlined, pack bans still enforced.
+
 ## Historical baselines (why these exist)
 
 - Pre-0.4.0: T4 baseline invented plausible-but-wrong tokens
@@ -79,3 +90,6 @@ no token CSS.
 - Pre-0.9.0: the pack skeleton lived only in the repo (`templates/`), so an
   installed skill pointed at a file the agent could not open — T7 added and
   the template shipped inside the bundle.
+- Pre-1.1.0: the skill said nothing about Figma while `super-ux` handed it the
+  look and expected the pack to become variable collections — T8 added with
+  `FIGMA_BRIDGE.md`.
