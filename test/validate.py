@@ -33,7 +33,21 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 PLUGIN = "sheleg-design"
 PLUGIN_DIR = f"plugins/{PLUGIN}"
-PACK_SECTIONS = ("## Register", "## Palette", "## Type", "## Motion tokens", "## Bans")
+# The pack contract: nine headings every pack must carry, plus "## Motion
+# flavor", which only cinematic packs have (workbench is standalone and has no
+# motion layer to flavor). Docs that say "ten-heading contract" mean these nine
+# plus that conditional one.
+PACK_SECTIONS = (
+    "## Register",
+    "## Palette",
+    "## Type",
+    "## Texture & surface",
+    "## Motion tokens",
+    "## Signature motifs",
+    "## Micro-interactions",
+    "## Bans",
+    "## Gotchas",
+)
 
 failures = []
 checks = 0
@@ -235,7 +249,7 @@ def validate_skills():
     # Companion docs ship with the bundle AND are reachable from SKILL.md --
     # a reference nothing links to is a file the agent never opens.
     skill_body = read(skills_dir / PLUGIN / "SKILL.md") or ""
-    for companion in ("SHELEG_DESIGN.md", "FIGMA_BRIDGE.md"):
+    for companion in ("SHELEG_DESIGN.md", "FIGMA_BRIDGE.md", "AI_PRODUCT_PATTERNS.md"):
         if check(
             (skills_dir / PLUGIN / companion).is_file(),
             f"{PLUGIN_DIR}/skills/{PLUGIN}/{companion}: missing",

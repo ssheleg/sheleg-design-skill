@@ -73,6 +73,31 @@ The cinematic layer is out of scope here; only the style half applies.
   hierarchy and content order only; palette, type and motion stay the pack's.
   Optional: absent the tools, work from the pack alone.
 
+## AI product surfaces (chat, agents, streaming, generated content)
+
+Same register as product UI, one organizing rule: **honest state**. (Full
+pattern set: `AI_PRODUCT_PATTERNS.md` in the installed skill.)
+
+- Design five states per model call, not two: idle · working · complete ·
+  refused/needs-a-human · failed. A refusal is not an error and a rate limit is
+  not a crash — one red state for all three teaches "just retry", which is
+  wrong most of the time.
+- Never a spinner where tokens can stream, and never a stream the user cannot
+  stop from the first frame. Reserve the container so arriving text does not
+  reflow the page. No fake typing delay, no invented progress percentage.
+- Optimize and show time-to-first-token, not just completion; past a few
+  seconds say what is happening in the model's own terms.
+- Cite or don't claim; a confidence number with nothing behind it is theater.
+  Show which context the model actually used — most "wrong answer" reports are
+  wrong-context reports.
+- An agent's action is shown in the shape it will take (the diff, the
+  recipient, the query) before it runs. Irreversible, outward-facing or costly
+  ⇒ explicit confirmation; cheap and reversible ⇒ run it and offer undo.
+- Chat is a shape, not the shape: structured tasks get structured surfaces, and
+  anything worth returning to gets a durable object with a URL.
+- No cinematic motion on a working surface; the typing cursor is the only
+  looping element, and it stops when the stream does.
+
 ## Figma, either direction
 
 The pack is the source of truth on both sides of the border. (Full contract:

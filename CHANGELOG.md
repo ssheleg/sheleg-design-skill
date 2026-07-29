@@ -4,6 +4,50 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-07-29
+
+Worked through Figma's *State of the Designer 2026* (NewtonX, 906 digital
+designers across five regions, surveyed September–October 2025). It is a survey
+of the profession — AI adoption, what designers mean by craft, satisfaction,
+regional outlook — **not** a visual-trends report, so nothing here is a "trend"
+invented from it. Two findings were actionable, and one was a gap in this skill.
+
+### Added
+
+- **`AI_PRODUCT_PATTERNS.md`** — the surfaces a model drives, which the skill
+  had nothing to say about while the survey ranks *designing AI-driven
+  products* the **third most in-demand skill (37%)**, ahead of motion design
+  (29%) and information architecture (19%). Organizing rule: **honest state**.
+
+  Contents: the five states of a model call (idle · working · complete ·
+  refused/needs-a-human · failed — a refusal is not an error and a rate limit
+  is not a crash); streaming instead of spinners, with a stop control from the
+  first frame, a reserved container and no fake typing delay; latency as two
+  numbers (time-to-first-token is the one users feel); provenance and
+  uncertainty (cite or don't claim, no confidence theater, show the context the
+  model actually used); agent actions where the confirmation *is* the design —
+  the diff/recipient/query shown before it runs, explicit consent for anything
+  irreversible or outward-facing, undo for what's cheap; empty states that
+  carry the capability; chat as a shape rather than the shape; cost and scope
+  as visible state; and a ban list. Pairs with `workbench` and reuses its
+  status tokens.
+- **The craft bar** in `SKILL.md` — a definition of done ordered by what
+  designers actually mean by craft in that survey: visual polish (58%),
+  thoughtful problem solving (47%), clear intuitive UX (36%), emotion and
+  delight (35%), consistency (15%). Item 3 is explicitly *not* this skill's
+  half — if flows and states aren't decided, the honest move is to stop.
+- Discovery, the Cursor rule, the README and both installers cover the AI-UI
+  direction; `scenarios.md` gains T9.
+
+### Fixed
+
+- **The validator enforced five of the nine required pack headings** while the
+  0.9.0 entry, `CONTRIBUTING.md`, the README and the wiki all claimed the full
+  contract was gated. Exactly the promise-without-a-check defect this repo
+  keeps hunting, living inside the checker itself. All nine are now enforced
+  (`Motion flavor` stays conditional — `workbench` is standalone and has no
+  motion layer to flavor), which is also why the check count jumps to 194.
+
 ## [1.1.1] - 2026-07-29
 
 ### Fixed

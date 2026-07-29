@@ -114,6 +114,7 @@ ${c("bold", "What it installs")}
   SKILL.md             the agent-facing skill (discovery + principles)
   SHELEG_DESIGN.md     the full reference (architecture, recipes, why it works)
   FIGMA_BRIDGE.md      the design↔code contract (tokens ⇄ Figma variables)
+  AI_PRODUCT_PATTERNS.md  chat / agent / streaming surfaces (honest state)
   styles/              three style packs — instrument-console (dark console),
                        editorial-luxury (warm editorial), workbench (light/dark
                        product UI, standalone) — plus a ready-made token CSS

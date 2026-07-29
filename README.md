@@ -110,6 +110,7 @@ skills.
 | `SKILL.md` | The agent-facing skill: discovery triggers, the principles, how to apply them, quick-reference rules, common mistakes |
 | `SHELEG_DESIGN.md` | The full reference: architecture, layer-by-layer mechanics with code, the exact morph math, the DOM↔WebGL projection bridge, a build-from-scratch recipe, and why each piece works |
 | `FIGMA_BRIDGE.md` | The design↔code contract: how a pack's tokens map onto Figma variable collections and modes, how to implement a design without importing raw values, and what cannot cross the border |
+| `AI_PRODUCT_PATTERNS.md` | The surfaces a model drives: the five states of a call, streaming instead of spinners, latency, provenance and uncertainty, agent confirmations, and the bans that keep it honest |
 | `styles/*.md` | The three style packs — palette, type, texture, motion tokens, motifs, bans, and the traps each one carries |
 | `styles/tokens/*.css` | The ready-made token layer per pack, copied verbatim instead of transcribed (workbench ships a light `:root` plus a `data-theme="dark"` twin) |
 | `styles/STYLE_PACK_TEMPLATE.md` | The pack contract as a skeleton, so a new style is authored against the same headings rather than improvised |
@@ -127,6 +128,28 @@ skills.
   to use Next.js + React + three / react-three-fiber + GSAP ScrollTrigger +
   Lenis, but the method applies to any stack that can render to a canvas and
   read scroll. It is a way of building, not a framework you now depend on.
+
+## AI product surfaces
+
+Chat, agent runs, streaming output and generated content are the surfaces most
+design systems were written before — and the ones everyone is now building.
+`AI_PRODUCT_PATTERNS.md` covers them with one organizing rule, **honest state**:
+a model's output is slow, uncertain, occasionally refused and sometimes wrong,
+and an interface that hides any of that is not calmer, it is lying.
+
+Concretely: five states per call, not two (idle · working · complete · refused ·
+failed — a refusal is not an error and a rate limit is not a crash); streaming
+instead of spinners, with a stop control from the first frame and no reflow; the
+context the model actually used, because most "wrong answer" reports are
+wrong-context reports; an agent's action shown in the shape it will take before
+it runs; and no confidence number with nothing behind it.
+
+This is where the skill's positioning is externally measured rather than
+asserted: in Figma's *State of the Designer 2026* (NewtonX, 906 designers,
+Sept–Oct 2025), designing AI-driven products is the **third most in-demand
+skill (37%)** — ahead of motion design and information architecture — while
+**visual polish tops the list at 58%**, and craft is named the differentiator
+now that anyone can prompt their way to a prototype.
 
 ## Figma, in both directions
 

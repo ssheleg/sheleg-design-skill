@@ -1,6 +1,6 @@
 ---
 name: sheleg-design
-description: Use when building or upgrading a cinematic scroll-driven landing page, marketing site, or hero experience (particle/WebGL background, scroll-linked animation, parallax, scrubbed sections) — when such a page feels busy or janky or its motion layers drift out of sync — or when styling product UI with its style packs - dashboards, admin panels, internal/dev tools, design tokens, light/dark themes - or when carrying a visual system across the Figma border (publishing tokens as variables, implementing a design without importing raw values). Triggers - "cinematic landing" / "кинематографичный лендинг", "scroll animation" / "скролл-анимация", "particle landing" / "лендинг с частицами", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы", "figma to code" / "фигма в код".
+description: Use when building or upgrading a cinematic scroll-driven landing page, marketing site, or hero experience (particle/WebGL background, scroll-linked animation, parallax, scrubbed sections) — when such a page feels busy or janky or its motion layers drift out of sync — or when styling product UI with its style packs - dashboards, admin panels, internal/dev tools, design tokens, light/dark themes - or when carrying a visual system across the Figma border (publishing tokens as variables, implementing a design without importing raw values). Triggers - "cinematic landing" / "кинематографичный лендинг", "scroll animation" / "скролл-анимация", "particle landing" / "лендинг с частицами", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы", "figma to code" / "фигма в код", "chat/agent UI" / "интерфейс чата или агента", "streaming output" / "стриминг ответа".
 ---
 
 # SHELEG Design
@@ -26,6 +26,9 @@ the DOM↔WebGL bridge, the build recipe (§11), and the file map.
 - Product UI that needs a locked visual system: dashboards, admin panels,
   internal/dev tools, design tokens, light/dark themes — style-pack only,
   via [`workbench`](./styles/workbench.md) standalone
+- AI product surfaces: chat and agent UI, streaming output, run logs, model
+  errors, generated-content and confirmation states
+  ([`AI_PRODUCT_PATTERNS.md`](./AI_PRODUCT_PATTERNS.md))
 - Moving a visual system across the Figma border in either direction —
   publishing a pack as variables, or implementing a design without importing
   raw values ([`FIGMA_BRIDGE.md`](./FIGMA_BRIDGE.md))
@@ -69,6 +72,35 @@ keep every heading — Register / Palette / Type / Texture & surface / Motion
 tokens / Signature motifs / Motion flavor (cinematic packs only) /
 Micro-interactions / Bans / Gotchas — then author its `tokens/<pack>.css` in
 the same change; never invent token values ad hoc.
+
+## The craft bar — what "done" means, in order
+
+When anyone can prompt their way to a prototype, craft is the only
+differentiator left. Designers rank what it means (Figma, *State of the
+Designer 2026*, n=906): **visual polish 58% · thoughtful problem solving 47% ·
+clear intuitive UX 36% · emotion and delight 35% · consistency 15%.** Read that
+as a definition of done, in that order:
+
+1. **Polish** — the pack applied without exception: tokens, not literals; no
+   ad-hoc hex, radius or font size anywhere in the diff.
+2. **Systems thinking** — the visual decision lives in one place (the token
+   layer, the `SCENES` registry) and everything else reads it.
+3. **Clear UX** — structure and behavior are not this skill's half; if the
+   flows and states aren't decided, stop and decide them first.
+4. **Emotion** — earned motion only (principle 4), and never at the cost of 1–3.
+5. **Consistency** — one ease, one duration set, one accent, one atom per job
+   across every screen.
+
+## AI-driven product surfaces
+
+Designing AI products is now the third most in-demand skill in that same survey
+(37%) — ahead of motion and IA — and the surfaces are new: a model streaming,
+an agent acting, an answer that might be wrong. Read
+[`AI_PRODUCT_PATTERNS.md`](./AI_PRODUCT_PATTERNS.md) before building chat,
+agent-run, or generated-content UI. It pairs with the `workbench` pack and
+carries one rule: **honest state** — never a spinner where tokens can stream,
+never a confidence number with nothing behind it, never an outward-facing
+action executed because the model suggested it.
 
 ## Optional — Figma (design ↔ code)
 

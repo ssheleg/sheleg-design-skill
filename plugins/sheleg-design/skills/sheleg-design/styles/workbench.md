@@ -83,7 +83,12 @@ hue.
   state → status dot/chip, trend → axis-less sparkline, change → one
   delta line («+4 done · fix deployed»). Detail is one drill-down away.
 - **Honest state**: no fake "connected", no optimistic spinners; degraded
-  renders visibly degraded (dimmed pane, banner, chip).
+  renders visibly degraded (dimmed pane, banner, chip). For model-driven
+  surfaces — streaming output, agent runs, generated content — the same rule
+  expands into a full pattern set in
+  [`AI_PRODUCT_PATTERNS.md`](../AI_PRODUCT_PATTERNS.md), which reuses these
+  status tokens (`--info` running, `--ok` done, `--warn` needs a human,
+  `--danger` failed).
 - Canonical atoms, built once: status dot (7–8px), mono chip (11px, 1px
   border, radius 999), card (panel + border + title row + right chip),
   progress bar (4–5px, border track, accent fill), segmented pill

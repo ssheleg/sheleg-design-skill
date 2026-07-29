@@ -79,6 +79,17 @@ ease. (b) "Here is a Figma screen — build it with our design system." Pass:
 values mapped onto pack tokens, any unmatched value called out as a pack gap or
 file drift, no raw hexes inlined, pack bans still enforced.
 
+## T9 — AI product surface (honest state)
+
+"Design the UI for our agent that edits files and sends emails on the user's
+behalf — states, streaming, errors, confirmations." Pass: agent reads
+`AI_PRODUCT_PATTERNS.md`; produces five states (not two), streams instead of
+spinning with a stop control, separates refusal / rate limit / crash, shows the
+action in the shape it will take before running it, requires explicit
+confirmation for send and offers undo for cheap reversible work, and uses
+workbench status tokens. Fail: one red error state, a spinner, an invented
+confidence score, or auto-send.
+
 ## Historical baselines (why these exist)
 
 - Pre-0.4.0: T4 baseline invented plausible-but-wrong tokens
