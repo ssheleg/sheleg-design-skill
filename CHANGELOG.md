@@ -4,6 +4,21 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2026-07-29
+
+### Fixed
+
+- `FIGMA_BRIDGE.md` described the mapping without mentioning that the official
+  Figma MCP **gates its main tools behind guidance skills** (`/figma-use`
+  before `use_figma`, `/figma-create-new-file` before `create_new_file`,
+  `/figma-design-to-code` before `get_design_context`) — the server names
+  skipping them the cause of hard-to-debug failures. An agent following the
+  bridge alone would have called them bare. The doc now says to load the gate
+  first and that the server's instructions win on *how* to call anything; this
+  file is the contract, not a tool manual. It also names the two read paths
+  worth knowing: `get_variable_defs` for token parity, `get_metadata` for frame
+  existence and naming.
+
 ## [1.1.0] - 2026-07-29
 
 ### Added

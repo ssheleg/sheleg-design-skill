@@ -22,6 +22,15 @@ when starting a file from a pack. With the official Figma MCP server connected,
 its library-generation workflow does the writing; the mapping below is what you
 give it.
 
+> **Load the server's own gate first.** The official Figma MCP puts its main
+> tools behind guidance skills and names skipping them the cause of
+> hard-to-debug failures: `/figma-use` before `use_figma`,
+> `/figma-create-new-file` before `create_new_file`, `/figma-design-to-code`
+> before `get_design_context`. Read the gate, then apply the mapping here — this
+> document is the *contract*, not a tool manual, and the server's instructions
+> win on how to call anything. For reading, `get_variable_defs` is the token
+> parity check and `get_metadata` answers frame existence and naming.
+
 ### Collections and modes
 
 One collection per token family, named after the pack:
