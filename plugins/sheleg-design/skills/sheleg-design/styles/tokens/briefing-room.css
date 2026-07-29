@@ -1,0 +1,118 @@
+/* SHELEG Design — Briefing Room token layer (dark presentation deck).
+   Copy verbatim; consume only var(--…) in components.
+   Neutrals are the accent hue (254) starved of chroma — keep the hue when
+   editing, or the deck reads as two designs. */
+:root {
+  --bg: oklch(0.045 0.008 254);
+  --panel: oklch(0.145 0.008 254);
+  --panel-2: oklch(0.178 0.008 254);
+  --line: oklch(0.231 0.006 254);
+  --line-2: oklch(0.269 0.006 254);
+
+  --ink: oklch(0.985 0.004 254);
+  --ink-2: oklch(0.8 0.006 254);
+  --ink-3: oklch(0.62 0.006 254);
+  --ink-dim: oklch(0.56 0.006 254); /* furniture only, ≥10.5px mono */
+
+  --accent: oklch(0.643 0.195 254);
+  --accent-soft: oklch(0.643 0.195 254 / 0.18); /* chip fill, glow */
+  --accent-line: oklch(0.643 0.195 254 / 0.45); /* chip border */
+  --accent-ink: var(--bg); /* text ON the accent — never white */
+  --good: oklch(0.824 0.151 148);
+  --good-soft: oklch(0.824 0.151 148 / 0.3);
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+
+  /* 4px grid with deliberate half-steps for dense slide layouts */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-4-5: 18px;
+  --space-5: 20px;
+  --space-5-5: 22px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-9: 36px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  /* Fixed 16:9 canvas — content that does not fit becomes a second slide */
+  --slide-w: 1280px;
+  --slide-h: 720px;
+  --frame-pad-x: var(--space-20);
+  --frame-pad-y: var(--space-16);
+
+  --shadow-card: 0 28px 70px -28px rgba(0, 0, 0, 0.85);
+  --shadow-pop: 0 12px 32px -12px rgba(0, 0, 0, 0.7);
+  --glow-accent: radial-gradient(
+    58% 46% at 50% 26%,
+    var(--accent-soft),
+    transparent 70%
+  );
+  /* Veil the artwork, never fade it: keeps the dither crisp under text */
+  --veil-left: linear-gradient(
+    95deg,
+    oklch(0 0 0 / 0.85) 0%,
+    oklch(0 0 0 / 0.55) 38%,
+    oklch(0 0 0 / 0.2) 70%,
+    oklch(0 0 0 / 0.05) 100%
+  );
+
+  --font-sans: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+  --t-display: 128px;
+  --t-h1: 96px;
+  --t-h2: 64px;
+  --t-h3: 36px;
+  --t-lede: 24px;
+  --t-body: 17px;
+  --t-meta: 14px;
+  --t-mono: 13px;
+  --t-mono-sm: 10.5px;
+
+  --track-display: -0.04em;
+  --track-h1: -0.035em;
+  --track-h2: -0.03em;
+  --track-h3: -0.02em;
+  --track-body: -0.005em;
+  --track-mono: 0.14em; /* mono without tracking reads as code, not telemetry */
+  --track-mono-wide: 0.18em;
+
+  --lh-display: 1.02;
+  --lh-head: 1.05;
+  --lh-tight: 1.1;
+  --lh-lede: 1.5;
+  --lh-body: 1.55;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 0.15s;
+  --dur-base: 0.2s;
+
+  background-color: var(--bg);
+  color: var(--ink);
+  color-scheme: dark;
+}
+
+/* Slides never animate — the presenter is the timeline. This block should
+   have nothing to disable; if it does, the deck has motion it should not. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0s;
+    --dur-base: 0s;
+  }
+}

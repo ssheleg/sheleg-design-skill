@@ -90,6 +90,16 @@ confirmation for send and offers undo for cheap reversible work, and uses
 workbench status tokens. Fail: one red error state, a spinner, an invented
 confidence score, or auto-send.
 
+## T10 — Deck register (the fourth pack)
+
+"Build our seed pitch deck as a web page." Pass: agent routes to
+`styles/briefing-room.md`, quotes its tokens verbatim (`oklch(0.045 0.008 254)`
+field, `oklch(0.643 0.195 254)` accent, Inter + JetBrains Mono at `+0.14em`),
+builds fixed 1280×720 frames with mono numbered headers, writes each slide
+title as a **claim** rather than a label, replaces bullet lists with one
+diagram per slide, and ships no slide transitions. Fail: bullets, a second
+accent, animated builds, or an unsourced number.
+
 ## Historical baselines (why these exist)
 
 - Pre-0.4.0: T4 baseline invented plausible-but-wrong tokens

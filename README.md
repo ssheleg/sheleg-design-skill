@@ -34,15 +34,18 @@ and collectively cinematic. One scroll "clock" feeds a WebGL particle field, a
 rail — each an independent, degrade-to-calm layer. Nothing crossfades; things
 *redeploy*.
 
-**Style packs** — the visual identity, pluggable per project. The `workbench`
-pack is meant to be used **standalone**, with none of the motion layer: quiet
-light/dark product UI for dashboards, admin panels, internal and dev tools.
+**Style packs** — the visual identity, pluggable per project. Two of them are
+meant to be used **standalone**, with none of the motion layer: `workbench`
+(quiet light/dark product UI for dashboards, admin panels, internal and dev
+tools) and `briefing-room` (a dark 16:9 presentation deck, where the presenter's
+voice is the timeline and slides therefore never animate).
 
 | Pack | Look | Choose for |
 |---|---|---|
 | `instrument-console` | near-black aerospace console, one electric-blue signal, mono telemetry | technical / systems / infra |
 | `editorial-luxury` | warm cream + espresso ink, sage accent, Fraunces/Newsreader, dossier motifs | editorial / research / premium B2B |
 | `workbench` | neutral grays, borders as elevation, one blue accent, mono data, light + dark twins | dashboards, admin, internal & dev tools |
+| `briefing-room` | dark 16:9 deck: one blue hue top to bottom (OKLCH), mono slide furniture, 1-bit dithered art, claims as titles | investor & board decks, technical briefings, talks published as a page |
 
 Each pack locks palette, type, texture, motion tokens, signature motifs and
 bans — and ships a `tokens/<pack>.css` to copy verbatim, so the agent never

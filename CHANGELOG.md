@@ -4,6 +4,38 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-07-29
+
+### Added
+
+- **Fourth style pack: `briefing-room`** — a register the skill had no answer
+  for. Decks are among the most-requested things people ask an agent to build,
+  and the default output is bullet lists on a gradient. Extracted from a
+  production investor-deck site (2026) by reading its live token layer; the
+  source is **anonymized at the owner's request**, so the `Origin:` line says
+  what it is without naming it — the values are still extracted rather than
+  invented, which is the point of the rule.
+
+  What it encodes: a fixed **1280×720 canvas with `overflow: hidden`** (content
+  that does not fit becomes a second slide — never a smaller type ramp); the
+  first **OKLCH** token layer in the skill, where every neutral is the accent
+  hue `254` starved of chroma, so the palette cannot drift into two designs;
+  Inter at tight optical tracking against JetBrains Mono furniture at `+0.14em`
+  to `+0.18em`; a two-part veil that protects text over artwork **without**
+  fading the artwork; 1-bit dithered art as the only imagery; mono numbered
+  section headers; **the slide title is a claim, not a label**; one bespoke
+  diagram per slide instead of bullets; exactly one highlighted phrase per
+  deck; and every number carrying its source.
+
+  Its motion position is a deliberate inversion of the rest of the skill:
+  **slides never animate**, because the presenter's voice is the timeline.
+  `prefers-reduced-motion` is a no-op by construction rather than by neglect.
+
+  Two honest notes carried as Gotchas: a fixed canvas fails *silently* (clipped
+  content is invisible in review and obvious in the room), and the reference
+  shipped no print or reduced-motion branch — the pack requires both.
+- `scenarios.md` gains T10 for the deck register. Gate: 194 → 220 checks.
+
 ## [1.2.0] - 2026-07-29
 
 Worked through Figma's *State of the Designer 2026* (NewtonX, 906 digital
