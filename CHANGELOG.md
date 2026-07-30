@@ -4,6 +4,18 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] - 2026-07-30
+
+### Changed
+
+- **README** — the family list gained `agent-sync`, and the install block now
+  carries all three family commands (`install`, `update`, `list`) with the
+  restart note; skills and hooks load at session start, so the session that
+  updates is not the session that gets the new ones. The registry copy of the
+  README is what most people read, and it only moves on a release.
+- `CONTRIBUTING.md` — how to run `test/validate.py` and what a PR is checked
+  against.
+
 ## [1.3.0] - 2026-07-29
 
 ### Added
