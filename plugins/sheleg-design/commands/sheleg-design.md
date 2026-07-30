@@ -1,6 +1,6 @@
 ---
 description: Apply the SHELEG Design methodology (single-clock, layered, degrade-to-calm motion) to the current landing-page / hero / scroll-animation task — or its style packs to product UI (dashboards, admin, internal tools)
-argument-hint: [what to build or upgrade]
+argument-hint: "[what to build or upgrade]"
 ---
 
 Invoke the `sheleg-design` skill and apply it to the current request.
