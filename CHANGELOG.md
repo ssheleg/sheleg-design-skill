@@ -4,6 +4,13 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.4] - 2026-07-30
+
+### Added
+
+- **`displayName`** ("SHELEG Design") in both manifests — the `/plugin` picker
+  falls back to `name`, which is kebab-case for namespacing reasons.
+
 ## [1.3.3] - 2026-07-30
 
 ### Fixed
