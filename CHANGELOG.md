@@ -4,6 +4,15 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.2] - 2026-07-30
+
+### Changed
+
+- **The licence is declared in both manifests** — SPDX `license: MIT` in the
+  `marketplace.json` plugin entry and in the skill's front matter (mirrored into
+  the `.cursor` copy, which the validator holds byte-identical). The `LICENSE`
+  file was always present and visible on neither surface a user actually reads.
+
 ## [1.3.1] - 2026-07-30
 
 ### Changed

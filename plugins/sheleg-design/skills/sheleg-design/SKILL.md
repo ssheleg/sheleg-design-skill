@@ -1,6 +1,7 @@
 ---
 name: sheleg-design
 description: Use when building or upgrading a cinematic scroll-driven landing page, marketing site, or hero experience (particle/WebGL background, scroll-linked animation, parallax, scrubbed sections) — when such a page feels busy or janky or its motion layers drift out of sync — or when styling product UI with its style packs - dashboards, admin panels, internal/dev tools, design tokens, light/dark themes - or when carrying a visual system across the Figma border (publishing tokens as variables, implementing a design without importing raw values). Triggers - "cinematic landing" / "кинематографичный лендинг", "scroll animation" / "скролл-анимация", "particle landing" / "лендинг с частицами", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы", "figma to code" / "фигма в код", "chat/agent UI" / "интерфейс чата или агента", "streaming output" / "стриминг ответа".
+license: MIT
 ---
 
 # SHELEG Design
