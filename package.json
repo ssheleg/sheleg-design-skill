@@ -39,7 +39,10 @@
     "landing-page",
     "sheleg"
   ],
-  "author": "ssheleg",
+  "author": {
+    "name": "ssheleg",
+    "url": "https://x.com/sshlg93"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
