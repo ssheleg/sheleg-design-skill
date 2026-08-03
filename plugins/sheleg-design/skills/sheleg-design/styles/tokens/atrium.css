@@ -1,0 +1,177 @@
+/* SHELEG Design — Atrium token layer (warm daylight consumer-health surface).
+   Copy verbatim; consume only var(--…) in components.
+   One field, one accent, no dark sections: the page is a single warm room and
+   depth comes from hairlines and cream-on-cream steps, never from a dark band. */
+:root {
+  /* ---- Field & surfaces ------------------------------------------------ */
+  --bg: #fef9ef; /* the daylight field — the "white" of this system */
+  --surface: #f5eee1; /* inset/raised step: cards, wells, footer, CTA band */
+  --surface-ink: #2a2b2f; /* the ONE inverted surface (media wells, banner) */
+  --line: #d1c9bf; /* hairline — decorative strength, see Gotchas */
+  --line-strong: #737373; /* borders that carry an affordance (inputs) */
+  --line-ink: #2a2b2f; /* ghost-control border */
+
+  /* ---- Ink ------------------------------------------------------------- */
+  --ink: #2a2b2f; /* 13.5:1 on --bg */
+  --ink-2: #515151; /* 7.6:1 — long-form body on the field */
+  --ink-3: #737373; /* 4.5:1 — exactly the AA floor: metadata/legal only */
+  --on-ink: #fef9ef; /* text on --surface-ink */
+
+  /* ---- The one accent -------------------------------------------------- */
+  --accent: #b05a36; /* terracotta — 4.6:1 on --bg, 4.2:1 on --surface (!) */
+  --accent-tint: #f7eeeb; /* 10% wash — chips, quiet rows */
+  --accent-ink: #fef9ef; /* text ON the accent — the field's beige, not white */
+  --accent-gradient: linear-gradient(#b05a36, rgba(216, 161, 131, 0.96));
+
+  /* ---- Semantics (fills and icons — NOT text; see Gotchas) ------------- */
+  --good: #79bd8b; /* 2.1:1 on --bg — never carries a word */
+  --good-tint: #f1f3e5;
+  --info: #488ad5; /* 3.4:1 — large text / UI marks only */
+  --danger: #db0000; /* 5.0:1 — the one semantic that may be text */
+
+  /* ---- Glass & scrims (photography lives behind these) ------------------ */
+  --glass-fill: rgba(255, 255, 255, 0.07);
+  --glass-fill-2: rgba(254, 249, 239, 0.1);
+  --glass-blur: blur(15px);
+  --glass-sheen: linear-gradient(
+    201.98deg,
+    rgba(254, 249, 239, 0.12) 28%,
+    rgba(254, 249, 239, 0.68) 135.96%
+  );
+  --scrim-card: linear-gradient(
+    rgba(0, 0, 0, 0) 4%,
+    rgba(0, 0, 0, 0.92) 100%
+  );
+
+  /* ---- Radii — every control is a pill, every container is soft -------- */
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem; /* cards, media wells */
+  --radius-lg: clamp(1rem, 0.7519vw + 0.8233rem, 1.5rem);
+  --radius-xl: clamp(1.5rem, 1.5038vw + 1.1466rem, 2.5rem); /* big panels */
+  --radius-pill: 999px; /* buttons, chips, inputs, nav dots — no exceptions */
+
+  /* ---- Fluid spine: every clamp is keyed to this viewport band ---------- */
+  --viewport-min: 23.5; /* rem — 376px */
+  --viewport-max: 90; /* rem — 1440px */
+  --main: 90rem; /* max page width */
+  --site-margin: clamp(1.25rem, 4.1353vw + 0.2782rem, 4rem); /* 20 → 64px */
+  --content-inset-x: clamp(1.5rem, 0.7519vw + 1.3233rem, 2rem); /* 24 → 32px */
+  --content-width: calc(100% - (var(--site-margin) + var(--content-inset-x)) * 2);
+  --section-y: clamp(3rem, 4.812vw + 1.8692rem, 6.2rem); /* 48 → 99px */
+  --section-y-sm: calc(var(--section-y) / 2);
+  --control-height: 3rem;
+
+  /* ---- Spacing ramp (fluid above s3 — the gaps grow with the page) ----- */
+  --s1: 0.25rem;
+  --s2: 0.5rem;
+  --s3: 0.75rem;
+  --s4: clamp(0.75rem, 0.3759vw + 0.6617rem, 1rem);
+  --s5: clamp(1rem, 0.3759vw + 0.9117rem, 1.25rem);
+  --s6: clamp(1.25rem, 0.3759vw + 1.1617rem, 1.5rem);
+  --s7: clamp(1.5rem, 0.7519vw + 1.3233rem, 2rem);
+  --s8: clamp(2rem, 0.7519vw + 1.8233rem, 2.5rem);
+  --s9: clamp(2.5rem, 1.5038vw + 2.1466rem, 3.5rem);
+  --s10: clamp(3rem, 1.5038vw + 2.6466rem, 4rem);
+  --s11: clamp(3.5rem, 2.2556vw + 2.9699rem, 5rem);
+  --s12: clamp(4.5rem, 2.2556vw + 3.9699rem, 6rem);
+  --s13: clamp(5rem, 3.7594vw + 4.1165rem, 7.5rem);
+
+  /* ---- Type ------------------------------------------------------------ */
+  --font-serif: "Financier Display", Georgia, "Times New Roman", serif;
+  --font-sans: "FT Base", system-ui, -apple-system, sans-serif;
+  --font-mono: "Fragment Mono", ui-monospace, Menlo, monospace;
+
+  /* The serif ships ONE weight. Do not add 400/500/700 — see Bans. */
+  --weight-serif: 300;
+  --weight-light: 300; /* body copy */
+  --weight-regular: 400; /* mono furniture only */
+  --weight-semibold: 600; /* labels, buttons, stats, emphasis */
+
+  --t-display: clamp(3.375rem, 4.3233vw + 2.359rem, 6.25rem); /* 54 → 100 */
+  --t-h1: clamp(3.5625rem, 2.1617vw + 3.0545rem, 5rem); /* 57 → 80 */
+  --t-h2: clamp(3rem, 1.5038vw + 2.6466rem, 4rem); /* 48 → 64 */
+  --t-h3: clamp(2.125rem, 1.0338vw + 1.882rem, 2.8125rem); /* 34 → 45 */
+  --t-h4: clamp(1.6875rem, 0.6579vw + 1.5329rem, 2.125rem); /* 27 → 34 */
+  --t-h5: clamp(1.375rem, 0.188vw + 1.3308rem, 1.5rem); /* 22 → 24 */
+  --t-h6: clamp(1.1875rem, 0.094vw + 1.1654rem, 1.25rem); /* 19 → 20 */
+  --t-stat: clamp(3rem, 1.5038vw + 2.6466rem, 4rem); /* 48 → 64 */
+  --t-quote: clamp(1.6875rem, 1.2218vw + 1.4004rem, 2.5rem); /* 27 → 40 */
+  --t-xxl: clamp(1.8125rem, 0.4699vw + 1.7021rem, 2.125rem);
+  --t-xl: clamp(1.125rem, 0.5639vw + 0.9925rem, 1.5rem);
+  --t-lg: clamp(1.125rem, 0.188vw + 1.0808rem, 1.25rem);
+  --t-md: clamp(1rem, 0.188vw + 0.9558rem, 1.125rem);
+  --t-body: 1rem;
+  --t-sm: 0.875rem;
+  --t-xs: 0.75rem;
+  --t-tagline: clamp(0.75rem, 0.3759vw + 0.6617rem, 1rem);
+  --t-mono: 0.6875rem; /* 11px — motion furniture */
+  --t-mono-sm: 0.625rem; /* 10px */
+
+  /* Two line heights and nothing between them. */
+  --lh-display: 0.9; /* the light serif closes up — needs its own leading */
+  --lh-head: 1; /* h2/h3 sit solid */
+  --lh-card-title: 1.15;
+  --lh-body: 1.5; /* every sans size, no exceptions */
+
+  /* Tracking is normal everywhere except these two. */
+  --track-stat: -0.031em;
+  --track-mono: 0.1em;
+  --track-mono-sm: 0.07em;
+
+  /* ---- Elevation: three shadows, one job each -------------------------- */
+  --shadow-panel: 12px 32px 80px 0 rgba(42, 43, 47, 0.1); /* the hero panel */
+  --shadow-lift: 0 4px 30px 0 rgba(0, 0, 0, 0.1); /* a card pulled forward */
+  --shadow-cta: 0 2px 12px 0 rgba(0, 0, 0, 0.1); /* a button on photography */
+  --shadow-float: 1.6px 1.6px 8px 0 rgba(0, 0, 0, 0.16); /* glass control */
+
+  /* ---- Motion ---------------------------------------------------------- */
+  --motion-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-quick: 0.16s; /* control colour/opacity */
+  --dur-base: 0.2s; /* the default */
+  --dur-soft: 0.24s; /* cards, media swaps */
+  --dur-slow: 0.3s; /* nav and header */
+  --marquee-cycle: 48s; /* the logo rail, linear, infinite */
+
+  /* ---- Fluted-glass hero (the signature effect; read by the shader) ----- */
+  --flute-freq: 82.8; /* ribs across the frame — desktop */
+  --flute-freq-mobile: 64.8;
+  --flute-angle: 0.36rad; /* ribs lean ~21° — desktop */
+  --flute-angle-mobile: -0.11rad;
+  --flute-amp: 0.0255; /* refraction offset */
+  --flute-drift: 0.543; /* rib travel per second */
+  --flute-chromatic: 0.04; /* edge colour split */
+  --flute-feather: 0.63; /* rib softness */
+  --flute-bevel: 0.0095;
+  --flute-bevel-width: 0.195;
+  --flute-highlight: 0.02;
+  --flute-shadow: 0.02;
+  --flute-highlight-focus: 10;
+  --flute-zoom-from: 1.08; /* slow push — never starts at 1 */
+  --flute-zoom-to: 1.1;
+  --flute-scrim: #2a2b2f; /* the ink, at 70%, scaled 3.05 × 0.91 */
+  --flute-scrim-opacity: 0.7;
+  --flute-overlay-opacity: 0.12; /* black, multiply */
+  /* One slide = 7.2s: hold fluted → reveal → run clear → cross to the next */
+  --flute-dur-fluted: 750ms;
+  --flute-dur-reveal: 2700ms;
+  --flute-dur-clear: 2250ms;
+  --flute-dur-cross: 1500ms;
+
+  background-color: var(--bg);
+  color: var(--ink);
+  color-scheme: light;
+}
+
+/* The hero effect is a bonus, never a dependency: at reduced motion the canvas
+   is REMOVED and the still image underneath is the hero. Do not slow it down —
+   a slow refraction is still refraction. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-quick: 0s;
+    --dur-base: 0s;
+    --dur-soft: 0s;
+    --dur-slow: 0s;
+    --marquee-cycle: 0s;
+  }
+}

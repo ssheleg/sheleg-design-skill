@@ -12,8 +12,11 @@ not from many animations. If the project has the full skill installed
 and the chosen style pack in `styles/` first (instrument-console — dark
 console; editorial-luxury — warm editorial; workbench — quiet light/dark
 product UI for dashboards and tools, used standalone without the cinematic
-motion layer); otherwise follow the contract below (self-contained on
-purpose).
+motion layer; briefing-room — dark 16:9 presentation deck, standalone, slides
+never animate; atrium — warm cream consumer-health field, one terracotta
+accent, fluted-glass hero; orchard — friendly consumer biotech, oat slabs,
+sage brand and one candy-orange action); otherwise follow the contract below
+(self-contained on purpose).
 
 ## Five principles, in order
 

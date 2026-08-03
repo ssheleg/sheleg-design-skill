@@ -4,6 +4,87 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-08-03
+
+Two packs for the warm consumer register, extracted from two production sites
+that solve the same brief in opposite ways — one premium and editorial, one
+friendly and modular. Between them they replace the reflex a generated wellness
+page falls into (a gradient, three cards, a stock photo of someone stretching).
+
+### Added
+
+- **Fifth style pack: `atrium`** — the warm consumer register, extracted from
+  **functionhealth.com** (2026) by reading its live token layer and computed
+  styles. The skill could already do dark-technical, editorial, product UI and
+  decks; it had no answer for *premium consumer health* — the page that has to
+  land a serious clinical claim without a sterile surface anywhere on it.
+
+  What it encodes: **one continuous cream field with no dark bands** (sections
+  are separated by a 48→99px rhythm and a change of layout, never by flipping
+  the background — the reflex that makes generated pages read as a stack of
+  slabs); a single terracotta accent `#B05A36`; a serif that ships **one
+  weight, 300**, set at `line-height: 0.9`, whose entire emphasis vocabulary is
+  *one italic accent phrase* per heading; a sans with only 300 and 600 in it;
+  mono reserved for exactly one component; a fully fluid `clamp()` scale keyed
+  to a single 23.5rem→90rem band, so the page resizes as one object; hairline
+  and cream-on-cream steps instead of shadows, with three shadows that each
+  have one job; and `999px` on everything clickable.
+
+  Its signature motif is the **fluted-glass hero**: a WebGL shader refracting
+  photography through reeded-glass ribs, shipped with the real numbers (82.8
+  ribs at `0.36rad`, amplitude `0.0255`, feather `0.63`, a 7.2s reveal cycle,
+  the ink scrim at 70%) over a still-image fallback. Its lifecycle is the pack's
+  most useful lesson: context-lost, tab-hidden, reduced-motion and no-WebGL are
+  four branches that ship in the same commit as the effect.
+
+  It also promotes something the reference does that most sites do not: **every
+  autonomous motion carries a visible `PAUSE MOTION` control**, and the pack
+  bans shipping one without it — `prefers-reduced-motion` alone does not
+  discharge the obligation.
+
+  Three measured contrast traps are carried as Gotchas rather than left for an
+  audit: the accent is AA on the field (4.6:1) but **fails on the cream surface**
+  (4.2:1); `--good`/`--info` are fills at 2.1:1 and 3.4:1 and may never be text;
+  and the hairline is 1.6:1 — decorative strength, not affordance strength, so
+  controls need `--line-strong`, `--line-ink` or `--accent` instead.
+- **Sixth style pack: `orchard`** — the same buyer, the opposite voice,
+  extracted from **gutgutgoose.com** (2026). Where `atrium` is one continuous
+  field, `orchard` is **a stack of rounded slabs**: every section is a card with
+  its own fill (oat, sage, cacao), no two adjacent slabs repeat, and the field
+  shows around all of them. Its whole layout rhythm is four numbers — `64px 24px`
+  slab padding, `44px` between blocks, `55px` between slabs, `36px` card padding.
+
+  Three colours with fixed jobs — oat is the paper, sage is the brand, candy
+  orange is the verb — and the pack's most useful rule is that **two of them are
+  not text colours**. A rounded geometric display at Medium carries all
+  hierarchy, so body weight never goes above 500; the price is deliberately set
+  in the body face, because a rounded display numeral reads as branding and a
+  price has to read as a fact.
+
+  Its signature material is **light, not shadow**: the "candy pill" is a flat
+  fill wearing two inset white hairlines (`.8` top, `.35` bottom) plus an
+  ambient glow **in the button's own hue** — the only real drop shadow in the
+  system. Its one cinematic move is a **word-by-word scrubbed headline** (opacity
+  only, ~12% of hero scroll per word) beside a sticky visual column, and that is
+  the entire motion budget.
+
+  The reference is strong on composition and weak on contrast, so the pack
+  carries the three measured failures with fixes from inside its own palette:
+  the CTA label is **2.8:1** (white on orange) and must use the cacao ink for
+  **5.6:1**; body copy on the sage slab is **3.4:1** — and oat on sage is
+  **2.96:1**, under even the large-text floor — so small text moves to
+  `--primary-deep` at **4.9:1**; and the 60% ink is **4.1:1** on oat, a caption
+  colour only. It also ships the `prefers-reduced-motion` branch the reference
+  has nowhere on the site.
+- `scenarios.md` gains T11 and T12 for the two consumer registers.
+
+### Changed
+
+- README, `SKILL.md`, `bin/cli.js`, `install.sh` and the standalone Cursor rule
+  route and ship both new packs; the stale "three style packs" counts in the
+  README are corrected to six, and the Cursor rule — which had listed only three
+  packs and never gained `briefing-room` — now names all six.
+
 ## [1.3.4] - 2026-07-30
 
 ### Added

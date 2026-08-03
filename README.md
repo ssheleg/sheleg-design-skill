@@ -10,7 +10,7 @@ nothing. Ask it for a dashboard and you get a different flavor of the same
 problem — invented colors, six accent hues, dark mode retrofitted later.
 
 This skill is the taste layer. It gives a coding agent **one motion
-methodology** for cinematic, scroll-driven pages and **three locked style
+methodology** for cinematic, scroll-driven pages and **six locked style
 packs** with ready-made design tokens, so what it builds reads as one system
 instead of a pile of effects.
 
@@ -46,6 +46,8 @@ voice is the timeline and slides therefore never animate).
 | `editorial-luxury` | warm cream + espresso ink, sage accent, Fraunces/Newsreader, dossier motifs | editorial / research / premium B2B |
 | `workbench` | neutral grays, borders as elevation, one blue accent, mono data, light + dark twins | dashboards, admin, internal & dev tools |
 | `briefing-room` | dark 16:9 deck: one blue hue top to bottom (OKLCH), mono slide furniture, 1-bit dithered art, claims as titles | investor & board decks, technical briefings, talks published as a page |
+| `atrium` | warm cream daylight field with no dark bands, one terracotta accent, light serif with italic asides, fluted-glass hero over photography | consumer health, longevity & diagnostics, wellness, premium care, high-trust DTC |
+| `orchard` | warm oat field of rounded slabs, sage brand + one candy-orange action, rounded geometric display, soft-3D pills built from inset light | friendly consumer biotech, DTC wellness, testing kits & supplements |
 
 Each pack locks palette, type, texture, motion tokens, signature motifs and
 bans — and ships a `tokens/<pack>.css` to copy verbatim, so the agent never
@@ -114,7 +116,7 @@ skills.
 | `SHELEG_DESIGN.md` | The full reference: architecture, layer-by-layer mechanics with code, the exact morph math, the DOM↔WebGL projection bridge, a build-from-scratch recipe, and why each piece works |
 | `FIGMA_BRIDGE.md` | The design↔code contract: how a pack's tokens map onto Figma variable collections and modes, how to implement a design without importing raw values, and what cannot cross the border |
 | `AI_PRODUCT_PATTERNS.md` | The surfaces a model drives: the five states of a call, streaming instead of spinners, latency, provenance and uncertainty, agent confirmations, and the bans that keep it honest |
-| `styles/*.md` | The three style packs — palette, type, texture, motion tokens, motifs, bans, and the traps each one carries |
+| `styles/*.md` | The six style packs — palette, type, texture, motion tokens, motifs, bans, and the traps each one carries |
 | `styles/tokens/*.css` | The ready-made token layer per pack, copied verbatim instead of transcribed (workbench ships a light `:root` plus a `data-theme="dark"` twin) |
 | `styles/STYLE_PACK_TEMPLATE.md` | The pack contract as a skeleton, so a new style is authored against the same headings rather than improvised |
 

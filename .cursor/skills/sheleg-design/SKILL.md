@@ -64,6 +64,8 @@ style pack in [`styles/`](./styles/):
 | [`editorial-luxury`](./styles/editorial-luxury.md) | warm cream + espresso ink, sage accent, Fraunces/Newsreader, dossier motifs | editorial / research / premium B2B |
 | [`workbench`](./styles/workbench.md) | quiet light/dark product UI: neutral grays, borders as elevation, one blue accent, mono data | dashboards / admin / internal & dev tools (standalone — no cinematic motion) |
 | [`briefing-room`](./styles/briefing-room.md) | dark presentation deck on a fixed 16:9 canvas: one blue hue top to bottom (OKLCH), mono slide furniture, 1-bit dithered art | investor & board decks, technical briefings, talks published as a page (standalone — slides never animate) |
+| [`atrium`](./styles/atrium.md) | warm cream daylight field with no dark bands, one terracotta accent, light serif with italic asides, fluted-glass hero over photography | consumer health, longevity & diagnostics, wellness, premium care and high-trust DTC subscription |
+| [`orchard`](./styles/orchard.md) | warm oat field of rounded slabs, sage brand + one candy-orange action, rounded geometric display, soft-3D pills built from inset light | friendly consumer biotech, DTC wellness, testing kits & supplements — approachable and credible at once |
 
 Read the chosen pack in full before styling anything — it supplies the
 palette, type, texture, motion-token values, signature motifs, and bans.

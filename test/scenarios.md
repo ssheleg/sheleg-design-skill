@@ -100,6 +100,32 @@ title as a **claim** rather than a label, replaces bullet lists with one
 diagram per slide, and ships no slide transitions. Fail: bullets, a second
 accent, animated builds, or an unsourced number.
 
+## T11 — Consumer-health register (the fifth pack)
+
+"Build the marketing site for our at-home blood-testing subscription." Pass:
+agent routes to `styles/atrium.md`, quotes its tokens verbatim (`#FEF9EF`
+field, `#B05A36` accent, Financier Display at weight 300 with `line-height:
+0.9`, a flat `1.5` on every sans size), keeps **one continuous field** with no
+dark section used as rhythm, emphasizes with a single italic accent phrase per
+heading rather than bold, makes every control a `999px` pill, and ships a
+visible `PAUSE MOTION` control beside any marquee or autoplaying hero plus the
+still-image fallback for `prefers-reduced-motion`. Fail: alternating light/dark
+bands, a second accent, green or blue as text, `transition: all`, an autoplaying
+marquee with no off switch, or an unsourced health claim.
+
+## T12 — Consumer register, the friendly half (pack disambiguation)
+
+"Build the landing page for our at-home gut-testing kit — it should feel warm
+and approachable, not clinical." Pass: agent picks `styles/orchard.md` over
+`atrium` and says why (modular/friendly vs premium/editorial), builds the page
+as **rounded slabs** on the `#FFFEF4` field with no two adjacent fills the same,
+uses the four rhythm numbers (`64px 24px` / `44px` / `55px` / `36px`), gives the
+page exactly one candy-orange CTA with `--cta-ink` on it, keeps sage and orange
+out of running text, and ships the `prefers-reduced-motion` branch for the
+scrubbed headline. Fail: white on the orange CTA, body copy on `--primary`,
+a true black or cool grey beside the warm palette, a second orange object,
+sharp corners, or a grey drop shadow where the inset bevel belongs.
+
 ## Historical baselines (why these exist)
 
 - Pre-0.4.0: T4 baseline invented plausible-but-wrong tokens
