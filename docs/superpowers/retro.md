@@ -4,7 +4,7 @@ The project's standing instructions and run log for task-pipeline. Stage 0
 reads this file **in full**; stage 10 prunes, stamps, and writes an entry only
 if the run diverged.
 
-## Standing instructions (cap: 10 · current: 3)
+## Standing instructions (cap: 10 · current: 4)
 
 Each one binds every run in this project until it is retired. Retire when it
 became a mechanical check, when the paths it names are gone, or when it has not
@@ -29,6 +29,14 @@ fired in five run stamps.
    directory, no register — must be re-checked before they are acted on. In a
    shared tree those files can appear an hour into the run.
    *(Last fired: 2026-08-04 · `491d422`)*
+
+4. **A scenario that asserts disambiguation must ship its negative branch.**
+   "Does the agent pick the new pack?" cannot fail in the interesting
+   direction — an agent that picks the newest pack for everything passes it.
+   Every routing test in `test/scenarios.md` that claims pack A is
+   distinguishable from pack B needs a second prompt that must still choose B,
+   run in a separate fresh context. T13 is the shape to copy.
+   *(Last fired: 2026-08-04 · `c324d1b`)*
 
 ## Run stamps
 

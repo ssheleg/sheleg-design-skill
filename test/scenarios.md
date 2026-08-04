@@ -152,6 +152,15 @@ names the distinction (live changing state → the console register). Fail:
 routing to `field-notes` because the audience is technical, which is the exact
 over-generalisation this pair exists to catch.
 
+**Result, 2026-08-04 (`c324d1b`): GREEN on both branches.** Two subagents in
+separate fresh contexts. T13a selected `field-notes`, named `instrument-console`
+as the alternative, applied the dial-vs-source test unprompted, quoted five
+tokens verbatim, and caught three bans it said it would otherwise have broken
+(a particle field, a second dark section, a confidence percentage). T13b stayed
+on `instrument-console` and named `field-notes` as the alternative it rejected,
+citing the same test in reverse. The over-generalisation branch did **not**
+fire.
+
 ## Historical baselines (why these exist)
 
 - Pre-0.4.0: T4 baseline invented plausible-but-wrong tokens
