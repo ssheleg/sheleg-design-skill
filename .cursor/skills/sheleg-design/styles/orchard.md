@@ -193,6 +193,12 @@ button.
 
 ## Bans
 
+- Status carried by hue alone. Success, warning, danger and info always
+  ship with an icon or a word beside the fill — **status is never by
+  colour alone**. Measured off a production reference, several of these
+  pairs sit inside a dichromat's confusion line; re-stepping them would
+  invent a colour this pack does not own, so the second signal carries
+  the meaning instead.
 - Orange or sage as **text**; white text on the orange CTA; white text on
   `--primary` at body size (use `--primary-deep`).
 - A true black, a cool grey, or any Framer/Tailwind default neutral

@@ -128,6 +128,12 @@ only — never body copy.
 
 ## Bans
 
+- Status carried by hue alone. Success, warning, danger and info always
+  ship with an icon or a word beside the fill — **status is never by
+  colour alone**. Measured off a production reference, several of these
+  pairs sit inside a dichromat's confusion line; re-stepping them would
+  invent a colour this pack does not own, so the second signal carries
+  the meaning instead.
 - Bullet lists as the default slide layout; stock photography; illustrations
   with a mascot; icon grids where a diagram belongs.
 - Gradients as decoration (the veil and the one accent glow are the exceptions,

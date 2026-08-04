@@ -1,7 +1,7 @@
 {
   "name": "sheleg-design-skill",
   "version": "1.4.0",
-  "description": "Design taste as an installable agent skill. Cinematic scroll-driven landing pages built on one scroll clock and layered degrade-to-calm motion, plus three locked style packs with ready-made design tokens — instrument-console (dark), editorial-luxury (warm), workbench (light/dark product UI for dashboards, admin and dev tools). Works with Cursor, Claude Code and any agent that reads a SKILL.md.",
+  "description": "Design taste as an installable agent skill. Cinematic scroll-driven landing pages built on one scroll clock and layered degrade-to-calm motion, plus three locked style packs with ready-made design tokens \u2014 instrument-console (dark), editorial-luxury (warm), workbench (light/dark product UI for dashboards, admin and dev tools). Works with Cursor, Claude Code and any agent that reads a SKILL.md.",
   "bin": {
     "sheleg-design-skill": "bin/cli.js"
   },
@@ -18,9 +18,10 @@
     "node": ">=16"
   },
   "scripts": {
-    "test": "python3 test/validate.py && node --check bin/cli.js",
-    "validate": "python3 test/validate.py",
-    "smoke": "node bin/cli.js --help"
+    "test": "python3 test/validate.py && python3 test/validate_palette.py && node --check bin/cli.js",
+    "validate": "python3 test/validate.py && python3 test/validate_palette.py",
+    "smoke": "node bin/cli.js --help",
+    "palette": "python3 test/validate_palette.py"
   },
   "keywords": [
     "skill",

@@ -90,6 +90,12 @@ How this pack rides the SHELEG motion layer:
 
 ## Bans
 
+- Status carried by hue alone. Success, warning, danger and info always
+  ship with an icon or a word beside the fill — **status is never by
+  colour alone**. Measured off a production reference, several of these
+  pairs sit inside a dichromat's confusion line; re-stepping them would
+  invent a colour this pack does not own, so the second signal carries
+  the meaning instead.
 - One accent hue — no second color except `--ok`/`--warn` status semantics.
 - No gradient text, no glassmorphism/backdrop blur, no purple/neon
   rainbow, no colored shadows besides `--accent-glow`.

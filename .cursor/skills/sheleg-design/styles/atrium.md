@@ -225,6 +225,12 @@ the stat dividers.
 
 ## Bans
 
+- Status carried by hue alone. Success, warning, danger and info always
+  ship with an icon or a word beside the fill — **status is never by
+  colour alone**. Measured off a production reference, several of these
+  pairs sit inside a dichromat's confusion line; re-stepping them would
+  invent a colour this pack does not own, so the second signal carries
+  the meaning instead.
 - A dark section used as a rhythm device; alternating light/dark bands; any
   second inverted surface beyond the one the page has earned.
 - A second accent hue. Green, blue and red are semantic fills with fixed
