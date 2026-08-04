@@ -21,6 +21,14 @@ jobs:
           if python3 /tmp/corrupted/test/validate.py; then
             echo "validator failed to fail on a version mismatch" >&2; exit 1
           fi
+      - name: Palette gate (claimed ratios re-derived; separation under CVD)
+        run: python3 test/validate_palette.py
+      - name: Slop lint (the skill is held to its own bans)
+        run: python3 test/sloplint.py
+      - name: Gate self-tests (both must be watched failing on a planted defect)
+        run: |
+          python3 test/validate_palette.py --self-test
+          python3 test/sloplint.py --self-test
       - name: CLI syntax check
         run: node --check bin/cli.js
       - name: CLI smoke test (npx channel installs the whole bundle)
