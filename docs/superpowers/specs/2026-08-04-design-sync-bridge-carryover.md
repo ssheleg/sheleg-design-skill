@@ -15,6 +15,9 @@
 | 7 | 0 Grill | This repo is `ungated`: no lease mechanism, no id reservation, despite agent-sync v1.4.3 being installed on the machine | out of scope for this run — it is a repo-wide policy change, not part of the design-sync bridge | — | **backlog — recommended**: `/agent-sync` init for this repo, or two agents keep colliding |
 | 8 | 0 Grill | ADR numbering across concurrent runs is unarbitrated; this run took 0002 by inspection, not by reservation | same root cause as row 7 | REQ-013 | re-checked at stage 9 (A7) |
 
+| 9 | 1 Docs | D5 ("plain React, no build step, no dependencies") was refuted by the converter's own requirements | the guess was cheap and wrong; corrected as D11 before any code was written, which is where a stage-1 gate is supposed to catch it | REQ-004, REQ-007 | resolved — D11 |
+| 10 | 1 Docs | The `/design-sync` flow's own verification needs Playwright + chromium (~200 MB) and the skill asks before installing | not this run's decision to make silently | REQ-009 | asked at stage 6, before the live push |
+
 ## Counts
 
-`open: 8 · unresolved: 0 · dropped: 0` — printed beside every gate verdict from here on.
+`open: 9 · unresolved: 0 · dropped: 0` (row 9 resolved same-stage) — printed beside every gate verdict from here on.

@@ -124,7 +124,8 @@ note at stage 9.
 | D2 | What crosses into claude.ai/design | the **static** half of a pack only — motion stays code-side, exactly as in `FIGMA_BRIDGE.md` §3 | claude.ai/design builds screens, not scroll narratives; particle formations and the fluted-glass shader have no component form |
 | D3 | Kit composition | fixed 6-atom spine with **identical names and props across all six kits** + 3–5 pack signature components | Direct application of the recorded lesson that names are an interface across packs (`--accent-dim` → `--accent-weak`): switching packs must swap identity, not API |
 | D4 | Gate style | tool-presence gated, like Lazyweb — never mandatory | Cursor has no `/design-sync`; a hard requirement would break a shipping channel |
-| D5 | React flavor | plain React + plain CSS + `className`, no build step, no dependencies | Forced by the repo: zero-dep CLI, POSIX installer, stdlib validator. Also keeps `_vendor/` empty in the upload. |
+| D5 | React flavor | ~~plain React + plain CSS + `className`, no build step, no dependencies~~ **REFUTED at stage 1 — see D11** | The guess was that a bare package needs no build. The converter reads the package's **built `dist/` entry and its `.d.ts` tree**, runs esbuild + ts-morph, and requires `@types/react` for prop extraction. A no-build kit falls to the documented last-resort "synth entry from `src/`", whose own text says "`.d.ts` contracts will be weaker; recommend adding a build" — and the `.d.ts` **is** what the design agent codes against. |
+| D11 | React flavor, corrected | React 18+ **with a real build** producing `dist/` + `.d.ts`; `react`/`react-dom` as peer deps, `typescript` + a bundler + `@types/react` as dev deps — scoped to `kits/`, never to the skill bundle | Grounded in the converter's own requirements (stage 1). ADR-0002 already isolates `kits/` from the bundle and from every installer, so the repo's zero-dependency promise survives where it was actually made: the installed skill. |
 | D6 | `styles.css` composition | `tokens/<pack>.css` verbatim, then a component layer beneath it | The pack contract already says *copy the token file verbatim, never transcribe*; byte-equality makes drift mechanically detectable |
 | D7 | Color-literal ban | no hex/rgb/hsl/oklch in a kit outside the token block; geometry literals **allowed** | Packs specify exact paddings and radii numerically but never a second palette; banning geometry would ban the pack's own spec |
 | D8 | Version | everything lands in **1.6.0**; `v1.4.0` is never tagged | Operator's call, revised at 19:20: 1.5.0 was claimed mid-grill by the concurrent run's `feat/audit-harvest-v1.5.0`. This run ships **after** it. Consequence recorded: the CHANGELOG keeps a 1.4.0 entry for a version that never shipped as a release. |
@@ -172,10 +173,54 @@ note at stage 9.
 
 | # | Assumption | How it's validated | If wrong |
 |---|---|---|---|
-| A1 | `/design-sync` accepts a **bare package** (`package.json` + `src/`) as source and its converter produces the upload layout — we author neither `_ds_bundle.js` nor the `@dsCard` markers by hand | **stage 1**, from the converter embedded in the binary; then proven at stage 6 by the live push | the kits gain whatever the converter actually requires (a `.design-sync/config.json`, authored previews); this is a spec change, not a scope change |
-| A2 | `@dsCard group` is derivable from config or authored previews rather than hand-written HTML | stage 1 | the kit gains `.design-sync/previews/<Name>.tsx` per component; cost is per-component, not structural |
+| A1 | `/design-sync` accepts a bare package and the converter produces the upload layout — we hand-author neither `_ds_bundle.js` nor the card HTML | **RESOLVED at stage 1: half right.** The converter does emit all of it ("You don't write any of these — the converter does"), but it builds from the package's compiled `dist/` + `.d.ts`, not from `src/`. → D11 | — |
+| A2 | `@dsCard group` is derivable from config rather than hand-written HTML | **RESOLVED at stage 1.** The group comes from the component's matched doc: a sibling `<Name>.md`/`.mdx` whose **frontmatter `category:`** sets `<group>`, discovered via `cfg.docsDir`. No HTML is ever hand-written. | — |
 | A3 | Creating a design-system project is org-visible; the operator will authorize a named one at stage 6 | asked at stage 6, before the call | no live proof; REQ-009 becomes a carry-over row and the format stays unproven — said plainly |
 | A4 | npm 2FA will let the release through | stage 7 | 1.5.0 strands on npm like 1.4.0 did; reported honestly, not papered over |
 | A5 | Six kits × ~10 components is authorable at production quality in this run | stage 5 progress | the spine ships for all six and signature components are cut per pack **with the operator's explicit agreement**, recorded — never silently |
 | A6 | The concurrent 1.5.0 run lands in `main` before this run's stage 7, and its edits to `test/validate.py`, `install.sh`, `SKILL.md`, `README.md`, `bin/cli.js` merge cleanly with this run's | re-read those six paths in `main` immediately before the merge (stage 5 integration row) | conflicts are resolved by hand at merge, against `main` as it then is — never by overwriting the other run's work. If it has not landed, stage 7 stops and asks. |
 | A7 | `docs/adr/0002` is still free when this run merges | stage 9 re-checks `docs/adr/` in `main` | this run's ADR is renumbered — it is unmerged, so moving it costs nothing and the never-renumber rule is not broken |
+
+## Stage 1 — grounded contracts (docs study)
+
+Source: the `/design-sync` skill and its **package source shape** sub-skill, extracted
+from the Claude Code binary (`/opt/homebrew/bin/claude`) — the skill ships inside the
+binary, so there is no file to fetch and no published doc. Working copies:
+`scratchpad/design-sync-SKILL.md`, `scratchpad/design-sync-package-shape.md`.
+Everything below is quoted behaviour, not recall.
+
+**What the converter does, so we don't.** "Per component, under
+`components/<group>/<Name>/`: `<Name>.jsx`, `<Name>.d.ts`, `<Name>.prompt.md`, and
+`<Name>.html` (the preview card). **You don't write any of these — the converter
+does.**" It also refuses to emit the adherence config, the manifest, a version file
+or a barrel — "the app's self-check regenerates those from the uploaded source."
+
+**What it needs from us.**
+
+| Need | Detail |
+|---|---|
+| A built package | "the built `dist/` entry + its `.d.ts` tree", found via `package.json` `module`/`main`/`exports['.']`. No build → a last-resort synth entry from `src/` with explicitly weaker `.d.ts`. |
+| React 18+ | both the bundle and the previews render through React; "a non-React DS has nothing for the claude.ai/design agent to build with" |
+| `@types/react` | required for prop extraction; without it inherited props vanish from the emitted `.d.ts` (`[DTS_REACT]`) |
+| `.design-sync/config.json` | only `pkg` + `globalName` are required. Relevant keys for a pack: `shape: "package"`, `buildCmd`, `cssEntry`, `tokensGlob`, `docsDir`, `readmeHeader`, `guidelinesGlob`, `provider`, `overrides.<Name>.cardMode` |
+| Grouping | frontmatter `category:` in the component's matched `<Name>.md` — that is the whole mechanism behind `@dsCard group` |
+| Previews | `.design-sync/previews/<Name>.tsx`, hand-authored, 2–6 named exports each (one export = one graded card cell). Absent → the **floor card**, which is "honest, not broken" |
+| Verification | `package-validate.mjs` screenshots every preview via Playwright + chromium (~200 MB if not cached); `--no-render-check` skips it and the run must say renders were never machine-checked |
+
+**Three findings that change the design rather than just informing it.**
+
+1. **A tokens-only sync is a supported first-class mode.** "Tokens-only DS (no
+   components): emits `styles.css` only with an empty-bodied `_ds_bundle.js`." A pack
+   can therefore reach claude.ai/design with **no React at all**.
+2. **`readmeHeader` is a slot for the pack's contract.** A repo-committed file is
+   "prepended verbatim to the generated README" that the design agent reads. This is
+   where a pack's bans, its one-accent rule and "motion does not cross" belong — the
+   rules travel, not just the values.
+3. **`guidelinesGlob` ships the pack markdown itself** into `guidelines/`. The pack
+   documents are already written; they are the highest-leverage payload in the whole
+   bridge and cost nothing to send.
+
+Taken together: the *rules* half of a pack is cheap, needs no build and no React, and
+is arguably worth more to a design agent than the components; the *components* half
+is the expensive part and is what D11 now prices honestly. Stage 2 chooses how far up
+that ladder this run goes.
