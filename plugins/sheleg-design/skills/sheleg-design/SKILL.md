@@ -78,10 +78,60 @@ palette, type, texture, motion-token values, signature motifs, and bans.
 Each pack ships a ready-made token layer in `styles/tokens/<pack>.css` —
 copy that file verbatim instead of transcribing tables. For a new style,
 copy [`styles/STYLE_PACK_TEMPLATE.md`](./styles/STYLE_PACK_TEMPLATE.md) and
-keep every heading — Register / Palette / Type / Texture & surface / Motion
-tokens / Signature motifs / Motion flavor (cinematic packs only) /
-Micro-interactions / Bans / Gotchas — then author its `tokens/<pack>.css` in
-the same change; never invent token values ad hoc.
+keep every heading — Register / Palette / Type / Texture & surface /
+Components / Hero / Responsive / Motion tokens / Signature motifs / Signature
+element / Motion flavor (cinematic packs only) / Micro-interactions / Bans /
+Gotchas — then author its `tokens/<pack>.css` in the same change; never invent
+token values ad hoc.
+
+## Calibration — three dials
+
+A pack answers *which register*. It does not answer *how far*. Two landing
+pages on the same pack, one for a regulated insurer and one for a design
+studio, are not the same page. Three dials carry that difference, and they are
+set once, out loud, before any layout exists.
+
+- **`DESIGN_VARIANCE`** 1–10 — 1 is perfect symmetry, 10 is deliberate
+  asymmetry and no two sections alike.
+- **`MOTION_INTENSITY`** 1–10 — 1 is static, 10 is cinematic and physical.
+- **`VISUAL_DENSITY`** 1–10 — 1 is a gallery wall, 10 is a cockpit.
+
+**Baseline `7 / 5 / 4`.** State the values and one line of reasoning before
+building; do not ask the user to edit a file, and do not silently drift from
+what you announced.
+
+### Reading them off the brief
+
+| The brief reads as | VARIANCE | MOTION | DENSITY |
+|---|---|---|---|
+| minimalist, calm, editorial, "quiet like Linear" | 5–6 | 3–4 | 2–3 |
+| premium consumer, brand-led, "feels expensive" | 7–8 | 5–7 | 3–4 |
+| agency, portfolio, experimental, award-bait | 9–10 | 7–9 | 3–4 |
+| landing / marketing page, no further signal | 7 | 5 | 4 |
+| product UI: dashboards, admin, internal tools | 4–5 | 2–3 | 6–8 |
+| trust-first: regulated, public-sector, clinical | 3–4 | 2–3 | 4–5 |
+| presentation deck | 5–6 | 1–2 | 3–4 |
+| redesign, preserve the existing identity | match | match +1 | match |
+| redesign, explicit overhaul | +2 | +2 | match |
+
+### How they bind
+
+- **The pack wins on values, the dials win on amount.** A dial never invents a
+  colour, a face, or a radius — those come from the pack's token layer. It
+  decides how much asymmetry the grid carries, how much of the page moves, and
+  how tightly it is packed.
+- **`MOTION_INTENSITY` is capped by the frequency table**, not the other way
+  round. A 9 on a settings screen still means the keyboard path does not
+  animate. Read [`MOTION_DOCTRINE.md`](./MOTION_DOCTRINE.md) §1 first; the dial
+  turns up what is left after that table has cut.
+- **Motion claimed is motion shown.** Above 4, the page actually moves —
+  entrance on the hero, reveal on key sections, response on the primary action.
+  A static page announcing 7 is broken. If working motion will not fit the
+  scope, drop the dial to 3 and ship a clean still page; never half-build motion
+  that stalls, cuts off, or jumps.
+- **A standalone pack pins its own ceiling.** `workbench` and `briefing-room`
+  are not cinematic; `MOTION_INTENSITY` above 3 on either is a misread of the
+  pack, not a bold choice.
 
 ## The craft bar — what "done" means, in order
 
