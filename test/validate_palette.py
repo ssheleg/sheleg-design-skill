@@ -402,7 +402,90 @@ def validate_theme(stem: str, label: str, decls: dict) -> None:
                     notes.append(f"  {stem} [{label}]: in the '{cluster[0]}' cluster, provenance present")
 
 
+def _reset():
+    global failures, notes, checks
+    failures, notes, checks = [], [], 0
+
+
+def self_test() -> int:
+    """Plant a defect of each class and require the matching check to fire.
+
+    Without this the suite proves only that the checks ran. It has to be shown
+    saying no, and shown staying quiet on clean input -- a validator that fails
+    nothing and a validator that fails everything are both green from here.
+
+    `_planted_` stems deliberately match no styles/*.md, so the "declare the
+    secondary encoding" and "prove it was read" branches see a pack that says
+    nothing, which is the state those checks exist to catch.
+    """
+    cases = [
+        (
+            "ink that misses WCAG AA on its own field",
+            {"--bg": "#ffffff", "--ink": "#a0a0a0", "--accent": "#8a2b1f", "--line": "#dddddd"},
+            "below WCAG AA",
+        ),
+        (
+            "a colour the parser cannot compute",
+            {"--bg": "#ffffff", "--ink": "#1a1a1a", "--accent": "color(display-p3 1 0 0)",
+             "--line": "#dddddd", "--surface2": "#eeeeee"},
+            "cannot compute",
+        ),
+        (
+            "two semantic states rendered in one colour",
+            {"--bg": "#ffffff", "--ink": "#1a1a1a", "--line": "#dddddd",
+             "--good": "#2f7d4f", "--danger": "#2f7d52"},
+            "two semantic states in one colour",
+        ),
+        (
+            # Green and red are far apart at full colour and collapse under
+            # deuteranopia -- the textbook pair, and the reason this check exists.
+            "statuses a deuteranope cannot separate, with nothing declared",
+            {"--bg": "#ffffff", "--ink": "#1a1a1a", "--line": "#dddddd",
+             "--good": "#1f7a3d", "--danger": "#b3261e"},
+            "never by colour alone",
+        ),
+        (
+            "a generated-default palette with no provenance",
+            {"--bg": "#f4f1ea", "--ink": "#1a1a1a", "--accent": "#b5623f",
+             "--line": "#e0dcd2", "--surface": "#ffffff"},
+            "default cluster",
+        ),
+    ]
+    problems = []
+    for label, decls, expected in cases:
+        _reset()
+        validate_theme("_planted_", ":root", decls)
+        fired = [f for f in failures if expected in f]
+        print(f"  {'caught ' if fired else 'MISSED '} {label}")
+        if not fired:
+            problems.append(label)
+    _reset()
+    # One status token only: the pair checks have nothing to compare, so this
+    # case isolates "does the rest of the suite stay quiet on good input".
+    validate_theme(
+        "_planted_", ":root",
+        {"--bg": "#ffffff", "--ink": "#1a1a1a", "--accent": "#1f4f8a",
+         "--line": "#dddddd", "--surface": "#f2f2f2", "--good": "#1f7a3d"},
+    )
+    print(f"  {'quiet  ' if not failures else 'NOISY  '} a clean palette")
+    if failures:
+        problems.append("false positive on a clean palette: " + "; ".join(failures))
+    _reset()
+    if problems:
+        print("\nself-test FAILED: " + "; ".join(problems))
+        return 1
+    print("\nself-test OK — every check was watched failing against a planted defect")
+    return 0
+
+
 def main() -> int:
+    if "--self-test" in sys.argv[1:]:
+        return self_test()
+    for arg in sys.argv[1:]:
+        # An unknown flag silently running the normal pass is how a suite ends
+        # up reporting green for a self-test it never ran.
+        print(f"FAIL: unknown argument {arg!r} (expected --self-test or none)", file=sys.stderr)
+        return 2
     if not TOKENS.is_dir():
         print(f"FAIL: {TOKENS} is missing", file=sys.stderr)
         return 1
