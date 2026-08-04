@@ -56,16 +56,25 @@ PACK_SECTIONS = (
 #
 # The skeleton carries all thirteen from the moment it is widened -- a template
 # that teaches nine while the contract wants thirteen is worse than no template.
-# The per-pack gate stays at PACK_SECTIONS until every shipped pack is backfilled
-# from its live reference, then flips here. The interim is deliberate and
-# time-boxed: an author who fills the skeleton is already compliant, and no pack
-# is ever held to a section the skeleton does not teach.
-PACK_SECTIONS_WIDE = PACK_SECTIONS + (
+#
+# The six packs shipped before the widening stay on the nine. Backfilling them
+# honestly needs re-reading each pack's live reference, and three of them record
+# a product name where an address belongs, so three cannot be re-read at all.
+# Filling those sections from the token layer instead would be inventing values
+# with a citation attached -- the exact failure the pack layer exists to prevent.
+# Held rather than faked (operator, 2026-08-04).
+#
+# So the gate is all-or-nothing rather than staged. Nine are always required.
+# Touch one of the four widened sections and you owe all four -- which closes the
+# dead zone where a new pack copies the thirteen-heading skeleton, keeps the easy
+# nine, and still passes. There is no version of a pack that is half-widened.
+PACK_SECTIONS_WIDENED_ONLY = (
     "## Components",
     "## Hero",
     "## Responsive",
     "## Signature element",
 )
+PACK_SECTIONS_WIDE = PACK_SECTIONS + PACK_SECTIONS_WIDENED_ONLY
 
 failures = []
 checks = 0
@@ -305,6 +314,17 @@ def validate_skills():
         text = read(pack) or ""
         for section in PACK_SECTIONS:
             check(section in text, f"{rel}: missing required section '{section}'")
+        # All-or-nothing on the widened four. A pack that copied the current
+        # skeleton and kept only the cheap headings would otherwise pass while
+        # teaching the next author that the four are optional.
+        adopted = [s for s in PACK_SECTIONS_WIDENED_ONLY if s in text]
+        if adopted:
+            missing = [s for s in PACK_SECTIONS_WIDENED_ONLY if s not in text]
+            check(
+                not missing,
+                f"{rel}: half-widened pack -- carries {', '.join(adopted)} but not "
+                f"{', '.join(missing)}. The widened four ship together or not at all",
+            )
         check(
             (styles_dir / "tokens" / f"{pack.stem}.css").is_file(),
             f"{rel}: missing ready-made token layer styles/tokens/{pack.stem}.css",

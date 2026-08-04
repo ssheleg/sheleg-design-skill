@@ -158,14 +158,23 @@ Append-only. Any stage may add a row; nobody edits or deletes one.
 | 2 | 0 Grill | `design-sync` bridge brief | separate unbuilt brief; deliberately out of this run's scope | — | backlog |
 | 3 | 0 Grill | Entry documentation audit (`docs/DOCMAP.md`, decision register) | operator declined 2026-08-04; recorded, never re-asked | — | dropped (operator agreement) |
 | 4 | 6 Build | **M6 `field-notes` pack** | a concurrent run owns `feat/field-notes-pack` and had already authored the pack, its token layer, the manifests and the CHANGELOG entry. Building it here would collide | R17 | reassigned to that run |
-| 5 | 6 Build | **M5 backfill of `briefing-room`, `instrument-console`, `workbench`** | their `Origin:` names a product, not an address. The operator agreed to supply URLs; they had not arrived when the run reached the module | R15, R16 | **open — needs three URLs** |
-| 6 | 6 Build | **M5 backfill of `atrium`, `editorial-luxury`, `orchard`** | addressable, but backfilling three while leaving three behind ships two classes of pack — the shape the operator rejected at the grill. Held so all six move together | R15, R16 | **open — moves with row 5** |
-| 7 | 6 Build | **M7 `industrial-brutalist` pack** | no addressable production origin. The register was described from a third-party skill whose palette is synthesised, not measured; shipping it would be the invented-values failure the contract exists to prevent | R18 | **open — needs a reference site** |
-| 8 | 9 Release | **Version number, tag, GitHub release, npm publish** | a concurrent run holds 1.5.0. This branch ships its CHANGELOG under `## Unreleased` and takes a number when it merges. npm publish additionally needs the operator's 2FA | R21, R22 | **open — sequenced behind `feat/field-notes-pack`** |
+| 5 | 6 Build | **M5 backfill of all six packs** | three record a product name where an address belongs and cannot be re-read; the operator has no URLs (2026-08-04). Filling the four new sections from the token layer instead would be inventing values with a citation attached. Backfilling only the three addressable packs was rejected at the grill — it ships two classes of pack | R15, R16 | **dropped (operator agreement)** — contract closed by the all-or-nothing gate instead |
+| 6 | 6 Build | **M7 `industrial-brutalist` pack** | no addressable production origin; the operator has none (2026-08-04). The register was described from a third-party skill whose palette is synthesised, not measured — shipping it would be the invented-values failure the pack layer exists to prevent | R18 | **dropped (operator agreement)** |
+| 7 | 9 Release | **Version number, tag, GitHub release, npm publish** | a concurrent run holds 1.5.0. This branch ships its CHANGELOG under `## Unreleased` and takes a number when it merges. npm publish additionally needs the operator's 2FA | R21, R22 | **open — sequenced behind `feat/field-notes-pack`** |
 
 ```
-carry-over: 5 open · unresolved: 0 · dropped with agreement: 1 · reassigned: 1
+carry-over: 3 open · unresolved: 0 · dropped with agreement: 3 · reassigned: 1
 ```
+
+### How the contract closes without the backfill
+
+Dropping M5 left the widened four taught by the skeleton and required by
+nothing — a dead zone where a new pack copies the thirteen-heading template,
+keeps the cheap nine, and still passes the gate. That is resolved without any
+origin: the per-pack rule is **all-or-nothing**. Nine are always required; touch
+one of the widened four and all four are owed. The six legacy packs stay valid
+on nine, and no pack can ever be half-widened. Verified against a planted
+half-adoption, which the gate caught and then went quiet on revert.
 
 ## Coverage against the REQ table
 
@@ -177,11 +186,11 @@ carry-over: 5 open · unresolved: 0 · dropped with agreement: 1 · reassigned: 
 | R11 | **done** | `test/sloplint.py`, wired into `npm test`; planted defect caught in a real token layer, then silent on revert |
 | R12 | **done** | `test/validate_palette.py`, 162 checks, `--self-test` watches each check fail |
 | R13, R14 | **done** | contract widened to thirteen; template and both mirrors enforced |
-| R15, R16 | **open** | carry-over rows 5–6 |
+| R15, R16 | **dropped (operator agreement)** | carry-over row 5; contract closed by the all-or-nothing gate instead |
 | R17 | **reassigned** | carry-over row 4 |
-| R18 | **open** | carry-over row 7 |
+| R18 | **dropped (operator agreement)** | carry-over row 6 |
 | R19, R20 | **done** | depth model, `dataviz` handoff, `?variant=` in `SKILL.md`; asserted by `sloplint.py` |
-| R21, R22 | **open** | carry-over row 8 |
+| R21, R22 | **open** | carry-over row 7 |
 | R23 | **done** | `package.json` description corrected |
 
 Gate at close: `validate.py` **299** (floor was 272) · `validate_palette.py`
@@ -189,10 +198,10 @@ Gate at close: `validate.py` **299** (floor was 272) · `validate_palette.py`
 
 ## Blocked, waiting on the operator
 
-1. **Three URLs** — the origins of `briefing-room`, `instrument-console` and
-   `workbench`. Unblocks M5 entirely; the three addressable packs are held with
-   them on purpose.
-2. **One reference site** in the industrial/tactical register, or the explicit
-   decision to drop M7. A pack cannot be authored from a synthesised palette.
-3. **Merge order** — `feat/field-notes-pack` lands first and takes 1.5.0; this
+1. **Merge order** — `feat/field-notes-pack` lands first and takes 1.5.0; this
    branch rebases and takes the next number. npm publish needs 2FA at the end.
+
+Resolved 2026-08-04: the operator has no URLs for the three unaddressable packs
+and no reference site for the industrial register. Both modules are dropped by
+agreement rather than carried — a pack authored from values nobody can re-read
+would break the one promise the pack layer makes.

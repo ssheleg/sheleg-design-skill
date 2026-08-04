@@ -71,9 +71,26 @@ this branch takes whatever is free when it merges.
 
 ### Changed
 
+- **The pack section gate is all-or-nothing.** The nine original headings stay
+  required; adopt one of the widened four and all four are owed. The six packs
+  that shipped before the widening stay valid on nine — backfilling them
+  honestly needs re-reading each live reference, and three record a product name
+  where an address belongs, so they cannot be re-read at all. Filling those
+  sections from the token layer instead would be inventing values with a
+  citation attached, which is the failure the pack layer exists to prevent. The
+  rule closes the gap either way: no pack can be half-widened, so a new pack
+  cannot copy the thirteen-heading skeleton, keep the cheap nine and pass.
 - `npm test` now runs three gates, not one. `npm run selftest` runs the planted
   defects.
 - `package.json` described "three locked style packs" while six shipped.
+
+### Not shipped, deliberately
+
+- **An eighth `industrial-brutalist` pack.** The register is real and the set
+  lacks it, but the only description available carries a synthesised palette,
+  not one measured off a production site. Held rather than authored.
+- **A backfill of the six existing packs onto the widened contract.** Same
+  reason, from the other direction: three of them cannot be re-read.
 
 ## [1.4.0] - 2026-08-03
 
