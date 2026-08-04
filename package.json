@@ -18,10 +18,12 @@
     "node": ">=16"
   },
   "scripts": {
-    "test": "python3 test/validate.py && python3 test/validate_palette.py && node --check bin/cli.js",
-    "validate": "python3 test/validate.py && python3 test/validate_palette.py",
+    "test": "python3 test/validate.py && python3 test/validate_palette.py && python3 test/sloplint.py && node --check bin/cli.js",
+    "validate": "python3 test/validate.py && python3 test/validate_palette.py && python3 test/sloplint.py",
     "smoke": "node bin/cli.js --help",
-    "palette": "python3 test/validate_palette.py"
+    "palette": "python3 test/validate_palette.py",
+    "sloplint": "python3 test/sloplint.py",
+    "selftest": "python3 test/validate_palette.py --self-test && python3 test/sloplint.py --self-test"
   },
   "keywords": [
     "skill",

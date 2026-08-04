@@ -151,6 +151,72 @@ as a definition of done, in that order:
 5. **Consistency** — one ease, one duration set, one accent, one atom per job
    across every screen.
 
+## Scene depth — six layers
+
+A cinematic page is not flat content with motion on top; it is a scene, and a
+scene has depth. Assign every element a layer before writing any CSS. The
+common failure is not "too little animation" — it is everything sitting on one
+plane, which no amount of easing repairs.
+
+| Layer | What lives there | Treatment |
+|---|---|---|
+| 0 | field, background imagery | slight blur, lowest contrast, slowest parallax |
+| 1 | ambient texture: grain, gradient wash, mesh | fixed, `pointer-events: none`, never on a scroller |
+| 2 | structural furniture: rules, grid marks, section labels | no parallax; they anchor the grid |
+| 3 | the subject: product, hero artwork, the thing being sold | sharpest, largest, leads the motion |
+| 4 | content: type, cards, controls | full contrast; readability outranks depth |
+| 5 | overlays: nav, modals, cursor effects, scrims | above everything, documented z-index |
+
+Rules that hold in every pack:
+
+- **Three layers minimum per section.** Two is a flat page with a shadow.
+- **Depth comes from treatment, not just `z-index`** — blur, scale, contrast and
+  parallax rate together, or the layering reads as stacking.
+- **Layer 4 never trades contrast for atmosphere.** If the text needs the scrim,
+  the scrim is layer 3's problem.
+- **Decorative layers are `aria-hidden="true"`.** Depth is visual; it never
+  reaches a screen reader.
+- **Below `pointer: coarse`, collapse 0–2 toward the field.** Parallax on a
+  phone costs frames and buys nothing.
+
+## Charts and data — hand the pack to `dataviz`
+
+Do not restyle charts from the pack by hand, and do not let a chart library pick
+its own colours. The `dataviz` skill already owns chart form, colour roles and
+the runnable palette validation; a pack is the *parameter set* it consumes.
+
+| `dataviz` parameter | What the pack supplies |
+|---|---|
+| Ramps | the pack's tint/step scale (`--accent-tint` … `--accent-deep`) |
+| Categorical order | a fixed hue order drawn from the pack, assigned once, never cycled |
+| Sequential hue | the pack's single accent hue |
+| Diverging pair | two poles from the pack, with a neutral grey midpoint |
+| Status palette | `--good` / `--warning` / `--danger`, distinct from categorical |
+| Surfaces | `--bg` for light, the pack's dark field for dark |
+| Texture fill | the pack's grain or hatch, for the print and forced-colours case |
+
+Two rules survive the handoff unchanged: **never a dual-axis chart**, and
+**colour follows the entity, never its rank** — a filter that changes the series
+count must not repaint the survivors.
+
+## Choosing between packs — mount them, don't imagine them
+
+When more than one pack could carry a product, do not argue about it. Render
+them.
+
+Mount the candidate packs on **an existing, populated page** — real header,
+real data, real density — switched by a `?variant=<pack>` search parameter, and
+flip between them in the browser. Only the token layer changes; the markup
+stays.
+
+A throwaway route with placeholder content is a vacuum: every pack looks fine
+in it, which is precisely why it settles nothing. If there is genuinely no
+populated page yet, the choice is premature — build the page in the default
+pack and revisit.
+
+The comparison harness is scaffolding, not a deliverable: it comes out with the
+same change that records the decision.
+
 ## AI-driven product surfaces
 
 Designing AI products is now the third most in-demand skill in that same survey
@@ -227,3 +293,20 @@ per-user — keep it out of the repo).
 - Parallax on everything → nausea. At most one drifting figure per viewport.
 - Scrub on hero/entrances → motion feels unearned; reserve scrub for
   instruments.
+
+### Three looks that are defaults, not decisions
+
+Left to itself, generated design lands in one of three places, regardless of
+what the product is:
+
+1. **Warm cream field (near `#F4F1EA`) + high-contrast serif display +
+   terracotta accent.**
+2. **Near-black field + a single acid-green or vermilion accent.**
+3. **Broadsheet: hairline rules, zero border-radius, dense newspaper columns.**
+
+Each is legitimate for some brief — and each shows up whether or not the brief
+called for it, which is what makes it a default. This skill's answer is the
+same either way: **the values come from a pack extracted off a live reference,
+never from taste at the keyboard.** If a pack's field happens to sit near one of
+these, that is a measurement; if a page arrives at one without a pack, that is
+the default talking. Say which of the two it is out loud before shipping.
