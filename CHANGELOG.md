@@ -4,6 +4,77 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+The harvest of a 41-skill audit of the design skills installed on this machine.
+The finding was narrow and repeated everywhere: the skill specified *what a
+thing looks like* with real rigour and left *how much, how fast, and whether at
+all* to whoever happened to be typing. Three of those four are now numeric, and
+two of them are checked by a script.
+
+The version number is deliberately absent. A concurrent run holds the next one;
+this branch takes whatever is free when it merges.
+
+### Added
+
+- **`MOTION_DOCTRINE.md`** — the missing half of the motion story.
+  `SHELEG_DESIGN.md` says how motion is built; this says whether to build it.
+  Frequency decides first, and it overrules taste: anything a user meets a
+  hundred times a day does not animate, ever. Then the easing tree with
+  `ease-in` banned in UI and the reason stated, three named curves, a duration
+  table with a 300 ms ceiling, springs in Apple's notation, and interruptibility
+  as the actual argument for reaching for one. Then the forms that are defects
+  rather than preferences — scroll listeners, continuous input held in component
+  state, blur and grain on scrolling containers, easing under `scrub`,
+  `useEffect` where `useGSAP` belongs, and layout transforms silently erased by
+  animated ones. Closes on anti-drift: the tokens are right and the built page is
+  generic anyway, which happens at application time and so is named there.
+
+- **Three calibration dials** — `DESIGN_VARIANCE`, `MOTION_INTENSITY`,
+  `VISUAL_DENSITY`, baseline `7 / 5 / 4`, read off the brief from a table. A
+  pack answers *which register*; it never answered *how far*, which is how a
+  regulated insurer and a design studio came out of one pack looking alike. The
+  dials are deliberately weak where the pack is strong: no dial invents a
+  colour, a face or a radius, and `MOTION_INTENSITY` sits **under** the
+  frequency table rather than over it.
+
+- **A widened pack contract — nine headings to thirteen.** `Components`,
+  `Hero`, `Responsive` and `Signature element`. The packs were precise about
+  colour and motion and then went quiet exactly where implementations drift:
+  per-component states, the opening viewport, collapse behaviour, and the one
+  element a page is remembered by. The skeleton also now teaches concentric
+  radius arithmetic, a `Not for` line in `Register`, and that an origin nobody
+  can re-read is decorative.
+
+- **`test/validate_palette.py`** — the colour part is computable, so it is
+  computed. Claimed contrast ratios are re-derived from the hex and compared,
+  WCAG floors are enforced, and semantic colours are checked for separation in
+  OKLab under protanopia, deuteranopia and tritanopia. A pack may sit under the
+  floor only if it states out loud that colour is never the only carrier.
+
+- **`test/sloplint.py`** — the skill is held to its own bans. The token layers
+  and every fenced example are read for `100vh`, scroll listeners, bare
+  `ease-in`, transitions on layout properties and pure black fields; and the
+  tables the docs promise are asserted by string, so a rule cannot be deleted
+  without failing the build. Both scripts ship a `--self-test` that watches every
+  check fail against a planted defect — a green from a check nobody has seen say
+  no is not evidence.
+
+- **A six-layer scene depth model**, a **parameter handoff to the built-in
+  `dataviz` skill** instead of duplicating it, and a **`?variant=` procedure**
+  for choosing between packs by mounting them on a populated page rather than
+  arguing about them.
+
+- **The three generated looks that are defaults rather than decisions** —
+  recorded so a page that lands on one has to say whether that was a measurement
+  or the default talking.
+
+### Changed
+
+- `npm test` now runs three gates, not one. `npm run selftest` runs the planted
+  defects.
+- `package.json` described "three locked style packs" while six shipped.
+
 ## [1.4.0] - 2026-08-03
 
 Two packs for the warm consumer register, extracted from two production sites
