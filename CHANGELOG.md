@@ -4,6 +4,92 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-08-04
+
+The register the skill was missing for its own audience: a developer tool that
+does not live on a dark console. Six packs could dress a landing page, a
+dashboard, a deck and two kinds of consumer health, and none of them had an
+answer for open-source software sold on *being checkable* — which is most of
+the software the people using this skill actually build.
+
+### Added
+
+- **Seventh style pack: `field-notes`** — extracted from **graphify.com**
+  (2026) by reading its live computed styles: 92 declared custom properties,
+  the served `@font-face` set, every authored rule pulled out of the CSSOM, and
+  a contrast pass over all 38 colour pairs in the system. Warm off-white paper
+  with a green cast (`#F8F7F0`), near-black green-cast ink (`#16211B`, 15.4:1),
+  one rust accent (`#9A3F28`), and a complete dark twin.
+
+  Its defining composition is what separates it from every warm pack already
+  here: **the page is one continuous sheet ruled by a `1px` hairline.** Ten of
+  the reference's sixteen sections are divided by nothing but that line; three
+  add a 40% wash. Where `orchard` stacks discrete slabs and `atrium` runs a
+  continuous field that changes layout, this one draws a rule and keeps going.
+
+  The hero is the other half of the idea: not a dark band but a **dawn** —
+  eight stops from `#062A22` to the exact paper colour, so the dark has no
+  edge. Over it, an inline `feTurbulence` grain at `baseFrequency 0.82`, a
+  radial vignette, and an ambient layer that is **notation rather than
+  particles**: mathematical glyphs at 14% opacity, one at a time flipping to
+  the verified hue.
+
+  It also carries the two devices most worth stealing. **The numbered eyebrow**
+  — `〉 HOW IT WORKS [03/09]`, built from `::before`/`::after` on a `data-n`
+  attribute — makes a marketing page into a document with a table of contents.
+  And **printer's crop marks** at the four corners: eight 1px gradient arms,
+  `inset: 14px`, ink at 30%, desktop only. Both cost nothing and both state the
+  thesis that the page is a printed record.
+
+  Elevation is a **ring** (`0 0 0 1px var(--line)`), not a shadow; radii are a
+  proportional ramp off one `--radius`, so a hardcoded `12px` is banned; and
+  motion is two eases doing two jobs — `.15s` `cubic-bezier(.4,0,.2,1)` for
+  control state, `.5s` `cubic-bezier(.22,1,.36,1)` for scroll entry — with one
+  rule on top: **only the verified hue ever animates colour.** The rust never
+  moves, because a brand that animates stops reading as an identity and starts
+  reading as a status.
+
+  Four corrections to the reference ship with it, each measured. Its hero
+  accent phrase — the single most prominent piece of text on the site — runs
+  the light brand over the gradient at **2.29:1** at the top and **1.41:1** in
+  the middle; the pack adds `--brand-on-dark` `#CF7A52` (**4.82:1**) and bans
+  the other. Its `--verify` green is 3.2:1 on paper and its own
+  `--verify-foreground: #fff` is 3.4:1 on the green, so both are fills and the
+  labels take `-ink`. It sets `color-scheme` nowhere despite a complete dark
+  theme — the same trap that bit `workbench`. And it paints three unrelated
+  dark palettes (warm-brown theme, forest bands, navy terminal) plus an app
+  layer whose neutrals drift browner than its page layer and whose ring is a
+  violet used nowhere else; the pack reconciles all of it to the forest family
+  and the page's own neutrals.
+
+  The pack ships that app layer deliberately, with a routing rule rather than a
+  turf war: `workbench` stays the default for neutral product UI, which should
+  disappear; `field-notes` is for a product whose console must read as the same
+  paper as its site.
+
+- **`AI_PRODUCT_PATTERNS.md` gains the provenance pattern** (§4), promoted out
+  of the pack because it is the reference's one genuinely transferable
+  invention and a direct extension of the file's existing *honest state* rule:
+  **label the part, not the whole.** A single confidence number on a mixed
+  answer hides exactly the clause the reader needed to check, so the pattern
+  attaches a small set of named states — `[EXTRACTED]` · `[INFERRED]` ·
+  `[AMBIGUOUS]` — inline to the span each one qualifies, with three tests for
+  whether it is honest: every state must be reachable, every label must derive
+  from something real, and if you cannot say which words a state covers you do
+  not know it well enough to show it. Any pack can implement it on three hues.
+
+- **Test scenario T13** — the developer register **and** the fork against
+  `instrument-console`, run as two prompts in separate contexts. The pack is
+  only worth its row if an agent can tell "this product has a source" from
+  "this product has a dial", so a pass requires both branches: one that must
+  select `field-notes`, one that must stay on the dark console.
+
+### Changed
+
+- `SKILL.md`, `README.md`, `bin/cli.js`, `install.sh` and the Cursor rule all
+  learn the seventh pack; the CLI's help and the README's file table stop
+  saying "six".
+
 ## [1.4.0] - 2026-08-03
 
 Two packs for the warm consumer register, extracted from two production sites

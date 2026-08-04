@@ -1,6 +1,6 @@
 {
   "name": "sheleg-design-skill",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Design taste as an installable agent skill. Cinematic scroll-driven landing pages built on one scroll clock and layered degrade-to-calm motion, plus three locked style packs with ready-made design tokens — instrument-console (dark), editorial-luxury (warm), workbench (light/dark product UI for dashboards, admin and dev tools). Works with Cursor, Claude Code and any agent that reads a SKILL.md.",
   "bin": {
     "sheleg-design-skill": "bin/cli.js"

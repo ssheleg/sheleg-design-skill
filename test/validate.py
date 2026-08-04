@@ -275,6 +275,13 @@ def validate_skills():
         )
     skill_text = read(skills_dir / PLUGIN / "SKILL.md") or ""
     cli_text = read(ROOT / "bin/cli.js") or ""
+    # The agent-facing surfaces are covered above; these two are read by humans
+    # deciding whether to install, and they drift silently because nothing
+    # imports them. A pack the README doesn't list is a pack nobody chooses.
+    readme_text = read(ROOT / "README.md") or ""
+    rules_text = "".join(
+        read(p) or "" for p in sorted((ROOT / "cursor/rules").glob("*.mdc"))
+    )
     for pack in packs:
         rel = pack.relative_to(ROOT)
         text = read(pack) or ""
@@ -292,6 +299,14 @@ def validate_skills():
         check(
             pack.stem in cli_text,
             f"bin/cli.js: style pack '{pack.stem}' is not named in the installer output",
+        )
+        check(
+            pack.stem in readme_text,
+            f"README.md: style pack '{pack.stem}' is not listed in the pack table",
+        )
+        check(
+            pack.stem in rules_text,
+            f"cursor/rules: style pack '{pack.stem}' is not named in any .mdc rule",
         )
 
 
