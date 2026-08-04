@@ -49,6 +49,18 @@ PACK_SECTIONS = (
     "## Gotchas",
 )
 
+# The Claude Design bridge covers four reference types plus the border; each is a
+# heading, so "we documented design-sync" stops being a claim and becomes a check.
+BRIDGE_SECTIONS = (
+    "## 1. What crosses, and in what shape",
+    "## 2. Style packs — the pack is the source of truth",
+    "## 3. Figma — one border at a time",
+    "## 4. Lazyweb sweeps — layout crosses, identity does not",
+    "## 5. Live-site extraction — the pack first, the sync second",
+    "## 6. What cannot cross",
+    "## 7. Round-trip discipline",
+)
+
 failures = []
 checks = 0
 
@@ -249,7 +261,12 @@ def validate_skills():
     # Companion docs ship with the bundle AND are reachable from SKILL.md --
     # a reference nothing links to is a file the agent never opens.
     skill_body = read(skills_dir / PLUGIN / "SKILL.md") or ""
-    for companion in ("SHELEG_DESIGN.md", "FIGMA_BRIDGE.md", "AI_PRODUCT_PATTERNS.md"):
+    for companion in (
+        "SHELEG_DESIGN.md",
+        "FIGMA_BRIDGE.md",
+        "AI_PRODUCT_PATTERNS.md",
+        "DESIGN_SYNC_BRIDGE.md",
+    ):
         if check(
             (skills_dir / PLUGIN / companion).is_file(),
             f"{PLUGIN_DIR}/skills/{PLUGIN}/{companion}: missing",
@@ -258,6 +275,15 @@ def validate_skills():
                 companion in skill_body,
                 f"SKILL.md: {companion} ships in the bundle but is not linked from SKILL.md",
             )
+    # The bridge doc's headings are a contract, not a suggestion: each one is a
+    # reference type someone has to be told about, and a missing heading is a
+    # reference type the agent will handle by improvising.
+    bridge = skills_dir / PLUGIN / "DESIGN_SYNC_BRIDGE.md"
+    brel = f"{PLUGIN_DIR}/skills/{PLUGIN}/DESIGN_SYNC_BRIDGE.md"
+    if bridge.is_file():
+        btext = read(bridge) or ""
+        for section in BRIDGE_SECTIONS:
+            check(section in btext, f"{brel}: missing required section '{section}'")
     styles_dir = skills_dir / PLUGIN / "styles"
     template = styles_dir / "STYLE_PACK_TEMPLATE.md"
     packs = sorted(p for p in styles_dir.glob("*.md") if p != template) if styles_dir.is_dir() else []
