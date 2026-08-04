@@ -49,6 +49,24 @@ PACK_SECTIONS = (
     "## Gotchas",
 )
 
+# The widened contract (1.5.0). Four sections were added after an audit found the
+# packs specified colour and motion precisely and then went quiet exactly where
+# implementations drift: per-component states, the opening viewport, collapse
+# behaviour, and the one element the page is remembered by.
+#
+# The skeleton carries all thirteen from the moment it is widened -- a template
+# that teaches nine while the contract wants thirteen is worse than no template.
+# The per-pack gate stays at PACK_SECTIONS until every shipped pack is backfilled
+# from its live reference, then flips here. The interim is deliberate and
+# time-boxed: an author who fills the skeleton is already compliant, and no pack
+# is ever held to a section the skeleton does not teach.
+PACK_SECTIONS_WIDE = PACK_SECTIONS + (
+    "## Components",
+    "## Hero",
+    "## Responsive",
+    "## Signature element",
+)
+
 failures = []
 checks = 0
 
@@ -267,7 +285,7 @@ def validate_skills():
     trel = f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/STYLE_PACK_TEMPLATE.md"
     if check(template.is_file(), f"{trel}: missing"):
         ttext = read(template) or ""
-        for section in PACK_SECTIONS:
+        for section in PACK_SECTIONS_WIDE:
             check(section in ttext, f"{trel}: missing required section '{section}'")
         check(
             read(ROOT / "templates/style-pack-template.md") == ttext,
@@ -275,6 +293,13 @@ def validate_skills():
         )
     skill_text = read(skills_dir / PLUGIN / "SKILL.md") or ""
     cli_text = read(ROOT / "bin/cli.js") or ""
+    # The agent-facing surfaces are covered above; these two are read by humans
+    # deciding whether to install, and they drift silently because nothing
+    # imports them. A pack the README doesn't list is a pack nobody chooses.
+    readme_text = read(ROOT / "README.md") or ""
+    rules_text = "".join(
+        read(p) or "" for p in sorted((ROOT / "cursor/rules").glob("*.mdc"))
+    )
     for pack in packs:
         rel = pack.relative_to(ROOT)
         text = read(pack) or ""
@@ -292,6 +317,14 @@ def validate_skills():
         check(
             pack.stem in cli_text,
             f"bin/cli.js: style pack '{pack.stem}' is not named in the installer output",
+        )
+        check(
+            pack.stem in readme_text,
+            f"README.md: style pack '{pack.stem}' is not listed in the pack table",
+        )
+        check(
+            pack.stem in rules_text,
+            f"cursor/rules: style pack '{pack.stem}' is not named in any .mdc rule",
         )
 
 
