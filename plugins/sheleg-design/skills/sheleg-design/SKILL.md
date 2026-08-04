@@ -18,6 +18,12 @@ read it per frame and react in their own language. Nothing crossfades — things
 directory) before implementing — it holds the architecture, exact morph math,
 the DOM↔WebGL bridge, the build recipe (§11), and the file map.
 
+**REQUIRED BEFORE ANY ANIMATION:** read
+[`MOTION_DOCTRINE.md`](./MOTION_DOCTRINE.md). `SHELEG_DESIGN.md` says how motion
+is built; the doctrine says whether to build it — the frequency table that kills
+animation on high-repetition paths, the easing tree and the `ease-in` ban, the
+duration ceiling, the forbidden forms, and the reduced-motion contract.
+
 ## When to Use
 
 - Landing/marketing/hero pages where motion is a stated goal

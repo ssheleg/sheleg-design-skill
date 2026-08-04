@@ -267,7 +267,7 @@ def validate_skills():
     # Companion docs ship with the bundle AND are reachable from SKILL.md --
     # a reference nothing links to is a file the agent never opens.
     skill_body = read(skills_dir / PLUGIN / "SKILL.md") or ""
-    for companion in ("SHELEG_DESIGN.md", "FIGMA_BRIDGE.md", "AI_PRODUCT_PATTERNS.md"):
+    for companion in ("SHELEG_DESIGN.md", "FIGMA_BRIDGE.md", "AI_PRODUCT_PATTERNS.md", "MOTION_DOCTRINE.md"):
         if check(
             (skills_dir / PLUGIN / companion).is_file(),
             f"{PLUGIN_DIR}/skills/{PLUGIN}/{companion}: missing",
