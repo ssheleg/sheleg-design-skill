@@ -160,6 +160,19 @@
   --crop-inset: 14px; /* the crop marks' distance from the edge */
   --crop-len: 0.75rem; /* 12px arms */
 
+  /* ---- Hero & viewport -------------------------------------------------- */
+  /* svh, not vh: with vh the gradient reflows when mobile browser chrome
+     collapses. dvh goes behind @supports (height: 100dvh) at the use site. */
+  --hero-min-h: 100svh;
+  --bar-h: 38px; /* the announcement bar — a real layout participant: the nav
+                    sits at top: var(--bar-h) and transitions `top` over 300ms
+                    when it is dismissed. Set to 0px when closed. */
+  --hero-line-cap: 3; /* the headline's line ceiling — at 1.02 leading a fourth
+                         line closes into a block and the dawn stops reading */
+  /* The page's ONLY fluid size. Everything else steps at the breakpoints:
+     40rem / 48rem / 64rem / 80rem / 96rem, plus a max-width: 639px branch. */
+  --t-caption-fluid: clamp(0.8125rem, 0.2rem + 2vw, 2.125rem);
+
   /* ---- Type ------------------------------------------------------------ */
   /* Display: Bricolage Grotesque. Variable upstream (opsz 12..96, wdth 75..100,
      wght 200..800) and it has NO ITALIC — see the pack's Bans. Substitutes with

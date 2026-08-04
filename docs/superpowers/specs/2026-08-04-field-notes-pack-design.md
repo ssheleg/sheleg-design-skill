@@ -461,6 +461,67 @@ because a generated page will otherwise drop them:
 
 ---
 
+## 9a. Responsive & remaining components (second capture, same day)
+
+Measured after the pack contract widened to thirteen headings and demanded
+`Components`, `Hero`, `Responsive` and `Signature element`.
+
+### Breakpoints and fluid type
+
+- Media queries in use: `max-width: 639px`, then `min-width` at `40rem`,
+  `48rem`, `64rem`, `80rem`, `96rem`.
+- **The page contains exactly one `clamp()`**:
+  `clamp(0.8125rem, 0.2rem + 2vw, 2.125rem)` — 13px → 34px on a 2vw slope, used
+  for a single figure caption. Everything else is fixed px stepping at the
+  breakpoints. This pack is **not** fluid-scaled, and that separates it from
+  `atrium`, whose whole scale is one `clamp()` band.
+
+### Viewport units
+
+- Hero: `min-height: 100svh`.
+- Figures: `24svh`, `34svh`, `36svh`.
+- `100dvh` appears only behind `@supports (height: 100dvh)`.
+- `.h-screen` (`100vh`) exists in the generated utility layer but is not used on
+  the page.
+
+### Container queries
+
+**None.** No `container-type` declaration and no `@container` rule anywhere in
+the stylesheet set. Components size against the viewport and their own
+`max-width`.
+
+### Navigation
+
+- Wrapper: `position: fixed; inset-x: 0; top: var(--bar-h); z-index: 50;`
+  `height: 74px`, `pointer-events: none`, and
+  `transition: top 300ms` — the nav **slides** when the announcement bar is
+  dismissed.
+- `--bar-h` measured at **38px** with the bar open.
+- The pill: `pointer-events: auto`, `border-radius: 9999px`,
+  `background: rgba(255,255,255,.05)`, `border: 1px rgba(255,255,255,.15)`,
+  `height: 62px`, `padding: 8px 8px 8px 12px`, **`backdrop-filter: none`** —
+  unlike `orchard`'s glass pill, this one is a plain translucent fill.
+
+### Inputs
+
+One form control on the page (the waitlist email, on the dawn):
+`background: rgba(255,255,255,.05)`, `border: 1px rgba(255,255,255,.2)`,
+`border-radius: 12px`, `padding: 0 12px`, `font-size: 16px` Geist, white text,
+focus outline `1.5px` in the brand at 50% alpha. The 16px is the iOS
+zoom-on-focus floor.
+
+### What the reference does not answer
+
+Recorded as gaps, not filled silently — the pack supplies a decision for each
+and labels it as such:
+
+| Gap | Evidence |
+|---|---|
+| **Loading idiom** | no skeleton, spinner or shimmer element on the page; `spin` and `pulse` keyframes exist in the generated utility layer and are unused |
+| **Empty states** | none present — a marketing page has no empty state |
+| **Disabled controls** | one `<button disabled>` found, rendering at `opacity: 1` with `cursor: default` — visually identical to an enabled control |
+| **Authored state rules** | no `:hover` / `:active` / `:disabled` rules in the stylesheets; every state is a generated utility, so the transition values on the resting element are the only reliable source |
+
 ## 10. Open items
 
 - `[AMBIGUOUS]` was not rendered at capture time; its mapping to

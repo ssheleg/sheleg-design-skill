@@ -155,6 +155,87 @@ figures, `--shell-max` 1920px for the hero and nav shell.
   the thesis.
 - Spacing is an 8-based ramp; the two numbers that build the page are the
   **64px section padding** and the **1px rule** between sections.
+- **Radius arithmetic when containers nest:** an inner radius is the outer
+  radius minus the padding between them, never the same value twice. A tag at
+  `--radius-sm` inside a card at `--radius-lg` with `--s3` padding is correct
+  because `12 - 12 ≈ 7.2` reads as concentric; the same `12px` on both reads as
+  two rectangles that happen to touch.
+
+## Components
+
+Measured off the reference unless a row says otherwise. Where it says
+otherwise, the reference has no answer and the pack supplies one — a pack about
+provenance does not get to invent a value and stay quiet about it.
+
+| Component | Resting | Hover | Active / selected | Disabled |
+|---|---|---|---|---|
+| **Primary CTA** | pill, `--ink` fill · `--on-ink`, `8px 16px`, 14px/500; on the hero a white fill with `--dawn-1` ink | `opacity` shift over `--dur-ui` — the only property it transitions | no separate treatment | **pack decision:** `opacity: .5`, `cursor: not-allowed`; the reference ships a `cursor: default` button at full opacity, which is indistinguishable from enabled |
+| **Secondary** | `--radius-lg`, `12px 20px`, 14px/600, `--bg` fill | `transform, background-color` over `--dur-ui` | — | as above |
+| **Ghost (on the dawn)** | `--fill-on-deep`, `1px --line-on-deep-strong`, `--radius-lg`, `8px 14px`, 14px/400 | `color, background-color` over `--dur-ui` | — | as above |
+| **Chip** | `--surface` on `1px --line`, `--ink-soft`, `--radius-sm`, `6px 14px`, 14px/400 | fill → `--surface-2` | `--brand-soft` fill, `1px --brand`, `--brand-ink` — exactly one selected | as above |
+| **Card** | `--surface` fill, `--ring-hairline`, `--radius-lg` | **nothing.** A page built from hairlines has nothing to lift off | — | — |
+| **Input** | `--fill-on-deep` on the dawn (`--surface` on paper), `1px --line-on-deep-strong`, `--radius-lg`, `0 12px`, **16px** Geist | border → `--line-strong` | focus-visible: `1.5px` `--focus-ring` at 50% alpha | as above |
+| **Nav** | a `--radius-pill` bar, `--fill-on-deep`, `1px --line-on-deep`, `62px` tall, `8px 8px 8px 12px`, **no backdrop blur** | link colour only | — | — |
+| **Provenance tag** | transparent, `1px` state-ink at 25% alpha, state-ink text, mono 10px/`--track-tag`, `1px 4px`, `--radius-sm` | none — it is a label, not a control | — | — |
+| **Loader** | **pack decision:** a skeleton whose geometry matches the block it replaces — same radius, same hairline, `--surface-2` fill, no shimmer. The reference ships no loader on its marketing surface and leaves `spin`/`pulse` keyframes unused | — | — | — |
+| **Empty state** | **pack decision:** one line of `--ink` stating what would be here, one `--ink-soft` line saying how to fill it, and nothing else. No illustration — the register is a document | — | — | — |
+
+The input's `16px` is not a style choice: anything smaller triggers zoom-on-focus
+on iOS. Keep it even where 14px would look better.
+
+## Hero
+
+**The dawn is the hero** (`--hero-dawn`, *Texture & surface*), and its
+architecture is fixed:
+
+- **Height** `min-height: 100svh` — small-viewport units, so the mobile browser
+  chrome collapsing does not reflow the gradient. Never `100vh` here.
+- **Shell** `--shell-max` (1920px) with `16px` padding rising to `48px`; the
+  content column sits left, not centred.
+- **Headline** `--t-hero` (67.2px) at `--lh-hero` (1.02) and
+  `--track-display`, **capped at three lines**. The line ceiling is the real
+  constraint: at 1.02 leading a four-line headline closes up into a block and
+  the dawn no longer reads behind it. Write to the cap.
+- **One accent phrase** inside the headline, in `--brand-on-dark` — never the
+  paper brand, which measures 2.29:1 there.
+- **Lede** `--t-lede` at `--lede-max` (448px), and it **must end above
+  `--dawn-5`**: white copy is 15.4:1 at the top of the gradient and 4.06:1 by
+  the 85% stop.
+- The first viewport carries: eyebrow, headline, lede, up to three buttons, and
+  one proof line. It does **not** carry a card, a screenshot, a metric row or a
+  second dark surface — those start below the fold, on paper.
+- The announcement bar is a real layout participant: the nav sits at
+  `top: var(--bar-h)` (`38px` when open, `0` when dismissed) and transitions
+  `top` over `300ms`. Do not absolutely position over it.
+
+## Responsive
+
+The rules, not the adjective.
+
+- **Type is fixed px with breakpoint jumps, not fluid.** This is the reference's
+  actual behaviour and it is deliberate: the hero drops 67.2 → 44 → 36px at the
+  breakpoints rather than sliding. The whole page contains **exactly one**
+  `clamp()`: `clamp(0.8125rem, 0.2rem + 2vw, 2.125rem)` (13px → 34px, slope
+  2vw), used for the one figure caption that has to survive both ends. Copying
+  `atrium`'s fully-fluid approach here would fight the pack, whose sizes are
+  chosen against the hairline grid.
+- **Breakpoints** are `40rem` / `48rem` / `64rem` / `80rem` / `96rem`, plus one
+  `max-width: 639px` branch for the phone-only layout.
+- **Full-height sections use `svh`**, with `100dvh` behind
+  `@supports (height: 100dvh)`. Figure heights are `24svh` / `34svh` / `36svh`.
+  Bare `100vh` is banned — it is why a mobile hero jumps when the URL bar hides.
+- **No container queries.** The reference declares no `container-type` and no
+  `@container` rule anywhere; components size against the viewport and against
+  their own `max-width`. If you add them, add them for the app layer's panels —
+  not for the page, whose column widths are the layout.
+- **Collapse:** the section rule survives every breakpoint (it is the layout);
+  section padding drops `64px → 16px`; the hero shell padding drops `48px →
+  16px`; the nav pill keeps its height and sheds links. Crop marks are
+  `hidden md:block` — they are a desktop-only flourish and must not become a
+  touch target.
+- Nothing in this pack overlaps, rotates or uses negative margins, so nothing
+  collapses badly. That is a consequence of the ruled-sheet composition, and it
+  is a reason to keep it.
 
 ## Motion tokens
 
@@ -202,6 +283,24 @@ figures, `--shell-max` 1920px for the hero and nav shell.
 - **Headings written as claims.** "The answer is a path, not a vibe." "Every
   edge says how it knows." Not "Features" and not "Benefits". (`briefing-room`
   carries the same rule for slides; here it applies to a scrolling page.)
+
+## Signature element
+
+**The dawn.** Not the crop marks, not the numbered eyebrow — those recur, and
+recurrence is what makes them motifs. The dawn happens **once**, at the top,
+and it is the only place this pack spends contrast, saturation or spectacle.
+
+It carries the identity because it resolves the pack's central tension in one
+gesture. A developer tool is expected to be dark; this one is printed on paper.
+The dawn does not argue with the expectation, it *passes through* it: the page
+opens where the reader expects a console and arrives, without a seam, at the
+document it actually is. A hard-edged dark hero would read as two pages stapled
+together; the eight-stop resolve reads as one page that got lighter.
+
+Everything around it stays quiet, which is the price. Below the dawn there is
+no second dark surface, no gradient, no photography bleed, no generative layer —
+only paper, hairlines and ink. Spend the boldness here or the pack has no
+centre.
 
 ## Motion flavor (cinematic packs only)
 
