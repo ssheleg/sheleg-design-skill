@@ -170,7 +170,23 @@ def lint_doctrine():
 
 # ------------------------------------------------------------------ pack rules
 
-URL = re.compile(r"https?://[^\s)>\]]+")
+# "Addressable" means a reader can go and look, not that someone typed a scheme.
+# Packs cite their reference the way a person says it -- `graphify.com`,
+# `**prowl.chat**` -- so a bare host counts. The extension list keeps filenames
+# from reading as hosts: `package.json` and `validate.py` are not references.
+NOT_A_HOST = (
+    "md", "css", "js", "mjs", "cjs", "json", "py", "sh", "html", "htm",
+    "png", "jpg", "jpeg", "svg", "webp", "ts", "tsx", "jsx", "yml", "yaml",
+    "toml", "lock", "txt", "log", "map", "cfg", "ini",
+)
+_HOST = re.compile(r"\b[a-z0-9][a-z0-9-]*(?:\.[a-z0-9-]+)*\.([a-z]{2,})\b", re.I)
+
+
+def addressable_reference(text: str) -> bool:
+    """True when the text names somewhere a reader could actually go."""
+    if re.search(r"https?://[^\s)>\]]+", text):
+        return True
+    return any(m.group(1).lower() not in NOT_A_HOST for m in _HOST.finditer(text))
 
 
 def lint_packs():
@@ -190,7 +206,7 @@ def lint_packs():
         if "## Signature element" in text:
             origin = re.search(r"^Origin:(.*?)(?=\n\n)", text, re.S | re.M)
             check(
-                origin is not None and URL.search(origin.group(1)) is not None,
+                origin is not None and addressable_reference(origin.group(1)),
                 f"{rel}: widened pack must name an addressable origin (a URL), "
                 f"not a product name -- provenance nobody can re-read is decorative",
             )
@@ -227,6 +243,22 @@ def self_test() -> int:
     print(f"  {'quiet  ' if not failures else 'NOISY  '} clean CSS")
     if failures:
         problems.append("false positive on clean CSS")
+
+    # Origin addressability, both directions. A pack cites its reference the way
+    # a person says it, so requiring a scheme rejects real provenance -- which is
+    # exactly what this check did until a neighbouring run's pack tripped it.
+    origin_cases = [
+        ("a bare host is addressable", "**graphify.com** (2026), read off live computed styles", True),
+        ("a full URL is addressable", "https://functionhealth.com — read 2026-08-03", True),
+        ("a product name is not", "the Builder Pro AI production design system", False),
+        ("a filename is not a host", "values taken from package.json and validate.py", False),
+    ]
+    for label, sample, expected in origin_cases:
+        got = addressable_reference(sample)
+        ok = got is expected
+        print(f"  {'ok     ' if ok else 'WRONG  '} {label}")
+        if not ok:
+            problems.append(f"{label}: expected {expected}, got {got}")
     if problems:
         print("\nself-test FAILED: " + "; ".join(problems))
         return 1
