@@ -102,6 +102,8 @@ note at stage 9.
 | REQ-012 | Release **1.6.0**: four-way version sync, tag, GitHub release, npm publish, local installs refreshed | `test/validate.py` + `npm view sheleg-design-skill version` == `1.6.0` + `gh run` green | open |
 | REQ-013 | ADR-0002 recorded, the 2026-07-19 spec annotated as partially superseded, `docs/DOCMAP.md` seeded | files exist; validator link check green | open |
 | REQ-014 | This run never writes to `/Users/sshlg/DATA/sheleg-design-skill` — every change lands in the isolated worktree and reaches `main` only through one reviewed merge, after the concurrent 1.5.0 run has landed | `git -C /Users/sshlg/DATA/sheleg-design-skill status --porcelain` shows no file authored by this run before the merge; `git worktree list` shows the run's own path | open |
+| REQ-015 | Every kit carries the **rules layer**: `.design-sync/conventions.md` (wired via `readmeHeader`) holding the pack's contract, and `guidelinesGlob` shipping the pack's own markdown into `guidelines/` | `test/validate.py` asserts both files exist per kit and that the config wires them; probe: unset `readmeHeader` in one kit → FAIL. Added at stage 2 — the slot was only discovered at stage 1. | open |
+| REQ-016 | All six kits **build**: `tsc` emits `dist/` + a `.d.ts` tree that the converter can read | a CI job runs the build for every kit and fails on a non-zero exit or an empty `dist/`; probe: break one component's types → FAIL. Added at stage 2 — "a kit exists" and "a kit builds" are different claims. | open |
 
 > **Frozen.** Adding a row is free. Removing or narrowing one needs the operator's
 > explicit agreement, recorded in the carry-over ledger.
@@ -224,3 +226,31 @@ Taken together: the *rules* half of a pack is cheap, needs no build and no React
 is arguably worth more to a design agent than the components; the *components* half
 is the expensive part and is what D11 now prices honestly. Stage 2 chooses how far up
 that ladder this run goes.
+
+## Stage 2 — design approved
+
+**One module, not a platform.** No decomposition; stages 3→10 run once.
+
+**Shape.** Six *separate* packages, `kits/<pack>/` — one design system per pack, one
+Claude Design project per kit. Mixing two packs into one DS would be a category
+error: they have contradictory bans.
+
+**Every kit is three layers, and they are a stack rather than alternatives.**
+
+| Layer | Content | Cost |
+|---|---|---|
+| Rules | `.design-sync/conventions.md` via `readmeHeader` (the pack's contract, read by the design agent) + `guidelinesGlob` shipping the pack's own markdown | near zero — the documents already exist |
+| Values | `src/styles.css` = `tokens/<pack>.css` verbatim + a component layer, wired as `cssEntry` | small |
+| Components | 6 shared spine atoms with identical names/props across all six kits + 3–5 pack signature components, built by `tsc` into `dist/` + `.d.ts` | the expensive layer |
+
+**Build.** Bare `typescript` with `declaration: true` — no bundler. Dev deps
+`typescript` + `@types/react`; `react` as a peer. Scoped to `kits/`, invisible to the
+skill bundle (ADR-0002).
+
+**Preview scope — operator's call, recorded.** All six kits ship complete; **authored
+previews are written for `workbench` only**, the one pack pushed live this run. The
+other five ship the converter's floor card, which the upstream skill calls "honest,
+not broken", and the same skill states previews can be authored on any later re-sync
+with grades carrying forward. This is **not** a narrowing of REQ-004: every kit still
+ships every component. It scopes REQ-009's verification depth, and rows 2 and 11 of
+the carry-over ledger say so.
