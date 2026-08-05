@@ -21,6 +21,14 @@ jobs:
           if python3 /tmp/corrupted/test/validate.py; then
             echo "validator failed to fail on a version mismatch" >&2; exit 1
           fi
+      - name: Palette gate (claimed ratios re-derived; separation under CVD)
+        run: python3 test/validate_palette.py
+      - name: Slop lint (the skill is held to its own bans)
+        run: python3 test/sloplint.py
+      - name: Gate self-tests (both must be watched failing on a planted defect)
+        run: |
+          python3 test/validate_palette.py --self-test
+          python3 test/sloplint.py --self-test
       - name: CLI syntax check
         run: node --check bin/cli.js
       - name: CLI smoke test (npx channel installs the whole bundle)
@@ -64,18 +72,29 @@ jobs:
           # which ADR-0002 exists to prevent.
           test -z "$(find plugins/sheleg-design/skills/sheleg-design -name 'package.json' -o -name '*.tsx')"
 
+  # The kit list is derived, never typed. A hand-maintained matrix is a list that
+  # must be kept in sync by a human, and the seventh kit proved it isn't: it was
+  # built, green and invisible to CI until someone noticed the matrix said six.
+  discover-kits:
+    runs-on: ubuntu-latest
+    outputs:
+      packs: ${{ steps.list.outputs.packs }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: list
+        run: |
+          set -eu
+          packs=$(ls -1 kits | jq -R . | jq -sc .)
+          echo "packs=$packs" >> "$GITHUB_OUTPUT"
+          echo "kits under test: $packs"
+
   kits:
+    needs: discover-kits
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        pack:
-          - instrument-console
-          - editorial-luxury
-          - workbench
-          - briefing-room
-          - atrium
-          - orchard
+        pack: ${{ fromJSON(needs.discover-kits.outputs.packs) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

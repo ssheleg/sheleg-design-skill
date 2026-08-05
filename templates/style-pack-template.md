@@ -4,14 +4,19 @@
 > every heading, and author `styles/tokens/<name>.css` in the same change.
 > Never load this file as a style.
 
-Origin: <where these values come from — a production system, a reference
-site; never invented ad hoc>. One-paragraph identity: field, ink, THE one
-accent, type voice, signature texture.
+Origin: <an addressable production reference — a URL, or a named system with
+the URL beside it; never invented ad hoc, never a product name alone. If the
+next person cannot re-read the reference, the provenance is decorative.>
+One-paragraph identity: field, ink, THE one accent, type voice, signature
+texture.
 
 ## Register
 
 Choose this pack for <product kinds / registers>. State whether it rides
 the SHELEG cinematic motion layer or is used standalone.
+
+**Not for:** <the registers this pack actively fails at>. A pack that claims
+everything routes nowhere.
 
 ## Palette
 
@@ -36,6 +41,45 @@ Display / body / data faces (≤3 families), weights, scale, measures.
 Elevation model (border vs shadow vs surface steps), radii set, grain/
 texture, spacing grid.
 
+State the **radius arithmetic** when containers nest: an inner radius is the
+outer radius minus the padding between them (`calc(2rem - 0.375rem)` inside
+`p-1.5`), never the same value twice. Concentric curves are what separates
+machined from stuck-together.
+
+## Components
+
+The per-component spec. Values measured off the reference, never inferred.
+Each entry states resting state, hover, active and disabled — a component
+described only at rest is half a component.
+
+- **Buttons** — fill/outline hierarchy, radius, padding, press feedback.
+- **Cards / containers** — fill, border, shadow, internal padding, when a card
+  is used at all versus a divider or plain negative space.
+- **Inputs / forms** — label position, focus ring, error placement.
+- **Navigation** — resting shape, scrolled shape, mobile shape.
+- **Loaders** — the pack's loading idiom (skeleton geometry matching the real
+  layout, or a spinner, or nothing).
+- **Empty states** — what fills a screen with no data.
+
+## Hero
+
+The pack's opening architecture: composition, type scale at the top of the
+page, what the first viewport must contain and what it must not. State the
+line ceiling for the display headline and the container width that keeps it
+there — a headline that wraps to five lines is a broken hero, not a long one.
+
+## Responsive
+
+How the pack collapses. Not "it is responsive" — the actual rules.
+
+- **Fluid type** — the `clamp()` values, with the slope shown, not guessed.
+- **Container queries** — which components size against their container
+  (`container-type: inline-size`) rather than the viewport.
+- **Collapse** — what happens to asymmetry, overlap, rotation and negative
+  margins below the pack's breakpoint. Overlapping elements that survive to
+  mobile become touch-target conflicts.
+- **Viewport** — `min-h-[100dvh]`, never `100vh`, for full-height sections.
+
 ## Motion tokens
 
 The one site-wide ease, durations, stagger; what overrides the SHELEG
@@ -44,6 +88,13 @@ defaults; reduced-motion behavior.
 ## Signature motifs
 
 The 3–6 recurring devices that make this style recognizable.
+
+## Signature element
+
+The **single** thing a page in this pack is remembered by — distinct from the
+motifs above, which recur. One element, named, with the reason it carries the
+pack's identity. If boldness is spent everywhere it is spent nowhere: this is
+where it goes, and everything around it stays quiet.
 
 ## Motion flavor (optional — cinematic packs only)
 
@@ -61,3 +112,8 @@ The slop guard: what this style never does. Be specific.
 ## Gotchas
 
 Migration/usage traps discovered in production.
+
+Correct the record here, do not flatter it: if an earlier version of this pack
+shipped wrong values, name them and the right ones beside them. A gotcha that
+only warns is half a gotcha — say what breaks and what it looks like when it
+does.

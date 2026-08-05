@@ -104,6 +104,12 @@ How this pack rides the SHELEG motion layer (brand register only):
 
 ## Bans
 
+- Status carried by hue alone. Success, warning, danger and info always
+  ship with an icon or a word beside the fill — **status is never by
+  colour alone**. Measured off a production reference, several of these
+  pairs sit inside a dichromat's confusion line; re-stepping them would
+  invent a colour this pack does not own, so the second signal carries
+  the meaning instead.
 - No gradient text, no side-stripe accent borders, no glassmorphism, no
   neon/outer-glow shadows, no purple.
 - No emojis in product UI; no Inter/system display fonts (Fraunces owns

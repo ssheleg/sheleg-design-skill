@@ -112,6 +112,12 @@ hue.
 
 ## Bans
 
+- Status carried by hue alone. Success, warning, danger and info always
+  ship with an icon or a word beside the fill — **status is never by
+  colour alone**. Measured off a production reference, several of these
+  pairs sit inside a dichromat's confusion line; re-stepping them would
+  invent a colour this pack does not own, so the second signal carries
+  the meaning instead.
 - No gradients, no shadows-as-decoration, no glassmorphism, no
   illustrations/mascots, no icon noise, no emojis in product UI.
 - No second accent hue; no semantic color used decoratively; no amber

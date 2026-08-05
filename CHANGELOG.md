@@ -4,15 +4,15 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
-## [1.6.0] - 2026-08-04
+## [1.7.0] - 2026-08-05
 
 The Claude Design border, and the first code this skill has ever shipped.
 
 `DESIGN_SYNC_BRIDGE.md` is the contract for pushing a pack to claude.ai/design
 through Claude Code's bundled `/design-sync`, so the design agent builds screens
-out of a pack's real components instead of generic ones. It covers all four
-reference types and, like the Figma bridge, spends as much space on what does
-**not** cross: motion stays in code, and a kit is the static half of a pack.
+out of a pack's real components instead of generic ones. Like the Figma bridge,
+it spends as much space on what does **not** cross: motion stays in code, and a
+kit is the static half of a pack.
 
 ### Added
 
@@ -23,11 +23,10 @@ reference types and, like the Figma bridge, spends as much space on what does
   first, the sync second), what cannot cross, and round-trip discipline.
 - A tool-presence-gated `## Optional — Claude Design (design-sync)` section in
   `SKILL.md`, gated exactly like the Lazyweb one. Cursor is unaffected.
-- **Six React reference kits** under `kits/<pack>/` — a six-component spine with
-  identical names, props and types in every kit, plus each pack's signature
-  components: 65 components in all, built by `tsc` to `dist/` with a `.d.ts`
-  tree, because the converter reads the built entry and the design agent codes
-  against those types.
+- **Seven React reference kits** under `kits/<pack>/` — a six-component spine
+  with identical names, props and types in every kit, plus each pack's signature
+  components, built by `tsc` to `dist/` with a `.d.ts` tree, because the
+  converter reads the built entry and the design agent codes against those types.
 - `npx sheleg-design-skill --kit <pack> --out <dir>` materializes one kit and
   drops the pack document into `guidelines/` on the way.
 - `--accent-ink` in `workbench`, `editorial-luxury` and `instrument-console`,
@@ -35,13 +34,14 @@ reference types and, like the Figma bridge, spends as much space on what does
   `briefing-room` already had exactly this name. In `workbench` it flips with
   the theme, because white on the dark-mode accent is 3.2:1 and fails AA.
 - `docs/DOCMAP.md` and `docs/adr/` — the repo's doc map and its decision home.
+- Scenario `T14`, run green by a fresh agent holding only the installed bundle.
 
 ### Changed
 
-- The validator grew from 306 to **665 checks**: eleven of them cover the kits,
-  including a prop-parity diff of the spine across all six packages. Every one
-  was watched failing against a planted defect before it landed.
-- CI builds all six kits in a matrix and asserts the build emitted something —
+- The validator gained eleven kit checks, including a prop-parity diff of the
+  spine across every kit package. Each was watched failing against a planted
+  defect before it landed.
+- CI builds every kit in a matrix and asserts the build emitted something —
   `tsc` exits 0 when it compiles nothing.
 - README's dependency-free promise gains its one honest caveat: the kits are
   code, they are not installed, and they appear only when asked for by name.
@@ -51,9 +51,186 @@ reference types and, like the Figma bridge, spends as much space on what does
 - **The kits are not installed with the skill.** They ship in the npm package
   and are copied out on demand (`ADR-0002`), which is how the installed skill
   stays documentation while still having real components to hand.
-- `1.5.0` is not this project's — it belongs to a concurrent release. `1.4.0`
-  was never tagged and never published; its entry below describes a version that
-  only ever existed in the manifests.
+- The live `/design-sync` push is a human step: the skill carries
+  `disable-model-invocation`, so only a person typing the command can start it.
+  Structure, build and materialization are proven; the upload is not yet proven
+  in anger.
+
+## [1.6.0] - 2026-08-05
+
+The harvest of a 41-skill audit of the design skills installed on this machine.
+The finding was narrow and repeated everywhere: the skill specified *what a
+thing looks like* with real rigour and left *how much, how fast, and whether at
+all* to whoever happened to be typing. Three of those four are now numeric, and
+two of them are checked by a script.
+
+Landed on top of 1.5.0, which shipped the `field-notes` pack from a concurrent
+run in the same working copy. That pack was already written against the widened
+contract below, so the two runs converged rather than collided — it is the first
+and so far only pack on the thirteen-heading contract.
+
+### Added
+
+- **`MOTION_DOCTRINE.md`** — the missing half of the motion story.
+  `SHELEG_DESIGN.md` says how motion is built; this says whether to build it.
+  Frequency decides first, and it overrules taste: anything a user meets a
+  hundred times a day does not animate, ever. Then the easing tree with
+  `ease-in` banned in UI and the reason stated, three named curves, a duration
+  table with a 300 ms ceiling, springs in Apple's notation, and interruptibility
+  as the actual argument for reaching for one. Then the forms that are defects
+  rather than preferences — scroll listeners, continuous input held in component
+  state, blur and grain on scrolling containers, easing under `scrub`,
+  `useEffect` where `useGSAP` belongs, and layout transforms silently erased by
+  animated ones. Closes on anti-drift: the tokens are right and the built page is
+  generic anyway, which happens at application time and so is named there.
+
+- **Three calibration dials** — `DESIGN_VARIANCE`, `MOTION_INTENSITY`,
+  `VISUAL_DENSITY`, baseline `7 / 5 / 4`, read off the brief from a table. A
+  pack answers *which register*; it never answered *how far*, which is how a
+  regulated insurer and a design studio came out of one pack looking alike. The
+  dials are deliberately weak where the pack is strong: no dial invents a
+  colour, a face or a radius, and `MOTION_INTENSITY` sits **under** the
+  frequency table rather than over it.
+
+- **A widened pack contract — nine headings to thirteen.** `Components`,
+  `Hero`, `Responsive` and `Signature element`. The packs were precise about
+  colour and motion and then went quiet exactly where implementations drift:
+  per-component states, the opening viewport, collapse behaviour, and the one
+  element a page is remembered by. The skeleton also now teaches concentric
+  radius arithmetic, a `Not for` line in `Register`, and that an origin nobody
+  can re-read is decorative.
+
+- **`test/validate_palette.py`** — the colour part is computable, so it is
+  computed. Claimed contrast ratios are re-derived from the hex and compared,
+  WCAG floors are enforced, and semantic colours are checked for separation in
+  OKLab under protanopia, deuteranopia and tritanopia. A pack may sit under the
+  floor only if it states out loud that colour is never the only carrier.
+
+- **`test/sloplint.py`** — the skill is held to its own bans. The token layers
+  and every fenced example are read for `100vh`, scroll listeners, bare
+  `ease-in`, transitions on layout properties and pure black fields; and the
+  tables the docs promise are asserted by string, so a rule cannot be deleted
+  without failing the build. Both scripts ship a `--self-test` that watches every
+  check fail against a planted defect — a green from a check nobody has seen say
+  no is not evidence.
+
+- **A six-layer scene depth model**, a **parameter handoff to the built-in
+  `dataviz` skill** instead of duplicating it, and a **`?variant=` procedure**
+  for choosing between packs by mounting them on a populated page rather than
+  arguing about them.
+
+- **The three generated looks that are defaults rather than decisions** —
+  recorded so a page that lands on one has to say whether that was a measurement
+  or the default talking.
+
+### Changed
+
+- **The pack section gate is all-or-nothing.** The nine original headings stay
+  required; adopt one of the widened four and all four are owed. The six packs
+  that shipped before the widening stay valid on nine — backfilling them
+  honestly needs re-reading each live reference, and three record a product name
+  where an address belongs, so they cannot be re-read at all. Filling those
+  sections from the token layer instead would be inventing values with a
+  citation attached, which is the failure the pack layer exists to prevent. The
+  rule closes the gap either way: no pack can be half-widened, so a new pack
+  cannot copy the thirteen-heading skeleton, keep the cheap nine and pass.
+- `npm test` now runs three gates, not one. `npm run selftest` runs the planted
+  defects.
+- `package.json` described "three locked style packs" while six shipped.
+
+### Not shipped, deliberately
+
+- **An eighth `industrial-brutalist` pack.** The register is real and the set
+  lacks it, but the only description available carries a synthesised palette,
+  not one measured off a production site. Held rather than authored.
+- **A backfill of the six existing packs onto the widened contract.** Same
+  reason, from the other direction: three of them cannot be re-read.
+
+## [1.5.0] - 2026-08-04
+
+The register the skill was missing for its own audience: a developer tool that
+does not live on a dark console. Six packs could dress a landing page, a
+dashboard, a deck and two kinds of consumer health, and none of them had an
+answer for open-source software sold on *being checkable* — which is most of
+the software the people using this skill actually build.
+
+### Added
+
+- **Seventh style pack: `field-notes`** — extracted from **graphify.com**
+  (2026) by reading its live computed styles: 92 declared custom properties,
+  the served `@font-face` set, every authored rule pulled out of the CSSOM, and
+  a contrast pass over all 38 colour pairs in the system. Warm off-white paper
+  with a green cast (`#F8F7F0`), near-black green-cast ink (`#16211B`, 15.4:1),
+  one rust accent (`#9A3F28`), and a complete dark twin.
+
+  Its defining composition is what separates it from every warm pack already
+  here: **the page is one continuous sheet ruled by a `1px` hairline.** Ten of
+  the reference's sixteen sections are divided by nothing but that line; three
+  add a 40% wash. Where `orchard` stacks discrete slabs and `atrium` runs a
+  continuous field that changes layout, this one draws a rule and keeps going.
+
+  The hero is the other half of the idea: not a dark band but a **dawn** —
+  eight stops from `#062A22` to the exact paper colour, so the dark has no
+  edge. Over it, an inline `feTurbulence` grain at `baseFrequency 0.82`, a
+  radial vignette, and an ambient layer that is **notation rather than
+  particles**: mathematical glyphs at 14% opacity, one at a time flipping to
+  the verified hue.
+
+  It also carries the two devices most worth stealing. **The numbered eyebrow**
+  — `〉 HOW IT WORKS [03/09]`, built from `::before`/`::after` on a `data-n`
+  attribute — makes a marketing page into a document with a table of contents.
+  And **printer's crop marks** at the four corners: eight 1px gradient arms,
+  `inset: 14px`, ink at 30%, desktop only. Both cost nothing and both state the
+  thesis that the page is a printed record.
+
+  Elevation is a **ring** (`0 0 0 1px var(--line)`), not a shadow; radii are a
+  proportional ramp off one `--radius`, so a hardcoded `12px` is banned; and
+  motion is two eases doing two jobs — `.15s` `cubic-bezier(.4,0,.2,1)` for
+  control state, `.5s` `cubic-bezier(.22,1,.36,1)` for scroll entry — with one
+  rule on top: **only the verified hue ever animates colour.** The rust never
+  moves, because a brand that animates stops reading as an identity and starts
+  reading as a status.
+
+  Four corrections to the reference ship with it, each measured. Its hero
+  accent phrase — the single most prominent piece of text on the site — runs
+  the light brand over the gradient at **2.29:1** at the top and **1.41:1** in
+  the middle; the pack adds `--brand-on-dark` `#CF7A52` (**4.82:1**) and bans
+  the other. Its `--verify` green is 3.2:1 on paper and its own
+  `--verify-foreground: #fff` is 3.4:1 on the green, so both are fills and the
+  labels take `-ink`. It sets `color-scheme` nowhere despite a complete dark
+  theme — the same trap that bit `workbench`. And it paints three unrelated
+  dark palettes (warm-brown theme, forest bands, navy terminal) plus an app
+  layer whose neutrals drift browner than its page layer and whose ring is a
+  violet used nowhere else; the pack reconciles all of it to the forest family
+  and the page's own neutrals.
+
+  The pack ships that app layer deliberately, with a routing rule rather than a
+  turf war: `workbench` stays the default for neutral product UI, which should
+  disappear; `field-notes` is for a product whose console must read as the same
+  paper as its site.
+
+- **`AI_PRODUCT_PATTERNS.md` gains the provenance pattern** (§4), promoted out
+  of the pack because it is the reference's one genuinely transferable
+  invention and a direct extension of the file's existing *honest state* rule:
+  **label the part, not the whole.** A single confidence number on a mixed
+  answer hides exactly the clause the reader needed to check, so the pattern
+  attaches a small set of named states — `[EXTRACTED]` · `[INFERRED]` ·
+  `[AMBIGUOUS]` — inline to the span each one qualifies, with three tests for
+  whether it is honest: every state must be reachable, every label must derive
+  from something real, and if you cannot say which words a state covers you do
+  not know it well enough to show it. Any pack can implement it on three hues.
+
+- **Test scenario T13** — the developer register **and** the fork against
+  `instrument-console`, run as two prompts in separate contexts. The pack is
+  only worth its row if an agent can tell "this product has a source" from
+  "this product has a dial", so a pass requires both branches: one that must
+  select `field-notes`, one that must stay on the dark console.
+
+### Changed
+
+- `SKILL.md`, `README.md`, `bin/cli.js`, `install.sh` and the Cursor rule all
+  learn the seventh pack; the CLI's help and the README's file table stop
+  saying "six".
 
 ## [1.4.0] - 2026-08-03
 

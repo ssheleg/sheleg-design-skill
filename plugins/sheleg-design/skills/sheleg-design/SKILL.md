@@ -18,6 +18,12 @@ read it per frame and react in their own language. Nothing crossfades — things
 directory) before implementing — it holds the architecture, exact morph math,
 the DOM↔WebGL bridge, the build recipe (§11), and the file map.
 
+**REQUIRED BEFORE ANY ANIMATION:** read
+[`MOTION_DOCTRINE.md`](./MOTION_DOCTRINE.md). `SHELEG_DESIGN.md` says how motion
+is built; the doctrine says whether to build it — the frequency table that kills
+animation on high-repetition paths, the easing tree and the `ease-in` ban, the
+duration ceiling, the forbidden forms, and the reduced-motion contract.
+
 ## When to Use
 
 - Landing/marketing/hero pages where motion is a stated goal
@@ -66,16 +72,67 @@ style pack in [`styles/`](./styles/):
 | [`briefing-room`](./styles/briefing-room.md) | dark presentation deck on a fixed 16:9 canvas: one blue hue top to bottom (OKLCH), mono slide furniture, 1-bit dithered art | investor & board decks, technical briefings, talks published as a page (standalone — slides never animate) |
 | [`atrium`](./styles/atrium.md) | warm cream daylight field with no dark bands, one terracotta accent, light serif with italic asides, fluted-glass hero over photography | consumer health, longevity & diagnostics, wellness, premium care and high-trust DTC subscription |
 | [`orchard`](./styles/orchard.md) | warm oat field of rounded slabs, sage brand + one candy-orange action, rounded geometric display, soft-3D pills built from inset light | friendly consumer biotech, DTC wellness, testing kits & supplements — approachable and credible at once |
+| [`field-notes`](./styles/field-notes.md) | warm green-cast paper ruled by hairlines, one rust accent, a hero that dissolves into the page, numbered mono eyebrows, crop marks, provenance colour | open-source & developer tools sold on auditability — code intelligence, provenance, evals, agent memory (standalone) |
 
 Read the chosen pack in full before styling anything — it supplies the
 palette, type, texture, motion-token values, signature motifs, and bans.
 Each pack ships a ready-made token layer in `styles/tokens/<pack>.css` —
 copy that file verbatim instead of transcribing tables. For a new style,
 copy [`styles/STYLE_PACK_TEMPLATE.md`](./styles/STYLE_PACK_TEMPLATE.md) and
-keep every heading — Register / Palette / Type / Texture & surface / Motion
-tokens / Signature motifs / Motion flavor (cinematic packs only) /
-Micro-interactions / Bans / Gotchas — then author its `tokens/<pack>.css` in
-the same change; never invent token values ad hoc.
+keep every heading — Register / Palette / Type / Texture & surface /
+Components / Hero / Responsive / Motion tokens / Signature motifs / Signature
+element / Motion flavor (cinematic packs only) / Micro-interactions / Bans /
+Gotchas — then author its `tokens/<pack>.css` in the same change; never invent
+token values ad hoc.
+
+## Calibration — three dials
+
+A pack answers *which register*. It does not answer *how far*. Two landing
+pages on the same pack, one for a regulated insurer and one for a design
+studio, are not the same page. Three dials carry that difference, and they are
+set once, out loud, before any layout exists.
+
+- **`DESIGN_VARIANCE`** 1–10 — 1 is perfect symmetry, 10 is deliberate
+  asymmetry and no two sections alike.
+- **`MOTION_INTENSITY`** 1–10 — 1 is static, 10 is cinematic and physical.
+- **`VISUAL_DENSITY`** 1–10 — 1 is a gallery wall, 10 is a cockpit.
+
+**Baseline `7 / 5 / 4`.** State the values and one line of reasoning before
+building; do not ask the user to edit a file, and do not silently drift from
+what you announced.
+
+### Reading them off the brief
+
+| The brief reads as | VARIANCE | MOTION | DENSITY |
+|---|---|---|---|
+| minimalist, calm, editorial, "quiet like Linear" | 5–6 | 3–4 | 2–3 |
+| premium consumer, brand-led, "feels expensive" | 7–8 | 5–7 | 3–4 |
+| agency, portfolio, experimental, award-bait | 9–10 | 7–9 | 3–4 |
+| landing / marketing page, no further signal | 7 | 5 | 4 |
+| product UI: dashboards, admin, internal tools | 4–5 | 2–3 | 6–8 |
+| trust-first: regulated, public-sector, clinical | 3–4 | 2–3 | 4–5 |
+| presentation deck | 5–6 | 1–2 | 3–4 |
+| redesign, preserve the existing identity | match | match +1 | match |
+| redesign, explicit overhaul | +2 | +2 | match |
+
+### How they bind
+
+- **The pack wins on values, the dials win on amount.** A dial never invents a
+  colour, a face, or a radius — those come from the pack's token layer. It
+  decides how much asymmetry the grid carries, how much of the page moves, and
+  how tightly it is packed.
+- **`MOTION_INTENSITY` is capped by the frequency table**, not the other way
+  round. A 9 on a settings screen still means the keyboard path does not
+  animate. Read [`MOTION_DOCTRINE.md`](./MOTION_DOCTRINE.md) §1 first; the dial
+  turns up what is left after that table has cut.
+- **Motion claimed is motion shown.** Above 4, the page actually moves —
+  entrance on the hero, reveal on key sections, response on the primary action.
+  A static page announcing 7 is broken. If working motion will not fit the
+  scope, drop the dial to 3 and ship a clean still page; never half-build motion
+  that stalls, cuts off, or jumps.
+- **A standalone pack pins its own ceiling.** `workbench` and `briefing-room`
+  are not cinematic; `MOTION_INTENSITY` above 3 on either is a misread of the
+  pack, not a bold choice.
 
 ## The craft bar — what "done" means, in order
 
@@ -95,6 +152,72 @@ as a definition of done, in that order:
 5. **Consistency** — one ease, one duration set, one accent, one atom per job
    across every screen.
 
+## Scene depth — six layers
+
+A cinematic page is not flat content with motion on top; it is a scene, and a
+scene has depth. Assign every element a layer before writing any CSS. The
+common failure is not "too little animation" — it is everything sitting on one
+plane, which no amount of easing repairs.
+
+| Layer | What lives there | Treatment |
+|---|---|---|
+| 0 | field, background imagery | slight blur, lowest contrast, slowest parallax |
+| 1 | ambient texture: grain, gradient wash, mesh | fixed, `pointer-events: none`, never on a scroller |
+| 2 | structural furniture: rules, grid marks, section labels | no parallax; they anchor the grid |
+| 3 | the subject: product, hero artwork, the thing being sold | sharpest, largest, leads the motion |
+| 4 | content: type, cards, controls | full contrast; readability outranks depth |
+| 5 | overlays: nav, modals, cursor effects, scrims | above everything, documented z-index |
+
+Rules that hold in every pack:
+
+- **Three layers minimum per section.** Two is a flat page with a shadow.
+- **Depth comes from treatment, not just `z-index`** — blur, scale, contrast and
+  parallax rate together, or the layering reads as stacking.
+- **Layer 4 never trades contrast for atmosphere.** If the text needs the scrim,
+  the scrim is layer 3's problem.
+- **Decorative layers are `aria-hidden="true"`.** Depth is visual; it never
+  reaches a screen reader.
+- **Below `pointer: coarse`, collapse 0–2 toward the field.** Parallax on a
+  phone costs frames and buys nothing.
+
+## Charts and data — hand the pack to `dataviz`
+
+Do not restyle charts from the pack by hand, and do not let a chart library pick
+its own colours. The `dataviz` skill already owns chart form, colour roles and
+the runnable palette validation; a pack is the *parameter set* it consumes.
+
+| `dataviz` parameter | What the pack supplies |
+|---|---|
+| Ramps | the pack's tint/step scale (`--accent-tint` … `--accent-deep`) |
+| Categorical order | a fixed hue order drawn from the pack, assigned once, never cycled |
+| Sequential hue | the pack's single accent hue |
+| Diverging pair | two poles from the pack, with a neutral grey midpoint |
+| Status palette | `--good` / `--warning` / `--danger`, distinct from categorical |
+| Surfaces | `--bg` for light, the pack's dark field for dark |
+| Texture fill | the pack's grain or hatch, for the print and forced-colours case |
+
+Two rules survive the handoff unchanged: **never a dual-axis chart**, and
+**colour follows the entity, never its rank** — a filter that changes the series
+count must not repaint the survivors.
+
+## Choosing between packs — mount them, don't imagine them
+
+When more than one pack could carry a product, do not argue about it. Render
+them.
+
+Mount the candidate packs on **an existing, populated page** — real header,
+real data, real density — switched by a `?variant=<pack>` search parameter, and
+flip between them in the browser. Only the token layer changes; the markup
+stays.
+
+A throwaway route with placeholder content is a vacuum: every pack looks fine
+in it, which is precisely why it settles nothing. If there is genuinely no
+populated page yet, the choice is premature — build the page in the default
+pack and revisit.
+
+The comparison harness is scaffolding, not a deliverable: it comes out with the
+same change that records the decision.
+
 ## AI-driven product surfaces
 
 Designing AI products is now the third most in-demand skill in that same survey
@@ -105,6 +228,11 @@ agent-run, or generated-content UI. It pairs with the `workbench` pack and
 carries one rule: **honest state** — never a spinner where tokens can stream,
 never a confidence number with nothing behind it, never an outward-facing
 action executed because the model suggested it.
+
+Its sharpest form is the **provenance pattern**: when an answer's parts have
+different evidence behind them, label each part with how it is known rather
+than scoring the whole. Any pack can implement it — `field-notes` ships the
+token set it was extracted from.
 
 ## Optional — Figma (design ↔ code)
 
@@ -191,3 +319,20 @@ per-user — keep it out of the repo).
 - Parallax on everything → nausea. At most one drifting figure per viewport.
 - Scrub on hero/entrances → motion feels unearned; reserve scrub for
   instruments.
+
+### Three looks that are defaults, not decisions
+
+Left to itself, generated design lands in one of three places, regardless of
+what the product is:
+
+1. **Warm cream field (near `#F4F1EA`) + high-contrast serif display +
+   terracotta accent.**
+2. **Near-black field + a single acid-green or vermilion accent.**
+3. **Broadsheet: hairline rules, zero border-radius, dense newspaper columns.**
+
+Each is legitimate for some brief — and each shows up whether or not the brief
+called for it, which is what makes it a default. This skill's answer is the
+same either way: **the values come from a pack extracted off a live reference,
+never from taste at the keyboard.** If a pack's field happens to sit near one of
+these, that is a measurement; if a page arrives at one without a pack, that is
+the default talking. Say which of the two it is out loud before shipping.

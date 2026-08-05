@@ -256,8 +256,16 @@ Taken from each pack's own **Signature motifs** and **Micro-interactions** secti
 | `briefing-room` | `SlideFrame`, `ClaimTitle`, `SourcedNumber`, `HighlightPhrase`, `ComparisonTable` |
 | `atrium` | `ItalicAside`, `MotionToggle`, `ComparisonTable`, `SourcedFigure`, `AuthorityRow` |
 | `orchard` | `Slab`, `ChipRail`, `ClaimEvidence`, `GlassNav`, `ObjectionSection` |
+| `field-notes` | `DawnHero`, `NumberedEyebrow`, `ProvenanceTag`, `SourcedClaim`, `CropMarks` |
 
-Total: 6 × 6 spine + 29 signature = **65 components**.
+Total: 7 × 6 spine + 34 signature = **76 components**.
+
+`field-notes` arrived on `main` from a concurrent run *after* this spec was
+written, and the seventh kit is here because check 3 caught its absence at the
+merge — which is the check doing exactly the job it was added for. Its `RuledSheet`
+motif is deliberately **not** a component: a section divided by one hairline is the
+spine's `Rule`, and giving it a second name would be the `--accent-dim` mistake in
+component form.
 
 `workbench`'s `DestructiveButton` is there because the pack names **three** button
 kinds — "primary = accent fill; secondary = 1px-border ghost; destructive = red-border

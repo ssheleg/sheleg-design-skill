@@ -19,13 +19,6 @@ file makes is checked against the file that has to keep it:
      unless alwaysApply is true; no relative links (rules travel alone).
   7. install.sh ships exactly the bundle, and bin/cli.js walks it at runtime.
   8. Relative markdown links inside the repo resolve.
-  9. Every style pack has a reference kit and vice versa; the six-component
-     spine is present in each with props identical to the workbench exemplar;
-     every component carries a doc whose category is in the locked taxonomy;
-     styles.css opens with the pack's token layer byte for byte and holds no
-     colour literal below the component marker; each kit's sync config has its
-     required keys, points readmeHeader at a real conventions.md and carries no
-     projectId; and nothing kit-shaped reached the installed bundle (ADR-0002).
 
 Exit code 0 with "OK (<n> checks)" when clean; 1 with FAIL: lines otherwise.
 """
@@ -55,6 +48,33 @@ PACK_SECTIONS = (
     "## Bans",
     "## Gotchas",
 )
+
+# The widened contract (1.5.0). Four sections were added after an audit found the
+# packs specified colour and motion precisely and then went quiet exactly where
+# implementations drift: per-component states, the opening viewport, collapse
+# behaviour, and the one element the page is remembered by.
+#
+# The skeleton carries all thirteen from the moment it is widened -- a template
+# that teaches nine while the contract wants thirteen is worse than no template.
+#
+# The six packs shipped before the widening stay on the nine. Backfilling them
+# honestly needs re-reading each pack's live reference, and three of them record
+# a product name where an address belongs, so three cannot be re-read at all.
+# Filling those sections from the token layer instead would be inventing values
+# with a citation attached -- the exact failure the pack layer exists to prevent.
+# Held rather than faked (operator, 2026-08-04).
+#
+# So the gate is all-or-nothing rather than staged. Nine are always required.
+# Touch one of the four widened sections and you owe all four -- which closes the
+# dead zone where a new pack copies the thirteen-heading skeleton, keeps the easy
+# nine, and still passes. There is no version of a pack that is half-widened.
+PACK_SECTIONS_WIDENED_ONLY = (
+    "## Components",
+    "## Hero",
+    "## Responsive",
+    "## Signature element",
+)
+PACK_SECTIONS_WIDE = PACK_SECTIONS + PACK_SECTIONS_WIDENED_ONLY
 
 # The Claude Design bridge covers four reference types plus the border; each is a
 # heading, so "we documented design-sync" stops being a claim and becomes a check.
@@ -280,6 +300,7 @@ def validate_skills():
         "SHELEG_DESIGN.md",
         "FIGMA_BRIDGE.md",
         "AI_PRODUCT_PATTERNS.md",
+        "MOTION_DOCTRINE.md",
         "DESIGN_SYNC_BRIDGE.md",
     ):
         if check(
@@ -308,7 +329,7 @@ def validate_skills():
     trel = f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/STYLE_PACK_TEMPLATE.md"
     if check(template.is_file(), f"{trel}: missing"):
         ttext = read(template) or ""
-        for section in PACK_SECTIONS:
+        for section in PACK_SECTIONS_WIDE:
             check(section in ttext, f"{trel}: missing required section '{section}'")
         check(
             read(ROOT / "templates/style-pack-template.md") == ttext,
@@ -316,11 +337,29 @@ def validate_skills():
         )
     skill_text = read(skills_dir / PLUGIN / "SKILL.md") or ""
     cli_text = read(ROOT / "bin/cli.js") or ""
+    # The agent-facing surfaces are covered above; these two are read by humans
+    # deciding whether to install, and they drift silently because nothing
+    # imports them. A pack the README doesn't list is a pack nobody chooses.
+    readme_text = read(ROOT / "README.md") or ""
+    rules_text = "".join(
+        read(p) or "" for p in sorted((ROOT / "cursor/rules").glob("*.mdc"))
+    )
     for pack in packs:
         rel = pack.relative_to(ROOT)
         text = read(pack) or ""
         for section in PACK_SECTIONS:
             check(section in text, f"{rel}: missing required section '{section}'")
+        # All-or-nothing on the widened four. A pack that copied the current
+        # skeleton and kept only the cheap headings would otherwise pass while
+        # teaching the next author that the four are optional.
+        adopted = [s for s in PACK_SECTIONS_WIDENED_ONLY if s in text]
+        if adopted:
+            missing = [s for s in PACK_SECTIONS_WIDENED_ONLY if s not in text]
+            check(
+                not missing,
+                f"{rel}: half-widened pack -- carries {', '.join(adopted)} but not "
+                f"{', '.join(missing)}. The widened four ship together or not at all",
+            )
         check(
             (styles_dir / "tokens" / f"{pack.stem}.css").is_file(),
             f"{rel}: missing ready-made token layer styles/tokens/{pack.stem}.css",
@@ -333,6 +372,14 @@ def validate_skills():
         check(
             pack.stem in cli_text,
             f"bin/cli.js: style pack '{pack.stem}' is not named in the installer output",
+        )
+        check(
+            pack.stem in readme_text,
+            f"README.md: style pack '{pack.stem}' is not listed in the pack table",
+        )
+        check(
+            pack.stem in rules_text,
+            f"cursor/rules: style pack '{pack.stem}' is not named in any .mdc rule",
         )
 
 

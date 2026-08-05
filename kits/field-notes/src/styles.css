@@ -1,0 +1,815 @@
+/* SHELEG Design — Field Notes token layer (open-source developer tools,
+   sold on auditability rather than power).
+   Copy verbatim; consume only var(--…) in components.
+
+   The page is ONE sheet of warm paper with rules drawn on it. Sections are
+   separated by a hairline, never by flipping the background. The only dark
+   surface is the hero, and it dissolves INTO the paper rather than ending
+   against it.
+
+   Extracted from graphify.com on 2026-08-04 by reading its live computed
+   styles. Where this file diverges from the reference it says so in a comment
+   and gives the measured reason — four such corrections, all in §CONTRAST
+   and §DARK. */
+
+:root {
+  color-scheme: light; /* per theme, never "light dark" — the reference sets
+                          none at all, so UA controls follow the OS while the
+                          page follows the class. */
+
+  /* ---- The paper ------------------------------------------------------- */
+  --bg: #f8f7f0; /* warm off-white with a green cast */
+  --surface: #fdfcf6; /* card / popover — a lighter sheet */
+  --surface-2: #edeee2; /* the section wash; used at 40% and 20% opacity */
+  --surface-3: #e8ebdd; /* the deepest paper step */
+  --line: #e0e2d3; /* THE hairline — this token does the composition */
+  --line-strong: #dcdecd; /* inputs, one step down */
+
+  /* ---- Ink ------------------------------------------------------------- */
+  --ink: #16211b; /* near-black, green-cast — 15.4:1 on --bg */
+  --ink-2: #232a24; /* on --surface-2 */
+  --ink-soft: #626b60; /* 5.2:1 on --bg — passes AA, so it MAY carry body copy */
+  --on-ink: #f8f7f0; /* the label on an ink fill */
+
+  /* ---- Brand: rust ink on paper ---------------------------------------- */
+  --brand: #9a3f28; /* 6.3:1 on --bg — safe as text on the paper */
+  --brand-ink: #8f3f1f; /* 6.8:1 — the text-safe rust */
+  --brand-soft: #e8cbb8; /* the rust wash (selected chip) */
+  --on-brand: #f8f4ef; /* 6.2:1 on --brand */
+  /* The light brand is 2.3:1 on the hero's top stop and 1.4:1 in its middle.
+     Any brand-coloured text on a dark surface uses THIS instead — 4.8:1. */
+  --brand-on-dark: #cf7a52;
+
+  /* ---- Provenance: the three states of a claim -------------------------- */
+  /* The pack's reason to exist. A claim is shown with its epistemic status as
+     a readable label, never as a confidence number. Each state ships a fill,
+     a text-safe ink, and a wash. */
+  --verify: #0e9e76; /* 3.2:1 on --bg — a FILL and large-text colour ONLY */
+  --verify-ink: #0a7558; /* 5.3:1 — the label colour */
+  --verify-soft: #d6f1e7;
+  --witness: #b3402a; /* 5.3:1 */
+  --witness-ink: #9a3016; /* 7.0:1 */
+  --witness-soft: #f4ded4;
+  /* [EXTRACTED] → --verify-ink · [INFERRED] → --brand-ink ·
+     [AMBIGUOUS] → --witness-ink.  The third mapping was not rendered on the
+     reference at capture time; it is inferred from the token set, and this
+     comment is the pack practising its own rule. */
+  --danger: #c0442e; /* 4.8:1 — destructive, distinct from --witness */
+
+  /* ---- App surfaces (see the pack's Register: workbench stays the default
+     for neutral product UI; this layer is for a console that must read as the
+     same paper as the marketing site). The reference's sidebar family drifts
+     browner than its page family and rings violet; both are reconciled here to
+     the page's own neutrals and the brand. */
+  --sidebar: #fffdf9;
+  --sidebar-surface: #f1ece3;
+  --sidebar-line: #e8e1d5;
+  --sidebar-ink: #1b1714;
+  --on-sidebar: #faf7f2;
+
+  /* ---- Charts: rust → teal, and nothing from another system ------------- */
+  --chart-1: #9a3f28;
+  --chart-2: #0e9e76;
+  --chart-3: #f0603c;
+  --chart-4: #b0563a;
+  --chart-5: #6f8f5e; /* the reference ships #3b82f6 here — an unrelated blue
+                         in a palette that otherwise runs rust to teal. */
+
+  /* ---- The dawn: the hero's eight stops --------------------------------- */
+  /* The dark has no edge. It resolves into --bg at 100%. */
+  --dawn-1: #062a22;
+  --dawn-2: #0a3f31;
+  --dawn-3: #124f3c;
+  --dawn-4: #1e6149;
+  --dawn-5: #4f8a68; /* white body copy is 4.1:1 here — content must END
+                        before the gradient reaches this stop. */
+  --dawn-6: #a8c9ad;
+  --dawn-7: #e9ecdf;
+  --hero-dawn: linear-gradient(
+    var(--dawn-1) 0%,
+    var(--dawn-2) 35%,
+    var(--dawn-3) 60%,
+    var(--dawn-4) 74%,
+    var(--dawn-5) 85%,
+    var(--dawn-6) 93%,
+    var(--dawn-7) 98%,
+    var(--bg) 100%
+  );
+  --hero-vignette: radial-gradient(
+    72% 58% at 32% 42%,
+    rgba(4, 30, 23, 0.28),
+    transparent 74%
+  );
+  /* Film grain, inline so it costs no request. */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='150' height='150' filter='url(%23g)' opacity='0.5'/%3E%3C/svg%3E");
+  --grain-opacity: 0.06;
+  /* The ambient layer is NOTATION, not particles: mathematical and logical
+     glyphs at this opacity, a few of which flip to --verify (see --dur-sym). */
+  --sym-op: 0.14;
+
+  /* ---- One dark family, not three -------------------------------------- */
+  /* The reference paints three unrelated dark palettes: a warm-brown theme, a
+     forest band, and a navy terminal. This pack keeps the forest — it is the
+     hero's own gradient and the only one the page argues for. */
+  --deep: #072820; /* full-bleed dark band */
+  --deep-2: #0b332a; /* the terminal's header bar */
+  --deep-3: #041d17; /* the terminal body — a darker step of the SAME family,
+                        where the reference switches to navy #0b101d */
+  --on-deep: #e9e2d6;
+  --line-on-deep: rgba(255, 255, 255, 0.1);
+  --line-on-deep-strong: rgba(255, 255, 255, 0.2);
+  --fill-on-deep: rgba(255, 255, 255, 0.06);
+
+  /* ---- Elevation is a RING, not a shadow -------------------------------- */
+  --ring-hairline: 0 0 0 1px var(--line);
+  --ring-brand: 0 0 0 1px rgba(154, 63, 40, 0.5);
+  --ring-inset: inset 0 0 0 1px rgba(255, 255, 255, 0.04); /* panels on dark */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-float: 0 32px 64px -28px rgba(26, 22, 12, 0.45); /* WARM, not grey —
+                        the one deep shadow in the system */
+  --focus-ring: var(--brand);
+
+  /* ---- Radii: one root, a proportional ramp ---------------------------- */
+  /* Change --radius and the whole system moves together. Never hardcode px. */
+  --radius: 0.75rem; /* 12px */
+  --radius-xs: calc(var(--radius) * 0.25); /* 3px  — icon squares */
+  --radius-sm: calc(var(--radius) * 0.6); /* 7.2px — chips, provenance tags */
+  --radius-md: calc(var(--radius) * 0.8); /* 9.6px — inner blocks */
+  --radius-lg: var(--radius); /* 12px  — cards, panels, buttons */
+  --radius-xl: calc(var(--radius) * 1.4); /* 16.8px — media wells */
+  --radius-2xl: calc(var(--radius) * 1.8); /* 21.6px — the largest panel */
+  --radius-pill: 999px; /* nav, primary CTA, badges */
+
+  /* ---- Spacing & measure ----------------------------------------------- */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 48px;
+  --s8: 64px;
+  --section-pad-y: var(--s8); /* 64px at md; 16px below it */
+  --content-max: 1152px; /* the default column */
+  --wide-max: 1400px; /* the graph viewer / full-width figures */
+  --shell-max: 1920px; /* hero and nav shell */
+  --prose-max: 672px;
+  --lede-max: 448px;
+  --crop-inset: 14px; /* the crop marks' distance from the edge */
+  --crop-len: 0.75rem; /* 12px arms */
+
+  /* ---- Hero & viewport -------------------------------------------------- */
+  /* svh, not vh: with vh the gradient reflows when mobile browser chrome
+     collapses. dvh goes behind @supports (height: 100dvh) at the use site. */
+  --hero-min-h: 100svh;
+  --bar-h: 38px; /* the announcement bar — a real layout participant: the nav
+                    sits at top: var(--bar-h) and transitions `top` over 300ms
+                    when it is dismissed. Set to 0px when closed. */
+  --hero-line-cap: 3; /* the headline's line ceiling — at 1.02 leading a fourth
+                         line closes into a block and the dawn stops reading */
+  /* The page's ONLY fluid size. Everything else steps at the breakpoints:
+     40rem / 48rem / 64rem / 80rem / 96rem, plus a max-width: 639px branch. */
+  --t-caption-fluid: clamp(0.8125rem, 0.2rem + 2vw, 2.125rem);
+
+  /* ---- Type ------------------------------------------------------------ */
+  /* Display: Bricolage Grotesque. Variable upstream (opsz 12..96, wdth 75..100,
+     wght 200..800) and it has NO ITALIC — see the pack's Bans. Substitutes with
+     the same voice and a real 600: Archivo, Space Grotesque, Darker Grotesque. */
+  --font-display: "Bricolage Grotesque", "Archivo", system-ui, sans-serif;
+  --font-sans: "Geist", system-ui, -apple-system, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", monospace;
+
+  --weight-display: 600;
+  --weight-display-quiet: 400; /* the deliberately softer section heading */
+  --weight-body: 400;
+  --weight-body-strong: 600;
+
+  --t-hero: 67.2px;
+  --t-h1: 44px;
+  --t-h2: 40px;
+  --t-h3: 30px;
+  --t-h4: 20px;
+  --t-h5: 15px; /* the card title */
+  --t-lede: 18px;
+  --t-body: 16px;
+  --t-sm: 14px;
+  --t-eyebrow: 0.6875rem; /* 11px */
+  --t-tag: 10px;
+  --t-mono: 13px; /* the terminal */
+
+  --lh-hero: 1.02;
+  --lh-display: 1.15;
+  --lh-h4: 1.4;
+  --lh-body: 1.5;
+  --lh-lede: 1.556;
+  --lh-mono: 1.625;
+  --lh-eyebrow: 1; /* the eyebrow sits on its own baseline */
+
+  /* One authored decision, not five: every display size tracks at -0.025em. */
+  --track-display: -0.025em;
+  --track-eyebrow: 0.16em;
+  --track-eyebrow-wide: 0.18em;
+  --track-tag: 0.08em;
+  --track-tab: 0.05em;
+
+  /* ---- Motion: two eases, two jobs ------------------------------------- */
+  --ease-ui: cubic-bezier(0.4, 0, 0.2, 1); /* state changes */
+  --ease-reveal: cubic-bezier(0.22, 1, 0.36, 1); /* scroll entry */
+  --dur-ui: 0.15s; /* every control */
+  --dur-reveal: 0.5s; /* opacity + transform on entry */
+  --dur-sym: 6s; /* one hero glyph flickering to --verify */
+  --dur-marquee: 40s;
+  /* The ONLY hue that ever animates is --verify. The rust never moves: the
+     moment the brand animates it stops reading as an identity and starts
+     reading as a status. */
+
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+/* The dark twin. Warm, one family, and clean on contrast throughout —
+   17.0:1 for body ink, 8.3:1 for verify, 5.9:1 for the brand. */
+[data-theme="dark"],
+.dark {
+  color-scheme: dark;
+
+  --bg: #14110e;
+  --surface: #1c1815;
+  --surface-2: #262019;
+  --surface-3: #262019;
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.14);
+
+  --ink: #f7f3ec;
+  --ink-2: #f7f3ec;
+  --ink-soft: #a89e8f; /* 7.1:1 — comfortably AA */
+  --on-ink: #14110e;
+
+  --brand: #cf7a52; /* 5.9:1 */
+  --brand-ink: #cf7a52;
+  --brand-soft: #2e1c12;
+  --on-brand: #14110e;
+  --brand-on-dark: #cf7a52; /* already the dark value */
+
+  --verify: #2bc0a8; /* 8.3:1 — safe as text here, unlike the light theme */
+  --verify-ink: #2bc0a8;
+  --verify-soft: #14312a;
+  --witness: #e06a4f; /* 5.7:1 */
+  --witness-ink: #e06a4f;
+  --witness-soft: #341711;
+  --danger: #e5654c;
+
+  --sidebar: #1c1815;
+  --sidebar-surface: #262019;
+  --sidebar-line: rgba(255, 255, 255, 0.1);
+  --sidebar-ink: #f7f3ec;
+  --on-sidebar: #14110e;
+
+  --chart-1: #cf7a52;
+  --chart-2: #2bc0a8;
+  --chart-3: #f0603c;
+  --chart-4: #cf7a52;
+  --chart-5: #8fae7a;
+
+  --ring-brand: 0 0 0 1px rgba(207, 122, 82, 0.5);
+  --shadow-float: 0 32px 64px -28px rgba(0, 0, 0, 0.6);
+  --focus-ring: var(--brand);
+}
+
+/* The reference ships a reduced-motion branch for every animated class, which
+   is the right posture and this pack requires it. Durations collapse; the
+   reveal resolves to its final state instead of transitioning to it. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-ui: 0s;
+    --dur-reveal: 0s;
+    --dur-sym: 0s;
+    --dur-marquee: 0s;
+  }
+}
+
+/* ── components ── */
+
+/* Everything below consumes var(--…) only. Colour never appears as a literal:
+   the token layer above is the whole palette, and a value with no token is a
+   gap in the pack rather than something to inline here. Geometry is different —
+   the pack states its paddings and sizes numerically, so those stay numbers.
+
+   The composition rule that governs every rule below: the page is ONE sheet of
+   paper with hairlines drawn on it. Nothing here fills a band, nothing lifts,
+   nothing casts a grey shadow, and the only dark surface is .fn-hero. */
+
+/* Heading — the display face (Bricolage Grotesque, 600) at the pack's three
+   section sizes: 44 / 40 / 30. Tracking is a constant --track-display at every
+   display size — one authored decision, not three. Headings are written as
+   claims, which is a copy rule the type ramp exists to carry. */
+.fn-heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--weight-display);
+  letter-spacing: var(--track-display);
+  font-optical-sizing: auto; /* the opsz 12..96 axis the reference leaves unused */
+  color: var(--ink);
+  text-wrap: balance;
+}
+.fn-heading--1 {
+  font-size: var(--t-h1);
+  line-height: var(--lh-display);
+}
+.fn-heading--2 {
+  font-size: var(--t-h2);
+  line-height: var(--lh-display);
+}
+.fn-heading--3 {
+  font-size: var(--t-h3);
+  line-height: 1.2; /* the pack measures h3 at 1.2; there is no --lh-h3 token */
+}
+/* The deliberately quieter heading the pack keeps a weight for. */
+.fn-heading--quiet {
+  font-weight: var(--weight-display-quiet);
+}
+
+/* Rule — the hairline that does the composition. THIS is the ruled sheet: a
+   section divided by one line is this component with --section-pad-y around it
+   (.fn-rule--section), which is why the kit ships no RuledSheet. A second name
+   for the same thing is how a token interface rots. */
+.fn-rule {
+  height: 0;
+  margin: var(--s5) 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+.fn-rule--strong {
+  border-top-color: var(--line-strong);
+}
+.fn-rule--section {
+  margin: var(--section-pad-y) 0;
+}
+
+/* Button — three variants, three geometries, and each transitions exactly the
+   properties the pack measured for it. Padding is per variant (the pack states
+   one number per variant, and that number is the `md` size); `sm` and `lg` step
+   from it rather than replacing it. */
+.fn-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s2);
+  box-sizing: border-box;
+  font-family: var(--font-sans);
+  border: 1px solid transparent;
+  cursor: pointer;
+  --fn-btn-pad-y: 8px;
+  --fn-btn-pad-x: 16px;
+}
+.fn-btn:focus-visible {
+  /* 2px of the brand at 2px offset, following the target's own radius. */
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+/* Pack decision, stated in the Components table: the reference ships a
+   `cursor: default` button at full opacity, which is indistinguishable from an
+   enabled one. A disabled control that looks enabled is a bug with a stylesheet. */
+.fn-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.fn-btn--sm {
+  padding: calc(var(--fn-btn-pad-y) - 2px) calc(var(--fn-btn-pad-x) - 4px);
+  font-size: 13px;
+}
+.fn-btn--md {
+  padding: var(--fn-btn-pad-y) var(--fn-btn-pad-x);
+  font-size: var(--t-sm);
+}
+.fn-btn--lg {
+  padding: calc(var(--fn-btn-pad-y) + 4px) calc(var(--fn-btn-pad-x) + 8px);
+  font-size: var(--t-body);
+}
+/* Primary CTA — a pill in ink, and `opacity` is the ONLY property it moves. */
+.fn-btn--primary {
+  --fn-btn-pad-y: 8px;
+  --fn-btn-pad-x: 16px;
+  font-weight: 500;
+  border-radius: var(--radius-pill);
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--on-ink);
+  transition: opacity var(--dur-ui) var(--ease-ui);
+}
+.fn-btn--primary:hover:not(:disabled) {
+  opacity: 0.88;
+}
+/* Secondary. The pack measures its transition as `transform, background-color`,
+   so both channels are declared here — and nothing below ever sets a transform,
+   because the same pack bans hover states that scale or lift. The declaration is
+   the reference's; the empty transform channel is the ban being kept. */
+.fn-btn--secondary {
+  --fn-btn-pad-y: 12px;
+  --fn-btn-pad-x: 20px;
+  font-weight: var(--weight-body-strong);
+  border-radius: var(--radius-lg);
+  background: var(--bg);
+  border-color: var(--line);
+  color: var(--ink);
+  transition:
+    transform var(--dur-ui) var(--ease-ui),
+    background-color var(--dur-ui) var(--ease-ui);
+}
+.fn-btn--secondary:hover:not(:disabled) {
+  background: var(--surface-2);
+}
+/* Ghost. The pack measures this variant on the dawn; on paper a 6%-white fill
+   is nothing, so the paper form is a bare hairline ghost and the measured
+   on-deep values live in the .fn-hero context below. */
+.fn-btn--ghost {
+  --fn-btn-pad-y: 8px;
+  --fn-btn-pad-x: 14px;
+  font-weight: var(--weight-body);
+  border-radius: var(--radius-lg);
+  background: transparent;
+  border-color: var(--line);
+  color: var(--ink-soft);
+  transition:
+    color var(--dur-ui) var(--ease-ui),
+    background-color var(--dur-ui) var(--ease-ui);
+}
+.fn-btn--ghost:hover:not(:disabled) {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+
+/* Card — a lighter sheet on a hairline RING, never a shadow. */
+.fn-card {
+  box-sizing: border-box;
+  padding: var(--s5);
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--ring-hairline);
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--ink);
+}
+/* There is deliberately no `.fn-card:hover` rule, and adding one is a change to
+   the pack rather than a fix to this file. The pack states the reason in as many
+   words: a page built from hairlines has nothing to lift off. No shadow appears
+   on hover, no border darkens, no fill changes — a card is a surface, not a
+   control, and if it is clickable the thing inside it is the control. */
+.fn-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s3);
+  margin-bottom: var(--s3);
+}
+.fn-card__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--t-h5);
+  font-weight: var(--weight-display);
+  letter-spacing: var(--track-display);
+  color: var(--ink);
+}
+/* Mono is furniture in this pack, not data — so the meta line is mono and the
+   figure in .fn-stat__value is not. That inverts workbench on purpose. */
+.fn-card__meta {
+  font-family: var(--font-mono);
+  font-size: var(--t-tag);
+  line-height: var(--lh-mono);
+  letter-spacing: var(--track-tag);
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.fn-card__body {
+  display: block;
+}
+
+/* Chip — --surface on a hairline at --radius-sm, 6x14, 14px/400. Selected is
+   the rust wash behind a rust border, and exactly one chip is selected. */
+.fn-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  box-sizing: border-box;
+  padding: 6px 14px;
+  font-family: var(--font-sans);
+  font-size: var(--t-sm);
+  font-weight: var(--weight-body);
+  line-height: var(--lh-body);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  color: var(--ink-soft);
+  transition:
+    background-color var(--dur-ui) var(--ease-ui),
+    border-color var(--dur-ui) var(--ease-ui),
+    color var(--dur-ui) var(--ease-ui);
+}
+.fn-chip:hover {
+  background: var(--surface-2);
+}
+.fn-chip--neutral {
+  background: var(--surface);
+  border-color: var(--line);
+  color: var(--ink-soft);
+}
+/* The rust wash without the border promotion — subject matter, not state. */
+.fn-chip--accent {
+  background: var(--brand-soft);
+  border-color: var(--brand-soft);
+  color: var(--brand-ink);
+}
+.fn-chip--selected {
+  background: var(--brand-soft);
+  border-color: var(--brand);
+  color: var(--brand-ink);
+}
+
+/* Stat — no tile, no fill, no border. A slab would be another pack; here the
+   figure sits on the paper between two hairlines like everything else. The
+   value is the DISPLAY face: mono in this pack means annotation, so the label
+   and the source are mono and the number is not. */
+.fn-stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  box-sizing: border-box;
+}
+.fn-stat__label {
+  font-family: var(--font-mono);
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.fn-stat__value {
+  font-family: var(--font-display);
+  font-size: var(--t-h2);
+  font-weight: var(--weight-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--track-display);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.fn-stat__source {
+  font-family: var(--font-sans);
+  font-size: var(--t-sm);
+  line-height: var(--lh-body);
+  color: var(--ink-soft);
+}
+
+/* NumberedEyebrow — the pack's most transferable device, and the whole of it is
+   two pseudo-elements. The chevron and the position are drawn off `data-n`, both
+   at 55% opacity, so the label text stays the only real content in the DOM. */
+.fn-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--t-eyebrow);
+  font-weight: var(--weight-body);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.fn-eyebrow::before {
+  content: "\3009"; /* U+3009 — the pack's own chevron, escaped so the
+                       stylesheet survives a re-encoding */
+  opacity: 0.55;
+}
+.fn-eyebrow::after {
+  content: attr(data-n);
+  opacity: 0.55;
+}
+.fn-eyebrow--wide {
+  letter-spacing: var(--track-eyebrow-wide);
+}
+
+/* ProvenanceTag — bracketed mono at 10px/--track-tag, transparent fill, and a
+   1px border of the state's OWN ink at 25% alpha. One border rule serves all
+   three states because the border mixes from currentColor: the state modifier
+   sets `color` and the frame follows it. It is a label, so it has no hover. */
+.fn-prov {
+  display: inline-block;
+  padding: 1px 4px;
+  font-family: var(--font-mono);
+  font-size: var(--t-tag);
+  line-height: var(--lh-mono);
+  letter-spacing: var(--track-tag);
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: transparent;
+  border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+  border-radius: var(--radius-sm);
+}
+.fn-prov--extracted {
+  color: var(--verify-ink); /* --verify itself is a fill, never a label */
+}
+.fn-prov--inferred {
+  color: var(--brand-ink);
+}
+.fn-prov--ambiguous {
+  color: var(--witness-ink);
+}
+
+/* SourcedClaim — the claim and the name of whoever produced it, in ONE block.
+   The source is not a footnote, not a superscript, not a tooltip: on a pack
+   whose product is provenance, the attribution is the argument. */
+.fn-claim {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  margin: 0;
+  max-width: var(--prose-max);
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--ink);
+}
+.fn-claim__body {
+  margin: 0;
+}
+.fn-claim__tag {
+  margin-left: var(--s2);
+}
+.fn-claim__source {
+  /* <cite> defaults to italic, and italic is banned pack-wide: the display face
+     has none, so the browser would synthesise a slant. */
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: var(--t-tag);
+  line-height: var(--lh-mono);
+  letter-spacing: var(--track-tag);
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* DawnHero — the signature element, and it happens ONCE per page. A dark field
+   that resolves into the paper instead of ending against it: eight stops, the
+   last of which IS --bg, so there is no seam and no second dark section below.
+   It is static. --hero-dawn is a gradient, not an animation; nothing here moves,
+   and a parallax or a canvas behind it would turn the document back into a
+   landing page. */
+.fn-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  /* svh, never vh: with vh the gradient reflows when the mobile URL bar hides. */
+  min-height: var(--hero-min-h);
+  padding: var(--s4);
+  background-image: var(--hero-dawn);
+  color: var(--on-deep);
+}
+@supports (height: 100dvh) {
+  .fn-hero {
+    min-height: 100dvh;
+  }
+}
+.fn-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-image: var(--hero-vignette);
+  pointer-events: none;
+}
+.fn-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--grain);
+  opacity: var(--grain-opacity);
+  pointer-events: none;
+}
+@media (min-width: 64rem) {
+  .fn-hero {
+    padding: var(--s7);
+  }
+}
+/* The content column sits left inside the shell, not centred. */
+.fn-hero__shell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s5);
+  width: 100%;
+  max-width: var(--shell-max);
+  margin: 0 auto;
+}
+.fn-hero__headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--t-hero);
+  font-weight: var(--weight-display);
+  line-height: var(--lh-hero);
+  letter-spacing: var(--track-display);
+  font-optical-sizing: auto;
+  color: var(--bg);
+  text-wrap: balance;
+  /* The line ceiling is a real constraint, not a safety net: at 1.02 leading a
+     fourth line closes into a block and the dawn stops reading behind it. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--hero-line-cap);
+  overflow: hidden;
+}
+/* One accent phrase inside the headline, and it is the DARK brand: the paper
+   rust measures 2.29:1 up there. */
+.fn-hero__accent {
+  color: var(--brand-on-dark);
+}
+.fn-hero__lede {
+  margin: 0;
+  /* Must end above --dawn-5: white copy is 15.4:1 at the top of the gradient
+     and 4.06:1 by the 85% stop. --lede-max is what keeps it short enough. */
+  max-width: var(--lede-max);
+  font-family: var(--font-sans);
+  font-size: var(--t-lede);
+  line-height: var(--lh-lede);
+  color: var(--on-deep);
+}
+.fn-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s3);
+}
+/* One proof line, and nothing else: no card, no screenshot, no metric row and
+   no second dark surface. Those start below the fold, on paper. */
+.fn-hero__proof {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--t-tag);
+  line-height: var(--lh-mono);
+  letter-spacing: var(--track-tag);
+  text-transform: uppercase;
+  color: var(--on-deep);
+}
+/* The primary CTA inverts on the dawn: the paper as the fill, the darkest stop
+   as the ink. --bg rather than white, because a pure white surface is banned. */
+.fn-hero .fn-btn--primary {
+  background: var(--bg);
+  border-color: var(--bg);
+  color: var(--dawn-1);
+}
+/* The ghost's measured on-deep form. */
+.fn-hero .fn-btn--ghost {
+  background: var(--fill-on-deep);
+  border-color: var(--line-on-deep-strong);
+  color: var(--on-deep);
+}
+.fn-hero .fn-btn--ghost:hover:not(:disabled) {
+  background: var(--line-on-deep);
+  color: var(--bg);
+}
+/* Focus on the dawn is the dark brand, never white. */
+.fn-hero .fn-btn:focus-visible {
+  outline-color: var(--brand-on-dark);
+}
+
+/* CropMarks — printer's registration marks: eight 1px arms of --crop-len at the
+   four corners, ink at 30%, desktop only. They cost nothing and they state the
+   thesis: this page was printed and trimmed. Hidden below 48rem so they never
+   become a touch target. */
+.fn-crop {
+  position: absolute;
+  inset: var(--crop-inset);
+  display: none;
+  pointer-events: none;
+  color: color-mix(in srgb, var(--ink) 30%, transparent);
+  background-repeat: no-repeat;
+  background-image: linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor);
+  background-size: var(--crop-len) 1px, 1px var(--crop-len), var(--crop-len) 1px,
+    1px var(--crop-len), var(--crop-len) 1px, 1px var(--crop-len),
+    var(--crop-len) 1px, 1px var(--crop-len);
+  background-position: left top, left top, right top, right top, left bottom,
+    left bottom, right bottom, right bottom;
+}
+@media (min-width: 48rem) {
+  .fn-crop {
+    display: block;
+  }
+}
+/* The one place crop marks meet a dark surface. */
+.fn-crop--on-deep {
+  color: color-mix(in srgb, var(--on-deep) 30%, transparent);
+}

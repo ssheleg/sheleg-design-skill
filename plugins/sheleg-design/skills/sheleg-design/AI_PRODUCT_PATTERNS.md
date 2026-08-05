@@ -78,6 +78,44 @@ indeterminate indicator plus elapsed time beats an invented estimate.
   drafted reply, a synthesized summary of someone's words, a generated image of
   a real place. Not everywhere: labeling every pixel is noise.
 
+### The provenance tag — label the part, not the whole
+
+A single confidence number on a whole answer is the wrong unit. Answers are
+usually mixed: one clause was read straight out of a source, the next was
+derived, a third is the model's guess. Scoring the assembly hides exactly the
+part the reader needed to check.
+
+The working pattern is a **small set of named states, attached inline to the
+span each one qualifies**. Three is enough, and the names are verbs about
+knowing rather than adjectives about certainty:
+
+| State | Means | Colour role |
+|---|---|---|
+| `[EXTRACTED]` | lifted verbatim from a source the user can open | the *verified* hue |
+| `[INFERRED]` | derived by a step the system can name | the *brand* hue — the system's own voice |
+| `[AMBIGUOUS]` | the evidence supports more than one reading | the *unverified* hue |
+
+Shape, so it annotates instead of shouting: monospace at ~10px, positive
+tracking, a bracketed label, a transparent fill and a 1px border of the state's
+own colour at ~25% alpha, on a small radius. It sits **beside the claim**, never
+collected into a legend at the bottom — a legend makes the reader hold a mapping
+in their head, which is the cost the tag exists to remove.
+
+Three rules that decide whether it is honest:
+
+- **Every state must be reachable.** If nothing is ever `[AMBIGUOUS]`, the
+  vocabulary is decoration and the reader learns to ignore all of it.
+- **The label must be derivable from something real** — a retrieval hit, a
+  traversal path, a rule that fired. A tag assigned by a second model call
+  guessing at the first one is confidence theater with better typography.
+- **Tag the span, not the message.** If you cannot say which words a state
+  applies to, you do not yet know it well enough to display it.
+
+Any pack can implement this: it needs three hues, each with a text-safe ink and
+a wash. `field-notes` ships that set (`--verify` / `--witness` / `--brand`, each
+with `-ink` and `-soft`) because it was extracted from a product whose entire
+argument is provenance; `workbench` can carry it on its own semantic colours.
+
 ## 5. Agent actions: the confirm is the design
 
 The moment a model stops answering and starts *acting*, the interface's job
