@@ -4,7 +4,7 @@ The project's standing instructions and run log for task-pipeline. Stage 0
 reads this file **in full**; stage 10 prunes, stamps, and writes an entry only
 if the run diverged.
 
-## Standing instructions (cap: 10 · current: 6)
+## Standing instructions (cap: 10 · current: 7)
 
 Each one binds every run in this project until it is retired. Retire when it
 became a mechanical check, when the paths it names are gone, or when it has not
@@ -54,12 +54,22 @@ fired in five run stamps.
    rejected a real reference for lacking `https://`.
    *(Last fired: 2026-08-04 · `564ecec`)*
 
+7. **A gate that CI does not run is not shipped.** Adding a check to
+   `package.json` scripts is half the work; the release gate is
+   `.github/workflows/validate.yml`. Before closing any run that adds a check,
+   diff the scripts against the workflow steps — `npm test` ran three gates
+   while CI ran one for a whole release cycle, so a merge's green described a
+   third of the suite. Instruction 6 says a gate must be watched saying no;
+   this one says it must be watched saying anything at all.
+   *(Last fired: 2026-08-04 · `623d2fb`)*
+
 ## Run stamps
 
 | Date | Commit | Task | Diverged? |
 |---|---|---|---|
 | 2026-08-04 | `491d422` | `field-notes` style pack from graphify.com (v1.5.0, built; release held) | **yes** |
 | 2026-08-05 | `564ecec` | audit harvest — motion doctrine, dials, widened contract, two computed gates (v1.6.0) | **yes** |
+| 2026-08-04 | `623d2fb` | release close-out — CI wired to all three gates; **`v1.6.0` shipped**: GitHub release + npm, first published version since `v1.3.4` | **yes** |
 
 ## Log
 
@@ -151,3 +161,32 @@ directions.
 **The check that catches it next time.** Run the other branch's artifacts
 through this branch's gates *before* the merge, not after. It cost one command
 and turned a merge-day failure into a pre-merge fix.
+
+### 2026-08-04 — the release found a gate CI had never run
+
+**Symptom.** Verifying `main` before pushing the tag, `npm test` was found to
+run `validate.py`, `validate_palette.py` and `sloplint.py`, while
+`.github/workflows/validate.yml` ran only the first. The palette gate, the slop
+lint and both `--self-test` flags had never executed on a push.
+
+**Stage it surfaced at:** 7 (release), during the pre-push verification.
+**Stage that owned it:** 6 — the run that added the gates tested them by hand
+and wired them into `package.json`, which is where a human runs them and not
+where a merge is judged.
+
+**Root cause.** "Wired up" was read as "reachable by a command" rather than
+"executed by the gate that guards the branch". Both readings are true of
+`package.json`; only the second is true of CI.
+
+**Fix, by grade.** *Mechanical* — four steps added to the workflow (both gates,
+both self-tests), verified green on the tag. *Standing instruction* (7) — diff
+the scripts against the workflow steps before closing a run that adds a check.
+
+**The check that catches it next time.** `grep` every `test/*.py` against
+`.github/workflows/*.yml`; a script the workflow never names is the finding.
+Cheap enough to be worth automating the next time this class appears — which,
+per the ratchet rule, would be its second appearance.
+
+**What went right.** The release was gated on verifying a `main` this run did
+not assemble. That verification is the only reason the gap was found before it
+shipped rather than after, and it cost about a minute.

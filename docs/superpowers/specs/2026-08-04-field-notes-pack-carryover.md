@@ -14,10 +14,11 @@
 | 6 | 0 Grill | The stage-0 decision to skip the entry documentation audit rested on `docs/DOCMAP.md`, `docs/adr/` and a decision register being **absent**. Another run created all three at 19:11–19:12 | the premise expired mid-run | — | re-offer at the next run |
 
 | 7 | 6 Tests | T13 authored but unexercised — the harness forbids dispatching a subagent unrequested | tooling constraint, stated rather than skipped | REQ-009 | **closed 2026-08-04** — operator authorized; both branches run in separate fresh contexts, both GREEN, verdict recorded in `test/scenarios.md` |
-| 8 | 7 Release | Tag `v1.5.0`, npm publish, local install refresh, CI verification | held: three runs claim the same version and `v1.4.0` was never published | REQ-011, REQ-012 | **unresolved — operator decision** |
+| 8 | 7 Release | Tag `v1.5.0`, npm publish, local install refresh, CI verification | held: three runs claim the same version and `v1.4.0` was never published | REQ-011, REQ-012 | **closed 2026-08-04** — the collision resolved itself: the audit-harvest run merged this branch into `main` and moved to `1.6.0`. Released as **`v1.6.0`** at `623d2fb`; both workflows green end to end, `npm view` = `1.6.0`, local plugin refreshed 1.4.0 → 1.6.0, shadow check clean |
+| 9 | 7 Release | CI ran one gate of three — `validate_palette.py`, `sloplint.py` and both `--self-test` flags never executed on a push | found while verifying `main` before the release | — | **fixed in the same change** (`623d2fb`); all twelve CI steps now green on the tag |
 
 ## Counts
 
 ```
-carry-over: 6 open · unresolved: 2 · partial: 0 · dropped with agreement: 1
+carry-over: 4 open · unresolved: 0 · partial: 0 · dropped with agreement: 1 · closed this run: 4
 ```
