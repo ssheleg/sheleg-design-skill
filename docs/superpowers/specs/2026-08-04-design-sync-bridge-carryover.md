@@ -31,6 +31,9 @@
 
 | 18 | 5 Build | The scenario is **T13**, not T12 — `T12` is already the orchard pack on `main`. Same collision class as the ADR number (A7): the concurrent run is adding packs and will take scenario numbers too | caught by reading `test/scenarios.md` instead of trusting the plan's number | REQ-010 | re-checked against `main` before the merge, with the ADR number |
 
+| 19 | 6 Tests | **REQ-009's live push cannot be run by this agent.** `/design-sync` carries `disable-model-invocation` — only a human typing the command can start it | a harness restriction, not a scope choice. Building the upload by hand instead was rejected: both the upstream skill and this run's own bridge doc forbid hand-authored cards, because a lookalike lies about what the component does | REQ-009 | **human step** — the operator runs `/design-sync`; the exact sequence is in the final report and in `DESIGN_SYNC_BRIDGE.md` |
+| 20 | 6 Tests | An `orchard` finding was reported and **refuted**: `--cta-sheen` was called invalid CSS. `<length-percentage>{2}` is a legal radial size and the shape then defaults to ellipse; `CSS.supports` returns true and a real parser keeps the declaration | recorded because a refuted claim that is never written down comes back as folklore. The token layer was not touched and the claim never reached a doc | — | resolved — no change needed |
+
 ## Counts
 
-`open: 15 · unresolved: 0 · dropped: 0` (rows 9, 15 and 17 resolved same-stage) — printed beside every gate verdict from here on.
+`open: 17 · unresolved: 0 · dropped: 0` (rows 9, 15 and 17 resolved same-stage) — printed beside every gate verdict from here on.

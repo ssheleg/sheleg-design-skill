@@ -1,8 +1,8 @@
 {
   "name": "sheleg-design",
   "displayName": "SHELEG Design",
-  "description": "SHELEG Design methodology: cinematic scroll-driven landing pages (single scroll clock, layered degrade-to-calm motion, WebGL particle formations) plus pluggable visual style packs — instrument-console (dark console), editorial-luxury (warm editorial), workbench (light/dark product UI for dashboards and tools). Ships the sheleg-design skill, the architecture reference, style packs with ready-made token CSS, and the /sheleg-design command.",
-  "version": "1.4.0",
+  "description": "SHELEG Design methodology: cinematic scroll-driven landing pages (single scroll clock, layered degrade-to-calm motion, WebGL particle formations) plus pluggable visual style packs \u2014 instrument-console (dark console), editorial-luxury (warm editorial), workbench (light/dark product UI for dashboards and tools). Ships the sheleg-design skill, the architecture reference, style packs with ready-made token CSS, and the /sheleg-design command.",
+  "version": "1.6.0",
   "author": {
     "name": "ssheleg",
     "url": "https://x.com/sshlg93"

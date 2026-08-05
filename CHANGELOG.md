@@ -4,6 +4,57 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2026-08-04
+
+The Claude Design border, and the first code this skill has ever shipped.
+
+`DESIGN_SYNC_BRIDGE.md` is the contract for pushing a pack to claude.ai/design
+through Claude Code's bundled `/design-sync`, so the design agent builds screens
+out of a pack's real components instead of generic ones. It covers all four
+reference types and, like the Figma bridge, spends as much space on what does
+**not** cross: motion stays in code, and a kit is the static half of a pack.
+
+### Added
+
+- `DESIGN_SYNC_BRIDGE.md` — seven sections, each a reference type or a border:
+  what crosses and in what shape, style packs as the source of truth, the
+  Figma/pack/Claude Design triangle taken one direction at a time, Lazyweb
+  sweeps (layout crosses, identity does not), live-site extraction (the pack
+  first, the sync second), what cannot cross, and round-trip discipline.
+- A tool-presence-gated `## Optional — Claude Design (design-sync)` section in
+  `SKILL.md`, gated exactly like the Lazyweb one. Cursor is unaffected.
+- **Six React reference kits** under `kits/<pack>/` — a six-component spine with
+  identical names, props and types in every kit, plus each pack's signature
+  components: 65 components in all, built by `tsc` to `dist/` with a `.d.ts`
+  tree, because the converter reads the built entry and the design agent codes
+  against those types.
+- `npx sheleg-design-skill --kit <pack> --out <dir>` materializes one kit and
+  drops the pack document into `guidelines/` on the way.
+- `--accent-ink` in `workbench`, `editorial-luxury` and `instrument-console`,
+  additively. Text on the accent had no token in those three; `atrium` and
+  `briefing-room` already had exactly this name. In `workbench` it flips with
+  the theme, because white on the dark-mode accent is 3.2:1 and fails AA.
+- `docs/DOCMAP.md` and `docs/adr/` — the repo's doc map and its decision home.
+
+### Changed
+
+- The validator grew from 306 to **665 checks**: eleven of them cover the kits,
+  including a prop-parity diff of the spine across all six packages. Every one
+  was watched failing against a planted defect before it landed.
+- CI builds all six kits in a matrix and asserts the build emitted something —
+  `tsc` exits 0 when it compiles nothing.
+- README's dependency-free promise gains its one honest caveat: the kits are
+  code, they are not installed, and they appear only when asked for by name.
+
+### Notes
+
+- **The kits are not installed with the skill.** They ship in the npm package
+  and are copied out on demand (`ADR-0002`), which is how the installed skill
+  stays documentation while still having real components to hand.
+- `1.5.0` is not this project's — it belongs to a concurrent release. `1.4.0`
+  was never tagged and never published; its entry below describes a version that
+  only ever existed in the manifests.
+
 ## [1.4.0] - 2026-08-03
 
 Two packs for the warm consumer register, extracted from two production sites
