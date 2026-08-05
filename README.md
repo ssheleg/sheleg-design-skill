@@ -74,7 +74,10 @@ anywhere.
 ## Install
 
 Requires Node ≥ 16 for the installer. Nothing is added to your dependencies:
-the skill is documentation an agent reads.
+the skill is documentation an agent reads. The React reference kits are the one
+thing that is code, and they are deliberately **not** installed — they ship in
+the npm package and only appear when you ask for one by name (see *Claude
+Design*, below).
 
 ```bash
 # Auto-detect (.cursor/ or .claude/), default .cursor/skills/sheleg-design/
@@ -114,6 +117,7 @@ skills.
 |---|---|
 | `SKILL.md` | The agent-facing skill: discovery triggers, the principles, how to apply them, quick-reference rules, common mistakes |
 | `SHELEG_DESIGN.md` | The full reference: architecture, layer-by-layer mechanics with code, the exact morph math, the DOM↔WebGL projection bridge, a build-from-scratch recipe, and why each piece works |
+| `DESIGN_SYNC_BRIDGE.md` | The Claude Design contract: what a pack sends to claude.ai/design and in what shape, the rule for each of the four reference types, and the border motion does not cross |
 | `FIGMA_BRIDGE.md` | The design↔code contract: how a pack's tokens map onto Figma variable collections and modes, how to implement a design without importing raw values, and what cannot cross the border |
 | `AI_PRODUCT_PATTERNS.md` | The surfaces a model drives: the five states of a call, streaming instead of spinners, latency, provenance and uncertainty, agent confirmations, and the bans that keep it honest |
 | `styles/*.md` | The six style packs — palette, type, texture, motion tokens, motifs, bans, and the traps each one carries |
@@ -171,6 +175,29 @@ motion never crosses — Figma has no easing variable type, so the ease, duratio
 and stagger stay code-only, and shadows are effect styles whose parts bind to
 variables. A value in a file with no matching token is either a gap in the pack
 or drift in the file — the one thing it is never is a literal in a component.
+
+## Claude Design, in one direction
+
+claude.ai/design is a design agent that builds working UI from real React. Out of
+the box it builds with generic components — three cards, a gradient, a hero that
+does nothing — which is the failure this skill exists to prevent. Push a pack and
+it builds from that pack's real parts instead.
+
+```bash
+npx sheleg-design-skill --kit workbench --out ./ds-workbench
+cd ./ds-workbench && npm install && npm run build
+```
+
+then `/design-sync` in that directory, from Claude Code. Three layers cross: the
+pack's **bans** as the design system's own README, `styles.css` built from
+`tokens/<pack>.css` verbatim, and the components — a six-name spine that is
+identical in all six kits, so switching packs swaps identity rather than API,
+plus each pack's signature parts. **Motion does not cross**, exactly as it does
+not cross into Figma: a kit is the static half of a pack, and saying so is what
+stops an agent inventing motion to fill the silence.
+
+The kits are not part of the install. `--kit` fetches one on demand, which is how
+the skill stays documentation while still having real components to hand.
 
 ## Optional: Lazyweb MCP
 

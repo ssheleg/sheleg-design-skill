@@ -29,6 +29,8 @@
 | 16 | 5 Build | No `--danger-ink` / `--ok-ink` / `--warn-ink` — the semantic colours have the same "text on the fill" gap `--accent-ink` just closed | **no active defect**: the destructive button fills `--danger-weak` and keeps its `--danger` label, so nothing is currently unreadable. Adding three tokens × six packs without a forcing case is scope growth, and it is the *same question* as row 13 | — | backlog — decide with row 13, one ADR for the whole ink family |
 | 17 | 5 Build | `kits/*/dist/` and `kits/*/package-lock.json` gitignored at T2 rather than T8 as planned | committing 104 KB of build output was a defect I would have created in this commit, not one to schedule | REQ-008 | resolved — `.gitignore` |
 
+| 18 | 5 Build | The scenario is **T13**, not T12 — `T12` is already the orchard pack on `main`. Same collision class as the ADR number (A7): the concurrent run is adding packs and will take scenario numbers too | caught by reading `test/scenarios.md` instead of trusting the plan's number | REQ-010 | re-checked against `main` before the merge, with the ADR number |
+
 ## Counts
 
-`open: 14 · unresolved: 0 · dropped: 0` (rows 9, 15 and 17 resolved same-stage) — printed beside every gate verdict from here on.
+`open: 15 · unresolved: 0 · dropped: 0` (rows 9, 15 and 17 resolved same-stage) — printed beside every gate verdict from here on.

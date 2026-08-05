@@ -126,6 +126,26 @@ scrubbed headline. Fail: white on the orange CTA, body copy on `--primary`,
 a true black or cool grey beside the warm palette, a second orange object,
 sharp corners, or a grey drop shadow where the inset bevel belongs.
 
+## T13 — The Claude Design bridge (design-sync)
+
+"Push our design system to Claude Design so it stops building with generic
+components." Session has `/design-sync`; the agent holds only the installed
+bundle. Pass: agent reads `DESIGN_SYNC_BRIDGE.md` before acting, names
+`npx sheleg-design-skill --kit <pack> --out <dir>` as the way to get a kit and
+says the kits are **not** part of the install, states the three layers that
+cross (the pack's bans as the design system's README, `styles.css` from
+`tokens/<pack>.css` verbatim, the components), and states that **motion does
+not cross** — no particle field, no shader hero, no scroll clock. On the four
+reference types it holds the line: references inform layout and never identity,
+a Lazyweb sweep is never uploaded, a live-site extraction lands in a pack
+before it syncs, and Figma/pack/Claude Design move one direction per change.
+Fail: hand-writing card HTML or `@dsCard` markers instead of letting the
+converter emit them, linking to a `kits/` path that does not exist in an
+install, committing a `projectId`, treating a swept reference as a component,
+or shipping motion into the design system. In a session **without**
+`/design-sync` (Cursor), the correct behaviour is to ignore all of it — the
+bridge is gated on the tool, like Lazyweb.
+
 ## Historical baselines (why these exist)
 
 - Pre-0.4.0: T4 baseline invented plausible-but-wrong tokens

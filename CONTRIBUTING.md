@@ -48,7 +48,13 @@ drift.
    exist.
 5. Mirror the new files into `.cursor/skills/sheleg-design/`, add them to the
    `install.sh` file list, and re-run the validator.
-6. Add or update a scenario in `test/scenarios.md` if the pack changes routing
+6. Add its React reference kit under `kits/<pack>/` — the six-name spine copied
+   from an existing kit (identical names, props and types) plus this pack's
+   signature components, `src/styles.css` opening with `styles/tokens/<pack>.css`
+   copied **byte for byte**, and `.design-sync/{config.json,conventions.md}`. The
+   validator refuses a pack without one. See
+   `docs/superpowers/specs/2026-08-04-design-sync-bridge-design.md`.
+7. Add or update a scenario in `test/scenarios.md` if the pack changes routing
    behavior.
 
 Token naming is an interface across packs: `--accent-weak` is a tint,
