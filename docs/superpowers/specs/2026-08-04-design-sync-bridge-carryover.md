@@ -22,6 +22,13 @@
 
 | 12 | 3 Spec | `test/validate.py`'s link check does not exempt fenced code blocks, so a relative link inside a documentation example is checked against the containing file's directory | found by the check firing on this run's own spec; the spec routes around it with a placeholder. Changing the checker to skip fences is a separate change with its own blast radius — and the strict version has been correct every other time | — | backlog — decide deliberately, don't loosen it in passing |
 
+| 13 | 5 Build | **Three naming conventions for one role across six shipped packs**: `--accent-ink` (`atrium`, `briefing-room`), `--cta-ink` / `--on-primary` / `--on-ink` (`orchard`), and nothing at all (`workbench`, `editorial-luxury`, `instrument-console` — fixed additively this run) | unifying them means **renaming shipped tokens in `orchard`**, which breaks every consumer who copied that layer. The wiki already records how a token remap goes wrong ("sweep hardcoded literals after"). Too big to fold silently into a design-sync run | — | **backlog — worth an ADR**: unify on `--accent-ink` with a deprecation window, or accept per-pack names and document the map |
+| 14 | 5 Build | `kits/*/dist/` is untracked and not gitignored — build output would be committed | surfaced by the T2 implementer; the fix belongs beside `package.json` `files[]` | REQ-008 | T8 |
+| 15 | 5 Build | `workbench`'s pack text names a destructive button; the locked spine has no room for it | resolved same-stage as a signature component with a real two-click confirm, not deferred | REQ-004 | resolved — spec §6 |
+
+| 16 | 5 Build | No `--danger-ink` / `--ok-ink` / `--warn-ink` — the semantic colours have the same "text on the fill" gap `--accent-ink` just closed | **no active defect**: the destructive button fills `--danger-weak` and keeps its `--danger` label, so nothing is currently unreadable. Adding three tokens × six packs without a forcing case is scope growth, and it is the *same question* as row 13 | — | backlog — decide with row 13, one ADR for the whole ink family |
+| 17 | 5 Build | `kits/*/dist/` and `kits/*/package-lock.json` gitignored at T2 rather than T8 as planned | committing 104 KB of build output was a defect I would have created in this commit, not one to schedule | REQ-008 | resolved — `.gitignore` |
+
 ## Counts
 
-`open: 11 · unresolved: 0 · dropped: 0` (row 9 resolved same-stage) — printed beside every gate verdict from here on.
+`open: 14 · unresolved: 0 · dropped: 0` (rows 9, 15 and 17 resolved same-stage) — printed beside every gate verdict from here on.

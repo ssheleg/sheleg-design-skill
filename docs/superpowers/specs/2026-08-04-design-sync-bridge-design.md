@@ -221,6 +221,23 @@ Every spine component takes `className?: string` in addition, appended after its
 classes. No pack adds a spine prop; a pack that needs more expresses it as a
 signature component.
 
+**Ink on the accent.** `Button --primary` needs a label colour on the accent fill.
+Use **`var(--accent-ink)`** — it now exists in five of the six token layers
+(`atrium` and `briefing-room` already had it; `workbench`, `editorial-luxury` and
+`instrument-console` gained it in this run, additively). **`orchard` is the
+exception**: it solves the same role under its own older names — `--cta-ink` for the
+candy pill and `--on-primary` for the sage fill — so the `orchard` kit uses those and
+must **not** invent `--accent-ink`, which would be an undefined variable rendering as
+transparent. Unifying the three naming conventions is a *breaking* rename of a
+shipped token layer and is filed, not done here (carry-over).
+
+**Primary hover, where the pack does not define one.** Use
+`color-mix(in srgb, var(--accent) 88%, var(--ink))`. It consumes only tokens,
+contains no literal, and moves the right way in both themes automatically — darker in
+light, lighter in dark. Locked here so six kits do the same thing rather than six
+authors each inventing one. Where a pack *does* define its hover (`atrium` swaps the
+accent pair; `orchard` goes `--primary` → `--primary-deep`), **the pack wins**.
+
 **`Field` is deliberately not in the spine.** Forms are real in `workbench` and absent
 from a deck and a scroll narrative; a spine entry that three packs must fake is how a
 system starts producing generic screens in pack colours. Forms live in `workbench`'s
@@ -235,12 +252,23 @@ Taken from each pack's own **Signature motifs** and **Micro-interactions** secti
 |---|---|
 | `instrument-console` | `ActBadge`, `ProgressRail`, `HudFrame`, `Telemetry` |
 | `editorial-luxury` | `DossierCard`, `Eyebrow`, `Stamp`, `DataTable` |
-| `workbench` | `StatusDot`, `DataTable`, `ProgressBar`, `SegmentedControl`, `EmptyState` |
+| `workbench` | `StatusDot`, `DataTable`, `ProgressBar`, `SegmentedControl`, `EmptyState`, `DestructiveButton` |
 | `briefing-room` | `SlideFrame`, `ClaimTitle`, `SourcedNumber`, `HighlightPhrase`, `ComparisonTable` |
 | `atrium` | `ItalicAside`, `MotionToggle`, `ComparisonTable`, `SourcedFigure`, `AuthorityRow` |
 | `orchard` | `Slab`, `ChipRail`, `ClaimEvidence`, `GlassNav`, `ObjectionSection` |
 
-Total: 6 × 6 spine + 28 signature = **64 components**.
+Total: 6 × 6 spine + 29 signature = **65 components**.
+
+`workbench`'s `DestructiveButton` is there because the pack names **three** button
+kinds — "primary = accent fill; secondary = 1px-border ghost; destructive = red-border
+ghost + confirm" — and the spine locks `Button` to the first two. A kit that ships two
+of three hands the design agent an obvious gap, which it will fill by inventing one.
+The confirm step is part of the component (first click arms, second fires), not the
+caller's problem: a destructive action whose confirmation is optional is a destructive
+action without confirmation.
+
+**Tables use `{ id, cells }` rows, never a flat record.** `DataTable` and
+`ComparisonTable` in every kit key rows on a real id rather than an array index.
 
 Three notes an implementer will otherwise get wrong:
 

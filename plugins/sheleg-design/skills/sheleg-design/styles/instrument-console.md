@@ -26,6 +26,7 @@ Ready-made token layer: [`tokens/instrument-console.css`](./tokens/instrument-co
 | `--ink-muted` / `-faint` | `#9aa7b6` / `#5f6b7a` | secondary / captions |
 | `--accent` | `#3392ff` | THE electric-blue signal (CTA, links, particles) |
 | `--accent-dim` / `-bright` | `#1f5fb0` / `#6bb3ff` | pressed / highlighted signal |
+| `--accent-ink` | `#0a0e14` | text **on** the accent — 6.0:1; white on `#3392ff` fails AA |
 | `--accent-glow` | `rgba(51,146,255,0.18)` | the only permitted glow |
 | `--ok` / `--warn` | `#46d39a` / `#e0a030` | status semantics only |
 

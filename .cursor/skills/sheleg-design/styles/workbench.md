@@ -30,6 +30,7 @@ transcribing this table.
 | `--muted` | `#5b6472` | `#8a93a6` | secondary text, labels, metadata |
 | `--border` / `-strong` | `#e6e9ef` / `#d7dce4` | `#232a36` / `#2c3441` | 1px lines / stronger edges |
 | `--accent` (`-weak`) | `#2f6feb` (`#eaf0fe`) | `#4b8bff` (`#1b2740`) | THE one accent + its tint |
+| `--accent-ink` | `#ffffff` | `#0f1218` | text **on** the accent — it flips with the theme, because white on the dark-mode accent fails AA |
 | `--ok` (`-weak`) | `#1a7f37` (`#e6f4ea`) | `#3fb960` (`#12281a`) | done / healthy / success |
 | `--warn` (`-weak`) | `#9a6700` (`#fff3d6`) | `#d9a93f` (`#2b2210`) | needs a human / waiting (reserved) |
 | `--danger` (`-weak`) | `#d1242f` (`#fde8e9`) | `#e5534b` (`#2d1517`) | failed / error / incident |

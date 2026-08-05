@@ -31,6 +31,7 @@ Ready-made token layer: [`tokens/editorial-luxury.css`](./tokens/editorial-luxur
 | `--ink` / `-soft` / `-faint` | `#241c14` / `#5b4f3d` / `#8a7c64` | text ramp on cream |
 | `--accent` (sage) / `-deep` | `#3f7d5f` / `#2f5e47` | THE single functional accent (links, CTA, "signal") |
 | `--accent-weak` / `-med` | `rgba(63,125,95,0.12)` / `…0.34` | accent tint fill / accent hairline |
+| `--accent-ink` | `#fbf6ec` | text **on** the accent — 6.1:1 over `--accent-deep`; large text only over `--accent` |
 | `--accent-on-dark` | `#9fd9bc` | the accent brightened for espresso sections |
 | `--terra` | `#b5623f` | rare editorial highlight only |
 | `--red` | `#a83a2b` | negatives ONLY (comparison "without") |

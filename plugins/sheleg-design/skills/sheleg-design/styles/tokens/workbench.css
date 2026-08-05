@@ -11,6 +11,7 @@
   --border-strong: #d7dce4;
   --accent: #2f6feb;
   --accent-weak: #eaf0fe;
+  --accent-ink: #ffffff; /* text ON the accent — 5.0:1 on --accent */
   --ok: #1a7f37;
   --ok-weak: #e6f4ea;
   --warn: #9a6700;
@@ -49,6 +50,7 @@
   --border-strong: #2c3441;
   --accent: #4b8bff;
   --accent-weak: #1b2740;
+  --accent-ink: #0f1218; /* text ON the accent — 5.7:1. White on #4b8bff fails AA. */
   --ok: #3fb960;
   --ok-weak: #12281a;
   --warn: #d9a93f;

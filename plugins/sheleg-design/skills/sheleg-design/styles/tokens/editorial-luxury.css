@@ -15,6 +15,7 @@
   --accent-deep: #2f5e47;
   --accent-weak: rgba(63, 125, 95, 0.12); /* tint fill (badges, wash) */
   --accent-med: rgba(63, 125, 95, 0.34); /* hairline / border tint */
+  --accent-ink: #fbf6ec; /* text ON the accent — 6.1:1 on --accent-deep; large text only on --accent */
   --accent-on-dark: #9fd9bc;
   --terra: #b5623f;
   --red: #a83a2b;
