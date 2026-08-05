@@ -1,0 +1,547 @@
+/* SHELEG Design — Briefing Room token layer (dark presentation deck).
+   Copy verbatim; consume only var(--…) in components.
+   Neutrals are the accent hue (254) starved of chroma — keep the hue when
+   editing, or the deck reads as two designs. */
+:root {
+  --bg: oklch(0.045 0.008 254);
+  --panel: oklch(0.145 0.008 254);
+  --panel-2: oklch(0.178 0.008 254);
+  --line: oklch(0.231 0.006 254);
+  --line-2: oklch(0.269 0.006 254);
+
+  --ink: oklch(0.985 0.004 254);
+  --ink-2: oklch(0.8 0.006 254);
+  --ink-3: oklch(0.62 0.006 254);
+  --ink-dim: oklch(0.56 0.006 254); /* furniture only, ≥10.5px mono */
+
+  --accent: oklch(0.643 0.195 254);
+  --accent-soft: oklch(0.643 0.195 254 / 0.18); /* chip fill, glow */
+  --accent-line: oklch(0.643 0.195 254 / 0.45); /* chip border */
+  --accent-ink: var(--bg); /* text ON the accent — never white */
+  --good: oklch(0.824 0.151 148);
+  --good-soft: oklch(0.824 0.151 148 / 0.3);
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+
+  /* 4px grid with deliberate half-steps for dense slide layouts */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-4-5: 18px;
+  --space-5: 20px;
+  --space-5-5: 22px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-9: 36px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  /* Fixed 16:9 canvas — content that does not fit becomes a second slide */
+  --slide-w: 1280px;
+  --slide-h: 720px;
+  --frame-pad-x: var(--space-20);
+  --frame-pad-y: var(--space-16);
+
+  --shadow-card: 0 28px 70px -28px rgba(0, 0, 0, 0.85);
+  --shadow-pop: 0 12px 32px -12px rgba(0, 0, 0, 0.7);
+  --glow-accent: radial-gradient(
+    58% 46% at 50% 26%,
+    var(--accent-soft),
+    transparent 70%
+  );
+  /* Veil the artwork, never fade it: keeps the dither crisp under text */
+  --veil-left: linear-gradient(
+    95deg,
+    oklch(0 0 0 / 0.85) 0%,
+    oklch(0 0 0 / 0.55) 38%,
+    oklch(0 0 0 / 0.2) 70%,
+    oklch(0 0 0 / 0.05) 100%
+  );
+
+  --font-sans: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+  --t-display: 128px;
+  --t-h1: 96px;
+  --t-h2: 64px;
+  --t-h3: 36px;
+  --t-lede: 24px;
+  --t-body: 17px;
+  --t-meta: 14px;
+  --t-mono: 13px;
+  --t-mono-sm: 10.5px;
+
+  --track-display: -0.04em;
+  --track-h1: -0.035em;
+  --track-h2: -0.03em;
+  --track-h3: -0.02em;
+  --track-body: -0.005em;
+  --track-mono: 0.14em; /* mono without tracking reads as code, not telemetry */
+  --track-mono-wide: 0.18em;
+
+  --lh-display: 1.02;
+  --lh-head: 1.05;
+  --lh-tight: 1.1;
+  --lh-lede: 1.5;
+  --lh-body: 1.55;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 0.15s;
+  --dur-base: 0.2s;
+
+  background-color: var(--bg);
+  color: var(--ink);
+  color-scheme: dark;
+}
+
+/* Slides never animate — the presenter is the timeline. This block should
+   have nothing to disable; if it does, the deck has motion it should not. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0s;
+    --dur-base: 0s;
+  }
+}
+
+/* ── components ── */
+
+/* Everything below consumes var(--…) only. Colour never appears as a literal:
+   the token block above is the whole palette, every neutral in it is the accent
+   hue starved of chroma, and a value with no token is a gap in the pack rather
+   than something to inline here.
+
+   There is no `transition` in this file, and that is the pack, not an omission.
+   Slides do not animate: the presenter's voice is the timeline, and a build-in
+   competes with it. `--dur-fast` and `--dur-base` exist in the token block for
+   the two interactive affordances a deck page still has (a real link, a focus
+   ring) and go deliberately unused by these components. That is also why the
+   `prefers-reduced-motion` block above has nothing to switch off — the correct
+   end state, reached by construction. */
+
+/* SlideFrame — the canvas. Fixed 1280x720 with overflow hidden, because the
+   pack's first constraint is the frame: content that does not fit becomes a
+   second slide, never a smaller type ramp. Overflow is hidden rather than
+   scrolled on purpose — a slide that scrolls is a slide nobody sees the end of
+   in the room. Check every frame at exactly this size before shipping. */
+.br-frame {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  width: var(--slide-w);
+  height: var(--slide-h);
+  overflow: hidden;
+  padding: var(--frame-pad-y) var(--frame-pad-x);
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--track-body);
+  /* The one card shadow the pack allows, used for its stated job: lifting the
+     slide off whatever page hosts the deck. Not decoration on the contents. */
+  box-shadow: var(--shadow-card);
+}
+/* At most one radial accent glow per slide — it lives on the frame so it can
+   never quietly become two. */
+.br-frame__glow {
+  position: absolute;
+  inset: 0;
+  background: var(--glow-accent);
+  pointer-events: none;
+}
+.br-frame__header,
+.br-frame__footer {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-6);
+  flex: none;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  font-variant-numeric: tabular-nums;
+}
+.br-frame__header {
+  font-size: var(--t-mono);
+  letter-spacing: var(--track-mono-wide);
+}
+.br-frame__footer {
+  /* --ink-dim is furniture-only and floored at 10.5px mono by the pack. */
+  font-size: var(--t-mono-sm);
+  letter-spacing: var(--track-mono);
+}
+.br-frame__body {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-6);
+  /* Lets the body shrink inside the fixed frame instead of pushing the footer
+     out of the 720px it is not allowed to leave. */
+  min-height: 0;
+}
+
+/* Heading — the structural ramp: 96 section divider / 64 slide label / 36
+   subhead. A slide's headline is a ClaimTitle, not a Heading. */
+.br-heading {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--ink);
+  text-wrap: balance;
+}
+.br-heading--1 {
+  font-size: var(--t-h1);
+  font-weight: var(--weight-semibold);
+  line-height: var(--lh-display);
+  letter-spacing: var(--track-h1);
+}
+.br-heading--2 {
+  font-size: var(--t-h2);
+  font-weight: var(--weight-medium);
+  line-height: var(--lh-head);
+  letter-spacing: var(--track-h2);
+}
+.br-heading--3 {
+  font-size: var(--t-h3);
+  font-weight: var(--weight-medium);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--track-h3);
+}
+
+/* Rule — the hairline that separates diagram bands inside one frame. */
+.br-rule {
+  height: 0;
+  margin: var(--space-6) 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+.br-rule--strong {
+  border-top-color: var(--line-2);
+}
+
+/* Button — a deck's affordances are thin, so the button wears the slide
+   furniture face: mono, uppercase, tracked, pill radius. Hover changes colour
+   instantly; there is no transition, because this is still a slide. */
+.br-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  box-sizing: border-box;
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--track-mono);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+.br-btn:focus-visible {
+  /* The pack's one interaction rule that is not "do less": a visible accent
+     focus ring, because a deck is driven from the keyboard. */
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.br-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.br-btn--sm {
+  min-height: 26px;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--t-mono-sm);
+}
+.br-btn--md {
+  min-height: 32px;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--t-mono);
+}
+.br-btn--lg {
+  min-height: 40px;
+  padding: var(--space-3) var(--space-5-5);
+  font-size: var(--t-meta);
+}
+.br-btn--primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  /* --accent-ink is the near-black field, never white: white text on the
+     accent fill is a ban in this pack, in as many words. */
+  color: var(--accent-ink);
+}
+.br-btn--primary:hover:not(:disabled) {
+  /* One step toward the ink. The pack defines no button hover, so the whole
+     set uses the same token-only mix rather than inventing six of them. */
+  background: color-mix(in srgb, var(--accent) 88%, var(--ink));
+  border-color: color-mix(in srgb, var(--accent) 88%, var(--ink));
+}
+.br-btn--secondary {
+  background: var(--panel);
+  border-color: var(--line-2);
+  color: var(--ink);
+}
+.br-btn--secondary:hover:not(:disabled) {
+  background: var(--panel-2);
+}
+.br-btn--ghost {
+  background: transparent;
+  color: var(--ink-2);
+}
+.br-btn--ghost:hover:not(:disabled) {
+  color: var(--ink);
+}
+
+/* Card — panel step plus a hairline, which is the pack's whole elevation
+   model. Deliberately no :hover rule: a card that lifts under a cursor during
+   a live presentation is noise, and the audience sees the noise, not the
+   cursor. */
+.br-card {
+  box-sizing: border-box;
+  padding: var(--space-6);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--track-body);
+  color: var(--ink-2);
+}
+.br-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+.br-card__title {
+  margin: 0;
+  font-size: var(--t-lede);
+  font-weight: var(--weight-medium);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--track-h3);
+  color: var(--ink);
+  text-wrap: balance;
+}
+.br-card__meta {
+  font-family: var(--font-mono);
+  font-size: var(--t-mono-sm);
+  letter-spacing: var(--track-mono);
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.br-card__body {
+  display: block;
+}
+
+/* Chip — pill radius, panel-2 fill, hairline border, mono uppercase. The
+   pack's stated replacement for a bullet list. */
+.br-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  box-sizing: border-box;
+  padding: var(--space-1) var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--t-mono-sm);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--track-mono);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  color: var(--ink-2);
+}
+.br-chip--neutral {
+  background: var(--panel-2);
+  border-color: var(--line);
+  color: var(--ink-2);
+}
+.br-chip--accent {
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+  color: var(--accent);
+}
+.br-chip--selected {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Stat — the compact figure, for a row of them inside a card. The slide's
+   headline number is a SourcedNumber. */
+.br-stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.br-stat__label {
+  font-family: var(--font-mono);
+  font-size: var(--t-mono-sm);
+  letter-spacing: var(--track-mono-wide);
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.br-stat__value {
+  font-family: var(--font-sans);
+  font-size: var(--t-h3);
+  font-weight: var(--weight-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--track-h3);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.br-stat__source {
+  font-family: var(--font-mono);
+  font-size: var(--t-mono-sm);
+  letter-spacing: var(--track-mono);
+  color: var(--ink-dim);
+}
+
+/* ClaimTitle — the slide's argument, set as a sentence. `balance` and the
+   measure cap are load-bearing on a fixed canvas: a one-word orphan is a
+   visible defect at 64px, not a nuance. */
+.br-claim {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--ink);
+  text-wrap: balance;
+}
+.br-claim--slide {
+  max-width: 26ch;
+  font-size: var(--t-h2);
+  font-weight: var(--weight-medium);
+  line-height: var(--lh-head);
+  letter-spacing: var(--track-h2);
+}
+.br-claim--cover {
+  max-width: 18ch;
+  font-size: var(--t-display);
+  font-weight: var(--weight-semibold);
+  line-height: var(--lh-display);
+  letter-spacing: var(--track-display);
+}
+
+/* HighlightPhrase — the accent-filled marker behind the one fragment the whole
+   story hangs on. `clone` so a wrapped phrase keeps its padding on both lines
+   instead of losing it on the second. */
+.br-highlight {
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-xs);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* SourcedNumber — the figure and, directly beneath it, where it came from. The
+   source line is not a caption; it is what keeps the layout reading as
+   instrumentation rather than as a poster. */
+.br-figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+}
+.br-figure__label {
+  font-family: var(--font-mono);
+  font-size: var(--t-mono-sm);
+  letter-spacing: var(--track-mono-wide);
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.br-figure__value {
+  font-family: var(--font-sans);
+  font-size: var(--t-h2);
+  font-weight: var(--weight-semibold);
+  line-height: var(--lh-head);
+  letter-spacing: var(--track-h2);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.br-figure__source {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--t-mono-sm);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--track-mono);
+  color: var(--ink-dim);
+}
+
+/* ComparisonTable — one column is us, and it is the only place the accent
+   appears in the table. Row dividers are hairlines; nothing hovers. */
+.br-cmp {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--track-body);
+  color: var(--ink-2);
+}
+.br-cmp__caption {
+  caption-side: top;
+  padding-bottom: var(--space-4);
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: var(--t-mono-sm);
+  letter-spacing: var(--track-mono-wide);
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.br-cmp__th {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: var(--t-mono-sm);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--track-mono-wide);
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+.br-cmp__td {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.br-cmp__row:last-child .br-cmp__td {
+  border-bottom: 0;
+}
+.br-cmp__th--us {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-bottom-color: var(--accent-line);
+  border-top-left-radius: var(--radius-sm);
+  border-top-right-radius: var(--radius-sm);
+}
+.br-cmp__td--us {
+  color: var(--ink);
+  background: var(--accent-soft);
+}
+.br-cmp__row:last-child .br-cmp__td--us {
+  border-bottom-left-radius: var(--radius-sm);
+  border-bottom-right-radius: var(--radius-sm);
+}
