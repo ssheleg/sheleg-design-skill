@@ -1,0 +1,615 @@
+/* SHELEG Design — Atrium token layer (warm daylight consumer-health surface).
+   Copy verbatim; consume only var(--…) in components.
+   One field, one accent, no dark sections: the page is a single warm room and
+   depth comes from hairlines and cream-on-cream steps, never from a dark band. */
+:root {
+  /* ---- Field & surfaces ------------------------------------------------ */
+  --bg: #fef9ef; /* the daylight field — the "white" of this system */
+  --surface: #f5eee1; /* inset/raised step: cards, wells, footer, CTA band */
+  --surface-ink: #2a2b2f; /* the ONE inverted surface (media wells, banner) */
+  --line: #d1c9bf; /* hairline — decorative strength, see Gotchas */
+  --line-strong: #737373; /* borders that carry an affordance (inputs) */
+  --line-ink: #2a2b2f; /* ghost-control border */
+
+  /* ---- Ink ------------------------------------------------------------- */
+  --ink: #2a2b2f; /* 13.5:1 on --bg */
+  --ink-2: #515151; /* 7.6:1 — long-form body on the field */
+  --ink-3: #737373; /* 4.5:1 — exactly the AA floor: metadata/legal only */
+  --on-ink: #fef9ef; /* text on --surface-ink */
+
+  /* ---- The one accent -------------------------------------------------- */
+  --accent: #b05a36; /* terracotta — 4.6:1 on --bg, 4.2:1 on --surface (!) */
+  --accent-tint: #f7eeeb; /* 10% wash — chips, quiet rows */
+  --accent-ink: #fef9ef; /* text ON the accent — the field's beige, not white */
+  --accent-gradient: linear-gradient(#b05a36, rgba(216, 161, 131, 0.96));
+
+  /* ---- Semantics (fills and icons — NOT text; see Gotchas) ------------- */
+  --good: #79bd8b; /* 2.1:1 on --bg — never carries a word */
+  --good-tint: #f1f3e5;
+  --info: #488ad5; /* 3.4:1 — large text / UI marks only */
+  --danger: #db0000; /* 5.0:1 — the one semantic that may be text */
+
+  /* ---- Glass & scrims (photography lives behind these) ------------------ */
+  --glass-fill: rgba(255, 255, 255, 0.07);
+  --glass-fill-2: rgba(254, 249, 239, 0.1);
+  --glass-blur: blur(15px);
+  --glass-sheen: linear-gradient(
+    201.98deg,
+    rgba(254, 249, 239, 0.12) 28%,
+    rgba(254, 249, 239, 0.68) 135.96%
+  );
+  --scrim-card: linear-gradient(
+    rgba(0, 0, 0, 0) 4%,
+    rgba(0, 0, 0, 0.92) 100%
+  );
+
+  /* ---- Radii — every control is a pill, every container is soft -------- */
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem; /* cards, media wells */
+  --radius-lg: clamp(1rem, 0.7519vw + 0.8233rem, 1.5rem);
+  --radius-xl: clamp(1.5rem, 1.5038vw + 1.1466rem, 2.5rem); /* big panels */
+  --radius-pill: 999px; /* buttons, chips, inputs, nav dots — no exceptions */
+
+  /* ---- Fluid spine: every clamp is keyed to this viewport band ---------- */
+  --viewport-min: 23.5; /* rem — 376px */
+  --viewport-max: 90; /* rem — 1440px */
+  --main: 90rem; /* max page width */
+  --site-margin: clamp(1.25rem, 4.1353vw + 0.2782rem, 4rem); /* 20 → 64px */
+  --content-inset-x: clamp(1.5rem, 0.7519vw + 1.3233rem, 2rem); /* 24 → 32px */
+  --content-width: calc(100% - (var(--site-margin) + var(--content-inset-x)) * 2);
+  --section-y: clamp(3rem, 4.812vw + 1.8692rem, 6.2rem); /* 48 → 99px */
+  --section-y-sm: calc(var(--section-y) / 2);
+  --control-height: 3rem;
+
+  /* ---- Spacing ramp (fluid above s3 — the gaps grow with the page) ----- */
+  --s1: 0.25rem;
+  --s2: 0.5rem;
+  --s3: 0.75rem;
+  --s4: clamp(0.75rem, 0.3759vw + 0.6617rem, 1rem);
+  --s5: clamp(1rem, 0.3759vw + 0.9117rem, 1.25rem);
+  --s6: clamp(1.25rem, 0.3759vw + 1.1617rem, 1.5rem);
+  --s7: clamp(1.5rem, 0.7519vw + 1.3233rem, 2rem);
+  --s8: clamp(2rem, 0.7519vw + 1.8233rem, 2.5rem);
+  --s9: clamp(2.5rem, 1.5038vw + 2.1466rem, 3.5rem);
+  --s10: clamp(3rem, 1.5038vw + 2.6466rem, 4rem);
+  --s11: clamp(3.5rem, 2.2556vw + 2.9699rem, 5rem);
+  --s12: clamp(4.5rem, 2.2556vw + 3.9699rem, 6rem);
+  --s13: clamp(5rem, 3.7594vw + 4.1165rem, 7.5rem);
+
+  /* ---- Type ------------------------------------------------------------ */
+  --font-serif: "Financier Display", Georgia, "Times New Roman", serif;
+  --font-sans: "FT Base", system-ui, -apple-system, sans-serif;
+  --font-mono: "Fragment Mono", ui-monospace, Menlo, monospace;
+
+  /* The serif ships ONE weight. Do not add 400/500/700 — see Bans. */
+  --weight-serif: 300;
+  --weight-light: 300; /* body copy */
+  --weight-regular: 400; /* mono furniture only */
+  --weight-semibold: 600; /* labels, buttons, stats, emphasis */
+
+  --t-display: clamp(3.375rem, 4.3233vw + 2.359rem, 6.25rem); /* 54 → 100 */
+  --t-h1: clamp(3.5625rem, 2.1617vw + 3.0545rem, 5rem); /* 57 → 80 */
+  --t-h2: clamp(3rem, 1.5038vw + 2.6466rem, 4rem); /* 48 → 64 */
+  --t-h3: clamp(2.125rem, 1.0338vw + 1.882rem, 2.8125rem); /* 34 → 45 */
+  --t-h4: clamp(1.6875rem, 0.6579vw + 1.5329rem, 2.125rem); /* 27 → 34 */
+  --t-h5: clamp(1.375rem, 0.188vw + 1.3308rem, 1.5rem); /* 22 → 24 */
+  --t-h6: clamp(1.1875rem, 0.094vw + 1.1654rem, 1.25rem); /* 19 → 20 */
+  --t-stat: clamp(3rem, 1.5038vw + 2.6466rem, 4rem); /* 48 → 64 */
+  --t-quote: clamp(1.6875rem, 1.2218vw + 1.4004rem, 2.5rem); /* 27 → 40 */
+  --t-xxl: clamp(1.8125rem, 0.4699vw + 1.7021rem, 2.125rem);
+  --t-xl: clamp(1.125rem, 0.5639vw + 0.9925rem, 1.5rem);
+  --t-lg: clamp(1.125rem, 0.188vw + 1.0808rem, 1.25rem);
+  --t-md: clamp(1rem, 0.188vw + 0.9558rem, 1.125rem);
+  --t-body: 1rem;
+  --t-sm: 0.875rem;
+  --t-xs: 0.75rem;
+  --t-tagline: clamp(0.75rem, 0.3759vw + 0.6617rem, 1rem);
+  --t-mono: 0.6875rem; /* 11px — motion furniture */
+  --t-mono-sm: 0.625rem; /* 10px */
+
+  /* Two line heights and nothing between them. */
+  --lh-display: 0.9; /* the light serif closes up — needs its own leading */
+  --lh-head: 1; /* h2/h3 sit solid */
+  --lh-card-title: 1.15;
+  --lh-body: 1.5; /* every sans size, no exceptions */
+
+  /* Tracking is normal everywhere except these two. */
+  --track-stat: -0.031em;
+  --track-mono: 0.1em;
+  --track-mono-sm: 0.07em;
+
+  /* ---- Elevation: three shadows, one job each -------------------------- */
+  --shadow-panel: 12px 32px 80px 0 rgba(42, 43, 47, 0.1); /* the hero panel */
+  --shadow-lift: 0 4px 30px 0 rgba(0, 0, 0, 0.1); /* a card pulled forward */
+  --shadow-cta: 0 2px 12px 0 rgba(0, 0, 0, 0.1); /* a button on photography */
+  --shadow-float: 1.6px 1.6px 8px 0 rgba(0, 0, 0, 0.16); /* glass control */
+
+  /* ---- Motion ---------------------------------------------------------- */
+  --motion-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-quick: 0.16s; /* control colour/opacity */
+  --dur-base: 0.2s; /* the default */
+  --dur-soft: 0.24s; /* cards, media swaps */
+  --dur-slow: 0.3s; /* nav and header */
+  --marquee-cycle: 48s; /* the logo rail, linear, infinite */
+
+  /* ---- Fluted-glass hero (the signature effect; read by the shader) ----- */
+  --flute-freq: 82.8; /* ribs across the frame — desktop */
+  --flute-freq-mobile: 64.8;
+  --flute-angle: 0.36rad; /* ribs lean ~21° — desktop */
+  --flute-angle-mobile: -0.11rad;
+  --flute-amp: 0.0255; /* refraction offset */
+  --flute-drift: 0.543; /* rib travel per second */
+  --flute-chromatic: 0.04; /* edge colour split */
+  --flute-feather: 0.63; /* rib softness */
+  --flute-bevel: 0.0095;
+  --flute-bevel-width: 0.195;
+  --flute-highlight: 0.02;
+  --flute-shadow: 0.02;
+  --flute-highlight-focus: 10;
+  --flute-zoom-from: 1.08; /* slow push — never starts at 1 */
+  --flute-zoom-to: 1.1;
+  --flute-scrim: #2a2b2f; /* the ink, at 70%, scaled 3.05 × 0.91 */
+  --flute-scrim-opacity: 0.7;
+  --flute-overlay-opacity: 0.12; /* black, multiply */
+  /* One slide = 7.2s: hold fluted → reveal → run clear → cross to the next */
+  --flute-dur-fluted: 750ms;
+  --flute-dur-reveal: 2700ms;
+  --flute-dur-clear: 2250ms;
+  --flute-dur-cross: 1500ms;
+
+  background-color: var(--bg);
+  color: var(--ink);
+  color-scheme: light;
+}
+
+/* The hero effect is a bonus, never a dependency: at reduced motion the canvas
+   is REMOVED and the still image underneath is the hero. Do not slow it down —
+   a slow refraction is still refraction. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-quick: 0s;
+    --dur-base: 0s;
+    --dur-soft: 0s;
+    --dur-slow: 0s;
+    --marquee-cycle: 0s;
+  }
+}
+
+/* ── components ── */
+
+/* Everything below consumes var(--…) only. Colour never appears as a literal:
+   the token block above is the whole palette, and a value with no token is a
+   gap in the pack rather than something to inline here. Geometry the pack
+   states numerically (12px 25px, the 14px icon gap) stays numeric, because
+   those numbers *are* the pack. */
+
+/* Heading — the light serif, one weight, two line heights. */
+.at-heading {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: var(--weight-serif);
+  color: var(--ink);
+  text-wrap: balance;
+  /* A 300 serif at 0.9 leading clips descenders and parenthesis tails inside
+     any ancestor with overflow: hidden or a fixed height — which is most hero
+     and card containers. Pad the block; never raise the leading. */
+  padding-block: 0.08em;
+}
+.at-heading--1 {
+  font-size: var(--t-h1);
+  line-height: var(--lh-display);
+}
+.at-heading--2 {
+  font-size: var(--t-h2);
+  line-height: var(--lh-head);
+}
+.at-heading--3 {
+  font-size: var(--t-h3);
+  line-height: var(--lh-head);
+}
+
+/* ItalicAside — the whole emphasis vocabulary of this pack. It inherits family,
+   size and weight from the headline it sits in; only the slope and the hue
+   change. At heading sizes the accent clears the large-text floor everywhere,
+   which is why this device is safe on the field and on --surface alike. */
+.at-aside {
+  font-style: italic;
+  color: var(--accent);
+}
+
+/* Rule — the hairline. Decorative strength (1.6:1 on --bg), so it separates
+   things and never carries an affordance; --line-strong is for borders that do. */
+.at-rule {
+  height: 0;
+  margin-block: var(--s7);
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+.at-rule--strong {
+  border-top-color: var(--line-strong);
+}
+
+/* Button — the pill triad and there is no fourth: solid accent, accent-outline
+   on the field, beige-on-photo. Hover swaps fill and ink between the accent
+   pair; nothing scales, nothing lifts. */
+.at-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px; /* the pack's icon gap */
+  box-sizing: border-box;
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semibold);
+  line-height: var(--lh-body);
+  text-align: center;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  /* Property-scoped, never `all`: on a page this long `all` animates layout
+     properties nobody meant to animate and costs frames on scroll. */
+  transition:
+    background-color var(--dur-base) var(--motion-ease),
+    color var(--dur-base) var(--motion-ease),
+    border-color var(--dur-base) var(--motion-ease);
+}
+.at-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.at-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+/* A size is not a fourth variant: md is the pack's pill exactly, and sm/lg only
+   rescale that same padding. */
+.at-btn--sm {
+  padding: 8px 18px;
+  font-size: var(--t-sm);
+}
+.at-btn--md {
+  min-height: var(--control-height);
+  padding: 12px 25px;
+  font-size: var(--t-body);
+}
+.at-btn--lg {
+  padding: 16px 32px;
+  font-size: var(--t-lg);
+}
+.at-btn--primary {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+.at-btn--primary:hover:not(:disabled) {
+  /* The swap. The border stays accent so the beige fill keeps an edge against
+     the cream field. */
+  background-color: var(--accent-ink);
+  color: var(--accent);
+}
+.at-btn--secondary {
+  background-color: transparent;
+  /* --accent, not --line: an outline button's only affordance is its border,
+     and the hairline is under the 3:1 floor for that job. */
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.at-btn--secondary:hover:not(:disabled) {
+  background-color: var(--accent);
+  color: var(--accent-ink);
+}
+.at-btn--ghost {
+  /* The light pill that sits on photography: the field's beige, with the one
+     shadow token that exists for a button over an image. Its label rests at
+     --ink because terracotta at 4.6:1 would compete with the photograph; the
+     accent pair arrives on hover. */
+  background-color: var(--accent-ink);
+  border-color: var(--accent-ink);
+  color: var(--ink);
+  box-shadow: var(--shadow-cta);
+}
+.at-btn--ghost:hover:not(:disabled) {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Card — elevation is a hairline plus the one cream step, never a shadow:
+   --surface on --bg is a 1.05:1 fill difference, so the border does the work.
+   No hover state — a static card that reacts to a cursor is a ban here. */
+.at-card {
+  box-sizing: border-box;
+  padding: var(--s7);
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-light);
+  font-size: var(--t-md);
+  line-height: var(--lh-body);
+  color: var(--ink-2);
+}
+.at-card__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+  margin-bottom: var(--s5);
+}
+.at-card__title {
+  margin: 0;
+  /* Card titles are sans 600, not the serif: the serif is for sentences and
+     never appears below ~27px. */
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semibold);
+  font-size: var(--t-h6);
+  line-height: var(--lh-card-title);
+  color: var(--ink);
+}
+.at-card__meta {
+  font-size: var(--t-sm);
+  color: var(--ink-3);
+}
+.at-card__body {
+  display: block;
+}
+
+/* Chip — a pill like every other control in this pack. */
+.at-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  box-sizing: border-box;
+  padding: var(--s2) var(--s5);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semibold);
+  font-size: var(--t-sm);
+  line-height: var(--lh-body);
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  color: var(--ink);
+}
+.at-chip--neutral {
+  background-color: var(--surface);
+  border-color: var(--line);
+  color: var(--ink);
+}
+/* The accent is 4.2:1 on --surface and 4.6:1 on --bg, so accent *text* at chip
+   size fails AA on every ground this pack has. The accent chip therefore marks
+   itself with the tint and the border and keeps --ink for the word. */
+.at-chip--accent {
+  background-color: var(--accent-tint);
+  border-color: var(--accent);
+  color: var(--ink);
+}
+.at-chip--selected {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Stat — the quiet figure: sans 600 over a light sublabel, and the source line
+   the pack requires under both. */
+.at-stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  box-sizing: border-box;
+  font-family: var(--font-sans);
+}
+.at-stat__value {
+  font-size: var(--t-xxl);
+  font-weight: var(--weight-semibold);
+  line-height: var(--lh-head);
+  letter-spacing: var(--track-stat);
+  color: var(--ink);
+}
+.at-stat__label {
+  font-size: var(--t-md);
+  font-weight: var(--weight-light);
+  line-height: var(--lh-body);
+  color: var(--ink-2);
+}
+.at-stat__source {
+  font-size: var(--t-sm);
+  font-weight: var(--weight-light);
+  line-height: var(--lh-body);
+  color: var(--ink-3);
+}
+
+/* SourcedFigure — the stat row at display scale. Two to four of these in a flex
+   row; the 1px hairline between siblings is the row's only separator, which is
+   why the row needs no component of its own. */
+.at-figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+  margin: 0;
+  padding-inline: var(--s7);
+  font-family: var(--font-sans);
+}
+.at-figure:first-child {
+  padding-inline-start: 0;
+}
+.at-figure + .at-figure {
+  border-inline-start: 1px solid var(--line);
+}
+.at-figure__value {
+  font-size: var(--t-stat);
+  font-weight: var(--weight-semibold);
+  line-height: var(--lh-head);
+  letter-spacing: var(--track-stat);
+  color: var(--ink);
+}
+.at-figure__caption {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+}
+.at-figure__label {
+  font-size: var(--t-lg);
+  font-weight: var(--weight-light);
+  line-height: var(--lh-body);
+  color: var(--ink-2);
+}
+.at-figure__source {
+  /* <cite> arrives italic, and italic in this pack means the accent aside.
+     The source is metadata, so it stands upright at the AA floor. */
+  font-style: normal;
+  font-size: var(--t-sm);
+  font-weight: var(--weight-light);
+  line-height: var(--lh-body);
+  color: var(--ink-3);
+}
+
+/* MotionToggle — the one place mono appears in this pack. That scarcity is what
+   makes it read as an instrument label rather than as code. */
+.at-motion-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  box-sizing: border-box;
+  padding: var(--s2) var(--s5);
+  background-color: transparent;
+  /* A ghost control's only affordance is its border, so it takes --line-ink. */
+  border: 1px solid var(--line-ink);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-weight: var(--weight-regular);
+  font-size: var(--t-mono);
+  letter-spacing: var(--track-mono);
+  text-transform: uppercase;
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-quick) var(--motion-ease),
+    color var(--dur-quick) var(--motion-ease),
+    border-color var(--dur-quick) var(--motion-ease);
+}
+.at-motion-toggle__target {
+  font-size: var(--t-mono-sm);
+  letter-spacing: var(--track-mono-sm);
+  color: var(--ink-3);
+}
+.at-motion-toggle[aria-pressed='true'] {
+  background-color: var(--accent-tint);
+  border-color: var(--accent);
+}
+.at-motion-toggle:hover {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+.at-motion-toggle:hover .at-motion-toggle__target {
+  color: var(--accent-ink);
+}
+.at-motion-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ComparisonTable — a wide cream panel of ruled rows with the "us" column
+   lifted out of it as a rounded card. */
+.at-compare {
+  font-family: var(--font-sans);
+}
+.at-compare__caption {
+  margin: 0 0 var(--s5);
+  font-size: var(--t-lg);
+  font-weight: var(--weight-light);
+  line-height: var(--lh-body);
+  color: var(--ink-2);
+}
+.at-compare__panel {
+  display: grid;
+  box-sizing: border-box;
+  padding: var(--s8);
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+}
+/* The rows exist for assistive technology; the grid does the layout and every
+   cell is placed explicitly, so the card can span all of them underneath. */
+.at-compare__row {
+  display: contents;
+}
+.at-compare__cell {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  padding: var(--s5);
+  border-bottom: 1px solid var(--line);
+  font-size: var(--t-md);
+  font-weight: var(--weight-light);
+  line-height: var(--lh-body);
+  color: var(--ink-2);
+}
+.at-compare__cell:not(.at-compare__cell--label) {
+  text-align: center;
+}
+.at-compare__cell--head {
+  padding-block: var(--s7);
+  font-weight: var(--weight-semibold);
+  color: var(--ink);
+}
+.at-compare__cell--label {
+  color: var(--ink);
+}
+.at-compare__cell--last {
+  border-bottom-color: transparent;
+}
+/* One element spanning every row, which is what makes it read as a single card
+   laid on the table rather than as a column of separately tinted cells. It is
+   the pack's one lift shadow, and the ruling stops where it covers. */
+.at-compare__card {
+  z-index: 0;
+  margin-block: calc(var(--s5) * -1);
+  background-image: var(--accent-gradient);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lift);
+}
+.at-compare__cell--us {
+  border-bottom-color: transparent;
+  color: var(--accent-ink);
+}
+
+/* AuthorityRow — named experts, each with the institution the name borrows its
+   weight from. The rail is swipeable; scroll-snap only decides where a swipe
+   lands, which is layout rather than motion. */
+.at-authority {
+  display: flex;
+  gap: var(--s7);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+}
+.at-authority__item {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: var(--s1);
+  max-width: 22rem;
+  padding-bottom: var(--s3);
+  scroll-snap-align: start;
+  font-family: var(--font-sans);
+}
+.at-authority__name {
+  font-size: var(--t-h6);
+  font-weight: var(--weight-semibold);
+  line-height: var(--lh-card-title);
+  color: var(--ink);
+}
+.at-authority__institution {
+  font-size: var(--t-md);
+  font-weight: var(--weight-light);
+  line-height: var(--lh-body);
+  color: var(--ink-2);
+}
+.at-authority__role {
+  font-size: var(--t-sm);
+  font-weight: var(--weight-light);
+  line-height: var(--lh-body);
+  color: var(--ink-3);
+}
