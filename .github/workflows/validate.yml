@@ -46,3 +46,49 @@ jobs:
           npm install -g @anthropic-ai/claude-code
           claude plugin validate . --strict
           claude plugin validate plugins/sheleg-design --strict
+      - name: Reference kit materializes (--kit is not the installer)
+        run: |
+          set -eu
+          node bin/cli.js --kit workbench --out /tmp/kit
+          # guidelines/ is materialized here and committed nowhere, so it is the
+          # one path that must differ -- see the design spec, section 9. dist/
+          # and node_modules/ are excluded for the same reason --kit skips them:
+          # they are absent on a fresh checkout and present for anyone who has
+          # built locally, and a check that only passes on CI teaches people to
+          # ignore it.
+          diff -r --exclude=guidelines --exclude=dist --exclude=node_modules \
+            kits/workbench /tmp/kit
+          diff plugins/sheleg-design/skills/sheleg-design/styles/workbench.md \
+               /tmp/kit/guidelines/workbench.md
+          # A kit that reached the bundle would be installed into every project,
+          # which ADR-0002 exists to prevent.
+          test -z "$(find plugins/sheleg-design/skills/sheleg-design -name 'package.json' -o -name '*.tsx')"
+
+  kits:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        pack:
+          - instrument-console
+          - editorial-luxury
+          - workbench
+          - briefing-room
+          - atrium
+          - orchard
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install the kit's build deps
+        working-directory: kits/${{ matrix.pack }}
+        run: npm install --no-save typescript@^5.6.0 @types/react@^18.3.0 react@^18.3.0
+      - name: Build
+        working-directory: kits/${{ matrix.pack }}
+        run: npm run build
+      - name: Emitted something
+        working-directory: kits/${{ matrix.pack }}
+        # tsc exits 0 when `include` matches nothing, so "the build passed"
+        # would be true and useless without this line.
+        run: test -s dist/index.js && test -s dist/index.d.ts
