@@ -1,0 +1,521 @@
+/* SHELEG Design — Editorial Luxury token layer (origin: prowl.chat).
+   Copy verbatim; consume only var(--…) in components.
+   After any theme migration, sweep hardcoded hex/rgba literals. */
+:root {
+  --paper: #fbf6ec;
+  --paper-2: #f3ead9;
+  --paper-3: #ece0cb;
+  --espresso: #1b150e;
+  --espresso-2: #241c12;
+  --cream: #f4ecdc;
+  --ink: #241c14;
+  --ink-soft: #5b4f3d;
+  --ink-faint: #8a7c64;
+  --accent: #3f7d5f;
+  --accent-deep: #2f5e47;
+  --accent-weak: rgba(63, 125, 95, 0.12); /* tint fill (badges, wash) */
+  --accent-med: rgba(63, 125, 95, 0.34); /* hairline / border tint */
+  --accent-ink: #fbf6ec; /* text ON the accent — 6.1:1 on --accent-deep; large text only on --accent */
+  --accent-on-dark: #9fd9bc;
+  --terra: #b5623f;
+  --red: #a83a2b;
+  --hair: rgba(36, 28, 20, 0.13);
+  --hair-strong: rgba(36, 28, 20, 0.22);
+
+  --r: 14px;
+  --r-lg: 22px;
+  --r-xl: 30px;
+
+  --shadow-sm: 0 2px 10px -4px rgba(36, 28, 20, 0.16);
+  --shadow: 0 18px 50px -28px rgba(36, 28, 20, 0.3),
+    0 4px 14px -10px rgba(36, 28, 20, 0.18);
+  --shadow-lg: 0 36px 90px -44px rgba(36, 28, 20, 0.42),
+    0 8px 24px -16px rgba(36, 28, 20, 0.2);
+  --inset-hi: inset 0 1px 0 rgba(255, 251, 242, 0.7);
+
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --spring: cubic-bezier(0.32, 0.72, 0, 1);
+  --dur-brand: 0.7s;
+  --dur-fast: 0.18s;
+  --dur-base: 0.32s;
+  --dur-slow: 0.55s;
+  --dur-epic: 0.8s;
+  --stagger: 0.07s;
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Newsreader", Georgia, serif;
+  --font-data: "JetBrains Mono", ui-monospace, monospace;
+
+  --grain-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  background-color: var(--paper);
+  color: var(--ink);
+  color-scheme: light;
+}
+
+/* ── components ── */
+
+/* Everything below consumes var(--…) only. The token block above is the whole
+   palette; a value with no token is a gap in the pack, never a literal to
+   inline here.
+
+   TWO SURFACES, NOT TWO THEMES. Cream is the field and espresso is a section
+   inside the same page — they coexist on one scroll. There is no
+   `[data-theme]` block here and no toggle to build: wrap a section in
+   `.el-espresso` and every component inside it re-reads its ink, its hairlines
+   and its accent from the locals below. Everything outside stays on cream.
+   `.el-cream` exists for the reverse (a cream block inside an espresso
+   section) and is never needed at the top of a page — `:root` is already
+   cream. */
+.el-cream {
+  background-color: var(--paper);
+  color: var(--ink);
+  --el-ink: var(--ink);
+  --el-ink-soft: var(--ink-soft);
+  --el-accent: var(--accent);
+  --el-accent-text: var(--accent-deep);
+  --el-accent-fill: var(--accent-deep);
+  --el-accent-ink: var(--accent-ink);
+  --el-surface: var(--paper-2);
+  --el-hair: var(--hair);
+  --el-hair-strong: var(--hair-strong);
+  --el-bezel: var(--inset-hi);
+}
+.el-espresso {
+  background-color: var(--espresso);
+  color: var(--cream);
+  --el-ink: var(--cream);
+  --el-ink-soft: color-mix(in srgb, var(--cream) 74%, var(--espresso));
+  /* The accent switches here: sage at --accent dies on the dark field, so
+     espresso sections take --accent-on-dark. That is the pack's rule, not a
+     theme — the same page carries both. */
+  --el-accent: var(--accent-on-dark);
+  --el-accent-text: var(--accent-on-dark);
+  --el-accent-fill: var(--accent-on-dark);
+  /* Ink on the accent fill flips with the fill: --accent-ink is cream and
+     would sit at ~1.5:1 on the brightened sage. */
+  --el-accent-ink: var(--espresso);
+  --el-surface: var(--espresso-2);
+  --el-hair: color-mix(in srgb, var(--cream) 14%, transparent);
+  --el-hair-strong: color-mix(in srgb, var(--cream) 26%, transparent);
+  --el-bezel: inset 0 1px 0 color-mix(in srgb, var(--cream) 10%, transparent);
+}
+
+/* Heading — Fraunces, optical, tracked in. Three rungs and no fourth. */
+.el-heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--el-ink, var(--ink));
+  text-wrap: balance;
+}
+.el-heading--1 {
+  font-size: clamp(2.4rem, 5.2vw, 4.2rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+}
+.el-heading--2 {
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+.el-heading--3 {
+  font-size: 1.25rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+/* Rule — the hairline this pack rules its pages with. */
+.el-rule {
+  height: 0;
+  margin: 28px 0;
+  border: 0;
+  border-top: 1px solid var(--el-hair, var(--hair));
+}
+.el-rule--strong {
+  border-top-color: var(--el-hair-strong, var(--hair-strong));
+}
+
+/* Eyebrow — the mono kicker that sits above a heading and says what kind of
+   thing follows. */
+.el-eyebrow {
+  display: inline-block;
+  font-family: var(--font-data);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--el-ink-soft, var(--ink-soft));
+}
+.el-eyebrow--accent {
+  color: var(--el-accent-text, var(--accent-deep));
+}
+
+/* Button — tactile: it lifts on hover and settles on press. No glow; an outer
+   glow on a button is a ban in this pack, not a taste call. */
+.el-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-sizing: border-box;
+  font-family: var(--font-data);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  border-radius: var(--r);
+  cursor: pointer;
+  transition:
+    transform var(--dur-fast) var(--spring),
+    background-color var(--dur-fast) var(--motion-ease),
+    border-color var(--dur-fast) var(--motion-ease),
+    color var(--dur-fast) var(--motion-ease);
+}
+.el-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+.el-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+.el-btn:focus-visible {
+  outline: 2px solid var(--el-accent, var(--accent));
+  outline-offset: 3px;
+}
+.el-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+.el-btn--sm {
+  min-height: 32px;
+  padding: 6px 14px;
+  font-size: 11px;
+}
+.el-btn--md {
+  min-height: 42px;
+  padding: 10px 20px;
+  font-size: 12px;
+}
+.el-btn--lg {
+  min-height: 52px;
+  padding: 14px 28px;
+  font-size: 13px;
+}
+/* --accent-deep, not --accent: --accent-ink clears 6.1:1 on the deep sage at
+   any size and is large-text-only on --accent, and a tracked 12px label is not
+   large text. On espresso the pair swaps to --accent-on-dark / --espresso. */
+.el-btn--primary {
+  background: var(--el-accent-fill, var(--accent-deep));
+  border-color: var(--el-accent-fill, var(--accent-deep));
+  color: var(--el-accent-ink, var(--accent-ink));
+  /* Soft ambient elevation, held constant through hover — the lift is the
+     feedback, and a shadow that grows under the cursor is the glow this pack
+     bans wearing a different name. */
+  box-shadow: var(--shadow-sm);
+}
+.el-btn--secondary {
+  background: transparent;
+  border-color: var(--el-hair-strong, var(--hair-strong));
+  color: var(--el-ink, var(--ink));
+}
+.el-btn--secondary:hover:not(:disabled) {
+  border-color: var(--el-accent, var(--accent));
+  color: var(--el-accent-text, var(--accent-deep));
+}
+.el-btn--ghost {
+  background: transparent;
+  color: var(--el-ink-soft, var(--ink-soft));
+}
+.el-btn--ghost:hover:not(:disabled) {
+  color: var(--el-accent-text, var(--accent-deep));
+}
+
+/* Card — the raised surface of the field it sits on: squircle, hairline,
+   double bezel, soft ambient shadow. Lifts and warms its border on hover. */
+.el-card {
+  box-sizing: border-box;
+  padding: 24px;
+  background: var(--el-surface, var(--paper-2));
+  border: 1px solid var(--el-hair, var(--hair));
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow), var(--el-bezel, var(--inset-hi));
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--el-ink, var(--ink));
+  transition:
+    transform var(--dur-base) var(--motion-ease),
+    border-color var(--dur-base) var(--motion-ease);
+}
+.el-card:hover {
+  transform: translateY(-2px);
+  /* The border warms — terracotta is the pack's rare editorial highlight, and
+     a hover edge is the one place it may be routine. */
+  border-color: color-mix(in srgb, var(--terra) 40%, transparent);
+}
+.el-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+.el-card__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--el-ink, var(--ink));
+}
+.el-card__meta {
+  font-family: var(--font-data);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--el-ink-soft, var(--ink-soft));
+}
+.el-card__body {
+  display: block;
+}
+
+/* DossierCard — the pack's file-card: eyebrow, title, a reference and a seal
+   on the right, a hairline, then the body. Deeper squircle and a heavier
+   ambient shadow than Card, because it is the one surface that carries a
+   document rather than a paragraph. */
+.el-dossier {
+  box-sizing: border-box;
+  padding: 28px;
+  background: var(--el-surface, var(--paper-2));
+  border: 1px solid var(--el-hair-strong, var(--hair-strong));
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-lg), var(--el-bezel, var(--inset-hi));
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--el-ink, var(--ink));
+  transition:
+    transform var(--dur-base) var(--motion-ease),
+    border-color var(--dur-base) var(--motion-ease);
+}
+.el-dossier:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--terra) 40%, transparent);
+}
+.el-dossier__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+.el-dossier__headings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.el-dossier__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  color: var(--el-ink, var(--ink));
+}
+.el-dossier__aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  flex: none;
+}
+.el-dossier__ref {
+  font-family: var(--font-data);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--el-ink-soft, var(--ink-soft));
+}
+.el-dossier__rule {
+  height: 0;
+  margin: 20px 0;
+  border: 0;
+  border-top: 1px solid var(--el-hair, var(--hair));
+}
+.el-dossier__body {
+  display: block;
+}
+
+/* Never a card nested in a card. When one lands inside another anyway, it
+   drops its chrome and reads as a block of content — the pack's rule enforced
+   where the mistake happens, not only in prose. */
+.el-card .el-card,
+.el-card .el-dossier,
+.el-dossier .el-card,
+.el-dossier .el-dossier {
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Chip — the mono atom: tracked uppercase, hairline, pill. */
+.el-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-sizing: border-box;
+  padding: 3px 10px;
+  background: transparent;
+  border: 1px solid var(--el-hair-strong, var(--hair-strong));
+  border-radius: 999px;
+  font-family: var(--font-data);
+  font-size: 11px;
+  line-height: 1.5;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: var(--el-ink-soft, var(--ink-soft));
+}
+.el-chip--neutral {
+  background: transparent;
+  border-color: var(--el-hair-strong, var(--hair-strong));
+  color: var(--el-ink-soft, var(--ink-soft));
+}
+.el-chip--accent {
+  background: var(--accent-weak);
+  border-color: var(--accent-med);
+  color: var(--el-accent-text, var(--accent-deep));
+}
+.el-chip--selected {
+  background: var(--accent-weak);
+  border-color: var(--el-accent, var(--accent));
+  color: var(--el-accent-text, var(--accent-deep));
+}
+
+/* Stat — a figure under a hairline, mono and tabular, with its source set as
+   a footnote caption underneath. */
+.el-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--el-hair, var(--hair));
+}
+.el-stat__label {
+  font-family: var(--font-data);
+  font-size: 11px;
+  line-height: 1.4;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--el-ink-soft, var(--ink-soft));
+}
+.el-stat__value {
+  font-family: var(--font-data);
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--el-ink, var(--ink));
+}
+.el-stat__source {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--el-ink-soft, var(--ink-soft));
+}
+
+/* Stamp — the seal: 2px box, tracked mono, rotated a few degrees. The tilt is
+   a static transform, not motion; nothing here animates. */
+.el-stamp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 6px 12px;
+  border: 2px solid currentColor;
+  border-radius: var(--r);
+  font-family: var(--font-data);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  transform: rotate(-4deg);
+  color: var(--el-accent-text, var(--accent-deep));
+}
+.el-stamp--accent {
+  color: var(--el-accent-text, var(--accent-deep));
+}
+/* Terracotta and classified-red are pulled 30% toward the surface's own ink so
+   an 11px label clears 4.5:1 on cream *and* on espresso. Neat hue, unreadable
+   label, is not the trade this pack makes. */
+.el-stamp--terra {
+  color: color-mix(in srgb, var(--terra) 70%, var(--el-ink, var(--ink)));
+}
+.el-stamp--red {
+  color: color-mix(in srgb, var(--red) 70%, var(--el-ink, var(--ink)));
+}
+
+/* DataTable — a printed table: mono header, hairline rows, numbers right and
+   tabular. No row hover; a dossier table does not light up under a cursor. */
+.el-table-wrap {
+  overflow-x: auto;
+}
+.el-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--el-ink, var(--ink));
+}
+.el-table__caption {
+  caption-side: top;
+  padding-bottom: 12px;
+  text-align: left;
+  font-family: var(--font-data);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--el-ink-soft, var(--ink-soft));
+}
+.el-table__th {
+  padding: 0 16px 10px 0;
+  text-align: left;
+  font-family: var(--font-data);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--el-ink-soft, var(--ink-soft));
+  border-bottom: 1px solid var(--el-hair-strong, var(--hair-strong));
+}
+.el-table__td {
+  padding: 12px 16px 12px 0;
+  vertical-align: baseline;
+  border-bottom: 1px solid var(--el-hair, var(--hair));
+}
+.el-table__th:last-child,
+.el-table__td:last-child {
+  padding-right: 0;
+}
+.el-table__th--num,
+.el-table__td--num {
+  text-align: right;
+  font-family: var(--font-data);
+  font-variant-numeric: tabular-nums;
+}
