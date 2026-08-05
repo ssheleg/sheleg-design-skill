@@ -1,0 +1,477 @@
+/* SHELEG Design — Instrument Console token layer.
+   Copy verbatim; consume only var(--…) in components. */
+:root {
+  --base: #05070a;
+  --surface-1: #0a0e14;
+  --surface-2: #10151d;
+  --surface-3: #161c26;
+  --hairline: #1e2630;
+  --hairline-strong: #2b3542;
+  --ink: #eef2f7;
+  --ink-muted: #9aa7b6;
+  --ink-faint: #5f6b7a;
+  --accent: #3392ff;
+  --accent-dim: #1f5fb0;
+  --accent-bright: #6bb3ff;
+  --accent-ink: #0a0e14; /* text ON the accent — 6.0:1. White on #3392ff fails AA. */
+  --accent-glow: rgba(51, 146, 255, 0.18);
+  --ok: #46d39a;
+  --warn: #e0a030;
+
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 14px;
+  --r-pill: 999px;
+
+  --signal-glow: 0 0 0 1px rgba(51, 146, 255, 0.4),
+    0 8px 30px rgba(51, 146, 255, 0.18);
+
+  --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 0.18s;
+  --dur-base: 0.32s;
+  --dur-slow: 0.55s;
+  --dur-epic: 0.8s;
+  --stagger: 0.07s;
+
+  --section: clamp(9rem, 24vh, 20rem);
+
+  --font-ui: var(--font-geist-sans, "Geist"), system-ui, sans-serif;
+  --font-data: var(--font-geist-mono, "Geist Mono"), ui-monospace, monospace;
+
+  background-color: var(--base);
+  color: var(--ink);
+  color-scheme: dark;
+}
+
+/* ── components ── */
+
+/* Everything below consumes var(--…) only. Colour never appears as a literal.
+   This pack is single-register — one dark mode, no light twin, no
+   [data-theme] block — so the :root above is the whole palette, and a value
+   with no token is a gap in the pack rather than something to inline here.
+
+   Two standing decisions, both taken from the pack's own Gotchas:
+   - --accent-glow is spent on :focus-visible and nowhere else. The composite
+     --signal-glow is reserved for "the active signal element", and a component
+     library cannot promise there is only one of those per viewport; a
+     transient focus ring can. Glow on two elements at once is the christmas
+     tree the pack names by name.
+   - --ink-faint fails 4.5:1 on --surface-1, so it stays on decoration — the
+     aria-hidden separator — and never on a line anyone has to read.
+
+   Transitions are colour-only, at the pack's own --dur-fast and --motion-ease.
+   Nothing translates, scales or springs: hover brightens, press dims one
+   shade, and that is the entire micro-interaction vocabulary. */
+
+/* Heading — grotesk, weight 600, clamp-scaled to the pack's 5.25rem ceiling.
+   Leading is tight; tracking is never pulled negative. */
+.ic-heading {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.ic-heading--1 {
+  font-size: clamp(2.75rem, 6.5vw, 5.25rem);
+  line-height: 1.04;
+}
+.ic-heading--2 {
+  font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+  line-height: 1.14;
+}
+.ic-heading--3 {
+  font-size: 1.0625rem;
+  line-height: 1.35;
+}
+
+/* Rule — the seam. Panels are flat and parted by 1px lines, not shadows. */
+.ic-rule {
+  height: 0;
+  margin: 20px 0;
+  border: 0;
+  border-top: 1px solid var(--hairline);
+}
+.ic-rule--strong {
+  border-top-color: var(--hairline-strong);
+}
+
+/* Button — primary is the accent fill and the screen's one signal; secondary
+   is a surface step; ghost is bare. --accent-bright is the pack's own
+   "highlighted signal" so it is the hover, and --accent-dim its "pressed". */
+.ic-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-sizing: border-box;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--motion-ease),
+    border-color var(--dur-fast) var(--motion-ease),
+    color var(--dur-fast) var(--motion-ease);
+}
+/* The pack's focus rule, verbatim: 1px --accent ring + --accent-glow halo. */
+.ic-btn:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--accent-glow);
+}
+.ic-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.ic-btn--sm {
+  min-height: 28px;
+  padding: 4px 12px;
+  font-size: 12px;
+}
+.ic-btn--md {
+  min-height: 36px;
+  padding: 7px 16px;
+  font-size: 14px;
+}
+.ic-btn--lg {
+  min-height: 44px;
+  padding: 10px 22px;
+  font-size: 15px;
+}
+.ic-btn--primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  /* --accent-ink, not --base and not white: white on this blue fails AA, and
+     borrowing a surface token here is how a token name stops meaning one
+     thing. */
+  color: var(--accent-ink);
+}
+.ic-btn--primary:hover:not(:disabled) {
+  background: var(--accent-bright);
+  border-color: var(--accent-bright);
+}
+.ic-btn--primary:active:not(:disabled) {
+  background: var(--accent-dim);
+  border-color: var(--accent-dim);
+  /* The label flips with the fill: --accent-ink on --accent-dim is 3.0:1 and
+     would fail on press, while --ink clears 5.7:1. A state nobody can read is
+     still a state. */
+  color: var(--ink);
+}
+.ic-btn--secondary {
+  background: var(--surface-2);
+  border-color: var(--hairline-strong);
+  color: var(--ink);
+}
+.ic-btn--secondary:hover:not(:disabled) {
+  background: var(--surface-3);
+}
+.ic-btn--secondary:active:not(:disabled) {
+  background: var(--surface-1);
+}
+.ic-btn--ghost {
+  color: var(--ink-muted);
+}
+.ic-btn--ghost:hover:not(:disabled) {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+.ic-btn--ghost:active:not(:disabled) {
+  background: var(--surface-1);
+}
+
+/* Card — a machined panel: surface step, hairline seam, 14px radius. */
+.ic-card {
+  box-sizing: border-box;
+  padding: 20px;
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.ic-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+.ic-card__title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.ic-card__meta {
+  font-family: var(--font-data);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--ink-muted);
+}
+.ic-card__body {
+  display: block;
+}
+
+/* Chip — the mono token: 11px, tracked out, 1px hairline, pill radius. The
+   accent fill is the CTA's; a chip borrows the outline and never the fill. */
+.ic-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-sizing: border-box;
+  padding: 2px 10px;
+  font-family: var(--font-data);
+  font-size: 11px;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-pill);
+  color: var(--ink-muted);
+}
+.ic-chip--neutral {
+  background: var(--surface-2);
+  border-color: var(--hairline);
+  color: var(--ink-muted);
+}
+.ic-chip--accent {
+  border-color: var(--accent-dim);
+  color: var(--accent);
+}
+.ic-chip--selected {
+  background: var(--surface-3);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Stat — mono eyebrow, tabular readout, honest source line. */
+.ic-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-sizing: border-box;
+  padding: 16px 18px;
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+}
+.ic-stat__label {
+  font-family: var(--font-data);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.ic-stat__value {
+  font-family: var(--font-data);
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.ic-stat__source {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--ink-muted);
+}
+
+/* ActBadge — "02 / CONTROL". The index is the only accent on the badge. */
+.ic-act {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
+  padding: 4px 12px;
+  font-family: var(--font-data);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-pill);
+}
+.ic-act__index {
+  font-weight: 600;
+  color: var(--accent);
+}
+.ic-act__sep {
+  color: var(--ink-faint);
+}
+.ic-act__name {
+  color: var(--ink-muted);
+}
+
+/* ProgressRail — the static right-edge rail: a hairline spine, one tick per
+   act, the current one lit. No transition anywhere: this renders position,
+   and the thing that moves it is the scroll clock, which does not cross. */
+.ic-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-right: 1px solid var(--hairline);
+}
+.ic-rail__act {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+.ic-rail__label {
+  font-family: var(--font-data);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.ic-rail__act--current .ic-rail__label {
+  color: var(--ink);
+}
+.ic-rail__tick {
+  flex: none;
+  width: 14px;
+  height: 1px;
+  background: var(--hairline-strong);
+}
+.ic-rail__act--current .ic-rail__tick {
+  width: 24px;
+  height: 2px;
+  background: var(--accent);
+}
+
+/* HudFrame — thin viewport frame with corner ticks. Transparent on purpose:
+   it frames whatever it is put around and brings no surface of its own. */
+.ic-hud {
+  position: relative;
+  box-sizing: border-box;
+  padding: 24px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sm);
+}
+.ic-hud__tick {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 0 solid var(--hairline-strong);
+}
+.ic-hud__tick--tl {
+  top: -1px;
+  left: -1px;
+  border-top-width: 1px;
+  border-left-width: 1px;
+}
+.ic-hud__tick--tr {
+  top: -1px;
+  right: -1px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+}
+.ic-hud__tick--bl {
+  bottom: -1px;
+  left: -1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+}
+.ic-hud__tick--br {
+  bottom: -1px;
+  right: -1px;
+  border-bottom-width: 1px;
+  border-right-width: 1px;
+}
+.ic-hud__label {
+  display: block;
+  margin-bottom: 16px;
+  font-family: var(--font-data);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.ic-hud__body {
+  display: block;
+}
+
+/* Telemetry — hairline-separated mono rows, annotation under the reading.
+   --ok and --warn are the only colours allowed here and they are claims. */
+.ic-tlm {
+  font-family: var(--font-data);
+  font-size: 12px;
+  color: var(--ink);
+}
+.ic-tlm__caption {
+  margin: 0 0 10px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.ic-tlm__list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+.ic-tlm__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0;
+  border-top: 1px solid var(--hairline);
+}
+.ic-tlm__row:first-child {
+  border-top: 0;
+}
+.ic-tlm__label {
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.ic-tlm__value {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+.ic-tlm__reading {
+  font-weight: 600;
+  color: var(--ink);
+}
+.ic-tlm__note {
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+.ic-tlm__row--neutral .ic-tlm__reading {
+  color: var(--ink);
+}
+.ic-tlm__row--ok .ic-tlm__reading {
+  color: var(--ok);
+}
+.ic-tlm__row--warn .ic-tlm__reading {
+  color: var(--warn);
+}
+
+/* The only transition in the kit is the button's colour swap; under
+   reduced-motion it becomes instant rather than being reinvented elsewhere. */
+@media (prefers-reduced-motion: reduce) {
+  .ic-btn {
+    transition: none;
+  }
+}
