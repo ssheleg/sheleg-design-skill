@@ -19,6 +19,13 @@ file makes is checked against the file that has to keep it:
      unless alwaysApply is true; no relative links (rules travel alone).
   7. install.sh ships exactly the bundle, and bin/cli.js walks it at runtime.
   8. Relative markdown links inside the repo resolve.
+  9. Every style pack has a reference kit and vice versa; the six-component
+     spine is present in each with props identical to the workbench exemplar;
+     every component carries a doc whose category is in the locked taxonomy;
+     styles.css opens with the pack's token layer byte for byte and holds no
+     colour literal below the component marker; each kit's sync config has its
+     required keys, points readmeHeader at a real conventions.md and carries no
+     projectId; and nothing kit-shaped reached the installed bundle (ADR-0002).
 
 Exit code 0 with "OK (<n> checks)" when clean; 1 with FAIL: lines otherwise.
 """
@@ -60,6 +67,14 @@ BRIDGE_SECTIONS = (
     "## 6. What cannot cross",
     "## 7. Round-trip discipline",
 )
+
+SPINE = ("Button", "Card", "Chip", "Stat", "Heading", "Rule")
+CARD_GROUPS = ("Foundations", "Actions", "Surfaces", "Data", "Signature")
+COLOR_LITERAL = re.compile(r"#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\(|oklch\(")
+PROPS_RE = re.compile(
+    r"export\s+interface\s+(\w+Props)\s*\{(.*?)^\}", re.S | re.M
+)
+CATEGORY_RE = re.compile(r"^category:\s*(\S+)\s*$", re.M)
 
 failures = []
 checks = 0
@@ -405,12 +420,188 @@ def validate_links():
             )
 
 
+def _props_body(text, name):
+    """The prop block, stripped of comments and whitespace, for cross-kit
+    comparison. Two kits may format differently and still agree."""
+    for match in PROPS_RE.finditer(text):
+        if match.group(1) != f"{name}Props":
+            continue
+        body = re.sub(r"/\*.*?\*/", "", match.group(2), flags=re.S)
+        body = re.sub(r"//[^\n]*", "", body)
+        return "".join(body.split())
+    return None
+
+
+def validate_kits():
+    """The reference kits: one per pack, a spine that is identical everywhere,
+    tokens copied rather than transcribed, and nothing that would push a kit
+    into the installed bundle (ADR-0002)."""
+    kits_dir = ROOT / "kits"
+    styles_dir = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
+    template = styles_dir / "STYLE_PACK_TEMPLATE.md"
+    packs = sorted(
+        p.stem for p in styles_dir.glob("*.md") if p != template
+    ) if styles_dir.is_dir() else []
+    kits = sorted(
+        p.name for p in kits_dir.iterdir() if p.is_dir()
+    ) if kits_dir.is_dir() else []
+
+    # 3. every pack has a kit, and every kit has a pack
+    for pack in packs:
+        check(pack in kits, f"kits/{pack}: no kit for style pack '{pack}'")
+    for kit in kits:
+        check(kit in packs, f"kits/{kit}: no style pack named '{kit}'")
+
+    # The exemplar is the reference for the spine's shape.
+    reference = {}
+    ref_dir = kits_dir / "workbench" / "src"
+    for name in SPINE:
+        text = read(ref_dir / f"{name}.tsx") or ""
+        reference[name] = _props_body(text, name)
+
+    for kit in kits:
+        src = kits_dir / kit / "src"
+        ds = kits_dir / kit / ".design-sync"
+
+        # 4. the spine is present and its props match the exemplar's
+        for name in SPINE:
+            comp = src / f"{name}.tsx"
+            if not check(
+                comp.is_file(),
+                f"kits/{kit}: spine component '{name}' missing (the spine is identical in every kit)",
+            ):
+                continue
+            if kit == "workbench" or reference.get(name) is None:
+                continue
+            check(
+                _props_body(read(comp) or "", name) == reference[name],
+                f"kits/{kit}/src/{name}.tsx: {name}Props differs from kits/workbench — "
+                "switching packs must swap identity, not API",
+            )
+
+        # 5. every component carries a doc with a category from the taxonomy
+        for comp in sorted(src.glob("*.tsx")) if src.is_dir() else []:
+            doc = src / f"{comp.stem}.md"
+            if not check(
+                doc.is_file(),
+                f"kits/{kit}/src/{comp.stem}.md: missing — a component with no doc gets no card group",
+            ):
+                continue
+            match = CATEGORY_RE.search(read(doc) or "")
+            if not check(
+                match is not None,
+                f"kits/{kit}/src/{comp.stem}.md: missing 'category:' frontmatter",
+            ):
+                continue
+            check(
+                match.group(1) in CARD_GROUPS,
+                f"kits/{kit}/src/{comp.stem}.md: category '{match.group(1)}' is not one of "
+                + "/".join(CARD_GROUPS),
+            )
+
+        # 6. the token block is the pack's token layer, byte for byte
+        styles = src / "styles.css"
+        tokens = styles_dir / "tokens" / f"{kit}.css"
+        if check(styles.is_file(), f"kits/{kit}/src/styles.css: missing") and tokens.is_file():
+            token_text = read(tokens) or ""
+            check(
+                (read(styles) or "").startswith(token_text),
+                f"kits/{kit}/src/styles.css: token block drifted from "
+                f"styles/tokens/{kit}.css — copy it, never transcribe it",
+            )
+
+            # 7. no colour literal below the component marker
+            body = read(styles) or ""
+            marker = "/* ── components ── */"
+            if check(
+                marker in body,
+                f"kits/{kit}/src/styles.css: missing the '{marker}' marker",
+            ):
+                after = body.split(marker, 1)[1]
+                offset = body[: body.index(marker)].count("\n") + 1
+                for i, line in enumerate(after.splitlines(), start=offset + 1):
+                    hit = COLOR_LITERAL.search(line)
+                    if hit:
+                        check(
+                            False,
+                            f"kits/{kit}/src/styles.css:{i}: raw colour literal "
+                            f"'{hit.group(0)}' — use a token",
+                        )
+
+        # 9/10. the sync config, and the conventions header it must point at
+        config_path = ds / "config.json"
+        conventions = ds / "conventions.md"
+        raw = read(config_path)
+        if check(raw is not None, f"kits/{kit}/.design-sync/config.json: missing"):
+            try:
+                cfg = json.loads(raw)
+            except json.JSONDecodeError as exc:
+                cfg = None
+                check(False, f"kits/{kit}/.design-sync/config.json: invalid JSON ({exc})")
+            if cfg is not None:
+                for field in ("pkg", "globalName", "shape", "cssEntry", "readmeHeader"):
+                    check(
+                        field in cfg,
+                        f"kits/{kit}/.design-sync/config.json: missing required field '{field}'",
+                    )
+                check(
+                    "projectId" not in cfg,
+                    f"kits/{kit}/.design-sync/config.json: committed projectId would point "
+                    "every user at one project — the target is chosen per sync, by a human",
+                )
+                check(
+                    cfg.get("shape") == "package",
+                    f"kits/{kit}/.design-sync/config.json: shape must be 'package'",
+                )
+                if "readmeHeader" in cfg:
+                    check(
+                        (kits_dir / kit / cfg["readmeHeader"]).is_file(),
+                        f"kits/{kit}: readmeHeader points at '{cfg['readmeHeader']}', which does not exist",
+                    )
+        check(
+            conventions.is_file() and len(read(conventions) or "") > 200,
+            f"kits/{kit}/.design-sync/conventions.md: missing — the pack's bans never "
+            "reach the design agent without it",
+        )
+
+        # 11. guidelines/ is materialized by --kit, never committed
+        check(
+            not (kits_dir / kit / "guidelines").exists(),
+            f"kits/{kit}/guidelines/: committed — the pack doc has one home, "
+            f"styles/{kit}.md; --kit materializes the copy",
+        )
+
+    # 8. nothing kit-shaped reached the bundle, and install.sh lists no kit path
+    bundle = ROOT / PLUGIN_DIR / "skills" / PLUGIN
+    strays = sorted(
+        str(p.relative_to(ROOT))
+        for p in bundle.rglob("*")
+        if p.is_file() and (p.suffix in (".tsx", ".ts") or p.name == "package.json")
+    )
+    for stray in strays:
+        check(False, f"{stray}: kit-shaped file inside the bundle — kits ship in the package (ADR-0002)")
+    sh = read(ROOT / "install.sh") or ""
+    check(
+        "kits/" not in sh,
+        "install.sh: names a kits/ path — kits ship in the package, not the bundle (ADR-0002)",
+    )
+
+    # 9 (continued). the package must actually carry them
+    package = ROOT / "package.json"
+    try:
+        files = json.loads(read(package) or "{}").get("files", [])
+    except json.JSONDecodeError:
+        files = []
+    check("kits/" in files, "package.json: files[] must include 'kits/'")
+
+
 def main():
     validate_manifests()
     validate_skills()
     validate_commands()
     validate_cursor_rules()
     validate_installer_sync()
+    validate_kits()
     validate_links()
     if failures:
         for failure in failures:
