@@ -4,7 +4,7 @@ The project's standing instructions and run log for task-pipeline. Stage 0
 reads this file **in full**; stage 10 prunes, stamps, and writes an entry only
 if the run diverged.
 
-## Standing instructions (cap: 10 · current: 7)
+## Standing instructions (cap: 10 · current: 8)
 
 Each one binds every run in this project until it is retired. Retire when it
 became a mechanical check, when the paths it names are gone, or when it has not
@@ -15,24 +15,24 @@ fired in five run stamps.
    mtimes. A HEAD move you did not make, a `feat/*` branch you did not create,
    or a file changing while you test means another pipeline run is live in the
    same directory. Recheck immediately before staging anything — the tree can
-   turn hostile mid-run. *(Last fired: 2026-08-05 · `75f3748` — fired three
-   times in one run: a stolen ADR number, a stolen scenario number, a stolen
-   and already-published version number.)*
+   turn hostile mid-run. *(Last fired: 2026-08-05 · `2ad45b2` — fired three
+   times in one run: a stolen ADR number, a stolen scenario number, and a
+   version number that was not only taken but already published.)*
 
 2. **Release state comes from the registry and the tags, never from the
    manifests or the CHANGELOG.** Verify with `git tag`, `git ls-remote --tags
    origin` and `npm view <pkg> version` before a brief writes a version
    anywhere. This repo carried `1.4.0` in three manifests, a full CHANGELOG
    entry and a commit subject for a release that was never tagged and never
-   published. *(Last fired: 2026-08-05 · `75f3748` — `npm view` is what revealed
-   that this run's chosen 1.6.0 was taken **and already shipped**.)*
+   published. *(Last fired: 2026-08-05 · `2ad45b2` — `npm view` is what showed
+   that this run's chosen `1.6.0` was taken **and already shipped**.)*
 
 3. **A stage-0 "absent" is perishable.** Decisions taken because a file does not
    exist — skipping the entry audit because there is no `DOCMAP.md`, no ADR
    directory, no register — must be re-checked before they are acted on. In a
    shared tree those files can appear an hour into the run.
-   *(Last fired: 2026-08-05 · `75f3748` — `docs/adr/` was absent at stage 0 and
-   held a committed ADR-0001 by stage 5.)*
+   *(Last fired: 2026-08-05 · `2ad45b2` — `docs/adr/` was absent at stage 0 and
+   held a committed `ADR-0001` by stage 5.)*
 
 4. **A scenario that asserts disambiguation must ship its negative branch.**
    "Does the agent pick the new pack?" cannot fail in the interesting
@@ -56,19 +56,29 @@ fired in five run stamps.
    `--self-test` flag that was never wired (the suite reported green for a
    self-test that did not run), two wrong fixtures, and a provenance check that
    rejected a real reference for lacking `https://`.
-   *(Last fired: 2026-08-05 · `75f3748` — twelve planted defects, one per kit
-   check, each FAIL line recorded before the check was allowed to land.)*
+   *(Last fired: 2026-08-05 · `2ad45b2` — twelve planted defects, one per kit
+   check, every FAIL line recorded before the check was allowed to land.)*
 
-7. **A delegated finding is a hypothesis until you check it against the
-   artifact.** A subagent reports what it believes; belief arrives in the same
-   prose as evidence. Reproduce the claim yourself before acting on it —
-   especially when acting means editing something already shipped. This run was
-   one step from "fixing" `--cta-sheen` in a released token layer on a report
-   that it was invalid CSS; `CSS.supports` in a real browser said it is valid,
-   and the discriminating control case (a genuinely invalid gradient) returned
-   false, so the test itself was trustworthy. Record refuted claims too — a
-   claim that is disproved and never written down comes back as folklore.
-   *(Last fired: 2026-08-05 · `75f3748`)*
+7. **A gate that CI does not run is not shipped.** Adding a check to
+   `package.json` scripts is half the work; the release gate is
+   `.github/workflows/validate.yml`. Before closing any run that adds a check,
+   diff the scripts against the workflow steps — `npm test` ran three gates
+   while CI ran one for a whole release cycle, so a merge's green described a
+   third of the suite. Instruction 6 says a gate must be watched saying no;
+   this one says it must be watched saying anything at all.
+   *(Last fired: 2026-08-04 · `623d2fb`)*
+
+8. **A delegated finding is a hypothesis until you reproduce it against the
+   artifact.** A subagent reports what it believes, and belief arrives in the
+   same prose as evidence — most convincingly right after the same agent was
+   right about something subtle. Reproduce the claim yourself before acting,
+   with a control case that must fail, and never edit something already shipped
+   on a report alone. This run was one step from "fixing" `--cta-sheen` in a
+   released token layer; `CSS.supports` in a real browser said the CSS is valid
+   and a genuinely invalid gradient returned false, so the test discriminated
+   and the pack was left alone. Record refuted claims too: a claim disproved and
+   never written down comes back as folklore.
+   *(Last fired: 2026-08-05 · `2ad45b2`)*
 
 ## Run stamps
 
@@ -76,7 +86,8 @@ fired in five run stamps.
 |---|---|---|---|
 | 2026-08-04 | `491d422` | `field-notes` style pack from graphify.com (v1.5.0, built; release held) | **yes** |
 | 2026-08-05 | `564ecec` | audit harvest — motion doctrine, dials, widened contract, two computed gates (v1.6.0) | **yes** |
-| 2026-08-05 | `75f3748` | Claude Design bridge + seven React reference kits (v1.7.0, released) | **yes** |
+| 2026-08-04 | `623d2fb` | release close-out — CI wired to all three gates; **`v1.6.0` shipped**: GitHub release + npm, first published version since `v1.3.4` | **yes** |
+| 2026-08-05 | `2ad45b2` | Claude Design bridge + seven React reference kits; **`v1.7.0` shipped** | **yes** |
 
 ## Log
 
@@ -169,52 +180,79 @@ directions.
 through this branch's gates *before* the merge, not after. It cost one command
 and turned a merge-day failure into a pre-merge fix.
 
+### 2026-08-04 — the release found a gate CI had never run
+
+**Symptom.** Verifying `main` before pushing the tag, `npm test` was found to
+run `validate.py`, `validate_palette.py` and `sloplint.py`, while
+`.github/workflows/validate.yml` ran only the first. The palette gate, the slop
+lint and both `--self-test` flags had never executed on a push.
+
+**Stage it surfaced at:** 7 (release), during the pre-push verification.
+**Stage that owned it:** 6 — the run that added the gates tested them by hand
+and wired them into `package.json`, which is where a human runs them and not
+where a merge is judged.
+
+**Root cause.** "Wired up" was read as "reachable by a command" rather than
+"executed by the gate that guards the branch". Both readings are true of
+`package.json`; only the second is true of CI.
+
+**Fix, by grade.** *Mechanical* — four steps added to the workflow (both gates,
+both self-tests), verified green on the tag. *Standing instruction* (7) — diff
+the scripts against the workflow steps before closing a run that adds a check.
+
+**The check that catches it next time.** `grep` every `test/*.py` against
+`.github/workflows/*.yml`; a script the workflow never names is the finding.
+Cheap enough to be worth automating the next time this class appears — which,
+per the ratchet rule, would be its second appearance.
+
+**What went right.** The release was gated on verifying a `main` this run did
+not assemble. That verification is the only reason the gap was found before it
+shipped rather than after, and it cost about a minute.
+
 ### 2026-08-05 — the check caught what memory would have missed, and a report nearly cost a shipped pack
 
 **Symptom, the good one.** The merge brought a seventh style pack from a
 concurrent run. The first line out of the validator was
 `kits/field-notes: no kit for style pack 'field-notes'` — a contract written
-three hours earlier, watched failing on a planted defect at the time, catching a
-real gap created by someone else at the one moment two branches met. Nobody
-remembered the rule; the check did.
+hours earlier, watched failing on a planted defect at the time, catching a real
+gap created by someone else at the one moment two branches meet. Nobody
+remembered the rule. The check did.
 
 **Symptom, the bad one.** A subagent reported that `--cta-sheen` in the shipped
-`orchard` token layer was syntactically invalid CSS and its sheen therefore
-dead. It reads like a finding, it names a file and a value, and the fix looked
-like one line. `radial-gradient(50% 50%, …)` is **valid**: two
-`<length-percentage>` values are a legal radial size and the shape then defaults
-to ellipse. `CSS.supports` returned true in a real browser and the parser kept
-the declaration, while a control case (`radial-gradient(nonsense, …)`) returned
-false, so the test discriminated. The token layer was not touched.
+`orchard` token layer was syntactically invalid CSS, so the candy pill's sheen
+was dead. It named a file and a value, and the fix looked like one line.
+`radial-gradient(50% 50%, …)` is **valid** — two `<length-percentage>` values are
+a legal radial size and the shape then defaults to ellipse. `CSS.supports`
+returned true in a real browser, the parser kept the declaration, and a control
+(`radial-gradient(nonsense, …)`) returned false, so the test discriminated. The
+token layer was not touched.
 
-**Stage it surfaced at:** 5 (build), on reviewing a subagent's report.
-**Stage that owned it:** 5 — the review step exists precisely so a report is not
-the same thing as a result.
+**Stage it surfaced at:** 5 (build), reviewing a subagent's report.
+**Stage that owned it:** 5 — the review step exists precisely because a report is
+not a result.
 
-**Root cause.** A subagent's report arrives in the register of a conclusion. It
-had already been right about a genuine, subtle gap in the same file (no token for
-text on the accent), which is exactly what makes the next claim easy to believe.
-Confidence is not correlated with correctness, and a wrong "fix" to a released
-token layer would have shipped to everyone who copied it.
+**Root cause.** The same agent had just been right about a genuine, subtle gap in
+the same file: no token for text on the accent, with `--panel` quietly standing
+in for it. Being right about the hard thing is what makes the next claim easy to
+believe. Confidence does not correlate with correctness, and a wrong fix to a
+released token layer ships to everyone who copied it.
 
 **Fix, by grade.**
-- *Standing instruction* (7) — reproduce a delegated finding against the artifact
-  before acting, and record refuted claims so they do not return as folklore.
-- *Mechanical* — none possible: no check can tell a true report from a plausible
-  one. This is one of the rules a machine cannot decide.
+- *Standing instruction* (8) — reproduce a delegated finding against the
+  artifact, with a control case, before acting; record refutations.
+- *Mechanical* — none possible. No check distinguishes a true report from a
+  plausible one; this is one the machine cannot decide.
 
-**A second, cheaper finding, already mechanical.** The CI matrix listed six packs
-by hand, so the seventh kit was built, green, and invisible to CI. Fixed by
-**deriving the matrix from `kits/`** rather than adding a seventh line — a
-hand-maintained list is the same defect class the kit check catches, one layer
-up. No standing instruction, because the mechanical fix removes the need for one.
+**A second finding, and this one was mechanical.** The CI matrix listed six packs
+by hand, so the seventh kit was built, green, and **invisible to CI** — the exact
+shape of instruction 7, one layer up. Fixed by deriving the matrix from `kits/`
+rather than adding a seventh line, so no instruction was needed.
 
-**What went right, worth keeping.** Resolving every merge conflict by *taking the
-other run's side first and re-applying this run's change on top* meant eighteen
-commits of concurrent work survived byte-for-byte while the overlay stayed
-reviewable. And writing one reusable ten-point verification script paid for
-itself seven times over — reading seven subagent reports would have been
-believing seven of them.
+**What went right, worth keeping.** Every merge conflict across two collisions
+was resolved by taking the other run's side first and re-applying this run's
+change on top: eighteen commits of concurrent work survived byte-for-byte and the
+overlay stayed reviewable. And one reusable ten-point verification script paid
+for itself seven times — the alternative was believing seven subagent reports.
 
 **The check that catches it next time.** For findings: reproduce, with a control
-case that must fail, before editing anything shipped. For lists: derive them.
+that must fail, before editing anything shipped. For lists: derive them.
