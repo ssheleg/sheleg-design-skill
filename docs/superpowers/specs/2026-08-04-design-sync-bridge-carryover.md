@@ -8,7 +8,7 @@
 |---|---|---|---|---|---|
 | 1 | 0 Grill | `v1.4.0` will never be tagged or released; its CHANGELOG entry describes a version that only ever existed in the manifests | operator's call — everything folds into 1.6.0 | REQ-012 | accepted, D8 |
 | 2 | 0 Grill | The five non-workbench kits are not pushed to claude.ai/design this run | only one live proof was authorized; the capability ships regardless | REQ-009 | backlog — run `--kit <pack>` + `/design-sync` any time |
-| 3 | 0 Grill | The code graph is not built for this repo | `graphify` is installed but `graphify-out/` does not exist; recommended, never a gate | — | backlog — `/graphify .` |
+| 3 | 0 Grill | ~~The code graph is not built for this repo~~ | **RESOLVED 2026-08-05** — built: 987 nodes, 1350 edges, 59 communities over 270 files. `graphify-out/` is gitignored (machine state, not source). Known gaps recorded: 324 dangling edges dropped, 11 collapsed, 10 files with no semantic output | — | resolved |
 | 4 | 0 Grill | The documentation entry audit (`references/setup.md`, seven passes) was not run | the minimal doc regime was chosen instead; disproportionate for ~10 docs | — | offer stands for a future run |
 | 5 | 0 Grill | Branches `feat/field-notes-pack`, `feat/audit-harvest-v1.5.0`, `feat/lecture-hall-pack` left untouched | not created by this run; another live session owns them | — | owned by the concurrent run |
 | 6 | 0 Grill | This run's 71-line first-draft brief is committed inside `d042b41`, a commit about the field-notes pack, on another run's branch | swept up by a `git add -A` in the shared checkout before isolation was in place | — | harmless duplicate — the authoritative brief is on `feat/design-sync-bridge`; flag at merge so the stale copy is not mistaken for the brief |

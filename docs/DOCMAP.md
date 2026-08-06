@@ -46,9 +46,14 @@ python3 test/validate.py
 ```
 
 `test/validate.py` **is** the documentation gate for this repo — there is no second
-`check-docs.sh`. Ratchet floor at seeding: **272 checks**, measured on `main`
-(`5e59263`) on 2026-08-04 — computed, not restated; the wiki still carries the stale
-v1.2.0 figure of 194. The count may rise, never fall.
+`check-docs.sh`, and it is no longer the only gate: `validate_palette.py` and
+`sloplint.py` joined it in 1.6.0 and CI runs all three.
+
+Ratchet floors, **measured on `main` (`97e7f63`) 2026-08-05, not restated**:
+`validate.py` **787** · `validate_palette.py` **269** · `sloplint.py` **184**.
+Each may rise, never fall. The floor was 272 when this map was seeded a day
+earlier — a number that goes stale this fast is exactly why it carries the commit
+it was measured at.
 CI (`.github/workflows/validate.yml`) runs it on every
 push and PR, together with a negative self-test that corrupts a version and requires
 the validator to fail.
