@@ -4,6 +4,59 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] - 2026-08-08
+
+An eighth style pack, and the first one whose reference already implements this
+skill's own core pattern.
+
+`cyclorama` is extracted from [codos.ai](https://www.codos.ai/): a pale field
+that breathes through **six pastel stops on a 32-second loop** under near-black
+ink that never moves with it, a **monospaced typewriter serif** over a
+monospaced sans, one orange used only as a fill, and no shadows anywhere. Its
+reference ships GSAP ScrollTrigger with real pinning and two WebGL canvases
+whose formation holds and then redeploys — principle 3 in production rather than
+in a doc.
+
+### Added
+
+- **`styles/cyclorama.md`** on the thirteen-heading widened contract plus
+  `## Motion flavor`, with an addressable origin and every ratio computed by
+  importing `test/validate_palette.py` rather than by a second implementation.
+- **`styles/tokens/cyclorama.css`** — the six cycle stops as named tokens, one
+  ease, three durations plus the 32s loop, a five-step radius ramp whose nesting
+  is arithmetic, and an inline accent-dot cursor.
+- **`kits/cyclorama/`** — the six-component spine plus four signature parts:
+  `FieldStop` (the six stops as six static surfaces — the cycle itself does not
+  cross the border), `AppWindow` (a hairline frame with **no fill**, so the
+  field shows through it), `StatusPill` and `ComparePanel`.
+- **`docs/adr/0001-style-pack-naming.md`** — restored to `main`. It was written
+  on a branch that held at its stage-0 gate and never merged, so the decision
+  register began at `0002` for four days while the rule it records was already
+  binding. It is why this pack is `cyclorama` and not `codos`.
+- **T15** in `test/scenarios.md` — a routing pair with its negative branch, so
+  "is `cyclorama` distinguishable from `field-notes`?" can fail in the
+  interesting direction.
+
+### Fixed — in the pack, not in the reference
+
+- The reference paints its section eyebrows in the accent on the field, which
+  measures **1.71–1.97:1** across the six stops. This pack does not propagate
+  it: the accent is a fill, eyebrows take `--ink-soft` at 8.36:1. The three
+  darkened-orange candidates are recorded in `## Gotchas` **with their numbers**,
+  because each one trades a WCAG failure for a colour-blindness collision with
+  `--danger` or `--warning` — there is no text-safe orange in this palette, and
+  the next reader should not have to rediscover that.
+- The pack states that `--accent` and `--signal` sit 6.8 apart under protanopia
+  and that **the palette gate cannot see it**, because `--signal` is not one of
+  the names it treats as semantic. Written down rather than renamed around: a
+  token renamed to satisfy a checker is worse than an unchecked token that says
+  so out loud.
+- The reference's own display fallback is `Fraunces`, which is **proportional**,
+  while the face it replaces is monospaced — so a reader without the licensed
+  font gets a hero that reflows rather than merely restyles. The pack ships
+  measured substitutes instead (Courier Prime 0.600, Cutive Mono 0.605 against
+  the original's 0.590).
+
 ## [1.7.0] - 2026-08-05
 
 The Claude Design border, and the first code this skill has ever shipped.

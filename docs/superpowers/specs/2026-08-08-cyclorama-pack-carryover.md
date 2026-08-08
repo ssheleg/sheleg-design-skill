@@ -1,0 +1,16 @@
+# Carry-over ledger — `cyclorama` style pack
+
+> Append-only. Every stage writes here the moment something is deferred, dropped
+> or left half-done. Read in full at stage 10. **Deferred out loud is forgotten.**
+
+| # | Stage | Item | Why deferred | Owner / resolution |
+|---|---|---|---|---|
+| C1 | 0 | Register positioning — what `cyclorama` claims and what it refuses, and the fork against `field-notes`, `orchard` and `instrument-console` | A genuine design call, and stage 3's gate is manual by design. The prior eighth-pack run deferred the same question as its C2 and never returned to it. | **Stage 3**, the gate that owns it. A proposal is written there; it is not settled in the brief. |
+| C2 | 0 | The kit's signature components beyond the six spine ones | Depends on C1, and on what `DESIGN_SYNC_BRIDGE.md` allows across the border (motion does not cross). | **Stage 3**, same gate. |
+| C3 | 0 | `docs/DOCMAP.md` → *Shared state* proved **overridden, not stale**: it requires a `git worktree` per run; the operator chose this checkout instead (D5). | The document lost to the operator, out loud. It is still correct as written for the concurrent case. | **Stage 9** — record the override beside the rule so the next run sees both, rather than silently deleting the rule. |
+| C4 | 0 | `docs/DOCMAP.md` ratchet floors will be stale the moment this run lands (787 / 269 / 184 all rise) | The new floors are not known until stage 6 finishes. | **Stage 9** — rewrite the floors with the commit they were measured at, as the file's own rule demands. |
+| C5 | 0 | `docs/DOCMAP.md` → *Propagation matrix* says a new pack needs "all nine headings"; the contract has been thirteen since 1.5.0 | Found during the harvest. Real staleness, unrelated to this run's override. | **Stage 9** — correct to thirteen (plus the conditional fourteenth). |
+| C6 | 0 | ADR-0001 is absent from `main`; the decision register begins at `0002` | Cherry-picked onto this branch as REQ-012, which fixes it for this line of work — but `main` only gains it when this branch merges. | **Stage 7**, on merge. Tracked as REQ-012. |
+| C7 | 0 | Standing instruction #1's second half — re-check the tree immediately before `git add` | Cannot be discharged at stage 0; it is a pre-staging act by definition. | **Stage 5**, before the first commit. |
+| C8 | 0 | `feat/lecture-hall-pack` remains an unmerged, held eighth-pack attempt whose brief and ADR now diverge from reality (its pack name is taken by a different extraction) | Out of this run's scope; deleting or merging another run's branch is not this run's call. | **Operator** — decide its fate after v1.8.0 lands. |
+| C9 | 6 | **`field-notes` contradicts itself about `--deep`.** `tokens/field-notes.css:114` annotates it "full-bleed dark band"; `field-notes.md:348` bans "a dark band with a hard edge" below the hero, and `:264` argues the page never needs a second dark section. Surfaced by the T15b subagent, then reproduced against both files. | Real, but it is a **shipped** pack and not this run's scope. Instruction 8 forbids editing something already released on the strength of a report — and the fix is a judgement call (retire the band annotation, or carve out the bounded terminal component), not a typo. | **Operator / a later run.** Both readings are defensible; the pack's author should pick one. |

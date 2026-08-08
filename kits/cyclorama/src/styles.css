@@ -1,0 +1,569 @@
+/* SHELEG Design — Cyclorama token layer (enterprise AI transformation, sold to
+   an executive buyer).
+   Copy verbatim; consume only var(--…) in components.
+
+   The page field is NOT a colour. It is a 32-second, six-stop, infinite loop,
+   and the ink never moves with it. Every contrast figure in this file is stated
+   against the WORST stop, not a representative one.
+
+   Extracted from https://www.codos.ai/ on 2026-08-08 by reading its live
+   computed styles. Where this file diverges from the reference it says so and
+   gives the measured reason — two such corrections, in ACCENT and MOTION.
+
+   Every ratio below was computed by importing test/validate_palette.py, so the
+   pack cannot claim a number the repository's own gate disagrees with. */
+
+:root {
+  color-scheme: light; /* per theme, never "light dark". The reference sets none
+                          at all, so UA controls follow the OS while the page
+                          follows its own class. */
+
+  /* ---- The cycle: six stops, in the order ctaCycle plays them ----------- */
+  /* Ink #1a1a1a measures 13.90 / 12.79 / 13.91 / 13.86 / 14.67 / 14.52 :1 on
+     these, in order. The floor is stop 2 at 12.79:1 — quote that one. */
+  --field-1: #f9def3; /* 0% and 100% — the rest stop, pale pink */
+  --field-2: #f3d9b8; /* 16.67% — apricot. The darkest stop: the contrast floor */
+  --field-3: #f9e0e2; /* 33.33% — blush */
+  --field-4: #eae3ee; /* 50% — lilac */
+  --field-5: #e6eee3; /* 66.67% — mint. The lightest stop */
+  --field-6: #eeeae3; /* 83.33% — warm cream */
+  --bg: var(--field-1); /* the static render, and what a screenshot shows */
+
+  /* ---- Surfaces: one opaque card, one mist panel, and otherwise nothing -- */
+  --surface: #ffffff; /* the card. The ONLY opaque surface in the system */
+  --panel: #c8bfcc; /* the mist panel — comparison tables. Ink on it: 9.76:1 */
+  --panel-tab: #b9afbd; /* its selected tab. Ink on it: 8.23:1 */
+  --panel-tab-deep: #a89eae; /* the scrollbar thumb, and the tab's hover */
+
+  /* ---- Ink -------------------------------------------------------------- */
+  --ink: #1a1a1a; /* 12.79:1 on the worst stop — never a true black */
+  --ink-soft: #3a3a3a; /* 8.36:1 on the worst stop, so it MAY carry body copy —
+                          and it is the eyebrow colour, see ACCENT below */
+  --ink-faint: rgba(26, 26, 26, 0.55); /* de-emphasised furniture, not copy */
+  --on-ink: #ebe1f0; /* the label on an ink fill — 13.73:1. The FIELD colour,
+                        not white: the reference tints its button labels with
+                        the page, and white here reads as a foreign part */
+
+  /* ---- Lines. This system has no shadows at all ------------------------- */
+  --line: rgba(26, 26, 26, 0.22); /* THE hairline: window frames, outline CTA */
+  --line-soft: rgba(26, 26, 26, 0.12); /* dividers, table rules */
+  --hairline: rgba(26, 26, 26, 0.08); /* the faintest rule */
+  --fill-soft: rgba(26, 26, 26, 0.06); /* the chip fill */
+
+  /* ---- ACCENT: one orange, and it is a FILL ------------------------------ */
+  /* [CORRECTION] The reference paints its section eyebrows in --accent on the
+     field. That measures 1.71–1.97:1 across the six stops and fails WCAG at
+     every one of them. This pack does not propagate it: the accent is a fill,
+     a dot and a chart series, never text on the field. Eyebrows take
+     --ink-soft at 8.36:1.
+
+     Darkening the orange is NOT the fix, and the numbers are here so the next
+     reader does not spend the afternoon rediscovering it. The warm-dark region
+     is already occupied by two of this palette's own semantics:
+       #903A00  5.53:1 as text, but  4.6 from --danger  (hard floor is 10)
+       #A14700  4.52:1 as text, but  9.0 from --danger, 5.1 from --warning
+                                     under deuteranopia
+       #C56200  3.01:1 (large text only), 1.4 from --warning under protanopia
+     There is no text-safe orange in this palette. That is a property of the
+     reference, not a shortcut taken here. */
+  --accent: #ff8c00; /* fill / dot / chart series. NEVER text on the field */
+  --accent-hover: #e69900; /* the accent's hover fill */
+  --on-accent: #1a1a1a; /* 7.46:1 on --accent, 7.39:1 on --accent-hover */
+  --accent-ring: rgba(255, 140, 0, 0.12); /* the focus halo behind the ring */
+
+  /* ---- Status. Read the pack's Palette section before using these -------- */
+  /* --good and --danger separate by 14.0 at full colour but 7.2 under
+     protanopia and 5.9 under deuteranopia; --warning and --danger by 14.8.
+     All clear the hard floor, so the palette is legal WITH the secondary
+     encoding the pack declares — and the reference already renders its status
+     pill as a dot plus the word, so the declaration is a measurement. */
+  --good: #2c5a44;
+  --warning: #9a6a00;
+  --danger: #7a3a1c;
+  --info: #1b6ec2;
+  /* The live indicator is a FILL, like --accent: 1.76:1 as text on the field.
+     Ink on it measures 7.26:1. It is NOT named --good-something on purpose —
+     it is a different job, not a variant of one.
+     Note for anyone extending this palette: --signal and --accent separate by
+     only 6.8 under protanopia and 6.7 under deuteranopia. The repository's
+     palette gate does not check this pair, because --signal is not one of the
+     names it treats as semantic. The pack's own rule covers it: a dot never
+     carries meaning without its word. */
+  --signal: #00c22d;
+  --on-signal: #1a1a1a;
+
+  /* ---- Radii: five steps, and they nest arithmetically ------------------ */
+  /* The reference gets this right and it is worth copying exactly: a 16px
+     window with 12px of padding holds 4px chips, because 16 - 12 = 4. Nesting
+     the same radius twice is what makes two rectangles that happen to touch. */
+  --radius-sm: 4px; /* chips, tabs, inline tags */
+  --radius-md: 8px; /* buttons, inputs */
+  --radius-lg: 16px; /* cards, the app window */
+  --radius-xl: 24px; /* the largest panel */
+  --radius-pill: 9999px; /* status pills */
+
+  /* ---- Spacing and the page ramp ---------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-8: 3rem;
+  --space-10: 4rem;
+  --space-12: 6rem;
+  --page-max: 90rem;
+  --page-gutter: clamp(1.75rem, 5.6vw, 5.6rem);
+  --section-gap: 200px; /* the number that builds the page's rhythm */
+  --section-y: calc(var(--section-gap) / 2);
+  --hero-min-h: 100dvh; /* never 100vh — the field would reflow when mobile
+                           browser chrome collapses */
+
+  /* ---- Type: two monospaced faces, two percent apart -------------------- */
+  /* Measured advance ratios at 100px: GT Alpina Typewriter 0.590, DM Mono
+     0.600. Display and body are BOTH monospaced, which is why the page reads
+     as one voice. Preserve that before anything else.
+
+     GT Alpina Typewriter is licensed (Grilli Type). The substitutes below were
+     measured the same way, not recommended from memory:
+       Courier Prime  0.600  SIL OFL  monospaced typewriter serif — use this
+       Cutive Mono    0.605  SIL OFL  same category
+     Do NOT substitute Zilla Slab (0.576) or Bitter (0.641): both are
+     PROPORTIONAL, and this hero is laid out one character at a time. The
+     reference's own declared fallback, Fraunces, is proportional too — see the
+     pack's Gotchas. */
+  --font-display: "GT Alpina Typewriter", "Courier Prime", "Cutive Mono",
+    ui-monospace, monospace;
+  --font-body: "DM Mono", "Geist Mono", ui-monospace, monospace;
+
+  --t-display: clamp(2.25rem, 0.5rem + 6.7vw, 8.125rem); /* 104.48px at 1440 */
+  --t-h1: clamp(2rem, 1rem + 2.8vw, 3.75rem);
+  --t-h2: clamp(1.6rem, 1rem + 1.7vw, 2.5rem);
+  --t-h3: clamp(1.375rem, 0.9rem + 1.2vw, 1.875rem);
+  --t-h4: clamp(1.125rem, 1rem + 0.5vw, 1.3125rem);
+  --t-intro: clamp(1.125rem, 0.85rem + 1.1vw, 1.875rem);
+  --t-body: clamp(0.9375rem, 0.9rem + 0.2vw, 1.0625rem);
+  --t-sm: clamp(0.8125rem, 0.79rem + 0.12vw, 0.875rem);
+  --t-label: clamp(0.8125rem, 0.75rem + 0.3vw, 0.9375rem);
+  --t-caption: 0.75rem;
+  --t-metric: clamp(2.75rem, 0.8rem + 6vw, 6.5rem);
+
+  --lh-display: 1;
+  --lh-h1: 1.05;
+  --lh-h2: 1.1;
+  --lh-h3: 1.15;
+  --lh-h4: 1.3;
+  --lh-intro: 1.35;
+  --lh-body: 1.6;
+  --lh-caption: 1.45;
+  --lh-metric: 0.95;
+
+  --track-display: -0.02em; /* the one display tracking value, everywhere */
+  --track-eyebrow: 0.12em;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+
+  /* ---- Motion: one ease, three durations, one loop ---------------------- */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1); /* every state change and reveal */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* entrances only */
+  --dur-fast: 0.15s; /* colour and opacity on a control */
+  --dur-base: 0.25s; /* transform on a control */
+  --dur-slow: 0.5s; /* section reveal */
+  --dur-cycle: 32s; /* THE signature: the field's full loop */
+  --dur-breathe: 6s; /* the organ's ambient scale, on hover only */
+  /* [CORRECTION] The reference declares `transition: all` on its root element.
+     This pack scopes every transition to named properties instead; `all` makes
+     a page animate things nobody chose, and it is banned in the pack's Bans. */
+
+  /* ---- The cursor: an accent dot, 22px, hotspot at its centre ----------- */
+  /* Inline so it costs no request. It rides filled and accent buttons only. */
+  --cursor-dot: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='22' height='22'><circle cx='11' cy='11' r='4' fill='%23FF8C00' stroke='%23ffffff' stroke-width='1.5'/></svg>")
+    11 11, pointer;
+
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+/* The reference ships a reduced-motion branch for every animated class,
+   including its hover transforms, which is the right posture and this pack
+   requires it. The field stops on its rest stop; nothing crossfades to get
+   there, because there is nothing to crossfade — the animation simply is not
+   running. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0s;
+    --dur-base: 0s;
+    --dur-slow: 0s;
+    --dur-cycle: 0s;
+    --dur-breathe: 0s;
+  }
+}
+
+/* ── components ── */
+
+/* Everything below consumes var(--…) only. Colour never appears as a literal:
+   the token layer above is the whole palette, and a value with no token is a
+   gap in the pack rather than something to inline here. Geometry is different —
+   the pack states its paddings and sizes numerically, so those stay numbers.
+
+   The composition rule that governs every rule below: the page is ONE field,
+   and that field is moving. Nothing here fills a band, nothing casts a shadow —
+   there is no shadow token because there is nothing for one to describe — and
+   the two opaque surfaces (.cy-card, .cy-compare) are used sparingly, because
+   each one switches the pack's signature off locally. */
+
+/* Field — the six stops of the cycle, static. The animation stays in the pack;
+   what a design system gets is the extremes to design against. */
+.cy-field {
+  padding: var(--space-10) var(--page-gutter);
+  color: var(--ink);
+}
+.cy-field--1 { background-color: var(--field-1); }
+.cy-field--2 { background-color: var(--field-2); }
+.cy-field--3 { background-color: var(--field-3); }
+.cy-field--4 { background-color: var(--field-4); }
+.cy-field--5 { background-color: var(--field-5); }
+.cy-field--6 { background-color: var(--field-6); }
+
+/* Heading — the monospaced display face at the three section sizes, all
+   tracking at the one authored --track-display. */
+.cy-heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--track-display);
+  color: var(--ink);
+  text-wrap: balance;
+}
+.cy-heading--1 { font-size: var(--t-h1); line-height: var(--lh-h1); }
+.cy-heading--2 { font-size: var(--t-h2); line-height: var(--lh-h2); }
+.cy-heading--3 { font-size: var(--t-h3); line-height: var(--lh-h3); }
+
+/* Rule — furniture inside a panel, never the page's composition. */
+.cy-rule {
+  height: 0;
+  margin: var(--space-4) 0;
+  border: 0;
+  border-top: 1px solid var(--line-soft);
+}
+.cy-rule--strong { border-top-color: var(--line); }
+
+/* Button — the press is instant on purpose; see Button.md. */
+.cy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-weight: var(--weight-regular);
+  letter-spacing: 0.005em;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    transform var(--dur-base) var(--ease),
+    background-color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease),
+    opacity var(--dur-fast) var(--ease);
+}
+.cy-btn--sm { padding: 0 var(--space-4); height: 34px; font-size: var(--t-sm); }
+.cy-btn--md { padding: 0 var(--space-5); height: 42px; font-size: var(--t-body); }
+.cy-btn--lg { padding: 0 var(--space-5); height: 56px; font-size: var(--t-intro); }
+
+.cy-btn--primary {
+  background-color: var(--ink);
+  color: var(--on-ink); /* the FIELD colour, not white — 13.73:1 */
+  cursor: var(--cursor-dot);
+}
+.cy-btn--primary:hover:not(:disabled) { background-color: var(--ink-soft); }
+
+.cy-btn--secondary {
+  background-color: transparent;
+  border-color: var(--line);
+  color: var(--ink);
+}
+.cy-btn--secondary:hover:not(:disabled) { border-color: var(--ink); }
+
+.cy-btn--ghost {
+  background-color: transparent;
+  color: var(--ink);
+}
+.cy-btn--ghost:hover:not(:disabled) { background-color: var(--fill-soft); }
+
+/* The accent fill. Not a `variant` on purpose: a variant list invites one per
+   button, and this pack allows at most one accent fill per view. */
+.cy-btn--accent {
+  background-color: var(--accent);
+  color: var(--on-accent); /* 7.46:1 */
+  cursor: var(--cursor-dot);
+}
+.cy-btn--accent:hover:not(:disabled) { background-color: var(--accent-hover); }
+
+.cy-btn:hover:not(:disabled) { transform: scale(1.02); }
+.cy-btn:active:not(:disabled) { transform: scale(0.98); transition-duration: 0s; }
+.cy-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.cy-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Card — one of only two opaque surfaces. No shadow exists to lift off. */
+.cy-card {
+  display: block;
+  background-color: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  color: var(--ink);
+  transition: transform var(--dur-base) var(--ease);
+}
+.cy-card:hover { transform: translateY(-2px); }
+.cy-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+.cy-card__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--t-h4);
+  line-height: var(--lh-h4);
+  letter-spacing: var(--track-display);
+  font-weight: var(--weight-regular);
+}
+.cy-card__meta {
+  font-family: var(--font-body);
+  font-size: var(--t-caption);
+  color: var(--ink-soft);
+}
+.cy-card__body {
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--ink-soft);
+}
+
+/* Chip — --radius-sm because 16 - 12 = 4, not because 4 looked right. */
+.cy-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background-color: var(--fill-soft);
+  border-radius: var(--radius-sm);
+  padding: var(--space-1) var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  color: var(--ink);
+  transition: background-color var(--dur-fast) var(--ease);
+}
+.cy-chip:hover { background-color: var(--line-soft); }
+.cy-chip--accent {
+  background-color: var(--accent);
+  color: var(--on-accent);
+}
+.cy-chip--accent:hover { background-color: var(--accent-hover); }
+.cy-chip--selected { background-color: var(--panel-tab); }
+.cy-chip--selected:hover { background-color: var(--panel-tab-deep); }
+
+/* Stat — the figure in the DISPLAY face: every glyph is one advance wide, so a
+   column of metrics aligns without tabular-nums and without a second face. */
+.cy-stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.cy-stat__label {
+  font-family: var(--font-body);
+  font-size: var(--t-caption);
+  letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase;
+  color: var(--ink-soft); /* never --accent: 1.71:1 on the field */
+}
+.cy-stat__value {
+  font-family: var(--font-display);
+  font-size: var(--t-metric);
+  line-height: var(--lh-metric);
+  letter-spacing: var(--track-display);
+  color: var(--ink);
+}
+.cy-stat__source {
+  font-family: var(--font-body);
+  font-size: var(--t-caption);
+  line-height: var(--lh-caption);
+  color: var(--ink-faint);
+}
+
+/* App window — a FRAME, not a surface. The absence of a background is the
+   whole component: the field cycle shows through it. */
+.cy-window {
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  color: var(--ink);
+}
+.cy-window__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-bottom: var(--space-3);
+}
+.cy-window__lights {
+  display: inline-flex;
+  gap: var(--space-1);
+  flex: none;
+}
+.cy-window__lights i {
+  width: 9px;
+  height: 9px;
+  border-radius: var(--radius-pill);
+  background-color: var(--line);
+}
+.cy-window__titles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex: 1 1 auto;
+  text-align: center;
+}
+.cy-window__title {
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  color: var(--ink);
+}
+.cy-window__meta {
+  font-family: var(--font-body);
+  font-size: var(--t-caption);
+  color: var(--ink-faint);
+}
+.cy-window__status { flex: none; }
+.cy-window__body {
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+}
+.cy-window__foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding-top: var(--space-3);
+}
+
+/* Status pill — the mark AND its word. The label is required in the API for
+   the reason spelled out in StatusPill.md: two of this palette's pairs fall
+   under the colour-blindness floor, and one of them the gate cannot see. */
+.cy-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background-color: var(--surface);
+  border-radius: var(--radius-pill);
+  padding: var(--space-1) 10px;
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  color: var(--ink);
+}
+.cy-status__mark {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  flex: none;
+}
+.cy-status--live .cy-status__mark { background-color: var(--signal); }
+.cy-status--good .cy-status__mark { background-color: var(--good); }
+.cy-status--warning .cy-status__mark { background-color: var(--warning); }
+.cy-status--danger .cy-status__mark { background-color: var(--danger); }
+
+/* Compare panel — the one place below the hero a real fill is earned, because
+   a comparison is what genuinely reads worse over a moving field. */
+.cy-compare {
+  background-color: var(--panel);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  color: var(--ink); /* 9.76:1 on --panel */
+}
+.cy-compare__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  text-align: left;
+}
+.cy-compare__table th,
+.cy-compare__table td {
+  padding: var(--space-3) var(--space-2);
+  border-bottom: 1px solid var(--line-soft);
+  font-weight: var(--weight-regular);
+  vertical-align: baseline;
+}
+.cy-compare__table tbody tr:last-child th,
+.cy-compare__table tbody tr:last-child td { border-bottom: 0; }
+.cy-compare__table thead th {
+  font-size: var(--t-caption);
+  letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.cy-compare__without { color: var(--ink-soft); }
+.cy-compare__with { color: var(--ink); }
+.cy-compare__mark {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: var(--space-2);
+  border-radius: var(--radius-pill);
+  background-color: var(--accent);
+}
+
+/* Eyebrow is a class, not a component, and deliberately so: a component would
+   invite parameterising its colour, and --ink-soft is the only value it may
+   take. The accent measures 1.71:1 here. */
+.cy-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--t-caption);
+  letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* Input — 16px is not a style choice: anything smaller triggers zoom-on-focus
+   on iOS. */
+.cy-field-input {
+  display: block;
+  width: 100%;
+  background-color: var(--surface);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: var(--lh-body);
+  color: var(--ink);
+  transition:
+    border-color var(--dur-fast) var(--ease),
+    box-shadow var(--dur-fast) var(--ease);
+}
+.cy-field-input:hover { border-color: var(--ink-soft); }
+.cy-field-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-ring);
+}
+.cy-field-input:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* Reduced motion: the durations above already collapse to 0s through the token
+   layer, so transitions resolve instantly rather than being removed. What still
+   has to go is the transform itself — a hover that jumps 2% is worse than one
+   that does not move. */
+@media (prefers-reduced-motion: reduce) {
+  .cy-btn:hover:not(:disabled),
+  .cy-btn:active:not(:disabled),
+  .cy-card:hover {
+    transform: none;
+  }
+}

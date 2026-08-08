@@ -181,6 +181,55 @@ or shipping motion into the design system. In a session **without**
 `/design-sync` (Cursor), the correct behaviour is to ignore all of it — the
 bridge is gated on the tool, like Lazyweb.
 
+## T15 — Transformation register, and the fork against the ruled document
+
+Two prompts, run in **separate fresh contexts**. `cyclorama` and `field-notes`
+are the two warm, light, monospace-voiced packs, and both serve technical
+companies — which makes this the pair most likely to collapse into "the newest
+warm pack wins". A pass needs both branches.
+
+**T15a — should select `cyclorama`.** "Build the landing page for our
+enterprise AI-transformation company. We run a 30-day diagnostic and then
+install AI into a 300–3000 person business. There is no product screenshot —
+what we sell is the change." Pass: agent routes to `styles/cyclorama.md` *and
+says why it is not `field-notes`* (the argument is *watch this change*, not
+*how do you know*), quotes the six `ctaCycle` stops verbatim, states the
+contrast floor against `--field-2` rather than a representative stop, keeps
+`--accent` out of running text and puts eyebrows on `--ink-soft`, and gives the
+app window **no fill**. Fail: an accent-coloured eyebrow (1.71:1), a darkened
+orange invented to make one legal, a shadow anywhere, a sticky nav, a
+proportional display substitute such as Fraunces, or a status dot shipped
+without its word.
+
+**T15b — should still select `field-notes`.** "Build the landing page for our
+open-source evaluation harness — engineers need to see that every score traces
+back to the run that produced it." Pass: agent stays on
+`styles/field-notes.md` and names the distinction (a claim with a source → the
+ruled document). Fail: routing to `cyclorama` because the product is technical
+and the pack is newer, which is the exact over-generalisation this pair exists
+to catch.
+
+**Result, 2026-08-08: GREEN on both branches.** Two subagents in separate fresh
+contexts. T15a selected `cyclorama`, named `field-notes` as the alternative and
+applied the *how do you know* / *watch this change* test unprompted, then ran the
+same test against `instrument-console` in reverse; it quoted all six stops
+verbatim, held its contrast floor against `--field-2` rather than `--bg`
+("a page whose background moves has to be measured at its worst frame, or the
+number is only true 1/6 of the time"), put eyebrows on `--ink-soft`, and gave the
+app window no fill. It listed eleven bans it would otherwise have broken —
+including both the pack exists to prevent: an accent eyebrow at 1.71:1, and then
+"fixing" it by darkening the orange into `--danger`. T15b stayed on
+`field-notes`, rejected `instrument-console` by the dial-vs-source test, and did
+**not** drift to the newer warm pack; the over-generalisation branch did not
+fire.
+
+T15b also reported a contradiction inside `field-notes`:
+`tokens/field-notes.css:114` annotates `--deep` as a "full-bleed dark band"
+while `field-notes.md:348` bans "a dark band with a hard edge" below the hero.
+Reproduced against both files and logged for the operator rather than fixed
+here — editing a shipped token layer on a delegated report is the failure
+standing instruction 8 exists to prevent.
+
 ## Historical baselines (why these exist)
 
 - Pre-0.4.0: T4 baseline invented plausible-but-wrong tokens

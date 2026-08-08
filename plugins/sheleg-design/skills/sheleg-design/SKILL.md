@@ -73,6 +73,7 @@ style pack in [`styles/`](./styles/):
 | [`atrium`](./styles/atrium.md) | warm cream daylight field with no dark bands, one terracotta accent, light serif with italic asides, fluted-glass hero over photography | consumer health, longevity & diagnostics, wellness, premium care and high-trust DTC subscription |
 | [`orchard`](./styles/orchard.md) | warm oat field of rounded slabs, sage brand + one candy-orange action, rounded geometric display, soft-3D pills built from inset light | friendly consumer biotech, DTC wellness, testing kits & supplements — approachable and credible at once |
 | [`field-notes`](./styles/field-notes.md) | warm green-cast paper ruled by hairlines, one rust accent, a hero that dissolves into the page, numbered mono eyebrows, crop marks, provenance colour | open-source & developer tools sold on auditability — code intelligence, provenance, evals, agent memory (standalone) |
+| [`cyclorama`](./styles/cyclorama.md) | a pale field cycling through six pastel stops on a 32s loop under fixed near-black ink, monospaced typewriter serif over mono, one orange used only as a fill, a particle organ that redeploys per section | enterprise AI transformation, applied-AI services and technical consultancies — a product whose argument is a change of state, not a screenshot |
 
 Read the chosen pack in full before styling anything — it supplies the
 palette, type, texture, motion-token values, signature motifs, and bans.
