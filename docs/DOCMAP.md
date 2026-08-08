@@ -20,7 +20,7 @@ decision home. A run that settles something records it as an ADR.
 | Fact | Its single home | Everywhere else must derive, never restate |
 |---|---|---|
 | Style-pack token values | `plugins/sheleg-design/skills/sheleg-design/styles/tokens/<pack>.css` | pack markdown tables are documentation; kit `styles.css` copies the file verbatim |
-| Style-pack rules (palette/type/motifs/bans) | `styles/<pack>.md` (ten-heading contract) | `SKILL.md` table routes to it; README summarises in one line |
+| Style-pack rules (palette/type/motifs/bans) | `styles/<pack>.md` (thirteen-heading contract, plus `## Motion flavor` for a cinematic pack) | `SKILL.md` table routes to it; README summarises in one line |
 | The motion methodology | `SHELEG_DESIGN.md` | `SKILL.md` states the five principles only |
 | The Figma contract | `FIGMA_BRIDGE.md` | — |
 | The Claude Design contract | `DESIGN_SYNC_BRIDGE.md` | — |
@@ -34,7 +34,7 @@ decision home. A run that settles something records it as an ADR.
 |---|---|---|
 | **New file in the skill bundle** | add to `install.sh`'s `for f in …` list · mirror into `.cursor/skills/sheleg-design/` · link it from `SKILL.md` if it is a companion doc · add it to the README install table | `python3 test/validate.py` |
 | **New style pack** | `styles/<pack>.md` with **all thirteen headings** (plus `## Motion flavor` for a cinematic pack) · `styles/tokens/<pack>.css` · the `.cursor/` mirror · **`install.sh`'s file list** · route from the `SKILL.md` pack table · name it in `bin/cli.js` output · README pack table · name it in a `cursor/rules/*.mdc` · **a kit under `kits/<pack>/`** · a routing scenario **with its negative branch** · CHANGELOG | `python3 test/validate.py` |
-| **New kit component** | the shared spine stays identical across all six kits · no raw color literal outside the token block · `.prompt.md` beside it | `python3 test/validate.py` |
+| **New kit component** | the shared spine stays identical across **every** kit — the count is derived, never typed, in both `validate.py` and the CI matrix · no raw color literal outside the token block · `.prompt.md` beside it | `python3 test/validate.py` |
 | **Any release** | four-way version sync · CHANGELOG entry · tag · GitHub release · `npm publish` · refresh local installs | `test/validate.py` + `npm view sheleg-design-skill version` + `gh run list` |
 | **Behavior an agent must follow** | a scenario in `test/scenarios.md` | the scenario run by a fresh subagent |
 | **A settled decision** | an ADR in `docs/adr/`; if it overrides an earlier record, that record's status line says so | link check in `test/validate.py` |
@@ -50,7 +50,7 @@ python3 test/validate.py
 `sloplint.py` joined it in 1.6.0 and CI runs all three.
 
 Ratchet floors, **measured on `main` (`025f866`) 2026-08-08, not restated**:
-`validate.py` **875** · `validate_palette.py` **305** · `sloplint.py` **192**.
+`validate.py` **876** · `validate_palette.py` **305** · `sloplint.py` **192**.
 Each may rise, never fall. They were 787 / 269 / 184 at `97e7f63` three days
 earlier, and 272 the day before that — a number that goes stale this fast is
 exactly why it carries the commit it was measured at.
@@ -79,6 +79,21 @@ decision taken against evidence, not a default taken from assumption. The run
 still discharged the second half of the concurrency instruction — the tree was
 re-checked immediately before `git add`, and every staged path was listed
 explicitly.
+
+**Branch hygiene, because it is what makes the concurrency check readable.**
+Standing instruction 1 treats "a `feat/*` branch you did not create" as evidence
+that another run is live. That signal is worthless while dead branches
+accumulate: by 2026-08-08 there were five, four of them long since merged, so
+every run had to re-adjudicate the same list and the honest answer was always
+"probably nothing". On 2026-08-08 all five were retired — the held branch's
+unique records were brought onto `main` first, and one merged branch was pinned
+by a clean, seven-day-idle worktree at `…-wt/audit-harvest`, which was removed
+with it. **No `feat/*` branches and one worktree remain.**
+
+The rule that keeps it that way: **delete a feature branch when it merges, and
+land a held run's records on `main` rather than leaving them on a branch.** From
+here, *any* `feat/*` branch means a live run — which is the only state in which
+instruction 1 is checking something.
 
 That `ADR-0001` is also no longer provisional: it never merged, so the decision
 register began at `0002` for four days while the rule it records was binding. The

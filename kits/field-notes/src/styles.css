@@ -111,7 +111,11 @@
   /* The reference paints three unrelated dark palettes: a warm-brown theme, a
      forest band, and a navy terminal. This pack keeps the forest — it is the
      hero's own gradient and the only one the page argues for. */
-  --deep: #072820; /* full-bleed dark band */
+  --deep: #072820; /* [CORRECTED 2026-08-08] this said "full-bleed dark band",
+                      which names the one thing the pack's Bans forbid. It is
+                      the dawn's darkest step, and it is legal only on a
+                      BOUNDED dark surface. Nothing consumes it directly today;
+                      --deep-2 and --deep-3 below are the terminal. */
   --deep-2: #0b332a; /* the terminal's header bar */
   --deep-3: #041d17; /* the terminal body — a darker step of the SAME family,
                         where the reference switches to navy #0b101d */
@@ -289,7 +293,6 @@
     --dur-marquee: 0s;
   }
 }
-
 /* ── components ── */
 
 /* Everything below consumes var(--…) only. Colour never appears as a literal:

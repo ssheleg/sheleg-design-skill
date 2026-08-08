@@ -74,7 +74,7 @@ copy it verbatim instead of transcribing this table.
 | `--witness` | `#B3402A` | provenance: ambiguous | 5.3:1 |
 | `--witness-ink` / `-soft` | `#9A3016` / `#F4DED4` | the label / the wash | **7.0:1** |
 | `--danger` | `#C0442E` | destructive — kept distinct from `--witness` | 4.8:1 |
-| `--deep` / `-2` / `-3` | `#072820` / `#0B332A` / `#041D17` | one dark family: band · terminal header · terminal body | — |
+| `--deep` / `-2` / `-3` | `#072820` / `#0B332A` / `#041D17` | one dark family, every member **bounded**: the dawn's darkest step · terminal header · terminal body — see Gotchas | — |
 
 Three rules carry this palette:
 
@@ -393,5 +393,17 @@ first thing to correct when porting this look:
   grotesque in its place turns the page corporate, and the loss is bigger than
   any colour substitution. Its `opsz 12..96` axis is available and unused by the
   reference — set `font-optical-sizing: auto` at hero sizes.
+- **`--deep` was annotated as a "full-bleed dark band" — the exact thing this
+  pack bans.** Corrected 2026-08-08. Surfaced by a routing-scenario subagent
+  reading the pack cold, then reproduced: the token layer called `--deep` a
+  full-bleed band, the Palette table called it "band", and Bans forbids "a
+  second dark section below the hero; a dark band with a hard edge". Checking
+  the consumers settled it — **nothing consumes `--deep`, `--deep-2` or
+  `--deep-3` anywhere in the kit or the bundle.** What *is* consumed is the
+  `-on-deep` family (`--on-deep`, `--fill-on-deep`, `--line-on-deep`), and only
+  inside `.fn-hero`, which is the dawn — the pack's one legitimate dark surface.
+  So the family is real and the annotation was wrong: these are **bounded** dark
+  surfaces, and the terminal is the intended one. If you reach for `--deep` as a
+  section background you have left the pack.
 - **Values are a snapshot** taken 2026-08-04 from a live production site. Treat
   them as extracted, not eternal.
