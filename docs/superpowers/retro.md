@@ -4,7 +4,7 @@ The project's standing instructions and run log for task-pipeline. Stage 0
 reads this file **in full**; stage 10 prunes, stamps, and writes an entry only
 if the run diverged.
 
-## Standing instructions (cap: 10 · current: 8)
+## Standing instructions (cap: 10 · current: 9)
 
 Each one binds every run in this project until it is retired. Retire when it
 became a mechanical check, when the paths it names are gone, or when it has not
@@ -78,7 +78,33 @@ fired in five run stamps.
    and a genuinely invalid gradient returned false, so the test discriminated
    and the pack was left alone. Record refuted claims too: a claim disproved and
    never written down comes back as folklore.
-   *(Last fired: 2026-08-05 · `2ad45b2`)*
+   *(Last fired: 2026-08-08 · `025f866` — a subagent reported that `field-notes`
+   contradicts itself about `--deep`. Reproduced against both files: the claim
+   is true. Still not acted on, because the pack is shipped and the fix is a
+   judgement call rather than a typo. Logged for its author instead.)*
+
+9. **A close-out artifact is verified by the artifact changing, not by the
+   command exiting 0.** Stage 9 refreshes three things — module docs, the wiki,
+   the code graph — and each has a command that can succeed at running while
+   failing at its job. `graphify . --update` **exited 0** having printed
+   `error: no LLM API key found` and changed nothing; the graph kept a
+   `built_at_commit` three commits stale, and the run would have reported it
+   refreshed. Check the artifact, not the exit code: `built_at_commit` against
+   `git rev-parse HEAD`, the wiki page's version string against the tag, a
+   doc's numbers against a fresh measurement. This is instruction 6 pointed at
+   the close-out instead of at the gates — a green nobody watched land is not
+   evidence there either.
+   *(Last fired: 2026-08-08 · `025f866` — the run that wrote it.)*
+
+## Prune log
+
+- **2026-08-08 · nothing retired.** All eight were walked against the three
+  triggers. Seven fired inside this run (1, 2, 4, 5, 6, 7, 8); instruction 3
+  did not fire but is one stamp old, not five. Instruction 5 is the closest to
+  retirement — `sloplint.py` now checks an addressable origin mechanically for
+  any widened pack — but the check can only fire once a pack file exists, and
+  what instruction 5 actually does is stop a pack from being *started* without a
+  reference. Kept until that half is covered too.
 
 ## Run stamps
 
@@ -88,8 +114,75 @@ fired in five run stamps.
 | 2026-08-05 | `564ecec` | audit harvest — motion doctrine, dials, widened contract, two computed gates (v1.6.0) | **yes** |
 | 2026-08-04 | `623d2fb` | release close-out — CI wired to all three gates; **`v1.6.0` shipped**: GitHub release + npm, first published version since `v1.3.4` | **yes** |
 | 2026-08-05 | `2ad45b2` | Claude Design bridge + seven React reference kits; **`v1.7.0` shipped** | **yes** |
+| 2026-08-08 | `025f866` | `cyclorama` style pack from codos.ai, eighth kit, ADR-0001 restored; **`v1.8.0` shipped** | **yes** |
 
 ## Log
+
+### 2026-08-08 — a stage-0 decision the measurement refuted, and a refresh that reported success
+
+**Symptom, the first one.** At stage 0 the operator chose, from three options,
+to fix the reference's failing accent by adding a second text-safe token —
+`--accent-ink`, the shape `field-notes` uses for `--brand-on-dark`. It is the
+obvious repair and it was chosen on a reasonable premise. Two hours later, while
+deriving the actual value, the premise turned out to be false: **every orange
+dark enough to carry text collides with a semantic this palette already has.**
+`#903A00` sits **4.6** from `--danger` against a hard floor of 10; `#A14700`
+sits 7.4 under protanopia; `#C56200` sits **1.4** from `--warning` under
+protanopia. The repair would have traded a WCAG failure for a colour-blindness
+failure — and `--accent-ink` is not a name the palette gate treats as semantic,
+so **no check would ever have said so.**
+
+**Stage it surfaced at:** 4 (build), while computing the token.
+**Stage that owned it:** 0 — the option was offered as though it were clean,
+without the separation having been computed first.
+
+**Root cause.** The three options were priced on contrast alone. Contrast is the
+number that names the defect, so it is the number that gets checked; separation
+is the number that decides whether the *fix* is legal, and it was not computed
+until the fix was being written. A palette repair has two constraints and only
+one of them is visible in the complaint.
+
+**Fix, by grade.**
+- *Mechanical* — none possible in the gate: `--accent-ink` would not be a peer,
+  which is the whole trap. The stronger fix was **not to create the token**, so
+  the collision cannot exist to be missed.
+- *Note that expires in two runs* — when a colour repair is offered as an
+  option, compute its separation from every semantic peer **before** offering
+  it, not after it is chosen. Two commands, and it changes which options exist.
+
+**What went right, worth keeping.** The reversal was taken back to the operator
+out loud with all three candidates measured, rather than quietly substituted.
+And the rejected candidates went **into the pack's Gotchas with their numbers**,
+so the next person to notice the failing eyebrow does not re-derive the same
+three dead ends — a negative result stored where the mistake would be made.
+
+**Symptom, the second one.** `graphify . --update` at stage 9 **exited 0** while
+printing `error: no LLM API key found (35 doc/paper/image file(s) need semantic
+extraction)` and changing nothing. `built_at_commit` stayed at `97e7f63` while
+HEAD was `025f866`. Nothing in the exit status distinguished "refreshed the
+graph" from "refused to". Re-run with `--code-only` it did the code half —
+987 → 1042 nodes, stamp now current — leaving the doc half a release behind,
+which is visible in `god-nodes`, where a hub still reads "T1–T14" although there
+are now fifteen scenarios.
+
+**Stage it surfaced at:** 9, and only because the graph was inspected before and
+after rather than trusted.
+**Stage that owned it:** 9.
+
+**Root cause.** The close-out stage inherited the habit of reading exit codes
+from the gate stages, where exit codes are designed to mean something. A
+third-party refresh command is not a gate and owes no such contract.
+
+**Fix, by grade.** *Standing instruction* (9) — verify the artifact changed, not
+that the command exited 0. Mechanical is possible later (compare
+`built_at_commit` to `HEAD`) but `graphify-out/` is gitignored machine state, so
+a repo gate cannot assume it exists; the instruction is the right grade for now.
+
+**The check that catches it next time.** Read `built_at_commit` before and after
+any graph refresh, and diff the wiki page's version string against the tag. Both
+are one command; the failure they prevent is a stale graph carrying the
+authority of a machine into the next run's harvest, which is the premise
+everything downstream is built on.
 
 ### 2026-08-04 — three runs, one working copy, one version number
 

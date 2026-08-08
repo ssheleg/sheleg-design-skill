@@ -33,7 +33,7 @@ decision home. A run that settles something records it as an ADR.
 | Change | Obliges | Proof |
 |---|---|---|
 | **New file in the skill bundle** | add to `install.sh`'s `for f in …` list · mirror into `.cursor/skills/sheleg-design/` · link it from `SKILL.md` if it is a companion doc · add it to the README install table | `python3 test/validate.py` |
-| **New style pack** | `styles/<pack>.md` with all nine headings · `styles/tokens/<pack>.css` · route from the `SKILL.md` pack table · name it in `bin/cli.js` output · README pack table · **a kit under `kits/<pack>/`** · CHANGELOG | `python3 test/validate.py` |
+| **New style pack** | `styles/<pack>.md` with **all thirteen headings** (plus `## Motion flavor` for a cinematic pack) · `styles/tokens/<pack>.css` · the `.cursor/` mirror · **`install.sh`'s file list** · route from the `SKILL.md` pack table · name it in `bin/cli.js` output · README pack table · name it in a `cursor/rules/*.mdc` · **a kit under `kits/<pack>/`** · a routing scenario **with its negative branch** · CHANGELOG | `python3 test/validate.py` |
 | **New kit component** | the shared spine stays identical across all six kits · no raw color literal outside the token block · `.prompt.md` beside it | `python3 test/validate.py` |
 | **Any release** | four-way version sync · CHANGELOG entry · tag · GitHub release · `npm publish` · refresh local installs | `test/validate.py` + `npm view sheleg-design-skill version` + `gh run list` |
 | **Behavior an agent must follow** | a scenario in `test/scenarios.md` | the scenario run by a fresh subagent |
@@ -49,11 +49,11 @@ python3 test/validate.py
 `check-docs.sh`, and it is no longer the only gate: `validate_palette.py` and
 `sloplint.py` joined it in 1.6.0 and CI runs all three.
 
-Ratchet floors, **measured on `main` (`97e7f63`) 2026-08-05, not restated**:
-`validate.py` **787** · `validate_palette.py` **269** · `sloplint.py` **184**.
-Each may rise, never fall. The floor was 272 when this map was seeded a day
-earlier — a number that goes stale this fast is exactly why it carries the commit
-it was measured at.
+Ratchet floors, **measured on `main` (`025f866`) 2026-08-08, not restated**:
+`validate.py` **875** · `validate_palette.py` **305** · `sloplint.py` **192**.
+Each may rise, never fall. They were 787 / 269 / 184 at `97e7f63` three days
+earlier, and 272 the day before that — a number that goes stale this fast is
+exactly why it carries the commit it was measured at.
 CI (`.github/workflows/validate.yml`) runs it on every
 push and PR, together with a negative self-test that corrupts a version and requires
 the validator to fail.
@@ -69,3 +69,19 @@ at once: one committed the other's draft brief into an unrelated commit (`d042b4
 and minted `ADR-0001` for a decision the other run had just taken. Until a lease
 mechanism exists, **every concurrent run must take its own `git worktree`**, and
 `docs/adr/` numbers are provisional until merge.
+
+**Overridden once, on the record.** The 2026-08-08 `cyclorama` run worked in this
+checkout rather than a worktree, by the operator's explicit choice, after
+evidence showed no live concurrent run (`git reflog`, `git branch -vv`, and no
+working-tree mtime inside six hours). The rule stands as written for the
+concurrent case; what the override changes is that "no worktree" now has to be a
+decision taken against evidence, not a default taken from assumption. The run
+still discharged the second half of the concurrency instruction — the tree was
+re-checked immediately before `git add`, and every staged path was listed
+explicitly.
+
+That `ADR-0001` is also no longer provisional: it never merged, so the decision
+register began at `0002` for four days while the rule it records was binding. The
+`cyclorama` run restored it. **A held branch's ADR is not filed** — if a run
+mints a decision and then parks, the decision needs a home on `main` or the next
+run rediscovers it by accident.
