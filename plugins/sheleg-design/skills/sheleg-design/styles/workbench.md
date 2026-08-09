@@ -15,6 +15,15 @@ scope here; motion is limited to meaningful 150–200ms state transitions.
 Light is the default register; dark is a first-class twin, both from the
 same tokens.
 
+**The fork against [`showroom`](./showroom.md).** Both render dense product UI,
+both use borders rather than shadows inside that UI, both carry one blue accent.
+The test is *which surface you are building*. This pack **is** the tool — it is
+meant to disappear, and a page built in it is an application. `showroom` is the
+marketing page **arguing for** the tool: it frames one real product surface as a
+specimen under a seven-layer shadow and wraps a hero and a CTA around it. A real
+product usually needs both, and the specimen in a `showroom` page should be a
+screenshot of the `workbench` build.
+
 ## Palette
 
 Ready-made token layer: [`tokens/workbench.css`](./tokens/workbench.css)

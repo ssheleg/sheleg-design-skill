@@ -1,0 +1,223 @@
+/* SHELEG Design — Prism token layer (an open-source infrastructure project's
+   front door).
+   Copy verbatim; consume only var(--…) in components.
+
+   White passed through a prism: one static iridescent wash across the top of the
+   page — pink to lilac to mint to cyan — under type that never picks up its hue.
+   Body copy is MONO, which is what makes the page read as a project rather than
+   a company. Below the wash the page is plain white.
+
+   Extracted from https://milvus.io/ on 2026-08-09 by reading its live computed
+   styles; ratios computed by importing test/validate_palette.py.
+
+   Two corrections, in ACCENT and MOTION. */
+
+:root {
+  color-scheme: light;
+
+  /* ---- The field -------------------------------------------------------- */
+  --bg: #ffffff;
+  --surface: #f9f9f9; /* card */
+  --surface-2: #f5f8fb; /* the sunken code well */
+
+  /* ---- Ink: near-black with a cyan cast, matching the accent's family --- */
+  --ink: #00131a; /* 18.95:1 on --bg */
+  --ink-2: #2e373b;
+  --ink-soft: #667176; /* 5.01:1 — clears AA, so it MAY carry body copy */
+  --ink-faint: #9ca6b4; /* 2.4:1 — furniture only, never text */
+  --on-ink: #f9f9f9;
+
+  /* ---- Lines ------------------------------------------------------------ */
+  --line: #e9e9ed; /* card border */
+  --line-strong: #d0d7dc;
+  --line-soft: #eaeef2;
+
+  /* ---- ACCENT: a fill, not a text colour -------------------------------- */
+  /* [CORRECTION] The reference sets 72px display type in #00b3ff on white. That
+     measures 2.36:1 — it fails WCAG at display size and at every size below it.
+     This pack does not propagate it: the cyan is a fill, a rule, a chart series
+     and a mark. Ink on it is 8.02:1, which is what --on-accent is for. Where a
+     heading needs the accent's family in text, it takes --accent-ink. */
+  --accent: #00b3ff; /* FILL ONLY — 2.36:1 as text on --bg */
+  --accent-hover: #0077ad;
+  --accent-ink: #1493cc; /* 3.4:1 — large display text only, never body */
+  --accent-deep: #008dc8;
+  --on-accent: #00131a; /* 8.02:1 */
+
+  /* ---- Status ----------------------------------------------------------- */
+  /* --warning and --danger separate by 11.3 at full colour, under the floor of
+     15 though clear of the hard floor. Legal only with the secondary encoding
+     the pack declares: a status carries its word. */
+  --good: #65f8c3;
+  --warning: #f25c05;
+  --danger: #d51f00;
+  --info: #00b3ff;
+
+  /* ---- The prism: the pack's one gradient, and it is spent at the top ---- */
+  /* Four stops, left to right, at low saturation so black type stays 18:1 over
+     every part of it. It does not repeat, it does not move, and there is no
+     second gradient anywhere in the pack. */
+  --wash-1: #fbeaf3; /* pink */
+  --wash-2: #ece9f7; /* lilac */
+  --wash-3: #e6f5ec; /* mint */
+  --wash-4: #e3f4fb; /* cyan */
+  --wash: linear-gradient(
+    100deg,
+    var(--wash-1) 0%,
+    var(--wash-2) 34%,
+    var(--wash-3) 67%,
+    var(--wash-4) 100%
+  );
+
+  /* ---- Elevation: flat. A border, or nothing --------------------------- */
+  --ring-hairline: 0 0 0 1px var(--line);
+
+  /* ---- Radii ------------------------------------------------------------ */
+  --radius-sm: 4px;
+  --radius: 8px; /* cards, buttons, the code well */
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+
+  /* ---- Spacing and the page -------------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --page-max: 80rem;
+  --hero-min-h: 100dvh; /* never 100vh */
+
+  /* ---- Type: Geist for display, Geist Mono for everything that reads ---- */
+  /* The inversion is the pack's signature and the first thing to keep: the
+     display face is the grotesque, and the BODY is mono. Most packs do the
+     opposite. Both are SIL OFL, so there is no substitution trap here. */
+  --font-display: "Geist", system-ui, -apple-system, sans-serif;
+  --font-body: "Geist Mono", ui-monospace, "SF Mono", monospace;
+
+  --t-display: 4.5rem; /* 72px */
+  --lh-display: 1.111;
+  --track-display: -0.01em;
+  --t-h2: 2.625rem; /* 42px */
+  --lh-h2: 1.286;
+  --t-h3: 1.75rem;
+  --lh-h3: 1.3;
+  --t-lede: 1.125rem;
+  --lh-lede: 1.7; /* mono needs more leading than a grotesque does */
+  --t-body: 1rem;
+  --lh-body: 1.65;
+  --t-sm: 0.875rem;
+  --lh-sm: 1.6;
+  --t-label: 0.75rem;
+  --lh-label: 1.5;
+  --track-label: 0.06em;
+
+  --weight-display: 700;
+  --weight-heading: 600;
+  --weight-body: 400;
+
+  /* ---- Motion ----------------------------------------------------------- */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 0.2s;
+  --dur-base: 0.3s;
+
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+/* [CORRECTION] The reference ships NO prefers-reduced-motion branch. This pack
+   requires it. The wash is static by definition — if you have animated it, that
+   is a change this pack did not authorise, and it stops here too. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0s;
+    --dur-base: 0s;
+  }
+}
+
+/* ── components ── */
+
+/* Everything below consumes var(--…) only. Colour never appears as a literal:
+   the token layer above is the whole palette, and a value with no token is a gap
+   in the pack rather than something to inline here. Geometry stays numeric.
+   The rule that governs every rule below: the wash is spent once at the top with
+   a hard edge, the body is mono, and nothing casts a shadow. */
+
+.pr-heading { margin: 0; font-family: var(--font-display); font-weight: var(--weight-heading); letter-spacing: var(--track-display); color: var(--ink); text-wrap: balance; }
+.pr-heading--1 { font-size: var(--t-display); line-height: var(--lh-display); font-weight: var(--weight-display); }
+.pr-heading--2 { font-size: var(--t-h2); line-height: var(--lh-h2); }
+.pr-heading--3 { font-size: var(--t-h3); line-height: var(--lh-h3); }
+
+.pr-rule { height: 0; margin: var(--space-6) 0; border: 0; border-top: 1px solid var(--line); }
+.pr-rule--strong { border-top-color: var(--line-strong); }
+
+.pr-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  border: 1px solid transparent; border-radius: var(--radius); font-family: var(--font-body);
+  font-weight: var(--weight-body); line-height: 1; cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
+.pr-btn--sm { padding: 10px var(--space-4); font-size: var(--t-sm); }
+.pr-btn--md { padding: 14px var(--space-6); font-size: var(--t-body); }
+.pr-btn--lg { padding: 16px var(--space-8); font-size: var(--t-lede); }
+.pr-btn--primary { background-color: var(--ink); color: var(--on-ink); }
+.pr-btn--primary:hover:not(:disabled) { background-color: var(--ink-2); }
+.pr-btn--secondary { background-color: var(--surface); border-color: var(--line-strong); color: var(--ink); }
+.pr-btn--secondary:hover:not(:disabled) { border-color: var(--ink-soft); }
+.pr-btn--ghost { background-color: transparent; color: var(--ink-soft); }
+.pr-btn--ghost:hover:not(:disabled) { color: var(--ink); }
+.pr-btn--accent { background-color: var(--accent); color: var(--on-accent); }
+.pr-btn--accent:hover:not(:disabled) { background-color: var(--accent-hover); }
+.pr-btn:active:not(:disabled) { transform: translateY(1px); }
+.pr-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.pr-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.pr-card { display: block; background-color: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: var(--space-6); color: var(--ink);
+  transition: border-color var(--dur-fast) var(--ease); }
+.pr-card:hover { border-color: var(--line-strong); }
+.pr-card__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-3); }
+.pr-card__title { margin: 0; font-family: var(--font-display); font-size: var(--t-h3); line-height: var(--lh-h3); font-weight: var(--weight-heading); }
+.pr-card__meta { font-family: var(--font-body); font-size: var(--t-label); color: var(--ink-soft); }
+.pr-card__body { font-family: var(--font-body); font-size: var(--t-body); line-height: var(--lh-body); color: var(--ink-soft); max-width: 60ch; }
+
+.pr-chip { display: inline-flex; align-items: center; gap: var(--space-2); background-color: var(--surface-2);
+  border-radius: var(--radius-pill); padding: var(--space-1) var(--space-3);
+  font-family: var(--font-body); font-size: var(--t-label); color: var(--ink); }
+.pr-chip::before { content: ""; width: 8px; height: 8px; border-radius: var(--radius-pill); background-color: var(--good); }
+.pr-chip--accent::before { background-color: var(--accent); }
+.pr-chip--selected { background-color: var(--accent); color: var(--on-accent); }
+
+.pr-stat { display: flex; flex-direction: column; gap: var(--space-1); }
+.pr-stat__label { font-family: var(--font-body); font-size: var(--t-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--ink-soft); }
+.pr-stat__value { font-family: var(--font-display); font-size: var(--t-h2); line-height: var(--lh-h2); font-weight: var(--weight-display); color: var(--ink); }
+.pr-stat__source { font-family: var(--font-body); font-size: var(--t-label); color: var(--ink-faint); }
+
+/* The prism. Static, bounded, and it ends in a hard edge. */
+.pr-wash { background-image: var(--wash); padding: var(--space-16) var(--space-8); }
+
+.pr-install { display: flex; align-items: center; gap: var(--space-3); background-color: var(--surface-2);
+  border: 1px solid var(--line); border-radius: var(--radius); padding: var(--space-3) var(--space-4);
+  font-family: var(--font-body); font-size: var(--t-sm); }
+.pr-install__prompt { color: var(--ink-faint); }
+.pr-install__cmd { color: var(--ink); flex: 1 1 auto; }
+.pr-install__copy { border: 0; background: none; font: inherit; color: var(--ink-soft); cursor: pointer;
+  transition: color var(--dur-fast) var(--ease); }
+.pr-install__copy:hover { color: var(--accent-ink); }
+
+.pr-bench { display: flex; align-items: baseline; gap: var(--space-4); padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--line); font-family: var(--font-body); font-size: var(--t-sm); }
+.pr-bench__label { flex: 1 1 auto; color: var(--ink-soft); }
+.pr-bench__baseline { color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+.pr-bench__value { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+.pr-repo { display: inline-flex; align-items: center; gap: var(--space-2); background-color: var(--surface);
+  border: 1px solid var(--line); border-radius: var(--radius-pill); padding: var(--space-1) var(--space-3);
+  font-family: var(--font-body); font-size: var(--t-label); color: var(--ink); text-decoration: none;
+  transition: border-color var(--dur-fast) var(--ease); }
+.pr-repo:hover { border-color: var(--line-strong); }
+.pr-repo__stars { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pr-btn:active:not(:disabled) { transform: none; }
+}

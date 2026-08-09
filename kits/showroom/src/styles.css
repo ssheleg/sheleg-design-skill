@@ -1,0 +1,249 @@
+/* SHELEG Design — Showroom token layer (product-led companies whose best
+   argument is the product on screen).
+   Copy verbatim; consume only var(--…) in components.
+
+   The page is a white gallery and the product is the exhibit. One specimen per
+   page, at real size, under the seven-layer shadow; everything else stays quiet
+   so the specimen reads as evidence rather than decoration.
+
+   Extracted from https://attio.com/ on 2026-08-09 by reading its live computed
+   styles. The reference declares its palette in CIE Lab, which this repository's
+   palette gate cannot parse — every value below was converted by painting the
+   declared lab() into a 1x1 canvas and reading the sRGB bytes back, so the hex
+   is the browser's own conversion rather than arithmetic of ours. Ratios were
+   computed by importing test/validate_palette.py.
+
+   One correction, in CONTRAST. */
+
+:root {
+  color-scheme: light;
+
+  /* ---- The gallery ------------------------------------------------------ */
+  --bg: #ffffff; /* the page */
+  --surface: #fafafb; /* card, popover */
+  --surface-2: #edeff3; /* the sunken well a specimen sits in */
+
+  /* ---- Ink -------------------------------------------------------------- */
+  --ink: #1c1d1f; /* 16.87:1 on --bg */
+  --ink-2: #232529; /* 15.9:1 — secondary headings */
+  --ink-soft: #505967; /* 7.7:1 — captions that must actually be read */
+  --on-ink: #ffffff;
+
+  /* [CORRECTION] The reference names #a4adba "caption-foreground" and it
+     measures 2.27:1 on its own white field — a colour called caption that
+     cannot carry a caption. Kept, because the reference really does use it, but
+     renamed to what it is safe for: disabled controls and placeholder text,
+     neither of which is content. Captions take --ink-soft. */
+  --disabled: #a4adba;
+
+  /* ---- Lines: elevation is a ring plus a stack, never a single shadow ---- */
+  --line-weak: #edeff3;
+  --line: #d3d8df;
+  --line-strong: #cad0d9;
+
+  /* ---- Accent: one blue, and it is symmetric --------------------------- */
+  /* 4.64:1 as text on the field AND 4.64:1 under white — rare, and it is why
+     the same blue can be a link and a filled button without a second token. */
+  --accent: #266df0;
+  --accent-hover: #245bc2;
+  --accent-soft: #94b9ff; /* the focus ring's colour, and chart tint */
+  --accent-wash: #e8f0ff; /* selected row, hovered cell */
+  --on-accent: #ffffff;
+
+  /* ---- Status. See the pack's Palette before using these ---------------- */
+  /* --good and --danger separate by 33.7 at full colour but only 4.9 under
+     deuteranopia — the classic pair, under the floor of 8. Legal only with the
+     secondary encoding the pack declares: a status is a chip with a word in it,
+     never a bare dot. */
+  --good: #0fc27b;
+  --warning: #f5b900;
+  --danger: #ff5b59;
+  --info: #266df0; /* deliberately the accent: informational is not a status */
+
+  /* ---- The seven-layer shadow — the pack's signature -------------------- */
+  /* A 1px inner ring plus six offsets. It is one token on purpose: split it and
+     somebody will use three of the seven and the specimen stops sitting in the
+     page. Do not add an eighth, and do not tint it — the alphas are the whole
+     effect. */
+  --shadow-specimen:
+    0 0 0 1px rgba(255, 255, 255, 0.2),
+    0 1px 2px 0 rgba(28, 29, 31, 0.05),
+    0 2px 4px -1px rgba(28, 29, 31, 0.02),
+    0 4px 8px -2px rgba(28, 29, 31, 0.03),
+    0 8px 16px -4px rgba(28, 29, 31, 0.04),
+    0 16px 32px -8px rgba(28, 29, 31, 0.05),
+    0 32px 64px -8px rgba(28, 29, 31, 0.06);
+  --ring-focus: 0 0 0 3px rgba(38, 109, 240, 0.35);
+
+  /* ---- Radii ------------------------------------------------------------ */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-3xl: 20px;
+
+  /* ---- Spacing and the page -------------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --page-max: 80rem;
+  --nav-h: 68px;
+  --hero-min-h: 100dvh; /* never 100vh */
+
+  /* ---- Type: three families, and every step carries its own metrics ----- */
+  /* The reference ships FOUR faces; Tiempos appears on one editorial surface
+     and is not part of this pack — a serif in a showroom page is a different
+     register wearing this one's clothes. See the pack's Type section.
+
+     The coupling below is the thing to copy: a size never travels without its
+     weight, its line-height and its tracking. */
+  --font-display: "Inter Display", "Inter", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+
+  --t-display: 4rem; /* 64px */
+  --lh-display: 0.95;
+  --track-display: -0.02em;
+  --weight-display: 600;
+
+  --t-h1: 3.5rem;
+  --lh-h1: 1.071;
+  --track-h1: -0.015em;
+  --t-h2: 2.5rem;
+  --lh-h2: 1.1;
+  --t-h3: 2rem;
+  --lh-h3: 1.125;
+  --t-h4: 1.75rem;
+  --lh-h4: 1.214;
+  --track-heading: -0.01em;
+  --weight-heading: 600;
+
+  --t-xl: 1.25rem;
+  --lh-xl: 1.3;
+  --t-lg: 1.125rem;
+  --lh-lg: 1.333;
+  --t-base: 1rem;
+  --lh-base: 1.375;
+  --t-sm: 0.875rem;
+  --lh-sm: 1.429;
+  --track-body: -0.01em;
+  --t-xs: 0.75rem;
+  --lh-xs: 1.5;
+  --track-xs: 0;
+  --weight-body: 500; /* the reference's body weight is 500, not 400 */
+
+  /* ---- Motion: one duration, one curve, and a longer one for panels ----- */
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 0.15s;
+  --dur-base: 0.3s;
+  --dur-panel: 0.5s;
+
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+/* The reference ships a reduced-motion branch; this pack requires it. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0s;
+    --dur-base: 0s;
+    --dur-panel: 0s;
+  }
+}
+
+/* ── components ── */
+
+/* Everything below consumes var(--…) only. Colour never appears as a literal:
+   the token layer above is the whole palette, and a value with no token is a gap
+   in the pack rather than something to inline here. Geometry stays numeric —
+   the pack states its paddings and sizes as numbers.
+   The rule that governs every rule below: the page is a white gallery and the
+   specimen is the exhibit. The seven-layer stack lifts frames; hairlines divide
+   what is inside them; the two never swap. */
+
+.sw-heading { margin: 0; font-family: var(--font-display); font-weight: var(--weight-heading); color: var(--ink); text-wrap: balance; }
+.sw-heading--1 { font-size: var(--t-h1); line-height: var(--lh-h1); letter-spacing: var(--track-h1); }
+.sw-heading--2 { font-size: var(--t-h2); line-height: var(--lh-h2); letter-spacing: var(--track-heading); }
+.sw-heading--3 { font-size: var(--t-h3); line-height: var(--lh-h3); letter-spacing: var(--track-heading); }
+
+.sw-rule { height: 0; margin: var(--space-6) 0; border: 0; border-top: 1px solid var(--line); }
+.sw-rule--strong { border-top-color: var(--line-strong); }
+
+.sw-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  border: 1px solid transparent; border-radius: var(--radius-xl); font-family: var(--font-sans);
+  font-weight: var(--weight-body); letter-spacing: var(--track-body); line-height: 1; cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
+.sw-btn--sm { padding: 6px var(--space-3); height: 32px; font-size: var(--t-sm); }
+.sw-btn--md { padding: 10px var(--space-4); height: 40px; font-size: var(--t-base); }
+.sw-btn--lg { padding: 12px var(--space-6); height: 48px; font-size: var(--t-lg); }
+.sw-btn--primary { background-color: var(--ink); color: var(--on-ink); }
+.sw-btn--primary:hover:not(:disabled) { background-color: var(--ink-2); }
+.sw-btn--secondary { background-color: var(--surface); border-color: var(--line); color: var(--ink); }
+.sw-btn--secondary:hover:not(:disabled) { border-color: var(--line-strong); }
+.sw-btn--ghost { background-color: transparent; color: var(--ink-2); }
+.sw-btn--ghost:hover:not(:disabled) { background-color: var(--surface-2); }
+.sw-btn--accent { background-color: var(--accent); color: var(--on-accent); }
+.sw-btn--accent:hover:not(:disabled) { background-color: var(--accent-hover); }
+.sw-btn:active:not(:disabled) { transform: translateY(1px); }
+.sw-btn:disabled { color: var(--disabled); background-color: var(--surface-2); cursor: not-allowed; }
+.sw-btn:focus-visible { outline: none; box-shadow: var(--ring-focus); }
+
+.sw-card { display: block; background-color: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius-xl); padding: var(--space-6); color: var(--ink); }
+.sw-card__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-3); }
+.sw-card__title { margin: 0; font-family: var(--font-display); font-size: var(--t-h4); line-height: var(--lh-h4); letter-spacing: var(--track-heading); font-weight: var(--weight-heading); }
+.sw-card__meta { font-family: var(--font-mono); font-size: var(--t-xs); color: var(--ink-soft); }
+.sw-card__body { font-size: var(--t-base); line-height: var(--lh-base); color: var(--ink-soft); }
+
+.sw-chip { display: inline-flex; align-items: center; gap: var(--space-1); background-color: var(--surface-2);
+  border-radius: var(--radius-sm); padding: 2px var(--space-2); font-family: var(--font-mono);
+  font-size: var(--t-xs); color: var(--ink); }
+.sw-chip--accent { background-color: var(--accent-wash); color: var(--accent); }
+.sw-chip--selected { background-color: var(--accent); color: var(--on-accent); }
+
+.sw-stat { display: flex; flex-direction: column; gap: var(--space-1); }
+.sw-stat__label { font-size: var(--t-xs); color: var(--ink-soft); }
+.sw-stat__value { font-family: var(--font-display); font-size: var(--t-h2); line-height: var(--lh-h2); letter-spacing: var(--track-heading); font-weight: var(--weight-heading); color: var(--ink); }
+.sw-stat__source { font-family: var(--font-mono); font-size: var(--t-xs); color: var(--disabled); }
+
+/* The specimen: the stack lifts the FRAME. Nothing inside it casts. */
+.sw-specimen { display: block; margin: 0; overflow: hidden; background-color: var(--surface);
+  border-radius: var(--radius-3xl); box-shadow: var(--shadow-specimen); }
+.sw-specimen__bar { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--line-weak); }
+.sw-specimen__dots { display: inline-flex; gap: 6px; }
+.sw-specimen__dots i { width: 10px; height: 10px; border-radius: 50%; background-color: var(--line-strong); }
+.sw-specimen__title { font-size: var(--t-sm); color: var(--ink-soft); }
+.sw-specimen__body { font-size: var(--t-sm); }
+
+.sw-row { display: flex; align-items: center; gap: var(--space-3); height: 36px; padding: 0 var(--space-4);
+  border-bottom: 1px solid var(--line-weak); border-left: 2px solid transparent;
+  transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease); }
+.sw-row:hover { background-color: var(--accent-wash); }
+.sw-row--selected { background-color: var(--accent-wash); border-left-color: var(--accent); }
+
+.sw-status { display: inline-flex; align-items: center; border-radius: var(--radius-sm);
+  padding: 2px var(--space-2); font-family: var(--font-mono); font-size: var(--t-xs); }
+.sw-status--good { background-color: var(--accent-wash); color: var(--good); }
+.sw-status--warning { background-color: var(--surface-2); color: var(--warning); }
+.sw-status--danger { background-color: var(--surface-2); color: var(--danger); }
+.sw-status--neutral { background-color: var(--surface-2); color: var(--ink-soft); }
+
+.sw-col { display: flex; align-items: center; gap: var(--space-2); height: 36px; padding: 0 var(--space-4);
+  border-bottom: 1px solid var(--line); font-size: var(--t-xs); color: var(--ink-soft);
+  transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.sw-col:hover { background-color: var(--surface-2); }
+.sw-col--asc, .sw-col--desc { color: var(--ink); }
+.sw-col__icon { display: inline-flex; width: 14px; height: 14px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sw-btn:active:not(:disabled) { transform: none; }
+}

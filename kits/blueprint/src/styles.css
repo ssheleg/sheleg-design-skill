@@ -1,0 +1,233 @@
+/* SHELEG Design — Blueprint token layer (infrastructure sold on precision).
+   Copy verbatim; consume only var(--…) in components.
+
+   The page is a drawing sheet, not a website: a white stock, a faint grid, ruled
+   column edges, registration marks at the corners of the things that matter, and
+   one saturated blue used the way a draftsman uses ink. There is NO radius
+   anywhere in this pack. A rounded corner damages it more than changing the blue
+   would.
+
+   Extracted from https://www.pinecone.io/ on 2026-08-09 by reading its live
+   computed styles; ratios computed by importing test/validate_palette.py.
+
+   Two corrections, in INK and MOTION. */
+
+:root {
+  color-scheme: light;
+
+  /* ---- The sheet -------------------------------------------------------- */
+  --bg: #fbfbfc; /* the stock */
+  --surface: #ffffff; /* a panel laid on it */
+  --surface-2: #f8fafc; /* a sunken figure well */
+  --surface-3: #f1f5f9; /* the deepest step */
+
+  /* ---- Ink -------------------------------------------------------------- */
+  /* [CORRECTION] The reference sets PURE BLACK as its body ink, on 316
+     elements. The doctrine bans pure black as ink and sloplint enforces it, so
+     this pack ships the reference's OWN second ink instead — #111827, which it
+     already uses on 136 elements.
+
+     This is a substitution and it is visible, not a rounding: the two sit 21.2
+     apart in OKLab. Said plainly here rather than smuggled, because a pack that
+     quietly changes a value it claims to have measured is worse than one that
+     changes it and says so. Pure black is 21:1 on the sheet; this is 17.74:1,
+     and both are far above any floor that matters. */
+  --ink: #111827; /* 17.74:1 on --bg */
+  --ink-soft: #4b5563; /* 7.5:1 — secondary copy, safe as body */
+  --ink-faint: #9ca3af; /* 2.5:1 — RULES AND MARKS ONLY, never text */
+  --on-ink: #ffffff;
+
+  /* ---- Lines. The grid is the layout, so these do the composition ------- */
+  --line-grid: #e7e5e4; /* the field grid and the tick marks */
+  --line: #e2e8f0; /* panel edges */
+  --line-strong: #cbd5e1; /* the ruled column boundary */
+
+  /* ---- Accent: one blue that works as ink AND as fill ------------------- */
+  /* 7.53:1 in both directions. That symmetry is why the pack needs no second
+     accent token: the same blue sets a heading word, draws a 1.5px rule, and
+     fills a button under white. */
+  --accent: #002bff;
+  --accent-wash: rgba(0, 43, 255, 0.05); /* selected cell, hovered row */
+  --on-accent: #ffffff; /* 7.53:1 */
+  --ring-accent: 0 0 0 1px #002bff; /* the focus and active ring — 1px, sharp */
+
+  /* ---- Category marks. Not statuses: this pack labels kinds, not health -- */
+  /* Every pair clears both separation floors under all three dichromacies, so
+     no secondary-encoding declaration is required here. It is still good
+     practice to label them; the pack asks for it without needing to. */
+  --good: #86af80;
+  --info: #8bf6ff;
+  --danger: #a440ce;
+  --warning: #f5b900;
+
+  /* ---- Elevation: a hairline, one soft shadow, and nothing else --------- */
+  --shadow-panel: 0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.06);
+
+  /* ---- NO RADIUS. This token exists so the ban is greppable ------------- */
+  --radius: 0; /* every corner in this pack. Do not add a second radius token */
+  --radius-round: 50%; /* the ONE exception: dots, avatars, the scroll knob */
+
+  /* ---- The drawing grid ------------------------------------------------- */
+  --grid-step: 32px; /* the field's repeat */
+  --grid-dot: 1px;
+  --rule-w: 1px; /* the vertical column rules */
+  --tick-len: 8px; /* the registration mark's arms */
+  --tick-w: 1px;
+  --tick-gap: 6px; /* how far a mark sits off the thing it registers */
+
+  /* ---- Spacing and the page -------------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --page-max: 90rem;
+  --column-max: 1280px; /* what the vertical rules bound */
+  --hero-min-h: 100dvh; /* never 100vh */
+
+  /* ---- Type: a grotesque and a mono, nothing else ----------------------- */
+  /* GT Planar is licensed (Grilli Type). Substitutes are measured in the pack's
+     Type section, not remembered. The ramp's bottom end is letterspaced and
+     that is deliberate: a 10px label at 0.1em reads as a drawing annotation,
+     the same size at 0 reads as small text. */
+  --font-sans: "GT Planar", "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+
+  --t-display: 2.75rem; /* 44px */
+  --lh-display: 1.1;
+  --track-display: -0.02em;
+  --t-h2: 2rem;
+  --lh-h2: 1.15;
+  --t-h3: 1.5rem;
+  --lh-h3: 1.2;
+  --t-body: 1rem;
+  --lh-body: 1.5;
+  --t-sm: 0.9375rem;
+  --lh-sm: 1.4;
+  --t-data: 0.75rem; /* JetBrains Mono — every number on the page */
+  --lh-data: 1.5;
+  --t-label: 0.6875rem; /* 11px */
+  --lh-label: 1.4;
+  --track-label: 0.045em;
+  --t-annot: 0.625rem; /* 10px — the drawing annotation */
+  --lh-annot: 1.6;
+  --track-annot: 0.1em;
+
+  --weight-body: 400;
+  --weight-label: 600;
+  --weight-display: 700;
+
+  /* ---- Motion: fast, flat, and it stops --------------------------------- */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 0.15s;
+  --dur-base: 0.22s;
+  --dur-slow: 0.4s;
+
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+/* [CORRECTION] The reference ships NO prefers-reduced-motion branch at all,
+   while running marquee, ping, pulse and scroll animations. This pack requires
+   the branch its reference omits: durations collapse, and any marquee or pulse
+   is expected to be stopped at its use site. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0s;
+    --dur-base: 0s;
+    --dur-slow: 0s;
+  }
+}
+
+/* ── components ── */
+
+/* Everything below consumes var(--…) only. Colour never appears as a literal:
+   the token layer above is the whole palette, and a value with no token is a gap
+   in the pack rather than something to inline here. Geometry stays numeric —
+   the pack states its paddings and sizes as numbers.
+   The rule that governs every rule below: this is a drawing sheet. Zero radius
+   on everything, elevation is a hairline, and the grid never moves. */
+
+.bp-heading { margin: 0; font-family: var(--font-sans); font-weight: var(--weight-display); letter-spacing: var(--track-display); color: var(--ink); text-wrap: balance; }
+.bp-heading--1 { font-size: var(--t-display); line-height: var(--lh-display); }
+.bp-heading--2 { font-size: var(--t-h2); line-height: var(--lh-h2); }
+.bp-heading--3 { font-size: var(--t-h3); line-height: var(--lh-h3); }
+
+.bp-rule { height: 0; margin: var(--space-6) 0; border: 0; border-top: 1px solid var(--line); border-radius: var(--radius); }
+.bp-rule--strong { border-top-color: var(--line-strong); }
+
+.bp-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  border: 1px solid transparent; border-radius: var(--radius); font-family: var(--font-sans);
+  font-weight: var(--weight-body); line-height: 1; cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.bp-btn--sm { padding: 10px var(--space-4); font-size: var(--t-sm); }
+.bp-btn--md { padding: 16px var(--space-6); font-size: var(--t-body); }
+.bp-btn--lg { padding: 20px var(--space-8); font-size: var(--t-body); }
+.bp-btn--primary { background-color: var(--accent); color: var(--on-accent); }
+.bp-btn--primary:hover:not(:disabled) { background-color: var(--ink); }
+.bp-btn--secondary { background-color: transparent; border-color: var(--line-strong); color: var(--ink); }
+.bp-btn--secondary:hover:not(:disabled) { border-color: var(--ink); }
+.bp-btn--ghost { background-color: transparent; color: var(--ink-soft); }
+.bp-btn--ghost:hover:not(:disabled) { color: var(--ink); }
+.bp-btn:disabled { background-color: var(--surface-3); color: var(--ink-faint); cursor: not-allowed; }
+.bp-btn:focus-visible { outline: none; box-shadow: var(--ring-accent); }
+
+.bp-card { display: block; background-color: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: var(--space-6); color: var(--ink); }
+.bp-card__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-3); }
+.bp-card__title { margin: 0; font-size: var(--t-h3); line-height: var(--lh-h3); letter-spacing: var(--track-display); font-weight: var(--weight-display); }
+.bp-card__meta { font-family: var(--font-mono); font-size: var(--t-data); color: var(--ink-soft); }
+.bp-card__body { font-size: var(--t-body); line-height: var(--lh-body); color: var(--ink-soft); }
+
+/* A category mark is a SQUARE. A circle is a status; a square is a kind. */
+.bp-chip { display: inline-flex; align-items: center; gap: var(--space-2); border-radius: var(--radius);
+  font-family: var(--font-sans); font-size: var(--t-label); font-weight: var(--weight-label);
+  letter-spacing: var(--track-label); text-transform: uppercase; color: var(--ink-soft); }
+.bp-chip::before { content: ""; width: 8px; height: 8px; background-color: var(--good); border-radius: var(--radius); }
+.bp-chip--accent::before { background-color: var(--accent); }
+.bp-chip--selected { color: var(--ink); }
+
+.bp-stat { display: flex; flex-direction: column; gap: var(--space-1); }
+.bp-stat__label { font-family: var(--font-sans); font-size: var(--t-annot); letter-spacing: var(--track-annot); text-transform: uppercase; color: var(--ink-soft); }
+.bp-stat__value { font-family: var(--font-mono); font-size: var(--t-h2); line-height: var(--lh-h2); color: var(--ink); font-variant-numeric: tabular-nums; }
+.bp-stat__source { font-family: var(--font-mono); font-size: var(--t-data); color: var(--ink-faint); }
+
+/* The grid: layer 1, never on a scroller, never animated. */
+.bp-grid { position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(var(--line-grid) var(--grid-dot), transparent 0);
+  background-size: var(--grid-step) var(--grid-step); }
+
+.bp-column { position: relative; max-width: var(--column-max); margin: 0 auto; }
+.bp-column__inner { padding: 0 var(--space-8); }
+.bp-column__rule { position: absolute; top: 0; bottom: 0; width: var(--rule-w); background-color: var(--line-strong); }
+.bp-column__rule--l { left: 0; }
+.bp-column__rule--r { right: 0; }
+
+/* Registration marks — one thing per viewport. */
+.bp-reg { position: relative; display: inline-block; }
+.bp-reg__tick { position: absolute; width: var(--tick-len); height: var(--tick-len); pointer-events: none; }
+.bp-reg--grid .bp-reg__tick { border-color: var(--line-grid); }
+.bp-reg--accent .bp-reg__tick { border-color: var(--accent); }
+.bp-reg__tick--tl { top: calc(var(--tick-gap) * -1); left: calc(var(--tick-gap) * -1); border-top: var(--tick-w) solid; border-left: var(--tick-w) solid; }
+.bp-reg__tick--tr { top: calc(var(--tick-gap) * -1); right: calc(var(--tick-gap) * -1); border-top: var(--tick-w) solid; border-right: var(--tick-w) solid; }
+.bp-reg__tick--bl { bottom: calc(var(--tick-gap) * -1); left: calc(var(--tick-gap) * -1); border-bottom: var(--tick-w) solid; border-left: var(--tick-w) solid; }
+.bp-reg__tick--br { bottom: calc(var(--tick-gap) * -1); right: calc(var(--tick-gap) * -1); border-bottom: var(--tick-w) solid; border-right: var(--tick-w) solid; }
+
+.bp-code { display: flex; align-items: center; gap: var(--space-3); background-color: var(--surface-2);
+  border: 1px solid var(--line); border-radius: var(--radius); padding: var(--space-3) var(--space-4);
+  font-family: var(--font-mono); font-size: var(--t-data); }
+.bp-code__prompt { color: var(--ink-faint); }
+.bp-code__cmd { color: var(--ink); flex: 1 1 auto; }
+.bp-code__copy { border: 0; background: none; font: inherit; color: var(--ink-soft); cursor: pointer;
+  transition: color var(--dur-fast) var(--ease); }
+.bp-code__copy:hover { color: var(--accent); }
+
+/* Registration marks are a desktop flourish and must not become touch targets. */
+@media (max-width: 768px) {
+  .bp-reg__tick { display: none; }
+  .bp-grid { background-size: calc(var(--grid-step) / 2) calc(var(--grid-step) / 2); }
+  .bp-column__rule { display: none; }
+}

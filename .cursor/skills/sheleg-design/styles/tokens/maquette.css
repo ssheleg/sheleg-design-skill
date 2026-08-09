@@ -1,0 +1,154 @@
+/* SHELEG Design — Maquette token layer (enterprise data infrastructure sold to
+   an architecture buyer).
+   Copy verbatim; consume only var(--…) in components.
+
+   The page is a dark table with a built object on it: an axonometric model in
+   cream, its blocks labelled in mono, lit from the upper left. The reader is
+   meant to take the system apart with their eyes before they evaluate its cost.
+
+   Extracted from https://zilliz.com/ on 2026-08-09 by reading its live computed
+   styles; ratios computed by importing test/validate_palette.py.
+
+   The reference needed no CONTRAST correction — every measured pair clears its
+   floor. Its status palette is a different matter: there isn't one, so the four
+   status tokens below are derived rather than extracted, and they say so at the
+   declaration. */
+
+:root {
+  color-scheme: dark;
+
+  /* ---- The table -------------------------------------------------------- */
+  --bg: #151515;
+  --surface: #1b1b1b; /* a panel on the table */
+  --surface-2: #1d1d1d; /* a raised panel */
+  --surface-sunken: #131313; /* a well cut into it */
+
+  /* ---- Ink: CREAM, not white ------------------------------------------- */
+  /* This is the pack's least obvious rule and the easiest to undo by accident.
+     The ink is the same cream the model is built from, so type and object read
+     as one material lit by one lamp. Swap in #ffffff and the page splits into a
+     warm object on a cold page. */
+  --ink: #fff9f4; /* 17.49:1 on --bg */
+  --ink-soft: #b3b5c1; /* 8.95:1 — secondary copy, comfortably AA */
+  --ink-faint: #8a8f98; /* 5.0:1 — captions and leader lines */
+  --on-ink: #151515;
+
+  /* ---- Lines ------------------------------------------------------------ */
+  --line: #2b2b2b; /* THE hairline: panel edges, table rules */
+  --line-strong: #3a3a3a;
+
+  /* ---- Accent: pale aqua, and it works as text -------------------------- */
+  /* Unusual among these packs: 15.49:1 on the field, so the aqua may set a
+     display word, a label or a link without a second token. Under it, black —
+     17.81:1 — never the cream, which drops to 1.1:1 and disappears. */
+  --accent: #97fdff;
+  --accent-deep: #5fd9dd; /* hover on an aqua fill */
+  --on-accent: #000000; /* 17.81:1 — the one place pure black is correct */
+
+  /* ---- The model -------------------------------------------------------- */
+  /* Three faces of one cream solid under a single upper-left light. They are
+     tokens rather than filter values because an axonometric drawing has no
+     shading model — the faces are flat fills and their relationship IS the
+     lighting. */
+  --model-top: #fff9f4; /* the lit top face — 17.49:1 */
+  --model-face: #fff3d6; /* the front face, warmer — 16.56:1 */
+  --model-side: #e8ddc8; /* the side in shade */
+  --model-line: #151515; /* the model's own outline: the field colour */
+  --leader: #8a8f98; /* the dotted leader from a block to its label */
+
+  /* ---- Elevation: ONE shadow, and its direction is not adjustable ------- */
+  /* Displaced on both axes. That is what makes a block sit on the table under a
+     raking light instead of floating above a page. Every block is lit from the
+     same upper-left source; change the offsets on one and the model comes
+     apart. */
+  --shadow-block: 12px 24px 24px rgba(0, 0, 0, 0.25);
+  /* Below 768px the displacement shortens: 24px on a 320px-wide drawing reads as
+     a printing error rather than as a light source. Same direction, same alpha. */
+  --shadow-block-sm: 6px 12px 12px rgba(0, 0, 0, 0.25);
+
+  /* ---- Status: A PACK DECISION, not a measurement ---------------------- */
+  /* The reference's homepage exposes no status palette at all — its whole
+     surface is cream, aqua and greys. These four are therefore derived for this
+     pack rather than read off the page, and this comment is the pack refusing to
+     let that pass as extracted.
+
+     They are chosen to sit in the pack's own world (bright enough to hold on a
+     #151515 table) and separated as far as the hue wheel allows from --accent
+     and from each other. The green/red pair still collapses to 6.4 under
+     deuteranopia — as it does in every palette, because green and red are the
+     one pair no hex can separate for a deuteranope. That is what the pack's
+     'never by colour alone' declaration is for; it is the correct answer here,
+     not a way around the check. */
+  --good: #3fcf7f;
+  --warning: #ffb020;
+  --danger: #ff5c5c;
+  --info: #97fdff; /* the accent, deliberately: informational is not a status */
+
+  /* ---- Radii ------------------------------------------------------------ */
+  --radius-sm: 6px;
+  --radius: 8px; /* panels, cards, the CLI well */
+  --radius-lg: 12px;
+  --radius-xl: 20px;
+  --radius-pill: 36px; /* every action in this pack is a pill */
+
+  /* ---- Spacing and the page -------------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --page-max: 80rem;
+  --hero-min-h: 100dvh; /* never 100vh */
+
+  /* ---- Type ------------------------------------------------------------- */
+  /* Geist for the argument, Geist Mono for anything the model says. The split
+     is strict: prose is the grotesque, and every block label, leader caption,
+     CLI line and dimension is mono. Both are SIL OFL — no substitution trap. */
+  --font-display: "Geist", system-ui, -apple-system, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", monospace;
+
+  --t-display: 4.125rem; /* 66px */
+  --lh-display: 1.06;
+  --track-display: -0.02em;
+  --t-h2: 2.5rem;
+  --lh-h2: 1.2;
+  --t-h3: 1.75rem;
+  --lh-h3: 1.25;
+  --t-lede: 1.375rem;
+  --lh-lede: 1.273;
+  --t-body: 1rem;
+  --lh-body: 1.6;
+  --t-sm: 0.875rem;
+  --lh-sm: 1.5;
+  --t-label: 0.8125rem; /* the block label, mono */
+  --lh-label: 1.4;
+  --track-label: 0.02em;
+
+  --weight-display: 700;
+  --weight-body: 400;
+
+  /* ---- Motion: short, and it never moves the model --------------------- */
+  /* The model is a drawing. Parallaxing it, rotating it or exploding it on
+     scroll turns a measurable object into a toy — see the pack's Bans. Motion
+     here belongs to controls and to section entry, nothing else. */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 0.15s;
+  --dur-base: 0.28s;
+  --dur-slow: 0.32s;
+
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+/* The reference ships four reduced-motion blocks — unusually good for this
+   category, and this pack requires the same posture. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0s;
+    --dur-base: 0s;
+    --dur-slow: 0s;
+  }
+}

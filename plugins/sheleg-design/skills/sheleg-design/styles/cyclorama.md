@@ -57,6 +57,15 @@ buyer is an executive spending a company's.
 **Against `briefing-room`.** Both address the boardroom. `briefing-room` is a
 fixed 16:9 canvas that never animates; here motion is the identity.
 
+**Against [`prism`](./prism.md).** Both are pale light fields with mono in the
+body, and both will be reached for by an AI-infrastructure brief. The difference
+is whether the field moves. This pack's field **breathes** — six stops on a 32-
+second loop, under a typewriter serif — because its subject is a change of state.
+`prism`'s field **holds**: one static iridescent wash with a hard bottom edge and
+a heavy grotesque display, because its subject is software that is ready now.
+Route by whether the page argues that something *will change* or that something
+*is ready*.
+
 ## Palette
 
 Ready-made token layer: [`tokens/cyclorama.css`](./tokens/cyclorama.css) — copy

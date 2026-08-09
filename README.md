@@ -49,6 +49,10 @@ voice is the timeline and slides therefore never animate).
 | `atrium` | warm cream daylight field with no dark bands, one terracotta accent, light serif with italic asides, fluted-glass hero over photography | consumer health, longevity & diagnostics, wellness, premium care, high-trust DTC |
 | `orchard` | warm oat field of rounded slabs, sage brand + one candy-orange action, rounded geometric display, soft-3D pills built from inset light | friendly consumer biotech, DTC wellness, testing kits & supplements |
 | `field-notes` | warm green-cast paper ruled by hairlines, one rust accent, a hero that dissolves into the page instead of ending, numbered mono eyebrows, crop marks, colour that encodes how a claim is known | open-source & developer tools sold on auditability — code intelligence, provenance, evals, agent memory |
+| `showroom` | white gallery, near-black ink, one blue that works as link and as fill, Inter Display + Inter + JetBrains Mono, a seven-layer shadow framing one real product surface | product-led companies whose best argument is the application on screen |
+| `blueprint` | white drawing stock, 32px grid, ruled column edges, corner registration marks, one electric blue, zero radius anywhere | infrastructure sold on precision — vector databases, search, storage and query engines |
+| `prism` | one static iridescent wash with a hard bottom edge, heavy grotesque display over mono body copy, cyan as a fill only | an open-source project's front door, where the first action is a command |
+| `maquette` | near-black table, cream ink and cream axonometric models, mono block labels, pale aqua that works as text, one offset shadow | enterprise data infrastructure sold to an architecture buyer |
 | `cyclorama` | a pale field cycling through six pastel stops on a 32s loop under near-black ink that never moves with it, a monospaced typewriter serif over mono, one orange used only as a fill, a particle organ that holds then redeploys, no shadows anywhere | enterprise AI transformation, applied-AI services, technical consultancies — where what is sold is a change of state and there is no screenshot worth showing |
 
 Each pack locks palette, type, texture, motion tokens, signature motifs and
@@ -122,7 +126,7 @@ skills.
 | `DESIGN_SYNC_BRIDGE.md` | The Claude Design contract: what a pack sends to claude.ai/design and in what shape, the rule for each of the four reference types, and the border motion does not cross |
 | `FIGMA_BRIDGE.md` | The design↔code contract: how a pack's tokens map onto Figma variable collections and modes, how to implement a design without importing raw values, and what cannot cross the border |
 | `AI_PRODUCT_PATTERNS.md` | The surfaces a model drives: the five states of a call, streaming instead of spinners, latency, provenance and uncertainty, agent confirmations, and the bans that keep it honest |
-| `styles/*.md` | The eight style packs — palette, type, texture, motion tokens, motifs, bans, and the traps each one carries |
+| `styles/*.md` | The twelve style packs — palette, type, texture, motion tokens, motifs, bans, and the traps each one carries |
 | `styles/tokens/*.css` | The ready-made token layer per pack, copied verbatim instead of transcribed (workbench ships a light `:root` plus a `data-theme="dark"` twin) |
 | `styles/STYLE_PACK_TEMPLATE.md` | The pack contract as a skeleton, so a new style is authored against the same headings rather than improvised |
 

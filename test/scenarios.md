@@ -230,6 +230,121 @@ Reproduced against both files and logged for the operator rather than fixed
 here — editing a shipped token layer on a delegated report is the failure
 standing instruction 8 exists to prevent.
 
+## T16 — Product-led register, and the fork against the tool itself
+
+Two prompts, run in **separate fresh contexts**.
+
+**T16a — should select `showroom`.** "Build the marketing page for our CRM. The
+product is genuinely good-looking and dense — real tables, real status chips —
+and our best argument is just showing it." Pass: routes to `styles/showroom.md`
+*and says why it is not `workbench`* (the page arguing for the tool, not the
+tool); puts **one** specimen in the first viewport under `--shadow-specimen`;
+**crops rather than scales** it; keeps `--disabled` `#A4ADBA` out of captions;
+renders statuses as chips **containing their word**. Fail: two specimens; a
+scaled-down screenshot; `--disabled` as a caption colour (2.27:1); a bare status
+dot; a shadow inside the specimen.
+
+**T16b — should still select `workbench`.** "Build the settings screen for our
+internal admin tool — dense tables, filters, a detail drawer." Pass: stays on
+`styles/workbench.md` and names the distinction (the surface being operated).
+Fail: routing to `showroom` because the screen has tables, which is the exact
+over-generalisation this pair exists to catch.
+
+**Result, 2026-08-09: GREEN on both branches.** T16a selected `showroom`, applied
+the *which surface am I building* test, cropped rather than scaled the specimen,
+routed captions away from `--disabled` (2.27:1) unprompted, and listed thirteen
+bans it would otherwise have broken — including approximating the seven-layer
+shadow and setting Inter 400 as body. T16b stayed on `workbench`, named
+`instrument-console`, `blueprint` and `field-notes` as packs that pulled "on
+features present in the brief's nouns, none on the brief's actual register", and
+did **not** drift to the newer pack.
+
+## T17 — Precision register, and the fork against the ruled document
+
+**T17a — should select `blueprint`.** "Build the landing page for our vector
+database. Buyers care about recall at scale and cost per query; they will read
+the architecture section first." Pass: routes to `styles/blueprint.md` *and says
+why it is not `field-notes`* (precision, not provenance); ships **zero radius**;
+puts registration marks on **one** thing; keeps `--ink-faint` out of text; adds
+the `prefers-reduced-motion` branch the reference omits. Fail: any radius; marks
+on every card; a screenshot as the hero figure; copying the reference's pure
+black ink.
+
+**T17b — should still select `field-notes`.** "Build the landing page for our
+open-source data-lineage tool — every column in a report has to trace back to
+the query that produced it." Pass: stays on `styles/field-notes.md`, names the
+*how do you know* test. Fail: routing to `blueprint` because the product is
+technical infrastructure.
+
+**Result, 2026-08-09: GREEN on both branches.** T17a selected `blueprint`, held
+zero radius globally rather than per component, drew the hero figure instead of
+screenshotting it, and named both corrections the pack makes to its reference.
+T17b stayed on `field-notes` and — the point of the reciprocity work — quoted the
+fork **from both sides**, citing `field-notes.md:55-56` "restated at
+`blueprint.md:45-46`", explicitly using the test "as written rather than
+inventing one".
+
+T17a also surfaced a real contradiction **inside `blueprint`**: the Signature
+element said registration marks go on one thing per viewport while Components and
+Hero gave them to both CTAs. Reproduced and fixed in the same run — marks belong
+to the primary only.
+
+## T18 — Project front door, and the fork against the moving field
+
+**T18a — should select `prism`.** "Build the front page for our open-source
+vector database. Developers arrive from GitHub; they want the install command,
+the benchmarks and the architecture." Pass: routes to `styles/prism.md` *and says
+why it is not `cyclorama`* (a field that holds vs one that moves); puts the
+**install line in the first viewport**; sets **mono body copy** at 1.65 leading
+and a 60ch measure; keeps `--accent` out of body text (2.36:1). Fail: a sans
+body; a second gradient; an animated wash; the install line below the fold;
+72px display type in `--accent`, which is what the reference itself does wrong.
+
+**T18b — should still select `cyclorama`.** "Build the landing page for our
+AI-transformation consultancy — we install AI into a 300–3000 person business
+and what we sell is the change." Pass: stays on `styles/cyclorama.md`. Fail:
+routing to `prism` because both are pale mono-voiced light fields.
+
+**Result, 2026-08-09: GREEN on both branches.** T18a selected `prism`, set the
+body in mono at 1.65 leading and a 60ch measure, put the install line in the
+first viewport, and caught the reference's own 2.36:1 headline. T18b stayed on
+`cyclorama` and quoted the fork from both sides (`cyclorama.md:60-67`,
+`prism.md:32-46`).
+
+T18a also reported that `blueprint` and `prism` did **not** cross-reference each
+other, so it had to derive the distinction itself — three packs extracted from
+vector-database companies and only some of the edges drawn. Fixed in the same
+run: `blueprint`, `prism` and `maquette` now fork against each other explicitly.
+
+## T19 — Architecture register, and the fork against the cockpit
+
+This pair was **probed at stage 0, before the pack was built**, against a draft
+register — see the run's brief. It is re-run here against the shipped pack.
+
+**T19a — should select `maquette`.** "Build the landing page for our enterprise
+vector lakebase. We separate real-time serving, batch analytics and iterative
+discovery on one source of truth, and buyers must understand the architecture
+before the cost story lands." Pass: routes to `styles/maquette.md` *and states
+the built-object test*; keeps the ink **cream** rather than white; puts black on
+the aqua fill; labels every model block; does not move the model. Fail: `#FFFFFF`
+as ink; the cream on an aqua fill (1.1:1); a perspective render; an exploded view
+on scroll.
+
+**T19b — should still select `instrument-console`.** "Build the landing page for
+our real-time observability platform — engineers watch it on a wall screen during
+incidents and the numbers update second by second." Pass: stays on
+`styles/instrument-console.md` and names the dial-vs-model test. Fail: routing to
+`maquette` on surface signals — near-black field, pale accent, mono labels — which
+is exactly what this pair exists to catch.
+
+**Result, 2026-08-09: GREEN on both branches**, and the stage-0 probe against the
+draft register was green too. T19a selected `maquette`, kept the ink cream rather
+than white, put black on the aqua fill, and refused the exploded-view-on-scroll
+by name. T19b stayed on `instrument-console`, cited the reciprocal test at
+`instrument-console.md:20-25` **and** `maquette.md:32-39`, and reported that
+`maquette` pulled on surface features alone — "which is exactly why the
+discriminator had to be *what the page renders*, not what the product is".
+
 ## Historical baselines (why these exist)
 
 - Pre-0.4.0: T4 baseline invented plausible-but-wrong tokens

@@ -37,6 +37,7 @@ decision home. A run that settles something records it as an ADR.
 | **New kit component** | the shared spine stays identical across **every** kit — the count is derived, never typed, in both `validate.py` and the CI matrix · no raw color literal outside the token block · `.prompt.md` beside it | `python3 test/validate.py` |
 | **Any release** | four-way version sync · CHANGELOG entry · tag · GitHub release · `npm publish` · refresh local installs | `test/validate.py` + `npm view sheleg-design-skill version` + `gh run list` |
 | **Behavior an agent must follow** | a scenario in `test/scenarios.md` | the scenario run by a fresh subagent |
+| **A fork between two packs** | the pack it forks against gains the mirror clause, as a markdown link in both directions | `validate_fork_reciprocity()` in `test/validate.py` |
 | **A settled decision** | an ADR in `docs/adr/`; if it overrides an earlier record, that record's status line says so | link check in `test/validate.py` |
 
 ## The gate
@@ -49,10 +50,10 @@ python3 test/validate.py
 `check-docs.sh`, and it is no longer the only gate: `validate_palette.py` and
 `sloplint.py` joined it in 1.6.0 and CI runs all three.
 
-Ratchet floors, **measured on `main` (`025f866`) 2026-08-08, not restated**:
-`validate.py` **876** · `validate_palette.py` **305** · `sloplint.py` **192**.
-Each may rise, never fall. They were 787 / 269 / 184 at `97e7f63` three days
-earlier, and 272 the day before that — a number that goes stale this fast is
+Ratchet floors, **measured on `feat/four-packs-v1.9.0` 2026-08-09, not restated**:
+`validate.py` **1252** · `validate_palette.py` **412** · `sloplint.py` **224**.
+Each may rise, never fall. They were 876 / 305 / 192 at `20797ef` a day earlier,
+787 / 269 / 184 at `97e7f63`, and 272 the day before that — a number that goes stale this fast is
 exactly why it carries the commit it was measured at.
 CI (`.github/workflows/validate.yml`) runs it on every
 push and PR, together with a negative self-test that corrupts a version and requires

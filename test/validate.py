@@ -479,6 +479,36 @@ def _props_body(text, name):
     return None
 
 
+def validate_fork_reciprocity():
+    """A fork is an edge, and an edge that points one way is not a router.
+
+    Five of eight packs named no other pack at all until 1.9.0, and every fork
+    that did exist pointed backwards -- at packs that never pointed back. An
+    agent entering the table at `instrument-console` therefore never learned any
+    distinction existed, which makes the pack table a list rather than something
+    that routes.
+
+    The marker is a markdown link to another pack (`](./other.md)`), not a bare
+    mention: a pack may name a neighbour in passing without owing it a section,
+    but linking to it is a claim that the two are confusable -- and that claim is
+    only useful if the neighbour makes it too.
+    """
+    styles_dir = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
+    template = styles_dir / "STYLE_PACK_TEMPLATE.md"
+    packs = {p.stem: read(p) or "" for p in styles_dir.glob("*.md") if p != template}
+    link = re.compile(r"\]\(\./([a-z0-9-]+)\.md\)")
+    for name, text in sorted(packs.items()):
+        for target in sorted(set(link.findall(text))):
+            if target not in packs or target == name:
+                continue
+            check(
+                f"](./{name}.md)" in packs[target],
+                f"styles/{name}.md forks against '{target}' but styles/{target}.md "
+                f"does not link back -- a one-way fork is a dead end for anyone "
+                f"who reaches '{target}' first",
+            )
+
+
 def validate_kits():
     """The reference kits: one per pack, a spine that is identical everywhere,
     tokens copied rather than transcribed, and nothing that would push a kit
@@ -647,6 +677,7 @@ def main():
     validate_skills()
     validate_commands()
     validate_cursor_rules()
+    validate_fork_reciprocity()
     validate_installer_sync()
     validate_kits()
     validate_links()

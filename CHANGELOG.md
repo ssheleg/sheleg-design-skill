@@ -4,6 +4,69 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.0] - 2026-08-09
+
+Four style packs, taking the library from eight to twelve — and a fix to the
+thing that would have made twelve worse than eight.
+
+Extracted from four live references on 2026-08-09. Three of them sell vector
+databases and none of them collapse into each other; two are the same company's
+project page and product page, and they share a type stack and nothing else.
+
+### Added
+
+- **`showroom`** — from [attio.com](https://attio.com/). A white gallery where
+  one real product surface is the exhibit, under a **seven-layer shadow**. The
+  reference declares its palette in **CIE Lab**, which this repo's palette gate
+  cannot parse; every value was converted by painting it into a canvas and
+  reading the sRGB bytes back — the browser's conversion, not ours.
+- **`blueprint`** — from [pinecone.io](https://www.pinecone.io/). A drawing
+  sheet: a 32px grid, ruled column boundaries, corner registration marks, one
+  electric blue that works as ink *and* as fill at 7.53:1 both ways, and **no
+  radius anywhere**.
+- **`prism`** — from [milvus.io](https://milvus.io/). One static iridescent wash
+  with a hard bottom edge, a heavy grotesque display over **mono body copy** —
+  the inversion that makes a page read as a project rather than a company.
+- **`maquette`** — from [zilliz.com](https://zilliz.com/). A near-black table
+  with a cream axonometric model on it, mono block labels, and the only accent in
+  this library's four new packs that works as text (15.49:1).
+- Four reference kits, each with the six-component spine plus four signature
+  parts, and four routing scenario pairs (**T16–T19**), every one with its
+  negative branch.
+
+### Fixed — the routing table, which was a list
+
+**Five of the eight shipped packs named no other pack at all.** Forks existed
+only in `field-notes`, `cyclorama` and `atrium`, and every one pointed backwards
+at packs that never pointed back — so an agent entering at `instrument-console`,
+which is where any infrastructure brief lands first, never learned that a
+distinction existed. Four more one-way forks would have made twelve packs with
+eight dead ends.
+
+- `instrument-console`, `workbench`, `field-notes` and `cyclorama` each gain the
+  mirror clause for the new pack that forks against them.
+- **A new `validate.py` check enforces it:** a markdown link from one pack to
+  another must be reciprocated. Watched failing against a planted defect before
+  it landed.
+
+### Fixed — in the packs, not in the references
+
+- **`blueprint`'s reference sets pure black as body ink**, on 316 elements, which
+  the doctrine bans. The pack ships the reference's *own* second ink `#111827`
+  (136 elements) and does not pretend it is the same colour: the two sit **21.2
+  apart** in OKLab.
+- **`showroom`'s reference names `#A4ADBA` "caption-foreground"** and it measures
+  **2.27:1** on its own white field. Kept, renamed `--disabled`, and captions
+  routed to an ink that passes.
+- **`prism`'s reference sets 72px display type in `#00B3FF`** — **2.36:1**, which
+  fails even the relaxed large-text floor. The cyan is a fill in this pack.
+- **Neither `blueprint` nor `prism` ships a `prefers-reduced-motion` branch** —
+  zero blocks each, against live marquee, ping, pulse and scroll. Both packs
+  require the branch their references omit.
+- **`maquette`'s status palette is derived, not extracted**, and the token layer
+  says so at the declaration. The reference exposes none; the first set this run
+  reached for was a framework default, and the palette gate caught it colliding.
+
 ## [1.8.0] - 2026-08-08
 
 An eighth style pack, and the first one whose reference already implements this

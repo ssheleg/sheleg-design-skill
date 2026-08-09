@@ -46,6 +46,15 @@ its marketing site takes this pack's app layer.
 a serif dossier selling prestige; this is a sans-and-mono lab notebook selling
 proof.
 
+**Against [`blueprint`](./blueprint.md).** Both draw rules on a light field, both
+annotate in mono, both serve readers who scroll to the technical section first.
+The difference is the stock and what the marks mean. This pack is **warm paper**:
+a green-cast off-white, rust ink, crop marks that say *this was printed and
+trimmed* — and its argument is provenance. `blueprint` is **cold stock**: pure
+white, electric blue, registration marks that say *this was drawn to tolerance* —
+and its argument is precision. *How do you know?* stays here. *How is it built?*
+goes there.
+
 The defining constraint is composition: **the page is one continuous sheet with
 rules drawn on it.** Ten of the reference's sixteen sections are separated by a
 single `1px` hairline and nothing else; three add a wash of `--surface-2` at

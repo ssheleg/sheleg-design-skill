@@ -12,6 +12,18 @@ products where the aesthetic is calm precision hardware. Single dark
 register across landing and app; brightness (energy) varies per scene, hue
 does not.
 
+**The fork against [`maquette`](./maquette.md), which is the one people get
+wrong.** Both are near-black with one pale accent, mono labels and an
+enterprise-infrastructure buyer; on product *category* they overlap completely,
+so a keyword match sends every infra brief here. The test is not the category —
+it is what the page has to render. **Does it show a number that changes while
+the reader watches?** A dial, a stream, request rates, saturation, an error
+budget → this pack: the single signal, the scrubbed telemetry and the progress
+rail exist to make a moving value readable. Nothing moves, but the reader has to
+decompose a structure before they can judge it → `maquette`, whose subject is a
+static axonometric model. **A cockpit answers *what is happening now*; a maquette
+answers *what is this made of*.**
+
 ## Palette
 
 Ready-made token layer: [`tokens/instrument-console.css`](./tokens/instrument-console.css)

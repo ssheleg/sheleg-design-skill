@@ -230,14 +230,17 @@ ${c("bold", "What it installs")}
   SHELEG_DESIGN.md     the full reference (architecture, recipes, why it works)
   FIGMA_BRIDGE.md      the design↔code contract (tokens ⇄ Figma variables)
   AI_PRODUCT_PATTERNS.md  chat / agent / streaming surfaces (honest state)
-  styles/              eight style packs — instrument-console (dark console),
+  styles/              twelve style packs — instrument-console (dark console),
                        editorial-luxury (warm editorial), workbench (light/dark
                        product UI), briefing-room (dark 16:9 presentation deck),
                        atrium (warm cream consumer health), orchard (friendly
                        consumer biotech), field-notes (warm paper dev tools),
-                       cyclorama (a pastel field on a 32s cycle, for enterprise
-                       AI transformation) — plus a ready-made token CSS per pack
-                       and STYLE_PACK_TEMPLATE.md for authoring more
+                       cyclorama (a pastel field on a 32s cycle), showroom
+                       (the product as the exhibit), blueprint (a drawing sheet,
+                       zero radius), prism (one iridescent wash over mono body),
+                       maquette (cream axonometric models on a dark table) —
+                       plus a ready-made token CSS per pack and
+                       STYLE_PACK_TEMPLATE.md for authoring more
 `);
 }
 
@@ -316,7 +319,7 @@ function main() {
     `\n${c("green", "✓")} ${c("bold", "SHELEG Design")} installed to ${c("blue", rel + "/")}\n` +
       `  ${c("dim", "SKILL.md")}          the agent skill\n` +
       `  ${c("dim", "SHELEG_DESIGN.md")}  the full reference\n` +
-      `  ${c("dim", "styles/")}           style packs + token CSS (instrument-console / editorial-luxury / workbench / briefing-room / atrium / orchard / field-notes / cyclorama)\n\n` +
+      `  ${c("dim", "styles/")}           style packs + token CSS (instrument-console / editorial-luxury / workbench / briefing-room / atrium / orchard / field-notes / cyclorama / showroom / blueprint / prism / maquette)\n\n` +
       `Your Cursor / Claude agent can now discover the skill and build\n` +
       `cinematic, scroll-driven pages — or style product UI (dashboards,\n` +
       `admin, internal tools) from the workbench pack — on its principles.\n\n` +

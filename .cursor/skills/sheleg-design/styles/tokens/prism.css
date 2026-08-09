@@ -1,0 +1,138 @@
+/* SHELEG Design — Prism token layer (an open-source infrastructure project's
+   front door).
+   Copy verbatim; consume only var(--…) in components.
+
+   White passed through a prism: one static iridescent wash across the top of the
+   page — pink to lilac to mint to cyan — under type that never picks up its hue.
+   Body copy is MONO, which is what makes the page read as a project rather than
+   a company. Below the wash the page is plain white.
+
+   Extracted from https://milvus.io/ on 2026-08-09 by reading its live computed
+   styles; ratios computed by importing test/validate_palette.py.
+
+   Two corrections, in ACCENT and MOTION. */
+
+:root {
+  color-scheme: light;
+
+  /* ---- The field -------------------------------------------------------- */
+  --bg: #ffffff;
+  --surface: #f9f9f9; /* card */
+  --surface-2: #f5f8fb; /* the sunken code well */
+
+  /* ---- Ink: near-black with a cyan cast, matching the accent's family --- */
+  --ink: #00131a; /* 18.95:1 on --bg */
+  --ink-2: #2e373b;
+  --ink-soft: #667176; /* 5.01:1 — clears AA, so it MAY carry body copy */
+  --ink-faint: #9ca6b4; /* 2.4:1 — furniture only, never text */
+  --on-ink: #f9f9f9;
+
+  /* ---- Lines ------------------------------------------------------------ */
+  --line: #e9e9ed; /* card border */
+  --line-strong: #d0d7dc;
+  --line-soft: #eaeef2;
+
+  /* ---- ACCENT: a fill, not a text colour -------------------------------- */
+  /* [CORRECTION] The reference sets 72px display type in #00b3ff on white. That
+     measures 2.36:1 — it fails WCAG at display size and at every size below it.
+     This pack does not propagate it: the cyan is a fill, a rule, a chart series
+     and a mark. Ink on it is 8.02:1, which is what --on-accent is for. Where a
+     heading needs the accent's family in text, it takes --accent-ink. */
+  --accent: #00b3ff; /* FILL ONLY — 2.36:1 as text on --bg */
+  --accent-hover: #0077ad;
+  --accent-ink: #1493cc; /* 3.4:1 — large display text only, never body */
+  --accent-deep: #008dc8;
+  --on-accent: #00131a; /* 8.02:1 */
+
+  /* ---- Status ----------------------------------------------------------- */
+  /* --warning and --danger separate by 11.3 at full colour, under the floor of
+     15 though clear of the hard floor. Legal only with the secondary encoding
+     the pack declares: a status carries its word. */
+  --good: #65f8c3;
+  --warning: #f25c05;
+  --danger: #d51f00;
+  --info: #00b3ff;
+
+  /* ---- The prism: the pack's one gradient, and it is spent at the top ---- */
+  /* Four stops, left to right, at low saturation so black type stays 18:1 over
+     every part of it. It does not repeat, it does not move, and there is no
+     second gradient anywhere in the pack. */
+  --wash-1: #fbeaf3; /* pink */
+  --wash-2: #ece9f7; /* lilac */
+  --wash-3: #e6f5ec; /* mint */
+  --wash-4: #e3f4fb; /* cyan */
+  --wash: linear-gradient(
+    100deg,
+    var(--wash-1) 0%,
+    var(--wash-2) 34%,
+    var(--wash-3) 67%,
+    var(--wash-4) 100%
+  );
+
+  /* ---- Elevation: flat. A border, or nothing --------------------------- */
+  --ring-hairline: 0 0 0 1px var(--line);
+
+  /* ---- Radii ------------------------------------------------------------ */
+  --radius-sm: 4px;
+  --radius: 8px; /* cards, buttons, the code well */
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+
+  /* ---- Spacing and the page -------------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --page-max: 80rem;
+  --hero-min-h: 100dvh; /* never 100vh */
+
+  /* ---- Type: Geist for display, Geist Mono for everything that reads ---- */
+  /* The inversion is the pack's signature and the first thing to keep: the
+     display face is the grotesque, and the BODY is mono. Most packs do the
+     opposite. Both are SIL OFL, so there is no substitution trap here. */
+  --font-display: "Geist", system-ui, -apple-system, sans-serif;
+  --font-body: "Geist Mono", ui-monospace, "SF Mono", monospace;
+
+  --t-display: 4.5rem; /* 72px */
+  --lh-display: 1.111;
+  --track-display: -0.01em;
+  --t-h2: 2.625rem; /* 42px */
+  --lh-h2: 1.286;
+  --t-h3: 1.75rem;
+  --lh-h3: 1.3;
+  --t-lede: 1.125rem;
+  --lh-lede: 1.7; /* mono needs more leading than a grotesque does */
+  --t-body: 1rem;
+  --lh-body: 1.65;
+  --t-sm: 0.875rem;
+  --lh-sm: 1.6;
+  --t-label: 0.75rem;
+  --lh-label: 1.5;
+  --track-label: 0.06em;
+
+  --weight-display: 700;
+  --weight-heading: 600;
+  --weight-body: 400;
+
+  /* ---- Motion ----------------------------------------------------------- */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 0.2s;
+  --dur-base: 0.3s;
+
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+/* [CORRECTION] The reference ships NO prefers-reduced-motion branch. This pack
+   requires it. The wash is static by definition — if you have animated it, that
+   is a change this pack did not authorise, and it stops here too. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0s;
+    --dur-base: 0s;
+  }
+}
