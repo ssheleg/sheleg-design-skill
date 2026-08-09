@@ -4,7 +4,7 @@ The project's standing instructions and run log for task-pipeline. Stage 0
 reads this file **in full**; stage 10 prunes, stamps, and writes an entry only
 if the run diverged.
 
-## Standing instructions (cap: 10 · current: 9)
+## Standing instructions (cap: 10 · current: 10)
 
 Each one binds every run in this project until it is retired. Retire when it
 became a mechanical check, when the paths it names are gone, or when it has not
@@ -15,17 +15,20 @@ fired in five run stamps.
    mtimes. A HEAD move you did not make, a `feat/*` branch you did not create,
    or a file changing while you test means another pipeline run is live in the
    same directory. Recheck immediately before staging anything — the tree can
-   turn hostile mid-run. *(Last fired: 2026-08-05 · `2ad45b2` — fired three
-   times in one run: a stolen ADR number, a stolen scenario number, and a
-   version number that was not only taken but already published.)*
+   turn hostile mid-run. *(Last fired: 2026-08-09 · `b426ccc` — clean both
+   times, which is the point: the answer is only worth having because it came
+   from evidence. Its sharpest firing remains 2026-08-05 `2ad45b2`, where it
+   caught a stolen ADR number, a stolen scenario number, and a version already
+   published.)*
 
 2. **Release state comes from the registry and the tags, never from the
    manifests or the CHANGELOG.** Verify with `git tag`, `git ls-remote --tags
    origin` and `npm view <pkg> version` before a brief writes a version
    anywhere. This repo carried `1.4.0` in three manifests, a full CHANGELOG
    entry and a commit subject for a release that was never tagged and never
-   published. *(Last fired: 2026-08-05 · `2ad45b2` — `npm view` is what showed
-   that this run's chosen `1.6.0` was taken **and already shipped**.)*
+   published. *(Last fired: 2026-08-09 · `b426ccc` — checked at stage 0 and
+   again immediately before the tag. Its sharpest firing remains 2026-08-05
+   `2ad45b2`, where `npm view` showed the chosen `1.6.0` already shipped.)*
 
 3. **A stage-0 "absent" is perishable.** Decisions taken because a file does not
    exist — skipping the entry audit because there is no `DOCMAP.md`, no ADR
@@ -40,7 +43,9 @@ fired in five run stamps.
    Every routing test in `test/scenarios.md` that claims pack A is
    distinguishable from pack B needs a second prompt that must still choose B,
    run in a separate fresh context. T13 is the shape to copy.
-   *(Last fired: 2026-08-04 · `c324d1b`)*
+   *(Last fired: 2026-08-09 · `b426ccc` — four pairs, eight fresh contexts, all
+   green; and the negative branches are what proved the fork clauses are read
+   from both sides.)*
 
 5. **A pack needs an addressable origin before it needs anything else.** A
    production reference a reader can go and look at — a URL or a bare host —
@@ -48,7 +53,10 @@ fired in five run stamps.
    values, and a synthesised palette with a citation attached is an invented
    value that looks sourced. This retired an eighth pack and a six-pack
    backfill in one run rather than shipping either.
-   *(Last fired: 2026-08-04 · `1cc28f1`)*
+   *(Last fired: 2026-08-09 · `b426ccc` — four references, four URLs, and the
+   one place a value had no reference behind it, `maquette`'s status set, is
+   marked as a pack decision at the declaration rather than passed off as
+   extracted.)*
 
 6. **A gate is not evidence until it has been watched saying no.** Every new
    check ships with a planted defect it catches — as a `--self-test`, and once
@@ -56,8 +64,10 @@ fired in five run stamps.
    `--self-test` flag that was never wired (the suite reported green for a
    self-test that did not run), two wrong fixtures, and a provenance check that
    rejected a real reference for lacking `https://`.
-   *(Last fired: 2026-08-05 · `2ad45b2` — twelve planted defects, one per kit
-   check, every FAIL line recorded before the check was allowed to land.)*
+   *(Last fired: 2026-08-09 · `b426ccc` — `validate_fork_reciprocity()` was
+   watched failing on a planted one-way edge and going quiet on restore, and the
+   palette gate was run before the pack docs existed specifically to watch it
+   refuse.)*
 
 7. **A gate that CI does not run is not shipped.** Adding a check to
    `package.json` scripts is half the work; the release gate is
@@ -66,7 +76,9 @@ fired in five run stamps.
    while CI ran one for a whole release cycle, so a merge's green described a
    third of the suite. Instruction 6 says a gate must be watched saying no;
    this one says it must be watched saying anything at all.
-   *(Last fired: 2026-08-04 · `623d2fb`)*
+   *(Last fired: 2026-08-09 · `b426ccc` — diffed again; the new reciprocity check
+   lives inside `validate.py`, which CI already runs, so it needed no workflow
+   change. That is worth noting rather than assuming.)*
 
 8. **A delegated finding is a hypothesis until you reproduce it against the
    artifact.** A subagent reports what it believes, and belief arrives in the
@@ -94,9 +106,30 @@ fired in five run stamps.
    doc's numbers against a fresh measurement. This is instruction 6 pointed at
    the close-out instead of at the gates — a green nobody watched land is not
    evidence there either.
-   *(Last fired: 2026-08-08 · `025f866` — the run that wrote it.)*
+   *(Last fired: 2026-08-09 · `b426ccc` — the graph again reported success while
+   refusing to run, and the npm tarball was unpacked rather than trusted.)*
+
+10. **A batch of new artifacts must be checked against each other, not only
+   against what already existed.** When several things land in one run, the
+   author has spent hours on how each differs from the *old* set and no time at
+   all on how they differ from *each other* — so same-batch relationships are the
+   ones that go undrawn. This run added four style packs, wrote a fork from each
+   into the existing packs, added a check enforcing reciprocity, and still
+   shipped three packs serving one product category with **no fork between
+   them**; two test agents found it and one had to derive the distinction itself.
+   The check was real and the coverage was not: after any batch, enumerate the
+   new set pairwise and ask what happens to a reader who confuses two of them.
+   *(Last fired: 2026-08-09 · `b426ccc` — the run that wrote it.)*
 
 ## Prune log
+
+- **2026-08-09 · nothing retired; one added (9 → 10, at cap).** Nine walked
+  against the three triggers. Eight fired inside this run — 1 (twice), 2 (twice),
+  4 (four pairs), 5, 6 (a planted defect for the new check), 7, 8 (three times),
+  9. Instruction 3 did not fire and is now two stamps old, not five. Instruction
+  5 remains the closest to retirement for the same reason as last time and is
+  kept for the same reason. **The list is now at its cap: the next run that wants
+  to add one must retire one, and instruction 3 is the candidate.**
 
 - **2026-08-08 · nothing retired.** All eight were walked against the three
   triggers. Seven fired inside this run (1, 2, 4, 5, 6, 7, 8); instruction 3
@@ -115,8 +148,60 @@ fired in five run stamps.
 | 2026-08-04 | `623d2fb` | release close-out — CI wired to all three gates; **`v1.6.0` shipped**: GitHub release + npm, first published version since `v1.3.4` | **yes** |
 | 2026-08-05 | `2ad45b2` | Claude Design bridge + seven React reference kits; **`v1.7.0` shipped** | **yes** |
 | 2026-08-08 | `025f866` | `cyclorama` style pack from codos.ai, eighth kit, ADR-0001 restored; **`v1.8.0` shipped** | **yes** |
+| 2026-08-09 | `b426ccc` | four packs — showroom, blueprint, prism, maquette — plus reciprocal forks and a check for them; **`v1.9.0` shipped** | **yes** |
 
 ## Log
+
+### 2026-08-09 — the fix that shipped with the same hole it was fixing
+
+**Symptom.** Stage 0 found that five of the eight shipped packs named no other
+pack at all: every disambiguation pointed backwards, at packs that never pointed
+back, so an agent entering the table at `instrument-console` learned nothing. The
+run fixed it properly — mirror clauses in four existing packs, plus a
+`validate_fork_reciprocity()` check watched failing against a planted one-way
+edge.
+
+Then two scenario agents, independently, reported that **the three packs added in
+this very run for vector-database companies did not fork against each other.**
+One said outright that it had to derive the distinction because it was not
+written down. `grep` confirmed it in a second.
+
+**Stage it surfaced at:** 6 (tests), from the routing pairs.
+**Stage that owned it:** 4 — the same stage that wrote the reciprocity fix.
+
+**Root cause.** The fix was scoped to the relationship the run had been thinking
+about: *new pack versus the existing library*. Every one of those edges got
+drawn, and the check enforced them. Nobody asked about the edges **inside the
+batch** — and those were the most confusable pairs in the whole library, because
+three of the four new packs share a product category exactly.
+
+The reason it is invisible is worth naming: after hours of work on four packs,
+their differences feel enormous to the author. To a reader matching on category
+they are one thing with four names.
+
+**Fix, by grade.**
+- *Mechanical* — none available. The reciprocity check can enforce an edge that
+  exists; it cannot know which edges *should*. That is a judgement about which
+  pairs a reader will confuse.
+- *Standing instruction* (10) — after any batch, enumerate the new set pairwise
+  and ask what happens to a reader who confuses two of them.
+
+**What went right, worth keeping.** The finding came from the routing scenarios,
+not from review — which is what those pairs are for, and the second time in two
+runs they have paid for themselves. And both agents were **reproduced before
+anything was edited**: instruction 8 held under three separate delegated findings
+in one run, including one that turned out to be sharper than reported.
+
+**A second entry, smaller and sharper.** The `maquette` token layer shipped
+status colours this run had *invented* — reached for from a framework's defaults
+— while the brief simultaneously claimed the pack "needed no correction". The
+palette gate caught the collision (7.9 under deuteranopia) within a minute of the
+file being written. The values were re-derived, the token layer now marks the
+whole set as a pack decision rather than an extraction, **and the brief and
+design record were corrected**, because a false claim in a record is worse than
+the defect it describes. The lesson is narrow and worth keeping: *the moment you
+supply a value the reference does not have, say so at the declaration* — the gate
+will catch the collision, but only the comment catches the provenance.
 
 ### 2026-08-08 — a stage-0 decision the measurement refuted, and a refresh that reported success
 
