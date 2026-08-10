@@ -37,8 +37,9 @@ gap the ladder walk exists to cover, and it covered it three times in one run.
 
 Carry-over counts printed beside every verdict: **8 of 21 scenarios still carry
 no recorded result** (down from 13 of 19), **3 REQ rows at `never`** in the
-verification ledger, **8 board rows open** — B-001…B-006 carried in, plus B-007
-and B-008 filed by this run's own scenario agents.
+verification ledger, **9 board rows open** — B-001…B-006 carried in, plus B-007
+and B-008 filed by this run's own scenario agents and B-009 by its refused graph
+refresh.
 
 | REQ | Verdict | Evidence |
 |---|---|---|
@@ -54,9 +55,10 @@ and B-008 filed by this run's own scenario agents.
 | REQ-10 CI runs every gate | **green** · 0 | scripts diffed against `validate.yml`; every gate present, no workflow change needed — noted rather than assumed |
 | REQ-11 released and verified by artifact | **green** · 0 | npm serves 1.11.0; **tarball unpacked**: 388 files, 32 in the bundle, version present, spine named, 0 repo-only paths |
 | REQ-12 local installs refreshed | **green** · 0 | plugin and hub both at 1.11.0; one-channel invariant prints nothing |
-| REQ-13 docs, wiki, graph | **green** · 0 | doc map, README, CONTRIBUTING, wiki, graph re-checked by `built_at_commit` |
-| REQ-14 board and ledger closed | **green** · 0 | 8 open rows, priorities re-derived; B-007 and B-008 filed from T7 and T21 |
+| REQ-13 docs and wiki | **green** · 0 | doc map, README, CONTRIBUTING, wiki all updated in this run |
+| REQ-14 board and ledger closed | **green** · 0 | 9 open rows, priorities re-derived; B-007, B-008 and B-009 filed by this run |
 
+| REQ-15 the code graph | **carried** · → B-009 | **the refresh was refused and the refusal was right.** The incremental re-extraction produced 1652 nodes against 1703 on disk, and the shrink-guard declined to overwrite. Investigated rather than forced: only 52 of the 168 lost nodes were `.cursor`-mirror duplicates; the rest were real content the new pass modelled more coarsely — a node per historical release in `CHANGELOG.md` among them. Forcing would have deleted the record of four releases to gain one. `graph.json` stays at 1703 nodes, `built_at_commit` `9312a85`, two commits behind HEAD, and says so |
 ## Gates
 
 | Gate | Before | After |
