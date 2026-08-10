@@ -55,8 +55,11 @@ drift.
    Micro-interactions / Bans / Gotchas. The four in bold were added in 1.5.0 and
    are the ones that decide whether an implementation drifts; the validator
    enforces the other nine always and the four all-or-nothing, so a pack cannot
-   be half-widened. Do not ship a pack on the nine: the gate will pass it and
-   the agent that reads it will invent the rest.
+   be half-widened. **Do not ship a pack on the nine**: the gate will pass it and
+   the agent that reads it will invent the rest. This rule and the three
+   beside it now live in `styles/STYLE_PACK_TEMPLATE.md`, which ships — an
+   author holding only the installed bundle never sees this file. Edit them
+   there; this paragraph is the pointer, not the home.
 3. Author `styles/tokens/<name>.css` in the **same change**. Values come from a
    real production system or a reference you can name in the pack's `Origin:`
    line — a pack whose tokens were invented defeats the point of the repo.
@@ -93,8 +96,11 @@ meaning silently inverts anyone who switches packs.
 ## Releasing
 
 Semver. Bump `.claude-plugin/marketplace.json`, `plugins/sheleg-design/.claude-plugin/plugin.json`,
-`package.json` and the `CHANGELOG.md` top entry **together** — the validator
-fails on a mismatch. Tag `vX.Y.Z`; the release workflow (armed by the
+`package.json`, the `CHANGELOG.md` top entry **and** `SKILL.md`'s
+`metadata.version` **together** — five homes since 1.11.0, and the validator
+fails on a mismatch. The fifth is the only one that ships inside the bundle,
+which is why it exists: an installed reader has nothing else to read a
+version from. Tag `vX.Y.Z`; the release workflow (armed by the
 `RELEASE_ENABLED` repo variable) validates, cuts a GitHub release from the
 matching CHANGELOG section and smoke-tests the tag through `npx`. `npm publish`
 is deliberately a human step.

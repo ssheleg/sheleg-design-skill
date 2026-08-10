@@ -126,6 +126,7 @@ skills.
 |---|---|
 | `SKILL.md` | The agent-facing skill: discovery triggers, the principles, how to apply them, quick-reference rules, common mistakes |
 | `SHELEG_DESIGN.md` | The full reference: architecture, layer-by-layer mechanics with code, the exact morph math, the DOM↔WebGL projection bridge, a build-from-scratch recipe, and why each piece works |
+| `SURFACE_COMPOSITION.md` | Two decisions the pack layer does not make: the six depth layers of a scene, read before writing CSS for a cinematic page; and the handoff to `dataviz`, read before drawing a chart in any pack — token names are not uniform across the twelve and an undefined custom property fails silently |
 | `MOTION_DOCTRINE.md` | Whether to animate at all, before how: the frequency table that kills motion on high-repetition paths, the easing tree and the `ease-in` ban, the duration ceiling, the forbidden forms, and the reduced-motion contract. `SKILL.md` marks it required before any animation |
 | `DESIGN_SYNC_BRIDGE.md` | The Claude Design contract: what a pack sends to claude.ai/design and in what shape, the rule for each of the four reference types, and the border motion does not cross |
 | `FIGMA_BRIDGE.md` | The design↔code contract: how a pack's tokens map onto Figma variable collections and modes, how to implement a design without importing raw values, and what cannot cross the border |
@@ -233,7 +234,7 @@ of the contract:
 
 | Gate | What it decides |
 |---|---|
-| `test/validate.py` | manifests and four-way version sync · skill/command/rule front-matter and the description canon · the pack section contract (nine always, the widened four all-or-nothing) and each pack's `Contract:` declaration · the core role vocabulary (`--bg`, `--ink`, and a resolvable accent) in every token layer · every counted claim (packs, kits, scenarios, headings) · exhaustive pack enumerations in the manifests, the command, the CLI, the README and the rule · one name for the pack contract · fork reciprocity · the eleven kit checks · `install.sh`'s file list, both directions · the whole `.cursor/` mirror · every relative link |
+| `test/validate.py` | manifests and five-way version sync (the fifth is the bundle's own `metadata.version`) · skill/command/rule front-matter and the description canon · the pack section contract (nine always, the widened four all-or-nothing) and each pack's `Contract:` declaration · the core role vocabulary (`--bg`, `--ink`, and a resolvable accent) in every token layer · every counted claim (packs, kits, scenarios, headings) · exhaustive pack enumerations in the manifests, the command, the CLI, the README and the rule · one name for the pack contract · fork reciprocity · the eleven kit checks · `install.sh`'s file list, both directions · the whole `.cursor/` mirror · every relative link |
 | `test/validate_palette.py` | contrast floors and semantic separation per theme, including three simulated dichromacies · AI-default-cluster provenance · **every contrast ratio the docs state, recomputed from the token layer** |
 | `test/sloplint.py` | the bundle obeying its own bans, in token layers, fenced examples **and the inline CSS the packs prescribe in prose** · doctrine completeness · pack origin addressability |
 | `node --check bin/cli.js` | the installer parses |

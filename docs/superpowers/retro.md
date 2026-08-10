@@ -15,8 +15,8 @@ fired in five run stamps.
    mtimes. A HEAD move you did not make, a `feat/*` branch you did not create,
    or a file changing while you test means another pipeline run is live in the
    same directory. Recheck immediately before staging anything — the tree can
-   turn hostile mid-run. *(Last fired: 2026-08-09 · `b426ccc` — clean both
-   times, which is the point: the answer is only worth having because it came
+   turn hostile mid-run. *(Last fired: 2026-08-10 · `89a8798` — clean again: one branch, one
+   worktree, no foreign HEAD move. The point stands: the answer is only worth having because it came
    from evidence. Its sharpest firing remains 2026-08-05 `2ad45b2`, where it
    caught a stolen ADR number, a stolen scenario number, and a version already
    published.)*
@@ -26,8 +26,11 @@ fired in five run stamps.
    origin` and `npm view <pkg> version` before a brief writes a version
    anywhere. This repo carried `1.4.0` in three manifests, a full CHANGELOG
    entry and a commit subject for a release that was never tagged and never
-   published. *(Last fired: 2026-08-09 · `b426ccc` — checked at stage 0 and
-   again immediately before the tag. Its sharpest firing remains 2026-08-05
+   published. *(Last fired: 2026-08-10 · `89a8798` — and it nearly produced a false
+   negative: `git tag | tail` and `ls-remote | tail` both sort lexically, where
+   `v1.10.0` lands **before** `v1.9.0`, so the tag looked missing. `--sort=v:refname`
+   and `sort -V` showed it present on both sides. A glance is not the check.
+   Previously checked at stage 0 and again immediately before the tag. Its sharpest firing remains 2026-08-05
    `2ad45b2`, where `npm view` showed the chosen `1.6.0` already shipped.)*
 
 3. **A stage-0 "absent" is perishable.** Decisions taken because a file does not
@@ -67,10 +70,25 @@ fired in five run stamps.
    ran — and on 2026-08-10 `validate.py` and `sloplint.py` were **still** doing
    exactly that, because the 2026-08-05 run fixed the script in front of it. A
    defect class found once is a defect class present everywhere until checked.
-   *(Last fired: 2026-08-10 · `3af6d97` — six new checks, each watched failing on
-   a planted defect; the slop lint's suppression bug watched passing identical
-   CSS with and without a decoy comment; and the sibling sweep found the same
-   argv defect in two more scripts.)*
+   **The sweep is over the class, not the siblings.** "Sibling" first meant
+   *the other scripts*; on 2026-08-10 it turned out to be too narrow. The
+   1.10.0 run found a rule inside the shipped bundle citing a repo-only path,
+   fixed it, and swept the literal form — repo paths in backticks went to zero
+   and stayed there. Two more instances shipped anyway, because they were not
+   paths: a rule telling the reader to record a version the bundle does not
+   carry, and an argument built on "the same six component names" that names
+   none. Same class, different shape. So: after fixing a defect, say what
+   *class* it belongs to in one sentence, enumerate the shapes that class can
+   take, and check each — a sweep that greps for the string you just fixed
+   finds only the string you just fixed. And a check that fires on a substring
+   can be evaded by rephrasing the very sentence it protects: prefer an
+   unconditional assertion, and prove each planted defect fails with **its own
+   check's message**, not merely that the suite went red.
+   *(Last fired: 2026-08-10 · `89a8798` — three new forms, each watched failing
+   and each discriminated by its own message; one of them was found evadable by
+   a reviewer and made unconditional before shipping. Its previous sharpest
+   firing, 2026-08-10 `3af6d97`, found the same argv defect in two more
+   scripts.)*
 
 7. **A gate that CI does not run is not shipped.** Adding a check to
    `package.json` scripts is half the work; the release gate is
@@ -79,7 +97,9 @@ fired in five run stamps.
    while CI ran one for a whole release cycle, so a merge's green described a
    third of the suite. Instruction 6 says a gate must be watched saying no;
    this one says it must be watched saying anything at all.
-   *(Last fired: 2026-08-09 · `b426ccc` — diffed again; the new reciprocity check
+   *(Last fired: 2026-08-10 · `89a8798` — diffed again; the new self-sufficiency
+   check lives inside `validate.py`, which CI already runs, so it needed no workflow
+   change. Noted rather than assumed, again. Previously: `b426ccc` — the reciprocity check
    lives inside `validate.py`, which CI already runs, so it needed no workflow
    change. That is worth noting rather than assuming.)*
 
@@ -93,7 +113,15 @@ fired in five run stamps.
    and a genuinely invalid gradient returned false, so the test discriminated
    and the pack was left alone. Record refuted claims too: a claim disproved and
    never written down comes back as folklore.
-   *(Last fired: 2026-08-08 · `025f866` — a subagent reported that `field-notes`
+   *(Last fired: 2026-08-10 · `89a8798` — eleven times. Six scenario agents'
+   findings were each reproduced against the artifact before any edit, and one of
+   mine was refuted that way: I predicted the gate's 1368-vs-1366 gap came from
+   untracked `graphify-out/` files, hid the directory, and the count did not move —
+   the real cause was two commits landing after the floor was measured, proven by
+   running the gate at `3af6d97` in a throwaway worktree. Then a code reviewer
+   returned five findings on my own diff; two were right about text I had just
+   written, and one made me concede that splitting the front-matter budget is a
+   loosening rather than a correction. Earlier: 2026-08-08 · `025f866` — a subagent reported that `field-notes`
    contradicts itself about `--deep`. Reproduced against both files: the claim
    is true. Still not acted on, because the pack is shipped and the fix is a
    judgement call rather than a typo. Logged for its author instead.)*
@@ -109,8 +137,9 @@ fired in five run stamps.
    doc's numbers against a fresh measurement. This is instruction 6 pointed at
    the close-out instead of at the gates — a green nobody watched land is not
    evidence there either.
-   *(Last fired: 2026-08-09 · `b426ccc` — the graph again reported success while
-   refusing to run, and the npm tarball was unpacked rather than trusted.)*
+   *(Last fired: 2026-08-10 · `89a8798` — the published tarball was unpacked and
+   the three fixed forms checked inside it, and the two local install channels were
+   verified by reading their installed files rather than by the updater's output.)*
 
 10. **A batch of new artifacts must be checked against each other, not only
    against what already existed.** When several things land in one run, the
@@ -122,9 +151,31 @@ fired in five run stamps.
    them**; two test agents found it and one had to derive the distinction itself.
    The check was real and the coverage was not: after any batch, enumerate the
    new set pairwise and ask what happens to a reader who confuses two of them.
-   *(Last fired: 2026-08-09 · `b426ccc` — the run that wrote it.)*
+   *(Last fired: 2026-08-10 · `89a8798` — the three new check forms enumerated
+   pairwise, which is how form 2 was found to be gated on a substring and made
+   unconditional.)*
 
 ## Prune log
+
+- **2026-08-10 (`89a8798`) · nothing retired; nothing added (still 10, at cap);
+  instruction 6 widened.** All ten walked against the three triggers. **Nine
+  fired** — 1, 2 (and nearly gave a false negative: lexical tag sort), 5 (the T7
+  authoring agent measured a live reference with a URL), 6 (three new forms,
+  each discriminated by its own message), 7, 8 (eleven times, including one of
+  my own predictions refuted by its control), 9 (tarball unpacked, both install
+  channels read), 10 (the new forms enumerated pairwise, which is how form 2 was
+  found evadable). Instruction 4 was walked and correctly found **not
+  applicable**: T21 asserts application, not disambiguation, so it owes no
+  negative branch — a rule that does not fire because it does not apply is not a
+  rule going stale.
+  **Instruction 3 still did not fire and is now four stamps old.** One more
+  silent run retires it. It stays only because the trigger is five, not four.
+  **Instruction 6 was widened rather than duplicated, for the second run
+  running** — the sweep it mandates now covers the defect *class* and its shapes,
+  not the sibling scripts, because this run's whole finding is that the last run
+  swept a string and left the class. An eleventh rule saying "sweep the class"
+  beside a sixth saying "sweep the siblings" would be two rules for one idea, and
+  the cap exists to prevent exactly that.
 
 - **2026-08-10 · nothing retired; nothing added (still 10, at cap).** All ten
   walked against the three triggers. Eight fired inside this run — 1 (twice: at
@@ -171,8 +222,59 @@ fired in five run stamps.
 | 2026-08-08 | `025f866` | `cyclorama` style pack from codos.ai, eighth kit, ADR-0001 restored; **`v1.8.0` shipped** | **yes** |
 | 2026-08-09 | `b426ccc` | four packs — showroom, blueprint, prism, maquette — plus reciprocal forks and a check for them; **`v1.9.0` shipped** | **yes** |
 | 2026-08-10 | `3af6d97` | fresh-eyes audit of the whole skill; six new checks, three gate defects reproduced and fixed, thirteen wrong ratios corrected; **`v1.10.0` shipped** | **yes** |
+| 2026-08-10 | `89a8798` | repeat audit run as application scenarios; the bundle made self-sufficient, the defect class gated, the hook contradiction resolved; **`v1.11.0` shipped** | **yes** |
 
 ## Log
+
+### 2026-08-10 — the class was not swept, and the harness had never tested using
+
+**Symptom.** Three separate rules inside the shipped bundle instructed the reader
+to use something only the repository has: `DESIGN_SYNC_BRIDGE.md` §7 said to
+record the pack version into the synced project, and no version existed anywhere
+in the bundle; §1 argued from "the same six component names" and named none of
+them; and the rule that decides a pack author's contract — *do not ship on the
+nine* — lived in `CONTRIBUTING.md`, which no install contains. All three read as
+authoritative right up to the moment an agent tried to follow one.
+
+**Surfaced at** stage 0, in a repeat audit, by fresh-context agents doing real
+work. **Owned by** stage 10 of the *previous* run, whose acceptance had written
+the instruction to check this and whose fix had covered one instance.
+
+**Root cause.** 1.10.0 found this defect once, fixed it, and swept the **literal
+form**: repo-only paths in backticks, which went to zero and are still zero. The
+two shapes that are not paths were never looked for, because the sweep was a
+grep for the thing already fixed. A class-level defect fixed at instance level
+leaves the class intact and the count of known instances at one, which reads like
+completeness.
+
+**Second finding, and the reason the first went unseen so long.** The scenario
+harness had 21 scenarios and had never recorded a result for the ones that test
+*application* — T2, T3, T7, T9, T14 all sat unrecorded while every routing pair
+carried a verdict. So the repository could not answer "do the usage scenarios
+work" for the case the library is used in most, and the bundle-only defects are
+invisible to a routing question by construction: choosing a pack never asks the
+bundle for a version. The run that found this had to invent T21 — build something
+real on a `core` pack — because no scenario covered it.
+
+**Fixes by grade.** *Structural:* `validate_bundle_self_sufficiency()` over the
+three shipped shapes, each watched failing and each discriminated by its own
+message; `metadata.version` in the bundle making version sync five-way. *Doc:*
+the authoring rules moved into the shipped template, the spine named, the
+`useGSAP` contradiction resolved, `arcAmp` and `drop` declared as tuning
+constants. *Process:* instruction 6 widened from siblings to shapes.
+
+**The check that catches it next time.** The three forms are mechanical now, so a
+fourth instance has to be a *new* shape — which is the honest limit and is written
+into the check's own comment. The question that stays human: *what else does the
+bundle tell a reader to do with something it does not contain?*
+
+**A near-miss worth recording.** I predicted the gate's 1368-vs-1366 gap came from
+untracked `graphify-out/` files being walked by the link checker. Plausible,
+specific, and wrong: hiding the directory did not move the count. The real cause
+was two commits landing after the floor was measured, proven by running the gate
+at `3af6d97` in a throwaway worktree — exactly 1366. Had I written the first
+version up, the repository would now carry a defect note describing a defect that
+does not exist, which is worse than the gap it purported to explain.
 
 ### 2026-08-10 — 1270 green checks, and none of them were looking at the claims
 
