@@ -9,7 +9,8 @@ A page feels cinematic from a **single source of truth** (measured scroll
 position) driving **many cheap, layered, independently-degradable responses** —
 not from many animations. If the project has the full skill installed
 (`.cursor/skills/sheleg-design/`), read its `SKILL.md`, `SHELEG_DESIGN.md`,
-and the chosen style pack in `styles/` first (instrument-console — dark
+`MOTION_DOCTRINE.md` (before any animation) and the chosen style pack in
+`styles/` first (instrument-console — dark
 console; editorial-luxury — warm editorial; workbench — quiet light/dark
 product UI for dashboards and tools, used standalone without the cinematic
 motion layer; briefing-room — dark 16:9 presentation deck, standalone, slides
@@ -28,6 +29,40 @@ blue and zero radius; prism — an open-source project's front door, one
 static iridescent wash over mono body copy; maquette — enterprise data
 infrastructure as a cream axonometric model on a near-black table);
 otherwise follow the contract below (self-contained on purpose).
+
+## Whether to animate at all — before how
+
+Frequency decides before taste gets a vote. (Full doctrine:
+`MOTION_DOCTRINE.md` in the installed skill.)
+
+- Seen 100+ times a day — command palette, keyboard shortcut, tab switch:
+  **no animation, ever.** Never animate a keyboard-initiated action; it turns
+  instant into laggy and disconnects the result from the keypress.
+- Tens of times a day — hover, list navigation, inline toggles: remove it or
+  cut it to the floor. Occasional (modals, drawers, toasts): standard. Rare or
+  first-time (onboarding, empty-to-filled): delight is allowed.
+- Every animation answers "why does this move?" in one sentence — spatial
+  consistency, state indication, feedback, explanation, or preventing a jarring
+  cut. "It looked cool" is not an answer; if you cannot write the sentence,
+  delete the animation.
+- **`ease-in` is banned in UI.** It starts slow, in the exact moment the user is
+  watching hardest. Entering or leaving → `ease-out`; moving or morphing on
+  screen → `ease-in-out`; hover or colour change → `ease`; constant motion →
+  `linear`. Curves: `--ease-out: cubic-bezier(.23,1,.32,1)`,
+  `--ease-in-out: cubic-bezier(.77,0,.175,1)`,
+  `--ease-drawer: cubic-bezier(.32,.72,0,1)`.
+- **UI motion stays under 300 ms.** Button press 100–160ms · tooltip 125–200ms ·
+  dropdown 150–250ms · modal/drawer 200–500ms. Marketing and scrollytelling are
+  deliberately longer.
+- Never animate a property that triggers layout (`width`, `height`, `top`,
+  `left`, `padding`, `margin`, `gap`, `font-size`). Never a bare scroll
+  listener, never `requestAnimationFrame` writing component state, never
+  `backdrop-filter` or grain on a scrolling container, never a left-behind
+  `will-change`, never two marquees.
+- **Reduced motion is a contract, not a feature.** Anything beyond a colour
+  change honours `prefers-reduced-motion: reduce`; loops, parallax and springs
+  collapse to static or instant, never to "slower". Shipping an animation
+  without that branch is a bug, not a polish item.
 
 ## Five principles, in order
 

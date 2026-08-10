@@ -478,6 +478,178 @@ def self_test() -> int:
     return 0
 
 
+# --- stated ratios --------------------------------------------------------
+#
+# The token layer is the single home for a pack's VALUES, and that half is
+# honoured -- 829 definitions, zero drift. A contrast ratio is just as derived a
+# fact as the hex is, and it was not: every ratio is computed once by hand, then
+# copied into the palette table, into the prose, and into a CSS comment, and the
+# three copies drift independently. Fourteen stated ratios were wrong when this
+# check was written; `blueprint` carried the same wrong number in four places
+# across two files, because its ratio column is headed ``On `--bg` `` and was
+# computed against pure white while its stock is #FBFBFC.
+#
+# The check needs no pair-matching heuristic to be trustworthy: the token is
+# named on the same line as the number. Subject = the first token on the line;
+# the ratio is checked against the pack's field, then against any other token
+# named on that line, then against every theme -- so a dark-theme comment and a
+# "text ON the accent" row both resolve without special cases. Anything that
+# matches nothing in the pack is a number that pack cannot produce.
+RATIO_CLAIM = re.compile(r"(\d+(?:\.\d+)?)\s*:\s*1(?![\d.])")
+TOKEN_ON_LINE = re.compile(r"--[a-z][a-z0-9-]*")
+# ``| Token | Value | Role | On `--bg` |`` -- the table stating what it measured
+# against. blueprint's says `--bg` and its numbers were computed against pure
+# white, which is the whole finding: the header was right and the arithmetic was
+# not, and nothing read the header.
+TABLE_BASE = re.compile(r"[Oo]n\s+`(--[a-z0-9-]+)`")
+# The library's uniform way of naming the other side, in a CSS comment or in a
+# table cell: "17.74:1 on --bg", "6.1:1 over `--accent-deep`".
+PARTNER_PHRASE = re.compile(r"\b(?:on|over|against)\s+`?(--[a-z0-9-]+)`?")
+# "16.5–17.8:1" spans a set of tokens and has no single right answer. Only a
+# dash BETWEEN TWO NUMBERS counts: an earlier version skipped any line
+# containing an em dash, which is most prose in this repo, and silently dropped
+# four real defects while still reporting green.
+RATIO_RANGE = re.compile(r"\d\s*[–—-]\s*\d+(?:\.\d+)?\s*:\s*1")
+RATIO_TOL = 0.1
+# A line that is arguing about a number rather than asserting one.
+RATIO_SKIP = re.compile(
+    r"(?i)\b(?:floor|minimum|at least|would|were|target|aim|WCAG|AA|AAA|budget|but|"
+    r"reject|rejected|candidate|instead|not\b|fails?|failing|below the)\b"
+)
+
+
+def _theme_maps(text: str) -> list[tuple[str, dict, tuple | None]]:
+    """(label, {token: linear_rgb}, field_rgb) per theme."""
+    out = []
+    for label, decls in themes(text):
+        solids = {}
+        for name in decls:
+            raw = resolve(name, decls)
+            if raw is None:
+                continue
+            parsed = parse_color(raw)
+            if parsed and parsed[1] >= 0.999:
+                solids[name] = parsed[0]
+        field_name = pick(decls, FIELD_TOKENS)
+        out.append((label, solids, solids.get(field_name)))
+    return out
+
+
+def validate_stated_ratios(css: Path) -> None:
+    stem = css.stem
+    maps = _theme_maps(css.read_text(encoding="utf-8"))
+    if not maps:
+        return
+    sources = [(f"tokens/{stem}.css", css)]
+    pack_md = PACKS / f"{stem}.md"
+    if pack_md.is_file():
+        sources.append((f"styles/{stem}.md", pack_md))
+
+    for rel, path in sources:
+        base: str | None = None  # the comparison base a table declares in its header
+        lines = path.read_text(encoding="utf-8").splitlines()
+        for lineno, line in enumerate(lines, 1):
+            if not line.startswith("|"):
+                base = None
+            # Only a real header row declares the base -- the row beneath it is
+            # the `|---|` separator. Reading it from any row let a data cell
+            # ("4.8:1 on `--dawn-1`") redefine the base for every row below it,
+            # which flagged six correct claims in `field-notes`.
+            elif TABLE_BASE.search(line) and lineno < len(lines) and set(
+                lines[lineno].replace("|", "").replace(" ", "")
+            ) <= {"-", ":"} and lines[lineno].strip():
+                base = TABLE_BASE.search(line).group(1)
+            claims = RATIO_CLAIM.findall(line)
+            if not claims or RATIO_SKIP.search(line) or RATIO_RANGE.search(line):
+                continue  # a range, or a line arguing about a number
+            names = TOKEN_ON_LINE.findall(line)
+            if not names:
+                continue
+            subject, others = names[0], names[1:]
+            atleast = "≥" in line or ">=" in line
+
+            # SCOPE, deliberately narrow. A ratio is only checked when the
+            # document says what it measured against, because a heuristic that
+            # guesses the other side produces a gate nobody trusts: the first
+            # draft of this check guessed, and 22 of its 40 findings were prose
+            # narrating a rejected candidate or a gradient stop.
+            #
+            # Two forms count as declared:
+            #   1. a palette-table column headed ``On `--bg` `` -- the row's
+            #      partner is that token. This is where the real defects were:
+            #      blueprint's column says `--bg` (#FBFBFC) and every number in
+            #      it was computed against pure white.
+            #   2. `--on-X`, whose own name states that it sits on `--X`, or any
+            #      other token named on the same line.
+            # A `-ink` suffix is deliberately NOT read as "text on X": the
+            # convention is pack-dependent. `editorial-luxury`'s `--accent-ink`
+            # is text ON the accent; `field-notes`' `--brand-ink` is a text-safe
+            # variant of the brand, on the paper. Inferring one meaning flagged
+            # six correct claims in `field-notes`.
+            # Prose ratios and worst-stop tables (`cyclorama`) are out of scope
+            # and stay out until they declare a base; see the board.
+            partner_names = PARTNER_PHRASE.findall(line)
+            if subject.startswith("--on-"):
+                partner_names.append("--" + subject[len("--on-"):])
+            if line.startswith("|") and base:
+                partner_names.append(base)
+            if not partner_names:
+                continue
+            # A row often carries several tokens (`--surface-2` / `-3`) and one
+            # ratio that belongs to whichever of them it describes. Any of them
+            # satisfying the claim is enough; the check is "this pack can produce
+            # that number for a token on this row", not "for the first one".
+            subjects = names if not subject.startswith("--on-") else [subject]
+
+            for claim in claims:
+                want = float(claim)
+                got: list[float] = []
+                for _label, solids, _field in maps:
+                    got += [
+                        contrast(solids[s], solids[n])
+                        for s in subjects if s in solids
+                        for n in partner_names if n in solids and n != s
+                    ]
+                if not got:
+                    continue  # the subject is not a solid colour in any theme
+                ok = any(c >= want - RATIO_TOL for c in got) if atleast else \
+                    any(abs(c - want) <= RATIO_TOL for c in got)
+                check(
+                    ok,
+                    f"{rel}:{lineno}: states {claim}:1 for {subject} against "
+                    f"{'/'.join(partner_names)}, but the token layer computes "
+                    f"{', '.join(f'{c:.2f}' for c in sorted(set(round(x, 2) for x in got)))} "
+                    f"-- a ratio is derived from the tokens, so it is checked like one",
+                )
+
+
+
+FLOORS = Path(__file__).resolve().parent / "floors.json"
+
+
+def check_floor(script: str, count: int) -> int:
+    """The ratchet. See test/floors.json for why a falling count is a defect."""
+    import json as _json
+    try:
+        floors = _json.loads(FLOORS.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        print(f"FAIL: {FLOORS.name} is missing or unreadable", file=sys.stderr)
+        return 1
+    floor = floors.get(script)
+    if floor is None:
+        print(f"FAIL: {FLOORS.name} has no floor for {script}", file=sys.stderr)
+        return 1
+    if count < floor:
+        print(
+            f"FAIL: {script} ran {count} checks, below its floor of {floor}. "
+            f"Checks do not disappear on their own. If the drop is intended, lower "
+            f"the floor in {FLOORS.name} in the same commit, with the reason.",
+            file=sys.stderr,
+        )
+        return 1
+    return 0
+
+
 def main() -> int:
     if "--self-test" in sys.argv[1:]:
         return self_test()
@@ -493,6 +665,7 @@ def main() -> int:
     check(len(files) >= 2, "styles/tokens: expected at least two token layers")
     for css in files:
         validate_pack(css)
+        validate_stated_ratios(css)
     for line in notes:
         print(line)
     if failures:
@@ -500,6 +673,9 @@ def main() -> int:
             print(f"FAIL: {f}")
         print(f"{len(failures)} failure(s) in {checks} checks", file=sys.stderr)
         return 1
+    rc = check_floor("validate_palette.py", checks)
+    if rc:
+        return rc
     print(f"OK ({checks} checks)")
     return 0
 

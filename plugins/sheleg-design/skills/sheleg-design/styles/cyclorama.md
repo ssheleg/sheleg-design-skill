@@ -13,6 +13,8 @@ The identity in one sentence: **a cyclorama** — the seamless theatre backdrop
 that changes colour behind a fixed subject. Not a gradient, not a theme switch:
 one continuous loop, under type and rules that never shift with it.
 
+Contract: widened — all thirteen headings.
+
 ## Register
 
 Choose this pack for **a company selling transformation to an executive buyer**:

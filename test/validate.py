@@ -26,17 +26,30 @@ Exit code 0 with "OK (<n> checks)" when clean; 1 with FAIL: lines otherwise.
 from __future__ import annotations
 
 import json
+import os
 import re
+import shutil
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+# The self-test plants a defect in a COPY of the tree and re-runs this file
+# against it, so every check is exercised exactly as CI runs it rather than by a
+# re-implementation that can drift from the thing it is testing.
+ROOT = Path(os.environ.get("SHELEG_ROOT") or Path(__file__).resolve().parent.parent)
 PLUGIN = "sheleg-design"
 PLUGIN_DIR = f"plugins/{PLUGIN}"
-# The pack contract: nine headings every pack must carry, plus "## Motion
-# flavor", which only cinematic packs have (workbench is standalone and has no
-# motion layer to flavor). Docs that say "ten-heading contract" mean these nine
-# plus that conditional one.
+# The pack contract is THIRTEEN headings, plus "## Motion flavor" for a
+# cinematic pack. These nine are the always-required floor; the four in
+# PACK_SECTIONS_WIDENED_ONLY are the rest, enforced all-or-nothing below.
+#
+# One name, one number, everywhere. Say "the thirteen-heading contract" and
+# nothing else: this repo shipped "nine", "ten" and "thirteen" simultaneously
+# across DOCMAP, DESIGN_SYNC_BRIDGE, scenarios.md, CONTRIBUTING and this
+# docstring, and one of those sites actively instructed an author to ship a
+# nine-heading pack -- which the gate then passed, because nine is the floor.
+# validate_contract_terminology() now fails on the stale spellings.
 PACK_SECTIONS = (
     "## Register",
     "## Palette",
@@ -348,13 +361,13 @@ def validate_skills():
         rel = pack.relative_to(ROOT)
         text = read(pack) or ""
         for section in PACK_SECTIONS:
-            check(section in text, f"{rel}: missing required section '{section}'")
+            check(has_heading(text, section), f"{rel}: missing required section '{section}'")
         # All-or-nothing on the widened four. A pack that copied the current
         # skeleton and kept only the cheap headings would otherwise pass while
         # teaching the next author that the four are optional.
-        adopted = [s for s in PACK_SECTIONS_WIDENED_ONLY if s in text]
+        adopted = [s for s in PACK_SECTIONS_WIDENED_ONLY if has_heading(text, s)]
         if adopted:
-            missing = [s for s in PACK_SECTIONS_WIDENED_ONLY if s not in text]
+            missing = [s for s in PACK_SECTIONS_WIDENED_ONLY if not has_heading(text, s)]
             check(
                 not missing,
                 f"{rel}: half-widened pack -- carries {', '.join(adopted)} but not "
@@ -672,7 +685,357 @@ def validate_kits():
     check("kits/" in files, "package.json: files[] must include 'kits/'")
 
 
+# --------------------------------------------------------- counted claims
+#
+# The class this repo could never see. `validate.py` checked that each pack's
+# NAME appears in the README, the CLI and the rules -- so twelve names were
+# present and the sentence above them still read "six locked style packs" for
+# four releases. A count is the one kind of claim a machine can settle outright,
+# and it was the only kind nothing checked.
+#
+# Normalisation matters more than the regex: the README's "six locked style /
+# packs" is split across a line break, so a line-based grep cannot see it. Every
+# source is whitespace-collapsed first.
+NUMBER_WORDS = {
+    1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven",
+    8: "eight", 9: "nine", 10: "ten", 11: "eleven", 12: "twelve",
+    13: "thirteen", 14: "fourteen", 15: "fifteen", 16: "sixteen",
+    17: "seventeen", 18: "eighteen", 19: "nineteen", 20: "twenty",
+}
+WORD_NUMBERS = {w: n for n, w in NUMBER_WORDS.items()}
+COUNTED = re.compile(
+    r"\b(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|"
+    r"thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|\d{1,2})"
+    r" (?:locked |named |shipped |pluggable |real |React |reference )*"
+    r"(?:visual |style )?(pack|kit|scenario|heading)s\b",
+    re.I,
+)
+# "A fork between two packs" counts a relationship, not the library. A hyphen
+# means a compound (`four-packs`, a branch name), not a count.
+COUNT_NOT_A_TALLY = re.compile(r"(?i)\b(?:between|either|each|any|both|per|same)\s+$")
+
+
+def _packs() -> list[str]:
+    d = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
+    return sorted(p.stem for p in d.glob("*.md") if p.name != "STYLE_PACK_TEMPLATE.md")
+
+
+def validate_counted_claims():
+    """Every 'N packs' / 'N kits' / 'N scenarios' / 'N headings' is true."""
+    packs = _packs()
+    kits = sorted(p.name for p in (ROOT / "kits").iterdir() if p.is_dir()) if (ROOT / "kits").is_dir() else []
+    scen = read(ROOT / "test/scenarios.md") or ""
+    truth = {
+        "pack": len(packs),
+        "kit": len(kits),
+        "scenario": max((int(n) for n in re.findall(r"^##+ T(\d+)", scen, re.M)), default=0),
+        "heading": len(PACK_SECTIONS_WIDE),
+    }
+    sources = [
+        "README.md", "CONTRIBUTING.md", "bin/cli.js", "docs/DOCMAP.md",
+        "cursor/rules/sheleg-design.mdc",
+        f"{PLUGIN_DIR}/commands/{PLUGIN}.md",
+    ] + [
+        str(p.relative_to(ROOT))
+        for p in sorted((ROOT / PLUGIN_DIR / "skills" / PLUGIN).rglob("*.md"))
+    ]
+    for rel in sources:
+        text = read(ROOT / rel)
+        if text is None:
+            continue
+        flat = " ".join(text.split())
+        for m in COUNTED.finditer(flat):
+            raw, noun = m.group(1).lower(), m.group(2).lower()
+            said = WORD_NUMBERS.get(raw, int(raw) if raw.isdigit() else None)
+            if said is None or truth[noun] == 0:
+                continue
+            if COUNT_NOT_A_TALLY.search(flat[max(0, m.start() - 24): m.start()]):
+                continue
+            check(
+                said == truth[noun],
+                f"{rel}: says {m.group(0)!r} but there are {truth[noun]} {noun}s "
+                f"-- a count is checkable, so it is checked",
+            )
+
+
+# ------------------------------------------------- exhaustive enumerations
+#
+# These surfaces are where a host or a human decides whether this skill answers
+# their request. plugin.json named three packs of twelve, and the /sheleg-design
+# command's fast path listed the same three -- so nine packs could not be asked
+# for by name through the command that exists to ask for them.
+#
+# Scoped to sites whose list is contractually exhaustive. FIGMA_BRIDGE.md names
+# three packs on purpose (they are the ones with a mode trap) and is not here.
+ENUMERATION_SITES = (
+    (".claude-plugin/marketplace.json", "the marketplace card an agent host reads"),
+    (f"{PLUGIN_DIR}/.claude-plugin/plugin.json", "the plugin description an agent host reads"),
+    (f"{PLUGIN_DIR}/commands/{PLUGIN}.md", "the slash command's by-name fast path"),
+    ("bin/cli.js", "the installer's help and banner"),
+    ("README.md", "the pack table"),
+    ("cursor/rules/sheleg-design.mdc", "the standalone Cursor rule"),
+    (f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md", "the routing table"),
+)
+
+
+def validate_pack_enumerations():
+    packs = _packs()
+    for rel, why in ENUMERATION_SITES:
+        text = read(ROOT / rel)
+        if not check(text is not None, f"{rel}: missing"):
+            continue
+        missing = [p for p in packs if p not in text]
+        check(
+            not missing,
+            f"{rel}: {why} names {len(packs) - len(missing)} of {len(packs)} packs "
+            f"-- missing {', '.join(missing)}. A pack absent here cannot be chosen here",
+        )
+
+
+# ------------------------------------------------------ contract terminology
+#
+# The pack contract was called "nine", "ten" and "thirteen" simultaneously
+# across DOCMAP, DESIGN_SYNC_BRIDGE, scenarios.md, CONTRIBUTING and validate.py's
+# own docstring -- and DESIGN_SYNC_BRIDGE told an author to ship "all nine
+# headings", which this gate then passed, because nine is the floor. One name,
+# one number, or the author ships the smaller thing.
+STALE_CONTRACT = re.compile(
+    r"\b(nine|ten|eleven|twelve|fourteen|9|10|11|12|14)[- ]heading\b", re.I
+)
+
+
+def validate_contract_terminology():
+    want = NUMBER_WORDS[len(PACK_SECTIONS_WIDE)]
+    # Documentation only. The gates' own source has to be able to name the stale
+    # spellings -- in the comment explaining why this check exists, and in the
+    # self-test fixture that plants one -- and a checker that fails on its own
+    # explanation teaches people to delete the explanation.
+    for md in sorted(ROOT.rglob("*.md")):
+        parts = set(md.parts)
+        if parts & {".git", "node_modules", "graphify-out", "test"} or "specs" in parts \
+                or md.name == "CHANGELOG.md":
+            continue  # a dated record states the contract of its own day
+        text = read(md) or ""
+        for m in STALE_CONTRACT.finditer(text):
+            check(
+                False,
+                f"{md.relative_to(ROOT)}: says {m.group(0)!r}; the pack contract is "
+                f"{want} ({len(PACK_SECTIONS_WIDE)}) plus '## Motion flavor' for a "
+                f"cinematic pack. One name, one number",
+            )
+
+
+# ------------------------------------------------ what a pack does NOT specify
+#
+# Six packs carry the four widened sections and six do not, and nothing said so.
+# SKILL.md tells the agent a pack "supplies the palette, type, texture,
+# motion-token values, signature motifs, and bans" -- a list that quietly omits
+# the four. An agent on a core-contract pack finds no component states, no hero
+# ceiling and no breakpoints, and invents them; the precision of what IS
+# specified reads as completeness.
+CONTRACT_MARKER = re.compile(r"^Contract:\s*(core|widened)\b", re.M)
+
+
+def has_heading(text: str, heading: str) -> bool:
+    """A heading is a line, not a substring.
+
+    `"## Hero" in text` is true of any prose that mentions `## Hero` -- including
+    the core-contract note that lists the four sections a pack omits, which made
+    six packs look widened the moment they declared they were not. Structure is
+    checked structurally.
+    """
+    return re.search(rf"^{re.escape(heading)}\s*$", text, re.M) is not None
+
+
+def validate_contract_declaration():
+    styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
+    skill = read(styles.parent / "SKILL.md") or ""
+    for name in _packs():
+        text = read(styles / f"{name}.md") or ""
+        rel = f"styles/{name}.md"
+        widened = all(has_heading(text, s) for s in PACK_SECTIONS_WIDENED_ONLY)
+        m = CONTRACT_MARKER.search(text)
+        if not check(m is not None, f"{rel}: no 'Contract: core|widened' line -- a reader "
+                                    "cannot tell what this pack leaves them to decide"):
+            continue
+        check(
+            (m.group(1) == "widened") == widened,
+            f"{rel}: declares 'Contract: {m.group(1)}' but "
+            f"{'carries' if widened else 'does not carry'} the four widened sections",
+        )
+        if not widened:
+            check(
+                f"styles/{name}.md" in skill and "core contract" in skill,
+                f"SKILL.md: '{name}' is on the core contract and the pack table does not "
+                "say so -- the table is where the pack is chosen",
+            )
+
+
+# ------------------------------------------------------------ the ratchet
+#
+# "Each may rise, never fall" was a sentence in DOCMAP.md and nothing else.
+# Measured: stripping the four widened headings from one pack made BOTH gates
+# quieter -- validate.py 1270 -> 1269, sloplint.py 224 -> 223 -- and both still
+# exited 0. A gate whose count can fall silently cannot detect a deleted
+# requirement, which is the one failure a consistency validator exists to catch.
+FLOORS = Path(__file__).resolve().parent / "floors.json"
+
+
+def check_floor(script: str, count: int) -> None:
+    try:
+        floors = json.loads(FLOORS.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        print(f"FAIL: {FLOORS.name} is missing or unreadable -- the ratchet cannot be enforced",
+              file=sys.stderr)
+        sys.exit(1)
+    floor = floors.get(script)
+    if floor is None:
+        print(f"FAIL: {FLOORS.name} has no floor for {script}", file=sys.stderr)
+        sys.exit(1)
+    if count < floor:
+        print(
+            f"FAIL: {script} ran {count} checks, below its floor of {floor}. "
+            f"Checks do not disappear on their own -- something that used to be "
+            f"required is not being required any more. If the drop is intended, "
+            f"lower the floor in {FLOORS.name} in the same commit, with the reason.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+
+# ------------------------------------------------------------- self-test
+#
+# Each planted defect is one this repo actually shipped. The tree is copied, one
+# defect is planted, and THIS file is re-run against the copy -- so what is
+# tested is the validator CI runs, not a re-implementation of it.
+PLANTS = (
+    (
+        "a count that is true of an older release",
+        "README.md",
+        lambda t: t.replace("**twelve locked style\npacks**", "**six locked style\npacks**"),
+    ),
+    (
+        "a manifest naming three packs of twelve",
+        f"{PLUGIN_DIR}/.claude-plugin/plugin.json",
+        lambda t: t.replace("briefing-room (dark 16:9 deck), ", ""),
+    ),
+    (
+        "the contract called by a stale number",
+        "CONTRIBUTING.md",
+        lambda t: t.replace("The contract is **thirteen**", "The contract is **nine-heading**"),
+    ),
+    (
+        "a pack that does not declare what it leaves undecided",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/workbench.md",
+        lambda t: re.sub(r"^Contract: .*\n", "", t, count=1, flags=re.M),
+    ),
+    (
+        "a version out of four-way sync",
+        "package.json",
+        lambda t: t.replace('"version": "', '"version": "9.', 1),
+    ),
+    (
+        "a style pack the SKILL.md table does not route to",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md",
+        lambda t: t.replace("styles/maquette.md", "styles/nowhere.md"),
+    ),
+)
+
+
+def self_test() -> int:
+    src = Path(__file__).resolve().parent.parent
+    ok = True
+    for label, rel, mutate in PLANTS:
+        with tempfile.TemporaryDirectory() as tmp:
+            dst = Path(tmp) / "repo"
+            shutil.copytree(
+                src, dst,
+                ignore=shutil.ignore_patterns(".git", "node_modules", "graphify-out", "dist"),
+            )
+            target = dst / rel
+            before = target.read_text(encoding="utf-8")
+            after = mutate(before)
+            if before == after:
+                print(f"  BROKEN  {label}: the fixture changed nothing in {rel}")
+                ok = False
+                continue
+            target.write_text(after, encoding="utf-8")
+            env = {**os.environ, "SHELEG_ROOT": str(dst)}
+            run = subprocess.run(
+                [sys.executable, str(Path(__file__).resolve()), ],
+                capture_output=True, text=True, env=env,
+            )
+            if run.returncode == 0:
+                print(f"  MISSED  {label}  ({rel}) -- validator stayed green")
+                ok = False
+            else:
+                print(f"  caught  {label}")
+    if not ok:
+        print("\nself-test FAILED: a planted defect went undetected", file=sys.stderr)
+        return 1
+    print("\nself-test OK — every planted defect was caught")
+    return 0
+
+
+# ------------------------------------------------- the core role vocabulary
+#
+# CONTRIBUTING.md has always said "token naming is an interface across packs".
+# Nothing enforced it, so twelve packs spoke twelve dialects: `--accent` was
+# absent from two (`field-notes` calls it `--brand`, `orchard` `--cta`) and
+# `--bg` from two more (`--paper`, `--base`). Every cross-pack document then
+# named tokens some packs do not define -- SKILL.md's dataviz handoff promised
+# `--accent-tint … --accent-deep`, a ramp NO pack defines in full.
+#
+# That is the quietest way this skill produces wrong output: an undefined custom
+# property makes the declaration invalid at computed-value time, so the property
+# falls back to its inherited or initial value with no error anywhere. The agent
+# followed the instruction exactly and the page is wrong.
+#
+# Three roles, resolvable in every pack. A pack whose own name for the role
+# differs adds an alias; it never renames or invents a colour.
+CORE_VOCABULARY = ("--bg", "--ink")
+# The accent is the same contract, declared rather than aliased: two packs name
+# it something else AND could not take the alias -- `field-notes` measures its
+# rust 5.5 from `--danger` (hard floor 10), so calling it `--accent` would make
+# it a status peer and fail the palette gate. A pack either defines `--accent`
+# or declares `/* @role accent: --X */`, and either way a cross-pack document
+# can resolve it.
+ROLE_ACCENT = re.compile(r"@role accent:\s*(--[a-z0-9-]+)")
+
+
+def validate_core_vocabulary():
+    tokens = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles" / "tokens"
+    for name in _packs():
+        css = read(tokens / f"{name}.css") or ""
+        for tok in CORE_VOCABULARY:
+            check(
+                re.search(rf"^\s*{re.escape(tok)}\s*:", css, re.M) is not None,
+                f"styles/tokens/{name}.css: no '{tok}'. The core role vocabulary is "
+                f"{', '.join(CORE_VOCABULARY)} in every pack -- add an alias to whatever "
+                f"this pack calls it, so a cross-pack document can name it truthfully",
+            )
+        m = ROLE_ACCENT.search(css)
+        declared = m.group(1) if m else "--accent"
+        check(
+            re.search(rf"^\s*{re.escape(declared)}\s*:", css, re.M) is not None,
+            f"styles/tokens/{name}.css: the accent role resolves to '{declared}', which "
+            f"is not defined here. Define --accent, or declare '@role accent: --X' "
+            f"pointing at a token that exists",
+        )
+
+
 def main():
+    if sys.argv[1:]:
+        # An unknown flag silently running the normal pass is how a suite reports
+        # green for a self-test it never ran. This script had no argv handling at
+        # all: `validate.py --self-test` printed OK and exited 0.
+        if sys.argv[1:] == ["--self-test"]:
+            return self_test()
+        print(
+            f"FAIL: unknown argument {sys.argv[1]!r} (expected --self-test or none)",
+            file=sys.stderr,
+        )
+        sys.exit(2)
     validate_manifests()
     validate_skills()
     validate_commands()
@@ -681,10 +1044,16 @@ def main():
     validate_installer_sync()
     validate_kits()
     validate_links()
+    validate_counted_claims()
+    validate_pack_enumerations()
+    validate_contract_terminology()
+    validate_contract_declaration()
+    validate_core_vocabulary()
     if failures:
         for failure in failures:
             print(f"FAIL: {failure}")
         sys.exit(1)
+    check_floor("validate.py", checks)
     print(f"OK ({checks} checks)")
 
 

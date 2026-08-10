@@ -41,4 +41,8 @@
   background-color: var(--base);
   color: var(--ink);
   color-scheme: dark;
+
+  /* Core role vocabulary — every pack resolves --bg, --ink and --accent, so a
+     cross-pack document can name them truthfully. Alias, never a new colour. */
+  --bg: var(--base); /* role alias -> --base, this pack's field */
 }

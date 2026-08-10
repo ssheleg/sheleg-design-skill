@@ -66,18 +66,29 @@ style pack in [`styles/`](./styles/):
 
 | Pack | Look | Choose for |
 |---|---|---|
-| [`instrument-console`](./styles/instrument-console.md) | near-black aerospace console, one electric-blue signal, mono telemetry | technical / systems / infra products |
-| [`editorial-luxury`](./styles/editorial-luxury.md) | warm cream + espresso ink, sage accent, Fraunces/Newsreader, dossier motifs | editorial / research / premium B2B |
-| [`workbench`](./styles/workbench.md) | quiet light/dark product UI: neutral grays, borders as elevation, one blue accent, mono data | dashboards / admin / internal & dev tools (standalone — no cinematic motion) |
-| [`briefing-room`](./styles/briefing-room.md) | dark presentation deck on a fixed 16:9 canvas: one blue hue top to bottom (OKLCH), mono slide furniture, 1-bit dithered art | investor & board decks, technical briefings, talks published as a page (standalone — slides never animate) |
-| [`atrium`](./styles/atrium.md) | warm cream daylight field with no dark bands, one terracotta accent, light serif with italic asides, fluted-glass hero over photography | consumer health, longevity & diagnostics, wellness, premium care and high-trust DTC subscription |
-| [`orchard`](./styles/orchard.md) | warm oat field of rounded slabs, sage brand + one candy-orange action, rounded geometric display, soft-3D pills built from inset light | friendly consumer biotech, DTC wellness, testing kits & supplements — approachable and credible at once |
+| [`instrument-console`](./styles/instrument-console.md) | near-black aerospace console, one electric-blue signal, mono telemetry | technical / systems / infra products · **core contract** |
+| [`editorial-luxury`](./styles/editorial-luxury.md) | warm cream + espresso ink, sage accent, Fraunces/Newsreader, dossier motifs | editorial / research / premium B2B · **core contract** |
+| [`workbench`](./styles/workbench.md) | quiet light/dark product UI: neutral grays, borders as elevation, one blue accent, mono data | dashboards / admin / internal & dev tools (standalone — no cinematic motion) · **core contract** |
+| [`briefing-room`](./styles/briefing-room.md) | dark presentation deck on a fixed 16:9 canvas: one blue hue top to bottom (OKLCH), mono slide furniture, 1-bit dithered art | investor & board decks, technical briefings, talks published as a page (standalone — slides never animate) · **core contract** |
+| [`atrium`](./styles/atrium.md) | warm cream daylight field with no dark bands, one terracotta accent, light serif with italic asides, fluted-glass hero over photography | consumer health, longevity & diagnostics, wellness, premium care and high-trust DTC subscription · **core contract** |
+| [`orchard`](./styles/orchard.md) | warm oat field of rounded slabs, sage brand + one candy-orange action, rounded geometric display, soft-3D pills built from inset light | friendly consumer biotech, DTC wellness, testing kits & supplements — approachable and credible at once · **core contract** |
 | [`field-notes`](./styles/field-notes.md) | warm green-cast paper ruled by hairlines, one rust accent, a hero that dissolves into the page, numbered mono eyebrows, crop marks, provenance colour | open-source & developer tools sold on auditability — code intelligence, provenance, evals, agent memory (standalone) |
 | [`showroom`](./styles/showroom.md) | white gallery, near-black ink, one symmetric blue, Inter Display over Inter and mono, a seven-layer shadow that frames one real product surface | product-led companies whose best argument is the application on screen — CRMs, planning tools, analytics |
 | [`blueprint`](./styles/blueprint.md) | white drawing stock, a 32px grid, ruled column edges, registration marks, one electric blue, and **no radius at all** | infrastructure sold on precision — vector databases, search and retrieval, storage and query engines |
 | [`prism`](./styles/prism.md) | white split into one static iridescent wash with a hard bottom edge, heavy grotesque display over **mono body copy**, one cyan used only as a fill | an open-source infrastructure project's front door, where the first action is a command |
 | [`maquette`](./styles/maquette.md) | near-black table, cream ink matching the cream axonometric models, mono block labels, one pale aqua that works as text, a single offset shadow | enterprise data infrastructure sold to an architecture buyer — the page's subject is a built object |
 | [`cyclorama`](./styles/cyclorama.md) | a pale field cycling through six pastel stops on a 32s loop under fixed near-black ink, monospaced typewriter serif over mono, one orange used only as a fill, a particle organ that redeploys per section | enterprise AI transformation, applied-AI services and technical consultancies — a product whose argument is a change of state, not a screenshot |
+
+**Six of the twelve are on the core contract, and it changes what you get.**
+A pack marked **core contract** does not specify `## Components`, `## Hero`,
+`## Responsive` or `## Signature element` — so per-component states, the
+opening viewport and its line ceiling, the collapse rules, and the single
+element the page is remembered by are **yours to decide**, and you say so out
+loud when you do. The other six answer all four. This asymmetry is the one
+thing about the library most likely to make you invent a value and believe you
+read it: what a core pack *does* state is measured to two decimals, and that
+precision is not evidence about the half it leaves silent. Each pack declares
+its own level on a `Contract:` line above its Register.
 
 Read the chosen pack in full before styling anything — it supplies the
 palette, type, texture, motion-token values, signature motifs, and bans.
@@ -137,7 +148,10 @@ what you announced.
   that stalls, cuts off, or jumps.
 - **A standalone pack pins its own ceiling.** `workbench` and `briefing-room`
   are not cinematic; `MOTION_INTENSITY` above 3 on either is a misread of the
-  pack, not a bold choice.
+  pack, not a bold choice. `field-notes` is standalone **by default** and may
+  opt into the cinematic layer — it carries a `## Motion flavor` section saying
+  how — so it is the one standalone pack without a hard ceiling. Read that
+  section before turning the dial up on it.
 
 ## The craft bar — what "done" means, in order
 
@@ -191,15 +205,29 @@ Do not restyle charts from the pack by hand, and do not let a chart library pick
 its own colours. The `dataviz` skill already owns chart form, colour roles and
 the runnable palette validation; a pack is the *parameter set* it consumes.
 
-| `dataviz` parameter | What the pack supplies |
-|---|---|
-| Ramps | the pack's tint/step scale (`--accent-tint` … `--accent-deep`) |
-| Categorical order | a fixed hue order drawn from the pack, assigned once, never cycled |
-| Sequential hue | the pack's single accent hue |
-| Diverging pair | two poles from the pack, with a neutral grey midpoint |
-| Status palette | `--good` / `--warning` / `--danger`, distinct from categorical |
-| Surfaces | `--bg` for light, the pack's dark field for dark |
-| Texture fill | the pack's grain or hatch, for the print and forced-colours case |
+**Read the chosen pack's own token names before you write a single `var()`.**
+This table is by *role*, not by token, because the names are not uniform across
+the twelve: only `--bg` and `--ink` resolve in every pack. The accent is
+`--accent` in ten, `--brand` in `field-notes` and `--cta` in `orchard` (each
+declares `@role accent:` in its token layer). Status colours are `--ok` /
+`--warn` in `workbench` and `instrument-console`, `--good` / `--warning` in
+five others, and **absent entirely** from `editorial-luxury` and `orchard` — a pack with no status palette does not
+get one invented for it; the chart uses categorical hues and a label.
+
+An undefined custom property does not error. `color: var(--good)` where
+`--good` is undefined makes the declaration invalid at computed-value time, so
+the property silently falls back to its inherited or initial value — which is
+why guessing a token name is the quietest way to ship a wrong chart.
+
+| `dataviz` parameter | What the pack supplies | Where to find it |
+|---|---|---|
+| Ramps | the pack's tint/step scale, where it has one | its Palette table; not every pack ships a ramp |
+| Categorical order | a fixed hue order drawn from the pack, assigned once, never cycled | Palette + Signature motifs |
+| Sequential hue | the pack's single accent hue | `--accent`, or the token its `@role accent:` names |
+| Diverging pair | two poles from the pack, with a neutral grey midpoint | Palette |
+| Status palette | the pack's status set, **if it has one**, distinct from categorical | Palette; `editorial-luxury` and `orchard` have none |
+| Surfaces | `--bg` for light, the pack's dark field for dark | resolves in all twelve |
+| Texture fill | the pack's grain or hatch, for the print and forced-colours case | Texture & surface |
 
 Two rules survive the handoff unchanged: **never a dual-axis chart**, and
 **colour follows the entity, never its rank** — a filter that changes the series

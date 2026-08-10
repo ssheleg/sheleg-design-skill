@@ -156,8 +156,16 @@ These are not stylistic preferences. Each one is a defect with a known failure.
 - **State for continuous input** — pointer position, scroll progress, magnetic
   hover, physics. Storing these in `useState` re-renders the tree on every
   movement and collapses on mobile.
-- **Animating anything but `transform`, `opacity`, `filter`, `clip-path`** —
-  `top`, `left`, `width`, `height`, `margin` trigger layout on every frame.
+- **Animating a property that triggers layout** — `top`, `left`, `width`,
+  `height`, `padding`, `margin`, `gap`, `font-size`. These re-lay-out the
+  document on every frame. Animate `transform` and `opacity`, which the
+  compositor handles alone; `filter` and `clip-path` are also safe. Paint-only
+  changes (`background-color`, `border-color`, `color`, `box-shadow`) are
+  cheaper than layout and are permitted — §2 gives them an ease and §9 treats a
+  colour change as the baseline everything else is measured against. The ban is
+  on **layout**, not on everything outside a list of four; an earlier wording
+  said "anything but `transform`, `opacity`, `filter`, `clip-path`", which
+  contradicted both of those sections.
 - **`backdrop-filter` on a scrolling container** — continuous GPU repaint. Blur
   belongs on fixed or sticky elements.
 - **Grain and noise on a scrolling container** — same reason. Put them on a

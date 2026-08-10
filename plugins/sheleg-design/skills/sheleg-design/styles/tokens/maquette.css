@@ -30,7 +30,7 @@
      warm object on a cold page. */
   --ink: #fff9f4; /* 17.49:1 on --bg */
   --ink-soft: #b3b5c1; /* 8.95:1 — secondary copy, comfortably AA */
-  --ink-faint: #8a8f98; /* 5.0:1 — captions and leader lines */
+  --ink-faint: #8a8f98; /* 5.62:1 on --bg — captions and leader lines */
   --on-ink: #151515;
 
   /* ---- Lines ------------------------------------------------------------ */

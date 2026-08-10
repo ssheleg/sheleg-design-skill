@@ -11,6 +11,15 @@
 - **Applied a second time:** 2026-08-08. The eighth pack was extracted from
   `codos.ai` and is named **`cyclorama`** for the register it encodes (a
   seamless backdrop that changes colour behind a fixed subject), not `codos`.
+- **Applied four more times:** 2026-08-09, for the 1.9.0 batch —
+  `attio.com` → **`showroom`**, `pinecone.io` → **`blueprint`**,
+  `milvus.io` → **`prism`**, `zilliz.com` → **`maquette`**. Twelve packs, twelve
+  registers, no source brand used as a name.
+- **Corrected:** 2026-08-10. The Decision section named the seventh pack
+  `lecture-hall`. That was the name on the branch this ADR was written on, and
+  that branch never merged; the pack that shipped from graphify.com is
+  **`field-notes`**. The rule is unchanged and was obeyed — only the example was
+  stale. See the note at the Decision.
 
 ## Context
 
@@ -39,7 +48,17 @@ precisely what happened.
 it was extracted from.** The source is recorded in the pack's `Origin:` line,
 which is where attribution belongs.
 
-The seventh pack is therefore **`lecture-hall`**, not `graphify`.
+The seventh pack is therefore named for its register, not `graphify`.
+
+> **Record corrected 2026-08-10.** This line originally read "*The seventh pack
+> is therefore `lecture-hall`, not `graphify`*". `lecture-hall` was the register
+> name chosen on `feat/lecture-hall-pack`, the branch this ADR was written on and
+> which never merged. The pack that actually shipped from graphify.com is
+> **`field-notes`** (`CHANGELOG.md`, 1.5.0). No `lecture-hall` pack, token layer
+> or kit has ever existed. The decision itself is untouched: the shipped name is
+> a register, not the source brand, which is what this ADR requires. A decision
+> register that names an artifact nobody can find teaches the reader to distrust
+> the register, so the fact is corrected here rather than left to be rediscovered.
 
 ## Consequences
 

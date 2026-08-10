@@ -10,6 +10,11 @@ next person cannot re-read the reference, the provenance is decorative.>
 One-paragraph identity: field, ink, THE one accent, type voice, signature
 texture.
 
+Contract: <`widened` for all thirteen headings, or `core` if this pack
+omits Components / Hero / Responsive / Signature element — in which case
+say, here, what the reader must decide themselves. A pack that is silent
+about its own silence is read as complete.>
+
 ## Register
 
 Choose this pack for <product kinds / registers>. State whether it rides

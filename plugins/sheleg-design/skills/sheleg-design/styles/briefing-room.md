@@ -7,6 +7,15 @@ public. Near-black field tinted with a single blue hue, one electric accent,
 mono slide furniture, 1-bit dithered artwork. It reads like a technical
 briefing: the room is dark, one thing is lit.
 
+Contract: core — this pack does **not** specify `## Components`, `## Hero`,
+`## Responsive` or `## Signature element`. Per-component states (hover,
+active, disabled), the opening viewport and its line ceiling, the collapse
+rules, and the single element the page is remembered by are **yours to
+decide** here, and you must say so out loud when you do. Everything the pack
+*does* state is measured; the precision of that half is not evidence about
+this half. See the board (`docs/superpowers/backlog.md`, B-001) for why the
+backfill is held rather than written from the token layer.
+
 ## Register
 
 Choose this pack for **presentations rendered as a product**: investor and
@@ -128,12 +137,12 @@ only — never body copy.
 
 ## Bans
 
-- Status carried by hue alone. Success, warning, danger and info always
-  ship with an icon or a word beside the fill — **status is never by
-  colour alone**. Measured off a production reference, several of these
-  pairs sit inside a dichromat's confusion line; re-stepping them would
-  invent a colour this pack does not own, so the second signal carries
-  the meaning instead.
+- **A status palette this pack barely has.** `briefing-room` ships one
+  semantic colour, `--good`. A deck states its bad news in words, not in a red
+  chip. If a slide needs more, that is a gap to close in this pack
+  deliberately, and status is still **never by colour alone**.
+  *(Corrected 2026-08-10: this bullet was copy-pasted into six of the twelve and
+  claimed a measurement across "several pairs" that one colour cannot form.)*
 - Bullet lists as the default slide layout; stock photography; illustrations
   with a mascot; icon grids where a diagram belongs.
 - Gradients as decoration (the veil and the one accent glow are the exceptions,

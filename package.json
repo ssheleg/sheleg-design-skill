@@ -1,7 +1,7 @@
 {
   "name": "sheleg-design-skill",
   "version": "1.9.0",
-  "description": "Design taste as an installable agent skill. Cinematic scroll-driven landing pages built on one scroll clock and layered degrade-to-calm motion, a motion doctrine that decides whether to animate before it decides how, three calibration dials, and twelve locked style packs with ready-made design tokens — instrument-console, editorial-luxury, workbench, briefing-room, atrium, orchard, field-notes, cyclorama, showroom, blueprint, prism and maquette. Colour, slop and fork-reciprocity gates run as scripts, not opinions. Works with Cursor, Claude Code and any agent that reads a SKILL.md.",
+  "description": "Design taste as an installable agent skill. Cinematic scroll-driven landing pages built on one scroll clock and layered degrade-to-calm motion, a motion doctrine that decides whether to animate before it decides how, three calibration dials, and twelve locked style packs with ready-made design tokens \u2014 instrument-console, editorial-luxury, workbench, briefing-room, atrium, orchard, field-notes, cyclorama, showroom, blueprint, prism and maquette. Colour, slop and fork-reciprocity gates run as scripts, not opinions. Works with Cursor, Claude Code and any agent that reads a SKILL.md.",
   "bin": {
     "sheleg-design-skill": "bin/cli.js"
   },
@@ -19,12 +19,12 @@
     "node": ">=16"
   },
   "scripts": {
-    "test": "python3 test/validate.py && python3 test/validate_palette.py && python3 test/sloplint.py && node --check bin/cli.js",
+    "test": "python3 test/validate.py && python3 test/validate_palette.py && python3 test/sloplint.py && node --check bin/cli.js && npm run selftest",
     "validate": "python3 test/validate.py && python3 test/validate_palette.py && python3 test/sloplint.py",
     "smoke": "node bin/cli.js --help",
     "palette": "python3 test/validate_palette.py",
     "sloplint": "python3 test/sloplint.py",
-    "selftest": "python3 test/validate_palette.py --self-test && python3 test/sloplint.py --self-test"
+    "selftest": "python3 test/validate.py --self-test && python3 test/validate_palette.py --self-test && python3 test/sloplint.py --self-test"
   },
   "keywords": [
     "skill",

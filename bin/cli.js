@@ -228,7 +228,11 @@ ${c("bold", "Default")}
 ${c("bold", "What it installs")}
   SKILL.md             the agent-facing skill (discovery + principles)
   SHELEG_DESIGN.md     the full reference (architecture, recipes, why it works)
+  MOTION_DOCTRINE.md   whether to animate at all — frequency, easing, duration,
+                       forbidden forms, the reduced-motion contract
   FIGMA_BRIDGE.md      the design↔code contract (tokens ⇄ Figma variables)
+  DESIGN_SYNC_BRIDGE.md   the Claude Design contract (what a pack sends, and
+                       what does not cross)
   AI_PRODUCT_PATTERNS.md  chat / agent / streaming surfaces (honest state)
   styles/              twelve style packs — instrument-console (dark console),
                        editorial-luxury (warm editorial), workbench (light/dark
@@ -317,12 +321,13 @@ function main() {
   const rel = path.relative(cwd, targetDir) || ".";
   console.log(
     `\n${c("green", "✓")} ${c("bold", "SHELEG Design")} installed to ${c("blue", rel + "/")}\n` +
-      `  ${c("dim", "SKILL.md")}          the agent skill\n` +
-      `  ${c("dim", "SHELEG_DESIGN.md")}  the full reference\n` +
-      `  ${c("dim", "styles/")}           style packs + token CSS (instrument-console / editorial-luxury / workbench / briefing-room / atrium / orchard / field-notes / cyclorama / showroom / blueprint / prism / maquette)\n\n` +
+      `  ${c("dim", "SKILL.md")}            the agent skill\n` +
+      `  ${c("dim", "SHELEG_DESIGN.md")}    the full reference\n` +
+      `  ${c("dim", "MOTION_DOCTRINE.md")}  whether to animate at all — read before any animation\n` +
+      `  ${c("dim", "styles/")}             style packs + token CSS (instrument-console / editorial-luxury / workbench / briefing-room / atrium / orchard / field-notes / cyclorama / showroom / blueprint / prism / maquette)\n\n` +
       `Your Cursor / Claude agent can now discover the skill and build\n` +
-      `cinematic, scroll-driven pages — or style product UI (dashboards,\n` +
-      `admin, internal tools) from the workbench pack — on its principles.\n\n` +
+      `cinematic, scroll-driven pages — or style product UI (dashboards, admin,\n` +
+      `internal tools) from a standalone pack — on its principles.\n\n` +
       `${c("dim", "Docs: " + pkg.homepage)}\n`,
   );
 }

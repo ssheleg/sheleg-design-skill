@@ -5,6 +5,15 @@ A near-black aerospace console: deep layered surfaces, hairline seams, one
 electric-blue signal accent, mono telemetry labels. The particle field and
 every instrument read as one precision device responding to the hand.
 
+Contract: core — this pack does **not** specify `## Components`, `## Hero`,
+`## Responsive` or `## Signature element`. Per-component states (hover,
+active, disabled), the opening viewport and its line ceiling, the collapse
+rules, and the single element the page is remembered by are **yours to
+decide** here, and you must say so out loud when you do. Everything the pack
+*does* state is measured; the precision of that half is not evidence about
+this half. See the board (`docs/superpowers/backlog.md`, B-001) for why the
+backfill is held rather than written from the token layer.
+
 ## Register
 
 Choose this pack for technical, systems, infra, or "operating system"

@@ -10,11 +10,22 @@ have a check that fails when it stops being true**.
 No dependencies. You need Node ≥ 16 (installer) and Python 3 (validator).
 
 ```bash
-python3 test/validate.py
+npm test        # all four gates — run this one
 ```
 
-Run it before and after every change. `npm test` runs the same thing plus a
-syntax check on the CLI.
+Run it before and after every change. It is four gates, not one:
+
+| Gate | What it decides |
+|---|---|
+| `python3 test/validate.py` | the consistency contract — manifests, version sync, the pack contract, routing, mirrors, links |
+| `python3 test/validate_palette.py` | colour: contrast floors and separation between semantics, per theme, including colour-vision deficiency |
+| `python3 test/sloplint.py` | bundle compliance and doctrine completeness |
+| `node --check bin/cli.js` | the installer parses |
+
+`npm run selftest` runs the planted-defect self-tests for the palette gate and
+the slop lint — the proof each check has been watched saying no. CI runs all of
+it on every push and PR; a green from `validate.py` alone covers one gate of
+four.
 
 ## Repo layout
 
@@ -26,7 +37,7 @@ syntax check on the CLI.
 | `cursor/rules/sheleg-design.mdc` | Self-contained condensed rule — **no relative links** (it gets copied into foreign projects alone) |
 | `bin/cli.js`, `install.sh` | The two installers; both must ship the whole bundle |
 | `test/validate.py` | Structural gate |
-| `test/scenarios.md` | Behavioral harness (T1–T7) |
+| `test/scenarios.md` | Behavioral harness (T1–T19) |
 | `templates/style-pack-template.md` | Source of the shipped pack skeleton |
 
 Edit the canonical bundle, then copy the changed file into the `.cursor/`
@@ -37,9 +48,15 @@ drift.
 
 1. Copy `templates/style-pack-template.md` to
    `plugins/sheleg-design/skills/sheleg-design/styles/<name>.md`.
-2. Fill **every** heading — Register / Palette / Type / Texture & surface /
-   Motion tokens / Signature motifs / Motion flavor (cinematic packs only) /
-   Micro-interactions / Bans / Gotchas. The validator enforces the set.
+2. Fill **every** heading. The contract is **thirteen**, plus `## Motion flavor`
+   for a cinematic pack: Register / Palette / Type / Texture & surface /
+   **Components** / **Hero** / **Responsive** / Motion tokens / Signature
+   motifs / **Signature element** / *Motion flavor (cinematic packs only)* /
+   Micro-interactions / Bans / Gotchas. The four in bold were added in 1.5.0 and
+   are the ones that decide whether an implementation drifts; the validator
+   enforces the other nine always and the four all-or-nothing, so a pack cannot
+   be half-widened. Do not ship a pack on the nine: the gate will pass it and
+   the agent that reads it will invent the rest.
 3. Author `styles/tokens/<name>.css` in the **same change**. Values come from a
    real production system or a reference you can name in the pack's `Origin:`
    line — a pack whose tokens were invented defeats the point of the repo.

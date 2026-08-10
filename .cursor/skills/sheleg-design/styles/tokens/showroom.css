@@ -25,8 +25,8 @@
 
   /* ---- Ink -------------------------------------------------------------- */
   --ink: #1c1d1f; /* 16.87:1 on --bg */
-  --ink-2: #232529; /* 15.9:1 — secondary headings */
-  --ink-soft: #505967; /* 7.7:1 — captions that must actually be read */
+  --ink-2: #232529; /* 15.35:1 on --bg — secondary headings */
+  --ink-soft: #505967; /* 7.08:1 on --bg — captions that must actually be read */
   --on-ink: #ffffff;
 
   /* [CORRECTION] The reference names #a4adba "caption-foreground" and it

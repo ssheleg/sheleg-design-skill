@@ -32,8 +32,8 @@
      quietly changes a value it claims to have measured is worse than one that
      changes it and says so. Pure black is 21:1 on the sheet; this is 17.74:1,
      and both are far above any floor that matters. */
-  --ink: #111827; /* 17.74:1 on --bg */
-  --ink-soft: #4b5563; /* 7.5:1 — secondary copy, safe as body */
+  --ink: #111827; /* 17.15:1 on --bg */
+  --ink-soft: #4b5563; /* 7.31:1 on --bg — secondary copy, safe as body */
   --ink-faint: #9ca3af; /* 2.5:1 — RULES AND MARKS ONLY, never text */
   --on-ink: #ffffff;
 

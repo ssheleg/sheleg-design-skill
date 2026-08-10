@@ -13,6 +13,8 @@ illustration, not a blurred mock behind a gradient — one real application
 surface, at real size, lit and framed, with the whole page arranged to make you
 look at it.
 
+Contract: widened — all thirteen headings.
+
 ## Register
 
 Choose this pack for a **product-led company whose best argument is the product
@@ -72,8 +74,8 @@ notation is.
 | `--surface` | `#FAFAFB` | card, popover | — |
 | `--surface-2` | `#EDEFF3` | the sunken well a specimen sits in | — |
 | `--ink` | `#1C1D1F` | body and display | **16.87:1** |
-| `--ink-2` | `#232529` | secondary headings | 15.9:1 |
-| `--ink-soft` | `#505967` | captions, meta, secondary copy | **7.7:1** |
+| `--ink-2` | `#232529` | secondary headings | 15.35:1 |
+| `--ink-soft` | `#505967` | captions, meta, secondary copy | **7.08:1** |
 | `--disabled` | `#A4ADBA` | **disabled and placeholder only** | 2.27:1 — see Gotchas |
 | `--line-weak` / `--line` / `--line-strong` | `#EDEFF3` / `#D3D8DF` / `#CAD0D9` | inside a specimen · panel edge · emphasis | rules, not text |
 | `--accent` | `#266DF0` | link **and** primary fill | **4.64:1** — and 4.64:1 under white |
@@ -82,10 +84,13 @@ notation is.
 
 Three rules carry this palette.
 
-- **The accent is symmetric, and that is why there is only one of it.** `#266DF0`
-  measures 4.64:1 as text on the field *and* 4.64:1 under white. The same blue is
-  the link, the focus ring and the filled button, with no second token and no
-  "on-dark" variant. Do not add one.
+- **One blue does every job, and that is a decision rather than a discovery.**
+  `#266DF0` measures 4.64:1 against the field, which here *is* white — so "and
+  4.64:1 under white" was the same measurement stated twice. WCAG contrast is
+  symmetric for every pair by definition; it is never evidence about one blue.
+  The reason there is one token is that 4.64:1 clears AA in the hardest role it
+  takes (text), so the link, the focus ring and the filled button can share it
+  with no "on-dark" variant. Do not add one.
 - **Status is never by colour alone.** `--good` and `--danger` separate by 33.7 at
   full colour but only **4.9 under deuteranopia**, which is the classic pair and
   the one nobody catches by looking. Every status renders as a chip containing its
@@ -283,7 +288,7 @@ narrative packs. Here the page is a room with one object in it.
   `--color-caption-foreground` `#A4ADBA` measures **2.27:1** on the reference's
   own white field — it fails WCAG at every size. This pack keeps the value,
   because the reference genuinely uses it, and renames it to what it is safe for:
-  `--disabled`. Captions take `--ink-soft` `#505967` at 7.7:1. If you port the
+  `--disabled`. Captions take `--ink-soft` `#505967` at 7.08:1. If you port the
   reference verbatim you inherit an unreadable caption class with a name that
   invites you to use it for captions.
 - **The palette is declared in `lab()` and most tooling will not round-trip it.**

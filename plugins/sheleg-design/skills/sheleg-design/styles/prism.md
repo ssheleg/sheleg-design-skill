@@ -12,6 +12,8 @@ this page is a command; the second is a benchmark. The wash is the only warmth i
 allows itself, it is spent once at the top, and below it the page is plain white
 with a monospaced argument on it.
 
+Contract: widened — all thirteen headings.
+
 ## Register
 
 Choose this pack for an **open-source infrastructure project's front door**: the
@@ -71,14 +73,14 @@ verbatim instead of transcribing this table.
 | `--bg` | `#FFFFFF` | the field | — |
 | `--surface` / `--surface-2` | `#F9F9F9` / `#F5F8FB` | card · the sunken code well | — |
 | `--ink` | `#00131A` | near-black with a cyan cast | **18.95:1** |
-| `--ink-2` | `#2E373B` | secondary headings | 13.6:1 |
+| `--ink-2` | `#2E373B` | secondary headings | 12.17:1 |
 | `--ink-soft` | `#667176` | body-safe secondary copy | **5.01:1 — clears AA** |
 | `--ink-faint` | `#9CA6B4` | furniture only, never text | 2.4:1 |
 | `--line` / `--line-strong` | `#E9E9ED` / `#D0D7DC` | card border · emphasis | — |
 | `--accent` | `#00B3FF` | **fill, rule, chart series, mark** | 2.36:1 as text ✗ |
 | `--accent-ink` | `#1493CC` | **large display text only** | 3.4:1 |
 | `--on-accent` | `#00131A` | the label on an accent fill | **8.02:1** |
-| `--wash-1` … `--wash-4` | `#FBEAF3` / `#ECE9F7` / `#E6F5EC` / `#E3F4FB` | the prism's four stops | ink ≥18:1 over all four |
+| `--wash-1` … `--wash-4` | `#FBEAF3` / `#ECE9F7` / `#E6F5EC` / `#E3F4FB` | the prism's four stops | ink 15.85–16.82:1 over the four |
 | `--good` / `--warning` / `--danger` | `#65F8C3` / `#F25C05` / `#D51F00` | status | see the rule below |
 
 Three rules carry this palette.
@@ -131,8 +133,9 @@ Monospace runs wider per character and a 75ch mono line is a scroll.
   `--wash`, four stops at `100deg`, across the hero and nothing else. Below the
   hero the page is `--bg` white. A second gradient anywhere — a section, a card,
   a button — is the fastest way to turn this pack into a generic AI landing page.
-- **The wash is low-saturation on purpose**: `--ink` measures at least 18:1 over
-  every one of its four stops, so the headline needs no scrim and no text-shadow.
+- **The wash is low-saturation on purpose**: `--ink` measures at least **15.85:1**
+  over every one of its four stops (18.95:1 on plain `--bg` white), so the
+  headline needs no scrim and no text-shadow.
   If you deepen the stops you will need a scrim, and a scrim over a wash is two
   wrongs.
 - **Elevation is flat.** A 1px border or nothing; `--ring-hairline` is the only
@@ -289,7 +292,8 @@ hero ends.
 - **The measure is 60ch, not 75ch.** Monospace runs wide; the sans habit produces
   a line that overflows on a laptop.
 - **The wash's stops are lighter than they look in a screenshot.** All four sit
-  above 18:1 against `--ink`. If you sample them from a JPEG you will get deeper
+  above 15.8:1 against `--ink` — the 18.95:1 figure belongs to plain white and
+  was carried onto the wash by hand until 1.10.0 recomputed it. If you sample them from a JPEG you will get deeper
   values, and then you will need a scrim you should not need.
 - **`--good` `#65F8C3` is a fill, not a text colour** — a mint at that lightness
   is below 2:1 on white. It marks, it does not label.

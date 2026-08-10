@@ -12,6 +12,8 @@ not a screenshot and not a diagram-as-decoration — it is an axonometric model 
 the system, labelled block by block, that the reader is meant to take apart with
 their eyes before they evaluate what it costs.
 
+Contract: widened — all thirteen headings.
+
 ## Register
 
 Choose this pack for **enterprise data infrastructure sold to an architecture
@@ -79,11 +81,11 @@ verbatim instead of transcribing this table.
 | `--surface` / `--surface-2` / `--surface-sunken` | `#1B1B1B` / `#1D1D1D` / `#131313` | panel · raised panel · a well cut into the table | ink 16.5–17.8:1 |
 | `--ink` | `#FFF9F4` | **cream, not white** | **17.49:1** |
 | `--ink-soft` | `#B3B5C1` | secondary copy | **8.95:1** |
-| `--ink-faint` | `#8A8F98` | captions, leader lines | 5.0:1 |
+| `--ink-faint` | `#8A8F98` | captions, leader lines | 5.62:1 |
 | `--line` / `--line-strong` | `#2B2B2B` / `#3A3A3A` | the hairline · emphasis | — |
 | `--accent` | `#97FDFF` | pale aqua — **works as text** | **15.49:1** |
 | `--on-accent` | `#000000` | the label on an aqua fill | **17.81:1** |
-| `--model-top` / `--model-face` / `--model-side` | `#FFF9F4` / `#FFF3D6` / `#E8DDC8` | the three faces of one cream solid | 17.5 / 16.6 / 13.9 :1 |
+| `--model-top` / `--model-face` / `--model-side` | `#FFF9F4` / `#FFF3D6` / `#E8DDC8` | the three faces of one cream solid | 17.5 / 16.6 / 13.6 :1 |
 | `--leader` | `#8A8F98` | the dotted line from a block to its label | — |
 | `--good` / `--warning` / `--danger` | `#3FCF7F` / `#FFB020` / `#FF5C5C` | status — **a pack decision, see below** | — |
 

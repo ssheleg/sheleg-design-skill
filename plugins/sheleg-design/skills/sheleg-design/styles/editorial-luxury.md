@@ -7,6 +7,15 @@ public pages; quiet and fast inside the app. Dossier/editorial DNA:
 hairline rules, eyebrow labels, stamp/seal motifs, mono data, authored
 artifact previews instead of icon cards.
 
+Contract: core — this pack does **not** specify `## Components`, `## Hero`,
+`## Responsive` or `## Signature element`. Per-component states (hover,
+active, disabled), the opening viewport and its line ceiling, the collapse
+rules, and the single element the page is remembered by are **yours to
+decide** here, and you must say so out loud when you do. Everything the pack
+*does* state is measured; the precision of that half is not evidence about
+this half. See the board (`docs/superpowers/backlog.md`, B-001) for why the
+backfill is held rather than written from the token layer.
+
 ## Register
 
 Choose this pack for warm, editorial, print-inspired products: research /
@@ -31,7 +40,7 @@ Ready-made token layer: [`tokens/editorial-luxury.css`](./tokens/editorial-luxur
 | `--ink` / `-soft` / `-faint` | `#241c14` / `#5b4f3d` / `#8a7c64` | text ramp on cream |
 | `--accent` (sage) / `-deep` | `#3f7d5f` / `#2f5e47` | THE single functional accent (links, CTA, "signal") |
 | `--accent-weak` / `-med` | `rgba(63,125,95,0.12)` / `…0.34` | accent tint fill / accent hairline |
-| `--accent-ink` | `#fbf6ec` | text **on** the accent — 6.1:1 over `--accent-deep`; large text only over `--accent` |
+| `--accent-ink` | `#fbf6ec` | text **on** the accent — 6.93:1 over `--accent-deep`; 4.52:1 over `--accent`, which clears AA by 0.02, so large text only there |
 | `--accent-on-dark` | `#9fd9bc` | the accent brightened for espresso sections |
 | `--terra` | `#b5623f` | rare editorial highlight only |
 | `--red` | `#a83a2b` | negatives ONLY (comparison "without") |
@@ -104,12 +113,13 @@ How this pack rides the SHELEG motion layer (brand register only):
 
 ## Bans
 
-- Status carried by hue alone. Success, warning, danger and info always
-  ship with an icon or a word beside the fill — **status is never by
-  colour alone**. Measured off a production reference, several of these
-  pairs sit inside a dichromat's confusion line; re-stepping them would
-  invent a colour this pack does not own, so the second signal carries
-  the meaning instead.
+- **A status palette this pack barely has.** `editorial-luxury` ships one
+  semantic colour, `--red`, for negatives only. There is no green, amber or
+  blue here to confuse with it. State is carried by a word; if a surface needs
+  a full status set, that is a gap to close in this pack deliberately, not a
+  set of hues invented at the keyboard — status is **never by colour alone**.
+  *(Corrected 2026-08-10: this bullet was copy-pasted into six of the twelve and
+  claimed a measurement across "several pairs" that one colour cannot form.)*
 - No gradient text, no side-stripe accent borders, no glassmorphism, no
   neon/outer-glow shadows, no purple.
 - No emojis in product UI; no Inter/system display fonts (Fraunces owns

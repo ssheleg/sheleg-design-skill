@@ -4,13 +4,13 @@
     "name": "ssheleg",
     "url": "https://github.com/ssheleg"
   },
-  "description": "SHELEG Design — a motion + systems methodology for cinematic, scroll-driven, particle-backed landing pages, plus pluggable visual style packs (including a light/dark product-UI pack for dashboards and tools), packaged as an agent skill.",
+  "description": "SHELEG Design — a motion + systems methodology for cinematic, scroll-driven, particle-backed landing pages, a motion doctrine that decides whether to animate before it decides how, and twelve pluggable visual style packs covering landing, product UI, presentation decks, consumer health, developer tools and data infrastructure, packaged as an agent skill.",
   "plugins": [
     {
       "name": "sheleg-design",
       "displayName": "SHELEG Design",
       "source": "./plugins/sheleg-design",
-      "description": "One scroll clock drives many cheap, layered, independently-degradable responses (WebGL particle field, 2D fallback, parallax, scrubbed instruments, progress rail) so a landing page reads as a single precision instrument — plus pluggable style packs (instrument-console, editorial-luxury, workbench for dashboards/tools). Skill + architecture reference + /sheleg-design command.",
+      "description": "One scroll clock drives many cheap, layered, independently-degradable responses (WebGL particle field, 2D fallback, parallax, scrubbed instruments, progress rail) so a landing page reads as a single precision instrument — plus twelve pluggable style packs: instrument-console, editorial-luxury, workbench, briefing-room, atrium, orchard, field-notes, cyclorama, showroom, blueprint, prism, maquette. Skill + architecture reference + motion doctrine + Figma and Claude Design bridges + /sheleg-design command.",
       "version": "1.9.0",
       "author": {
         "name": "ssheleg",

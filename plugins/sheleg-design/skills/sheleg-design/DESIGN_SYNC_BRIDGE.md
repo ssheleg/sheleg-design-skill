@@ -91,12 +91,13 @@ hierarchy, content order. It never answers what it looks like.
 
 ## 5. Live-site extraction — the pack first, the sync second
 
-Three packs in this skill were extracted from production sites by reading their live
+Most packs in this skill were extracted from production sites by reading their live
 computed styles. That is a legitimate way to *make a pack* and never a way to make a
 kit.
 
-**The order is the rule:** extraction lands in a pack first — all nine headings and a
-`tokens/<pack>.css` — and only a pack syncs. A site's raw values never reach
+**The order is the rule:** extraction lands in a pack first — **the full thirteen
+headings** (plus `## Motion flavor` if it is cinematic) and a `tokens/<pack>.css` —
+and only a pack syncs. A site's raw values never reach
 claude.ai/design, because a kit assembled straight from a scrape carries that site's
 accidents, its dead ends and its one-off hexes, and the design agent will treat every
 one of them as a decision.

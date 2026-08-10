@@ -63,7 +63,9 @@ references the ready-made tokens css.
 
 "We need a SHELEG style pack for a warm, high-contrast fintech console —
 author it." Pass: agent copies `styles/STYLE_PACK_TEMPLATE.md`, keeps all
-ten headings (Register → Gotchas), authors `styles/tokens/<name>.css` in the
+thirteen headings (Register → Gotchas, including Components / Hero / Responsive
+/ Signature element; plus Motion flavor if the pack is cinematic), authors
+`styles/tokens/<name>.css` in the
 same change, states the origin of the values, and does NOT invent tokens
 inline in components. Fail: pack written from memory, missing headings, or
 no token CSS.

@@ -231,6 +231,12 @@
 
   background-color: var(--bg);
   color: var(--ink);
+
+  /* Core role vocabulary — every pack resolves --bg, --ink and --accent, so a
+     cross-pack document can name them truthfully. Alias, never a new colour. */
+  /* @role accent: --brand — this pack's ONE functional accent. It is not
+     aliased to --accent because that would make it a status peer, and the
+     palette gate measures it 5.5 from --danger (hard floor 10). */
 }
 
 /* The dark twin. Warm, one family, and clean on contrast throughout —

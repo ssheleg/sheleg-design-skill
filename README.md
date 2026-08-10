@@ -10,7 +10,8 @@ nothing. Ask it for a dashboard and you get a different flavor of the same
 problem — invented colors, six accent hues, dark mode retrofitted later.
 
 This skill is the taste layer. It gives a coding agent **one motion
-methodology** for cinematic, scroll-driven pages and **six locked style
+methodology** for cinematic, scroll-driven pages, **a motion doctrine** that
+decides whether to animate before it decides how, and **twelve locked style
 packs** with ready-made design tokens, so what it builds reads as one system
 instead of a pile of effects.
 
@@ -34,11 +35,13 @@ and collectively cinematic. One scroll "clock" feeds a WebGL particle field, a
 rail — each an independent, degrade-to-calm layer. Nothing crossfades; things
 *redeploy*.
 
-**Style packs** — the visual identity, pluggable per project. Two of them are
-meant to be used **standalone**, with none of the motion layer: `workbench`
-(quiet light/dark product UI for dashboards, admin panels, internal and dev
-tools) and `briefing-room` (a dark 16:9 presentation deck, where the presenter's
-voice is the timeline and slides therefore never animate).
+**Style packs** — the visual identity, pluggable per project. Three of them are
+meant to be used **standalone**: `workbench` (quiet light/dark product UI for
+dashboards, admin panels, internal and dev tools) and `briefing-room` (a dark
+16:9 presentation deck, where the presenter's voice is the timeline and slides
+therefore never animate) take none of the motion layer at all; `field-notes` is
+standalone by default — its reference carries no motion library — but may opt
+into the cinematic layer, and says so in its own *Motion flavor* section.
 
 | Pack | Look | Choose for |
 |---|---|---|
@@ -123,11 +126,12 @@ skills.
 |---|---|
 | `SKILL.md` | The agent-facing skill: discovery triggers, the principles, how to apply them, quick-reference rules, common mistakes |
 | `SHELEG_DESIGN.md` | The full reference: architecture, layer-by-layer mechanics with code, the exact morph math, the DOM↔WebGL projection bridge, a build-from-scratch recipe, and why each piece works |
+| `MOTION_DOCTRINE.md` | Whether to animate at all, before how: the frequency table that kills motion on high-repetition paths, the easing tree and the `ease-in` ban, the duration ceiling, the forbidden forms, and the reduced-motion contract. `SKILL.md` marks it required before any animation |
 | `DESIGN_SYNC_BRIDGE.md` | The Claude Design contract: what a pack sends to claude.ai/design and in what shape, the rule for each of the four reference types, and the border motion does not cross |
 | `FIGMA_BRIDGE.md` | The design↔code contract: how a pack's tokens map onto Figma variable collections and modes, how to implement a design without importing raw values, and what cannot cross the border |
 | `AI_PRODUCT_PATTERNS.md` | The surfaces a model drives: the five states of a call, streaming instead of spinners, latency, provenance and uncertainty, agent confirmations, and the bans that keep it honest |
 | `styles/*.md` | The twelve style packs — palette, type, texture, motion tokens, motifs, bans, and the traps each one carries |
-| `styles/tokens/*.css` | The ready-made token layer per pack, copied verbatim instead of transcribed (workbench ships a light `:root` plus a `data-theme="dark"` twin) |
+| `styles/tokens/*.css` | The ready-made token layer per pack, copied verbatim instead of transcribed (`workbench` and `field-notes` each ship a light `:root` plus a `data-theme="dark"` twin) |
 | `styles/STYLE_PACK_TEMPLATE.md` | The pack contract as a skeleton, so a new style is authored against the same headings rather than improvised |
 
 ## What you get out of it
@@ -197,7 +201,7 @@ cd ./ds-workbench && npm install && npm run build
 then `/design-sync` in that directory, from Claude Code. Three layers cross: the
 pack's **bans** as the design system's own README, `styles.css` built from
 `tokens/<pack>.css` verbatim, and the components — a six-name spine that is
-identical in all six kits, so switching packs swaps identity rather than API,
+identical in all twelve kits, so switching packs swaps identity rather than API,
 plus each pack's signature parts. **Motion does not cross**, exactly as it does
 not cross into Figma: a kit is the static half of a pack, and saying so is what
 stops an agent inventing motion to fill the silence.
@@ -224,16 +228,29 @@ repo. Entirely optional; without it the skill works from the pack alone.
 python3 test/validate.py   # or: npm test
 ```
 
-The validator is the repo's contract, not a formality — it checks manifests and
-four-way version sync, skill/command/rule front-matter and description canon,
-the full style-pack section contract, pack ↔ `SKILL.md` ↔ CLI-help agreement,
-the bundled template against `templates/`, both installers' file lists, the
-entire `.cursor/` mirror against the plugin copy, and every relative link. CI
-runs it on each push and PR alongside a negative self-test (the validator must
-fail on a corrupted version) and installs the bundle through **both** installers,
-diffing the result against the source.
+`npm test` is **four gates**, not one, and `validate.py` alone is about a third
+of the contract:
 
-`test/scenarios.md` (T1–T7) is the behavioral harness: fresh subagents given a
+| Gate | What it decides |
+|---|---|
+| `test/validate.py` | manifests and four-way version sync · skill/command/rule front-matter and the description canon · the pack section contract (nine always, the widened four all-or-nothing) and each pack's `Contract:` declaration · the core role vocabulary (`--bg`, `--ink`, and a resolvable accent) in every token layer · every counted claim (packs, kits, scenarios, headings) · exhaustive pack enumerations in the manifests, the command, the CLI, the README and the rule · one name for the pack contract · fork reciprocity · the eleven kit checks · `install.sh`'s file list, both directions · the whole `.cursor/` mirror · every relative link |
+| `test/validate_palette.py` | contrast floors and semantic separation per theme, including three simulated dichromacies · AI-default-cluster provenance · **every contrast ratio the docs state, recomputed from the token layer** |
+| `test/sloplint.py` | the bundle obeying its own bans, in token layers, fenced examples **and the inline CSS the packs prescribe in prose** · doctrine completeness · pack origin addressability |
+| `node --check bin/cli.js` | the installer parses |
+
+Each gate ships a `--self-test` that plants a defect it must catch (`npm run
+selftest`), rejects an unknown argument instead of silently running the normal
+pass, and enforces a **ratchet floor** from `test/floors.json` — a check count
+that falls means a requirement stopped being required, which is how stripping
+a pack's four widened sections used to make two gates *quieter* and still green.
+
+One honest limit: the npx installer is checked by asserting its runtime bundle
+walker exists, not by reading a file list — it has none by design. What proves
+it ships the right files is CI, which installs the bundle through **both**
+installers and `diff -r`s the result against the source, then builds all twelve
+kits.
+
+`test/scenarios.md` (T1–T19) is the behavioral harness: fresh subagents given a
 task, checking that the skill is discovered, applied and quoted correctly.
 Re-run the affected scenarios after any edit to `SKILL.md`, a pack or the
 reference.

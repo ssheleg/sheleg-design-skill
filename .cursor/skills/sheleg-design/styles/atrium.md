@@ -8,6 +8,15 @@ light-weight serif that speaks in italic asides, and photography seen through
 unhurried — a serious clinical claim delivered without a single sterile
 surface.
 
+Contract: core — this pack does **not** specify `## Components`, `## Hero`,
+`## Responsive` or `## Signature element`. Per-component states (hover,
+active, disabled), the opening viewport and its line ceiling, the collapse
+rules, and the single element the page is remembered by are **yours to
+decide** here, and you must say so out loud when you do. Everything the pack
+*does* state is measured; the precision of that half is not evidence about
+this half. See the board (`docs/superpowers/backlog.md`, B-001) for why the
+backfill is held rather than written from the token layer.
+
 ## Register
 
 Choose this pack for **consumer health and premium care**: longevity and
@@ -106,11 +115,18 @@ faster to build and impossible to drift.
   `--surface` inside a `1px solid --line`; the border is doing the work,
   because `#F5EEE1` on `#FEF9EF` is a 1.05:1 fill difference and invisible on
   its own.
-- **Three shadows exist and each has one job**: `--shadow-panel` (the pricing /
+- **Four shadows exist and each has one job**: `--shadow-panel` (the pricing /
   footer panel, `12px 32px 80px rgba(42,43,47,.10)` — offset to the right, which
   is what makes it read as daylight rather than as a drop shadow),
   `--shadow-lift` (the one card pulled out of a table), `--shadow-cta` (a button
-  sitting on photography). A fourth shadow means one of these lost its meaning.
+  sitting on photography), and `--shadow-float` (`1.6px 1.6px 8px
+  rgba(0,0,0,.16)`) — the circular glass media control over photography, and
+  the only place it appears. **A fifth shadow means one of these lost its
+  meaning.**
+  *(Corrected 2026-08-10: this read "three shadows exist … a fourth shadow
+  means one of these lost its meaning" while `tokens/atrium.css` has always
+  defined four, so copying the token layer as the pack instructs broke the
+  pack's own rule on arrival.)*
 - **Radii: 12px for containers, `--radius-xl` (24→40px) for full-width panels,
   `999px` for everything you can click or type into** — buttons, chips, inputs,
   carousel dots, the media controls. There is no 4px or 8px button in this
@@ -220,8 +236,12 @@ the stat dividers.
   a pill progress scrubber; media swaps are `opacity .22s`. Each card owns its
   own controls — there is no global player.
 - The header is a `sticky` layer holding a translucent nav bar that is
-  transparent over the hero and gains its surface on scroll, with
-  `transition: padding-top .2s` only.
+  transparent over the hero and **gains its surface on scroll**. Transition the
+  surface only — `background-color`, `border-color` and `backdrop-filter` at
+  `--dur-slow` — and apply any padding step **without** a transition. Paint
+  properties are free; padding is not, and this bar is sticky, so a transitioned
+  `padding-top` relays out the whole document on every frame of the scroll that
+  triggers it.
 
 ## Bans
 
@@ -252,6 +272,17 @@ the stat dividers.
   without a person attached to it.
 
 ## Gotchas
+
+- **This pack prescribed a banned form for two releases, and no gate saw it.**
+  Until 1.10.0 the header rule above read `transition: padding-top .2s` — a
+  layout property, transitioned, on a `sticky` element, which is exactly what
+  `MOTION_DOCTRINE.md` §5 forbids and why. It survived because `sloplint.py`
+  only read *fenced* code blocks, and no style pack contains one: every pack
+  prescribes its CSS in inline backticks, so all twelve were unlinted. The lint
+  now reads inline spans too. If you copied this header before 1.10.0, the fix
+  is to move the transition onto `background-color` / `border-color` and let the
+  padding step land instantly — nobody perceives a 200ms padding ease, and
+  everybody perceives the jank.
 
 - **The hairline is decorative-strength, not affordance-strength.** `--line` on
   `--bg` is only **1.6:1**, well under WCAG 1.4.11's 3:1 for UI boundaries. It

@@ -7,6 +7,15 @@ orange reserved entirely for the action, a rounded geometric display face, and
 buttons made of light rather than of shadow. It reads the way good packaging
 does: friendly enough to pick up, precise enough to trust.
 
+Contract: core — this pack does **not** specify `## Components`, `## Hero`,
+`## Responsive` or `## Signature element`. Per-component states (hover,
+active, disabled), the opening viewport and its line ceiling, the collapse
+rules, and the single element the page is remembered by are **yours to
+decide** here, and you must say so out loud when you do. Everything the pack
+*does* state is measured; the precision of that half is not evidence about
+this half. See the board (`docs/superpowers/backlog.md`, B-001) for why the
+backfill is held rather than written from the token layer.
+
 ## Register
 
 Choose this pack for **approachable consumer biotech and DTC wellness**:
@@ -193,12 +202,16 @@ button.
 
 ## Bans
 
-- Status carried by hue alone. Success, warning, danger and info always
-  ship with an icon or a word beside the fill — **status is never by
-  colour alone**. Measured off a production reference, several of these
-  pairs sit inside a dichromat's confusion line; re-stepping them would
-  invent a colour this pack does not own, so the second signal carries
-  the meaning instead.
+- **A status palette this pack does not have.** `orchard` ships **no**
+  `--good` / `--warn` / `--danger` / `--info` at all: its colour vocabulary is
+  the sage brand and the one candy-orange action, and *"a fourth hue means one
+  of them stopped meaning something"* (below) is why. If a screen needs status,
+  that is a **gap to close in this pack, deliberately** — not four hues invented
+  at the keyboard. Until then, carry state with a word, an icon or a border, and **never by colour
+  alone**.
+  *(Corrected 2026-08-10: this bullet was copy-pasted into six of the twelve and told
+  the reader that "several of these pairs sit inside a dichromat's confusion
+  line", a measurement that needs at least two status colours to exist.)*
 - Orange or sage as **text**; white text on the orange CTA; white text on
   `--primary` at body size (use `--primary-deep`).
 - A true black, a cool grey, or any Framer/Tailwind default neutral

@@ -12,6 +12,8 @@ The identity in one sentence: **an engineer's notes, published.** Not a
 cockpit, not a brochure — a document with numbered sections, marked-up sources,
 and trim marks showing where it was cut.
 
+Contract: widened — all thirteen headings.
+
 ## Register
 
 Choose this pack for **an open-source or developer product sold on
@@ -164,11 +166,17 @@ figures, `--shell-max` 1920px for the hero and nav shell.
   the thesis.
 - Spacing is an 8-based ramp; the two numbers that build the page are the
   **64px section padding** and the **1px rule** between sections.
-- **Radius arithmetic when containers nest:** an inner radius is the outer
-  radius minus the padding between them, never the same value twice. A tag at
-  `--radius-sm` inside a card at `--radius-lg` with `--s3` padding is correct
-  because `12 - 12 ≈ 7.2` reads as concentric; the same `12px` on both reads as
-  two rectangles that happen to touch.
+- **Radius arithmetic when containers nest:** an inner radius is always
+  *smaller* than its outer radius, never the same value twice — the same `12px`
+  on both reads as two rectangles that happen to touch. This pack sets the step
+  **proportionally**, not by subtraction: `tokens/field-notes.css` defines
+  `--radius-sm: calc(var(--radius) * 0.6)`, so a tag at `--radius-sm` (7.2px)
+  inside a card at `--radius-lg` (12px) is correct.
+  *(Corrected 2026-08-10. This read "an inner radius is the outer radius minus
+  the padding between them … `12 - 12 ≈ 7.2`". Subtraction gives 0, not 7.2, and
+  the token layer never used subtraction — the rule, its worked example and the
+  implementation were three different systems, and an agent applying the rule as
+  written would have shipped square tags.)*
 
 ## Components
 

@@ -25,12 +25,22 @@ jobs:
         run: python3 test/validate_palette.py
       - name: Slop lint (the skill is held to its own bans)
         run: python3 test/sloplint.py
-      - name: Gate self-tests (both must be watched failing on a planted defect)
+      - name: Gate self-tests (every gate watched failing on a planted defect)
         run: |
+          python3 test/validate.py --self-test
           python3 test/validate_palette.py --self-test
           python3 test/sloplint.py --self-test
+      - name: Unknown arguments must be refused, not silently ignored
+        run: |
+          for g in validate validate_palette sloplint; do
+            if python3 "test/$g.py" --nonsense-flag; then
+              echo "$g.py accepted an unknown flag and ran the normal pass" >&2; exit 1
+            fi
+          done
       - name: CLI syntax check
         run: node --check bin/cli.js
+      - name: CLI help smoke test
+        run: npm run smoke
       - name: CLI smoke test (npx channel installs the whole bundle)
         run: |
           mkdir -p /tmp/smoke && cd /tmp/smoke

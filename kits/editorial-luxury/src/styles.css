@@ -15,7 +15,7 @@
   --accent-deep: #2f5e47;
   --accent-weak: rgba(63, 125, 95, 0.12); /* tint fill (badges, wash) */
   --accent-med: rgba(63, 125, 95, 0.34); /* hairline / border tint */
-  --accent-ink: #fbf6ec; /* text ON the accent — 6.1:1 on --accent-deep; large text only on --accent */
+  --accent-ink: #fbf6ec; /* text ON the accent — 6.93:1 on --accent-deep; 4.52:1 on --accent, AA by 0.02, so large text only there */
   --accent-on-dark: #9fd9bc;
   --terra: #b5623f;
   --red: #a83a2b;
@@ -51,8 +51,11 @@
   background-color: var(--paper);
   color: var(--ink);
   color-scheme: light;
-}
 
+  /* Core role vocabulary — every pack resolves --bg, --ink and --accent, so a
+     cross-pack document can name them truthfully. Alias, never a new colour. */
+  --bg: var(--paper); /* role alias -> --paper, this pack's field */
+}
 /* ── components ── */
 
 /* Everything below consumes var(--…) only. The token block above is the whole

@@ -40,10 +40,16 @@ jobs:
         with:
           ref: ${{ steps.t.outputs.tag }}
 
-      - name: Structural validator (gate the release on a valid repo)
+      - name: Every gate (a release gated on one of three is not gated)
         run: |
           set -eu
           python3 test/validate.py
+          python3 test/validate_palette.py
+          python3 test/sloplint.py
+          python3 test/validate.py --self-test
+          python3 test/validate_palette.py --self-test
+          python3 test/sloplint.py --self-test
+          node --check bin/cli.js
 
       - name: Tag must match the manifests (version sync)
         run: |

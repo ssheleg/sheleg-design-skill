@@ -16,10 +16,11 @@ Two halves:
      asserted by string, so deleting one fails the build instead of quietly
      shrinking the contract.
 
-Pack hygiene rides along, and ratchets: a pack authored under the widened
-contract must carry an addressable origin. Packs still on the nine-heading
-contract are not held to it -- they are held to it the moment they are
-backfilled, which is the point.
+Pack hygiene rides along, and ratchets: a pack authored under the full
+thirteen-heading contract must carry an addressable origin. Packs still on the
+always-required nine are not held to it -- they are held to it the moment they are
+backfilled, which is the point. (The contract is thirteen; "the nine" is only
+ever the always-required subset, never a contract an author may ship against.)
 
 Run `--self-test` to watch each check fail against a planted defect.
 
@@ -78,7 +79,7 @@ BANNED = (
     ),
     (
         "layout transition",
-        re.compile(r"transition\s*:[^;{}]*\b(?:width|height|top|left|margin)\b"),
+        re.compile(r"transition\s*:[^;{}]*\b(?:width|height|top|left|margin|padding|gap|font-size)\b"),
         "transitioning a layout property lays out every frame -- animate transform "
         "and opacity",
     ),
@@ -98,26 +99,89 @@ BANNED = (
 # they are held to the same bans as the token layers.
 FENCE = re.compile(r"```[a-z]*\n(.*?)```", re.S)
 
+# So are inline code spans inside a pack. Twelve of nineteen bundle markdown
+# files carry no fenced block at all -- the packs prescribe CSS in backticks,
+# in prose -- so scanning fences alone left `styles/*.md` entirely unlinted.
+# `atrium.md` prescribed `transition: padding-top .2s` on a sticky header for
+# two releases: a layout property, transitioned, on scroll, which is the exact
+# form MOTION_DOCTRINE bans, in the bundle that ships the ban.
+INLINE = re.compile(r"`([^`\n]+)`")
+
+# A doc may quote a banned form in order to ban it. Suppression is per
+# OCCURRENCE and stays on the occurrence's own line (plus the line above, for a
+# leading comment), because the old window was 120 characters of preceding text
+# for the FIRST match only -- so one decoy "never write this" disabled a ban for
+# a whole file, permanently, and every later occurrence went unexamined.
+# Watched: an identical `.real { min-height: 100vh; }` in a token layer FAILS
+# without the decoy comment and PASSED with it, while the check count dropped
+# 224 -> 223.
+NEGATION = re.compile(r"(?i)\b(?:never|not|no longer|wrong|banned|forbidden|instead of|avoid)\b")
+
+
+# A section whose whole job is to enumerate forbidden forms will contain them.
+# Scanning it is guaranteed noise, so the exemption is declared by heading --
+# narrow, greppable, and impossible to trip by accident -- rather than by
+# hoping a negation word happens to sit nearby.
+QUOTE_SECTION = re.compile(
+    r"(?im)^#{2,4}\s.*\b(?:forbidden|banned|bans|never does|anti-drift)\b.*$"
+)
+
+
+def _quote_zones(text: str) -> list[tuple[int, int]]:
+    """Character ranges of sections that exist in order to quote what is banned."""
+    zones = []
+    for m in QUOTE_SECTION.finditer(text):
+        level = len(m.group(0)) - len(m.group(0).lstrip("#"))
+        nxt = re.compile(rf"(?m)^#{{1,{level}}}\s").search(text, m.end())
+        zones.append((m.start(), nxt.start() if nxt else len(text)))
+    return zones
+
+
+def _suppressed(text: str, start: int, zones: list[tuple[int, int]]) -> bool:
+    """True when this occurrence is the doc quoting the form in order to ban it."""
+    if any(a <= start < b for a, b in zones):
+        return True
+    line_start = text.rfind("\n", 0, start) + 1
+    line_end = text.find("\n", start)
+    line_end = len(text) if line_end == -1 else line_end
+    prev_start = text.rfind("\n", 0, line_start - 1) + 1 if line_start else 0
+    return bool(NEGATION.search(text[prev_start:line_end]))
+
 
 def lint_sources():
-    targets: list[tuple[str, str]] = []
+    # (label, text, zones, allowed_ranges) -- allowed_ranges limits which offsets
+    # count, so an inline scan keeps the surrounding prose for suppression
+    # instead of being handed a synthetic file of joined spans.
+    targets: list[tuple[str, str, list, list]] = []
     for css in sorted(TOKENS.glob("*.css")):
-        targets.append((str(css.relative_to(ROOT)), read(css)))
+        targets.append((str(css.relative_to(ROOT)), read(css), [], []))
     for md in sorted(SKILL_DIR.rglob("*.md")):
         body = read(md)
+        zones = _quote_zones(body)
         for i, block in enumerate(FENCE.findall(body)):
-            targets.append((f"{md.relative_to(ROOT)} (example {i + 1})", block))
+            targets.append((f"{md.relative_to(ROOT)} (example {i + 1})", block, [], []))
+        # Inline spans that look like a CSS declaration -- a prescription an
+        # implementer will copy verbatim.
+        spans = [
+            m.span(1) for m in INLINE.finditer(body)
+            if ":" in m.group(1) or "addEventListener" in m.group(1)
+        ]
+        if spans:
+            targets.append((f"{md.relative_to(ROOT)} (inline)", body, zones, spans))
     check(bool(targets), "no bundle sources found to lint")
-    for rel, text in targets:
+    for rel, text, zones, allowed in targets:
         for label, pattern, why in BANNED:
-            hit = pattern.search(text)
-            # A doc may quote a banned form in order to ban it. The quote lives
-            # in prose, not in an example, so only fenced blocks are scanned --
-            # but a doctrine example may still show the wrong way beside the
-            # right way, marked as such.
-            if hit and re.search(r"(?i)\b(?:never|not|wrong|banned|instead of)\b", text[max(0, hit.start() - 120) : hit.start()]):
-                continue
-            check(hit is None, f"{rel}: {label} -- {why}")
+            # One check per (target, ban), ALWAYS -- never `continue`. A gate
+            # whose count falls when a defect is planted cannot be ratcheted,
+            # and this one fell twice: once per suppressed ban, once per deleted
+            # requirement.
+            live = [
+                m for m in pattern.finditer(text)
+                if (not allowed or any(a <= m.start() < b for a, b in allowed))
+                and not _suppressed(text, m.start(), zones)
+            ]
+            where = "" if not live else f":{text[: live[0].start()].count(chr(10)) + 1}"
+            check(not live, f"{rel}{where}: {label} -- {why}")
 
 
 # ------------------------------------------------------- doctrine completeness
@@ -203,7 +267,10 @@ def lint_packs():
         )
         # The ratchet: only packs on the widened contract owe an addressable
         # origin. The rest owe it the moment they are backfilled.
-        if "## Signature element" in text:
+        # A heading is a line, not a substring: the core-contract note NAMES the
+        # four sections a pack omits, which made three core packs look widened
+        # the moment they declared they were not.
+        if re.search(r"^## Signature element\s*$", text, re.M):
             origin = re.search(r"^Origin:(.*?)(?=\n\n)", text, re.S | re.M)
             check(
                 origin is not None and addressable_reference(origin.group(1)),
@@ -266,9 +333,43 @@ def self_test() -> int:
     return 0
 
 
+
+FLOORS = Path(__file__).resolve().parent / "floors.json"
+
+
+def check_floor(script: str, count: int) -> int:
+    """The ratchet. See test/floors.json for why a falling count is a defect."""
+    import json as _json
+    try:
+        floors = _json.loads(FLOORS.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        print(f"FAIL: {FLOORS.name} is missing or unreadable", file=sys.stderr)
+        return 1
+    floor = floors.get(script)
+    if floor is None:
+        print(f"FAIL: {FLOORS.name} has no floor for {script}", file=sys.stderr)
+        return 1
+    if count < floor:
+        print(
+            f"FAIL: {script} ran {count} checks, below its floor of {floor}. "
+            f"Checks do not disappear on their own. If the drop is intended, lower "
+            f"the floor in {FLOORS.name} in the same commit, with the reason.",
+            file=sys.stderr,
+        )
+        return 1
+    return 0
+
+
 def main() -> int:
-    if "--self-test" in sys.argv:
+    # argv[0] is a path; `"--self-test" in sys.argv` made any invocation path
+    # containing that substring silently run the self-test instead of the lint.
+    args = sys.argv[1:]
+    if args == ["--self-test"]:
         return self_test()
+    if args:
+        print(f"FAIL: unknown argument {args[0]!r} (expected --self-test or none)",
+              file=sys.stderr)
+        return 2
     lint_sources()
     lint_doctrine()
     lint_packs()
@@ -277,6 +378,9 @@ def main() -> int:
             print(f"FAIL: {f}")
         print(f"\n{len(failures)} failure(s) out of {checks} checks")
         return 1
+    rc = check_floor("sloplint.py", checks)
+    if rc:
+        return rc
     print(f"OK ({checks} checks)")
     return 0
 

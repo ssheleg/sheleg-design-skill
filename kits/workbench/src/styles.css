@@ -11,7 +11,7 @@
   --border-strong: #d7dce4;
   --accent: #2f6feb;
   --accent-weak: #eaf0fe;
-  --accent-ink: #ffffff; /* text ON the accent — 5.0:1 on --accent */
+  --accent-ink: #ffffff; /* text ON the accent — 4.57:1 on --accent */
   --ok: #1a7f37;
   --ok-weak: #e6f4ea;
   --warn: #9a6700;

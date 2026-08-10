@@ -15,6 +15,15 @@ build new sites on the same principles and understand *why* each piece works.
 > Where a pack's motion tokens differ from the defaults in §10, **the pack
 > wins** — it is the visual contract.
 
+> **Every `**Reference file:**` path below belongs to the reference
+> implementation, not to your project.** `src/lib/motion/scroll-progress.ts` and
+> its siblings do not exist until you write them, and none of them ships with
+> this skill — nothing here is importable. Read the paths as *one file per idea*
+> (the split is the lesson; §13 is the full map) and name them however your
+> framework does. An agent that imports from these paths because the heading
+> looked authoritative will get a build error at best and a silently missing
+> module at worst.
+
 ---
 
 ## 0. The one-paragraph thesis
@@ -81,7 +90,7 @@ file with one responsibility, reading the same clock.
 
 ## 2. Layer 1 — The scroll store (the single clock)
 
-**File:** `src/lib/motion/scroll-progress.ts`
+**Reference file:** `src/lib/motion/scroll-progress.ts`
 
 This is the heart of the system. One `requestAnimationFrame` loop (scheduled on
 the native `scroll` event) measures the page and writes a plain `state` object.
@@ -161,7 +170,7 @@ to you" signal.
 
 ## 3. Layer 2 — Smooth scroll (one position per frame)
 
-**File:** `src/components/motion/SmoothScroll.tsx`
+**Reference file:** `src/components/motion/SmoothScroll.tsx`
 
 Lenis provides inertial scrolling, but the important move is **driving Lenis
 from the GSAP ticker** rather than its own rAF:
@@ -186,7 +195,7 @@ and keep native scroll. The store still runs, so the rail and nav stay in sync.
 
 ## 4. Layer 3 — The particle field (the scene-formation engine)
 
-**File:** `src/components/webgl/SignalField.tsx`
+**Reference file:** `src/components/webgl/SignalField.tsx`
 
 This is the showpiece: 936 points (a `24 × 13` grid × 3 depth layers — a count,
 not a scene index) that narrate the page section by section. It is a single `THREE.Points` cloud whose target positions change
@@ -195,7 +204,7 @@ with the brand accent.
 
 ### 4.1 The scene registry
 
-**File:** `src/lib/motion/scenes.ts`
+**Reference file:** `src/lib/motion/scenes.ts`
 
 Each section "owns" a scene; a scene is a `{ anchor, formation, focusX, energy }`
 record. The registry is the single place that maps DOM sections to particle
@@ -329,7 +338,7 @@ scrubbed scalar, scrolling back up rewinds the whole explosion frame-for-frame.
 
 ## 5. Layer 4 — The 2D fallback (SignalMesh)
 
-**File:** `src/components/atmosphere/SignalMesh.tsx`
+**Reference file:** `src/components/atmosphere/SignalMesh.tsx`
 
 Touch and no-WebGL clients get a canvas mesh: two depth layers of grid nodes
 with hairline links and traveling pulses, plus **stroke overlays** that fade in
@@ -346,7 +355,7 @@ fidelity. Only `prefers-reduced-motion` gets a single static frame.
 
 ## 6. Layer 5 — The projection bridge (fusing DOM and WebGL)
 
-**File:** `src/lib/motion/field-sync.ts`
+**Reference file:** `src/lib/motion/field-sync.ts`
 
 The hardest problem in mixing WebGL particles with DOM labels: the camera moves,
 so you cannot hard-code where a cluster appears on screen. The bridge solves it
@@ -423,7 +432,7 @@ React renders. Act markers deep-link to their anchor sections and use the coarse
 
 ## 8. Layer 7 — Reveal primitives (act-themed entrances)
 
-**File:** `src/components/design/Reveal.tsx`
+**Reference file:** `src/components/design/Reveal.tsx`
 
 Entrances are not generic. Each narrative act has a reveal whose *physics* match
 its meaning — this is Disney's "staging" applied to a scroll page:

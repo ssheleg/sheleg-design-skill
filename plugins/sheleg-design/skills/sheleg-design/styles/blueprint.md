@@ -11,6 +11,8 @@ The identity in one sentence: **the drawing, not the render.** This page does no
 photograph the product; it draws it to tolerance, and expects the reader to be
 someone who reads drawings.
 
+Contract: widened — all thirteen headings.
+
 ## Register
 
 Choose this pack for **infrastructure sold on precision**: vector databases,
@@ -81,21 +83,26 @@ it verbatim instead of transcribing this table.
 |---|---|---|---|
 | `--bg` | `#FBFBFC` | the drawing stock | — |
 | `--surface` / `--surface-2` / `--surface-3` | `#FFFFFF` / `#F8FAFC` / `#F1F5F9` | panel · figure well · deepest step | — |
-| `--ink` | `#111827` | body and display | **17.74:1** — see the conflict below |
-| `--ink-soft` | `#4B5563` | secondary copy, safe as body | **7.5:1** |
+| `--ink` | `#111827` | body and display | **17.15:1** — see the conflict below |
+| `--ink-soft` | `#4B5563` | secondary copy, safe as body | **7.31:1** |
 | `--ink-faint` | `#9CA3AF` | **rules and marks only, never text** | 2.5:1 |
 | `--line-grid` | `#E7E5E4` | the field grid, the tick marks | — |
 | `--line` / `--line-strong` | `#E2E8F0` / `#CBD5E1` | panel edge · the ruled column boundary | — |
-| `--accent` | `#002BFF` | ink **and** fill | **7.53:1**, both directions |
+| `--accent` | `#002BFF` | ink **and** fill | **7.28:1** |
 | `--good` / `--info` / `--danger` / `--warning` | `#86AF80` / `#8BF6FF` / `#A440CE` / `#F5B900` | category marks | every pair clears both floors |
 
 Three rules carry this palette.
 
-- **One blue does everything.** `#002BFF` measures 7.53:1 as text on the stock
-  *and* 7.53:1 under white. It sets a heading word, draws a 1.5px rule, fills a
-  button, and rings a focused input — with no second token and no lighter
-  "on-dark" variant. That symmetry is unusual and it is why this pack needs no
-  accent family.
+- **One blue does everything.** `#002BFF` measures **7.28:1** on the stock
+  (`--bg` `#FBFBFC`) and 7.53:1 on pure white. It sets a heading word, draws a
+  1.5px rule, fills a button, and rings a focused input — with no second token
+  and no lighter "on-dark" variant. It carries text and fill at one value
+  because it clears 7:1 in the role that is harder — as text — not because of
+  any symmetry: WCAG contrast is symmetric for every colour pair by
+  definition, so that is never a finding about a particular blue.
+  *(Corrected 2026-08-10: this table's numbers were computed against pure
+  white while its own column is headed ``On `--bg` ``, and the stock is not
+  white. `validate_palette.py` now recomputes every stated ratio.)*
 - **These are category marks, not statuses.** The pack labels *kinds* — an index
   type, a tier, a language — not health. Every pair clears both separation floors
   under all three dichromacies, so no secondary-encoding declaration is required
@@ -115,8 +122,8 @@ So this pack ships `#111827`: the reference's **own second ink**, already used o
 than inventing one.
 
 **It is a visible substitution, not a rounding, and the pack will not pretend
-otherwise.** The two sit **21.2 apart** in OKLab. Pure black measures 21:1 on the
-stock; `#111827` measures 17.74:1. Both are far above any floor that matters, and
+otherwise.** The two sit **21.2 apart** in OKLab. Pure black measures 20.31:1 on the
+stock; `#111827` measures 17.15:1. Both are far above any floor that matters, and
 the page reads a shade softer for it. If you require the reference exactly, you
 are choosing a value this library bans, and you should do that knowingly.
 
@@ -179,7 +186,7 @@ Measured off the reference unless a row says **pack decision**.
 | Component | Resting | Hover | Active / selected | Disabled |
 |---|---|---|---|---|
 | **Primary CTA** | `--accent` fill, white label, **0 radius**, `16px 24px`, 16px/400, registration marks at its four corners | fill → a step darker over `--dur-fast` | marks switch to `--accent` at full opacity | `--surface-3` fill, `--ink-faint` label, `cursor: not-allowed` |
-| **Secondary CTA** | transparent, `1px --line-strong`, `--ink` label, same metrics and marks | border → `--ink` | — | as above |
+| **Secondary CTA** | transparent, `1px --line-strong`, `--ink` label, same metrics, **no marks** | border → `--ink` | — | as above |
 | **Panel** | `--surface`, `1px --line`, 0 radius | none | — | — |
 | **Figure well** | `--surface-2`, `1px --line`, 0 radius, the grid showing through at 40% | none | — | — |
 | **Data cell** | `--t-data` JetBrains Mono, `--ink`, right-aligned when numeric, `1px --line` bottom | row tint → `--accent-wash` | left edge 1.5px `--accent` | — |
@@ -198,7 +205,9 @@ Measured off the reference unless a row says **pack decision**.
   hero sits between them; the grid continues outside them, fainter.
 - **Left-aligned, not centred.** A caps eyebrow in `--accent` at `--t-label`, the
   display headline with **one word in `--accent`**, a two-line lede, then two
-  buttons side by side with their registration marks.
+  buttons side by side — registration marks on the **primary only**, never on
+  both (see *Signature element*: two marked buttons read as a texture rather
+  than as an argument).
 - **Line ceiling: two.** The display is 44px, which is small for a hero on
   purpose — this pack does not shout, and a third line pushes the figure below
   the fold.

@@ -13,8 +13,11 @@ claude.ai/design, so a SHELEG style pack — markdown plus a CSS token layer —
 be pushed at all without React components existing somewhere on disk. The
 2026-07-19 canon spec recorded that this skill seeds no application code and "is not
 a generator", and the README promises the installed skill is "documentation an agent
-reads"; six style packs' worth of components inside the bundle would break both, and
-would put React into every Cursor install that never asked for it.
+reads"; a style pack's worth of components inside the bundle, once per pack, would
+break both, and would put React into every Cursor install that never asked for it.
+*(Written when there were six packs; there are twelve as of 1.9.0, which only makes
+the argument larger — the count is deliberately not restated here, because a number
+in a decision record goes stale while the decision does not.)*
 
 So the kits live in `kits/<pack>/` — committed to the repo, shipped in the npm
 package (`files[]`), and **never copied into a consuming project by any installer**.
