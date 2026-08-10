@@ -4,6 +4,114 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.10.0] - 2026-08-10
+
+A fresh-eyes audit of the whole skill, and the finding is the green: at 1.9.0 all
+three gates passed — 1270 / 412 / 224 — while the skill told a reading agent
+there were six style packs, handed the chart layer a token ramp no pack defines,
+and stated thirteen contrast ratios that are wrong.
+
+Full report with every `file:line`, and the reproductions:
+[`docs/audit/2026-08-10-skill-audit.md`](./docs/audit/2026-08-10-skill-audit.md).
+
+### Fixed — what an agent was told that was not true
+
+- **The `dataviz` handoff named tokens no pack defines.** `SKILL.md` promised a
+  ramp `--accent-tint … --accent-deep`: `--accent-tint` exists in **one** pack of
+  twelve, `--accent-deep` in three, and **no pack has both**. It promised a
+  status set of `--good` / `--warning` / `--danger` that seven packs lack and
+  two have no version of at all. An undefined custom property does not error —
+  the declaration goes invalid at computed-value time and the property silently
+  inherits — so the agent follows the instruction exactly and the page is wrong.
+  The table is now written by role, and the non-uniform mappings are named.
+- **Thirteen stated contrast ratios, recomputed and corrected.** `blueprint`'s
+  ratio column is headed ``On `--bg` `` and every number in it was computed
+  against pure white (`--ink` 17.74 → **17.15**, `--accent` 7.53 → **7.28**,
+  pure black 21 → **20.31**). `prism` claimed ink "≥18:1 over all four stops"
+  three times; it is **15.85–16.82** — 18.95 is ink on plain white, carried onto
+  the wash. Also `showroom` 15.9 → **15.35** and 7.7 → **7.08**, `maquette` 5.0 →
+  **5.62** and 13.9 → **13.57**, `editorial-luxury` 6.1 → **6.93**, `workbench`
+  5.0 → **4.57**. None crossed a floor; all were presented as measured.
+- **Two packs justified one accent by a "symmetry" that is a mathematical
+  identity.** WCAG contrast is symmetric for every pair by definition. In
+  `showroom`, whose field is white, the sentence stated one measurement twice; in
+  `blueprint`, whose field is not, the two directions genuinely differ and the
+  pack asserted one number for both.
+- **`atrium` prescribed `transition: padding-top .2s` on a sticky header** — a
+  layout property, transitioned, on scroll: the exact form `MOTION_DOCTRINE.md`
+  forbids, shipped inside the bundle that ships the ban.
+- **`field-notes`' radius rule, its worked example and its token layer were three
+  different systems.** "Subtract the padding … `12 - 12 ≈ 7.2`" — subtraction
+  gives 0; the token layer uses `calc(var(--radius) * 0.6)`.
+- **`blueprint`'s Components and Hero instructed the violation its own Signature
+  element section names** (registration marks on both CTAs). `test/scenarios.md`
+  recorded this as "fixed in the same run"; only half of it had landed.
+- **`atrium` said three shadows exist**; its token layer defines four.
+- **The colour-blindness ban was copy-pasted into six packs**, asserting a
+  measurement across "several pairs" in packs owning one status colour or none —
+  and naming four states as if the pack supplied them, which is an invitation to
+  invent a hue. Rewritten for `orchard`, `editorial-luxury` and `briefing-room`.
+- **`MOTION_DOCTRINE.md` §5 over-banned**, forbidding everything outside four
+  properties while §2 prescribes an ease for colour changes. The ban is on
+  layout, which is what its own rationale says.
+- **ADR-0001 named a pack that never existed** (`lecture-hall`; the pack that
+  shipped from graphify.com is `field-notes`). The decision stands; the example
+  was written on a branch that never merged.
+
+### Added — the half-library nobody declared
+
+Six of twelve packs carry `## Components`, `## Hero`, `## Responsive` and
+`## Signature element`; six do not, and nothing said which. Every pack now
+declares **`Contract: core` or `Contract: widened`** above its Register, a core
+pack states what it leaves the reader to decide, the `SKILL.md` routing table
+marks it, and a check enforces the declaration against the headings present.
+
+### Added — six checks, each watched failing on a planted defect
+
+Counted claims (whitespace-normalised: the README's "six locked style packs" was
+split across a line break) · exhaustive pack enumerations in both manifests, the
+slash command, the CLI, the README and the Cursor rule · one name for the pack
+contract · the `Contract:` declaration · the core role vocabulary (`--bg`,
+`--ink`, and an accent role every pack resolves) · and **every stated contrast
+ratio, recomputed from the token layer**.
+
+The ratio check is scoped to claims whose base the document declares — a column
+headed ``On `--bg` ``, an `on/over --token` phrase, or an `--on-X` name. A first
+draft that inferred the partner produced 22 false positives out of 40.
+
+### Fixed — three gates that could not fail
+
+- **Deleting requirements made two gates quieter, and green.** Stripping a pack's
+  four widened headings took `validate.py` 1270 → 1269 and `sloplint.py` 224 →
+  223, both exit 0. **Ratchet floors** now live in `test/floors.json` and are
+  enforced by all three.
+- **One decoy comment disabled a slop-lint ban for a whole file, permanently.**
+  The check took the first match only and `continue`d past a nearby negation
+  word, so the counter fell and later occurrences went unexamined. Suppression is
+  now per occurrence, and ban-quoting sections are exempted by heading.
+- **`validate.py --self-test` printed OK for a self-test that did not exist** —
+  the same defect the 2026-08-05 retrospective recorded in `validate_palette.py`.
+  All three scripts now exit 2 on an unknown argument, and `validate.py` has a
+  real self-test: six planted defects, run against a copy of the tree.
+- **The slop lint read only fenced code blocks**, and no style pack contains one —
+  so all twelve packs, `SKILL.md`, both bridges and the AI patterns were never
+  linted. It now reads the inline CSS the packs prescribe in prose.
+- **`npm test` and both workflows now run every gate and every self-test.** The
+  release path was gated on one of three.
+
+### Fixed — stale counts and reach
+
+"six locked style packs" and "all six kits" (twelve), "T1–T7" (T1–T19), "Three
+packs extracted" (eight), the pack contract called nine / ten / thirteen in five
+places at once — one of which told an author to ship nine headings, which the
+gate then passed. `plugin.json`, `marketplace.json` and the `/sheleg-design`
+command named three packs of twelve, so nine could not be asked for by name.
+`MOTION_DOCTRINE.md`, marked REQUIRED, appeared on no install surface: it is now
+in the README table, the CLI help and banner, the slash command, and the Cursor
+rule — which gains the whole doctrine in condensed form.
+
+Gates: **1364 / 469 / 320**, from 1270 / 412 / 224.
+
 ## [1.9.0] - 2026-08-09
 
 Four style packs, taking the library from eight to twelve — and a fix to the

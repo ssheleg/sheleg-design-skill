@@ -20,7 +20,9 @@ decision home. A run that settles something records it as an ADR.
 | Fact | Its single home | Everywhere else must derive, never restate |
 |---|---|---|
 | Style-pack token values | `plugins/sheleg-design/skills/sheleg-design/styles/tokens/<pack>.css` | pack markdown tables are documentation; kit `styles.css` copies the file verbatim |
-| Style-pack rules (palette/type/motifs/bans) | `styles/<pack>.md` (thirteen-heading contract, plus `## Motion flavor` for a cinematic pack) | `SKILL.md` table routes to it; README summarises in one line |
+| Style-pack rules (palette/type/motifs/bans) | `styles/<pack>.md` (the thirteen-heading contract, plus `## Motion flavor` for a cinematic pack; a pack still on the always-required nine declares `Contract: core` and says what it leaves undecided) | `SKILL.md` table routes to it and marks the core packs; README summarises in one line |
+| **A stated contrast ratio** | the token layer — it is derived, not authored | `validate_stated_ratios()` recomputes every claim whose base the document declares |
+| **A count of anything** (packs, kits, scenarios, headings) | derived at check time from the directory | `validate_counted_claims()` |
 | The motion methodology | `SHELEG_DESIGN.md` | `SKILL.md` states the five principles only |
 | The Figma contract | `FIGMA_BRIDGE.md` | — |
 | The Claude Design contract | `DESIGN_SYNC_BRIDGE.md` | — |
@@ -33,12 +35,12 @@ decision home. A run that settles something records it as an ADR.
 | Change | Obliges | Proof |
 |---|---|---|
 | **New file in the skill bundle** | add to `install.sh`'s `for f in …` list · mirror into `.cursor/skills/sheleg-design/` · link it from `SKILL.md` if it is a companion doc · add it to the README install table | `python3 test/validate.py` |
-| **New style pack** | `styles/<pack>.md` with **all thirteen headings** (plus `## Motion flavor` for a cinematic pack) · `styles/tokens/<pack>.css` · the `.cursor/` mirror · **`install.sh`'s file list** · route from the `SKILL.md` pack table · name it in `bin/cli.js` output · README pack table · name it in a `cursor/rules/*.mdc` · **a kit under `kits/<pack>/`** · a routing scenario **with its negative branch** · CHANGELOG | `python3 test/validate.py` |
-| **New kit component** | the shared spine stays identical across **every** kit — the count is derived, never typed, in both `validate.py` and the CI matrix · no raw color literal outside the token block · `.prompt.md` beside it | `python3 test/validate.py` |
+| **New style pack** | `styles/<pack>.md` with **all thirteen headings** and a `Contract:` line (plus `## Motion flavor` for a cinematic pack) · `styles/tokens/<pack>.css` · the `.cursor/` mirror · **`install.sh`'s file list** · route from the `SKILL.md` pack table · name it in `bin/cli.js` output · README pack table · name it in a `cursor/rules/*.mdc` · **a kit under `kits/<pack>/`** · a routing scenario **with its negative branch** · CHANGELOG | `python3 test/validate.py` |
+| **New kit component** | the shared spine stays identical across **every** kit — the count is derived, never typed, in both `validate.py` and the CI matrix · no raw color literal outside the token block · **`<Component>.md` beside it, with a `category:` from the taxonomy** | `python3 test/validate.py` |
 | **Any release** | four-way version sync · CHANGELOG entry · tag · GitHub release · `npm publish` · refresh local installs | `test/validate.py` + `npm view sheleg-design-skill version` + `gh run list` |
-| **Behavior an agent must follow** | a scenario in `test/scenarios.md` | the scenario run by a fresh subagent |
+| **Behavior an agent must follow** | a scenario in `test/scenarios.md` | the scenario run by a fresh subagent — **`validate.py` does not read that file**, so this row's proof is a person running it, and the result is stamped with a commit |
 | **A fork between two packs** | the pack it forks against gains the mirror clause, as a markdown link in both directions | `validate_fork_reciprocity()` in `test/validate.py` |
-| **A settled decision** | an ADR in `docs/adr/`; if it overrides an earlier record, that record's status line says so | link check in `test/validate.py` |
+| **A settled decision** | an ADR in `docs/adr/`; if it overrides an earlier record, that record's status line says so | reviewed by hand — `validate.py` resolves relative links but has no ADR status logic. ADR-0001 named a pack that never shipped for four days without any check noticing |
 
 ## The gate
 
@@ -46,18 +48,33 @@ decision home. A run that settles something records it as an ADR.
 python3 test/validate.py
 ```
 
-`test/validate.py` **is** the documentation gate for this repo — there is no second
-`check-docs.sh`, and it is no longer the only gate: `validate_palette.py` and
-`sloplint.py` joined it in 1.6.0 and CI runs all three.
+```bash
+npm test      # all four gates and all three self-tests — this is the gate
+```
 
-Ratchet floors, **measured on `feat/four-packs-v1.9.0` 2026-08-09, not restated**:
-`validate.py` **1252** · `validate_palette.py` **412** · `sloplint.py` **224**.
-Each may rise, never fall. They were 876 / 305 / 192 at `20797ef` a day earlier,
-787 / 269 / 184 at `97e7f63`, and 272 the day before that — a number that goes stale this fast is
-exactly why it carries the commit it was measured at.
-CI (`.github/workflows/validate.yml`) runs it on every
-push and PR, together with a negative self-test that corrupts a version and requires
-the validator to fail.
+`test/validate.py` is one of four, and about a third of the contract.
+`validate_palette.py` and `sloplint.py` joined it in 1.6.0; `node --check
+bin/cli.js` and the three `--self-test` runs joined `npm test` in 1.10.0, because
+until then a developer running `npm test` never watched any gate say no.
+
+**Ratchet floors are enforced, not asserted.** They live in
+[`test/floors.json`](../test/floors.json) and every gate compares its own count
+before printing OK. Until 1.10.0 "each may rise, never fall" was a sentence in
+this file and nothing else — and it mattered: stripping a pack's four widened
+headings took `validate.py` 1270 → 1269 and `sloplint.py` 224 → 223, **both still
+exit 0**. Deleting a requirement made the gates quieter.
+
+The floors also have to be *measured*, not restated. This file claimed 1252 for
+`validate.py` on 2026-08-09; the actual count on that commit was **1270**, and
+the branch it named no longer exists, so it could not be re-derived. Read the
+floor from `floors.json`; it is the number a machine wrote.
+
+CI (`.github/workflows/validate.yml`) runs all four gates, all three self-tests,
+a negative test that corrupts a version and requires a failure, a check that each
+gate refuses an unknown argument, both installers with a `diff -r` against the
+source, `claude plugin validate --strict`, and a twelve-kit build matrix.
+`release.yml` runs every gate too — until 1.10.0 it gated a publish on one of
+three.
 
 ## Shared state
 

@@ -225,12 +225,12 @@ including both the pack exists to prevent: an accent eyebrow at 1.71:1, and then
 **not** drift to the newer warm pack; the over-generalisation branch did not
 fire.
 
-T15b also reported a contradiction inside `field-notes`:
-`tokens/field-notes.css:114` annotates `--deep` as a "full-bleed dark band"
-while `field-notes.md:348` bans "a dark band with a hard edge" below the hero.
-Reproduced against both files and logged for the operator rather than fixed
-here — editing a shipped token layer on a delegated report is the failure
-standing instruction 8 exists to prevent.
+T15b also reported a contradiction inside `field-notes`: the token layer
+annotated `--deep` as a "full-bleed dark band" while the Bans forbid "a dark
+band with a hard edge" below the hero. Reproduced against both files, then
+**fixed in `20797ef`** — nothing consumed `--deep` either way, so the annotation
+was simply wrong. (The line numbers this note originally cited have since moved;
+a citation without a commit does not survive the file it points into.)
 
 ## T16 — Product-led register, and the fork against the tool itself
 
@@ -288,8 +288,12 @@ inventing one".
 
 T17a also surfaced a real contradiction **inside `blueprint`**: the Signature
 element said registration marks go on one thing per viewport while Components and
-Hero gave them to both CTAs. Reproduced and fixed in the same run — marks belong
-to the primary only.
+Hero gave them to both CTAs. Recorded here as "fixed in the same run" — but only
+the Signature element half landed. The Components row still read "same metrics
+and marks" and the Hero recipe still put marks on both buttons until the
+2026-08-10 audit found them. **A fix is verified by the artifact changing, not by
+the note saying it changed** (standing instruction 9, pointed at a fix rather
+than at a refresh).
 
 ## T18 — Project front door, and the fork against the moving field
 
