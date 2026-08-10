@@ -4,6 +4,68 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.11.0] - 2026-08-10
+
+The bundle now stands on its own. A repeat audit ran the skill the way an agent
+actually uses it — six application scenarios in fresh contexts, not routing
+questions — and found the same defect class three times: **a rule inside the
+shipped bundle instructing the reader to use something only the repository has.**
+1.10.0 had fixed one instance of this and swept the literal form (a repo path in
+backticks, now zero) without sweeping the class.
+
+### Fixed — the class, in its three shipped shapes
+
+- **The bundle carries its own version.** `SKILL.md` front-matter gains
+  `metadata.version`, making version sync ×5. `DESIGN_SYNC_BRIDGE.md` §7 has told
+  readers since 1.6.0 to record the pack version in the synced project; there was
+  no version anywhere in the bundle to read, only historical mentions in two packs
+  ("until 1.10.0 the header rule read…"). A rule whose input does not ship is not
+  a rule.
+- **The spine is named.** §1 built its "names are the interface" argument on "the
+  same six component names" and named none of them. They are now stated —
+  `Button`, `Card`, `Chip`, `Stat`, `Heading`, `Rule` — so a delivered kit can be
+  checked against the claim. A test agent refused to guess them and said asserting
+  them would be "inventing a value and believing I read it".
+- **Pack-authoring rules ship with the template.** *Never ship on the nine*, *no
+  addressable reference, no pack*, *a derived value is marked derived where it is
+  declared*, and *the three gates are what done means* lived in `CONTRIBUTING.md`,
+  which no install contains. They are now in `styles/STYLE_PACK_TEMPLATE.md`,
+  which does.
+- **`validate_bundle_self_sufficiency()`** gates all three shapes, each watched
+  failing on a planted defect *and* discriminated by its own message. It checks
+  the three forms that have actually shipped and says so — it is not a general
+  proof, so a fourth instance has to be a new shape.
+
+### Fixed — two files that disagreed, and two constants with no value
+
+- **The scrub recipe now obeys the doctrine it contradicted.** `SHELEG_DESIGN.md`
+  §9 shipped `useLayoutEffect` with hand-rolled teardown; `MOTION_DOCTRINE.md` §6
+  names that exact pattern as where leaked triggers and doubled animations come
+  from. Neither file acknowledged the other, and an agent reading only the
+  reference copied the banned shape into a junior-ready plan.
+- **`arcAmp` and `drop` are declared tuning constants.** Both appeared inside
+  formulas with no value anywhere in the skill, which reads as an omission rather
+  than a decision. Neither is invented here; the rule is to tune, then record the
+  value beside the formation rather than inline.
+
+### Changed
+
+- **The entry point is back under its disclosure budget** — 6157 → 4856 tokens.
+  Scene depth and the `dataviz` handoff moved to `SURFACE_COMPOSITION.md` with
+  stated load triggers; the quick-reference table moved next to the mechanisms it
+  summarises in `SHELEG_DESIGN.md`. No doctrine was deleted.
+- **The front-matter budget was measuring the wrong thing, and fixing it raises
+  the total ceiling from 1024 to 1280.** That is a loosening, named as one. The
+  single 1024 cap over the whole block conflated the spec's limit on
+  `description` with the bookkeeping keys beside it, leaving the check stricter
+  than the standard it claimed to implement — so a 24-character version key
+  consumed the description's headroom and would have blocked the widening board
+  row B-006 asks for. Now two budgets: `description` ≤ 1024 (the spec),
+  everything else ≤ 256, against 74 characters used today.
+- **Six scenario results recorded** with their commit, closing most of board row
+  B-005. The harness had 20 scenarios and 7 recorded results, so the repository
+  could not answer "do the usage scenarios work" from its own records.
+
 ## [1.10.0] - 2026-08-10
 
 A fresh-eyes audit of the whole skill, and the finding is the green: at 1.9.0 all

@@ -58,6 +58,13 @@ The pack is the primary reference type; the other three feed it rather than bypa
 - **Names are the interface.** The spine — the same six component names and props in
   every pack — exists so switching packs swaps identity, not API. This is the
   component-level form of a lesson the token layer already learned the hard way.
+  The six are `Button`, `Card`, `Chip`, `Stat`, `Heading` and `Rule`, and their
+  `*Props` bodies are byte-identical across all twelve kits once comments are
+  stripped. Everything a kit ships beyond them is that pack's signature —
+  `Specimen` in `showroom`, `RegistrationMarks` in `blueprint`, `ModelBlock` in
+  `maquette` — and belongs to it alone. Until 1.11.0 this paragraph asserted the
+  count and named none of the six, which left a reader with a number and no way
+  to check a delivered kit against it.
 
 ## 3. Figma — one border at a time
 
@@ -117,7 +124,14 @@ and it is a contract rather than a gap:
   half of a pack**, and saying so out loud is what stops an agent from inventing
   motion to fill the silence.
 - **Reduced-motion branches have nothing to attach to** once motion is gone, so they
-  do not ship either. They are not missing; they are meaningless there.
+  do not ship either. They are not missing; they are meaningless there. **This
+  governs components, not the token layer.** §1 requires `tokens/<pack>.css` be
+  copied byte for byte, and several packs' token layers carry a
+  `@media (prefers-reduced-motion: reduce)` block that zeroes their duration
+  tokens — so a verbatim copy ships one, and that is correct. Verbatim wins,
+  because it is the half a machine can check; this bullet is about the branches a
+  component would otherwise carry. Stated because a reader following both rules
+  literally found them in collision and had to adjudicate alone.
 - **Anything a component cannot render itself.** If a preview needs markup the
   component does not produce, the fix is the composition — props, children, a
   provider — never a hand-written imitation.

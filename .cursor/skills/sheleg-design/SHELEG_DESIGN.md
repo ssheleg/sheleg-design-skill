@@ -291,6 +291,22 @@ if (m > 0.001 && m < 0.999) {
 > flying to new posts (alive, physical). It is the single biggest reason the
 > field reads as premium rather than as a screensaver.
 
+**`arcAmp` is a tuning constant and this file does not set it.** Every other
+number in the morph — `HOLD` 0.82, the chase 0.028, the `±0.04` cap, `spread`
+0.5 — is measured off the reference implementation and can be copied. `arcAmp`
+is the one that has to be looked at, because its right value depends on your
+formation scale: too small and the swarm slides in straight lines, which is the
+failure this whole mechanism exists to avoid; too large and it wobbles. Start
+around `0.35 × the median inter-point distance`, watch a mid-morph frame, and
+**record the value you land on in `scenes.ts` beside the formation, not inline
+in the loop.** The same holds for `drop` in the chart-participation branch (§11),
+which sets how far an unassembled point sits below the curve.
+
+Saying this out loud is the point: until 1.11.0 both constants appeared inside
+formulas with no value anywhere in the skill, which reads as an omission rather
+than as a decision, and an agent that notices the gap has no way to tell whether
+it is supposed to measure something or choose something.
+
 ### 4.4 Formation profiles (the glow programs)
 
 A `PROFILES` table gives each formation a render character — how lattice-like it
@@ -462,11 +478,11 @@ pinned three-step flow, the why-now chart) use one repeatable GSAP recipe.
 **Files:** `WhyNowChart.tsx`, `EcosystemDiagram.tsx`, `PinnedSteps.tsx`, `gsap-client.ts`
 
 ```ts
+import { useGSAP } from "@gsap/react";           // MOTION_DOCTRINE.md §6 — not a bare effect
 import { STAGGER } from "@/lib/motion/tokens";   // §10 — never a literal here
 
-useLayoutEffect(() => {
+useGSAP(() => {
   if (shouldReduceScenes()) return;          // static, fully-drawn fallback
-  let teardown;
   loadGsap().then(({ gsap, ScrollTrigger }) => {   // lazy: GSAP never in initial bundle
     const tl = gsap.timeline({
       defaults: { ease: "none" },             // ease: 'none' is mandatory with scrub
@@ -475,22 +491,28 @@ useLayoutEffect(() => {
     tl.fromTo(lines,
       { strokeDasharray: 1, strokeDashoffset: 1 },   // pathLength={1} normalizes every path
       { strokeDashoffset: 0, stagger: STAGGER });     // → one variable draws them all
-    teardown = () => { tl.scrollTrigger?.kill(); tl.kill(); };  // ALWAYS kill on cleanup
     ScrollTrigger.refresh();
   });
-  return () => teardown?.();
-}, []);
+}, { scope: container });   // the context reverts on unmount: timelines and triggers die with it
 ```
 
 The non-negotiables (each learned from a real bug here):
 
+- **`useGSAP` from `@gsap/react`, never a bare `useEffect`/`useLayoutEffect`.**
+  It reverts the GSAP context on unmount, which kills the timeline *and* its
+  ScrollTrigger for you. Until 1.11.0 this recipe shipped a hand-rolled
+  `useLayoutEffect` with a manual `teardown` — the exact pattern
+  [`MOTION_DOCTRINE.md`](./MOTION_DOCTRINE.md) §6 names as where leaked triggers
+  and doubled animations come from. Two files, one job, opposite instructions,
+  and neither acknowledged the other; a reader who opened only this one copied
+  the banned shape. Outside React, keep the manual `tl.scrollTrigger?.kill();
+  tl.kill()` in whatever teardown the framework gives you — the rule is that
+  something must kill both, not that the hook is magic.
 - **Lazy-load GSAP** (`loadGsap()`), register the plugin once, keep it out of the
   initial bundle.
 - **`ease: 'none'`** on scrubbed tweens — easing fights the scrub.
 - **`pathLength={1}`** on SVG paths so a single 0..1 variable can draw any path,
   regardless of its real length.
-- **Always `tl.kill()` + `scrollTrigger.kill()`** in cleanup — un-killed
-  timelines leak and double up on fast-refresh / route changes.
 - **Reduced-motion renders the final drawn state** with no trigger attached.
 
 ---
@@ -664,6 +686,19 @@ Adapt the names to your framework's conventions.
 | Epilogue runway | `src/components/sections/FinaleSection.tsx` |
 | Scrubbed instruments (examples) | `WhyNowChart.tsx`, `EcosystemDiagram.tsx`, `PinnedSteps.tsx` |
 | CSS tokens + motion styles | `src/app/motion.css` |
+
+## Quick reference — each rule, and the failure it prevents
+
+| Rule | Prevents |
+|---|---|
+| One scroll store, two read paths (live getter + coarse subscription) | layers drifting out of phase; render storms |
+| Long hold, short smoothstepped morph tail | nervous, constantly-moving page |
+| Per-point phase-staggered, perpendicular-arc migration | "screensaver" particle look |
+| Smooth scroll driven from the animation library's ticker | scrub and field on different inertia |
+| Lazy-load GSAP/WebGL; mount WebGL one frame after hydration | heavy initial bundle, hydration jank |
+| One ease + tiny duration/stagger token set site-wide | motion reading as many systems, not one |
+| Scrubbed SVG: `ease: 'none'`, `pathLength={1}`, kill timelines on cleanup | easing fighting scrub; leaked triggers |
+| Animate only `transform`/`opacity` | layout thrash |
 
 ---
 

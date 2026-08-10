@@ -148,10 +148,33 @@ def check_description_canon(rel, path, desc: str) -> None:
         bool(re.search(r"[а-яё]", desc, re.I)),
         f"{rel}/SKILL.md: description must carry Russian trigger aliases beside the English ones (canon)",
     )
-    raw = raw_front_matter(path)
+    # Two budgets, not one -- and this RAISES the total ceiling from 1024 to
+    # 1280, which is a loosening and is recorded as one rather than as a tidy-up.
+    #
+    # The old check capped the WHOLE front-matter at 1024 and called it canon.
+    # 1024 is the Agent Skills limit on `description` alone, so the old check was
+    # stricter than the standard it claimed to implement, and it conflated the
+    # number that governs discovery with the bookkeeping keys beside it. The
+    # conflation had a cost the moment it was tested: a 24-character
+    # `metadata.version` consumed the description's remaining headroom, and board
+    # row B-006 -- widen the description, which today has no trigger for decks,
+    # the motion doctrine or design-sync -- would have been blocked by a ceiling
+    # that does not exist upstream.
+    #
+    # The 256 is a budget, not a measurement: `name` + `license` + `metadata`
+    # is 74 characters today, so it is roughly three times the current need and
+    # will fail long before front-matter becomes a place to write prose.
     check(
-        len(raw) <= 1024,
-        f"{rel}/SKILL.md: front-matter is {len(raw)} chars, must be under 1024 (canon)",
+        len(desc) <= 1024,
+        f"{rel}/SKILL.md: description is {len(desc)} chars, the spec limit is 1024",
+    )
+    raw = raw_front_matter(path)
+    overhead = len(raw) - len(desc)
+    check(
+        overhead <= 256,
+        f"{rel}/SKILL.md: front-matter carries {overhead} chars besides the "
+        "description, budget is 256 -- everything here is read every session, so "
+        "keys other than the description stay bookkeeping-sized",
     )
 
 
@@ -201,6 +224,37 @@ def changelog_version():
     return match.group(1) if match else None
 
 
+def skill_metadata_version():
+    """The version the SHIPPED bundle carries, read from `metadata.version`.
+
+    Parsed with an explicit nested pattern rather than through front_matter():
+    that parser is flat, so it would also accept a bare top-level `version:`
+    key -- which is not a legal Agent Skills front-matter key and would pass
+    here while failing an install-time validator.
+
+    The bundle exists without the repo. `DESIGN_SYNC_BRIDGE.md` §7 tells the
+    reader to record the pack version in the synced project so staleness can be
+    answered without guessing, and until 1.11.0 there was no version anywhere in
+    the bundle to read: the only version strings were historical ("until 1.10.0
+    the header rule read ..."). A rule whose input does not ship is not a rule.
+    """
+    rel = f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md"
+    text = read(ROOT / rel) or ""
+    head = text.split("\n---", 1)[0] if text.startswith("---") else ""
+    match = re.search(
+        r"^metadata:[ \t]*\n(?:[ \t]+[^\n]*\n)*?[ \t]+version:[ \t]*(\d+\.\d+\.\d+)[ \t]*$",
+        head,
+        re.MULTILINE,
+    )
+    check(
+        match is not None,
+        f"{rel}: front-matter must carry a nested 'metadata.version' -- the "
+        "bundle ships without the repo, so a rule that says to record the pack "
+        "version has nothing to read",
+    )
+    return match.group(1) if match else None
+
+
 def validate_manifests():
     marketplace = load_json(
         ".claude-plugin/marketplace.json",
@@ -244,21 +298,27 @@ def validate_manifests():
                 (ROOT / source).is_dir(),
                 f"marketplace.json: plugin source '{source}' is not a directory",
             )
-            if plugin and package and changelog:
+            skill_version = skill_metadata_version()
+            if plugin and package and changelog and skill_version:
+                # Five homes since 1.11.0. The fifth is the only one that ships
+                # inside the bundle, which is the whole reason it exists.
                 versions = {
                     entry.get("version"),
                     plugin.get("version"),
                     package.get("version"),
                     changelog,
+                    skill_version,
                 }
                 check(
                     len(versions) == 1,
-                    "version mismatch: marketplace=%s plugin=%s package=%s changelog=%s"
+                    "version mismatch: marketplace=%s plugin=%s package=%s "
+                    "changelog=%s SKILL.md=%s"
                     % (
                         entry.get("version"),
                         plugin.get("version"),
                         package.get("version"),
                         changelog,
+                        skill_version,
                     ),
                 )
 
@@ -932,9 +992,28 @@ PLANTS = (
         lambda t: re.sub(r"^Contract: .*\n", "", t, count=1, flags=re.M),
     ),
     (
-        "a version out of four-way sync",
+        "a version out of five-way sync",
         "package.json",
         lambda t: t.replace('"version": "', '"version": "9.', 1),
+    ),
+    (
+        "the bundle's own version removed, leaving §7's rule with nothing to read",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md",
+        lambda t: re.sub(r"^metadata:\n  version: .*\n", "", t, count=1, flags=re.M),
+    ),
+    (
+        "a repo-only path offered to a reader who has no repo",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/DESIGN_SYNC_BRIDGE.md",
+        lambda t: t.replace(
+            "## 7. Round-trip discipline",
+            "## 7. Round-trip discipline\n\nSee `docs/superpowers/backlog.md` for the open rows.",
+            1,
+        ),
+    ),
+    (
+        "a counted claim whose members stopped travelling with the count",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/DESIGN_SYNC_BRIDGE.md",
+        lambda t: t.replace("The six are `Button`, `Card`, `Chip`,", "The six are `Card`, `Chip`,", 1),
     ),
     (
         "a style pack the SKILL.md table does not route to",
@@ -1026,6 +1105,73 @@ def validate_core_vocabulary():
         )
 
 
+# ------------------------------------------------- the bundle stands alone
+#
+# The installed bundle is `plugins/<p>/skills/<s>/` and nothing above it: 32
+# files, every one .md or .css. Three times now a rule inside it has instructed
+# the reader to use something only the repository has, and each time the rule
+# read as authoritative right up to the moment someone tried to follow it:
+#
+#   1.10.0  the `Contract: core` note cited `docs/superpowers/backlog.md`
+#   1.11.0  §7 said to record the pack version, in a bundle carrying none
+#   1.11.0  §1 built an argument on "the same six component names" and named none
+#
+# The 1.10.0 run fixed the instance and not the class -- it swept the literal
+# form (a repo path in backticks, now zero) and left the two forms that are not
+# paths. This check covers the three NAMED forms above. It is not a proof that
+# the bundle is self-sufficient in general; no check is. It is the three shapes
+# that have actually shipped, so a fourth has to be a new shape.
+REPO_ONLY_DIRS = ("docs/", "test/", "kits/", ".github/", "scripts/", "cursor/")
+
+
+def validate_bundle_self_sufficiency():
+    bundle = ROOT / PLUGIN_DIR / "skills" / PLUGIN
+    if not bundle.is_dir():
+        return
+    # Form 1 -- a repo-only path offered to a reader who does not have the repo.
+    path_ref = re.compile(
+        r"`(" + "|".join(re.escape(d) for d in REPO_ONLY_DIRS) + r")[A-Za-z0-9_./-]+`"
+    )
+    for doc in sorted(bundle.rglob("*.md")):
+        rel = doc.relative_to(ROOT)
+        for match in path_ref.finditer(read(doc) or ""):
+            check(
+                False,
+                f"{rel}: cites '{match.group(0)}', which is a repository path -- "
+                "the installed bundle has no such directory, so this instruction "
+                "dead-ends for every reader who did not clone the repo",
+            )
+    # Form 2 -- a rule whose input is a version the bundle does not carry.
+    # Unconditional on purpose. A first draft gated this on the substring "pack
+    # version" appearing in the bridge, which made the check evadable by
+    # rephrasing the very sentence it protects -- the check would go quiet and
+    # the count would fall by one, which is the shape `test/floors.json` exists
+    # to catch and not a shape worth shipping. The bundle carries its version or
+    # it does not; no wording anywhere changes that.
+    check(
+        skill_metadata_version() is not None,
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md: the bundle must carry its own "
+        "version -- DESIGN_SYNC_BRIDGE.md §7 tells the reader to record the pack "
+        "version in the synced project, and an installed reader has nothing else "
+        "to read it from",
+    )
+    # Form 3 -- a counted claim about a set the bundle never enumerates. The
+    # count and the members have to travel together, or the reader has to guess
+    # which six, and guessing is how a value gets invented and believed.
+    for doc in sorted(bundle.rglob("*.md")):
+        text = read(doc) or ""
+        rel = doc.relative_to(ROOT)
+        if "six component names" not in text:
+            continue
+        missing = [name for name in SPINE if f"`{name}`" not in text]
+        check(
+            not missing,
+            f"{rel}: claims 'the same six component names' but does not name "
+            f"{', '.join(missing)} -- a counted claim ships with its members or "
+            "the reader guesses them",
+        )
+
+
 def main():
     if sys.argv[1:]:
         # An unknown flag silently running the normal pass is how a suite reports
@@ -1051,6 +1197,7 @@ def main():
     validate_contract_terminology()
     validate_contract_declaration()
     validate_core_vocabulary()
+    validate_bundle_self_sufficiency()
     if failures:
         for failure in failures:
             print(f"FAIL: {failure}")

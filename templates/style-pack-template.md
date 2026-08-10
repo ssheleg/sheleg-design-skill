@@ -15,6 +15,43 @@ omits Components / Hero / Responsive / Signature element — in which case
 say, here, what the reader must decide themselves. A pack that is silent
 about its own silence is read as complete.>
 
+## Before you fill anything — four rules that decide whether this pack is real
+
+Until 1.11.0 these were spread across three places a reader of the installed
+bundle cannot reach — the repository's `CONTRIBUTING.md` (rules 1 and 4), a
+standing instruction in its retrospective (rule 2), and the prose of one pack
+that had solved it once (rule 3). Being scattered is why they are restated here
+rather than moved: the agent most likely to author a pack holds this directory
+and no clone.
+
+1. **Do not ship on the nine.** The consistency gate enforces the nine original
+   headings always and the four widened ones all-or-nothing, so a pack cannot be
+   *half* widened — but a pack that omits all four still passes. It passes and
+   the agent that reads it invents the rest. Ship `widened`, or ship `core` and
+   say in the `Contract:` line exactly what you are leaving to the reader.
+2. **No addressable reference, no pack.** `Origin:` needs something the next
+   person can open — a URL or a bare host, never a product name alone. This is
+   not politeness about attribution: the contract forbids invented values, and a
+   synthesised palette with a citation attached is an invented value wearing the
+   costume of a measured one. A planned pack and a backfill were both held rather
+   than shipped on this rule. Finding the reference is usually the most expensive
+   part of authoring a pack, and nothing here can do it for you — a marketing
+   site with a published stylesheet is the cheapest kind to measure.
+3. **A value the reference does not have is a pack decision, and says so where
+   it is declared.** Marketing sites do not paint error states, so a pack
+   extracted from one usually has no status set while the palette gate still
+   demands one that separates under dichromacy. Derive it, and mark it derived
+   **at the declaration** — `maquette`'s token layer is the worked example. The
+   failure this prevents is a derived value read later as a measured one.
+4. **The gates are what "done" means.** Three of them run on every change:
+   consistency (structure, routing, mirrors, kit parity), palette (every ratio
+   you state recomputed from your token layer, plus OKLab separation under
+   protanopia / deuteranopia / tritanopia), and slop lint (the skill obeying its
+   own bans). Two consequences while authoring: the palette gate cannot compute
+   a value it cannot parse, so keep `color-mix()` and `lab()` out of the token
+   layer; and a markdown link from your pack to another must be reciprocated, so
+   do not fork against a pack you are not also editing.
+
 ## Register
 
 Choose this pack for <product kinds / registers>. State whether it rides

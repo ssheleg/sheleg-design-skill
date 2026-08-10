@@ -31,12 +31,30 @@ Pass: agent reads SKILL.md AND SHELEG_DESIGN.md; plan has the layer order,
 SCENES-as-data, hold-then-morph specifics, fallback-in-same-commit,
 verification step.
 
+**Result, 2026-08-10 (tree `9312a85`): GREEN, with one finding.** The plan
+carried the layer order, SCENES-as-data, the 0.82 hold with its smoothstep tail,
+every fallback in the same commit, and a verification step; the agent tagged each
+invented value `[mine]` unprompted and enumerated the four sections
+`instrument-console` leaves undecided. **The finding is what it copied silently:**
+the scrub recipe from `SHELEG_DESIGN.md` §9, which shipped `useLayoutEffect` with
+hand-rolled teardown — the pattern `MOTION_DOCTRINE.md` §6 names as the source of
+leaked triggers. It went into a plan labelled junior-ready. Fixed in 1.11.0.
+
 ## T3 — Retrieval (reference depth)
 
 Ask for exact morph math + timing, the GSAP scrub recipe, and the perf
 budget. Pass: HOLD 0.82, smoothstep + per-point arc stagger (spread 0.5,
 chase 0.028/±0.04), ease:'none' + pathLength={1} + kill-on-cleanup,
 936 particles / DPR [1,1.75] — quoted, not invented.
+
+**Result, 2026-08-10 (tree `9312a85`): GREEN, and it found two absences.** Every
+value came back with a `file:line`, nothing was invented, and the one number the
+agent derived (a ≥25-frame floor for a full formation transition) was labelled
+derived arithmetic rather than quoted. It then reported what the skill does not
+contain: **`arcAmp` has no value anywhere** — "what separates *curls between
+formations* from *wobbles*" — and neither does `drop`. It also caught the T2
+contradiction from the other side, naming both files and refusing to pick without
+saying so. Both fixed in 1.11.0.
 
 ## T4 — Style request by name
 
@@ -70,6 +88,28 @@ same change, states the origin of the values, and does NOT invent tokens
 inline in components. Fail: pack written from memory, missing headings, or
 no token CSS.
 
+**Result, 2026-08-10 (tree `9312a85`): GREEN.** The agent copied the skeleton
+rather than improvising the structure, shipped all thirteen headings with
+`Contract: widened`, omitted `Motion flavor` deliberately (standalone pack),
+measured a live reference — numeric.io's published stylesheet, named with its
+URL — and **read the three gates before authoring**, shaping decisions around
+them (no `color-mix()` in the token layer, no one-way fork link). Ratios computed
+by importing `validate_palette.py` rather than asserted.
+
+**Three gaps it reported, all in what the bundle does not carry:** the skill
+demands a live reference and offers no way to find one; the derive-a-status-set
+pattern exists only in `maquette`'s prose, so every author rediscovers it; and
+`## Hero` is written for a scrolling page and has no meaning for a standalone
+console pack — both packs that could demonstrate it are `core` and skip it. The
+first two are fixed in 1.11.0 by moving the authoring rules into the shipped
+template. The third is real and open.
+
+**One thing this run proves about the harness itself:** the agent reached
+`CONTRIBUTING.md` and `test/*.py` because it had the repository. An installed
+agent has neither, and the rule it cited as decisive — *do not ship a pack on the
+nine* — lived only in `CONTRIBUTING.md`. A scenario run against a clone cannot
+see that class of defect; it took reading the FILES I READ list to notice.
+
 ## T8 — Figma direction (the border)
 
 Two prompts, one pass each. (a) "Publish the workbench pack into Figma as
@@ -91,6 +131,24 @@ action in the shape it will take before running it, requires explicit
 confirmation for send and offers undo for cheap reversible work, and uses
 workbench status tokens. Fail: one red error state, a spinner, an invented
 confidence score, or auto-send.
+
+**Result, 2026-08-10 (tree `9312a85`): GREEN.** Five states not two, streaming
+with a stop control from the first frame, refusal / rate-limit / crash rendered
+as three visibly different things, the send confirm built as the artifact itself
+rather than a dialog about it, and no invented confidence score. It went further
+than the scenario asks in two places worth keeping: it disabled the approve
+control **while an artifact is still streaming** ("you cannot consent to
+something still being written"), and it refused to offer an undo for a sent
+email because there is none.
+
+**Two collisions it resolved out loud instead of silently picking:** the pack's
+empty-state atom (*one dim sentence, no illustrations*) against the AI patterns
+file's *capability statement plus runnable examples*; and the permitted typing
+cursor loop against the doctrine's rule that loops collapse to static under
+`prefers-reduced-motion` — the token layer's reduced-motion block zeroes two
+durations and cannot touch a keyframe animation, so nothing joined the two rules.
+It also named the one custom property it invented (`--accent-hover`, absent from
+every pack) and derived it from two existing tokens rather than inventing a hue.
 
 ## T10 — Deck register (the fourth pack)
 
@@ -182,6 +240,23 @@ install, committing a `projectId`, treating a swept reference as a component,
 or shipping motion into the design system. In a session **without**
 `/design-sync` (Cursor), the correct behaviour is to ignore all of it — the
 bridge is gated on the tool, like Lazyweb.
+
+**Result, 2026-08-10 (tree `9312a85`, bundle-only): GREEN, and it is the run that
+named this release.** Given the bundle and told to read nothing above it, the
+agent read the gate, the contract and the pack in full, named the `npx` kit
+command correctly, said the kits are not part of the install, held every line on
+what does not cross, and **refused to hand-author a kit** if the fetch failed —
+citing the ban rather than improvising, which is the outcome the whole section
+exists to produce.
+
+**Three findings, all the same shape — the bundle instructing what the bundle
+does not contain:** §7 says to record the pack version and no version existed
+anywhere in the bundle; §1 argues from "the same six component names" and named
+none; and a byte-for-byte token copy necessarily ships the `prefers-reduced-motion`
+block that §6 says does not ship. The first two are fixed in 1.11.0 and gated by
+`validate_bundle_self_sufficiency()`. The third was a genuine collision between
+two rules that never adjudicated each other; §6 now states the resolution —
+verbatim wins for the token layer, the bullet governs component-level branches.
 
 ## T15 — Transformation register, and the fork against the ruled document
 
@@ -409,3 +484,42 @@ same run that criticised a fix for half-landing; the status-token sentence in
 `SKILL.md` left three packs unaccounted for and licensed `var(--warning)` in
 `atrium`, which has no such token; and `workbench`'s five sub-AA pairs were
 undocumented while its Gotcha warned about a pair that passes.
+
+## T21 — Building on a core-contract pack (not choosing one)
+
+Added 1.11.0. T20 asked whether an agent *knows* what a `core` pack leaves
+undecided. This asks the next question, which nothing in the harness covered:
+what does an agent actually *do* with that silence when the user wants working
+code? Every scenario before this one tested routing or specification; none
+tested application, so "do the usage scenarios work" had no evidence behind it
+for the case the library is used in most.
+
+"Build the incident list screen for our internal ops console — dense table with
+status, severity and owner, a filter rail, a detail drawer on row click. Use our
+`workbench` design system. Give me the React component and the CSS." Pass: every
+`var(--…)` verified against `styles/tokens/workbench.css` rather than assumed;
+inventions namespaced and declared; the four undecided sections named as the
+pack's declaration rather than discovered by failure. Fail: a token that does not
+exist, an invented status ramp presented as the pack's, or silence about what the
+pack did not decide.
+
+**Result, 2026-08-10 (tree `9312a85`): GREEN.** 25 pack tokens, every one checked
+against the CSS; the only five invented are layout scalars (`--ops-rail-w`,
+`--ops-drawer-w`, `--ops-row-h`, two z-indexes) scoped to `.ops` so they cannot
+leak into the token namespace. `tsc --strict` clean, rendered at four widths in
+both themes, all 13 contrast pairs computed and passing, and the drawer's focus
+behaviour verified rather than asserted.
+
+**What only building could surface.** Three things no amount of reading would
+have found: at 1440px the drawer covered three columns and the search box; the
+title column collapsed to eight characters once the drawer took its width; and
+the pack's `--bg`/`--panel-2` Gotcha — stated for dense tables and stat tiles —
+applies verbatim to the filter rail, which the pack does not say. The agent
+generalised it and **said that it was generalising**.
+
+**And one gap the pack does not declare:** `workbench` has four status roles and
+no rank ramp, so a severity scale had to be inferred from role descriptions. The
+`Contract: core` line names four sections it leaves undecided; a severity ramp is
+not among them, so this one was found by hitting it. That is the difference
+between a declared silence and an undeclared one, and it is the shape to watch
+for in the remaining core packs.
