@@ -812,8 +812,8 @@ def validate_contract_terminology():
     # explanation teaches people to delete the explanation.
     for md in sorted(ROOT.rglob("*.md")):
         parts = set(md.parts)
-        if parts & {".git", "node_modules", "graphify-out", "test", "audit"} \
-                or "specs" in parts or md.name == "CHANGELOG.md":
+        if parts & {".git", "node_modules", "graphify-out", "test", "audit",
+                     "superpowers"} or md.name == "CHANGELOG.md":
             # A dated record states the contract of its own day, and an audit
             # report has to be able to quote the stale spelling it found.
             continue

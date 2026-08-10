@@ -14,9 +14,13 @@ independently-degradable responses**. Centralize scroll into one store; layers
 read it per frame and react in their own language. Nothing crossfades — things
 *redeploy*. Every layer degrades to a calm static state.
 
-**REQUIRED REFERENCE:** read [`SHELEG_DESIGN.md`](./SHELEG_DESIGN.md) (same
-directory) before implementing — it holds the architecture, exact morph math,
-the DOM↔WebGL bridge, the build recipe (§11), and the file map.
+**REQUIRED REFERENCE — for the cinematic path:** read
+[`SHELEG_DESIGN.md`](./SHELEG_DESIGN.md) (same directory) before implementing a
+scroll-driven page. It holds the architecture, exact morph math, the DOM↔WebGL
+bridge, the build recipe (§11), and the file map. **Product-UI work does not owe
+this read** — a dashboard takes the style-pack half and nothing else, and the one
+rule it would owe you is repeated here: where a pack's motion tokens differ from
+the SHELEG defaults, **the pack wins**.
 
 **REQUIRED BEFORE ANY ANIMATION:** read
 [`MOTION_DOCTRINE.md`](./MOTION_DOCTRINE.md). `SHELEG_DESIGN.md` says how motion
@@ -209,9 +213,14 @@ the runnable palette validation; a pack is the *parameter set* it consumes.
 This table is by *role*, not by token, because the names are not uniform across
 the twelve: only `--bg` and `--ink` resolve in every pack. The accent is
 `--accent` in ten, `--brand` in `field-notes` and `--cta` in `orchard` (each
-declares `@role accent:` in its token layer). Status colours are `--ok` /
-`--warn` in `workbench` and `instrument-console`, `--good` / `--warning` in
-five others, and **absent entirely** from `editorial-luxury` and `orchard` — a pack with no status palette does not
+declares `@role accent:` in its token layer). Status colours are the least uniform
+thing in the library, so the full map is here rather than summarised: the pair
+`--ok` / `--warn` in `workbench` and `instrument-console`; the pair `--good` /
+`--warning` in `blueprint`, `cyclorama`, `maquette`, `prism` and `showroom`;
+`--good` **without** a `--warning` in `atrium` and `briefing-room`; `--danger`
+alone in `field-notes`; and **nothing at all** in `editorial-luxury` and
+`orchard`. Writing `var(--warning)` in `atrium` is the trap this paragraph
+exists to prevent — it is the shape of a token this pack does not have — a pack with no status palette does not
 get one invented for it; the chart uses categorical hues and a label.
 
 An undefined custom property does not error. `color: var(--good)` where
@@ -222,12 +231,12 @@ why guessing a token name is the quietest way to ship a wrong chart.
 | `dataviz` parameter | What the pack supplies | Where to find it |
 |---|---|---|
 | Ramps | the pack's tint/step scale, where it has one | its Palette table; not every pack ships a ramp |
-| Categorical order | a fixed hue order drawn from the pack, assigned once, never cycled | Palette + Signature motifs |
+| Categorical order | a fixed hue order drawn from the pack, assigned once, never cycled | Palette + Signature motifs. Most packs carry **one** accent and ban a second hue, so a multi-series chart usually means small multiples, or one accent series against `--border-strong` — or a validated `--chart-1…N` set added to the **token layer** in the same change. Only `field-notes` ships one today |
 | Sequential hue | the pack's single accent hue | `--accent`, or the token its `@role accent:` names |
-| Diverging pair | two poles from the pack, with a neutral grey midpoint | Palette |
+| Diverging pair | two poles from the pack, with a neutral grey midpoint | Palette. A one-accent pack has no sanctioned second pole; status colours are state-only and may not stand in. If the pack has no pair, that is a gap to close in the pack |
 | Status palette | the pack's status set, **if it has one**, distinct from categorical | Palette; `editorial-luxury` and `orchard` have none |
 | Surfaces | `--bg` for light, the pack's dark field for dark | resolves in all twelve |
-| Texture fill | the pack's grain or hatch, for the print and forced-colours case | Texture & surface |
+| Texture fill | the pack's grain or hatch, for the print and forced-colours case | Texture & surface — several packs ship none, in which case the forced-colours fallback is shape and label, not fill |
 
 Two rules survive the handoff unchanged: **never a dual-axis chart**, and
 **colour follows the entity, never its rank** — a filter that changes the series
@@ -245,8 +254,12 @@ stays.
 
 A throwaway route with placeholder content is a vacuum: every pack looks fine
 in it, which is precisely why it settles nothing. If there is genuinely no
-populated page yet, the choice is premature — build the page in the default
-pack and revisit.
+populated page yet, the choice is premature — build the page in the pack the
+brief's register points at, and revisit once there is something real to switch.
+If the brief gives no signal at all, the defaults are **`workbench`** for product
+UI and **`showroom`** for a marketing page: both are quiet enough that switching
+away later costs layout, not identity. (This used to say "the default pack" and
+name none, which is not a fallback.)
 
 The comparison harness is scaffolding, not a deliverable: it comes out with the
 same change that records the decision.

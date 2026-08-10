@@ -58,16 +58,19 @@ fired in five run stamps.
    marked as a pack decision at the declaration rather than passed off as
    extracted.)*
 
-6. **A gate is not evidence until it has been watched saying no.** Every new
-   check ships with a planted defect it catches — as a `--self-test`, and once
-   against a real file in the tree. Writing the self-tests in this run caught a
-   `--self-test` flag that was never wired (the suite reported green for a
-   self-test that did not run), two wrong fixtures, and a provenance check that
-   rejected a real reference for lacking `https://`.
-   *(Last fired: 2026-08-09 · `b426ccc` — `validate_fork_reciprocity()` was
-   watched failing on a planted one-way edge and going quiet on restore, and the
-   palette gate was run before the pack docs existed specifically to watch it
-   refuse.)*
+6. **A gate is not evidence until it has been watched saying no — and the fix
+   goes to every sibling in the same pass.** Every new check ships with a planted
+   defect it catches, as a `--self-test` **and** once against a real file in the
+   tree. When a defect is found in one gate, apply the fix to the other gates
+   before closing: this instruction has existed since 2026-08-05, when
+   `validate_palette.py` was found reporting green for a `--self-test` it never
+   ran — and on 2026-08-10 `validate.py` and `sloplint.py` were **still** doing
+   exactly that, because the 2026-08-05 run fixed the script in front of it. A
+   defect class found once is a defect class present everywhere until checked.
+   *(Last fired: 2026-08-10 · `3af6d97` — six new checks, each watched failing on
+   a planted defect; the slop lint's suppression bug watched passing identical
+   CSS with and without a decoy comment; and the sibling sweep found the same
+   argv defect in two more scripts.)*
 
 7. **A gate that CI does not run is not shipped.** Adding a check to
    `package.json` scripts is half the work; the release gate is
@@ -123,6 +126,24 @@ fired in five run stamps.
 
 ## Prune log
 
+- **2026-08-10 · nothing retired; nothing added (still 10, at cap).** All ten
+  walked against the three triggers. Eight fired inside this run — 1 (twice: at
+  stage 0 and again immediately before staging, clean both times), 2 (the release
+  path read from tags and the registry, and the local `npm whoami` 401 turned out
+  to be irrelevant because the workflow publishes), 4 (routing pairs re-run in
+  fresh contexts after the SKILL.md table changed), 5 (it is why three packs were
+  *not* backfilled and went to the board instead), 6 (six planted defects), 7
+  (scripts diffed against both workflows; the release path was gated on one of
+  three and now runs all), 9 (the graph refresh checked by `built_at_commit`, not
+  by exit code), 10 (the six new checks enumerated pairwise against each other —
+  `validate_contract_declaration` and `validate_contract_terminology` overlap on
+  the word "thirteen" and were given non-overlapping messages).
+  **Instruction 3 did not fire and is now three stamps old, not five** — it stays
+  the retirement candidate. Instruction 6 was **strengthened rather than
+  duplicated**: this run's sharpest finding is that a defect fixed in one script
+  survived in two siblings for five days, which is a widening of 6, not an
+  eleventh rule. The cap held without a deletion.
+
 - **2026-08-09 · nothing retired; one added (9 → 10, at cap).** Nine walked
   against the three triggers. Eight fired inside this run — 1 (twice), 2 (twice),
   4 (four pairs), 5, 6 (a planted defect for the new check), 7, 8 (three times),
@@ -149,8 +170,86 @@ fired in five run stamps.
 | 2026-08-05 | `2ad45b2` | Claude Design bridge + seven React reference kits; **`v1.7.0` shipped** | **yes** |
 | 2026-08-08 | `025f866` | `cyclorama` style pack from codos.ai, eighth kit, ADR-0001 restored; **`v1.8.0` shipped** | **yes** |
 | 2026-08-09 | `b426ccc` | four packs — showroom, blueprint, prism, maquette — plus reciprocal forks and a check for them; **`v1.9.0` shipped** | **yes** |
+| 2026-08-10 | `3af6d97` | fresh-eyes audit of the whole skill; six new checks, three gate defects reproduced and fixed, thirteen wrong ratios corrected; **`v1.10.0` shipped** | **yes** |
 
 ## Log
+
+### 2026-08-10 — 1270 green checks, and none of them were looking at the claims
+
+**Symptom.** A fresh-eyes audit at `7abe96e`, with all three gates green
+(1270 / 412 / 224), CI green and the package published, found that the skill
+told a reading agent there were **six** style packs (twelve), handed the chart
+layer a token ramp **no pack defines**, left **six of twelve packs** silent on
+component states, heroes and breakpoints without saying which, and stated
+**thirteen contrast ratios that are wrong**.
+
+**Stage it surfaced at:** 0 — the harvest, before a single question.
+**Stage that owned it:** every prior run's stage 6, and this is the point. No
+individual run shipped a lie; each shipped a true sentence that a later run made
+false, into a file nothing derived from.
+
+**Root cause, and it has two halves.**
+
+*A claim with no owner.* `validate.py` checked that each pack's **name** appears
+in the README, the CLI and the rules. It never checked a **number**. So twelve
+names sat in a table under a sentence that said six, for four releases. Counts,
+token names and contrast ratios are all *derived* facts that were being
+hand-copied into three places each — and the one class of claim a machine can
+settle outright was the only class nothing checked.
+
+*A check that cannot fail.* Three, reproduced with controls:
+
+- Stripping a pack's four widened headings made **both** gates quieter
+  (1270→1269, 224→223) and both exited 0. The ratchet was a sentence in
+  `DOCMAP.md` and nothing else.
+- One decoy comment disabled a slop-lint ban for a whole file, permanently — the
+  check took the first match only and `continue`d, so the counter fell too.
+  Identical CSS failed without the comment and passed with it.
+- `validate.py --self-test` printed OK for a self-test that did not exist.
+
+**Fix, by grade.**
+- *Mechanical* — six new checks, each watched failing on a planted defect and
+  against a real file: counted claims (whitespace-normalised, because the
+  README's was split across a line break and no line-based grep could see it),
+  exhaustive pack enumerations, one name for the contract, the `Contract:`
+  declaration, the core role vocabulary, and every stated contrast ratio
+  recomputed from the token layer.
+- *Mechanical* — ratchet floors in `test/floors.json`, enforced by all three
+  gates; unknown arguments exit 2 everywhere; `validate.py` gains a real
+  self-test that runs against a copy of the tree.
+- *Standing instruction 6, strengthened* — when a defect is found in one gate,
+  sweep the siblings in the same pass.
+
+**Two things worth keeping.**
+
+*The scoping lesson.* The first draft of the ratio checker inferred which colour
+pair a claim referred to and produced **22 false positives out of 40**. Narrowing
+it to claims whose base the document *declares* — a column headed ``On `--bg` ``,
+an `on/over --token` phrase, an `--on-X` name — took it to zero false positives
+while keeping every true one. A gate people learn to ignore is worse than no
+gate, so the scope is written into the code with the reason.
+
+*Three of my own checks were wrong the first time, and each was caught by
+running it.* The heading check matched substrings, so the core-contract note —
+which names the four sections a pack omits — made six packs look widened the
+moment they declared they were not. The em-dash range guard silently dropped four
+real defects. A partner-resolution edit dropped explicitly-named partners and
+flagged six correct claims in `field-notes`. None of these would have been found
+by reading the diff.
+
+**A finding recorded is not a finding fixed.** The self-test defect was recorded
+on 2026-08-05 and was still live in two other scripts. `DOCMAP.md`'s "all nine
+headings" was closed as REQ-018 on 2026-08-08 and was still live in four other
+files — one of which, `DESIGN_SYNC_BRIDGE.md`, actively instructed an author to
+ship a nine-heading pack, which the gate then passed because nine is the floor.
+`test/scenarios.md` recorded a `blueprint` contradiction as "fixed in the same
+run" while only half of it had landed.
+
+**The check that catches it next time.** For claims: derive them, or check them —
+never restate them. For fixes: standing instruction 9 already says a close-out
+artifact is verified by the artifact changing rather than by the command exiting
+0; this run shows the same sentence is true of a *fix*, and of a retrospective
+entry. Grep for the class, not for the instance.
 
 ### 2026-08-09 — the fix that shipped with the same hole it was fixing
 

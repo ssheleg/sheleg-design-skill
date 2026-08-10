@@ -12,15 +12,16 @@ active, disabled), the opening viewport and its line ceiling, the collapse
 rules, and the single element the page is remembered by are **yours to
 decide** here, and you must say so out loud when you do. Everything the pack
 *does* state is measured; the precision of that half is not evidence about
-this half. See the board (`docs/superpowers/backlog.md`, B-001) for why the
-backfill is held rather than written from the token layer.
+this half. The backfill is held rather than written from the token layer,
+because filling these sections from tokens would be inventing values with a
+citation attached — which is the one thing this pack layer exists to prevent.
 
 ## Register
 
 Choose this pack for **product surfaces**: dashboards, admin panels,
 internal tools, dev tools, analytics, settings. This is the one pack meant
 to be used **standalone** — the SHELEG cinematic motion layer is out of
-scope here; motion is limited to meaningful 150–200ms state transitions.
+scope here; motion is limited to meaningful 120–200ms state transitions (`--dur-hover` 0.12s, `--dur-state` 0.18s).
 Light is the default register; dark is a first-class twin, both from the
 same tokens.
 
@@ -146,6 +147,23 @@ hue.
   register.
 
 ## Gotchas
+
+- **Five pairs in this palette miss AA in light mode, and the Gotcha below used
+  to name a pair that passes.** Measured from `tokens/workbench.css` on
+  2026-08-10: `--ok` on `--ok-weak` **4.47**, `--danger` on `--danger-weak`
+  **4.47**, `--warn` on `--warn-weak` **4.41**, `--accent` on `--panel-2`
+  **4.30**, `--accent` on `--accent-weak` **4.00**. All five are below the 4.5
+  floor for normal text; `--muted` on `--panel-2` measures **5.63** and passes.
+  The values are not changed, because a darker green invented here would be a
+  colour this pack does not own. **The resolutions, which are rules rather than
+  new tokens:** the status word inside a chip renders in `--ink` (14–15:1 on all
+  three tints) with the status colour carried by the dot or the fill; and
+  accent-coloured text never sits on `--panel-2` or on `--accent-weak` — inside a
+  selected row or a sticky header, text is `--ink` or `--muted`.
+- **`--bg` and `--panel-2` are the same colour in light mode** (`#f7f8fa`) and
+  different in dark. So the mandated row hover — a `--panel-2` fill — is
+  **invisible** if a table sits directly on `--bg`. Dense tables go on a
+  `--panel` card, always. The same applies to a "quiet stat tile on `--panel-2`".
 
 - Ship light AND dark from day one via the token layer — retrofitting a
   theme later leaves inverted hardcodes (sweep raw hex; consume only

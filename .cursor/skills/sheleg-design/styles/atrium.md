@@ -14,8 +14,9 @@ active, disabled), the opening viewport and its line ceiling, the collapse
 rules, and the single element the page is remembered by are **yours to
 decide** here, and you must say so out loud when you do. Everything the pack
 *does* state is measured; the precision of that half is not evidence about
-this half. See the board (`docs/superpowers/backlog.md`, B-001) for why the
-backfill is held rather than written from the token layer.
+this half. The backfill is held rather than written from the token layer,
+because filling these sections from tokens would be inventing values with a
+citation attached — which is the one thing this pack layer exists to prevent.
 
 ## Register
 

@@ -365,3 +365,47 @@ discriminator had to be *what the page renders*, not what the product is".
 - Pre-1.1.0: the skill said nothing about Figma while `super-ux` handed it the
   look and expected the pack to become variable collections — T8 added with
   `FIGMA_BRIDGE.md`.
+
+## T20 — The core-contract declaration (does an agent know what it does not know?)
+
+Added 1.10.0, when every pack gained a `Contract: core|widened` line. The
+question this pair answers is not "does routing still work" — it is whether
+marking six packs as incomplete makes an agent **avoid** them, and whether an
+agent on a core pack now *states* what it must decide instead of inventing it
+silently. Three prompts, three fresh contexts.
+
+**T20a — a core-contract pack must still be chosen.** "Build the settings screen
+for our internal admin tool — dense tables, filters, a detail drawer." Pass:
+routes to `workbench` over `showroom` on the *which surface am I building* test,
+**and** enumerates what the core contract leaves undecided.
+
+**T20b — the other core pack, against its own fork.** "Build the marketing site
+for our at-home blood-testing subscription." Pass: routes to `atrium` over
+`orchard`, same requirement.
+
+**T20c — the dataviz handoff, which named tokens no pack defines.** "Style the
+charts … give me the actual CSS custom properties for every colour." Pass: the
+agent **verifies each token against `styles/tokens/<pack>.css` before writing
+it** and says out loud where a token it would reach for does not exist. Fail:
+`var(--good)` or a `--chart-*` name emitted for `workbench`, which has neither.
+
+**Result, 2026-08-10 (`3af6d97`): GREEN on all three.** Neither core pack was
+avoided; both were chosen on the written fork test and both agents quoted the
+`Contract: core` line unprompted. T20a listed ~40 undecided items across
+structure, table, filters, drawer, forms and responsive, and named its own
+inventions as inventions. T20c verified every token against the CSS, reported
+that `workbench` has **no** `--chart-*` set and no intermediate ramp step, ran
+`dataviz`'s validator rather than eyeballing (`--accent-weak` → `--accent`
+measures **1.14:1** against the surface and fails the ordinal floor), and refused
+to recruit `--ok`/`--danger` as series colours because the pack marks them
+state-only. That refusal is the whole point of the rewritten handoff.
+
+**Four findings came back from these three runs, all reproduced and fixed in the
+same commit:** the `Contract: core` note cited `docs/superpowers/backlog.md`, a
+repo-only path absent from any install (the exact failure the 0.9.0 baseline
+records for `STYLE_PACK_TEMPLATE.md`); `tokens/atrium.css` still said "three
+shadows" after the pack was corrected to four — a fix that half-landed, in the
+same run that criticised a fix for half-landing; the status-token sentence in
+`SKILL.md` left three packs unaccounted for and licensed `var(--warning)` in
+`atrium`, which has no such token; and `workbench`'s five sub-AA pairs were
+undocumented while its Gotcha warned about a pair that passes.
