@@ -34,6 +34,13 @@ specimen under a seven-layer shadow and wraps a hero and a CTA around it. A real
 product usually needs both, and the specimen in a `showroom` page should be a
 screenshot of the `workbench` build.
 
+**The fork against [`scoreboard`](./scoreboard.md)** is the same test on a
+different axis: whose numbers are on screen. This pack renders the user's own
+working data, in a surface they operate — filter it, sort it, act on it.
+`scoreboard` renders a claim *about* numbers, on a marketing page whose argument
+is that they accumulate. A metric the reader can drill into belongs here; a
+metric the reader is being shown belongs there.
+
 ## Palette
 
 Ready-made token layer: [`tokens/workbench.css`](./tokens/workbench.css)

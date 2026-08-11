@@ -3,7 +3,7 @@ name: sheleg-design
 description: Use when building or upgrading a cinematic scroll-driven landing page, marketing site or hero (particle/WebGL background, scroll-linked animation, parallax, scrubbed sections) — when such a page feels busy or janky or its motion layers drift out of sync — or when styling product UI with its style packs - dashboards, admin panels, internal/dev tools, mobile app screens, design tokens, light/dark themes - or when carrying a visual system across the Figma border (publishing tokens as variables, implementing a design without importing raw values). Triggers - "cinematic landing" / "кинематографичный лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables / figma to code" / "переменные фигмы, фигма в код", "chat/agent UI" / "интерфейс чата или агента", "streaming output" / "стриминг ответа", "mobile screen" / "мобильный экран".
 license: MIT
 metadata:
-  version: 1.12.1
+  version: 1.13.0
 ---
 
 # SHELEG Design
@@ -84,8 +84,9 @@ style pack in [`styles/`](./styles/):
 | [`prism`](./styles/prism.md) | white split into one static iridescent wash with a hard bottom edge, heavy grotesque display over **mono body copy**, one cyan used only as a fill | an open-source infrastructure project's front door, where the first action is a command |
 | [`maquette`](./styles/maquette.md) | near-black table, cream ink matching the cream axonometric models, mono block labels, one pale aqua that works as text, a single offset shadow | enterprise data infrastructure sold to an architecture buyer — the page's subject is a built object |
 | [`cyclorama`](./styles/cyclorama.md) | a pale field cycling through six pastel stops on a 32s loop under fixed near-black ink, monospaced typewriter serif over mono, one orange used only as a fill, a particle organ that redeploys per section | enterprise AI transformation, applied-AI services and technical consultancies — a product whose argument is a change of state, not a screenshot |
+| [`scoreboard`](./styles/scoreboard.md) | warm paper and warm near-black ink, 2–3px radii, an ink primary button, one hot orange that only ever marks, and a dark ledger of dotted-leader rows whose numbers are set in an aliased pixel face | products whose argument is an accumulating number — ads and SEO operators, growth tools, revenue dashboards sold on results |
 
-**Six of the twelve are on the core contract, and it changes what you get.**
+**Six of the thirteen are on the core contract, and it changes what you get.**
 A pack marked **core contract** does not specify `## Components`, `## Hero`,
 `## Responsive` or `## Signature element` — so per-component states, the
 opening viewport and its line ceiling, the collapse rules, and the single
@@ -183,7 +184,7 @@ as a definition of done, in that order:
   before writing CSS for a cinematic page. A scene has planes; everything on one
   plane is the failure no amount of easing repairs.
 - **Charts — hand the pack to `dataviz`** (same file), before drawing a chart in
-  any pack. Token names are not uniform across the twelve — only `--bg` and
+  any pack. Token names are not uniform across the thirteen — only `--bg` and
   `--ink` resolve everywhere — and an undefined custom property does not error,
   it silently falls back. Guessing one is the quietest way to ship a wrong chart.
 - **Mobile surfaces** ([`MOBILE_SURFACES.md`](./MOBILE_SURFACES.md)), when the

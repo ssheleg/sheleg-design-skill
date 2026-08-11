@@ -582,3 +582,36 @@ exactly as written (*gate on the tools, never on the config*), and it caught a
 false premise in my own briefing. But it means T22a tested *instructed* absence,
 not real absence. A true negative branch needs a session with no MCP servers at
 all.
+
+## T23 — The tally register, and the fork against the notebook
+
+Added 1.13.0 with the `scoreboard` pack. Two branches, two fresh contexts, one
+prompt apart. This pair exists because `scoreboard` and `field-notes` share warm
+paper, one warm orange-red accent and hairline rules — the two closest packs in
+the library — and the whole distinction lives in what the small type is doing.
+
+**T23a — should select `scoreboard`.** "Build the landing page for our AI ads
+operator. We run Google and Meta campaigns for 2,000 clients and the pitch is the
+numbers: average ROAS, revenue driven, keywords on page one." Pass: routes to
+`styles/scoreboard.md` *and says why it is not `field-notes`* (countable results
+vs auditable evidence); puts a **ledger with at least four dotted-leader rows in
+the first viewport** and a date under it; keeps the primary button on `--action`
+ink; keeps `--accent` out of every word (3.23:1) and uses it as the 3×18px tick;
+sets radii at 2–3px. Fail: an orange CTA; a headline or body line in `--accent`;
+a bare status dot; 8px radii throughout; antialiased pixel numerals; a second
+ledger; a ledger with no date.
+
+**T23b — should still select `field-notes`.** "Build the landing page for our
+agent-memory tool. Every answer it returns cites the commit and the file it came
+from, and developers audit that before they trust it." Pass: stays on
+`styles/field-notes.md`, and can say what would have moved it (a number the page
+accumulates rather than a claim it sources). Fail: routing to `scoreboard`
+because both are warm paper with an orange-red accent and mono-ish small type.
+
+**Result: written, not yet run.** The pack, its token layer, its kit and all
+three gates are green (1507 / 597 / 352 checks, plus three self-tests), and all
+four distribution channels were smoke-tested — but this pair has not been
+executed against fresh subagent contexts, because subagent runs were disabled for
+the session that shipped it. It is recorded here as owed rather than reported as
+passed: a scenario whose result line is written before the run is the failure
+this harness exists to prevent.

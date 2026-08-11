@@ -1,0 +1,332 @@
+/* SHELEG Design — Scoreboard token layer (a page whose argument is a running
+   tally: numbers, dated, on warm paper, with one hot orange used as a mark).
+   Copy verbatim; consume only var(--…) in components.
+
+   Extracted from https://www.get-ryze.ai/ on 2026-08-12 by reading its shipped
+   stylesheet (/_next/static/css/7c091e1bb8e23b8b.css) and the markup of three
+   pages — the home page, /seo, and the MCP article. Ratios were computed by
+   importing this repository's own palette gate, test/validate_palette.py.
+
+   Two families of value appear below and they are not the same kind of claim:
+
+   MEASURED — the literal was in the reference's stylesheet or markup.
+   SELECTED — the reference ships the whole Tailwind v4 ramp as custom
+   properties and paints statuses only on its dark panels, so the paper-safe
+   status set is a different *step* of a ramp the reference already carries,
+   chosen for WCAG AA on this pack's field. Selected is weaker than measured
+   and is marked at every declaration it applies to.
+
+   Two corrections, both in the pack's Gotchas. */
+
+:root {
+  color-scheme: light;
+
+  /* ---- The paper ------------------------------------------------------- */
+  --bg: #faf9f5; /* MEASURED — the page */
+  --surface: #ffffff; /* MEASURED — card, report, table */
+  --surface-2: #fbf8f2; /* MEASURED — warm hover / sunken row */
+  --surface-3: #f8f9fb; /* MEASURED — the cool well a data panel sits in */
+  --surface-cream: #fefef5; /* MEASURED — the one cream band per page */
+  --surface-sand: #f5efe2; /* MEASURED — quote and callout fill */
+
+  /* ---- Ink -------------------------------------------------------------- */
+  --ink: #221d16; /* 15.88:1 on --bg — warm near-black, body and display */
+  --ink-strong: #0a0a0a; /* 18.79:1 on --bg — the numeral, the total */
+  --ink-soft: #71717b; /* 4.58:1 on --bg — labels, meta, secondary copy */
+  --ink-faint: #9f9fa9; /* 2.49:1 — placeholder and disabled ONLY, never content */
+  --on-ink: #ffffff; /* 19.80:1 on --ink-strong */
+
+  /* ---- Lines: this pack divides with rules, not with shadow ------------- */
+  --line-weak: #e4e4e7;
+  --line: #d4d4d8;
+  --line-sand: #e9dfc9; /* MEASURED — the warm border, used on cream surfaces */
+
+  /* ---- The accent: a mark, a rule and a focus ring. Not a text colour. --- */
+  /* 3.23:1 on --bg — below WCAG AA 4.5:1 for text, above the 3:1 floor for a
+     non-text mark. The reference obeys this without saying so: its orange is a
+     3x18 tick, a ::marker, a focus ring, a link underline and one oversized
+     chevron. Its primary button is ink. See the pack's Palette. */
+  --accent: #ff4801;
+  --accent-hover: #e03d00; /* 4.12:1 on --bg — the one orange that may carry a link */
+  --accent-wash: #fff7ed; /* MEASURED — selected row, hovered cell */
+  --on-accent: #221d16; /* SELECTED — 4.92:1 on --accent; white would be 3.40:1 */
+
+  /* ---- The action is ink, not the accent -------------------------------- */
+  --action: #0a0a0a; /* the primary button fill */
+  --action-hover: #27272a; /* 14.89:1 under --on-action */
+  --on-action: #ffffff;
+
+  /* ---- Status. Never by colour alone — see the pack's Palette. ---------- */
+  /* SELECTED, all four: steps of the Tailwind ramp the reference's own
+     stylesheet declares, taken deep enough to clear AA on warm paper. The
+     reference paints status only on its dark panels, where its own values
+     measure 1.6–2.6:1 against this field — unusable here. The on-dark set
+     below is the measured one. */
+  --good: #007a55; /* 5.17:1 on --bg */
+  --warn: #bb4d00; /* 4.81:1 on --bg */
+  --danger: #9f0712; /* 7.95:1 on --bg */
+  --info: #1447e6; /* 6.48:1 on --bg */
+
+  /* MEASURED — the reference's own status set, valid only on --panel. */
+  --good-on-dark: #00d492; /* 10.21:1 on --panel */
+  --warn-on-dark: #ffb900; /* 11.49:1 on --panel */
+  --danger-on-dark: #ff637e; /* 6.92:1 on --panel */
+  --info-on-dark: #51a2ff; /* 7.51:1 on --panel */
+  --live-on-dark: #7bf1a8; /* 14.13:1 — the pulsing square beside "All systems ok" */
+
+  /* ---- The dark readout ------------------------------------------------- */
+  /* MEASURED — one dark band per page: the hero, and the ledger panel inside
+     it. --panel-cast is the green the reference tilts its black toward, and it
+     is why the dark half does not read as a generic near-black. */
+  --panel: #0a0a0a;
+  --panel-cast: #0e2418;
+  --panel-line: rgba(255, 255, 255, 0.3);
+  --panel-leader: rgba(255, 255, 255, 0.45); /* the dotted leader between label and number */
+  --on-panel: #ffffff;
+  --on-panel-soft: #9f9fa9; /* 7.55:1 on --panel */
+
+  /* ---- Charts. Hand this pack to `dataviz` before drawing one. ---------- */
+  /* SELECTED — the reference charts in slate greys with one emerald line and
+     the accent for the series under discussion. Categorical, in order. */
+  --chart-1: #62748e;
+  --chart-2: #ff4801;
+  --chart-3: #007a55;
+  --chart-4: #cad5e2;
+  --chart-5: #1447e6;
+  --chart-grid: #e4e4e7;
+  --chart-axis: #71717b;
+
+  /* ---- Elevation: two soft stacks and a hairline ------------------------ */
+  /* MEASURED. Both stacks are two layers at 4–5% and neither is tinted. This
+     pack lifts almost nothing: a card is a 1px --line-weak rule with the
+     hairline under it, and --shadow-card is for the one report surface a
+     section is built around. */
+  --shadow-hairline: 0 1px 2px 0 rgba(0, 0, 0, 0.025);
+  --shadow-panel: 0 1px 6px rgba(0, 0, 0, 0.04);
+  --shadow-card:
+    0 2px 8px rgba(16, 24, 40, 0.05),
+    0 8px 24px rgba(16, 24, 40, 0.05);
+  --shadow-lift: 0 14px 40px -18px rgba(0, 0, 0, 0.16); /* modal, floating bar */
+  --ring-focus: 0 0 0 2px rgba(255, 72, 1, 0.2);
+  --ring-focus-edge: rgba(255, 72, 1, 0.4); /* the border colour under the ring */
+
+  /* ---- Radii: this pack is nearly square -------------------------------- */
+  /* MEASURED: 2px and 3px carry the page (107 of 143 rounded utilities across
+     the three pages). 6–8px is for a container big enough that 3px would read
+     as an accident; 1px is the ledger's bullet. */
+  --radius-hair: 1px;
+  --radius-xs: 2px;
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-pill: 999px;
+
+  /* ---- Spacing and the page -------------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --page-max: 1800px; /* MEASURED — the full-bleed shell */
+  --content-max: 1260px; /* MEASURED — the reading column inside it */
+  --gutter: 1.5rem; /* 24px, and 48px from --bp-md up */
+  --gutter-wide: 3rem;
+  --nav-h: 64px;
+  --hero-pt: 116px; /* MEASURED — 140px from --bp-lg up */
+  --hero-min-h: 820px; /* MEASURED — the hero is a fixed band, not a viewport */
+  --section-min-h: 100dvh; /* for any section that does want the viewport */
+
+  /* ---- Type: three families, and the third one only ever sets digits ---- */
+  --font-display: "Satoshi", "Inter", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-pixel: "Press Start 2P", ui-monospace, monospace;
+
+  --t-display: 4.5rem; /* 72px */
+  --lh-display: 1.08;
+  --track-display: -0.03em;
+  --weight-display: 700;
+
+  --t-h1: 3.4375rem; /* 55px */
+  --t-h2: 1.5rem; /* 24px */
+  --t-h3: 1.3125rem; /* 21px */
+  --t-h4: 1.125rem; /* 18px */
+  --lh-heading: 1.25;
+  --track-heading: -0.02em;
+  --weight-heading: 600;
+
+  --t-lede: 1.1875rem; /* 19px */
+  --t-body: 1.0625rem; /* 17px */
+  --t-base: 0.9375rem; /* 15px — the page's real body size */
+  --t-sm: 0.875rem; /* 14px */
+  --t-xs: 0.8125rem; /* 13px */
+  --t-2xs: 0.6875rem; /* 11px */
+  --t-micro: 0.625rem; /* 10px — in-product chrome inside a screenshot only */
+  --lh-body: 1.5;
+  --track-body: 0;
+  --weight-body: 400;
+  --weight-body-strong: 500;
+
+  /* The micro-label: uppercase, and the tracking is not optional. */
+  --t-label: 0.875rem; /* 14px */
+  --track-label: 0.14em;
+  --weight-label: 700;
+  --track-label-wide: 0.1em; /* the 11px variant inside dense panels */
+
+  /* The numeral. One size, because the ledger aligns on a column. */
+  --t-numeral: 0.9375rem; /* 15px */
+  --numeral-col: 80px; /* 70px below --bp-md */
+
+  /* ---- Motion ----------------------------------------------------------- */
+  /* MEASURED curve and base duration; the durations are this pack's, capped by
+     MOTION_DOCTRINE §3. The reference transitions its primary button over
+     500ms, which is over the 300ms ceiling for UI — see the pack's Gotchas. */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --dur-instant: 0.15s;
+  --dur-fast: 0.16s;
+  --dur-base: 0.24s;
+  --dur-reveal: 0.5s; /* entrance only, and it never gates content */
+  --reveal-y: 30px; /* MEASURED — 16–40px across the three pages */
+  --reveal-x: 50px; /* MEASURED — side entrances only */
+  --scan-period: 8s; /* the ledger's scan line, one pass */
+
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+/* The dark readout. Applied to the hero band and the ledger panel — never to a
+   whole page. Statuses inside it take the --*-on-dark values above. */
+[data-surface="panel"] {
+  --bg: #0a0a0a;
+  --surface: #0e2418;
+  --surface-2: #18181b;
+  --surface-3: #0a0a0a;
+  --ink: #ffffff; /* 19.80:1 on --bg */
+  --ink-strong: #ffffff;
+  --ink-soft: #9f9fa9; /* 7.55:1 on --bg */
+  --line-weak: rgba(255, 255, 255, 0.16);
+  --line: rgba(255, 255, 255, 0.3);
+  --action: #ffffff;
+  --action-hover: #e4e4e7;
+  --on-action: #0a0a0a;
+}
+
+/* The reference ships no reduced-motion branch. This pack requires one: every
+   duration collapses and the ledger's scan line stops. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-instant: 0s;
+    --dur-fast: 0s;
+    --dur-base: 0s;
+    --dur-reveal: 0s;
+    --reveal-y: 0px;
+    --reveal-x: 0px;
+    --scan-period: 0s;
+  }
+}
+
+/* ── components ── */
+
+/* Everything below consumes var(--…) only. Colour never appears as a literal:
+   the token layer above is the whole palette, and a value with no token is a gap
+   in the pack rather than something to inline here. Geometry stays numeric —
+   the pack states its paddings and sizes as numbers.
+   The rule that governs every rule below: the page is a running tally. Rules
+   divide, the accent marks, the action is ink, and the only element allowed to
+   be loud is the numeral. */
+
+.sb-heading { margin: 0; font-family: var(--font-display); font-weight: var(--weight-heading);
+  color: var(--ink); line-height: var(--lh-heading); letter-spacing: var(--track-heading); text-wrap: balance; }
+.sb-heading--1 { font-size: var(--t-h1); line-height: var(--lh-display); letter-spacing: var(--track-display); font-weight: var(--weight-display); }
+.sb-heading--2 { font-size: var(--t-h2); }
+.sb-heading--3 { font-size: var(--t-h3); }
+
+.sb-rule { height: 0; margin: var(--space-6) 0; border: 0; border-top: 1px solid var(--line-weak); }
+.sb-rule--strong { border-top-color: var(--line); }
+
+.sb-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  border: 1px solid transparent; border-radius: var(--radius-sm); font-family: var(--font-sans);
+  font-weight: var(--weight-body-strong); line-height: 1; cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
+.sb-btn--sm { padding: 6px var(--space-3); height: 30px; font-size: var(--t-xs); }
+.sb-btn--md { padding: 10px 20px; height: 40px; font-size: var(--t-sm); }
+.sb-btn--lg { padding: 12px var(--space-6); height: 46px; font-size: var(--t-base); }
+.sb-btn--primary { background-color: var(--action); color: var(--on-action); }
+.sb-btn--primary:hover:not(:disabled) { background-color: var(--action-hover); }
+.sb-btn--secondary { background-color: var(--surface-2); border-color: var(--line-weak); color: var(--ink); }
+.sb-btn--secondary:hover:not(:disabled) { border-color: var(--line); }
+.sb-btn--ghost { background-color: transparent; color: var(--ink-soft); }
+.sb-btn--ghost:hover:not(:disabled) { color: var(--ink); background-color: var(--surface-2); }
+.sb-btn:active:not(:disabled) { transform: translateY(1px); }
+.sb-btn:disabled { color: var(--ink-faint); background-color: var(--surface-2); cursor: not-allowed; }
+.sb-btn:focus-visible { outline: none; border-color: var(--ring-focus-edge); box-shadow: var(--ring-focus); }
+
+.sb-card { display: block; background-color: var(--surface); border: 1px solid var(--line-weak);
+  border-radius: var(--radius-sm); box-shadow: var(--shadow-hairline); padding: 26px var(--space-6); color: var(--ink);
+  transition: border-color var(--dur-fast) var(--ease); }
+.sb-card:hover { border-color: var(--line); }
+.sb-card__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-3); }
+.sb-card__title { margin: 0; font-family: var(--font-display); font-size: var(--t-h4);
+  letter-spacing: var(--track-heading); font-weight: var(--weight-heading); }
+.sb-card__meta { font-size: var(--t-2xs); text-transform: uppercase; letter-spacing: var(--track-label-wide); color: var(--ink-soft); }
+.sb-card__body { font-size: var(--t-base); line-height: var(--lh-body); color: var(--ink-soft); }
+
+.sb-chip { display: inline-flex; align-items: center; gap: var(--space-1); background-color: var(--surface-2);
+  border-radius: var(--radius-xs); padding: 2px var(--space-2); font-size: var(--t-2xs);
+  text-transform: uppercase; letter-spacing: var(--track-label-wide); color: var(--ink); }
+.sb-chip--accent { background-color: var(--accent-wash); color: var(--accent-hover); }
+.sb-chip--selected { background-color: var(--accent); color: var(--on-accent); }
+
+.sb-stat { display: flex; flex-direction: column; gap: var(--space-1); }
+.sb-stat__label { font-size: var(--t-2xs); text-transform: uppercase; letter-spacing: var(--track-label-wide); color: var(--ink-soft); }
+.sb-stat__value { font-family: var(--font-display); font-size: var(--t-h2); letter-spacing: var(--track-heading);
+  font-weight: var(--weight-heading); color: var(--ink-strong); font-variant-numeric: tabular-nums; }
+.sb-stat__source { font-size: var(--t-2xs); color: var(--ink-soft); }
+
+/* The tick: 3x18, pill, then a 10px gap. It never precedes the page title. */
+.sb-tick-heading { display: flex; align-items: center; gap: 10px; }
+.sb-tick-heading__tick { flex: 0 0 auto; width: 3px; height: 18px; border-radius: var(--radius-pill); background-color: var(--accent); }
+
+/* The ledger. One per page, and every row is a record rather than a control. */
+.sb-ledger { display: block; background-color: var(--bg); color: var(--ink);
+  border-radius: var(--radius-md); padding: var(--space-8) var(--space-6); }
+.sb-ledger__label { display: flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-4);
+  font-size: var(--t-label); font-weight: var(--weight-label); text-transform: uppercase;
+  letter-spacing: var(--track-label); color: var(--ink); }
+.sb-ledger__bullet { flex: 0 0 auto; width: 4px; height: 4px; background-color: var(--ink); }
+.sb-ledger__rows { display: flex; flex-direction: column; gap: var(--space-3); }
+.sb-ledger__foot { margin-top: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--line);
+  display: flex; flex-direction: column; gap: var(--space-1); font-size: var(--t-xs); color: var(--ink); }
+.sb-ledger__status { display: flex; align-items: center; gap: 6px; }
+.sb-ledger__live { flex: 0 0 auto; width: 3px; height: 3px; background-color: var(--live-on-dark); }
+
+.sb-row { display: flex; align-items: flex-end; gap: var(--space-3); }
+.sb-row__label { flex: 0 0 auto; width: 95px; padding-bottom: 2px; font-size: var(--t-base);
+  font-weight: var(--weight-body-strong); line-height: 1.25; color: var(--ink); }
+.sb-row__leader { flex: 1 1 auto; margin-bottom: 6px; border-bottom: 1px dotted var(--panel-leader); }
+.sb-row__value { flex: 0 0 auto; width: var(--numeral-col); text-align: right;
+  font-family: var(--font-pixel); font-size: var(--t-numeral); font-variant-numeric: tabular-nums;
+  font-variant-ligatures: none; text-rendering: geometricPrecision;
+  -webkit-font-smoothing: none; color: var(--ink); }
+.sb-row__value--pending { font-family: var(--font-sans); color: var(--ink-soft); }
+
+/* Status carries its word. The chip is the encoding, not the colour. */
+.sb-status { display: inline-flex; align-items: center; border-radius: var(--radius-xs);
+  padding: 2px var(--space-2); font-size: var(--t-2xs); text-transform: uppercase;
+  letter-spacing: var(--track-label-wide); font-weight: var(--weight-body-strong); }
+.sb-status--good { color: var(--good); }
+.sb-status--warn { color: var(--warn); }
+.sb-status--danger { color: var(--danger); }
+.sb-status--info { color: var(--info); }
+.sb-status--on-panel.sb-status--good { color: var(--good-on-dark); }
+.sb-status--on-panel.sb-status--warn { color: var(--warn-on-dark); }
+.sb-status--on-panel.sb-status--danger { color: var(--danger-on-dark); }
+.sb-status--on-panel.sb-status--info { color: var(--info-on-dark); }
+
+@media (max-width: 767px) {
+  .sb-row__label { width: 75px; }
+  .sb-row__value { width: 70px; }
+}

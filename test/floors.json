@@ -1,7 +1,7 @@
 {
   "_why": "Ratchet floors. A gate whose check count can fall silently cannot detect a deleted requirement: stripping four required headings from one pack made validate.py drop 1270->1269 and sloplint.py 224->223, both still green. Each number is the count measured on the commit named below. Raise freely; lowering one needs a reason in the same commit.",
-  "_measured_on": "feat/mobile-references-v1.12.0, 2026-08-11",
-  "validate.py": 1401,
-  "validate_palette.py": 469,
-  "sloplint.py": 338
+  "_measured_on": "feat/scoreboard-pack-v1.13.0, 2026-08-12",
+  "validate.py": 1507,
+  "validate_palette.py": 597,
+  "sloplint.py": 352
 }

@@ -88,7 +88,7 @@ rather than a fourth ledger row.
 CI (`.github/workflows/validate.yml`) runs all four gates, all three self-tests,
 a negative test that corrupts a version and requires a failure, a check that each
 gate refuses an unknown argument, both installers with a `diff -r` against the
-source, `claude plugin validate --strict`, and a twelve-kit build matrix.
+source, `claude plugin validate --strict`, and a thirteen-kit build matrix.
 `release.yml` runs every gate too — until 1.10.0 it gated a publish on one of
 three.
 

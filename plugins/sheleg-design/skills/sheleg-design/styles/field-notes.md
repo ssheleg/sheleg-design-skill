@@ -48,6 +48,15 @@ its marketing site takes this pack's app layer.
 a serif dossier selling prestige; this is a sans-and-mono lab notebook selling
 proof.
 
+**Against [`scoreboard`](./scoreboard.md), which from a distance is this pack.**
+Warm off-white paper, one warm orange-red accent, hairline rules, uppercase
+eyebrows, a light page with a dark passage in it — the two share all of it. The
+distinction is what the small type is doing. Here the numerals are **mono** and
+they make evidence auditable: a provenance label, a commit, a citation you can go
+and check. There they are **pixel** and they make results countable: a total, a
+multiple, a delta since last week. *How do you know that?* stays here. *How much,
+and since when?* goes there.
+
 **Against [`blueprint`](./blueprint.md).** Both draw rules on a light field, both
 annotate in mono, both serve readers who scroll to the technical section first.
 The difference is the stock and what the marks mean. This pack is **warm paper**:

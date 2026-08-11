@@ -234,7 +234,7 @@ ${c("bold", "What it installs")}
   DESIGN_SYNC_BRIDGE.md   the Claude Design contract (what a pack sends, and
                        what does not cross)
   AI_PRODUCT_PATTERNS.md  chat / agent / streaming surfaces (honest state)
-  styles/              twelve style packs — instrument-console (dark console),
+  styles/              thirteen style packs — instrument-console (dark console),
                        editorial-luxury (warm editorial), workbench (light/dark
                        product UI), briefing-room (dark 16:9 presentation deck),
                        atrium (warm cream consumer health), orchard (friendly
@@ -242,7 +242,8 @@ ${c("bold", "What it installs")}
                        cyclorama (a pastel field on a 32s cycle), showroom
                        (the product as the exhibit), blueprint (a drawing sheet,
                        zero radius), prism (one iridescent wash over mono body),
-                       maquette (cream axonometric models on a dark table) —
+                       maquette (cream axonometric models on a dark table),
+                       scoreboard (warm paper, pixel numerals, a dark ledger) —
                        plus a ready-made token CSS per pack and
                        STYLE_PACK_TEMPLATE.md for authoring more
 `);
@@ -324,7 +325,7 @@ function main() {
       `  ${c("dim", "SKILL.md")}            the agent skill\n` +
       `  ${c("dim", "SHELEG_DESIGN.md")}    the full reference\n` +
       `  ${c("dim", "MOTION_DOCTRINE.md")}  whether to animate at all — read before any animation\n` +
-      `  ${c("dim", "styles/")}             style packs + token CSS (instrument-console / editorial-luxury / workbench / briefing-room / atrium / orchard / field-notes / cyclorama / showroom / blueprint / prism / maquette)\n\n` +
+      `  ${c("dim", "styles/")}             style packs + token CSS (instrument-console / editorial-luxury / workbench / briefing-room / atrium / orchard / field-notes / cyclorama / showroom / blueprint / prism / maquette / scoreboard)\n\n` +
       `Your Cursor / Claude agent can now discover the skill and build\n` +
       `cinematic, scroll-driven pages — or style product UI (dashboards, admin,\n` +
       `internal tools) from a standalone pack — on its principles.\n\n` +

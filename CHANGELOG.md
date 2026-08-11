@@ -4,6 +4,64 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.13.0] - 2026-08-12
+
+A thirteenth style pack, and it is the first one in the library whose accent is
+forbidden from carrying a word.
+
+### Added
+
+- **`scoreboard`** — the thirteenth pack, extracted from
+  <https://www.get-ryze.ai/> on 2026-08-12 off its shipped stylesheet and the
+  markup of three pages. Warm paper (`#FAF9F5`), a warm near-black ink
+  (`#221D16`, 15.88:1), radii of two and three pixels, an **ink** primary button,
+  one hot orange (`#FF4801`) used only as a mark, and a dark ledger of
+  dotted-leader rows whose numbers are set in an aliased pixel face. Widened
+  contract — all thirteen headings — with `styles/tokens/scoreboard.css` and a
+  full reference kit in `kits/scoreboard/`.
+- **The accent measures 3.23:1 and the pack says so at the top.** Above the 3:1
+  floor for a non-text mark, below the one for a word. The reference obeys this
+  without ever stating it: across three pages its orange is a 3×18px tick, a
+  `::marker`, a focus ring, a selection colour, a link underline and one
+  oversized chevron — and its primary button is ink. The pack turns that
+  observation into a ban, which is the only reason a page in it can carry a
+  colour that loud.
+- **Two status sets rather than one filtered set.** The reference paints status
+  only on its dark panels; those values measure 1.6–2.6:1 against warm paper. The
+  paper set is selected from deeper steps of the Tailwind ramp the reference's own
+  stylesheet ships, and the measured on-dark set is kept beside it under
+  `--*-on-dark`. Every declaration says which of the two kinds of claim it is.
+- **`TickHeading`, `Ledger`, `LedgerRow` and `StatusChip`** in the kit, on the
+  same six-component spine as every other kit. `StatusChip` takes `label` as a
+  **required** prop: the paper statuses cluster (the accent and `--warn` separate
+  by 6.3 under protanopia), so status in this pack is a chip with its word in it.
+
+### Fixed
+
+- **Three corrections to the reference, recorded rather than silently applied.**
+  Its positive-delta colour `#00D492` is set at 11px on white — 1.84:1, an
+  invisible success state — and is confined here to the dark panel where it
+  measures 10.21:1. Its primary button transitions over 500ms, past the 300ms
+  ceiling in `MOTION_DOCTRINE.md` §3, and the pack pins `--dur-fast` at .16s. Its
+  scan line animates `top`; the pack rebuilds it on `transform`.
+- **`validate.py --self-test` printed FAILED and exited 0.** `main()` returned
+  the self-test's status and `__main__` called it bare, so the code was dropped
+  on the floor and `npm run selftest` stayed green through a self-test that had
+  failed — found because this release's count change broke a plant fixture and
+  the suite passed anyway. The argv handling directly above it exists to close
+  this exact class one layer up and never reached the exit code. Verified by
+  breaking a fixture in a copy of the tree: 0 before, 1 after.
+- **A plant fixture pinned to a literal that changes every release.** The
+  stale-count plant searched for `**twelve locked style packs**`; the first time
+  the library grew it mutated nothing and stopped testing the check it exists
+  for. It now reads whatever number the README claims and makes that wrong.
+- **Reciprocal forks with `field-notes` and `workbench`.** From a distance
+  `field-notes` *is* this pack — warm paper, one orange-red accent, hairline
+  rules — and the distinction is what the small type does: mono numerals make
+  evidence auditable, pixel numerals make results countable. Both neighbours now
+  carry the fork back, so an agent arriving at either one first still learns it
+  exists.
+
 ## [1.12.1] - 2026-08-11
 
 - **The reference-sweep heading named one server for a section about two.** It

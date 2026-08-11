@@ -972,9 +972,16 @@ def check_floor(script: str, count: int) -> None:
 # tested is the validator CI runs, not a re-implementation of it.
 PLANTS = (
     (
+        # The literal count word travels with every release, so pinning it here
+        # made the fixture stop mutating anything the first time the library
+        # grew -- a plant that changes nothing reports BROKEN rather than
+        # missing, but it stops testing the check either way. Read whatever
+        # number the README currently claims and make it wrong.
         "a count that is true of an older release",
         "README.md",
-        lambda t: t.replace("**twelve locked style\npacks**", "**six locked style\npacks**"),
+        lambda t: re.sub(
+            r"\*\*[a-z]+ locked style\npacks\*\*", "**six locked style\npacks**", t, count=1
+        ),
     ),
     (
         "a manifest naming three packs of twelve",
@@ -1207,4 +1214,10 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # `main()` bare dropped the self-test's return code on the floor: with
+    # --self-test it printed "self-test FAILED" and exited 0, so `npm run
+    # selftest` stayed green through a self-test that had failed. The argv
+    # handling above was added to close exactly this class one layer up and did
+    # not reach the exit code. The normal pass exits through sys.exit() inside
+    # main(), so SystemExit(None) is the success path.
+    raise SystemExit(main())

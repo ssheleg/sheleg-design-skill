@@ -15,6 +15,12 @@
   `attio.com` → **`showroom`**, `pinecone.io` → **`blueprint`**,
   `milvus.io` → **`prism`**, `zilliz.com` → **`maquette`**. Twelve packs, twelve
   registers, no source brand used as a name.
+- **Applied a seventh time:** 2026-08-12. The thirteenth pack was extracted from
+  `get-ryze.ai` and is named **`scoreboard`** for the register it encodes (a
+  board whose subject is an accumulating number), not `ryze`. The request that
+  opened the run named the source site and nothing else, which is the shape this
+  ADR exists to answer; the name was chosen from the register and the site is
+  recorded in the pack's `Origin:` line.
 - **Corrected:** 2026-08-10. The Decision section named the seventh pack
   `lecture-hall`. That was the name on the branch this ADR was written on, and
   that branch never merged; the pack that shipped from graphify.com is
