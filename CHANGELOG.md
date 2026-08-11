@@ -4,6 +4,13 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.12.1] - 2026-08-11
+
+- **The reference-sweep heading named one server for a section about two.** It
+  read `Optional — real-world references (Lazyweb MCP)` after Mobbin joined it,
+  so an agent skimming headings would conclude Mobbin was not there. Headings are
+  a discovery surface, not decoration.
+
 ## [1.12.0] - 2026-08-11
 
 Mobile becomes a register the skill can name, and a second reference sweep joins
