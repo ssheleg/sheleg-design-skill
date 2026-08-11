@@ -4,6 +4,70 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.12.0] - 2026-08-11
+
+Mobile becomes a register the skill can name, and a second reference sweep joins
+the one slot that already existed rather than opening a competing one.
+
+### Added
+
+- **`MOBILE_SURFACES.md`** — loaded when the brief is a native app screen or a
+  mobile-web view. It collects the five mobile rules the packs each state on
+  their own (`svh` over a banned bare `100vh`, the 16px input floor that exists
+  to stop iOS zoom-on-focus, a desktop flourish that must not survive into a
+  touch target, the `pointer: coarse` depth collapse, and why reduced motion and
+  a coarse pointer are two signals rather than one). Until now a reader looking
+  for *mobile* had to find them inside `field-notes`, `cyclorama` and the
+  template.
+- **The half a pack does not decide on a phone: platform convention.** Where
+  primary navigation lives, sheet versus push, gesture affordances, the notch and
+  the home indicator — no pack in the library states any of it and none should.
+  Said out loud, in the same shape as a `Contract: core` declaration, so the
+  silence is not read as permission to invent.
+- **Mobbin joins the reference-sweep slot** (`mcp__mobbin__*`) beside Lazyweb.
+  Strongest on native iOS and Android, and it carries web products too, so it is
+  swept on a website as well — **use whichever server is present, on web and
+  mobile alike; with both, sweep both.** `DESIGN_SYNC_BRIDGE.md` §4 is
+  unchanged and now governs two sources: **a sweep informs structure, hierarchy,
+  content order and platform convention; identity stays the pack's.** Stylistic
+  observations are allowed *as observations* — "three of five finance apps use a
+  full-bleed dark sheet for the confirm step" is a structural fact worth telling
+  a designer; "use their blue" is a second identity source, and a reference that
+  genuinely should set identity goes through §5 live-site extraction into a pack
+  instead.
+
+- **A sixth mobile rule that no pack answers.** Every pack's type scale is a
+  `vw`-keyed `clamp()`, which responds to viewport width and **not** to iOS
+  Dynamic Type or Android's font scale — a user at the largest text size gets
+  the same type as a user at the smallest. Zero mentions of it existed anywhere
+  in the bundle. Two independent test agents raised it as the largest
+  unaddressed gap for a native surface, and it is now stated as a gap with the
+  decision handed to the reader rather than answered with an invented value.
+
+### Changed
+
+- **The sweep gate reads the tools, not the config.** A registered MCP server
+  nobody has signed into exposes nothing, and Mobbin needs both a browser
+  sign-in and a paid plan — so "is it configured" was never the right question.
+  Its tool surface is unpublished, so the skill says to discover what the session
+  exposes rather than naming a tool it cannot verify.
+- **The description carries a mobile trigger** (`"mobile screen" / "мобильный
+  экран"`) and `mobile app screens` in the product-UI clause. It was restructured
+  rather than extended to make room: the two overlapping Figma triggers merged
+  into one pair and `"particle landing"` came out, since the prose already
+  carries `particle/WebGL background`. Net 964 → **961**, under the 970 working
+  limit the house rule reserves for a future "not for" clause — the first draft
+  reached 1017 and the gate refused it.
+- **One trigger removal was a regression, caught by running T1 rather than by
+  reasoning about it.** Dropping `scrubbed sections` from the prose cost the
+  scroll-narrative storyboard task: a fresh agent answered `none` where the old
+  description loaded the skill. A control run against the previous description
+  proved the edit caused it rather than the task being borderline. The phrase is
+  back, paid for by shortening `marketing site, or hero experience`, and the
+  re-run is **14/14 — 0 misses, 0 false loads** across the full set including
+  both new mobile tasks. A description edit obliges the whole trigger set for
+  exactly this reason.
+
 ## [1.11.0] - 2026-08-10
 
 The bundle now stands on its own. A repeat audit ran the skill the way an agent

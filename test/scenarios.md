@@ -16,11 +16,26 @@ scroll-narrative storyboard; "landing janky / layers out of sync";
 Russian-language phrasing of "cinematic particle landing"
 («кинематографичный лендинг с частицами»); quiet-light dashboard styling;
 admin design tokens light/dark; Russian phrasing of "calm light UI for an
-internal tool" («спокойный светлый интерфейс для внутреннего инструмента»).
+internal tool" («спокойный светлый интерфейс для внутреннего инструмента»);
+**iOS onboarding screens; Russian phrasing of "design the mobile payment
+screen" («спроектируй мобильный экран оплаты»)** — both added 1.12.0.
 MUST NOT load: charts-only dashboard build (dataviz), pricing-table
 redesign, three.js FPS drop, copywriting headline.
 
 Pass: 0 misses / 0 false loads across the set.
+
+**Result, 2026-08-11 (`v1.12.0`): GREEN, 14/14 — after one RED and a control.**
+The first run of the widened description scored 13/14: the scroll-narrative
+storyboard task came back `none`. A control run of the same set against the
+**previous** description loaded the skill for it, which is what turned a
+suspicion into a cause — the regression was mine, from dropping `scrubbed
+sections` out of the prose to make room for the mobile trigger. That phrase was
+the only thing carrying "section by section". Restored, paid for by shortening
+`marketing site, or hero experience`, and re-run: 14/14 with both new mobile
+tasks loading and all four distractors still routing away.
+
+This is why the harness header says a description edit obliges the full trigger
+set. The edit looked purely additive; it removed a carrier.
 
 ## T2 — Application (motion architecture)
 
@@ -523,3 +538,47 @@ no rank ramp, so a severity scale had to be inferred from role descriptions. The
 not among them, so this one was found by hitting it. That is the difference
 between a declared silence and an undeclared one, and it is the shape to watch
 for in the remaining core packs.
+
+## T22 — The mobile register and the reference-sweep gate
+
+Added 1.12.0, when `MOBILE_SURFACES.md` and the Mobbin sweep landed. Two
+branches, two fresh contexts, one prompt apart.
+
+**T22a — the sweep tools are absent.** "Design the paywall screen for our iOS
+meditation app — we're on the `atrium` look. I need the structure and the actual
+CSS values." Pass: the agent reads `MOBILE_SURFACES.md`, is **not blocked** by
+the absence, declares what a `core` pack plus a phone leaves to it, and every
+`var(--…)` resolves in `styles/tokens/atrium.css`.
+
+**T22b — the sweep tools are present.** Same brief plus "have a look at what good
+paywalls do and give me your recommendation". Pass: the agent states what it
+would ask for and, for each answer class, **what it would and would not let that
+answer change** — structure and content order may move; palette, type, radii and
+motion may not.
+
+**Result, 2026-08-11 (tree `0f3a866` + this change): GREEN on both.** Neither was
+blocked. Both quoted the five rules with their homes, both named platform
+convention as theirs, both computed contrast from the token layer rather than
+trusting the pack's prose, and both found the same real defect in `atrium`:
+`--accent-gradient` cannot carry `--accent-ink` across a full row (2.08:1 at the
+pale end), so the selected plan row must use flat `--accent`. T22b's boundary
+table is the artifact this scenario exists to produce — five queries, each with a
+"may change" and a "may never change" column.
+
+**The finding that changed the release:** both runs independently reported that
+**no pack answers iOS Dynamic Type**. Every scale is a `vw`-keyed `clamp()`,
+which responds to viewport width and not to the user's text-size setting; the
+bundle had zero mentions of it. Reproduced by inspection — `--t-display:
+clamp(3.375rem, 4.3233vw + 2.359rem, 6.25rem)` and no occurrence of the term
+anywhere — and shipped as rule 6 of `MOBILE_SURFACES.md`, stated as a gap rather
+than answered with an invented value.
+
+**A limitation of this harness, recorded rather than smoothed over.** A subagent
+inherits the session's MCP tools, so a *genuinely* toolless branch is not
+reachable from here: both agents reported seeing `mcp__lazyweb__*` in their
+listing, and T22b — briefed that Mobbin was present — checked and said plainly
+that `mcp__mobbin__*` was **not** there. That is the new gate rule working
+exactly as written (*gate on the tools, never on the config*), and it caught a
+false premise in my own briefing. But it means T22a tested *instructed* absence,
+not real absence. A true negative branch needs a session with no MCP servers at
+all.
