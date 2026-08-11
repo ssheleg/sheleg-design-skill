@@ -15,7 +15,11 @@ fired in five run stamps.
    mtimes. A HEAD move you did not make, a `feat/*` branch you did not create,
    or a file changing while you test means another pipeline run is live in the
    same directory. Recheck immediately before staging anything — the tree can
-   turn hostile mid-run. *(Last fired: 2026-08-10 · `89a8798` — clean again: one branch, one
+   turn hostile mid-run. *(Last fired: 2026-08-12 · `e9b753f` — and it fired **late**: the
+   prescribed commands were run at close-out rather than before staging, on the strength of
+   a clean session-start snapshot and `git status`. Clean either way — one worktree, two
+   branches both at `e9b753f`, no foreign HEAD move — but a check run after the staging it
+   protects is a check that cannot protect it. Previously: 2026-08-10 `89a8798` — clean again: one branch, one
    worktree, no foreign HEAD move. The point stands: the answer is only worth having because it came
    from evidence. Its sharpest firing remains 2026-08-05 `2ad45b2`, where it
    caught a stolen ADR number, a stolen scenario number, and a version already
@@ -26,19 +30,35 @@ fired in five run stamps.
    origin` and `npm view <pkg> version` before a brief writes a version
    anywhere. This repo carried `1.4.0` in three manifests, a full CHANGELOG
    entry and a commit subject for a release that was never tagged and never
-   published. *(Last fired: 2026-08-10 · `89a8798` — and it nearly produced a false
+   published. *(Last fired: 2026-08-12 · `e9b753f` — `npm view` 1.13.0 against
+   `ls-remote --tags | sort -V` v1.13.0 after the release, and it settled a live
+   ambiguity: a local `npm publish` returned 403 "cannot publish over the previously
+   published versions" while the registry showed 1.13.0 published *seconds later* with
+   provenance and a different shasum. The manifests could not have answered that; the
+   registry did — the tag had triggered the release workflow, which published first, and
+   the local attempt was correctly refused. Previously: 2026-08-10 `89a8798` — and it nearly produced a false
    negative: `git tag | tail` and `ls-remote | tail` both sort lexically, where
    `v1.10.0` lands **before** `v1.9.0`, so the tag looked missing. `--sort=v:refname`
    and `sort -V` showed it present on both sides. A glance is not the check.
    Previously checked at stage 0 and again immediately before the tag. Its sharpest firing remains 2026-08-05
    `2ad45b2`, where `npm view` showed the chosen `1.6.0` already shipped.)*
 
-3. **A stage-0 "absent" is perishable.** Decisions taken because a file does not
-   exist — skipping the entry audit because there is no `DOCMAP.md`, no ADR
-   directory, no register — must be re-checked before they are acted on. In a
-   shared tree those files can appear an hour into the run.
-   *(Last fired: 2026-08-05 · `2ad45b2` — `docs/adr/` was absent at stage 0 and
-   held a committed `ADR-0001` by stage 5.)*
+3. **A scenario written is not a scenario run, and the difference is stated in the
+   scenario.** `test/scenarios.md` is the only place this repository tests the thing it
+   actually ships — an agent reading the skill and choosing correctly — and it is a
+   harness a human has to start. So every scenario carries a result line, and a scenario
+   that has not been executed says **"written, not yet run"** with the reason, in the
+   file, at the moment it is written. Never a blank, and never a verdict inferred from
+   the author's confidence: the author of a pack cannot pass its routing test, because
+   they already know the answer. When a run cannot execute one — no subagents, no
+   session, no time — it ships the debt in the same commit as the artifact and names it
+   in the release notes, so the next run inherits a list rather than a silence. Five
+   application scenarios sat unrecorded across four releases (2026-08-10), which is what
+   an unstated debt looks like after it has been left alone.
+   *(Added 2026-08-12 · `e9b753f`, replacing the retired "a stage-0 absent is
+   perishable". First instance: T23, `scoreboard` against `field-notes`, written with
+   both branches and no result — subagent runs were disabled for the session that
+   shipped the pack.)*
 
 4. **A scenario that asserts disambiguation must ship its negative branch.**
    "Does the agent pick the new pack?" cannot fail in the interesting
@@ -46,7 +66,12 @@ fired in five run stamps.
    Every routing test in `test/scenarios.md` that claims pack A is
    distinguishable from pack B needs a second prompt that must still choose B,
    run in a separate fresh context. T13 is the shape to copy.
-   *(Last fired: 2026-08-09 · `b426ccc` — four pairs, eight fresh contexts, all
+   *(Last fired: 2026-08-12 · `e9b753f` — **half.** T23 ships with its negative branch
+   written (`scoreboard` vs `field-notes`, the two closest packs in the library) and with
+   **no result**, because subagent runs were disabled for the session. The scenario's
+   result line says so rather than claiming a green. This instruction covers the shape of
+   the scenario; nothing in it covers a scenario that is never run, which is the gap this
+   firing exposes. Previously: 2026-08-09 · `b426ccc` — four pairs, eight fresh contexts, all
    green; and the negative branches are what proved the fork clauses are read
    from both sides.)*
 
@@ -56,7 +81,11 @@ fired in five run stamps.
    values, and a synthesised palette with a citation attached is an invented
    value that looks sourced. This retired an eighth pack and a six-pack
    backfill in one run rather than shipping either.
-   *(Last fired: 2026-08-09 · `b426ccc` — four references, four URLs, and the
+   *(Last fired: 2026-08-12 · `e9b753f` — one reference, one URL, and the pack was
+   measured off the reference's own shipped stylesheet rather than off a screenshot. The
+   two places a value had no reference behind it — the paper status set and the chart
+   ramp — are marked `SELECTED` at the declaration, with the file's header defining what
+   that word costs against `MEASURED`. Previously: 2026-08-09 · `b426ccc` — four references, four URLs, and the
    one place a value had no reference behind it, `maquette`'s status set, is
    marked as a pack decision at the declaration rather than passed off as
    extracted.)*
@@ -84,7 +113,19 @@ fired in five run stamps.
    can be evaded by rephrasing the very sentence it protects: prefer an
    unconditional assertion, and prove each planted defect fails with **its own
    check's message**, not merely that the suite went red.
-   *(Last fired: 2026-08-10 · `89a8798` — three new forms, each watched failing
+   *(Last fired: 2026-08-12 · `e9b753f` — and the class was **the entry point that
+   drops a status the script already computed**, which is the 2026-08-05 argv defect one
+   layer down: `validate.py --self-test` printed FAILED and exited 0 because `main()`
+   returned the status and `__main__` called it bare. Watched saying no by breaking a
+   fixture in a copy of the tree — 0 before, 1 after. Shapes enumerated and each checked
+   rather than grepped for: the other two gates' entry points (`sys.exit(main())`,
+   `raise SystemExit(main())` — clean), every `check_floor` return path, the self-test's
+   own `subprocess.returncode`, `package.json`'s six script chains (all `&&`, none `;`),
+   and the workflows for `continue-on-error`, `|| true` and pipes that swallow a gate's
+   exit — none present. The second defect is the same class pointed at fixtures: a plant
+   pinned to `**twelve locked style packs**` stopped mutating anything the first time the
+   library grew, and reported BROKEN into an exit code nobody read. Previously:
+   2026-08-10 · `89a8798` — three new forms, each watched failing
    and each discriminated by its own message; one of them was found evadable by
    a reviewer and made unconditional before shipping. Its previous sharpest
    firing, 2026-08-10 `3af6d97`, found the same argv defect in two more
@@ -97,7 +138,12 @@ fired in five run stamps.
    while CI ran one for a whole release cycle, so a merge's green described a
    third of the suite. Instruction 6 says a gate must be watched saying no;
    this one says it must be watched saying anything at all.
-   *(Last fired: 2026-08-10 · `89a8798` — diffed again; the new self-sufficiency
+   *(Last fired: 2026-08-12 · `e9b753f` — diffed again, and this is the run where it
+   would have mattered: the self-test whose exit code was dropped runs in CI through
+   `npm run selftest`, so CI had been reporting green for a self-test that could not fail
+   it. No workflow change was needed — the fix was in the script CI already runs — but
+   "CI runs it" was true the whole time and worth nothing while the script could not say
+   no. Previously: 2026-08-10 · `89a8798` — diffed again; the new self-sufficiency
    check lives inside `validate.py`, which CI already runs, so it needed no workflow
    change. Noted rather than assumed, again. Previously: `b426ccc` — the reciprocity check
    lives inside `validate.py`, which CI already runs, so it needed no workflow
@@ -137,7 +183,14 @@ fired in five run stamps.
    doc's numbers against a fresh measurement. This is instruction 6 pointed at
    the close-out instead of at the gates — a green nobody watched land is not
    evidence there either.
-   *(Last fired: 2026-08-10 · `89a8798` — the published tarball was unpacked and
+   *(Last fired: 2026-08-12 · `e9b753f` — the published tarball was pulled from the
+   registry and read: 418 files carrying `styles/scoreboard.md`, its token layer and the
+   whole kit. The local channels were verified by reading installed files rather than the
+   updater's output — the hub copy's `SKILL.md` says `version: 1.13.0` and its `styles/`
+   holds `scoreboard.md`, and the shadow check printed nothing. In the same output the
+   updater failed to refresh one unrelated marketplace and still reported the plugin
+   updated, which is the exact shape this instruction exists for. Previously:
+   2026-08-10 · `89a8798` — the published tarball was unpacked and
    the three fixed forms checked inside it, and the two local install channels were
    verified by reading their installed files rather than by the updater's output.)*
 
@@ -151,11 +204,41 @@ fired in five run stamps.
    them**; two test agents found it and one had to derive the distinction itself.
    The check was real and the coverage was not: after any batch, enumerate the
    new set pairwise and ask what happens to a reader who confuses two of them.
-   *(Last fired: 2026-08-10 · `89a8798` — the three new check forms enumerated
+   *(Last fired: 2026-08-12 · `e9b753f` — **weakly, and the weakness is worth naming.**
+   One pack landed, so there was no new batch to enumerate against itself; the pairwise
+   question was asked against the existing thirteen instead, and it found the real edge —
+   `scoreboard` and `field-notes` share warm paper, one orange-red accent and hairline
+   rules, and differ only in what the small type is doing. Forks written from both sides
+   and enforced by `validate_fork_reciprocity()`. A single-artifact run is where this
+   instruction is easiest to skip and where the confusable neighbour is likeliest to be an
+   old one. Previously: 2026-08-10 · `89a8798` — the three new check forms enumerated
    pairwise, which is how form 2 was found to be gated on a substring and made
    unconditional.)*
 
 ## Prune log
+
+- **2026-08-12 (`e9b753f`) · one retired, one added (still 10, at cap).** All ten
+  walked against the three triggers. **Eight fired** — 1 (late, and recorded as late),
+  2 (it settled a live registry-vs-manifest ambiguity mid-release), 4 (**half**: T23
+  ships its negative branch and no result), 5, 6 (the entry point that drops a computed
+  status, swept over five shapes), 7, 9 (tarball unpacked, both install channels read),
+  10 (weakly — one artifact, so the pairwise question was asked against the old set).
+  Instruction 8 was walked and correctly found **not applicable**: no work was delegated,
+  because subagent runs were disabled for the session, so there was no delegated finding
+  to reproduce.
+  **Instruction 3 did not fire for the fifth consecutive stamp and is retired.** Its
+  trigger — a stage-0 "absent" acted on later — has not occurred since 2026-08-05, and
+  the two things that made it dangerous are now covered mechanically: `validate_links()`
+  resolves every relative path in the tree, and `docs/DOCMAP.md` names where each kind of
+  artifact lives, so "there is no ADR directory" is a claim the tree answers rather than
+  a memory. It is retired for staleness, not because the failure it describes became
+  impossible; if a run is ever taken in a genuinely shared checkout again, re-add it.
+  **Added in its place, at the same cap: instruction 3 (new) — a scenario written is not
+  a scenario run.** This run produced the first scenario in the harness that ships with
+  its result line saying *owed*. Instruction 4 governs the scenario's shape and says
+  nothing about whether anyone executed it, which is exactly how T2, T3, T7, T9 and T14
+  sat unrecorded for four releases (see the 2026-08-10 log entry). The new rule makes the
+  debt explicit and time-boxed rather than leaving it to be noticed.
 
 - **2026-08-10 (`89a8798`) · nothing retired; nothing added (still 10, at cap);
   instruction 6 widened.** All ten walked against the three triggers. **Nine
@@ -223,8 +306,64 @@ fired in five run stamps.
 | 2026-08-09 | `b426ccc` | four packs — showroom, blueprint, prism, maquette — plus reciprocal forks and a check for them; **`v1.9.0` shipped** | **yes** |
 | 2026-08-10 | `3af6d97` | fresh-eyes audit of the whole skill; six new checks, three gate defects reproduced and fixed, thirteen wrong ratios corrected; **`v1.10.0` shipped** | **yes** |
 | 2026-08-10 | `89a8798` | repeat audit run as application scenarios; the bundle made self-sufficient, the defect class gated, the hook contradiction resolved; **`v1.11.0` shipped** | **yes** |
+| 2026-08-11 | `eb13099` / `13f0a3f` | mobile becomes a named register; Mobbin joins the sweep slot; **`v1.12.0` and `v1.12.1` shipped** | no |
+| 2026-08-12 | `e9b753f` | `scoreboard` style pack from get-ryze.ai, thirteenth kit, two gate defects fixed; **`v1.13.0` shipped** | **yes** |
 
 ## Log
+
+### 2026-08-12 — the self-test said FAILED and the gate said 0
+
+**Symptom.** A release-time count change broke one of `validate.py`'s planted defects:
+the stale-count plant searched for the literal `**twelve locked style packs**`, which
+this run had just rewritten to *thirteen*, so the fixture mutated nothing and the
+harness printed `BROKEN … the fixture changed nothing in README.md` followed by
+`self-test FAILED: a planted defect went undetected`. The suite it runs inside exited
+**0**, and `npm test` was green.
+
+**Surfaced at** the gate-raising step, by reading output that had already scrolled past
+a green summary. **Owned by** whichever run added the argv handling in `main()` — the
+comment three lines above the bug says, in this repository's own words, *"an unknown
+flag silently running the normal pass is how a suite reports green for a self-test it
+never ran"*.
+
+**Root cause, in two layers.** `main()` **returned** `self_test()`'s status and
+`__main__` called `main()` bare, so the value was computed, formatted into a failure
+message, printed to stderr, and dropped. The sibling gates both propagate
+(`sys.exit(main())`, `raise SystemExit(main())`); the one that had been repaired at the
+argv layer was the one still broken at the exit layer, because the fix had been aimed at
+the argument and not at the status. The second layer is the fixture: pinning a plant to
+a literal that every release edits guarantees it stops testing the check it exists for,
+and the only thing that would have reported that was the exit code nobody read. Two
+defects, one class — **a status the program computed and its exit path discarded** —
+and each was the other's cover.
+
+**Fixes by grade.** *Structural:* `raise SystemExit(main())`, watched saying no by
+breaking a fixture in a copy of the tree (0 before, 1 after). *Structural:* the plant now
+reads whatever number the README claims and makes that number wrong, so it cannot go
+quiet again. *Process:* the class was swept over its shapes rather than its string — the
+other two entry points, every `check_floor` return path, the self-test's own
+`subprocess.returncode`, `package.json`'s six script chains, and the workflows for
+`continue-on-error`, `|| true` and pipes that swallow a gate's exit. None of the other
+shapes was present, which is worth recording precisely because a sweep that finds nothing
+is the only kind that can be trusted later.
+
+**What the pack run itself found.** `scoreboard`'s reference sets a positive delta in
+`#00D492` **on white** — 1.84:1, an invisible success state — at 11px inside its own
+product screenshots. The pack keeps the colour and confines it to the dark panel, where
+it measures 10.21:1. Two more corrections went the same way: a 500ms button transition
+past the doctrine's 300ms ceiling, and a scan line animating `top`. All three are in
+`Gotchas` rather than silently applied, because a correction nobody can see is a value
+the next reader will re-derive from the reference and call a finding.
+
+**The debt this run ships.** T23 — `scoreboard` against `field-notes`, the two closest
+packs in the library — is written with both branches and **no result**, because subagent
+runs were disabled for the session. That is now instruction 3.
+
+**The check that catches it next time.** The exit path is mechanical. What stays human:
+*is there anything else this suite computes and then declines to act on?* The honest
+limit is that a self-test cannot test its own runner — the proof here came from breaking
+a fixture by hand in a throwaway copy, and that is the technique to repeat, not a check
+to add.
 
 ### 2026-08-10 — the class was not swept, and the harness had never tested using
 
