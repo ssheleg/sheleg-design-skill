@@ -2,7 +2,7 @@
 
 The React reference kit for the SHELEG **Pigeonhole** style pack — a white wall
 ruled by hairlines, a display face that never passes weight 400, one italic word
-in the headline, and eleven pastel hues in which a hue *is* a category.
+in the headline, and nine pastel categories in which a hue *is* the category.
 
 It is generated from the pack, not authored beside it: `src/styles.css` opens with
 `styles/tokens/pigeonhole.css` byte for byte, and the rules the design agent must
@@ -38,9 +38,12 @@ lightness down compresses the hues in OKLab, so the worst deuteranopic pair
 (Marketing against Notification) ends up **1.24 ΔE** apart, well under the palette
 gate's hard floor of 10.
 
-Eleven hues cannot be simultaneously AA-compliant and mutually distinguishable to
-a dichromatic reader. So the hue is the second channel and the word is the first —
-which is why `children` on `CategoryChip` is not optional.
+Nine hues cannot be simultaneously AA-compliant and mutually distinguishable to a
+dichromatic reader — and they were not distinguishable before the derivation either:
+the reference's own worst pair measures 4.42 ΔE against the same floor of 10. The
+derivation makes it worse rather than causing it. So the hue is the second channel
+and the word is the first, which is why `children` on `CategoryChip` is not
+optional.
 
 ## What this kit deliberately does not contain
 

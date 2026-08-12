@@ -7,8 +7,8 @@ computed styles at 1440×900, 768×1024 and 390×844. The full pack is
 ## The one thing this pack is
 
 **The label system is the design system.** A white wall, hairlines instead of
-borders, a display face that never passes weight 400, and eleven pastel hues in
-which a hue *is* a category — each rendered as a two-layer chip: the deeper tint
+borders, a display face that never passes weight 400, and nine pastel categories in
+which a hue *is* the category — each rendered as a two-layer chip: the deeper tint
 pair outside at 8px, the paler pair inside at 7px, one pixel between them.
 
 ## Non-negotiable

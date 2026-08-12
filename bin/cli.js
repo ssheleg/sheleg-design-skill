@@ -248,8 +248,8 @@ ${c("bold", "What it installs")}
                        goes dark when it catches the reader hiding),
                        manpage (a developer landing page set in the reader's
                        own system monospace, cream paper, coral label chips),
-                       pigeonhole (a white sorting wall whose eleven pastel
-                       hues are a filing scheme, one hue per category) —
+                       pigeonhole (a white sorting wall whose nine pastel
+                       categories are a filing scheme, one hue each) —
                        plus a ready-made token CSS per pack and
                        STYLE_PACK_TEMPLATE.md for authoring more
 `);

@@ -80,7 +80,7 @@ this table is for choosing, not for reading instead of the pack:
 | [`scoreboard`](./styles/scoreboard.md) | warm paper, ink primary, hot orange that only marks, pixel numerals | products whose argument is an accumulating number — growth, ads, SEO |
 | [`datasheet`](./styles/datasheet.md) | off-white spec sheet, hairline cells at radius 0, one orange, Inter over JetBrains Mono, a dark **alarm state** | B2B SaaS whose product is a verdict about the visitor, request or device — fraud, bot and device intelligence, identity, API products |
 | [`manpage`](./styles/manpage.md) | cream paper, the reader's own **system monospace** (zero webfont bytes), 48px display ceiling, 576px argument column, coral label chips that are real `<h2>`s | developer products whose buyer reads code — APIs, SDKs, CLIs, MCP servers, developer infrastructure |
-| [`pigeonhole`](./styles/pigeonhole.md) | white field, hairlines, a display that never passes weight 400 plus one italic word, and **eleven pastel hues where a hue is a category** — a two-layer chip, 8px outside / 7px inside, label word mandatory | products that file the reader's incoming mess into named categories — email triage, ticket routing, digests, organisers, CRM inboxes |
+| [`pigeonhole`](./styles/pigeonhole.md) | white field, hairlines, a display that never passes weight 400 plus one italic word, and **nine categories in which a hue is the category**, from an eleven-ramp pastel system — a two-layer chip, 8px outside / 7px inside, label word mandatory | products that file the reader's incoming mess into named categories — email triage, ticket routing, digests, organisers, CRM inboxes |
 
 **A materialized kit answers part of what a core pack leaves out.** `npx
 sheleg-design-skill --kit <pack>` produces `src/styles.css`, whose component half is
@@ -165,7 +165,9 @@ not with emptiness. Say which row you took and why when two fire.
   that stalls, cuts off, or jumps.
 - **A standalone pack pins its own ceiling.** `workbench` and `briefing-room`
   are not cinematic; `MOTION_INTENSITY` above 3 on either is a misread of the
-  pack, not a bold choice. `field-notes` is standalone **by default** and may
+  pack, not a bold choice. `pigeonhole` is cinematic but at the family's floor: it bans the scroll clock,
+scrubbing, parallax and a sticky nav, so `MOTION_INTENSITY` above **4** on it has
+nothing legal to buy. `field-notes` is standalone **by default** and may
   opt into the cinematic layer — it carries a `## Motion flavor` section saying
   how — so it is the one standalone pack without a hard ceiling. Read that
   section before turning the dial up on it.

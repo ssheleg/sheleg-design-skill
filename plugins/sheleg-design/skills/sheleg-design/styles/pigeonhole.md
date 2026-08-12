@@ -10,8 +10,9 @@ elements. Ratios were computed by importing this repository's own palette gate.
 
 A white wall, one blue that only ever appears as a two-stop gradient, a display
 face that never goes bolder than 400, one italic word in the headline — and
-**eleven pastel hues in which a hue *is* a category**, rendered as a two-layer
-chip: an outer chip in the deeper tint holding an inner chip in the paler one.
+**nine categories in which a hue *is* the category**, drawn from an eleven-ramp
+pastel system and rendered as a two-layer chip: an outer chip in the deeper tint
+holding an inner chip in the paler one.
 
 The identity in one sentence: **the label system is the design system.** Not a
 page decorated with pastels — a page whose only bespoke colour is a filing
@@ -48,8 +49,8 @@ marketing page a user lands on before the product they log into, which is
 Both are pastel, and that is the whole trap. In `cyclorama` the pastel is a
 **field** — a full-bleed backdrop cycling on a 32-second loop behind a fixed
 subject, and its meaning is atmosphere. Here the pastel is a **taxonomy**: eleven
-hues, each one bound to a named category, each appearing only inside a chip the
-size of a word, and **none of them ever moves**. One pack colours the room; this
+hues, nine of them bound to a named category, each appearing only inside a chip
+the size of a word, and **none of them ever moves**. One pack colours the room; this
 one colours the filing.
 
 The give-away is what happens when you remove the colour. Remove `cyclorama`'s
@@ -102,6 +103,15 @@ Ratios recomputed from `styles/tokens/pigeonhole.css` by the palette gate.
 | `--warn` | `#9f6d00` | 4.50:1 |
 | `--danger` | `#c94244` | 4.83:1 |
 | `--info` | `#2965ec` | 5.04:1 — an alias of the accent, on purpose |
+| `--surface` | `#ffffff` | the card fill: at field level, separated by hairline |
+| `--surface-3` | `#fcfcfc` | the third, barely-there step |
+| `--accent` / `--accent-2` | `#2965ec` / `#5c89f8` | the CTA gradient's two stops — a fill, never a word |
+| `--on-accent` | `#ffffff` | 5.04:1 on `--accent`, and 3.29:1 on `--accent-2`; see Gotchas |
+| `--accent-wash` / `--accent-edge` | `#eff3ff` / `#d9e2ff` | the functional wash and edge — **and they collide with To Reply's two palest tints; see Gotchas** |
+
+The thirty-six tint tokens are not listed here: a table of them would be a
+transcription, and `styles/tokens/pigeonhole.css` is the copy to take. What the
+table above is for is the functional half — the tokens a component names by hand.
 
 **Status is never by colour alone.** The four status tokens are close under
 dichromacy — the gate measures `--danger`/`--good` at ΔE 3.4 and `--good`/`--warn`
@@ -132,13 +142,16 @@ against the very tints it paints them on, eight of nine of them, and the token
 layer marks each derivation at its declaration. The four tint steps per hue are
 measured literals.
 
-**Why the hue is only the second channel, with the number.** Darkening these inks
-to clear AA compresses them in OKLab, and the gate measures the worst
-deuteranopic pair (marketing against notification) falling from ΔE 4.42 to
-**1.24** — far under its hard floor of 10. Eleven hues cannot be simultaneously
-AA-compliant and mutually distinguishable to a dichromatic reader; no
-re-stepping fixes it, because that reader is working with one axis where this
-system wants nine points. So the chip's **word** is the category and the hue
+**Why the hue is only the second channel, with the numbers.** Neither set clears
+the bar. As the reference paints them, the worst deuteranopic pair (marketing
+against notification) is ΔE **4.42** — already less than half the palette gate's
+hard floor of 10, so these hues were never distinguishable to that reader.
+Deriving them to clear AA makes it worse rather than causing it: the same pair
+falls to **1.24**. Nine hues cannot be simultaneously AA-compliant and mutually
+distinguishable to a dichromatic reader, and no re-stepping fixes either number,
+because that reader is working with one axis where this system wants nine points.
+So the choice is not *accessible colour or legible colour* — it is that colour
+cannot carry this meaning at all. The chip's **word** is the category and the hue
 reinforces it. A chip without its label is not a quieter chip, it is an unreadable
 one.
 
@@ -153,13 +166,14 @@ elements, Geist appears on 878 and the display face on 34.
 
 | Role | Token | Measured |
 |---|---|---|
-| Display | `--size-display` | `clamp(34px, 5.6vw, 60px)`, `--lh-display` **1** — 60px on 60px at 1440, 34px/42.5px at 390 |
-| Section head | `--size-head` | `clamp(27.2px, 3.6vw, 40px)`, line-height 1.25 |
+| Display | `--size-display` | 60px at 1440 **and at 768**, 34px at 390 — `clamp(34px, 7.82vw, 60px)`, a ramp fitted to those three readings |
+| Display line-height | `--lh-display` | **1** at 1440 and 768 — 60px on 60px, the tightest in the library. **1.25 at 390** (34px/42.5px), which the token layer switches below 768px |
+| Section head | `--size-head` | 40px at 1440 and 768, 27.2px at 390 — `clamp(27.2px, 5.21vw, 40px)`, fitted the same way |
 | Sub-head | `--size-sub` | 20px/24px |
 | Lede | `--size-lede` | 18px/28px |
 | Body | `--size-body` | 14px/24px — the dominant pairing, on 59 elements |
 | Body large | `--size-body-lg` | 16px/24px |
-| Chip label | `--size-chip` | 12px, weight 500 |
+| Chip label | `--size-chip` | 12px/16px, weight 500 |
 | Smallest | `--size-micro` | 10px/15px |
 
 **The display never gets louder.** `--weight-display` is **400** at every size the
@@ -171,6 +185,14 @@ off computed styles rather than assumed.
 **One italic word.** The headline's emphasis is a real `<em>` in the display face
 at the same size and the same weight, italic — 213px of the 780px column. Not a
 colour change, not a weight change, not a highlight, and **exactly one per page.**
+
+**The two ramps are fitted, not copied, and that is a pack decision.** The
+reference ships seven `clamp()` declarations and its display resolves from none of
+them alone: the widest, `clamp(40px, 5.6vw, 60px)`, yields 43.01px at 768 where
+60px was measured, and its 40px floor cannot reach the 34px measured at 390. The
+coefficients above are the ones that reproduce all three readings — 7.82vw caps at
+exactly 768. Re-measure before trusting either number at a viewport not in the
+table.
 
 Body copy sits at `--measure-body` (650px) and the lede at `--measure-lede`
 (640px); the display column is wider than both at `--measure-hero` (780px), which
@@ -207,9 +229,12 @@ decisions, and they are stated rather than left to the reader.
 inner carries `--radius-chip-inner` (7px), `linear-gradient(--cat-X-50,
 --cat-X-100)`, `--cat-X-ink`, `--size-chip` at `--weight-label`, and 1px of
 padding from its parent — which is exactly the 8px→7px step. The label word is
-**required**. `:hover` deepens the outer pair by one step; there is no pressed
-state, because a chip is a label rather than a control unless the product makes it
-a filter, in which case it takes the button's `:focus-visible` ring.
+**required**. `:hover` deepens the outer pair by one step. There is no
+pressed state, because a chip is a label rather than a control — but a product
+whose categories are *filters* needs the state a label does not have, so
+**selected** is specified: the inner layer takes its category's `-150` step instead
+of `-50`, the outer keeps `-200`, and a 2px inset of `--cat-X-ink` marks it. That is
+the one place a chip may carry a border. `:focus-visible` is the button's ring.
 
 **Primary button.** `linear-gradient(var(--accent), var(--accent-2))`,
 `--radius-control` (13px), `--on-accent` label at `--size-body-lg`
@@ -217,11 +242,14 @@ a filter, in which case it takes the button's `:focus-visible` ring.
 the accent rather than to black. **Ship the ramp light-to-dark, not
 dark-to-light**: the reference runs `#2965ec` → `#5c89f8`, and white clears
 5.04:1 at the top and only 3.29:1 at the bottom of the same button. Reverse the
-stops so the label's worst case is the passing one. `:hover` lifts the shadow to
-`--shadow-card` plus 1px of translate; `:focus-visible` takes a 2px
+stops so the label's worst case is the passing one. `:hover` **deepens its own tinted
+shadow** and translates −1px — never swap it for `--shadow-card`, which is greyer
+*and* fainter, so the button would read as sinking. `:focus-visible` takes a 2px
 `--accent-strong` ring at 2px offset — the reference ships `outline-style: none`
-here, which is the one defect in it a keyboard user meets immediately;
-`:disabled` drops to `--surface-2` with `--ink-faint` and no shadow.
+here, which is the one defect in it a keyboard user meets immediately. `:disabled`
+drops to `--surface-2` with `--ink-faint` and no shadow: that pair is 2.43:1, which
+WCAG 1.4.3 exempts for a disabled control and which is the only word
+`--ink-faint` may ever carry.
 
 **Secondary button.** `--surface` fill, `--rule` hairline, `--ink-body` label,
 same radius. `:hover` fills `--surface-2`.
@@ -234,18 +262,23 @@ gradient and its shadow for the tinted pair. Two-column at ≥768px, one below.
 `--cat-step-*`, the same two-layer construction. Three across at 1440.
 
 **FAQ.** A `<dl>`: `<dt>` at `--size-body-lg` `--weight-emphasis`, `<dd>` at
-`--size-body` `--ink-soft`, one `--rule` hairline between pairs, two columns at
-1440. **Never `<details>`** — the reference ships 7 `dt`/`dd` pairs in served
+`--size-body` `--ink-soft`, one `--rule` hairline between pairs, two columns
+at ≥1024px and one below — the middle breakpoint takes one column, because two
+543px columns do not fit inside 720px. **Never `<details>`** — the reference ships 7 `dt`/`dd` pairs in served
 HTML, and an answer a crawler cannot read without running JS is an answer that is
 not there.
 
 **Nav.** Transparent over the field, `--size-body` at `--weight-label`, a
 `--radius-control` primary button at the right, and it **does not stick** —
-measured: zero `position: sticky` on the page.
+measured: zero `position: sticky` on the page. Below 768px it collapses to the
+wordmark plus one `--radius-control` button, with the links behind a disclosure: at
+a 342px container the row does not fit, and this is the only element on the page
+whose mobile shape is not a stacked version of its desktop one.
 
 **Logo wall.** A marquee at `--dur-marquee` (100s, linear), logos as SVG at 32px
-height, `--ink-faint` treatment. It is the one continuous animation in the pack
-and it stops entirely under reduced motion.
+height, `--ink-faint` treatment. It is the one continuous animation in the pack, and
+under reduced motion it is **paused** rather than shortened — see Motion flavor,
+because collapsing its duration would strobe it.
 
 ## Hero
 
@@ -254,16 +287,20 @@ then the display headline centred in a 780px column at `--size-display` with
 `--lh-display` 1 — **two lines, and two is the ceiling**; the lede in 640px at
 `--size-lede` `--ink-lede`; two buttons side by side, primary then secondary; one
 microline of provider marks; and the top of the social-proof line. The product
-frame with `--shadow-hero` begins **below** the fold, at y≈713 — the page does not
-try to fit the screenshot into the first screen, and that is what leaves the
-headline room to be 60px on 60px.
+frame with `--shadow-hero` starts at **y≈713**, which is inside a 900px viewport by
+187px: the first screen shows its top edge and nothing more, and the screenshot
+itself resolves below the fold. That is the proportion to copy — not *the frame is
+below the fold*, which the measurement refutes, but *the frame is cut by it* — and
+it is what leaves the headline room to be 60px on 60px.
 
 The display column at 780px against a 1152px container is the pack's proportion:
 the headline is narrower than the page, so the eye reads a paragraph shape rather
 than a banner.
 
-Three lines is a mobile state, not a desktop one. If the headline needs three
-lines at 1440, cut the headline.
+**Two lines is the ceiling at 1440, and three is correct at 768 and below** — the
+display holds 60px down to 768 while the column narrows from 780px to 720px, so the
+same headline takes a third line there. Measured at all three viewports. If a
+headline needs three lines at 1440, cut the headline.
 
 ## Responsive
 
@@ -344,17 +381,28 @@ Everything else arrives once per section and then holds still. `--ease-overshoot
 exists because the reference spends it exactly once; spend it the same way — one
 element, never a set.
 
+**The entrance curve is `--ease`, and it is named here because a pack that ships no
+curve inherits the motion doctrine's three.** The word-by-word blur-in and every
+section entrance run on `--ease`; this pack declares no `--ease-out` because the
+reference declares none, and `--ease-overshoot` is reserved for the single element
+above.
+
 Under `prefers-reduced-motion: reduce` every duration in the token layer collapses
 to 0.01ms, the blur goes to 0, the stagger goes to 0 and the overshoot degrades to
-`--ease`. The reference honours reduced motion globally and a pack that regressed
-that would be worse than its own source.
+`--ease`. **One case needs more than a duration:** an infinite animation at 0.01ms
+does not stop, it strobes — so the marquee is paused with
+`animation-play-state: paused` in the component layer, which no custom property can
+express. The reference honours reduced motion globally and a pack that regressed
+that would be worse than its own source; a duration alone would have regressed it.
 
 ## Micro-interactions
 
 - **Chip `:hover`** — the outer gradient deepens one step; 0.15s, `--ease`.
 - **Card `:hover`** — `--shadow-card` grows and the card lifts 1px. No scale: a
   scaling card in a grid pushes its neighbours' baselines out of alignment.
-- **Button `:hover`** — the tinted shadow lifts, translate −1px.
+- **Button `:hover`** — its own tinted shadow deepens, translate −1px. Stated in
+  the same words as Components, because these two sections disagreeing is how an
+  implementer ends up choosing for themselves.
 - **`:focus-visible`, everywhere** — 2px `--accent-strong`, 2px offset. This pack
   ships it because the reference does not; see Gotchas.
 - **The overshoot**, once — a single element may arrive on `--ease-overshoot`.
@@ -409,6 +457,25 @@ framework leftovers as brand decisions; both are in the token layer because both
 are load-bearing on the page, and `--ink-soft` is deliberately the one that clears
 AA.
 
+**Two of the nine chips do not render two layers, and the signature depends on
+it.** `--cat-cold-150` and `--cat-cold-100` are the same measured literal
+(`#e5f9ff` — the reference repeats the step), so on a Cold Email chip the inner
+gradient's foot equals the outer gradient's head and the 8px→7px step is invisible;
+its inner fill `#feffff` is one unit off the page white. `--cat-step-50` is
+`#ffffff`, identical to `--bg` and `--surface`, so a STEP chip on a white panel
+shows only its `#eeeeee`→`#e6e6e6` ring. Both are faithful to the reference, and
+both are exceptions to the construction the Signature element calls the thing to get
+exactly right. Where a chip must read as two layers on those two hues, put it on
+`--surface-2` rather than on the field.
+
+**The functional accent collides with To Reply.** `--accent-wash` `#eff3ff` and
+`--accent-edge` `#d9e2ff` are byte-identical to `--cat-reply-50` and
+`--cat-reply-100`, and `--accent` `#2965ec` is the same blue family as
+`--cat-reply-ink` `#0940f3`. In a pack whose thesis is that the label system *is*
+the design system, an accent wash and a To Reply card are the same colour. Do not
+place one beside the other; where a surface needs both, the accent takes
+`--surface-2`.
+
 **The reference is not consistent about its control radius** — 13px in the hero and
 nav, 14px in-page. Both are recorded; pick one per surface and stay with it.
 
@@ -424,6 +491,9 @@ no rotation anywhere on the page. And the before/after diptych is not built from
 DOM rows: the words `Before` and `After` appear zero times in the served HTML and
 zero times in the live DOM after a full scroll pass — the section is a raster.
 
-**Fluid type does most of the responsive work.** Seven `clamp()` ramps ship. The
-display's caps out at 768px, which is why 768 and 1440 measure the same 60px and
-differ only in how many lines it takes.
+**Fluid type does less than it looks like it does.** The *reference* ships seven
+`clamp()` ramps; this pack ships **two** — the display and the section head — and
+every other size is fixed, body copy included at 14px/24px across all three
+viewports. So the whole responsive story is: the headline shrinks, the columns
+stack, nothing else changes. The display's ramp caps at 768px, which is why 768 and
+1440 measure the same 60px and differ only in how many lines it takes.

@@ -17,7 +17,8 @@ mood — and a taxonomy that fails its own contrast floor eight times out of nin
   live page** at 1440×900, 768×1024 and 390×844 — 912 rendered elements. A white
   field ruled by hairlines, one blue that only ever appears as a two-stop
   gradient, a display face that never passes weight 400, one italic word in the
-  headline, and eleven pastel hues in which a hue *is* a category. For products
+  headline, and nine categories in which a hue *is* the category, drawn from an
+  eleven-ramp pastel system. For products
   whose job is to sort the reader's incoming mess into named categories — email
   triage, ticket routing, digests, organisers, CRM inboxes. Widened contract, a
   light-only token layer, a full reference kit, and reciprocal forks written into

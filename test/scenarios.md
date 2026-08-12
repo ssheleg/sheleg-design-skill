@@ -899,5 +899,69 @@ Both branches are also asked, after choosing, to read their chosen pack in full 
 report defects with file and quoted text — the same shape that returned nine
 findings on `scoreboard` in T23 and twenty-two on the `datasheet` pair in T24.
 
-**Result: written, not yet run.** Filled in below the moment the two runs return.
+**Result, 2026-08-12 (tree `feat/pigeonhole-pack-v1.21.0`): GREEN on both branches**,
+and the pair returned forty-nine findings of which twenty-two were defects in the pack
+shipped in the same commit.
+
+T25a selected `pigeonhole`, quoted the `SKILL.md` row and the pack's own *"the reader's
+first question is what will it call this?"*, rejected `showroom` on the fork clause
+**from both sides**, and named `cyclorama` as second-closest via the documented pastel
+trap. Dials 5 / 4 / 4, each moved off the baseline with the clause it came from — and it
+flagged its own VARIANCE reasoning as judgement rather than quotation, which is the
+honest form.
+
+T25b stayed on `showroom`, quoted the reciprocal fork from both directions, and answered
+what would move it in four separate directions — including the one that matters: *"if the
+review tool auto-filed comments into a fixed set of named buckets … the subject shifts."*
+So the negative branch did not merely resist the newest pack; it named the boundary.
+
+**Every finding was reproduced before an edit** (standing instruction 8). The arithmetic
+ones were recomputed rather than read: `clamp(34px, 5.6vw, 60px)` yields **43.01px** at
+768 where the pack claimed the measured 60px, `clamp(27.2px, 3.6vw, 40px)` yields
+**27.65px** where it claimed 40px, `42.5 / 34 = 1.25` against a declared `--lh-display: 1`,
+and **713 < 900** against a hero frame described as beginning below the fold. All four
+confirmed: the ramps had been transcribed from the reference's *declared* clamps instead
+of fitted to this run's own three readings — the same class as reading a ratio off an
+OKLCH parent instead of the shipped hex, one layer up.
+
+**Twenty-two findings fixed in this commit.** Both ramps refitted (7.82vw and 5.21vw,
+which reproduce 34/60/60 and 27.2/40/40 exactly); a width media block for the mobile
+line-height; the hero's arithmetic restated as *cut by the fold* rather than *below it*;
+the button's hover made one instruction in both sections and stopped swapping its tinted
+shadow for a greyer, fainter one; `--ink-faint`'s "never a word" amended to name the
+WCAG 1.4.3 exemption it relies on; **the marquee paused rather than shortened under
+reduced motion**, because an infinite animation at 0.01ms strobes at the reader the query
+protects; the nine-versus-eleven count swept across eleven sites; `--ink-lede` relabelled
+(a substitution that holds neither hue nor chroma is not a derivation) and `--good` /
+`--warn` relabelled DERIVED with the definition widened to cover a role the reference
+never paints; `--cta-shadow` renamed `--cta-shadow-tint` because a colour named like a
+shadow is an invalid declaration CSS drops in silence; six tokens added that the pack
+stated and the layer lacked (five line-heights and the 20px radius measured on 12
+elements); the selected state specified and shipped; the FAQ's middle breakpoint and the
+nav's mobile shape stated; the two-line ceiling reconciled with the measured three lines
+at 768; a motion ceiling added to `SKILL.md`; the tinted-shadow rule given its mechanism
+(`var(--cat-X-150)` / `-200`, which the kit writes out nine times); and three Gotchas
+added — the two chips whose layers collapse (`--cat-cold-150` equals `-100`,
+`--cat-step-50` equals `--bg`), the collision between `--accent-wash` and To Reply's two
+palest tints, and the corrected causal claim about deuteranopia.
+
+**That last one is the finding worth keeping.** The pack had argued that deriving the inks
+to clear AA *caused* the hues to collapse under deuteranopia. T25a checked the two numbers
+and refuted the causation: 4.42 ΔE is already less than half the floor of 10, so the
+reference's brighter inks were never distinguishable either. Derivation makes it worse; it
+does not make it true. The conclusion survives and the argument for it is now correct.
+
+**One finding refuted, and the two branches disagreed about it.** T25b called
+`Contract: widened — all thirteen headings` an off-by-one, because every widened pack has
+fourteen `##` headings. T25a checked the same thing and found the count correct. T25a is
+right: the contract is thirteen headings **plus** `## Motion flavor` for a cinematic pack,
+which is `validate.py`'s own docstring and which `validate_contract_terminology()` enforces
+as the one permitted spelling. Recorded because a claim disproved and never written down
+comes back as folklore — and because two capable readers of the same file reached opposite
+conclusions, which is evidence the phrasing invites the misreading even though it is true.
+
+**Twenty-six findings filed rather than fixed**, because they belong to artifacts this run
+does not own: twenty-three against `showroom` (board B-021 … B-024) and three against the
+pack skeleton's Components contract (B-025). Filing them here rather than acting on them is
+the boundary this run kept; several are serious, and the board rows carry the numbers.
 

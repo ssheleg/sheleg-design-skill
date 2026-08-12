@@ -16,10 +16,11 @@ export interface CategoryChipProps {
   category: Category;
   /**
    * The label word, and it is required rather than optional on purpose: the hue
-   * alone cannot carry the category. Darkening the nine inks to clear WCAG AA
-   * leaves the worst deuteranopic pair 1.24 ΔE apart, so a reader with
-   * deuteranopia cannot tell Marketing from Notification by colour. The word is
-   * the channel; the hue reinforces it.
+   * alone cannot carry the category. The reference's own inks leave the worst
+   * deuteranopic pair 4.42 ΔE apart against a floor of 10, and deriving them to
+   * clear WCAG AA drops that pair to 1.24 — so a reader with deuteranopia cannot
+   * tell Marketing from Notification by colour either way. The word is the
+   * channel; the hue reinforces it.
    */
   children: ReactNode;
   className?: string;

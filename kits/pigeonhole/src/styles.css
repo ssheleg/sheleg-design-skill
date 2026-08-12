@@ -1,5 +1,5 @@
-/* SHELEG Design — Pigeonhole token layer (a white sorting wall: an eleven-hue
-   pastel taxonomy where a hue is a category, a display face that never goes
+/* SHELEG Design — Pigeonhole token layer (a white sorting wall: nine categories
+   drawn from an eleven-ramp pastel system, where a hue is a category, a display face that never goes
    bolder than 400, and one italic word in the headline).
    Copy verbatim; consume only var(--…) in components.
 
@@ -21,9 +21,12 @@
    SELECTED — the reference paints no value in this role (it is a marketing page
    and has no error state), so the value is a different *step* of a hue the
    reference already ships, chosen for WCAG AA on the field it sits on.
-   DERIVED — the reference DOES paint this role and its value fails an
-   accessibility floor. The hue and chroma are held and OKLab L is walked down
-   until the ROUNDED hex clears 4.5:1. Eight bits per channel is where the
+   DERIVED — a value walked down OKLab L from a hue the reference ships, holding
+   hue and chroma, until the ROUNDED hex clears 4.5:1. Two cases: the reference
+   paints this role and its value fails the floor (every category ink), or the
+   reference paints no such role and the nearest hue it does ship is too light for
+   one (--good, --warn). A substitution that holds neither hue nor chroma is not a
+   derivation and is not labelled as one -- see --ink-lede. Eight bits per channel is where the
    derivation finishes: an earlier pass of this file read its ratios off the
    unrounded candidates and would have shipped #007b22 claiming its parent's
    4.50:1 where the hex itself measures 4.38:1.
@@ -59,12 +62,16 @@
   --ink: #242424; /* 15.52:1 on --bg — MEASURED: display, section heads, every h2 */
   --ink-body: #3d3d3d; /* 10.86:1 on --bg — MEASURED: body copy that must carry weight */
   --ink-soft: #6b7280; /* 4.83:1 on --bg — MEASURED: the dominant body ink, and the one that clears AA */
-  --ink-faint: #9ca3af; /* 2.54:1 on --bg — MEASURED: non-text only, an icon or a disabled glyph. Never a word. */
+  --ink-faint: #9ca3af; /* 2.54:1 on --bg — MEASURED: an icon, a decorative glyph, or the label of a DISABLED control — which WCAG 1.4.3 exempts and which is the only word this token may carry. Never live text. */
 
   /* The reference's own lede ink is #848484 at 3.74:1 — below AA for the 18px
-     regular it is painted at. This pack does not ship it; --ink-soft is the
-     reference's own alternative and it clears the floor. */
-  --ink-lede: #6b7280; /* 4.83:1 on --bg — DERIVED: the reference's own alternative, and it clears the floor */
+     regular it is painted at. This pack does not ship it. The replacement is not a
+     derivation: nothing was walked down a lightness axis, and the two are not the
+     same hue (#848484 is achromatic; this one has a blue-slate cast). It is the
+     reference's OWN dominant body ink, measured on 79 elements, promoted into a
+     role the reference fills with something that fails. The promotion is the pack's
+     decision; the value is a reading. */
+  --ink-lede: #6b7280; /* 4.83:1 on --bg — MEASURED, role SELECTED: the reference's own body ink, promoted to the lede */
 
   /* ---- Lines: this pack divides with hairlines, not with shadow ---------- */
   --rule: #f3f3f3; /* COMPOSITED — its 1px rgba(231,231,231,0.5) resolved over --bg, on 43 elements */
@@ -82,7 +89,7 @@
   --accent-strong: #2965ec; /* 5.04:1 on --bg — MEASURED: the accent that may carry a word */
   --accent-wash: #eff3ff; /* MEASURED — its new-blue-50, the palest step of the same hue */
   --accent-edge: #d9e2ff; /* MEASURED — its new-blue-100 */
-  --cta-shadow: rgba(75, 131, 253, 0.2); /* MEASURED — 0 2px 10.1px, tinted to the accent */
+  --cta-shadow-tint: rgba(75, 131, 253, 0.2); /* MEASURED — the accent tint the CTA's shadow is mixed from. A COLOUR, not a shadow: the shadow itself is --shadow-cta, and `box-shadow: var(--cta-shadow-tint)` would be dropped by CSS in silence. */
   --on-accent: #ffffff; /* 5.04:1 on --accent — MEASURED: the label colour the reference paints */
 
   /* ---- Status ----------------------------------------------------------- */
@@ -93,8 +100,8 @@
      13.9 at full colour, above the hard floor of 10; under deuteranopia
      --danger/--good fall to 3.4 and --good/--warn to 5.0, which is legal only
      because this pack states that status is never by colour alone. */
-  --good: #008931; /* 4.54:1 on --bg — SELECTED from its #17a34a */
-  --warn: #9f6d00; /* 4.50:1 on --bg — SELECTED from its #d8a40c */
+  --good: #008931; /* 4.54:1 on --bg — DERIVED from its #17a34a: hue and chroma held, L walked to the floor */
+  --warn: #9f6d00; /* 4.50:1 on --bg — DERIVED from its #d8a40c, the same way */
   --danger: #c94244; /* 4.83:1 on --bg — MEASURED: the Notification chip's ink, which already clears AA on the field */
   --info: #2965ec; /* 5.04:1 on --bg — MEASURED: an alias of --accent, on purpose */
 
@@ -208,20 +215,34 @@
   --weight-label: 500; /* MEASURED — control labels and every chip */
   --weight-emphasis: 600; /* MEASURED — inline emphasis in body copy */
 
-  /* Fluid, by clamp(). Measured: 60px at 1440 and at 768 (both cap), 34px at 390
-     in three lines; section heads 40px, then 27.2px. The reference ships seven
-     ramps; these two are the ones its display and section heads resolve to. */
-  --size-display: clamp(34px, 5.6vw, 60px); /* MEASURED at three viewports */
-  --lh-display: 1; /* MEASURED — 60px on 60px, the tightest in the library */
-  --size-head: clamp(27.2px, 3.6vw, 40px); /* MEASURED */
+  /* Fluid. The SIZES below are measured — display 60px at 1440 and at 768, 34px at
+     390; section heads 40px, 40px, 27.2px — but the RAMPS are FITTED to those three
+     points rather than copied from a declaration, and that is a pack decision.
+     The reference ships seven clamp() ramps and its display resolves from none of
+     them alone: its widest, clamp(40px, 5.6vw, 60px), yields 43.01px at 768 where
+     60px was measured, and its 40px floor cannot reach the 34px measured at 390.
+     So the vw term here is the one that reproduces all three readings — 7.82vw
+     caps at exactly 768 — and the same method gives the section head 5.21vw.
+     Change a viewport and re-measure; do not trust the coefficient. */
+  --size-display: clamp(34px, 7.82vw, 60px); /* SELECTED ramp over MEASURED sizes: 34 / 60 / 60 at 390 / 768 / 1440 */
+  --lh-display: 1; /* MEASURED — 60px on 60px at 1440 and 768, the tightest in the library */
+  --size-head: clamp(27.2px, 5.21vw, 40px); /* SELECTED ramp over MEASURED sizes: 27.2 / 40 / 40 */
   --lh-head: 1.25; /* MEASURED — 50px on 40px */
+  /* A size never travels alone in this library, so every pairing the pack states
+     has a token here. Five of these were stated in the pack and missing from the
+     layer until a fresh-context read of the pack asked for the lede's 28px. */
   --size-sub: 20px; /* MEASURED — 20px/24px, 9 elements */
+  --lh-sub: 1.2; /* MEASURED — 24px on 20px */
   --size-lede: 18px; /* MEASURED — 18px/28px */
+  --lh-lede: 1.556; /* MEASURED — 28px on 18px */
   --size-body: 14px; /* MEASURED — 14px/24px, the dominant pairing on 59 elements */
   --lh-body: 1.714; /* MEASURED — 24px on 14px */
   --size-body-lg: 16px; /* MEASURED — 16px/24px */
+  --lh-body-lg: 1.5; /* MEASURED — 24px on 16px */
   --size-chip: 12px; /* MEASURED — 12px/16px, weight 500 */
+  --lh-chip: 1.333; /* MEASURED — 16px on 12px */
   --size-micro: 10px; /* MEASURED — 10px/15px, the smallest on the page */
+  --lh-micro: 1.5; /* MEASURED — 15px on 10px */
 
   /* ---- Texture ---------------------------------------------------------- */
   /* Radii by frequency: 9999 (35), 32 (21), 20 (12), 13 (10), 8 and 7 (12 each),
@@ -230,6 +251,7 @@
   --radius-chip-inner: 7px; /* MEASURED — the inner chip, 1px inside its parent */
   --radius-control: 13px; /* MEASURED — every button in the hero and the nav */
   --radius-control-lg: 14px; /* MEASURED — the same button in-page; the reference is not consistent and this records both */
+  --radius-panel-sm: 20px; /* MEASURED — the third most frequent radius on the page, on 12 elements */
   --radius-panel: 32px; /* MEASURED — cards, FAQ rows, product frames */
   --radius-band: 52px; /* MEASURED — the full-width enterprise band */
   --radius-pill: 9999px; /* MEASURED — badges */
@@ -244,6 +266,12 @@
      reads coloured while staying white. Measured on the green and blue cards;
      the pattern generalises and the pack states the rule rather than shipping a
      token per hue. */
+  /* These two are the measured INSTANCE, off the green card. The RULE they stand
+     for is mechanical and does not need a token per hue: a tinted card's shadow is
+     `0 2px 3.4px var(--cat-X-150), 0 1px 1px var(--cat-X-200)` — its own two deeper
+     steps, which every category ships. The kit's .pg-wash--* rules are that rule
+     written out nine times; do not reach for these two literals to tint a card that
+     is not green. */
   --shadow-tint-a: 0 2px 3.4px rgba(207, 249, 222, 0.22); /* MEASURED — the green card's near shadow */
   --shadow-tint-b: 0 1px 1px rgba(118, 217, 143, 0.11); /* MEASURED — and its contact shadow */
 
@@ -267,6 +295,15 @@
   --stagger-word: 0.04s; /* SELECTED — same reason: 20 word spans enter in sequence, the interval is not in the stylesheet */
 }
 
+/* The display's line-height is not one number. It is exactly 1 where the ramp is
+   capped (60px on 60px at 1440 and at 768) and 1.25 below that, measured at 390 as
+   34px on 42.5px. A single value would make one of the two viewports wrong. */
+@media (max-width: 767px) {
+  :root {
+    --lh-display: 1.25; /* MEASURED at 390 — 42.5px on 34px */
+  }
+}
+
 /* The reference honours reduced motion globally — its first rule collapses
    transition-duration and animation-duration to 0.01ms on *. A pack that
    regressed that would be worse than its own source, so the collapse is part of
@@ -276,7 +313,13 @@
     --dur-quick: 0.01ms; /* MEASURED — the reference collapses * to 0.01ms !important */
     --dur-base: 0.01ms; /* MEASURED — same rule */
     --dur-slow: 0.01ms; /* MEASURED — same rule */
-    --dur-marquee: 0.01ms; /* MEASURED — the same rule collapses animation-duration */
+    /* 0.01ms is what the reference's global rule sets, and for the marquee it is
+       WRONG: an infinite animation at 0.01ms does not stop, it strobes ~100,000
+       times a second at the reader this query protects. The duration is kept for
+       parity with the reference and the marquee is stopped in the component layer
+       instead — `animation-play-state: paused` — because no custom property can
+       express it. See the kit's .pg-marquee rule. */
+    --dur-marquee: 0.01ms; /* MEASURED — and insufficient on its own; see above */
     --blur-enter: 0px; /* SELECTED — the entrance blur has no reduced-motion value to read */
     --stagger-word: 0s; /* SELECTED — same reason */
     --ease-overshoot: cubic-bezier(0.4, 0, 0.2, 1); /* SELECTED — an overshoot is motion, so it degrades to the standard curve; the reference states no reduced-motion easing */
@@ -301,7 +344,7 @@
   font-family: var(--font-body);
   font-size: var(--size-body-lg);
   font-weight: var(--weight-label);
-  line-height: 1.5;
+  line-height: var(--lh-body-lg);
   border: 1px solid transparent;
   border-radius: var(--radius-control);
   padding: 11.7px 22px;
@@ -323,7 +366,10 @@
 }
 
 .pg-btn--primary:hover {
-  box-shadow: var(--shadow-card);
+  /* Deepen its OWN tint. Swapping to --shadow-card would hand the button a shadow
+     that is greyer and fainter than its resting one, so it would read as sinking —
+     which is what the pack's Components section now forbids in those words. */
+  box-shadow: 0 4px 14px var(--cta-shadow-tint);
   transform: translateY(-1px);
 }
 
@@ -383,7 +429,7 @@
   font-family: var(--font-body);
   font-size: var(--size-body-lg);
   font-weight: var(--weight-emphasis);
-  line-height: 1.5;
+  line-height: var(--lh-body-lg);
   color: var(--ink);
   margin: 0;
 }
@@ -409,7 +455,7 @@
   gap: 6px;
   font-size: var(--size-chip);
   font-weight: var(--weight-label);
-  line-height: 1.333;
+  line-height: var(--lh-chip);
   border: 1px solid transparent;
   border-radius: var(--radius-chip);
   padding: 3px 8px;
@@ -449,11 +495,17 @@
   font-family: var(--font-body);
   font-size: var(--size-chip);
   font-weight: var(--weight-label);
-  line-height: 1.333;
+  line-height: var(--lh-chip);
   white-space: nowrap;
 }
 
 .pg-cat:hover { filter: saturate(1.08); }
+
+/* Selected — for a product whose categories are filters. The inner layer takes the
+   -150 step instead of -50, and the ink marks the edge. This is the one place a
+   chip may carry a border. */
+.pg-cat[aria-pressed='true'],
+.pg-cat--selected { box-shadow: inset 0 0 0 2px currentColor; }
 
 .pg-cat--reply {
   background-image: linear-gradient(var(--cat-reply-150), var(--cat-reply-200));
@@ -536,6 +588,60 @@
   color: var(--cat-step-ink);
 }
 
+.pg-cat--reply[aria-pressed='true'] .pg-cat__inner,
+.pg-cat--reply.pg-cat--selected .pg-cat__inner {
+  background-image: linear-gradient(var(--cat-reply-150), var(--cat-reply-200));
+  color: var(--cat-reply-ink);
+}
+
+.pg-cat--newsletter[aria-pressed='true'] .pg-cat__inner,
+.pg-cat--newsletter.pg-cat--selected .pg-cat__inner {
+  background-image: linear-gradient(var(--cat-newsletter-150), var(--cat-newsletter-200));
+  color: var(--cat-newsletter-ink);
+}
+
+.pg-cat--marketing[aria-pressed='true'] .pg-cat__inner,
+.pg-cat--marketing.pg-cat--selected .pg-cat__inner {
+  background-image: linear-gradient(var(--cat-marketing-150), var(--cat-marketing-200));
+  color: var(--cat-marketing-ink);
+}
+
+.pg-cat--calendar[aria-pressed='true'] .pg-cat__inner,
+.pg-cat--calendar.pg-cat--selected .pg-cat__inner {
+  background-image: linear-gradient(var(--cat-calendar-150), var(--cat-calendar-200));
+  color: var(--cat-calendar-ink);
+}
+
+.pg-cat--notification[aria-pressed='true'] .pg-cat__inner,
+.pg-cat--notification.pg-cat--selected .pg-cat__inner {
+  background-image: linear-gradient(var(--cat-notification-150), var(--cat-notification-200));
+  color: var(--cat-notification-ink);
+}
+
+.pg-cat--cold[aria-pressed='true'] .pg-cat__inner,
+.pg-cat--cold.pg-cat--selected .pg-cat__inner {
+  background-image: linear-gradient(var(--cat-cold-150), var(--cat-cold-200));
+  color: var(--cat-cold-ink);
+}
+
+.pg-cat--team[aria-pressed='true'] .pg-cat__inner,
+.pg-cat--team.pg-cat--selected .pg-cat__inner {
+  background-image: linear-gradient(var(--cat-team-150), var(--cat-team-200));
+  color: var(--cat-team-ink);
+}
+
+.pg-cat--urgent[aria-pressed='true'] .pg-cat__inner,
+.pg-cat--urgent.pg-cat--selected .pg-cat__inner {
+  background-image: linear-gradient(var(--cat-urgent-150), var(--cat-urgent-200));
+  color: var(--cat-urgent-ink);
+}
+
+.pg-cat--step[aria-pressed='true'] .pg-cat__inner,
+.pg-cat--step.pg-cat--selected .pg-cat__inner {
+  background-image: linear-gradient(var(--cat-step-150), var(--cat-step-200));
+  color: var(--cat-step-ink);
+}
+
 /* ---- LabelledRow — one row of the product, labelled -------------------- */
 .pg-row {
   display: flex;
@@ -607,7 +713,7 @@
   font-family: var(--font-display);
   font-size: var(--size-sub);
   font-weight: var(--weight-display);
-  line-height: 1.2;
+  line-height: var(--lh-sub);
   color: var(--ink);
   margin: 0 0 8px;
 }
@@ -727,12 +833,28 @@
   max-width: var(--measure-body);
 }
 
+/* ---- The logo marquee -------------------------------------------------- */
+/* 100s, linear, and the one continuous animation in the pack. */
+.pg-marquee {
+  display: flex;
+  gap: var(--gutter); /* the measured gutter, reused: the marquee's own gap was not measured */
+  animation: pg-marquee var(--dur-marquee) linear infinite;
+}
+
+@keyframes pg-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 /* ---- Reduced motion ---------------------------------------------------- */
-/* The durations already collapse in the token layer; these are the transforms,
-   which a duration cannot switch off. */
+/* The durations already collapse in the token layer. Two things a duration cannot
+   do: stop a transform, and stop an INFINITE animation — at 0.01ms the marquee
+   would strobe roughly a hundred thousand times a second at the reader this query
+   protects, which is worse than the motion it replaced. */
 @media (prefers-reduced-motion: reduce) {
   .pg-btn--primary:hover,
   .pg-row:hover,
   .pg-wash:hover { transform: none; }
   .pg-cat:hover { filter: none; }
+  .pg-marquee { animation-play-state: paused; }
 }
