@@ -25,6 +25,17 @@
 
 ## The register, in one sentence
 
+> **[CORRECTION — the measurement refuted this section.]** The sentence below came
+> from the Refero style card and is **false of the page as it ships**: the hero's
+> focal element is a *light* frame of hairline-ruled cells, and no element on the
+> reference has a dark background at all. The dark surface is not a window but a
+> **state** — `--dash-dark` appears in 97 rules and every one is an incognito
+> selector. The shipped register is *the page is a spec sheet, the specimen is you,
+> and the instrument re-skins itself dark when it detects the reader is hiding.*
+> Kept here unedited because a brief that quietly matches the artifact teaches the
+> next reader that stage-0 premises are never wrong. Full account in the design
+> record.
+
 **The page is a spec sheet, and the data lives in a dark instrument window cut into
 it.** Not a cockpit whose every surface is dark, and not a paper document that refuses
 instruments: an off-white datasheet whose focal element is a console panel showing the
