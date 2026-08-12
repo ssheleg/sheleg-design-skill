@@ -61,6 +61,17 @@ monitoring *now*. `scoreboard` is a warm paper page with **one** dark band in it
 and its numbers are a record of what has already happened. If the page has no
 paper on it, this is the wrong pack.
 
+### Against [`datasheet`](./datasheet.md)
+
+Both set warm off-white paper against a near-black ink with one hot orange that is
+mostly a mark, and both put their numbers in a ruled grid. The difference is what
+the number is. Here it is a **tally**: an accumulating total, dated, about someone
+else's outcomes, and the reader's questions are *how much* and *since when*. In
+`datasheet` it is a **single live reading** about the reader — this visit, this
+device, this verdict — with no history and nothing accumulating. A dotted-leader
+row whose figure is set in an aliased pixel face against a label-over-value cell
+in Inter at 11px is the visual tell.
+
 ## Palette
 
 Ready-made token layer: [`tokens/scoreboard.css`](./tokens/scoreboard.css) — copy

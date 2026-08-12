@@ -21,6 +21,17 @@
   opened the run named the source site and nothing else, which is the shape this
   ADR exists to answer; the name was chosen from the register and the site is
   recorded in the pack's `Origin:` line.
+- **Applied an eighth time:** 2026-08-12. The fourteenth pack was extracted from
+  `fingerprint.com` and is named **`datasheet`** for the register it encodes (a
+  spec sheet whose focal element is a live instrument, which re-skins itself dark
+  when it detects the reader is hiding), not `fingerprint`. This is the second run
+  whose opening request named the source brand and nothing else — *"look at
+  fingerprint design and let's put it in as the recommendation for B2B SaaS"* —
+  and, as the Consequences require, it was answered by pointing at this ADR before
+  any file was written rather than by complying silently. `fingerprint` is also a
+  live trademark of the company whose stylesheet was measured, which the
+  *no trademark surface* clause below already covers; the register name carries no
+  such reading. The address is in the pack's `Origin:`.
 - **Corrected:** 2026-08-10. The Decision section named the seventh pack
   `lecture-hall`. That was the name on the branch this ADR was written on, and
   that branch never merged; the pack that shipped from graphify.com is

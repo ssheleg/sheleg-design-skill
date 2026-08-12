@@ -11,7 +11,7 @@ problem — invented colors, six accent hues, dark mode retrofitted later.
 
 This skill is the taste layer. It gives a coding agent **one motion
 methodology** for cinematic, scroll-driven pages, **a motion doctrine** that
-decides whether to animate before it decides how, and **thirteen locked style
+decides whether to animate before it decides how, and **fourteen locked style
 packs** with ready-made design tokens, so what it builds reads as one system
 instead of a pile of effects.
 
@@ -58,6 +58,7 @@ into the cinematic layer, and says so in its own *Motion flavor* section.
 | `maquette` | near-black table, cream ink and cream axonometric models, mono block labels, pale aqua that works as text, one offset shadow | enterprise data infrastructure sold to an architecture buyer |
 | `scoreboard` | warm paper and warm near-black ink, 2–3px radii, an ink primary button, one hot orange that only ever marks, and a dark ledger of dotted-leader rows whose numbers are set in an aliased pixel face | products whose argument is an accumulating number — ads and SEO operators, growth tools, revenue dashboards sold on results |
 | `cyclorama` | a pale field cycling through six pastel stops on a 32s loop under near-black ink that never moves with it, a monospaced typewriter serif over mono, one orange used only as a fill, a particle organ that holds then redeploys, no shadows anywhere | enterprise AI transformation, applied-AI services, technical consultancies — where what is sold is a change of state and there is no screenshot worth showing |
+| `datasheet` | an off-white spec sheet ruled with dashed page guides, a live instrument built from hairline cells at radius zero, one vivid orange, Inter over JetBrains Mono, concentric radii from 16 to 2, and a dark alarm state the instrument enters when it detects the reader is hiding | B2B SaaS whose product is a verdict about the visitor, the request or the device — fraud and bot detection, device intelligence, identity and verification, API products sold on their payload |
 
 Each pack locks palette, type, texture, motion tokens, signature motifs and
 bans — and ships a `tokens/<pack>.css` to copy verbatim, so the agent never
@@ -132,7 +133,7 @@ skills.
 | `DESIGN_SYNC_BRIDGE.md` | The Claude Design contract: what a pack sends to claude.ai/design and in what shape, the rule for each of the four reference types, and the border motion does not cross |
 | `FIGMA_BRIDGE.md` | The design↔code contract: how a pack's tokens map onto Figma variable collections and modes, how to implement a design without importing raw values, and what cannot cross the border |
 | `AI_PRODUCT_PATTERNS.md` | The surfaces a model drives: the five states of a call, streaming instead of spinners, latency, provenance and uncertainty, agent confirmations, and the bans that keep it honest |
-| `styles/*.md` | The thirteen style packs — palette, type, texture, motion tokens, motifs, bans, and the traps each one carries |
+| `styles/*.md` | The fourteen style packs — palette, type, texture, motion tokens, motifs, bans, and the traps each one carries |
 | `styles/tokens/*.css` | The ready-made token layer per pack, copied verbatim instead of transcribed (`workbench` and `field-notes` each ship a light `:root` plus a `data-theme="dark"` twin) |
 | `styles/STYLE_PACK_TEMPLATE.md` | The pack contract as a skeleton, so a new style is authored against the same headings rather than improvised |
 
@@ -203,7 +204,7 @@ cd ./ds-workbench && npm install && npm run build
 then `/design-sync` in that directory, from Claude Code. Three layers cross: the
 pack's **bans** as the design system's own README, `styles.css` built from
 `tokens/<pack>.css` verbatim, and the components — a six-name spine that is
-identical in all thirteen kits, so switching packs swaps identity rather than API,
+identical in all fourteen kits, so switching packs swaps identity rather than API,
 plus each pack's signature parts. **Motion does not cross**, exactly as it does
 not cross into Figma: a kit is the static half of a pack, and saying so is what
 stops an agent inventing motion to fill the silence.
@@ -249,7 +250,7 @@ a pack's four widened sections used to make two gates *quieter* and still green.
 One honest limit: the npx installer is checked by asserting its runtime bundle
 walker exists, not by reading a file list — it has none by design. What proves
 it ships the right files is CI, which installs the bundle through **both**
-installers and `diff -r`s the result against the source, then builds all thirteen
+installers and `diff -r`s the result against the source, then builds all fourteen
 kits.
 
 `test/scenarios.md` (T1–T19) is the behavioral harness: fresh subagents given a

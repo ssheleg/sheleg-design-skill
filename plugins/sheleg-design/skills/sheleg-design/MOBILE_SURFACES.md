@@ -68,13 +68,13 @@ and pretending otherwise is worse than the gap.
    - **Binding the root size to the platform's text-size setting is yours**, and
      so is re-checking every line ceiling you set at the largest step — a
      three-line headline ceiling is a three-line ceiling only at one text size.
-     Nothing in the thirteen packs states a value for this and this file does not
+     Nothing in the fourteen packs states a value for this and this file does not
      invent one; the honest move is to say out loud that you decided it. WCAG
      1.4.4 (200% resize) is the floor you are working against, and it is not
      satisfied by a `vw` ramp.
 
 The one thing this library genuinely does not carry: **a mobile-native pack**.
-Every one of the thirteen was extracted from a web reference. Their tokens hold —
+Every one of the fourteen was extracted from a web reference. Their tokens hold —
 colour and type do not care about the runtime — but no pack's `## Components`
 was written against a tab bar or a sheet, so the component half is yours on any
 native surface, in every pack, whatever its `Contract:` line says about the web.

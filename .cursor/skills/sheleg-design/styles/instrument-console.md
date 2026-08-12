@@ -34,6 +34,17 @@ decompose a structure before they can judge it → `maquette`, whose subject is 
 static axonometric model. **A cockpit answers *what is happening now*; a maquette
 answers *what is this made of*.**
 
+### Against [`datasheet`](./datasheet.md)
+
+Both put an instrument at the centre of the page, and the difference is which way
+round the page and the instrument sit. This pack is the cockpit: the field is dark
+throughout, and the one electric accent exists to make a value readable **while it
+changes**. `datasheet` is paper with a single instrument set into it, and its
+readings are already settled — a verdict about a visit that has happened. If the
+number ticks while the reader watches, it belongs here. If it is a result, it
+belongs there. That pack does ship a dark surface, but as an alarm state on the
+instrument alone, never as the page's field.
+
 ## Palette
 
 Ready-made token layer: [`tokens/instrument-console.css`](./tokens/instrument-console.css)

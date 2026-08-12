@@ -4,6 +4,80 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.19.0] - 2026-08-12
+
+A fourteenth style pack, and the Refero style card it started from was wrong in
+four measurable places.
+
+### Added
+
+- **`datasheet`** — the fourteenth pack, extracted from `fingerprint.com` off its
+  live computed styles and its shipped stylesheet, which declares 140 custom
+  properties including ten-step ramps for nine hues. An off-white spec sheet, one
+  vivid orange, Inter over JetBrains Mono, a concentric radius family from 16 down
+  to 2 — and a **live instrument ruled out of hairlines at radius 0 which re-skins
+  itself dark when it detects the reader is hiding**. For B2B SaaS whose product is
+  a verdict about the visitor, the request or the device: fraud and bot detection,
+  device intelligence, identity, API products sold on their payload. Widened
+  contract, a two-theme token layer, a full reference kit, and reciprocal forks
+  written into `field-notes`, `instrument-console`, `showroom`, `blueprint` and
+  `scoreboard`.
+- **The dark half is a state, not a theme.** `[data-state="alarm"]` — the token
+  `--dash-dark` appears in 97 rules on the reference and every one of them is an
+  incognito selector; 134 rules in total re-skin the instrument when it detects
+  evasion. Wiring that surface to a user preference is banned in the pack, because
+  it destroys the only idea the pack has.
+
+### Fixed
+
+- **`validate_counted_claims()` did not read the three manifests, and both carried
+  a stale count.** `.claude-plugin/marketplace.json` said *"twelve pluggable style
+  packs"* above a list of thirteen for two releases, and `package.json` said
+  *"thirteen"* on the day the fourteenth landed. Names in those files were already
+  checked; the number beside the names was not, because the source list was
+  all-markdown plus two scripts. The list now includes both plugin manifests and
+  `package.json`, watched saying no against a planted `eleven` in the real file and
+  again as a permanent self-test plant that derives its wrong number from whatever
+  the manifest currently claims.
+- **Four corrections to the reference, recorded rather than applied silently.** Its
+  primary button sets white on `--orange-7` at **3.32:1**, so the pack's resting
+  fill moves one ramp step to `--orange-8` (5.34:1) and hovers to `--orange-9`
+  (9.02:1) — no colour invented, and the darkening direction kept. Its 8px mono
+  badge is set in `--gray-6` at **2.51:1** and the pack refuses that ink. Its `h1`
+  is pure black while its `body` is `#141415`, and the pack ships one ink. Its
+  `prefers-reduced-motion` block covers one group of hero animations out of roughly
+  twenty keyframe sets, and the token layer collapses the whole surface.
+- **Eleven defects in the new pack, found by its own routing scenario and fixed
+  before the tag.** T24 ran both branches in fresh contexts — the positive branch
+  chose `datasheet`, the negative stayed on `field-notes` — and each was asked to
+  read its chosen pack and report defects. The sharpest: in the alarm state
+  `--danger` on its own tint measured **4.44:1**, in the one cell that state exists
+  to render (the tint moves to `--pink-10`, 6.24:1); and the focus ring at
+  `--accent` measured **2.85:1** on `--accent-wash`, the surface the pack itself
+  mandates for a selected cell (a new `--focus-color` is `--accent-deep` on paper).
+  Also fixed: an accent job list that contradicted the pack's own ban, a button
+  border rule with no token behind it, 54 of 118 token declarations carrying
+  neither MEASURED nor SELECTED, a "hard floor" argument that sat exactly on the
+  floor, a duration measured against the wrong ceiling, an empty state using an ink
+  the palette table forbids for content, and two type values outside the ramp. Full
+  table in `test/scenarios.md` under T24.
+- **`SKILL.md` said "Six of the fourteen … The other seven answer all four."** Six
+  plus seven is thirteen against a fourteen-row table, and the pack left out of the
+  sentence was the one this release adds. It was this release's own count edit that
+  did it — **and the identical defect was found by a scenario agent in the previous
+  pack release**, fixed then as an instance. `validate_contract_split()` now derives
+  all three numbers from the table, watched saying no against a planted remainder
+  and shipped with a permanent self-test plant that reads whatever the paragraph
+  currently claims.
+- **`SURFACE_COMPOSITION.md` said the accent role resolves to `--accent` in ten
+  packs.** True at twelve, silently wrong at thirteen, twelve at fourteen. Fixed by
+  hand and filed as **B-016**, because the phrase reaches no check: `in ten,` is
+  not followed by a counted noun.
+
+### Changed
+
+- Ratchet floors raised to **1647 / 716 / 366** from 1507 / 603 / 352.
+
 ## [1.18.0] - 2026-08-12
 
 ### Changed

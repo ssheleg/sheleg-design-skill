@@ -1,8 +1,8 @@
 {
   "_why": "Ratchet floors. A gate whose check count can fall silently cannot detect a deleted requirement: stripping four required headings from one pack made validate.py drop 1270->1269 and sloplint.py 224->223, both still green. Each number is the count measured on the commit named below. Raise freely; lowering one needs a reason in the same commit.",
-  "_measured_on": "fix/scenario-findings-v1.16.0, 2026-08-12",
-  "validate.py": 1507,
-  "validate_palette.py": 603,
-  "sloplint.py": 352,
-  "_raised": "validate_palette.py 596 -> 603: instrument-console's palette table declares its base for the first time, so seven of its per-token ratios are now recomputed on every run. The pack was the library's least-covered until 1.16.0."
+  "_measured_on": "feat/datasheet-pack-v1.19.0, 2026-08-12",
+  "validate.py": 1647,
+  "validate_palette.py": 716,
+  "sloplint.py": 366,
+  "_raised": "validate.py 1507 -> 1647: the fourteenth pack adds its structural, enumeration, kit-parity and mirror checks, and validate_counted_claims() gained three sources -- the two plugin manifests and package.json, which carried counts nothing read (marketplace.json said 'twelve pluggable style packs' above a list of thirteen for two releases). validate_palette.py 603 -> 716: datasheet declares two themes and a table base, so both halves' ratios and every stated claim are recomputed on every run. sloplint.py 352 -> 366: one more pack and token layer under the bans. Also validate_contract_split(): the core-contract paragraph's three numbers are now derived from the pack table rather than typed, because that remainder was stale in two consecutive pack releases and a scenario agent found it both times."
 }

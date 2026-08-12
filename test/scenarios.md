@@ -773,3 +773,90 @@ anything was edited** (standing instruction 8). Seven confirmed, one refuted:
 All nine fixes shipped in `1.13.1`. **The scenario found more in one pair of runs
 than the three gates did in the whole release**, which is the argument for
 running the harness rather than writing it.
+
+## T24 — The reading register, and the fork against the notebook
+
+Added 1.19.0 with the `datasheet` pack. Two branches, two fresh contexts, run
+**blind against the bundle directory only** — the agents were forbidden `test/`,
+`docs/`, `kits/`, the README and the CHANGELOG, because this file carries the
+answer beside the prompt (the limitation B-012 recorded). The bundle they read is
+the worktree's, not an installed copy: the pack is unreleased, so a truly blind
+run against an install is impossible until 1.19.0 ships. Stated rather than
+glossed.
+
+This pair exists because `datasheet` and `field-notes` are now the two closest
+packs in the library — both off-white technical paper, both hairline-ruled, both
+carrying one warm accent and mono small type — and the whole distinction lives in
+what that small type is doing: a **source** you can check, or a **reading** about
+you.
+
+**T24a — should select `datasheet`.** "The marketing site for an API that tells a
+customer, per request, whether the visitor is a bot, is on a device seen
+committing fraud before, or is hiding behind a VPN or incognito. It returns a
+stable device id and a suspect score in about 20ms. Buyers are engineering and
+risk teams at e-commerce and fintech. We want the page itself to prove the thing
+works." Pass: routes to `styles/datasheet.md`, quotes the clause that decided it,
+and names the closest rejected pack with the clause that ruled it out. Fail:
+routing to `showroom` because the page shows the product, or to
+`instrument-console` because there is a dark surface in the pack.
+
+**T24b — should still select `field-notes`.** "The marketing site for an
+open-source tool that builds a knowledge graph of a codebase. Its whole selling
+point is that every answer traces back to the file and line it came from, so a
+reader can check it. Buyers are engineers and auditors who do not trust a black
+box. There is a dashboard, but the argument is the traceability." Pass: stays on
+`styles/field-notes.md` and can say what would have moved it (a reading about the
+reader rather than a claim with a source). Fail: routing to `datasheet` because
+the newest pack also serves a technical product with an instrument in it — which
+is the failure mode a positive-only branch cannot detect, per standing
+instruction 4.
+
+Both branches were also asked, after choosing, to read their chosen pack in full
+and report defects with file and quoted text — the same shape that returned nine
+findings on `scoreboard` in T23.
+
+**Result, 2026-08-12 (tree `feat/datasheet-pack-v1.19.0`): GREEN on both branches**,
+and the pair returned twenty-two findings of which eleven were defects in the pack
+shipped in the same commit.
+
+T24a selected `datasheet`, quoted the SKILL.md row and the pack's own *"the reader's
+first question is what does it actually return"*, and rejected `instrument-console`
+using the fork clause **from both sides** — *"If the number ticks while the reader
+watches, it belongs here. If it is a result, it belongs there."* It set the dials
+5 / 3 / 5 against the pack's own text and named `field-notes` as the runner-up.
+
+T24b stayed on `field-notes` and named what would move it, quoting the new fork at
+`field-notes.md:76` and `datasheet`'s own *"Not for"* clause. It also observed that
+three separate packs point at `field-notes` for that brief from three directions —
+so the negative branch did not merely resist the newest pack, it had positive
+evidence.
+
+**Every finding was reproduced against the artifact before any edit** (standing
+instruction 8). Eleven confirmed defects in `datasheet` were fixed in this commit:
+
+| Finding | Verdict |
+|---|---|
+| In the alarm state `--danger` on its own `--danger-weak` tint is **4.44:1** — the one cell the alarm state exists to render | **confirmed** — the tint moves to `--pink-10`, 6.24:1. Every other alarm status tints at step 9; the break is now recorded |
+| The focus ring at `--accent` is **2.85:1** on `--accent-wash` — the surface the same section mandates for a selected cell — and below 3:1 on `--surface-3` and all four status tints | **confirmed** — a new `--focus-color` token is `--accent-deep` on paper (worst case 4.59) and the accent in the alarm state |
+| The accent's job list includes the reference's 11px mono visitor id, which the pack's own ban forbids | **confirmed** — the pack now states which two of the reference's four accent uses are legal and which two it refuses |
+| "a 1px border one ramp step darker than the fill" is unimplementable: that step **is** `--action-hover`, so the border vanishes on hover and no token existed | **confirmed** — `--action-edge` is named, and the vanishing is stated as the reference's measured behaviour |
+| The alarm tints and the alarm `--action`/`--accent-deep` carry neither MEASURED nor SELECTED, against the token layer's own contract | **confirmed** — 54 of 118 declarations were unmarked; the alarm group is now marked in full |
+| "separate by only 10.0 … the hard floor" — 10.0 is not under a floor of 10 | **confirmed** — the sentence now says the floor is not strict and that zero margin is the reason to move |
+| `--dur-reveal: 0.3s` against "UI motion stays **under** 300 ms" | **confirmed** — it is an entrance, governed by the sub-500ms rule, and the pack now says which ceiling applies to which token |
+| The empty state fills value cells with `--ink-faint`, which the palette table restricts to "never content" | **confirmed** — `--ink-muted` at 5.06:1 |
+| The 15px verdict chip and its -0.03em sit outside the type ramp with no token | **confirmed** — `--t-chip` and `--tr-chip` added, and a table row |
+| The responsive clamp and its tracking switch had no tokens, in a pack that orders the token file be copied verbatim | **confirmed** — `--t-display-min` and `--tr-display-min` added |
+| `SKILL.md`: "Six of the fourteen … The other **seven** answer all four" — 6 + 7 = 13 against a 14-row table, and `datasheet` is the pack left out | **confirmed, and it was this run's own edit.** The identical defect was found by a T23 agent in the previous pack release. Fixed, and this time the class is gated: `validate_contract_split()` derives all three numbers from the table |
+
+**One claim refuted, and it is recorded because a refutation nobody writes down comes
+back as folklore.** T24a reported that `field-notes` carries no fork against
+`datasheet` and that the routing is one-directional at the riskiest fork. It is not:
+the fork is at `field-notes.md:76`, and T24b quoted it verbatim from that file. The
+two branches disagreed about the same line in the same tree.
+
+**Eleven further findings are real and belong to files this run did not author** —
+`field-notes`' provenance colours, its undocumented dark theme, and three routing
+ambiguities in `SKILL.md`. Reproduced, filed as B-017 through B-020, and not fixed
+here: changing a shipped pack's hexes is a visual change to a released design system
+and is not this run's call to make quietly.
+

@@ -796,9 +796,19 @@ def validate_counted_claims():
         "scenario": max((int(n) for n in re.findall(r"^##+ T(\d+)", scen, re.M)), default=0),
         "heading": len(PACK_SECTIONS_WIDE),
     }
+    # The three manifests were missing from this list until 1.19.0, and the cost
+    # was exactly what this check exists to prevent: marketplace.json said
+    # "twelve pluggable style packs" while thirteen shipped, for two releases,
+    # and package.json said "thirteen" on the day the fourteenth landed. Names in
+    # these files were already checked (validate_pack_enumerations); the NUMBER
+    # beside the names was not, because the source list was all-markdown plus two
+    # scripts. A count is checkable wherever it is written, including in JSON.
     sources = [
         "README.md", "CONTRIBUTING.md", "bin/cli.js", "docs/DOCMAP.md",
         "cursor/rules/sheleg-design.mdc",
+        ".claude-plugin/marketplace.json",
+        f"{PLUGIN_DIR}/.claude-plugin/plugin.json",
+        "package.json",
         f"{PLUGIN_DIR}/commands/{PLUGIN}.md",
     ] + [
         str(p.relative_to(ROOT))
@@ -914,6 +924,53 @@ def has_heading(text: str, heading: str) -> bool:
     return re.search(rf"^{re.escape(heading)}\s*$", text, re.M) is not None
 
 
+def validate_contract_split():
+    """The core-contract paragraph states three numbers; the table decides them.
+
+    "Six of the fourteen are on the core contract ... The other eight answer all
+    four" is three claims about one table, and they have now been wrong in TWO
+    CONSECUTIVE pack releases -- each time introduced by the release's own count
+    edit, which changed the total and left the remainder behind. 1.13.0 shipped
+    "Six of the thirteen ... the other six" (found by a T23 scenario agent);
+    1.19.0's draft shipped "Six of the fourteen ... the other seven" (found by a
+    T24 scenario agent). Both were fixed as instances. This is the class fix, and
+    it is arithmetic rather than judgement: the paragraph is the one place the
+    library explains that a core pack leaves four sections to the reader, so a
+    wrong remainder there is precisely the "invent a value and believe you read
+    it" failure the paragraph itself warns about.
+
+    validate_counted_claims() cannot see these: "Six of the fourteen" has no
+    counted noun after the number, and "the other eight" has none either.
+    """
+    skill_path = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "SKILL.md"
+    skill = read(skill_path) or ""
+    rows = re.findall(r"^\| \[`[a-z0-9-]+`\].*$", skill, re.M)
+    total = len(rows)
+    core = sum(1 for r in rows if "core contract" in r)
+    if not check(total > 0, "SKILL.md: no pack table rows found -- the contract split "
+                            "cannot be checked against anything"):
+        return
+    m = re.search(r"\*\*(\w+) of the (\w+) are on the core contract", skill)
+    if check(m is not None, "SKILL.md: the core-contract paragraph does not state "
+                            "'<N> of the <M> are on the core contract'"):
+        said_core, said_total = (WORD_NUMBERS.get(g.lower()) for g in m.groups())
+        check(said_core == core,
+              f"SKILL.md: says {m.group(1)!r} packs are on the core contract; the table "
+              f"marks {core}")
+        check(said_total == total,
+              f"SKILL.md: says the library holds {m.group(2)!r} packs; the table has {total}")
+    m = re.search(r"The other (\w+) answer all four", skill)
+    if check(m is not None, "SKILL.md: the core-contract paragraph does not state "
+                            "'The other <N> answer all four'"):
+        check(
+            WORD_NUMBERS.get(m.group(1).lower()) == total - core,
+            f"SKILL.md: says {m.group(1)!r} packs answer all four widened sections; the "
+            f"table leaves {total - core} that are not marked 'core contract' -- this "
+            f"remainder has been stale in two consecutive releases, each time because a "
+            f"count edit moved the total and not the remainder",
+        )
+
+
 def validate_contract_declaration():
     styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
     skill = read(styles.parent / "SKILL.md") or ""
@@ -992,6 +1049,25 @@ PLANTS = (
         "a manifest naming three packs of twelve",
         f"{PLUGIN_DIR}/.claude-plugin/plugin.json",
         lambda t: t.replace("briefing-room (dark 16:9 deck), ", ""),
+    ),
+    (
+        # The remainder that has now been stale in two consecutive pack releases:
+        # 1.13.0 shipped "the other six" of thirteen, and 1.19.0's draft shipped
+        # "the other seven" of fourteen. Derived from whatever the paragraph
+        # currently says, so it cannot pin itself to a number the next release
+        # edits -- the failure mode of the plant this one sits beside.
+        "the core-contract remainder left behind by a count edit",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md",
+        lambda t: re.sub(r"The other \w+ answer all four", "The other five answer all four", t, count=1),
+    ),
+    (
+        # The same class as the first plant, in a file the source list did not
+        # read until 1.19.0 -- which is how "twelve pluggable style packs" sat
+        # above a list of thirteen for two releases. Derived from whatever the
+        # manifest currently claims, for the reason given at the first plant.
+        "a count that is true of an older release, in a manifest",
+        ".claude-plugin/marketplace.json",
+        lambda t: re.sub(r"[a-z]+ (pluggable style packs)", r"six \1", t, count=1),
     ),
     (
         "the contract called by a stale number",
@@ -1207,6 +1283,7 @@ def main():
     validate_counted_claims()
     validate_pack_enumerations()
     validate_contract_terminology()
+    validate_contract_split()
     validate_contract_declaration()
     validate_core_vocabulary()
     validate_bundle_self_sufficiency()

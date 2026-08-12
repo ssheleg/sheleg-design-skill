@@ -73,6 +73,20 @@ single `1px` hairline and nothing else; three add a wash of `--surface-2` at
 discrete slabs with the field showing between them, `atrium` runs a continuous
 field and changes layout instead, and this one draws a line.
 
+### Against [`datasheet`](./datasheet.md), the nearest twin in the library
+
+Both are off-white technical paper. Both rule with hairlines rather than shadow,
+both carry one warm orange-red accent, and both set their small type in a mono.
+The test is **what that small type is doing.** Here it annotates a *source* — it
+says where a claim came from, so a reader can go and check it, and the register is
+*how do you know*. In `datasheet` it carries a *reading*: a visitor id, an IP, a
+score produced seconds ago, which the reader cannot check and does not need to,
+because the reading is about the reader. Its register is *what did you get*.
+
+The second tell is the dark surface. This pack refuses a console on purpose. That
+one ships a dark instrument, but only as an alarm state — darkness there is a
+verdict, never a theme.
+
 ## Palette
 
 Ready-made token layer: [`tokens/field-notes.css`](./tokens/field-notes.css) —

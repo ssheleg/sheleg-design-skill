@@ -1,0 +1,268 @@
+/* SHELEG Design — Datasheet token layer (a spec sheet whose focal element is a
+   live instrument ruled out of hairlines on the same paper — and which re-skins
+   itself dark when what it detects is evasion).
+   Copy verbatim; consume only var(--…) in components.
+
+   Extracted from https://fingerprint.com on 2026-08-12 by reading its live
+   computed styles at 1440x900 and 500x844 and its shipped stylesheet
+   (/styles.6f4ca5130282f8853ea6.css), which declares 140 custom properties
+   including ten-step ramps for grey, red, orange, yellow, green, teal, blue,
+   purple and pink. Ratios were computed by importing this repository's own
+   palette gate, test/validate_palette.py.
+
+   Two families of value appear below and they are not the same kind of claim:
+
+   MEASURED — the literal was in the reference's stylesheet or computed styles.
+   SELECTED — the reference declares the whole ramp but paints no such value in
+   this role, so the value is a different *step* of a ramp the reference already
+   carries, chosen for WCAG AA on the field it sits on. Selected is weaker than
+   measured and is marked at every declaration it applies to.
+
+   The reference's rem base is 8px (html { font-size: 8px }, matching its own
+   --grid-base), so every length below is stated in px: a rem here would mean
+   something different in any host that did not copy that base.
+
+   Six corrections, all in the pack's Gotchas: the primary button's label, the
+   8px badge ink, the two oranges for one job, the reduced-motion branch, the
+   focus ring's step down, and the alarm state's danger tint. */
+
+:root {
+  color-scheme: light;
+
+  /* ---- The paper -------------------------------------------------------- */
+  --bg: #fafaf8; /* MEASURED — the page field (its --gray-0) */
+  --surface: #ffffff; /* MEASURED — the alternating band, and every card */
+  --surface-2: #f8f8f6; /* MEASURED — hover fill (its --gray-1) */
+  --surface-3: #f0f0ed; /* MEASURED — sunken well, switch track (--gray-2) */
+
+  /* ---- Ink -------------------------------------------------------------- */
+  --ink: #141415; /* 17.62:1 on --bg — body, display, cell values */
+  --ink-soft: #484946; /* 8.67:1 on --bg — labels, lead paragraph, nav */
+  --ink-muted: #6b6c69; /* 5.06:1 on --bg — meta, footer, the trust eyebrow */
+  --ink-faint: #8c8c89; /* 3.23:1 on --bg — placeholder and disabled ONLY, never content */
+
+  /* ---- Lines: this pack divides with hairlines, not with shadow --------- */
+  /* The instrument is not a boxed card. It is a grid of cells whose walls are
+     1px solid --rule at radius 0, measured on the reference's own panel. */
+  --rule: #e4e5e1; /* MEASURED — every cell wall and section divider */
+  --rule-strong: #d9d9d6; /* MEASURED — the one heavier edge (its --gray-4) */
+  --rule-dash: #e4e5e1; /* MEASURED — same value, drawn dashed: the page's own guides */
+
+  /* ---- The accent: a mark, a fill and a focus ring ---------------------- */
+  /* 3.17:1 on --bg — below WCAG AA 4.5:1 for text at body size, above the 3:1
+     floor for a non-text mark and for large text (>=24px). Its measured jobs on
+     the reference are exactly those: one word of a 48px headline, the mono
+     visitor id, a 2px focus ring, a tick. It is never body copy. */
+  --accent: #f35b22; /* MEASURED — its --orange-7 */
+  --accent-deep: #be400f; /* 5.11:1 on --bg — MEASURED (--orange-8): the one orange that may carry a word */
+  --accent-wash: #ffeadc; /* MEASURED — selected cell, hovered row (--orange-2) */
+
+  /* ---- The primary action ---------------------------------------------- */
+  /* The reference fills this button with --accent and sets the label white,
+     which measures 3.32:1 and does not clear AA. The correction is one ramp
+     step, not a new colour: the resting fill is --orange-8 and the hover is
+     --orange-9, so white clears AA in both states and the press still darkens.
+     See the pack's Gotchas. */
+  --action: #be400f; /* MEASURED — --orange-8 */
+  --action-hover: #77361c; /* MEASURED — --orange-9 */
+  --on-action: #ffffff; /* 5.34:1 on --action */
+  /* MEASURED: the reference borders its button one ramp step darker than the fill
+     and, on hover, sets the border to the hover fill -- so the edge disappears at
+     the moment of press. That is the reference's behaviour, kept and named here
+     rather than left as a rule with no token behind it. */
+  --action-edge: #77361c;
+
+  /* ---- Status: step 9 of the ramp on step 2 of the same ramp ------------ */
+  /* The reference solves the light-field status problem before this pack does:
+     its "Not Detected" cell is --green-9 text on a --green-2 tint, measured.
+     Three of the four sets below follow that rule at the same steps; danger
+     stops at step 8 because --red-9 (#882329) and the warning ink (#663d00)
+     separate by only 10.0 in OKLab, which is the palette gate's hard floor —
+     two semantic states in one dark brown. Status is never carried by colour
+     alone here: every status cell on the reference also carries its word. */
+  --success: #165424; /* 8.63:1 on --bg — MEASURED (--green-9) */
+  --success-weak: #e8f7e9; /* MEASURED — --green-2 */
+  --danger: #d42035; /* 4.95:1 on --bg — SELECTED (--red-8, one step up from the set) */
+  --danger-weak: #ffebea; /* MEASURED — --red-2 */
+  --warning: #663d00; /* 9.00:1 on --bg — MEASURED (its --status-yellow) */
+  --warning-weak: #fdf0d9; /* MEASURED — --yellow-2 */
+  --info: #0a4c7b; /* 8.61:1 on --bg — SELECTED (--blue-9) */
+  --info-weak: #e7f4ff; /* MEASURED — --blue-2 */
+
+  /* ---- Radii: concentric, and the arithmetic is the reference's --------- */
+  /* Measured in use: 16 on the outer frame, 12 on cards, 8 on the frame's
+     inner shell, 6 on buttons, 4 on nav controls, 2 on a mono chip. The frame
+     carries 8px of padding and its child reads 8px, so inner = outer - padding
+     holds on the reference itself. The instrument's own cells are radius 0. */
+  --r-chip: 2px;
+  --r-control: 4px;
+  --r-button: 6px;
+  --r-inner: 8px;
+  --r-card: 12px;
+  --r-frame: 16px;
+  --r-cell: 0px; /* MEASURED — the ruled instrument never rounds a cell */
+
+  /* ---- Elevation: inset, never a drop shadow --------------------------- */
+  /* MEASURED. Both cards and the outer frame carry the same two-line inset —
+     a light top edge and a dark bottom one — so a surface reads as machined
+     rather than floating. Nothing on the reference casts a shadow downward
+     except the toggle handle. */
+  --lift-card: inset 0 1px 0 0 rgba(228, 229, 225, 0.3), inset 0 -1px 0 0 rgba(110, 111, 109, 0.1);
+  --lift-control: 0 2px 1px 0 rgba(24, 25, 22, 0.02), inset 0 -1px 0 0 rgba(24, 25, 22, 0.1);
+  --lift-action: inset 0 1px 0 0 rgba(255, 255, 255, 0.2), 0 1px 2px 0 rgba(24, 25, 22, 0.06), inset 0 -1px 0 0 rgba(24, 25, 22, 0.1);
+
+  /* ---- The grid --------------------------------------------------------- */
+  --grid: 8px; /* MEASURED — its own --grid-base, and the rem base it sets */
+  --gutter: 8px; /* MEASURED — the gap between instrument cells */
+  --pad-cell: 10px 12px; /* MEASURED — every label/value cell */
+  --pad-card: 12px; /* MEASURED */
+  --pad-button: 7px 14px; /* MEASURED 7.21px, which is 0.9rem at an 8px base */
+  --measure: 1248px; /* MEASURED — the page container */
+  --header-h: 56px; /* MEASURED — the sticky bar */
+
+  /* ---- Type ------------------------------------------------------------- */
+  --font-sans: Inter, -apple-system, "system-ui", "Segoe UI", Roboto, sans-serif; /* MEASURED, self-hosted 200-700 */
+  --font-mono: "JetBrains Mono", ui-monospace, monospace; /* MEASURED, self-hosted 400-800 */
+  --w-body: 400;
+  --w-medium: 500; /* the reference's display weight — not 600 */
+  --w-semi: 600; /* the accented word inside a title, and nothing else */
+
+  --t-display: 48px;
+  --lh-display: 1.167; /* MEASURED 56/48 */
+  --tr-display: -0.0625em; /* MEASURED -3px at 48px */
+  --t-title: 36px;
+  --lh-title: 1.222; /* MEASURED 44/36 */
+  --tr-title: -0.0203em; /* MEASURED -0.73px at 36px */
+  --t-figure: 30px;
+  --lh-figure: 1; /* MEASURED — a figure sets solid */
+  --t-lead: 16px;
+  --lh-lead: 1.5;
+  --t-body: 14px;
+  --lh-body: 1.5;
+  --t-nav: 13px;
+  --lh-nav: 1.692; /* MEASURED 22/13 */
+  --t-cell: 11px;
+  --lh-cell: 1.6; /* MEASURED 17.6/11 */
+  --tr-cell: 0.01em; /* MEASURED 0.11px at 11px */
+  --t-label: 9px; /* uppercase, --w-medium, --ink-soft */
+  --lh-label: 1.6; /* MEASURED 14.4/9 */
+  --tr-label: 0.08em; /* MEASURED 0.72px at 9px */
+  --t-eyebrow: 12px; /* uppercase, --w-body, --ink-muted */
+  --lh-eyebrow: 1.667; /* MEASURED 20/12 */
+  --tr-eyebrow: 0.12em; /* MEASURED 1.44px at 12px */
+  --t-mono: 11px;
+  --lh-mono: 1.45; /* MEASURED 15.95/11 */
+  --t-chip: 15px; /* MEASURED — the mono verdict chip */
+  --tr-chip: -0.03em; /* MEASURED -0.45px at 15px */
+  --t-display-min: 32px; /* MEASURED at 500px wide */
+  --tr-display-min: -0.021em; /* MEASURED -0.672px at 32px */
+  --t-badge: 8px; /* uppercase mono; see the pack's Gotchas on its ink */
+  --lh-badge: 1;
+  --tr-badge: 0.09em; /* MEASURED 0.72px at 8px */
+
+  /* ---- Motion ----------------------------------------------------------- */
+  /* --dur-base is MEASURED: the reference declares one duration token,
+     --t-normal: 250ms, and spends it on 119 transitions. The rest are this
+     pack's, capped by MOTION_DOCTRINE §3. --stagger is MEASURED off the
+     headline's three word spans: delays 0.000215s, 0.130447s, 0.261s. */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --dur-instant: 0.1s; /* MEASURED — its fastest transition */
+  --dur-fast: 0.16s; /* MEASURED */
+  --dur-base: 0.25s; /* MEASURED — its --t-normal */
+  --dur-reveal: 0.3s; /* MEASURED — the headline's per-word rise */
+  --stagger: 0.13s; /* MEASURED — between word spans */
+  --reveal-y: 16px;
+  --focus-ring: 2px; /* MEASURED — 0.25rem at an 8px base */
+  /* The reference rings in --orange-7. That clears the 3:1 non-text floor on the
+     field (3.17) and on white (3.32) and FAILS it on five surfaces this pack
+     itself mandates: --surface-3 (2.91), --accent-wash (2.85, the selected cell)
+     and all four status tints (2.89-2.99). One ramp step down clears every one of
+     them, worst case 4.59 on --accent-wash. See the pack's Gotchas. */
+  --focus-color: #be400f;
+
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+/* The alarm state. On the reference this is `incognito detected`: 134 rules
+   re-skin the instrument dark when it identifies a visitor who is hiding. It is
+   a STATE, not a theme and not a preference — apply it to the instrument, never
+   to a whole page, and never because a user asked for dark.
+
+   The accent changes step with the field: --orange-7 loses its footing on
+   #1a1917, so the reference's own dark visitor id is --orange-dark. Text on the
+   accent flips to ink here, because white on it measures 2.73:1. */
+[data-state="alarm"] {
+  color-scheme: dark;
+
+  --bg: #1a1917; /* MEASURED — the instrument's dark field */
+  --surface: #232321; /* MEASURED — a cell inside it */
+  --surface-2: #2d2d2b; /* MEASURED — the message panel */
+  --surface-3: #141415; /* MEASURED — the chrome bar, its own --dark-black */
+
+  --ink: #eeeeec; /* 15.12:1 on --bg — MEASURED */
+  --ink-soft: #b7b7b4; /* 8.74:1 on --bg — MEASURED */
+  --ink-muted: #a0a09d; /* 6.70:1 on --bg — MEASURED, its --gray-6 */
+  --ink-faint: #6b6c69; /* 3.32:1 on --bg — disabled ONLY, never content */
+
+  --rule: #2f2e2c; /* MEASURED as rgba(232,232,232,0.1) over the field, composited in sRGB */
+  --rule-strong: #3d3c39;
+  --rule-dash: #2f2e2c;
+
+  --accent: #fa7545; /* 6.44:1 on --bg — MEASURED, its --orange-dark */
+  --accent-deep: #f35b22; /* 5.30:1 on --bg — SELECTED: the light field's accent, demoted here */
+  --accent-wash: #331105; /* SELECTED — --orange-10, the only step dark enough to wash a cell */
+  /* The ring needs no step down here: --accent clears the 3:1 non-text floor on
+     every surface in this state, worst case 5.77 on --surface. */
+  --focus-color: #fa7545; /* SELECTED — the accent itself */
+
+  --action: #fa7545; /* SELECTED — the accent carries the action on dark */
+  --action-hover: #f35b22; /* SELECTED */
+  --action-edge: #f35b22; /* SELECTED */
+  --on-action: #141415; /* 6.75:1 on --action — white would be 2.73:1 */
+
+  /* SELECTED, all four, and the reason is arithmetic: on a dark field the
+     reference paints no status text at all, and a red danger cannot sit beside
+     an orange accent — --red-6 separates from --accent by 5.2 in OKLab and
+     --red-5 by 14.3 but then collides with the warning at 9.1, both under the
+     gate's hard floor of 10. Danger therefore takes the pink ramp, which is the
+     nearest hue in the reference's own system that clears every pair. The set's
+     worst separation is 12.7 at full colour; under dichromacy it is 3.6, which
+     is why status here is never by colour alone. */
+  /* Every value in this group is SELECTED, tints included: on a dark field the
+     reference paints no status at all, so nothing here can be measured. The tint
+     is step 9 of each hue's ramp, except danger, which takes step 10 -- on
+     --pink-9 the status text measures 4.44:1 and fails AA at the 11px value,
+     which is the one cell this whole state exists to render. */
+  --success: #94cf9a; /* 9.75:1 on --bg — SELECTED, --green-5 */
+  --success-weak: #165424; /* SELECTED — --green-9; text on it 5.01:1 */
+  --danger: #f69fb8; /* 8.84:1 on --bg — SELECTED, --pink-5 */
+  --danger-weak: #631634; /* SELECTED — --pink-10; text on it 6.24:1 */
+  --warning: #f2d5a3; /* 12.40:1 on --bg — SELECTED, --yellow-4 */
+  --warning-weak: #64420d; /* SELECTED — --yellow-9; text on it 6.37:1 */
+  --info: #8bc5f3; /* 9.52:1 on --bg — SELECTED, --blue-5 */
+  --info-weak: #0a4c7b; /* SELECTED — --blue-9; text on it 4.88:1 */
+
+  --lift-card: inset 0 1px 0 0 rgba(255, 255, 255, 0.06), inset 0 -1px 0 0 rgba(0, 0, 0, 0.4);
+  --lift-control: inset 0 -1px 0 0 rgba(0, 0, 0, 0.4);
+  --lift-action: inset 0 1px 0 0 rgba(255, 255, 255, 0.12), inset 0 -1px 0 0 rgba(0, 0, 0, 0.4);
+
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+/* The reference ships one reduced-motion block and it covers one group of hero
+   animations out of roughly twenty keyframe sets. This pack requires the whole
+   surface to collapse: every duration and the stagger go to zero, and the
+   headline arrives already in place. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-instant: 0s;
+    --dur-fast: 0s;
+    --dur-base: 0s;
+    --dur-reveal: 0s;
+    --stagger: 0s;
+    --reveal-y: 0px;
+  }
+}

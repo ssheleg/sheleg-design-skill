@@ -344,6 +344,18 @@ fired in five run stamps.
 
 ## Run stamps
 
+**Five rows below are marked *unrecorded* in the `Diverged?` column, and they were
+backfilled on 2026-08-12 by the `datasheet` run rather than written by the runs
+they describe.** Between `v1.14.1` and `v1.18.0` this table went five releases
+without a stamp, so the retirement trigger in the standing instructions above —
+*has not fired in five run stamps* — was not computable: a list that is short by
+five rows retires whatever it likes. Date, commit and task were derived from
+`git log`, tags and the CHANGELOG; **`Diverged?` cannot be derived**, because the
+question is whether the run hit something worth an entry in the Log, and only the
+run knows. It is left as *unrecorded* instead of guessed. Nothing here is a
+substitute for the entries those runs owed; it restores the arithmetic, not the
+knowledge.
+
 | Date | Commit | Task | Diverged? |
 |---|---|---|---|
 | 2026-08-04 | `491d422` | `field-notes` style pack from graphify.com (v1.5.0, built; release held) | **yes** |
@@ -358,6 +370,11 @@ fired in five run stamps.
 | 2026-08-12 | `e9b753f` | `scoreboard` style pack from get-ryze.ai, thirteenth kit, two gate defects fixed; **`v1.13.0` shipped** | **yes** |
 | 2026-08-12 | `8df0ede` | T23 run the day it shipped; nine findings reproduced, eight confirmed and one refuted; **`v1.13.1` shipped** | **yes** |
 | 2026-08-12 | `ada7462` | Refero joins the reference-sweep slot in both repositories, and the claim written about the slot was wrong; **`v1.14.0` + `v1.14.1` shipped** | **yes** |
+| 2026-08-12 | `a993a8e` | T5 and T6 run; two scenarios go green and the kit stops being invisible; **`v1.15.0` shipped** | *unrecorded* |
+| 2026-08-12 | `b1e7d31` | the five T5/T6 findings actioned — the default dark pack's ratios finally reach a check; **`v1.16.0` shipped** | *unrecorded* |
+| 2026-08-12 | `771dd86` | the skill body brought back inside the token budget (~5478 → ~4988 of 5000); **`v1.16.1` shipped** | *unrecorded* |
+| 2026-08-12 | `abc0ec8` | the scenario harness reaches zero unrun; 121 stated ratios measured and 71 found unguarded (B-013); **`v1.17.0` shipped** | *unrecorded* |
+| 2026-08-12 | `0c23558` | the installer offers the family's routing block (B-06); **`v1.18.0` shipped** — a concurrent run, not this one | *unrecorded* |
 
 ## Log
 

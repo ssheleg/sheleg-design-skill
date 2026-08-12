@@ -59,8 +59,8 @@ the runnable palette validation; a pack is the *parameter set* it consumes.
 
 **Read the chosen pack's own token names before you write a single `var()`.**
 This table is by *role*, not by token, because the names are not uniform across
-the thirteen: only `--bg` and `--ink` resolve in every pack. The accent is
-`--accent` in ten, `--brand` in `field-notes` and `--cta` in `orchard` (each
+the fourteen: only `--bg` and `--ink` resolve in every pack. The accent is
+`--accent` in twelve, `--brand` in `field-notes` and `--cta` in `orchard` (each
 declares `@role accent:` in its token layer). Status colours are the least uniform
 thing in the library, so the full map is here rather than summarised: the pair
 `--ok` / `--warn` in `workbench` and `instrument-console`; the pair `--good` /

@@ -1,9 +1,25 @@
 # Brief — `datasheet`, the fourteenth style pack
 
 - **Run:** `2026-08-12-datasheet-pack`
-- **Branch:** `feat/datasheet-pack-v1.18.0`
-- **Base:** `main` at `13dcd5d`
-- **Target version:** `1.18.0` (a new pack is a feature; minor)
+- **Branch:** `feat/datasheet-pack-v1.19.0`, built in an isolated worktree at
+  `.claude/worktrees/datasheet`
+- **Base:** `main` at `0c23558`
+- **Target version:** `1.19.0` (a new pack is a feature; minor)
+
+> **[CORRECTION — the version and the base moved mid-run.]** This brief opened
+> targeting `1.18.0` from `main` at `13dcd5d`. While the reference was being
+> measured, **another agent working in the same checkout committed `0c23558` on
+> `main`**, bumped every manifest to `1.18.0`, tagged `v1.18.0` and published it to
+> npm. Evidence: `git reflog` puts that commit at `HEAD@{1}`, between this run's
+> stage-0 snapshot and its `git checkout -b`; the tag `e3bde7a` is on `origin` and
+> `npm view` returns `1.18.0` where stage 0 read `1.17.0`. That commit also swept
+> this brief and a scratch screenshot into itself, which is the `git add -A`
+> failure the retrospective recorded on 2026-08-04. Two consequences: this run
+> moves to `1.19.0`, and it builds in an isolated worktree so a concurrent
+> `git add -A` cannot claim its files again. A third is inherited rather than
+> caused: **`main` is two commits ahead of `origin/main` while `v1.18.0` is tagged
+> and published**, so a fresh clone gets `main` at the `v1.17.0` era while the
+> registry serves 1.18.0. Filed as a board row; this run pushes what it merges.
 - **Operator request, verbatim in intent:** look at Fingerprint's design through the
   Refero MCP and put it into the library as the recommendation for B2B SaaS.
 

@@ -74,6 +74,16 @@ seven-layer shadow and asks you to look at it. `blueprint` has **no shadow
 vocabulary at all** and asks you to read a figure. If the page's centre is a
 screenshot, it is not this pack.
 
+### Against [`datasheet`](./datasheet.md)
+
+Both are light, technical and gridded, and both refuse ornament. This pack is a
+**drawing**: white stock, a 32px grid, registration marks, and no radius anywhere,
+describing a thing precisely enough to build. `datasheet` is a **datasheet**: an
+off-white sheet with a concentric radius family from 16 down to 2, describing a
+thing that is already running and printing its output into the page. Zero radius
+against a radius family is the tell; the deeper one is tense — a specification of
+what will exist, against a reading of what just happened.
+
 ## Palette
 
 Ready-made token layer: [`tokens/blueprint.css`](./tokens/blueprint.css) — copy

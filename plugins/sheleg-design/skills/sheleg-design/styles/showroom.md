@@ -57,6 +57,17 @@ photographs the product — soft radii, a deep stacked shadow, and no drafting
 furniture anywhere. Route by whether the page shows *how it is built* or *what it
 looks like to use*.
 
+### Against [`datasheet`](./datasheet.md)
+
+Both are light pages whose argument is the product, shown rather than described.
+The difference is what gets shown. Here it is a **whole application surface at
+real size**, framed and lit like a specimen: real rows, real column headers, real
+chrome. In `datasheet` it is a **payload** — a few dozen values the API returned
+about the person reading the page, laid out in hairline-ruled cells at radius zero.
+A gallery frame with a seven-layer shadow versus a ruled grid with none is the
+fastest tell, and the deeper one is whose data is on screen: a customer's, or the
+reader's own.
+
 ## Palette
 
 Ready-made token layer: [`tokens/showroom.css`](./tokens/showroom.css) — copy it
