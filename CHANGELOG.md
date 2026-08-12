@@ -4,6 +4,64 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.23.0] - 2026-08-13
+
+A component library that sized itself by the screen, and a contract bullet nobody had
+answered since it was written.
+
+### Added
+
+- **`validate_pack_container_answer()`** — a widened pack's `## Responsive` section has
+  to say which of its components size against their container. The skeleton has carried
+  that bullet since the contract was widened in **1.5.0**, and **seven of the ten
+  widened packs left it blank**: the contract asked and nothing checked, which is the
+  same dead zone the all-or-nothing heading rule closed. "None, and here is why" is a
+  valid answer — `field-notes` and `cyclorama` were already giving it.
+- **`validate_kit_breakpoints()`** — every width media query in the sixteen kits must
+  either target `:root` alone or carry a declared reason, because a kit ships components
+  a consumer drops into an arbitrary box. It found **seven queries across six kits, and
+  zero `container-type` anywhere**.
+- **Three kinds of breakpoint, in the skeleton**, because only one of them has a
+  container answer: **CONTAINER** (a property on a descendant of a component root),
+  **PAGE** (a value the page owns — a hero's padding, a root token switch), and **SELF**
+  — a property on the element that *establishes* the container, which cannot query
+  itself and has no container answer at all. Five of the seven queries turned out to be
+  SELF or PAGE, which is why "0 of 16 kits use container queries" was a worse
+  description of the problem than it looked.
+- **The distinction the library was missing:** the pack documents a page measured off a
+  reference, so its breakpoints are viewport-shaped; the kit ships components this
+  project authors, so theirs are container-shaped. `field-notes` was right that
+  container queries are "not for the page" and incomplete about the component library
+  shipped beside it.
+- **All seven silent packs now answer**, each from its own component list — the
+  instrument's cell grid, the code frame and the endpoint row, the CLI line and the
+  agent prompt, the labelled row and the FAQ's columns, the install line and the
+  benchmark row, the data row and the column header, the panel and the figure well.
+
+### Fixed
+
+- **`scoreboard`'s ledger now does what its own pack has always specified.** The pack
+  says *"Container queries for the report surface and the ledger: `container-type:
+  inline-size`, because both appear inside columns of different widths on the same page
+  and neither should size against the viewport"* — and the kit was switching on the
+  viewport, so a ledger in a 320px sidebar on a 1440px screen kept its wide columns and
+  crushed its leader. This was not a missing modern feature; it was a kit ignoring its
+  pack.
+- **The breakpoint is derived rather than carried over.** 767px was a statement about
+  phones. The row's own geometry: label 95 + gap 12 + numeral column 80 + gap 12 = 199px
+  of fixed content, plus a minimum leader of `--space-8` so the dotted line still reads
+  as a leader — **231px**, with the 32px named as the one decision it contains.
+
+### Notes
+
+- **Two conversions are held, with the reason at the block.** `blueprint`'s tick and
+  column rule and `datasheet`'s cell grid are genuine CONTAINER cases marked
+  `TODO-CONTAINER B-032`; each needs its breakpoint derived from its own geometry, and
+  carrying 768 or 640 into `@container` would be the same mistake in a newer syntax.
+- The new check's own first draft looked back a fixed 400 characters for its marker and
+  missed a five-line reason whose marker sat at 425 — a check that fails on a longer
+  explanation teaches authors to write shorter ones. It reads the whole comment now.
+
 ## [1.22.0] - 2026-08-13
 
 The palette gate learns two colour forms it had been refusing, and the refusal turns

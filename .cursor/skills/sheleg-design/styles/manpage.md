@@ -422,6 +422,12 @@ Measured at the reference's own breakpoints (Tailwind v4: `sm` 40rem, `lg` 64rem
   reflows and never shrinks its type — a wrapped code sample is a wrong code
   sample.
 
+- **Container queries.** Two components own their own width: the **code frame**,
+  which scrolls rather than reflows and must decide that from its box, and the
+  **endpoint row**, whose method chip and path share a line only while there is room
+  for both. Both take `container-type: inline-size`. The 576px argument column is a
+  page measure — **PAGE** — and so is the label chip's position in the flow.
+
 ## Signature element
 
 **The coral label chip that is a real `<h2>`.**

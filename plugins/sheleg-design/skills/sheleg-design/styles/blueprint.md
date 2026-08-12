@@ -242,6 +242,14 @@ Measured off the reference unless a row says **pack decision**.
   — at 8px they become touch-target confetti — and stay only on framed figures.
 - Buttons go full-width and stack below 480px. Full-height sections use `dvh`.
 
+- **Container queries.** The **panel** and the **figure well** are what a consumer
+  drops into an arbitrary column, so both take `container-type: inline-size`, and the
+  registration ticks and the column rule inside them answer to that box rather than to
+  the screen — a drawing sheet in a 400px sidebar has no room for ticks whatever the
+  viewport says. The 32px grid's own `background-size` is **SELF**: it sits on the
+  element that establishes the container, so it cannot query its own width, and it
+  keeps a viewport query.
+
 ## Motion tokens
 
 - **One curve, `cubic-bezier(0.4, 0, 0.2, 1)`**, and three durations:

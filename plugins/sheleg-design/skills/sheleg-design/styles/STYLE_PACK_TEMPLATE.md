@@ -143,7 +143,23 @@ How the pack collapses. Not "it is responsive" — the actual rules.
 
 - **Fluid type** — the `clamp()` values, with the slope shown, not guessed.
 - **Container queries** — which components size against their container
-  (`container-type: inline-size`) rather than the viewport.
+  (`container-type: inline-size`) rather than the viewport. **This bullet is not
+  optional and "none" is a valid answer**: it was added with the widened contract
+  and seven of the ten widened packs left it blank until 1.23.0, which is why
+  `validate_pack_container_answer()` now asks for it. Sort every breakpoint the
+  pack owns into three kinds, because only the first has a container answer:
+
+  | Kind | What it is | Where it goes |
+  |---|---|---|
+  | **CONTAINER** | a property on a *descendant* of a component root — a row's column widths, a grid's track count, a decorative tick | `container-type: inline-size` on the root, `@container` on the descendant |
+  | **PAGE** | a value the page owns — a hero's padding, a nav's shape, a root token switch | a viewport `@media`, and it stays there |
+  | **SELF** | a property on the element that *establishes* the container — a block's own shadow, a background-size on the grid element itself | **no container answer exists.** A container cannot query itself, and adding a wrapper to a consumer's markup is not the kit's business. Keep the viewport query and mark it `SELF` with the reason |
+
+  The distinction the library was missing: **the pack documents a page measured off
+  a reference, so its breakpoints are viewport-shaped; the kit ships components this
+  project authors, so theirs are container-shaped.** `field-notes` was right that
+  container queries are "not for the page" and incomplete about the component
+  library shipped beside it.
 - **Collapse** — what happens to asymmetry, overlap, rotation and negative
   margins below the pack's breakpoint. Overlapping elements that survive to
   mobile become touch-target conflicts.

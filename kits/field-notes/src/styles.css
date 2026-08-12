@@ -702,6 +702,8 @@
   opacity: var(--grain-opacity);
   pointer-events: none;
 }
+/* PAGE — a hero's padding is the page's opening viewport, which is the one measure
+   that is genuinely about the screen. */
 @media (min-width: 64rem) {
   .fn-hero {
     padding: var(--s7);
@@ -813,6 +815,8 @@
   background-position: left top, left top, right top, right top, left bottom,
     left bottom, right bottom, right bottom;
 }
+/* SELF — .fn-crop is the crop mark itself, so the property is on the element that
+   would establish the container. A crop mark cannot query its own presence. */
 @media (min-width: 48rem) {
   .fn-crop {
     display: block;

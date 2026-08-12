@@ -193,6 +193,12 @@ Measured off the reference unless a row says **pack decision**.
   thing to be compromised.
 - Full-height sections use `dvh`; bare `100vh` is banned.
 
+- **Container queries.** The **install line** is the container case that matters — a
+  command must not wrap mid-flag, and whether it fits is a fact about its box, not about
+  the screen — with the **benchmark row** beside it for the same reason. Both take
+  `container-type: inline-size`. The iridescent wash and its hard edge are **PAGE**: the
+  field is the page, and a wash that recalculated per component would band.
+
 ## Motion tokens
 
 - **One curve, `cubic-bezier(0.4, 0, 0.2, 1)`**, two durations: `--dur-fast .2s`

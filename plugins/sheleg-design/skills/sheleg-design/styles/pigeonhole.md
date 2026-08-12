@@ -328,6 +328,15 @@ What stacks below 768px: the two-column card grids collapse to one, the FAQ's tw
 columns to one, the three step cards to a vertical run, and the hero's two buttons
 to full width. The marquee keeps running at the same 100s.
 
+- **Container queries.** The **labelled row** is the container case, and it is the
+  reason the category chip sits above the subject rather than beside it: a row in a
+  320px sidebar needs that stacking whatever the viewport is. The FAQ's two columns are
+  the same kind of decision — its `≥1024px` rule is really about the list's own width.
+  Both take `container-type: inline-size` on their wrapper. The **nav** and the **logo
+  marquee** are **PAGE**. And the display's line-height switch is a **root token**, so
+  it has no container answer at all — `:root` is not inside anyone's container, which
+  is why that single `@media` in the token layer is correct as it stands.
+
 ## Motion tokens
 
 | Token | Value | Where it was measured |
