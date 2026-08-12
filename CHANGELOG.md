@@ -4,6 +4,86 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.20.0] - 2026-08-12
+
+A fifteenth style pack, whose display typeface costs zero bytes — and three
+WCAG failures in the reference, one of them on the very element the design is
+remembered by.
+
+### Added
+
+- **`manpage`** — the fifteenth pack, extracted from `zernio.com` off the
+  server-rendered HTML of three pages and its two shipped stylesheets, which
+  declare 398 custom properties: the Tailwind v4 default ramps plus twelve
+  bespoke brand names (coral, cream, ink, charcoal, burgundy, each with a
+  `-muted` partner). Cream paper, a 48px display that never grows louder, a
+  576px argument column narrower than most prose, coral label chips that are
+  real `<h2>`s, `└` tree glyphs in their own grid column, and one dark code
+  frame as the focal point. For developer products whose buyer reads code —
+  APIs, SDKs, CLIs, MCP servers. Widened contract, a two-theme token layer, a
+  full reference kit, and reciprocal forks written into `blueprint`,
+  `datasheet`, `field-notes`, `instrument-console`, `scoreboard`, `showroom`
+  and `workbench`.
+- **The display face is the system monospace, and that is the whole identity.**
+  The reference loads exactly one webfont — a single variable Geist Sans — and
+  sets its headline, body, chips, code frames and FAQ in
+  `Menlo, Consolas, Monaco, "Liberation Mono", "Courier New", monospace`, which
+  is already on the reader's machine. No render-blocking request for the face
+  that carries the page, and no swap window on the headline. Substituting a
+  webfont mono is banned in the pack: it costs a request to look less native.
+- **The section heading is a chip and the chip is a real heading.** `LabelChip`
+  wraps its span in an `<h2>`, which is why the reference keeps a clean outline
+  — one `h1`, one `h2` per section — while reading as a printed specification.
+- **`FaqList` is a `<dl>` that never collapses.** The reference ships zero
+  `<details>` and zero `<summary>` on its FAQ: every answer is flat text in the
+  DOM, paired with its question, extractable without running JavaScript. The
+  component has no `collapsed` prop and will not get one.
+
+### Fixed
+
+Four corrections to the reference, every replacement a colour it already ships:
+
+- **The white button label fails AA.** `Start for Free` is white on coral at
+  **4.16:1**, on both the hero and the closing CTA. The fill is kept — the coral
+  button *is* the identity — and the label darkens to `--on-action` (ink) at
+  **4.55:1**. `--action-strong` is the reference's burgundy, carrying white at
+  13.34:1.
+- **The signature element is the least readable thing on the page.** The section
+  chip paints 12px coral on a coral/8 wash: **3.24:1**, worse than coral on bare
+  cream because the wash lifts the field. The wash and edge are kept so the chip
+  looks identical; the label becomes `--accent-ink` at **10.40:1**.
+- **The live-status green fails AA at 2.82:1.** `green-600` carries the credit
+  balance, the `online` badge and both weekly counters. Its own ramp cannot be
+  stepped into a legal set — `green-700` still misses at 4.35:1 and `green-800`
+  clears AA but separates by only 3.9 under dichromacy — so success takes
+  emerald-800, a ramp the reference also ships in full.
+- **One reduced-motion gate out of eight animations.** The reference gates its
+  40s logo marquee behind `motion-safe:` and leaves the hero blur-in, every
+  section rise, `fadeInScale`, `slideInRight`, `pulse`, `ping` and a **1.1s
+  infinite `waveform`** running for a reader who asked for stillness. The pack
+  collapses the whole surface, and infinite motion **stops** rather than
+  shortens.
+
+### Changed
+
+- `test/floors.json` raised: `validate.py` 1647 → 1788, `validate_palette.py`
+  716 → 791, `sloplint.py` 366 → 422.
+- **The stated-ratio checker earned its keep twice on this pack**, catching
+  `--ink-strong` claimed at 18.98:1 against a computed 19.44 and
+  `--on-action-strong` at 6.71:1 against 7.76 — both authored by hand, both
+  wrong, neither visible on inspection.
+- `SURFACE_COMPOSITION.md`: three counts corrected by measurement — the accent
+  resolves as `--accent` in **thirteen** packs, `--brand` in `field-notes` and
+  `--cta` in `orchard`. **B-016 stays open**: none of the three reaches a check,
+  because `in thirteen,` is not followed by a counted noun. This is the third
+  release in which they were fixed by hand.
+- `plugins/sheleg-design/.claude-plugin/plugin.json` said **thirteen** style
+  packs while fourteen shipped. `validate_counted_claims()` did not catch it:
+  its pattern wants `<number> [pluggable|locked] style packs` and the manifest
+  wrote `pluggable visual style packs`, so the intervening adjective hid a stale
+  count from the gate that exists to find them. Corrected to fifteen; the
+  pattern gap is the same class as B-016.
+
 ## [1.19.0] - 2026-08-12
 
 A fourteenth style pack, and the Refero style card it started from was wrong in

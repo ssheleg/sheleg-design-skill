@@ -37,7 +37,8 @@ change of state rather than a reading, `cyclorama`. A page whose subject is an
 accumulating total rather than a single live record —
 [`scoreboard`](./scoreboard.md). A control plane narrating telemetry that changes
 while you watch, on a field that is dark throughout —
-[`instrument-console`](./instrument-console.md). A product sold on auditability,
+[`instrument-console`](./instrument-console.md). A developer page whose focal element is a call the reader will write rather than a reading the product returns — [`manpage`](./manpage.md); it sets its body copy in mono too, which this pack reserves for readings.
+A product sold on auditability,
 whose output is a claim that must be traceable to a source —
 [`field-notes`](./field-notes.md). And **not** the product UI itself: this is the
 marketing page that embeds a working instrument, not the console the customer logs

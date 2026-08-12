@@ -1,0 +1,529 @@
+/* SHELEG Design — Manpage token layer (a developer landing page set in the
+   typeface of its own documentation: cream paper, the system monospace, and one
+   coral label chip standing in for a section header).
+   Copy verbatim; consume only var(--…) in components.
+
+   Extracted from https://zernio.com on 2026-08-12 by reading the server-rendered
+   HTML of /, /pricing and /phone-numbers together with the two shipped
+   stylesheets (/_next/static/chunks/0idbh9t-u9vsm.css and 11gmwmuo_p3gd.css,
+   316,561 bytes combined), which declare 398 custom properties: the Tailwind v4
+   default ramps plus twelve bespoke brand names — coral, cream, ink, charcoal and
+   burgundy, each with a -muted partner. Ratios were computed by importing this
+   repository's own palette gate, test/validate_palette.py.
+
+   Three families of value appear below and they are not the same kind of claim:
+
+   MEASURED — the literal was in the reference's stylesheet or its markup.
+   COMPOSITED — the reference paints an alpha over a known field (bg-coral/8 over
+   the cream page); the value below is that composite resolved in sRGB, so a
+   component never has to know what sat underneath it.
+   SELECTED — the reference declares the whole ramp but paints no such value in
+   this role, so the value is a different *step* of a ramp the reference already
+   carries, chosen for WCAG AA on the field it sits on. Selected is weaker than
+   measured and is marked at every declaration it applies to.
+
+   Four corrections, all in the pack's Gotchas: the white button label, the coral
+   chip label, the live-status green, and the reduced-motion branch. Every one is
+   an accessibility floor the reference misses, and every replacement is a colour
+   the reference itself already ships — nothing here was invented. */
+
+:root {
+  color-scheme: light;
+
+  /* ---- The paper -------------------------------------------------------- */
+  /* The reference sets this on `body` with !important and nothing overrides it. */
+  --bg: #f0efeb; /* MEASURED — its --color-cream, the page field */
+  --surface: #ffffff; /* MEASURED — the testimonial card and the floating nav pill */
+  --surface-2: #d9d8d3; /* MEASURED — its --color-cream-muted, the sunken well */
+
+  /* ---- Ink -------------------------------------------------------------- */
+  /* The reference sets display and body from the charcoal pair, not from ink:
+     `text-charcoal` on the h1 and every <dt>, `text-charcoal-muted` on every
+     paragraph. The ink family is this palette's DARK theme, not its light ink. */
+  --ink: #2d2d2d; /* 11.97:1 on --bg — MEASURED (--color-charcoal): display, headings, dt */
+  --ink-strong: #131010; /* 16.45:1 on --bg — MEASURED (--color-ink): the one step darker */
+  --ink-soft: #6b6b6b; /* 4.63:1 on --bg — MEASURED (--color-charcoal-muted): all body copy */
+
+  /* ---- Lines: this pack divides with hairlines, not with shadow --------- */
+  --rule: #e5e5e5; /* MEASURED — its --border, hsl(0 0% 89.8%) resolved */
+
+  /* ---- The accent: a mark, a wash and an edge — almost never a word ----- */
+  /* 3.61:1 on --bg — below WCAG AA 4.5:1 for text, above the 3:1 floor for a
+     non-text mark and for large text (>=24px, or >=18.66px bold). The reference
+     spends it on the wordmark, the button fill, a 12px label chip and a link.
+     The chip and the link are the two that do not clear the floor; see
+     --accent-ink, which is what this pack paints a word in. */
+  --accent: #eb3514; /* MEASURED — its --color-coral, and its <meta name=theme-color> */
+  --accent-ink: #660202; /* 11.59:1 on --bg — MEASURED (--color-burgundy): the accent that may carry a word */
+  --accent-wash: #f0e0da; /* COMPOSITED — bg-coral/8 over --bg */
+  --accent-edge: #efd3cb; /* COMPOSITED — border-coral/15 over --bg */
+
+  /* ---- The primary action ---------------------------------------------- */
+  /* The reference fills this button with coral and sets the label white, which
+     measures 4.16:1 and does not clear AA at the 16px semibold it ships. The
+     correction keeps the fill — the coral button IS the identity — and darkens
+     the label to the ink the palette already carries, which clears at 4.55:1.
+     Where a white label is non-negotiable, --action-strong is the reference's own
+     burgundy and carries white at 13.34:1. See the pack's Gotchas. */
+  --action: #eb3514; /* MEASURED */
+  --on-action: #131010; /* 4.55:1 on --action — MEASURED (--color-ink); white would be 4.16:1 */
+  --action-strong: #660202; /* MEASURED (--color-burgundy) — for a white label */
+  --on-action-strong: #ffffff; /* 13.34:1 on --action-strong */
+
+  /* ---- Status ----------------------------------------------------------- */
+  /* All four are SELECTED, and the reason is arithmetic. The reference paints its
+     live status in green-600 (#00a544), which measures 2.82:1 on the cream field
+     and fails AA outright — it is the credit balance, the "online" badge and the
+     two weekly counters, so it is the most load-bearing text on the surface.
+     Stepping the same ramp down does not rescue the set: green-800 clears AA at
+     6.20:1 but its best legal companion set separates by only 3.9 under
+     dichromacy, under the gate's 8.0. Emerald — a ramp the reference also ships
+     in full — clears both floors at step 800. Warning is forced to step 950
+     because the accent occupies the warning hue: amber-700 separates from coral
+     by 1.2 under dichromacy and amber-800 collides with danger at 7.4 at full
+     colour, below the hard floor that secondary encoding cannot excuse.
+     This set's worst separation is 17.5 at full colour and 8.1 under dichromacy,
+     so it clears both floors with no waiver. Status is still never carried by
+     colour alone here — the reference always sets the word beside it, and so
+     does this pack. */
+  --success: #005f46; /* 6.70:1 on --bg — SELECTED (emerald-800) */
+  --success-weak: #ecfdf5; /* SELECTED (emerald-50) — text on it 7.31:1 */
+  --danger: #9f0712; /* 7.26:1 on --bg — SELECTED (red-800) */
+  --danger-weak: #fef2f2; /* SELECTED (red-50) — text on it 7.64:1 */
+  --warning: #441306; /* 13.60:1 on --bg — SELECTED (orange-950) */
+  --warning-weak: #fffbeb; /* SELECTED (amber-50) — text on it 15.09:1 */
+  --info: #155dfc; /* 4.56:1 on --bg — MEASURED (blue-600, painted on the reference) */
+  --info-weak: #eff6ff; /* SELECTED (blue-50) — text on it 4.82:1 */
+
+  /* ---- Radii: small, and the chip is the smallest thing on the page ----- */
+  /* MEASURED, all six, off the reference's Tailwind scale in use. The label chip
+     takes rounded-xs — 2px — which is what keeps it reading as a printed tag
+     rather than a pill. Nothing on this surface is fully round. */
+  --r-chip: 2px; /* MEASURED — rounded-xs, the section label */
+  --r-control: 6px; /* MEASURED — rounded-md */
+  --r-button: 8px; /* MEASURED — rounded-lg, its --radius */
+  --r-card: 12px; /* MEASURED — rounded-xl */
+  --r-panel: 16px; /* MEASURED — rounded-2xl, the nav pill and the code frame */
+
+  /* ---- Elevation: one hairline, and a coral glow that is not a shadow --- */
+  --lift-card: 0 1px 0 0 var(--rule); /* MEASURED — its --tw-shadow, a single bottom line */
+  --glow-accent: 0 0 20px #eb35144d; /* MEASURED — its --shadow-glow, 30% coral */
+
+  /* ---- The frame -------------------------------------------------------- */
+  /* MEASURED and easy to miss: the reference pads `body` by 4px, so the whole
+     document sits inset from the window edge and the panels round against a
+     visible margin of paper. It is the cheapest identity move on the page. */
+  --frame: 4px;
+
+  /* ---- The grid and the width ladder ------------------------------------ */
+  /* MEASURED, every step, off the section wrappers. The ladder is the layout:
+     the argument runs in a 576px column — narrower than most prose — and only
+     the evidence is allowed to get wider. */
+  --grid: 4px; /* MEASURED — its --spacing, 0.25rem */
+  --gutter: 32px; /* MEASURED — px-8 on every section */
+  --measure-text: 576px; /* MEASURED — max-w-xl: the argument, How It Works, the closing CTA */
+  --measure-hero: 768px; /* MEASURED — lg:max-w-3xl: the hero and its code frame */
+  --measure-proof: 896px; /* MEASURED — max-w-4xl: the testimonial grid */
+  --measure-foot: 1080px; /* MEASURED — max-w-[1080px]: the footer columns */
+  --measure-wall: 1152px; /* MEASURED — max-w-6xl: the logo wall */
+  --pad-chip: 2px 4px; /* MEASURED — px-1 py-0.5 on the label chip */
+  --pad-card: 16px; /* MEASURED — p-4 on the testimonial card */
+  --pad-button: 16px 32px; /* MEASURED — the hero pair */
+  --rhythm: 64px; /* MEASURED — py-16, the section pitch */
+  --rhythm-tight: 48px; /* MEASURED — py-12 */
+  --pad-top: 48px; /* MEASURED — pt-12, rising to pt-24 at lg */
+  --pad-top-lg: 96px; /* MEASURED — lg:pt-24 */
+
+  /* ---- Type ------------------------------------------------------------- */
+  /* The whole identity is here and it costs nothing to ship. The reference loads
+     exactly ONE webfont — Geist Sans, one variable woff2 at font-display: swap —
+     and sets its display, its body, its chips and its code in the SYSTEM
+     monospace stack, which is already on the reader's machine. There is no mono
+     webfont to wait for and no second file to block. Do not substitute a webfont
+     mono here: the pack's texture is the reader's own Menlo or Consolas, and that
+     is why it renders instantly and looks native rather than art-directed. */
+  --font-mono: Menlo, Consolas, Monaco, "Liberation Mono", "Courier New", monospace; /* MEASURED */
+  --font-sans: GeistSans, "GeistSans Fallback", ui-sans-serif, system-ui, sans-serif; /* MEASURED — the one webfont */
+  --w-body: 400;
+  --w-medium: 500;
+  --w-semi: 600; /* MEASURED — every <dt>, every nav item */
+  --w-bold: 700; /* MEASURED — the h1, and nothing larger */
+
+  /* MEASURED off the Tailwind steps in use. The display tops out at 48px: this
+     pack does not shout, because a man page does not shout. */
+  --t-display: 48px; /* MEASURED — lg:text-5xl */
+  --lh-display: 1; /* MEASURED — text-5xl sets solid */
+  --tr-display: -0.025em; /* MEASURED — tracking-tight */
+  --t-display-mid: 36px; /* MEASURED — sm:text-4xl */
+  --t-display-min: 30px; /* MEASURED — text-3xl at the narrowest */
+  --t-title: 24px; /* MEASURED — text-2xl, the section h3 */
+  --lh-title: 1.333; /* MEASURED — 32/24 */
+  --t-lead: 16px; /* MEASURED — text-base, the hero subhead */
+  --lh-lead: 1.5;
+  --t-body: 14px; /* MEASURED — text-sm, and this is the page's real body size */
+  --lh-body: 1.4286; /* MEASURED — 20/14 */
+  --t-chip: 12px; /* MEASURED — text-xs, the label chip and the eyebrow */
+  --lh-chip: 1.3333; /* MEASURED — 16/12 */
+  --tr-chip: 0.05em; /* MEASURED — tracking-wider, uppercase */
+  --t-mono: 12px; /* MEASURED — the code frame and the endpoint rows */
+  --lh-mono: 1.5;
+
+  /* ---- Motion ----------------------------------------------------------- */
+  /* MEASURED, all of it, off the reference's own keyframes and utilities. This
+     surface animates on ENTRY and then holds still: there is no scrubbing, no
+     parallax and no scroll clock anywhere on it. The stagger is the arbitrary
+     delay it writes inline on the hero, [animation-delay:0.1s]. */
+  --ease-out: cubic-bezier(0, 0, 0.2, 1); /* MEASURED — its --ease-out */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1); /* MEASURED — its --ease-in-out */
+  --dur-instant: 0.15s; /* MEASURED — its --default-transition-duration */
+  --dur-fast: 0.2s; /* MEASURED — slideInRight, and its --tw-duration */
+  --dur-base: 0.5s; /* MEASURED — fadeInUp */
+  --dur-reveal: 0.6s; /* MEASURED — fadeInBlur, the hero's own entrance */
+  --stagger: 0.1s; /* MEASURED — [animation-delay:0.1s] on the h1 */
+  --reveal-y: 12px; /* MEASURED — fadeInBlur's translateY */
+  --reveal-y-far: 20px; /* MEASURED — fadeInUp's translateY */
+  --reveal-blur: 8px; /* MEASURED — fadeInBlur's filter */
+  --focus-ring: 2px;
+  /* The ring cannot be the accent here. Coral clears the 3:1 non-text floor on
+     the page field (3.61) and on white (4.16) and FAILS it on the pack's own
+     chip wash: coral on --accent-wash is 3.24:1. Burgundy clears every surface
+     this pack declares, worst case 10.40:1 on --accent-wash. */
+  --focus-color: #660202; /* MEASURED (--color-burgundy) */
+
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+/* The dark theme. The reference ships one — `body { background-color: #0d0d0d
+   !important }` with the ink family carrying the surfaces — and it is a THEME,
+   toggled by the sun icon in the sidebar, not a state and not an alarm.
+
+   Note the field is #0d0d0d and not --color-ink (#131010): the reference keeps
+   ink for the surface beneath, so the page reads as paper on a darker desk. The
+   accent does not change step, because coral clears AA on this field at 4.68:1 —
+   the one surface where it may carry a word. */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #0d0d0d; /* MEASURED — its dark body override */
+  --surface: #1b1818; /* MEASURED — its --color-ink-surface */
+  --surface-2: #131010; /* MEASURED — its --color-ink */
+
+  --ink: #f0efeb; /* 16.89:1 on --bg — MEASURED (--color-cream): the paper becomes the ink */
+  --ink-strong: #ffffff; /* 19.44:1 on --bg */
+  --ink-soft: #b8b2b2; /* 9.30:1 on --bg — MEASURED (--color-ink-muted) */
+
+  --rule: #3d3838; /* MEASURED — its --color-ink-border */
+
+  --accent: #eb3514; /* 4.68:1 on --bg — MEASURED: coral holds on this field */
+  --accent-ink: #e09282; /* 7.96:1 on --bg — MEASURED (--color-coral-muted) */
+  --accent-wash: #1f100e; /* COMPOSITED — bg-coral/8 over --bg */
+  --accent-edge: #2e130e; /* COMPOSITED — border-coral/15 over --bg */
+
+  --action: #eb3514; /* MEASURED */
+  --on-action: #131010; /* 4.55:1 on --action */
+  --action-strong: #e09282; /* SELECTED — burgundy has no footing on this field */
+  --on-action-strong: #131010; /* 7.76:1 on --action-strong */
+
+  /* SELECTED, all four: the reference paints no status colour on its dark theme,
+     so nothing here can be measured. Each is the step of the reference's own ramp
+     that clears AA on --surface, the darkest field a status cell sits on:
+     success 8.94:1, danger 6.11:1, warning 8.22:1, info 4.75:1. The set's worst
+     separation is 10.1 at full colour — above the hard floor — and 6.8 under
+     dichromacy, which is below the 8.0 gate. That is covered by the pack's
+     standing rule that status is never by colour alone, and the tint here is the
+     card rather than an invented wash, because the reference ships no dark tint
+     to read one off. */
+  --success: #00d294; /* SELECTED — emerald-400 */
+  --success-weak: #1b1818; /* SELECTED — the card; text on it 8.94:1 */
+  --danger: #ff6467; /* SELECTED — red-400 */
+  --danger-weak: #1b1818; /* SELECTED — the card; text on it 6.11:1 */
+  --warning: #f99c00; /* SELECTED — amber-500 */
+  --warning-weak: #1b1818; /* SELECTED — the card; text on it 8.22:1 */
+  --info: #3080ff; /* SELECTED — blue-500 */
+  --info-weak: #1b1818; /* SELECTED — the card; text on it 4.75:1 */
+
+  --lift-card: 0 1px 0 0 var(--rule);
+  --focus-color: #e09282; /* SELECTED — coral-muted; burgundy is invisible here */
+
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+/* The reference gates exactly one thing behind a motion query — its 40s logo
+   marquee, written as motion-safe:animate-marquee — and leaves the hero's
+   blur-in, every section's rise, and a 1.1s infinite waveform running for a
+   reader who asked for stillness. One gate out of eight animations is not a
+   degrade path. This pack collapses the whole surface: every duration and the
+   stagger go to zero, the blur never applies, and the headline arrives already
+   in place. Infinite motion stops rather than shortens — a waveform that loops
+   forever is exactly what the preference is about. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-instant: 0s;
+    --dur-fast: 0s;
+    --dur-base: 0s;
+    --dur-reveal: 0s;
+    --stagger: 0s;
+    --reveal-y: 0px;
+    --reveal-y-far: 0px;
+    --reveal-blur: 0px;
+  }
+}
+
+/* ── components ── */
+/* Authored CSS for the states a core pack declines to specify. Everything below
+   consumes var(--…) only: the gate rejects a raw colour literal past this line. */
+
+.mp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: var(--t-body);
+  font-weight: var(--w-semi);
+  line-height: 1;
+  border: 1px solid transparent;
+  border-radius: var(--r-button);
+  padding: var(--pad-button);
+  cursor: pointer;
+  transition: background-color var(--dur-instant) var(--ease-out),
+    border-color var(--dur-instant) var(--ease-out),
+    color var(--dur-instant) var(--ease-out);
+}
+
+.mp-btn--sm { padding: 8px 16px; font-size: var(--t-chip); }
+.mp-btn--lg { padding: 20px 40px; }
+
+.mp-btn--primary {
+  background-color: var(--action);
+  color: var(--on-action);
+}
+.mp-btn--primary:hover {
+  background-color: var(--action-strong);
+  color: var(--on-action-strong);
+}
+
+.mp-btn--secondary {
+  background-color: var(--surface);
+  border-color: var(--rule);
+  color: var(--ink);
+}
+.mp-btn--secondary:hover { border-color: var(--ink-soft); }
+
+.mp-btn--ghost {
+  background-color: transparent;
+  color: var(--ink-soft);
+}
+.mp-btn--ghost:hover { color: var(--ink); }
+
+.mp-btn:focus-visible {
+  outline: var(--focus-ring) solid var(--focus-color);
+  outline-offset: 2px;
+}
+
+.mp-btn:disabled {
+  background-color: var(--surface-2);
+  border-color: transparent;
+  color: var(--ink-soft);
+  cursor: not-allowed;
+}
+
+/* The section label — this pack's signature. The ink is --accent-ink and not
+   --accent on purpose: coral on this wash measures 3.24:1. */
+.mp-label__head { margin: 0 0 32px; }
+
+.mp-label {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--t-chip);
+  line-height: var(--lh-chip);
+  font-weight: var(--w-medium);
+  letter-spacing: var(--tr-chip);
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  background-color: var(--accent-wash);
+  border: 1px solid var(--accent-edge);
+  border-radius: var(--r-chip);
+  padding: var(--pad-chip);
+}
+
+.mp-card {
+  background-color: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-card);
+  padding: var(--pad-card);
+  box-shadow: var(--lift-card);
+}
+.mp-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+.mp-card__title {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--t-body);
+  font-weight: var(--w-semi);
+  color: var(--ink);
+}
+.mp-card__meta {
+  font-family: var(--font-mono);
+  font-size: var(--t-chip);
+  color: var(--ink-soft);
+}
+.mp-card__body {
+  font-family: var(--font-mono);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--ink-soft);
+}
+
+.mp-chip {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--t-chip);
+  line-height: var(--lh-chip);
+  letter-spacing: var(--tr-chip);
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  border-radius: var(--r-chip);
+  padding: var(--pad-chip);
+}
+.mp-chip--neutral { background-color: var(--surface-2); color: var(--ink-soft); }
+.mp-chip--accent { background-color: var(--accent-wash); color: var(--accent-ink); }
+.mp-chip--selected { border-color: var(--accent-edge); }
+
+.mp-stat { display: flex; flex-direction: column; gap: 4px; font-family: var(--font-mono); }
+.mp-stat__label {
+  font-size: var(--t-chip);
+  letter-spacing: var(--tr-chip);
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.mp-stat__value {
+  font-size: var(--t-title);
+  line-height: var(--lh-title);
+  font-weight: var(--w-semi);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.mp-stat__source { font-size: var(--t-chip); color: var(--ink-soft); }
+
+.mp-heading { font-family: var(--font-mono); color: var(--ink); margin: 0; }
+.mp-heading--1 {
+  font-size: var(--t-display);
+  line-height: var(--lh-display);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tr-display);
+  animation: mp-fade-in-blur var(--dur-reveal) var(--ease-out) var(--stagger) both;
+}
+.mp-heading--2 { font-size: var(--t-title); line-height: var(--lh-title); font-weight: var(--w-semi); }
+.mp-heading--3 { font-size: var(--t-body); line-height: var(--lh-body); font-weight: var(--w-semi); }
+
+.mp-rule { border: 0; border-top: 1px solid var(--rule); margin: var(--rhythm-tight) 0; }
+.mp-rule--strong { border-top-width: 2px; }
+
+/* The code frame: dark on both themes by design, and it never reflows. */
+.mp-code {
+  margin: 0;
+  background-color: var(--surface-2);
+  border-radius: var(--r-panel);
+  overflow: hidden;
+}
+[data-theme='dark'] .mp-code { border: 1px solid var(--rule); }
+.mp-code__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  font-family: var(--font-mono);
+  font-size: var(--t-chip);
+  color: var(--ink-soft);
+}
+.mp-code__dots { display: inline-flex; gap: 6px; }
+.mp-code__dots i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: var(--ink-soft);
+  opacity: 0.5;
+}
+.mp-code__lang { margin-left: auto; }
+.mp-code__body {
+  margin: 0;
+  padding: 0 16px 16px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: var(--t-mono);
+  line-height: var(--lh-mono);
+}
+
+/* The tree glyph lives in its own grid column so it can never wrap into the
+   text, be selected with it, or land inside an extracted snippet. */
+.mp-tree,
+.mp-faq__a {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0 8px;
+  font-family: var(--font-mono);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--ink-soft);
+}
+.mp-tree__glyph,
+.mp-faq__glyph { color: var(--ink-soft); }
+
+.mp-faq { margin: 0; display: flex; flex-direction: column; gap: 24px; }
+.mp-faq__q {
+  font-family: var(--font-mono);
+  font-size: var(--t-body);
+  font-weight: var(--w-semi);
+  color: var(--ink);
+}
+.mp-faq__a { margin: 4px 0 0; }
+
+.mp-endpoint {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-control);
+  padding: 12px 16px;
+  font-family: var(--font-mono);
+  font-size: var(--t-body);
+}
+.mp-endpoint--selected { background-color: var(--accent-wash); border-color: var(--accent-edge); }
+.mp-endpoint__method {
+  font-size: var(--t-chip);
+  font-weight: var(--w-semi);
+  letter-spacing: var(--tr-chip);
+  border-radius: var(--r-chip);
+  padding: var(--pad-chip);
+}
+.mp-endpoint__method--get { color: var(--success); background-color: var(--success-weak); }
+.mp-endpoint__method--post,
+.mp-endpoint__method--put,
+.mp-endpoint__method--patch { color: var(--info); background-color: var(--info-weak); }
+.mp-endpoint__method--delete { color: var(--danger); background-color: var(--danger-weak); }
+.mp-endpoint__path { color: var(--ink); }
+.mp-endpoint__note { color: var(--ink-soft); }
+
+@keyframes mp-fade-in-blur {
+  from {
+    opacity: 0;
+    filter: blur(var(--reveal-blur));
+    transform: translateY(var(--reveal-y));
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
