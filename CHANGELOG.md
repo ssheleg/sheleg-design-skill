@@ -4,6 +4,20 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.16.1] - 2026-08-12
+
+### Changed
+
+- **The body is back inside the token budget** — ~5478 → ~4988 of 5000. Four places
+  were restating what a file beside them already carries in full: the style-pack table
+  described each pack in a sentence when every pack file opens with its own
+  description, so the table is now for *choosing*; the reference-sweep, When-to-Use and
+  Overview sections lost their second telling. Nothing was deleted — the core-contract
+  asymmetry, the sweep boundary and the pack-wins rule all stay inline, because those
+  are traps an agent cannot know to look up.
+- The Cursor mirror was updated in the same change; its drift guard is what caught the
+  omission.
+
 ## [1.16.0] - 2026-08-12
 
 The five findings T5 and T6 left on the board, actioned.

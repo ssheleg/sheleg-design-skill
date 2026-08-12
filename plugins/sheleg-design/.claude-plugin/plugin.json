@@ -2,7 +2,7 @@
   "name": "sheleg-design",
   "displayName": "SHELEG Design",
   "description": "SHELEG Design methodology: cinematic scroll-driven landing pages (single scroll clock, layered degrade-to-calm motion, WebGL particle formations), a motion doctrine that decides whether to animate before it decides how, and thirteen pluggable visual style packs — instrument-console (dark console), editorial-luxury (warm editorial), workbench (light/dark product UI for dashboards and tools), briefing-room (dark 16:9 deck), atrium (warm consumer health), orchard (friendly consumer biotech), field-notes (warm paper for dev tools sold on auditability), cyclorama (a pastel field on a 32s cycle), showroom (the product as the exhibit), blueprint (a drawing sheet, zero radius), prism (one iridescent wash over mono body), maquette (cream axonometric models on a dark table), scoreboard (warm paper, pixel numerals, a dark ledger of results). Ships the sheleg-design skill, the architecture reference, the motion doctrine, the Figma and Claude Design bridges, AI-surface patterns, style packs with ready-made token CSS, and the /sheleg-design command.",
-  "version": "1.16.0",
+  "version": "1.16.1",
   "author": {
     "name": "ssheleg",
     "url": "https://x.com/sshlg93"
