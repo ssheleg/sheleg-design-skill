@@ -449,6 +449,74 @@ knowledge.
 
 ## Log
 
+### 2026-08-12 — the ramp was copied from the reference instead of fitted to my own readings
+
+**Symptom.** `pigeonhole` shipped with `--size-display: clamp(34px, 5.6vw, 60px)`
+and a Responsive table claiming 60px at 768. A blind routing run recomputed it:
+5.6vw of 768 is **43.01px**, and the clamp reaches its 60px ceiling only at
+1071.4px. The section head had the same shape — `clamp(27.2px, 3.6vw, 40px)` gives
+27.65px where the table claimed 40px. Two more in the same family: `--lh-display: 1`
+cannot produce the 34px/42.5px the same row states (42.5/34 = 1.25), and the Hero
+section described the product frame as beginning **below** a 900px fold at y≈713.
+
+**Surfaced at** stage 6, by the pack's own routing scenario, hours after three green
+gates and a green CI had passed the pack. **Owned by** stage 5, which wrote the
+token layer.
+
+**Root cause, and it is one habit rather than four mistakes.** I measured the page at
+three viewports and got display sizes of 34 / 60 / 60. Then, writing the token
+layer, I reached for the reference's **declared** `clamp()` list — seven of them in
+its stylesheet — picked the one whose ceiling matched (`clamp(40px, 5.6vw, 60px)`),
+adjusted its floor to the 34px I had measured, and shipped it. The declaration and
+the measurement were never reconciled: the reference's display does not resolve from
+that clamp at all, and its 40px floor cannot reach 34px. **A value read off the
+reference's source is not the same claim as a value read off the reference's
+rendering**, and where they disagree the rendering is the fact. The ramps are now
+*fitted* — 7.82vw and 5.21vw, which reproduce all three readings — and the token
+layer says they are fitted, because a coefficient nobody can re-derive is a number
+the next reader has to trust.
+
+This is the same class as the previous entry's *four ratios stated from the OKLCH
+instead of the shipped hex*, one unit up: **stating a number computed from a parent
+representation rather than from the thing that ships.** It had already been caught in
+colour and was not looked for in type. Earlier in this very run the same class was
+caught a third time, in the derivation script: candidates were tested for 4.5:1
+before being rounded to eight bits, so `#007b22` would have shipped claiming its
+parent's 4.50:1 where the hex measures 4.38.
+
+**The finding that mattered more than the arithmetic.** Under
+`prefers-reduced-motion: reduce` the token layer collapsed `--dur-marquee` to
+0.01ms, in parity with the reference's global rule. On an **infinite** animation that
+does not stop anything — it strobes it roughly a hundred thousand times a second, at
+exactly the reader the media query protects. A duration cannot switch off an
+animation, and no custom property can express `animation-play-state`. The marquee is
+paused in the component layer now. The pack's closing boast — *a pack that regressed
+that would be worse than its own source* — was describing what the pack itself had
+done.
+
+**And one argument that was wrong while its conclusion was right.** The pack claimed
+that deriving the category inks to clear AA **caused** the hues to collapse under
+deuteranopia, citing ΔE 4.42 → 1.24. The agent pointed out that 4.42 is already less
+than half the gate's hard floor of 10: the reference's brighter inks were never
+distinguishable to that reader either. Derivation makes it worse; it does not make it
+true. The conclusion — colour cannot carry this meaning, so the label word is the
+channel — survives on stronger ground.
+
+**Fixes by grade.** *Mechanical:* the derivation script now reads its ratio off the
+rounded hex, and the type ramps are fitted with the arithmetic written beside them.
+*Doc:* twenty-two findings actioned in the pack, its token layer, its kit and four
+enumeration sites; six tokens added that the pack stated and the layer lacked.
+*Process:* nothing new — instruction 8 already covers reproducing a delegated
+finding, and it is what caught all four.
+
+**What stays human.** No gate in this repository can evaluate a `clamp()` against a
+measurement taken in a browser, and one that tried would need the browser. The
+available substitute is the one that worked twice in a row now: **run the pack's own
+routing scenario before the tag, and read every finding as a hypothesis.** The
+cheaper half is a habit rather than a check — when a pack states a size at a
+viewport, the number in the token layer has to be *derived from that reading*, not
+recognised in the reference's source and adopted.
+
 ### 2026-08-12 — the style card was wrong, and so was the sentence I wrote about my own table
 
 **Symptom, the one that shaped the pack.** The run opened from a Refero style card
