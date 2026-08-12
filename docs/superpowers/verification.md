@@ -7,7 +7,7 @@ directions: no REQ without a row, no row without a REQ.
 `never` is a legitimate value and the one worth counting: it says a requirement
 was shipped on the strength of an argument rather than an observation.
 
-Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (REQ-10, carried to board B-004).
+Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (REQ-10, carried to board B-004). Extended 2026-08-12 by the `pigeonhole` run with twenty rows, none of them `never`.
 
 | REQ | What must stay true | How it is checked | Last verified | Status |
 |---|---|---|---|---|
@@ -42,3 +42,28 @@ Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (R
 | REQ-29 | `v1.19.0` is tagged, released and published; the CI verdict read before the tag | `git ls-remote --tags`, `npm view`, the Actions run | 2026-08-12 · validate run 31607435774 green on `f4f25ce` **before** the tag, with 14 of 14 kit jobs including `kits (datasheet)`; release+publish run 31607540101 green; `npm view` 1.19.0; the published tarball unpacked and read — 449 files carrying the pack, its token layer and the kit | **green** |
 | REQ-30 | Every local channel serves 1.19.0, verified by reading installed files | the shadow invariant plus reading `SKILL.md` in each channel | 2026-08-12 · plugin cache `1.19.0/skills/sheleg-design/SKILL.md` reads `version: 1.19.0` and carries `styles/datasheet.md` + its token layer; the hub copy reads 1.19.0 and has the pack; the shadow invariant printed nothing. Read from disk, not from the updater's output | **green** |
 | REQ-31 | The code graph's staleness is restated honestly rather than forced past its shrink guard | `built_at_commit` against HEAD; B-009 left open | 2026-08-12 · `9312a85` against a HEAD of `3be7a63`; B-009 holds the two candidate fixes and this run does not choose between them | **green (as restated)** |
+
+### `pigeonhole` / v1.21.0 — 2026-08-12
+
+| REQ | What must stay true | How it is checked | Last verified | Status |
+|---|---|---|---|---|
+| P-01 | `styles/pigeonhole.md` carries thirteen headings plus `## Motion flavor`, `Contract: widened`, and a dated addressable `Origin:` | `validate.py` heading + contract checks; `sloplint.py` origin check | 2026-08-12 · green at 1920 checks | **green** |
+| P-02 | Every token declaration says which kind of claim it is | grep for the four provenance words at each declaration | 2026-08-12 · watched finding two silent declarations, then 121 of 121 marked | **green** |
+| P-03 | The token layer passes the palette gate, with nothing the gate cannot parse | `npm run palette` | 2026-08-12 · OK at 906 | **green** |
+| P-04 | Every ratio the pack or the layer states recomputes from the tokens | `validate_stated_ratios()` | 2026-08-12 · watched refusing nine of this run's own lines before it passed | **green** |
+| P-05 | The reference's own accessibility failures are recorded with numbers, never applied | `## Gotchas`, each number recomputed at write time | 2026-08-12 · eight inks, the lede, the CTA's two stops, the badge, the missing focus ring | **green** |
+| P-06 | The category set's exclusion from the peer set carries the number that justifies it, and the pack states status is never by colour alone | the declaration; the palette gate's secondary-encoding escape | 2026-08-12 · ΔE 4.42 → 1.24 stated; the causal claim corrected after T25a refuted it | **green** |
+| P-07 | The type ramps produce the sizes the pack states | arithmetic at each measured viewport | 2026-08-12 · 5.6vw refuted (43.01px at 768); refitted to 7.82vw and 5.21vw, recomputed at 390/768/1440 | **green** |
+| P-08 | Reduced motion actually stops the marquee | the component layer, not the duration | 2026-08-12 · `animation-play-state: paused`; a 0.01ms infinite animation strobes and was watched doing so in arithmetic | **green** |
+| P-09 | `kits/pigeonhole` has the identical spine, a doc per component, tokens copied byte for byte | `validate_kits()`; `dist/` listed after `tsc` | 2026-08-12 · gate green; 11 modules with declarations, read from the directory | **green** |
+| P-10 | `pigeonhole` and every pack a reader could confuse it with name each other | `validate_fork_reciprocity()` | 2026-08-12 · five reciprocal forks | **green** |
+| P-11 | Every count of packs or kits is true, in every channel | `validate_counted_claims()`, `validate_contract_split()` | 2026-08-12 · the gate found five sites the sweep missed | **green** |
+| P-12 | The nine-versus-eleven distinction is stated the same way everywhere | grep across eleven sites | 2026-08-12 · found by both T25 branches, swept | **green** |
+| P-13 | The floors rise with a reason and refuse a drop | the three gates against `floors.json` | 2026-08-12 · watched refusing 1921 with its own message | **green** |
+| P-14 | A routing scenario with its negative branch exists **and has run** | T25a / T25b in fresh contexts | 2026-08-12 · both green, before the tag | **green** |
+| P-15 | `v1.21.0` is tagged, released, published, and the CI verdict was read before the tag | `gh run view`, `git ls-remote --tags`, `npm view` | 2026-08-12 · run 31642256634 green on `98722cd`, the commit tagged; npm 1.21.0 | **green** |
+| P-16 | The published tarball carries the pack, its tokens and the kit | the tarball pulled from the registry and read | 2026-08-12 · 509 files; pack 29,203 bytes; 27 kit files; `7.82vw` present | **green** |
+| P-17 | Every local channel serves 1.21.0, verified by reading installed files | the resolved install path, the hub copy, the shadow invariant | 2026-08-12 · plugin resolves to `…/1.21.0` carrying the pack; hub reads 1.21.0; shadow check silent | **green** |
+| P-18 | Refuted claims are recorded rather than dropped | the brief, the design record, Gotchas, the CHANGELOG | 2026-08-12 · no rotation anywhere; the diptych is raster art | **green** |
+| P-19 | The graph's staleness is restated honestly rather than forced | `built_at_commit` against HEAD | 2026-08-12 · `9312a85` against `149324c`; B-009 untouched | **green (as restated)** |
+| P-20 | Every run leaves a stamp, so the retirement trigger stays computable | `retro.md`'s run stamps | 2026-08-12 · this run stamped and the 1.20.0 run backfilled | **green** |

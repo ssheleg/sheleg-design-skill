@@ -263,6 +263,31 @@ fired in five run stamps.
 
 ## Prune log
 
+**2026-08-12, the `pigeonhole` run (`98722cd`) — nothing retired, and the walk is
+recorded because "I checked" is not a check.** All ten instructions fired in this
+run, several of them hard, so none met a retirement trigger:
+
+1 fired twice, at stage 0 and again immediately before staging — clean both times,
+one worktree, no foreign HEAD move; and its remedy was used rather than merely
+cited (an isolated worktree under a gitignored path, an explicit 66-path commit).
+2 settled the version before the brief wrote it anywhere: `v1.20.0` on the tags, on
+`origin` and on npm, three manifests agreeing, so 1.21.0 with no ghost. 3 and 4 both
+fired on T25, which was written **and run** the same day with its negative branch,
+and the negative branch is what proved the fork reads from both sides. 5 fired in
+its widened form: two claims taken from screenshots — rotation, and a DOM-built
+diptych — could not be verified against the artifact and are recorded as refuted
+rather than dropped. 6 fired on the ratchet, watched refusing 1921 with its own
+message, and on the palette gate, watched refusing nine of this run's own ratio
+claims. 7 was checked rather than assumed: no new gate shipped, and `npm test` was
+diffed against the workflow that ran 18 jobs. 8 fired forty-nine times and corrected
+**me** twice — the type ramps and the deuteranopia causation were both mine. 9 fired
+at the close-out. 10 fired weakly, as it does on a single-artifact run: the pairwise
+question was asked against the existing fifteen and found five genuine forks, each
+written from both sides.
+
+Cap 10, current 10, none retired.
+
+
 - **2026-08-12 (`f4f25ce`) · nothing retired, nothing added (still 10, at cap);
   instruction 1 widened.** All ten walked against the three triggers and **all ten
   fired**, which has not happened before. Instruction 1 caught a live concurrent run
@@ -419,6 +444,8 @@ knowledge.
 | 2026-08-12 | `abc0ec8` | the scenario harness reaches zero unrun; 121 stated ratios measured and 71 found unguarded (B-013); **`v1.17.0` shipped** | *unrecorded* |
 | 2026-08-12 | `0c23558` | the installer offers the family's routing block (B-06); **`v1.18.0` shipped** — a concurrent run, not this one | *unrecorded* |
 | 2026-08-12 | `f4f25ce` | `datasheet` style pack from fingerprint.com, fourteenth kit, two gate holes closed, T24 run on the day it shipped; **`v1.19.0` shipped** | **yes** |
+| 2026-08-12 | `e97a8cc` | `manpage` style pack from zernio.com, fifteenth kit; **`v1.20.0` shipped** | *unrecorded* |
+| 2026-08-12 | `98722cd` | `pigeonhole` style pack from getinboxzero.com, sixteenth kit; the taxonomy's inks re-derived and the deuteranopia argument corrected; T25 written and run before the tag; **`v1.21.0` shipped** | **yes** |
 
 ## Log
 
