@@ -337,6 +337,12 @@ Measured breakpoints, ordered by how much of the stylesheet each carries:
   guides on a 390px screen is noise.
 - **Viewport** — use `100dvh` for any full-height section, never the static unit.
 
+- **Container queries.** The **instrument's cell grid** is the one that must: it
+  collapses to a single column when *its own* box is narrow, not when the phone is,
+  because the instrument is exactly the component a reader embeds in a sidebar. Cards
+  follow the same rule. The **navigation** spans the page and stays viewport, and the
+  `--1` heading step is page type rather than a component's — **PAGE**, both of them.
+
 ## Motion tokens
 
 One ease, one measured base duration, one measured stagger.

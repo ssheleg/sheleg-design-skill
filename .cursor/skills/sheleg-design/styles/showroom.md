@@ -219,6 +219,13 @@ on iOS.
   `480px`.
 - Full-height sections use `dvh`; bare `100vh` is banned.
 
+- **Container queries.** The **data row** and the **column header** are the container
+  cases: the specimen's own table is laid out at whatever width the specimen frame
+  gives it, which is not the viewport minus gutters. Both take
+  `container-type: inline-size` on the table wrapper. The specimen frame's seven-layer
+  shadow is **SELF** — it is a property of the frame itself — and the centred hero is
+  **PAGE**.
+
 ## Motion tokens
 
 - **One curve, `cubic-bezier(0.2, 0, 0, 1)`**, for every state change and reveal;

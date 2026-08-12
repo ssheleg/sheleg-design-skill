@@ -203,6 +203,12 @@ Measured off the reference unless a row says **pack decision**.
   24px displacement on a 320px-wide drawing reads as a printing error.
 - Full-height sections use `dvh`; bare `100vh` is banned.
 
+- **Container queries.** The **CLI line** and the **agent prompt** wrap by their own
+  width, so they answer to their container. The **model block's** drop-shadow is
+  **SELF**: the shadow is a property of the block that would establish the container,
+  and a container cannot query itself — so that one breakpoint stays a viewport query,
+  by limitation rather than by preference.
+
 ## Motion tokens
 
 - **One curve, `cubic-bezier(0.4, 0, 0.2, 1)`.** Durations `--dur-fast .15s`,

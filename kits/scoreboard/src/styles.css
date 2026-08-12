@@ -307,7 +307,7 @@
 .sb-tick-heading__tick { flex: 0 0 auto; width: 3px; height: 18px; border-radius: var(--radius-pill); background-color: var(--accent); }
 
 /* The ledger. One per page, and every row is a record rather than a control. */
-.sb-ledger { display: block; background-color: var(--bg); color: var(--ink);
+.sb-ledger { container-type: inline-size; display: block; background-color: var(--bg); color: var(--ink);
   border-radius: var(--radius-md); padding: var(--space-8) var(--space-6); }
 .sb-ledger__label { display: flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-4);
   font-size: var(--t-label); font-weight: var(--weight-label); text-transform: uppercase;
@@ -342,7 +342,23 @@
 .sb-status--on-panel.sb-status--danger { color: var(--danger-on-dark); }
 .sb-status--on-panel.sb-status--info { color: var(--info-on-dark); }
 
-@media (max-width: 767px) {
+/* The pack has specified this since it shipped -- "Container queries for the report
+   surface and the ledger: container-type: inline-size, because both appear inside
+   columns of different widths on the same page and neither should size against the
+   viewport" -- and the kit was still switching on the VIEWPORT, so a ledger in a
+   320px sidebar on a 1440px screen kept its wide columns and crushed its leader.
+
+   The breakpoint is derived from the row's own geometry rather than carried over
+   from the old 767px, which was a statement about phones and not about this box:
+   label 95px + gap 12px + numeral column 80px + gap 12px = 199px of fixed content,
+   plus a minimum leader of --space-8 (32px) so the dotted line still reads as a
+   leader rather than a dash. 231px. The 32px is this kit's one decision here; the
+   199px is arithmetic on the pack's own tokens.
+
+   Below it the columns take the narrow pair, which the pack describes as a glyph
+   budget rather than a width: 70px holds four glyphs of Press Start 2P at
+   --t-numeral where 80px holds five. */
+@container (max-width: 231px) {
   .sb-row__label { width: 75px; }
   .sb-row__value { width: 70px; }
 }

@@ -245,6 +245,9 @@
 
 /* The offset shortens on small screens: 24px of displacement on a 320px drawing
    reads as a printing error. Labels never scale. */
+/* SELF — the drop-shadow is a property of .mq-block, which is the element that would
+   establish the container. Wrapping every model block to let it query itself would
+   change a consumer's markup, which is not the kit's business. */
 @media (max-width: 768px) {
   .mq-block { filter: drop-shadow(var(--shadow-block-sm)); }
 }

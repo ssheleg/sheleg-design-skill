@@ -913,6 +913,18 @@ def validate_contract_terminology():
 CONTRACT_MARKER = re.compile(r"^Contract:\s*(core|widened)\b", re.M)
 
 
+def _section(text: str, heading: str) -> str:
+    """The body of one `## Heading`, up to the next one. Empty when absent."""
+    lines = text.splitlines()
+    try:
+        start = next(i for i, l in enumerate(lines) if l.strip() == heading)
+    except StopIteration:
+        return ""
+    end = next((i for i in range(start + 1, len(lines))
+                if lines[i].startswith("## ")), len(lines))
+    return "\n".join(lines[start + 1:end])
+
+
 def has_heading(text: str, heading: str) -> bool:
     """A heading is a line, not a substring.
 
@@ -995,6 +1007,89 @@ def validate_contract_declaration():
             )
 
 
+CONTAINER_ANSWER = re.compile(r"container-type|container quer|@container", re.I)
+# A width-based viewport query, which is what a component must not be sized by.
+KIT_MEDIA = re.compile(r"@media[^{]*\((?:min|max)-width[^{]*\{", re.I)
+# The three kinds a breakpoint can be. Only CONTAINER has a container answer; the
+# other two are declared, with a reason, at the block.
+KIT_MEDIA_MARK = re.compile(r"\b(PAGE|SELF|TODO-CONTAINER)\b")
+
+
+def validate_pack_container_answer():
+    """A widened pack has to say which components size against their container.
+
+    The bullet has been in the skeleton's `## Responsive` section since the contract
+    was widened in 1.5.0, and seven of the ten widened packs left it blank -- so the
+    contract asked and nothing checked, which is the same shape as the nine-heading
+    dead zone the all-or-nothing rule closed. "None, and here is why" is a valid
+    answer; `field-notes` and `cyclorama` were already giving it.
+
+    Core packs are exempt because they carry no `## Responsive` section at all.
+    """
+    styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
+    for name in _packs():
+        text = read(styles / f"{name}.md") or ""
+        if not all(has_heading(text, s) for s in PACK_SECTIONS_WIDENED_ONLY):
+            continue  # core contract: no Responsive section to answer in
+        section = _section(text, "## Responsive")
+        check(
+            bool(CONTAINER_ANSWER.search(section)),
+            f"styles/{name}.md: '## Responsive' does not say which components size "
+            "against their container -- the skeleton has asked since 1.5.0, and "
+            "'none, and why' is a valid answer",
+        )
+
+
+def validate_kit_breakpoints():
+    """A component's breakpoint belongs to its container, not to the viewport.
+
+    A kit ships components a consumer drops into an arbitrary box, so a viewport
+    query inside one is a bug the moment the component is not full-width: a
+    scoreboard row in a 320px sidebar on a 1440px screen keeps its wide columns and
+    overflows. Measured 2026-08-13: seven width queries across six kits, and zero
+    `container-type` anywhere.
+
+    Two blocks legitimately stay on the viewport and both are declared rather than
+    tolerated: a `:root` token switch (`:root` is inside nobody's container) and a
+    property on the element that would *establish* the container, which cannot query
+    itself. Anything else says TODO-CONTAINER with a board id.
+    """
+    kits_dir = ROOT / "kits"
+    if not kits_dir.is_dir():
+        return
+    for css in sorted(kits_dir.glob("*/src/styles.css")):
+        text = read(css) or ""
+        rel = css.relative_to(ROOT)
+        for m in KIT_MEDIA.finditer(text):
+            start = m.end()
+            depth, i = 1, start
+            while i < len(text) and depth:
+                depth += text[i] == "{"
+                depth -= text[i] == "}"
+                i += 1
+            body = text[start:i - 1]
+            selectors = [s.strip() for s in re.findall(r"([^{}]+)\{", body)]
+            root_only = selectors and all(s == ":root" for s in selectors)
+            # The marker lives in the comment immediately above the block, and the
+            # comment is read whole rather than through a fixed window: the first
+            # version looked back 400 characters and missed a five-line reason whose
+            # marker sat at character 425 -- a check that fails on a longer
+            # explanation teaches authors to write shorter ones.
+            before = text[:m.start()].rstrip()
+            marked = False
+            if before.endswith("*/"):
+                opened = before.rfind("/*")
+                marked = opened != -1 and bool(KIT_MEDIA_MARK.search(before[opened:]))
+            check(
+                root_only or marked,
+                f"{rel}:{text[:m.start()].count(chr(10)) + 1}: a viewport width query in a "
+                f"kit sizes a component by the screen instead of by its box "
+                f"({', '.join(selectors[:3]) or 'no selector'}) -- use container-type on the "
+                f"root and @container on the descendant, or mark the block PAGE / SELF / "
+                f"TODO-CONTAINER with the reason",
+            )
+
+
 # ------------------------------------------------------------ the ratchet
 #
 # "Each may rise, never fall" was a sentence in DOCMAP.md and nothing else.
@@ -1033,6 +1128,21 @@ def check_floor(script: str, count: int) -> None:
 # defect is planted, and THIS file is re-run against the copy -- so what is
 # tested is the validator CI runs, not a re-implementation of it.
 PLANTS = (
+    (
+        # A widened pack that stops answering the container bullet. Derived from
+        # whatever the pack currently says rather than pinned to a phrase, so it
+        # keeps mutating something as the answers get rewritten.
+        "a widened pack whose Responsive section stops answering the container question",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/scoreboard.md",
+        lambda t: t.replace("**Container queries** for the report surface", "**Breakpoints** for the report surface", 1),
+    ),
+    (
+        # A kit component sized by the screen instead of by its box: the defect
+        # this release exists to close, planted back in.
+        "a kit breakpoint that goes back to the viewport with no reason given",
+        "kits/scoreboard/src/styles.css",
+        lambda t: t.replace("@container (max-width: 231px)", "@media (max-width: 767px)", 1),
+    ),
     (
         # The literal count word travels with every release, so pinning it here
         # made the fixture stop mutating anything the first time the library
@@ -1286,6 +1396,8 @@ def main():
     validate_contract_split()
     validate_contract_declaration()
     validate_core_vocabulary()
+    validate_pack_container_answer()
+    validate_kit_breakpoints()
     validate_bundle_self_sufficiency()
     if failures:
         for failure in failures:
