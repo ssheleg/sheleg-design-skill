@@ -593,6 +593,61 @@ false premise in my own briefing. But it means T22a tested *instructed* absence,
 not real absence. A true negative branch needs a session with no MCP servers at
 all.
 
+## T4 / T8 / T10 / T11 / T12 — run 2026-08-12, blind
+
+The first runs executed against the **installed bundle** rather than this
+checkout, under the rule at the top of this file: `~/.agents/skills/sheleg-design/`
+carries the bundle and no `test/` directory, so no agent could reach its own pass
+condition. Each was handed the brief and nothing else.
+
+**5 of 5 GREEN**, and with that every scenario in this harness has a result.
+
+| | Verdict |
+|---|---|
+| **T4** — style by name | quoted `#fbf6ec`, `#3f7d5f`, Fraunces / Newsreader / JetBrains Mono and `cubic-bezier(0.22, 1, 0.36, 1)`, and stated the source of values without being asked |
+| **T8** — the Figma border | one collection per token family, light and dark as **two modes of one collection**, motion declared uncrossable; reading direction mapped onto tokens with unmatched values called out as a pack gap or file drift |
+| **T10** — deck register | routed to `briefing-room`, quoted the OKLCH field and accent and `+0.14em`, built fixed 1280×720 frames, wrote slide titles as claims, replaced bullets with one diagram per slide, shipped no transitions |
+| **T11** — consumer health | routed to `atrium`, quoted `#FEF9EF` / `#B05A36` / Financier Display 300 / `line-height: 0.9`, kept one continuous field, used the italic accent aside, made every control a pill, and shipped the `PAUSE MOTION` control with the still fallback |
+| **T12** — the friendly half | picked `orchard` over `atrium` with the distinction quoted from the file, used the four rhythm numbers, gave the page one candy CTA with `--cta-ink` computed at 5.61:1, and kept sage and orange out of running text |
+
+### The finding that outweighed the verdicts
+
+T10 asked why `briefing-room` publishes no contrast ratios, and noted that by the
+library's own account that means none of them are gate-covered. **It was right,
+and it was right about more than one pack.** 1.16.0 had fixed exactly this for
+`instrument-console` and swept nothing — an instance fix on a class, which is the
+failure this repository has recorded three times.
+
+Measured across the library rather than guessed: **121 stated ratios, and 71 of
+them — 59% — reach no check.** Six packs declare no table base, and packs that
+*do* declare one still leak, because a Gotchas paragraph is not a table row.
+
+Every one of the 71 was recomputed by hand against its own token layer that day.
+**All 71 are correct.** Two do not reproduce from any pair and both are legitimate:
+`blueprint` arguing about pure black and `maquette` about pure white, colours those
+packs deliberately do not ship.
+
+**Two guards were written for it and both were thrown away**, which is the more
+useful half of the finding:
+
+1. *"Can any pair of this pack's tokens produce that number?"* — **cannot fail.**
+   Thirty solid tokens are ~435 pairs spanning 1:1 to 20:1, and a planted `9.99:1`
+   passed. Caught by planting a defect, which is the only reason it was caught.
+2. Narrowing the pool to the token named on the line **does** fail — on nine lines,
+   and eight of them are correct writing: floors (*"body on cream must clear
+   4.5:1"*), bounds (*"no better than 1.97:1 on any of the six"*), positions in a
+   gradient (*"4.06:1 by the 85% stop"*), and candidate colours a pack measures in
+   order to reject them. None is a claim about a pair of shipped tokens.
+
+So the guard has to tell a measurement from an argument about a measurement, and
+that is work rather than a regex. Filed as B-013 rather than faked. The honest
+state, written into `validate_palette.py` where the skip happens: **these 71 are
+hand-verified as of 2026-08-12 and unguarded against the next edit.**
+
+One real defect did come out of it: `RATIO_CLAIM` matched `--space-4: 1rem` as a
+`4:1` claim. It had never fired because the partnerless branch skipped it — the
+same blind spot, one layer down. The pattern now refuses a unit.
+
 ## T5 / T6 — run 2026-08-12, and what they found
 
 Two of B-011's eight unrun scenarios, executed in fresh contexts against tree

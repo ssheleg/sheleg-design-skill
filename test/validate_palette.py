@@ -495,7 +495,11 @@ def self_test() -> int:
 # named on that line, then against every theme -- so a dark-theme comment and a
 # "text ON the accent" row both resolve without special cases. Anything that
 # matches nothing in the pack is a number that pack cannot produce.
-RATIO_CLAIM = re.compile(r"(\d+(?:\.\d+)?)\s*:\s*1(?![\d.])")
+# The `1` must not be followed by a unit either: `--space-4: 1rem` is a CSS
+# declaration, not a 4:1 contrast claim. That false positive sat undetected
+# because the old code skipped any claim whose partner it could not name, and
+# this one never had a partner -- the same blind spot, one layer down.
+RATIO_CLAIM = re.compile(r"(\d+(?:\.\d+)?)\s*:\s*1(?![\d.]|[A-Za-z])")
 TOKEN_ON_LINE = re.compile(r"--[a-z][a-z0-9-]*")
 # ``| Token | Value | Role | On `--bg` |`` -- the table stating what it measured
 # against. blueprint's says `--bg` and its numbers were computed against pure
@@ -511,9 +515,14 @@ PARTNER_PHRASE = re.compile(r"\b(?:on|over|against)\s+`?(--[a-z0-9-]+)`?")
 # four real defects while still reporting green.
 RATIO_RANGE = re.compile(r"\d\s*[–—-]\s*\d+(?:\.\d+)?\s*:\s*1")
 RATIO_TOL = 0.1
+# A hex written on the line the claim sits on. Two places in the library argue
+# about a colour the pack deliberately does NOT ship -- blueprint on pure black,
+# maquette on pure white -- and for those the literal is the partner.
+HEX_ON_LINE = re.compile(r"#[0-9a-fA-F]{6}\b")
 # A line that is arguing about a number rather than asserting one.
 RATIO_SKIP = re.compile(
-    r"(?i)\b(?:floor|minimum|at least|would|were|target|aim|WCAG|AA|AAA|budget|but|"
+    r"(?i)\b(?:floor|minimum|at least|must clear|no better than|no worse than|"
+    r"would|were|target|aim|WCAG|AA|AAA|budget|but|"
     r"reject|rejected|candidate|instead|not\b|fails?|failing|below the)\b"
 )
 
@@ -594,6 +603,66 @@ def validate_stated_ratios(css: Path) -> None:
             if line.startswith("|") and base:
                 partner_names.append(base)
             if not partner_names:
+                # ------------------------------------------------------------
+                # MEASURED AND LEFT UNGUARDED, DELIBERATELY — 2026-08-12.
+                # A ratio whose line names no partner and whose table declares
+                # no base is skipped. That is 71 of the library's 121 stated
+                # ratios (59%), including inside packs whose tables DO declare a
+                # base, because a Gotchas paragraph is not a table row.
+                #
+                # All 71 were recomputed by hand the day the hole was found and
+                # all 71 were correct, so nothing is wrong today. Two attempts
+                # to guard them were written and both were thrown away, and the
+                # reasons are the finding:
+                #
+                #   1. "Can any pair of this pack's tokens produce that number?"
+                #      cannot fail. Thirty solid tokens are ~435 pairs spanning
+                #      1:1 to 20:1; a planted 9.99:1 sailed through. A check
+                #      that cannot fail is worse than none, because it reports
+                #      coverage it does not have.
+                #   2. Narrowing the pool to the token named on the line does
+                #      fail — on nine lines, and eight of them are correct
+                #      writing. They are floors ("body on cream must clear
+                #      4.5:1"), bounds ("no better than 1.97:1 on any of the
+                #      six"), positions in a gradient ("4.06:1 by the 85%
+                #      stop"), and candidate colours the pack measures in order
+                #      to REJECT them. None is a claim about a pair of shipped
+                #      tokens, which is the only thing this file can check.
+                #
+                # So the guard needs to tell a measurement from an argument
+                # about a measurement, and that is a real piece of work rather
+                # than a regex. Filed rather than faked. The honest state is:
+                # these 71 are verified by hand as of this date and unguarded
+                # against the next edit.
+                continue
+                literal = [
+                    parsed[0] for parsed in
+                    (parse_color(h) for h in HEX_ON_LINE.findall(line))
+                    if parsed
+                ]
+                for claim in claims:
+                    want = float(claim)
+                    got: list[float] = []
+                    for _label, solids, _field in maps:
+                        for s in names:
+                            if s not in solids:
+                                continue
+                            got += [contrast(solids[s], o) for o in literal]
+                            got += [
+                                contrast(solids[s], solids[n])
+                                for n in solids if n != s
+                            ]
+                    if not got:
+                        continue
+                    ok = any(c >= want - RATIO_TOL for c in got) if atleast else \
+                        any(abs(c - want) <= RATIO_TOL for c in got)
+                    check(
+                        ok,
+                        f"{rel}:{lineno}: states {claim}:1 for "
+                        f"{'/'.join(names)} and nothing in this pack pairs with "
+                        f"it to produce that. Name the partner if the claim is "
+                        f"real, or write the literal it argues about on the line",
+                    )
                 continue
             # A row often carries several tokens (`--surface-2` / `-3`) and one
             # ratio that belongs to whichever of them it describes. Any of them
