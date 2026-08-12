@@ -4,6 +4,84 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.21.0] - 2026-08-12
+
+A sixteenth style pack, whose eleven pastel hues are a filing scheme rather than a
+mood — and a taxonomy that fails its own contrast floor eight times out of nine.
+
+### Added
+
+- **`pigeonhole`** — the sixteenth pack, extracted from `getinboxzero.com` off the
+  server-rendered HTML of `/` (399,558 bytes), its two shipped stylesheets
+  (599,990 bytes, 152 custom properties) and then off **computed styles on the
+  live page** at 1440×900, 768×1024 and 390×844 — 912 rendered elements. A white
+  field ruled by hairlines, one blue that only ever appears as a two-stop
+  gradient, a display face that never passes weight 400, one italic word in the
+  headline, and nine categories in which a hue *is* the category, drawn from an
+  eleven-ramp pastel system. For products
+  whose job is to sort the reader's incoming mess into named categories — email
+  triage, ticket routing, digests, organisers, CRM inboxes. Widened contract, a
+  light-only token layer, a full reference kit, and reciprocal forks written into
+  `cyclorama`, `showroom`, `orchard`, `workbench` and `manpage`.
+- **The signature element is a chip with two layers.** The outer carries the
+  deeper tint pair at radius 8px, the inner the paler pair at 7px with one pixel
+  between them — the one place in the reference where radius-by-subtraction
+  happens to hold exactly. `CategoryChip`'s label word is a **required** prop, not
+  an optional one, and the reason is measured: see below.
+- **Nine category inks, eight of them derived.** The reference paints its chip
+  inks on tints of their own hue and eight of nine fail WCAG AA against those very
+  tints — `#49d1fa` at 1.53:1, `#d8a40c` at 1.65:1, `#e65707` at 2.71:1, `#17a34a`
+  at 2.72:1, `#c942b2` at 2.79:1, `#c94244` at 3.09:1, `#124dff` at 3.89:1,
+  `#6410ff` at 4.28:1. Only the neutral `#525252` clears it. Each is re-derived
+  along OKLab lightness with hue and chroma held, and each derivation is marked at
+  its declaration.
+- **The label word is mandatory, and the number says why.** Darkening those inks
+  to clear 4.5:1 compresses them: the worst deuteranopic pair (Marketing against
+  Notification) falls from ΔE 4.42 to **1.24**, far under the palette gate's hard
+  floor of 10. Eleven hues cannot be simultaneously AA-compliant and mutually
+  distinguishable to a dichromatic reader, so the hue is declared a *redundant*
+  channel and the category tokens sit deliberately outside the gate's semantic
+  peer set — with the reason written at the declaration, so a future widening
+  reads it rather than assuming an oversight.
+- **`LabelledRow`, `WashCard` and `FaqList`** join the six-component spine. A
+  wash card's shadow is mixed toward its own hue rather than toward black, which
+  is why the page reads coloured while the field stays white.
+
+### Fixed
+
+- **The primary button's ramp is reversed against the reference.** White on its
+  upper gradient stop measures 5.04:1 and on its lower stop 3.29:1 — the label
+  passes at the top of the button and fails at the bottom of the same button. The
+  pack and the kit run the gradient light-to-dark so the worst case is the passing
+  colour.
+- **The focused CTA gets a ring.** The reference computes `outline-style: none` on
+  its focused primary button with no compensating shadow. The kit ships 2px of
+  `--accent-strong` at 2px offset.
+- **The lede ink.** `#848484` at 3.74:1, painted at 18px regular, replaced by the
+  reference's own `#6b7280` at 4.83:1.
+- **Two counts that reached no check** are corrected in passing:
+  `SURFACE_COMPOSITION.md`'s accent-role tally (thirteen → fourteen, recounted
+  from the token layers rather than incremented) and the kit-count claims in
+  `README.md`. The class stays open on the board as B-016.
+- **B-015 is closed.** `.tmp-fp-hero.png` leaves the tree and `.gitignore` gains
+  the `.tmp*` rule that would have stopped it entering.
+
+### Notes
+
+- **Two claims from the screenshots were refuted by the DOM and are recorded
+  rather than dropped.** There is no rotation anywhere on the page — zero
+  elements carry a rotation term in `transform` or the individual `rotate`
+  property, at three viewports — so a scattered, tilted pile is explicitly not
+  this pack. And the before/after diptych is not built from DOM rows: the words
+  `Before` and `After` appear zero times in the served HTML and zero times in the
+  live DOM after a full scroll pass. The section is raster art, and the pack
+  specifies it as art direction with an aspect ratio rather than as a component.
+- **No dark theme.** The reference's stylesheet carries a `.dark` block, but it
+  belongs to the application's stock shadcn slate theme and nothing on the
+  marketing page consumes it. Shipping an undocumented dark twin is a defect this
+  library already carries once (board B-018), so the pack is light only and says
+  so.
+
 ## [1.20.0] - 2026-08-12
 
 A fifteenth style pack, whose display typeface costs zero bytes — and three

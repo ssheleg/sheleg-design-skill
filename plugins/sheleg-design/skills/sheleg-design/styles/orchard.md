@@ -43,6 +43,13 @@ not a continuous surface**. Rhythm comes from alternating slab fills (oat,
 sage, cacao) with a `55px` gap between them, and every slab is inset from the
 field so the field is always visible around it.
 
+**The fork against [`pigeonhole`](./pigeonhole.md).** Both are friendly, both are
+tinted, both round generously. This pack works on **warm oat slabs** with soft-3D
+pills and its tint is decoration in service of approachability; that one works on
+**white** with hairlines and its tint carries meaning — nine hues, each bound to a
+category, each label word mandatory. A warm field says *this is pleasant*; a white
+field with nine labelled hues says *this is sorted*.
+
 ## Palette
 
 Ready-made token layer: [`tokens/orchard.css`](./tokens/orchard.css) — copy it

@@ -35,6 +35,13 @@ are `briefing-room` and never animate; and any brand whose identity depends on
 one stable background colour, because this pack's background is not a colour, it
 is a loop.
 
+**The fork against [`pigeonhole`](./pigeonhole.md), which is the pastel collision.**
+Both spend pastel as their signature. Here it is a **field** — full-bleed, cycling
+on a 32-second loop behind a fixed subject — and its job is atmosphere. There it is
+a **taxonomy**: one hue bound to one named category, appearing only inside a chip
+the size of a word, and never moving. Remove this pack's wash and the page loses
+its mood; remove that one's tints and the page loses its *information*.
+
 ### The forks, in the order people get them wrong
 
 **Against `field-notes`** — the sharp one. Both are warm, light and

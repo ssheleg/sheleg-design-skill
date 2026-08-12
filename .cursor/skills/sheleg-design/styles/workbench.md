@@ -26,8 +26,11 @@ Light is the default register; dark is a first-class twin, both from the
 same tokens.
 
 **Not for:** the marketing page a developer lands on before they ever sign in —
-that is [`manpage`](./manpage.md). This pack is the console they reach
-afterwards.
+that is [`manpage`](./manpage.md), or [`pigeonhole`](./pigeonhole.md) where the
+product files the reader's incoming mess into named categories. This pack is the
+console they reach afterwards — and with `pigeonhole` it forms a deliberate pair,
+whose seam is the category chip: if the marketing page names a category in a hue,
+the application must name it in the same one.
 
 **The fork against [`showroom`](./showroom.md).** Both render dense product UI,
 both use borders rather than shadows inside that UI, both carry one blue accent.
