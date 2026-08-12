@@ -1,5 +1,20 @@
 # Release test scenarios (run with subagents before every release)
 
+> **Every scenario carries its own `**Result:**` line, even when the run is
+> written up jointly.** A verdict recorded only in a combined section is a
+> verdict nobody can audit per scenario, and it miscounted this harness twice in
+> one day — once claiming T1 was unrun when it had been green since 1.12.0, once
+> claiming six were owed when five were. The one-line check:
+>
+> ```
+> python3 - <<'EOF'
+> import re, pathlib
+> t = pathlib.Path("test/scenarios.md").read_text()
+> s = re.split(r"(?m)^## (T\d+)", t)
+> print([s[i] for i in range(1,len(s),2) if not re.search(r"\*\*Result|GREEN", s[i+1])] or "zero unrun")
+> EOF
+> ```
+>
 > **Run these against the installed bundle, not this checkout.** Every scenario
 > below states its own pass condition one paragraph from its brief, so an agent
 > with repository access can find its own exam — T5's run said so, unprompted,
@@ -88,6 +103,8 @@ fonts, motion values, bans." Pass: values verbatim from
 styles/editorial-luxury.md (#fbf6ec, #3f7d5f, Fraunces/Newsreader/JetBrains
 Mono, ease 0.22,1,0.36,1) + "SOURCE OF VALUES: from skill files".
 
+**Result:** GREEN, 2026-08-12, blind — see *T4 / T8 / T10 / T11 / T12*.
+
 ## T5 — Style self-selection
 
 "Dark, precise, mission-control landing for infra product — which
@@ -95,12 +112,16 @@ direction + exact values?" Pass: agent picks instrument-console from the
 SKILL.md table and quotes its values (#05070a, #3392ff, Geist, ease
 0.16,1,0.3,1).
 
+**Result:** GREEN, 2026-08-12 — see *T5 / T6*.
+
 ## T6 — Product-UI routing (standalone pack)
 
 "Quiet light GitHub-like admin/dashboard styling — exact tokens, fonts,
 surfaces, interaction states." Pass: agent routes to styles/workbench.md
 standalone (no cinematic motion), quotes light+dark tokens verbatim,
 references the ready-made tokens css.
+
+**Result:** GREEN, 2026-08-12 — see *T5 / T6*.
 
 ## T7 — Authoring a new pack (contract, not improvisation)
 
@@ -146,6 +167,8 @@ ease. (b) "Here is a Figma screen — build it with our design system." Pass:
 values mapped onto pack tokens, any unmatched value called out as a pack gap or
 file drift, no raw hexes inlined, pack bans still enforced.
 
+**Result:** GREEN, 2026-08-12, blind — see *T4 / T8 / T10 / T11 / T12*.
+
 ## T9 — AI product surface (honest state)
 
 "Design the UI for our agent that edits files and sends emails on the user's
@@ -185,6 +208,8 @@ title as a **claim** rather than a label, replaces bullet lists with one
 diagram per slide, and ships no slide transitions. Fail: bullets, a second
 accent, animated builds, or an unsourced number.
 
+**Result:** GREEN, 2026-08-12, blind — see *T4 / T8 / T10 / T11 / T12*.
+
 ## T11 — Consumer-health register (the fifth pack)
 
 "Build the marketing site for our at-home blood-testing subscription." Pass:
@@ -198,6 +223,8 @@ still-image fallback for `prefers-reduced-motion`. Fail: alternating light/dark
 bands, a second accent, green or blue as text, `transition: all`, an autoplaying
 marquee with no off switch, or an unsourced health claim.
 
+**Result:** GREEN, 2026-08-12, blind — see *T4 / T8 / T10 / T11 / T12*.
+
 ## T12 — Consumer register, the friendly half (pack disambiguation)
 
 "Build the landing page for our at-home gut-testing kit — it should feel warm
@@ -210,6 +237,8 @@ out of running text, and ships the `prefers-reduced-motion` branch for the
 scrubbed headline. Fail: white on the orange CTA, body copy on `--primary`,
 a true black or cool grey beside the warm palette, a second orange object,
 sharp corners, or a grey drop shadow where the inset bevel belongs.
+
+**Result:** GREEN, 2026-08-12, blind — see *T4 / T8 / T10 / T11 / T12*.
 
 ## T13 — Developer register, and the fork against the dark console
 
