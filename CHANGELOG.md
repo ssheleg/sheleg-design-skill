@@ -4,6 +4,42 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.17.0] - 2026-08-12
+
+The scenario harness reaches zero unrun, and the last five runs found something
+the three gates could not see about themselves.
+
+### Changed
+
+- **Every scenario in `test/scenarios.md` now carries a verdict and a date.** T4,
+  T8, T10, T11 and T12 were run **blind** — against the installed bundle, which
+  has no `test/` directory, so no agent could reach its own pass condition. Five
+  of five green: style-by-name, the Figma border in both directions, the deck
+  register, consumer health, and the friendly-half disambiguation.
+- **`RATIO_CLAIM` no longer reads `--space-4: 1rem` as a `4:1` claim.** A real
+  latent defect that had never fired, because the branch that would have hit it
+  skipped every claim whose partner it could not name — the same blind spot, one
+  layer down. Floors and bounds (*"must clear"*, *"no better than"*) join the skip
+  list, because they are arguments about a measurement rather than one.
+
+### Fixed
+
+- **1.16.0 fixed an instance and called it a class.** It gave
+  `instrument-console` a declared ratio base and swept nothing else. Measured now,
+  across the library: **121 stated contrast ratios, 71 of them — 59% — reach no
+  check.** Six packs declare no table base, and packs that do still leak, because
+  a Gotchas paragraph is not a table row.
+- **All 71 were recomputed by hand and all 71 are correct**, so nothing shipped
+  wrong; what is missing is a guard against the next edit. Two guards were written
+  and both discarded, and that is the part worth keeping: pooling every token pair
+  **cannot fail** (a planted `9.99:1` passed — thirty tokens are ~435 pairs
+  spanning the whole range), and pooling the token named on the line fails on nine
+  lines of which eight are correct writing — floors, bounds, gradient positions,
+  and candidate colours a pack measures in order to reject them. A guard has to
+  tell a measurement from an argument about one. Filed as **B-013**, with the
+  honest interim state written into `validate_palette.py` at the point where the
+  skip happens, rather than a check that reports coverage it does not have.
+
 ## [1.16.1] - 2026-08-12
 
 ### Changed
