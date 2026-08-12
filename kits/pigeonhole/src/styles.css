@@ -196,8 +196,11 @@
      commercial webfonts on the reference; the stacks below name them first and
      fall through to the system, so a consumer without a licence still gets the
      rhythm. */
+  /* MEASURED family, SELECTED tail: the reference names aeonikFont first and falls
+     through to its own Fallback face; the system tail below is this pack's, so a
+     consumer without the licence still gets the rhythm. */
   --font-display: aeonikFont, "Aeonik", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-body: Geist, "Geist Fallback", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: Geist, "Geist Fallback", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; /* MEASURED — the reference's own stack, on 878 of 912 elements */
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; /* MEASURED — declared, and spent on nothing the page shows */
 
   --weight-display: 400; /* MEASURED — never 500, never 600, at any display size */
@@ -270,13 +273,13 @@
    the token layer rather than advice in the prose. */
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --dur-quick: 0.01ms;
-    --dur-base: 0.01ms;
-    --dur-slow: 0.01ms;
-    --dur-marquee: 0.01ms;
-    --blur-enter: 0px;
-    --stagger-word: 0s;
-    --ease-overshoot: cubic-bezier(0.4, 0, 0.2, 1); /* an overshoot is motion; it degrades to the standard curve */
+    --dur-quick: 0.01ms; /* MEASURED — the reference collapses * to 0.01ms !important */
+    --dur-base: 0.01ms; /* MEASURED — same rule */
+    --dur-slow: 0.01ms; /* MEASURED — same rule */
+    --dur-marquee: 0.01ms; /* MEASURED — the same rule collapses animation-duration */
+    --blur-enter: 0px; /* SELECTED — the entrance blur has no reduced-motion value to read */
+    --stagger-word: 0s; /* SELECTED — same reason */
+    --ease-overshoot: cubic-bezier(0.4, 0, 0.2, 1); /* SELECTED — an overshoot is motion, so it degrades to the standard curve; the reference states no reduced-motion easing */
   }
 }
 
