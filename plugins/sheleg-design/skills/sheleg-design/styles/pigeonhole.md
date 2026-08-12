@@ -328,14 +328,20 @@ What stacks below 768px: the two-column card grids collapse to one, the FAQ's tw
 columns to one, the three step cards to a vertical run, and the hero's two buttons
 to full width. The marquee keeps running at the same 100s.
 
-- **Container queries.** The **labelled row** is the container case, and it is the
-  reason the category chip sits above the subject rather than beside it: a row in a
-  320px sidebar needs that stacking whatever the viewport is. The FAQ's two columns are
-  the same kind of decision — its `≥1024px` rule is really about the list's own width.
-  Both take `container-type: inline-size` on their wrapper. The **nav** and the **logo
-  marquee** are **PAGE**. And the display's line-height switch is a **root token**, so
-  it has no container answer at all — `:root` is not inside anyone's container, which
-  is why that single `@media` in the token layer is correct as it stands.
+- **Container queries, and the honest version of the answer.** The rules that matter
+  here are the **labelled row's** axis (chip above the subject rather than beside it) and
+  the **FAQ's** two columns — and both are properties of the row and the list
+  *themselves*, so neither can query its own width: that is the **SELF** case. What
+  makes them container cases anyway is that both are placed inside a list the consumer
+  already owns, so **the consumer's list is the container**: set
+  `container-type: inline-size` on it, and the row and the `<dl>` answer to that box
+  rather than to the screen. A component library may ask for that; it may not wrap
+  someone's markup to get it. Descendants inside those two — the preview's truncation,
+  the date's visibility — are ordinary **CONTAINER** cases and need nothing from the
+  consumer. The **nav** and the **logo marquee** are **PAGE**. And the display's
+  line-height switch is a **root token**, so it has no container answer at all: `:root`
+  is inside nobody's container, which is why that single `@media` in the token layer is
+  correct as it stands.
 
 ## Motion tokens
 

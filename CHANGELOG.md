@@ -4,6 +4,33 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.23.1] - 2026-08-13
+
+Two of the seven answers 1.23.0 shipped told an implementer to do something the same
+release had just described as impossible.
+
+### Fixed
+
+- **`pigeonhole` contradicted the SELF category it shipped beside.** Its new Responsive
+  answer said the labelled row and the FAQ "take `container-type: inline-size` on their
+  wrapper" — but the row's axis and the list's columns are properties of the row and the
+  `<dl>` **themselves**, so neither can query its own width. That is exactly the SELF case
+  the skeleton now defines. The corrected answer is the useful one: both live inside a
+  list the consumer already owns, so **the consumer's list is the container** — a
+  component library may ask for `container-type` on it and may not wrap someone's markup
+  to get it. Descendants inside them (the preview's truncation, the date's visibility)
+  are ordinary CONTAINER cases and need nothing from the consumer.
+- **`showroom` named a wrapper its kit does not ship.** "container-type on the table
+  wrapper" became the **specimen frame**, which is the component that actually holds the
+  table (`Specimen`), so the data row and the column header query something that exists.
+
+### Notes
+
+Found by checking every component named in the seven new answers against the components
+its kit actually ships — a check worth running whenever pack prose starts naming parts.
+Five of the seven were already right; `maquette`'s "agent prompt" is named by the pack and
+absent from the kit, which is a pre-existing pack/kit gap rather than this release's.
+
 ## [1.23.0] - 2026-08-13
 
 A component library that sized itself by the screen, and a contract bullet nobody had
