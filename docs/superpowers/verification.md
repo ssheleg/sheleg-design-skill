@@ -67,3 +67,18 @@ Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (R
 | P-18 | Refuted claims are recorded rather than dropped | the brief, the design record, Gotchas, the CHANGELOG | 2026-08-12 · no rotation anywhere; the diptych is raster art | **green** |
 | P-19 | The graph's staleness is restated honestly rather than forced | `built_at_commit` against HEAD | 2026-08-12 · `9312a85` against `149324c`; B-009 untouched | **green (as restated)** |
 | P-20 | Every run leaves a stamp, so the retirement trigger stays computable | `retro.md`'s run stamps | 2026-08-12 · this run stamped and the 1.20.0 run backfilled | **green** |
+
+### `color-mix()` and relative colour / v1.22.0 — 2026-08-13
+
+| REQ | What must stay true | How it is checked | Last verified | Status |
+|---|---|---|---|---|
+| M-01 | The gate computes `color-mix()` in the four spaces it claims, and refuses the rest | four self-test plants + the browser oracle | 2026-08-13 · Chrome 151, eleven cases, worst ΔE **0.004**; an unimplemented space and a `calc()` channel both watched failing with "cannot compute" | **green** |
+| M-02 | The new paths are *checked*, not merely tolerated | a mix and a relative colour whose ink misses AA must fail on the ratio | 2026-08-13 · both watched failing with "below WCAG AA", which is only reachable if the value was computed | **green** |
+| M-03 | `var()` resolves inside a value, not only as a whole value | `resolve()` → `substitute_vars()`; the showroom ring resolves to `rgb(from #266df0 …)` | 2026-08-13 · read out of the token layer | **green** |
+| M-04 | A theme written in a new colour form is still validated | `themes()` asks `COLOR_SHAPED` instead of a `#`/`oklch(` prefix list | 2026-08-13 · the blind spot was closed in the same commit that could have opened it | **green** |
+| M-05 | `showroom`'s migrated ring renders exactly what the literal did | ΔE between the derived value and the literal it replaced | 2026-08-13 · **ΔE 0.0000**, alpha 0.35 both sides | **green** |
+| M-06 | A browser that cannot parse relative colour still gets a focus ring | the literal declared first, the derived value second | 2026-08-13 · both declarations present in the published tarball | **green** |
+| M-07 | The lifted ban reaches the author, in all three copies of the skeleton | `validate.py` mirror + template parity | 2026-08-13 · bundle, `.cursor` mirror and `templates/` all carry rule 5; the gate found the third copy | **green** |
+| M-08 | `v1.22.0` is tagged, released, published, CI read before the tag | `gh run view`, `npm view`, the tarball | 2026-08-13 · run 31649056089 green on `4f78dff` (18 jobs) **before** the tag; npm 1.22.0; tarball 509 files carrying rule 5 and both ring declarations | **green** |
+| M-09 | Every local channel serves 1.22.0, verified by reading installed files | the resolved install path, the hub copy, the shadow invariant | 2026-08-13 · plugin resolves to `1.22.0` and carries rule 5; hub reads 1.22.0; shadow check clean | **green** |
+| M-10 | The measurement behind the audit is reproducible, not asserted | the sweep script's three-way split | 2026-08-13 · 42 EXACT / 13 NEAR / 45 OWN across sixteen token layers | **green** |

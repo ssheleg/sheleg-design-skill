@@ -446,8 +446,70 @@ knowledge.
 | 2026-08-12 | `f4f25ce` | `datasheet` style pack from fingerprint.com, fourteenth kit, two gate holes closed, T24 run on the day it shipped; **`v1.19.0` shipped** | **yes** |
 | 2026-08-12 | `e97a8cc` | `manpage` style pack from zernio.com, fifteenth kit; **`v1.20.0` shipped** | *unrecorded* |
 | 2026-08-12 | `98722cd` | `pigeonhole` style pack from getinboxzero.com, sixteenth kit; the taxonomy's inks re-derived and the deuteranopia argument corrected; T25 written and run before the tag; **`v1.21.0` shipped** | **yes** |
+| 2026-08-13 | `4f78dff` | the modern-CSS audit, and the `color-mix()` ban lifted by teaching the palette gate to compute it — verified against Chrome rather than against the spec; **`v1.22.0` shipped** | **yes** |
 
 ## Log
+
+### 2026-08-13 — a green from the wrong tree, and a ban that was really a parser
+
+**Symptom, the process one.** Mid-run I ran `python3 test/validate_palette.py`, read
+`OK (906 checks)`, and moved on. The gate that ran was the **main tree's** — the old one,
+without the extension I was testing — because the shell's working directory had silently
+returned to the project root after a command that `cd`-ed into a scratch directory
+outside it. The same session then printed `has parse_relative: False` for a function
+sitting in the file I had just edited. Two commands earlier, that green would have been
+read as evidence the extension worked.
+
+**Surfaced at** the first debugging print, by luck rather than by design. **Owned by**
+whichever step assumed the working directory is stable across tool calls. It is not, and
+the harness says so in its own output when it resets.
+
+**Root cause.** An isolated `git worktree` is the remedy standing instruction 1
+prescribes, and it introduces a second tree with **the same relative paths**. Every
+relative path is then ambiguous, and the one thing that disambiguates it is not owned by
+the run. The previous release hit the same class from the other side: two close-out
+documents landed in the main tree while two others went to the worktree, and it took a
+four-way `grep -c` to establish where each had gone.
+
+**Fix by grade.** *Process, one line:* in a worktree run, every command that touches the
+tree opens with `cd <worktree> &&` in the same invocation, and every read states an
+absolute path. **A verification that cannot say which tree it read is not a
+verification** — which is standing instruction 9 pointed one level down, at the
+filesystem instead of the artifact.
+
+**The substantive finding, and it was hiding in plain sight for eleven releases.**
+`STYLE_PACK_TEMPLATE.md` told authors to keep `color-mix()` out of the token layer *and
+gave the reason in the same sentence*: the palette gate cannot compute a value it cannot
+parse. A tooling limitation had been written down as doctrine and was read as taste. The
+cost, once measured: **42 `rgba()` literals across eight token layers are ΔE 0.00 from a
+token in their own file** — a token's channels restated by hand, which is the live
+mechanism behind B-023/B-024.
+
+Two things made the fix trustworthy rather than plausible. The arithmetic was checked
+against **Chrome 151's own computed values** across eleven cases, worst ΔE 0.004, rather
+than against my reading of the interpolation spec — the browser is the thing being
+modelled, so it is the oracle, and this is the same move as measuring a reference's
+rendering instead of its stylesheet. And two of the four plants assert on the **ratio**
+message rather than on the parse: a mix that misses AA can only fail that way if the
+value was really computed, which is the difference between a code path that is tolerated
+and one that is checked.
+
+**A blind spot was closed in the commit that would otherwise have opened it.**
+`themes()` decided whether a block was a theme by testing for a `#` or `oklch(` prefix,
+so a dark theme written in `color-mix()` would have been read as "overrides no colour"
+and skipped entirely. Teaching the parser two new forms without widening that test would
+have opened a hole in the same change that closed a limitation.
+
+**And the sweep's own framing needed correcting before it shipped.** The script first
+called the 13 near-miss literals "a derivation that no longer tracks". They are not:
+`rgba(255, 255, 255, 0.8)` beside an off-white `--bg` may be deliberately pure white.
+Near is *ambiguous*, not wrong, and that distinction decides whether the follow-up is one
+sweep or thirteen conversations. It is written into B-028 rather than left in the tone.
+
+**What stays human.** No check can tell a limitation from a decision. The sentence that
+hid this one was **true** — the gate really could not parse `color-mix()` — and it sat
+inside a rule phrased as a preference. The habit that catches the next one: **when a rule
+states its own reason, check whether the reason is still true.**
 
 ### 2026-08-12 — the ramp was copied from the reference instead of fitted to my own readings
 
