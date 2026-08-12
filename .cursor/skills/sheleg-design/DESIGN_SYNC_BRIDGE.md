@@ -103,6 +103,18 @@ Refero; judging whether a step actually works on a phone looks at Mobbin. Sweep
 whichever are present; with more than one, sweep them all and say which answered
 what.
 
+Two cases the pairing above quietly assumes away, and both are the common one:
+
+- **Only the image server is present.** Then you are deriving structure from
+  pictures — reading step order and decision points off screenshots — which is a
+  weaker read than structured steps, not an equivalent one. Do it, and say that is
+  what you did. The failure is inferring a system response from a screenshot and
+  reporting it as if it had been stated.
+- **A sweep returns nothing.** A null result is a result: say the query and that it
+  came back empty. "I swept" with no findings and no statement of emptiness is
+  indistinguishable from not sweeping, and the next reader cannot tell which
+  happened.
+
 > **[CORRECTION — 1.14.1]** 1.14.0 shipped this paragraph saying Refero was "alone
 > among the three" in returning flows. It is not: `mcp__mobbin__search_flows` has
 > always existed. The claim was written while Mobbin was registered but

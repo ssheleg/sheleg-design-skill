@@ -165,7 +165,12 @@ hue.
   colour this pack does not own. **The resolutions, which are rules rather than
   new tokens:** the status word inside a chip renders in `--ink` (14–15:1 on all
   three tints) with the status colour carried by the dot or the fill; and
-  accent-coloured text never sits on `--panel-2` or on `--accent-weak` — inside a
+  accent-coloured text never sits on `--panel-2`, on `--accent-weak`, **or on
+  `--bg`** — in light mode `--bg` and `--panel-2` are the same `#F7F8FA`, so the app
+  ground carries that same 4.30 and a plain accent link sitting directly on the
+  dashboard background fails identically. This clause named only two of the three for
+  four releases, which made the most ordinary element in an admin panel look covered.
+  Inside a
   selected row or a sticky header, text is `--ink` or `--muted`.
 - **`--bg` and `--panel-2` are the same colour in light mode** (`#f7f8fa`) and
   different in dark. So the mandated row hover — a `--panel-2` fill — is

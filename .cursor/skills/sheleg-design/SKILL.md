@@ -3,7 +3,7 @@ name: sheleg-design
 description: Use when building or upgrading a cinematic scroll-driven landing page, marketing site or hero (particle/WebGL background, scroll-linked animation, parallax, scrubbed sections) — when such a page feels busy or janky or its motion layers drift out of sync — or when styling product UI with its style packs - dashboards, admin panels, internal/dev tools, mobile app screens, design tokens, light/dark themes - or when carrying a visual system across the Figma border (publishing tokens as variables, implementing a design without importing raw values). Triggers - "cinematic landing" / "кинематографичный лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables / figma to code" / "переменные фигмы, фигма в код", "chat/agent UI" / "интерфейс чата или агента", "streaming output" / "стриминг ответа", "mobile screen" / "мобильный экран".
 license: MIT
 metadata:
-  version: 1.14.1
+  version: 1.15.0
 ---
 
 # SHELEG Design
@@ -86,6 +86,14 @@ style pack in [`styles/`](./styles/):
 | [`cyclorama`](./styles/cyclorama.md) | a pale field cycling through six pastel stops on a 32s loop under fixed near-black ink, monospaced typewriter serif over mono, one orange used only as a fill, a particle organ that redeploys per section | enterprise AI transformation, applied-AI services and technical consultancies — a product whose argument is a change of state, not a screenshot |
 | [`scoreboard`](./styles/scoreboard.md) | warm paper and warm near-black ink, 2–3px radii, an ink primary button, one hot orange that only ever marks, and a dark ledger of dotted-leader rows whose numbers are set in an aliased pixel face | products whose argument is an accumulating number — ads and SEO operators, growth tools, revenue dashboards sold on results |
 
+**A materialized kit answers part of what a core pack leaves out.** `npx
+sheleg-design-skill --kit <pack>` produces `src/styles.css`, whose component half is
+authored CSS for the per-component states — `:hover`, `:focus-visible`, `:disabled`,
+selected — that a core pack declines to specify. It is not installed with this skill,
+so an agent reading only this bundle cannot see it and will invent those states from
+scratch. Fetch the kit before inventing them, and treat what differs between the kit
+and the pack as a defect in one of the two rather than a choice.
+
 **Six of the thirteen are on the core contract, and it changes what you get.**
 A pack marked **core contract** does not specify `## Components`, `## Hero`,
 `## Responsive` or `## Signature element` — so per-component states, the
@@ -137,6 +145,13 @@ what you announced.
 | presentation deck | 5–6 | 1–2 | 3–4 |
 | redesign, preserve the existing identity | match | match +1 | match |
 | redesign, explicit overhaul | +2 | +2 | match |
+
+**A brief can match two rows, and they can disagree by a factor of three.** "A quiet
+internal admin dashboard" fires both *"quiet like Linear"* (DENSITY 2–3) and *"product
+UI"* (DENSITY 6–8). The precedence rule: **the row that names the surface wins over the
+row that names a mood.** A surface decides how much has to fit; a mood decides how it is
+handled — in a product-UI pack, "quiet" is bought with restraint in colour and motion,
+not with emptiness. Say which row you took and why when two fire.
 
 ### How they bind
 

@@ -583,6 +583,39 @@ false premise in my own briefing. But it means T22a tested *instructed* absence,
 not real absence. A true negative branch needs a session with no MCP servers at
 all.
 
+## T5 / T6 — run 2026-08-12, and what they found
+
+Two of B-011's eight unrun scenarios, executed in fresh contexts against tree
+`1e79c45`. **Both GREEN on their stated pass conditions.**
+
+**T5** picked `instrument-console` from the table, quoted `#05070a`, `#3392ff`,
+Geist and `cubic-bezier(0.16, 1, 0.3, 1)`, and forked it against `maquette` using
+the library's own tiebreak (a number changing while the reader watches). It also
+ran the repo's `near_cluster()` over the pack to answer the "three defaults"
+self-check rather than asserting it — the field *is* inside the near-black
+cluster and the electric blue is what takes it out.
+
+**T6** routed to `workbench` standalone, quoted both themes verbatim, referenced
+the token file rather than transcribing it, and declared the core contract's
+silence out loud. It reproduced all five of the pack's stated contrast pairs
+exactly.
+
+**What they found is worth more than the verdicts.** Reproduced against the
+artifacts before anything was edited:
+
+| Finding | Verdict | Action |
+|---|---|---|
+| A materialized kit contains authored `:hover` / `:focus-visible` / `:disabled` / selected CSS — the exact states a **core** pack declines to specify — and `SKILL.md` says kits are not installed, so a reader of the bundle invents them from scratch. Neither file points at the other | **confirmed** (`kits/workbench/src/styles.css:134,138`) | fixed — `SKILL.md` now points at `--kit` before those states are invented |
+| The dial table fires twice for "a quiet internal admin dashboard": *quiet like Linear* says DENSITY 2–3, *product UI* says 6–8, with no precedence rule | **confirmed** | fixed — the row naming the **surface** wins over the row naming a **mood** |
+| `workbench`'s accent gotcha names `--panel-2` and `--accent-weak` but not `--bg`, and in light mode `--bg` **is** `--panel-2` (`#F7F8FA`) — so a plain accent link on the app ground fails the same 4.30:1 while reading as covered | **confirmed** (`tokens/workbench.css:5,7`) | fixed |
+| `workbench` ships no type-size or spacing tokens, so the craft bar's "no ad-hoc font size" is unachievable in it; the kit writes 20 raw `font-size:` declarations | **confirmed** (zero `--t-*` / `--space-*` in the token layer) | filed |
+| The kit's `DataTable` has no selected state, though the pack mandates `--accent-weak` + a 2px inset — the one atom on an admin dashboard that most needs selection | **confirmed** | filed |
+| `instrument-console`'s palette table declares no measurement base, so none of its per-token ratios are gate-covered; the library's default dark infra pack is its least-covered one | **confirmed** | filed |
+| `instrument-console` states `--accent-ink` at 6.0:1; the tokens compute 6.17 | **confirmed**, and conservative | filed |
+| T5 noticed the expected answer for this scenario is checked into this file | **fair** — the harness cannot be blind while the answers live beside the prompts | filed |
+
+Result: **2 of 8 closed. Six remain — T1, T4, T8, T10, T11, T12.**
+
 ## T23 — The tally register, and the fork against the notebook
 
 Added 1.13.0 with the `scoreboard` pack. Two branches, two fresh contexts, one

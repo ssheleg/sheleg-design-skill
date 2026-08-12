@@ -4,6 +4,37 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.15.0] - 2026-08-12
+
+Two of the eight unrun scenarios were run. Both passed, and between them they
+found four things three green gates could not.
+
+### Added
+
+- **A core pack's missing half has an authored answer, and the bundle now says
+  where.** `npx sheleg-design-skill --kit <pack>` materializes `src/styles.css`,
+  whose component half is real CSS for `:hover`, `:focus-visible`, `:disabled` and
+  selected — the exact per-component states a **core** pack declines to specify.
+  `SKILL.md` said kits are not installed and stopped there, so an agent reading the
+  bundle invented those states from scratch while an authored version sat one
+  command away. Neither file pointed at the other.
+- **A precedence rule for the dial table.** "A quiet internal admin dashboard"
+  fires both *quiet like Linear* (DENSITY 2–3) and *product UI* (6–8) — a factor of
+  three, with nothing to break the tie. **The row that names the surface wins over
+  the row that names a mood**, and you say which fired.
+- **Two cases the reference-sweep pairing assumed away**, both common: only the
+  image server present (you are reading structure off screenshots — a weaker read,
+  say so) and a sweep that returns nothing (a null result is a result; "I swept"
+  with no findings and no statement of emptiness cannot be told apart from not
+  sweeping).
+
+### Fixed
+
+- **`workbench`'s accent gotcha named two surfaces of three.** It forbids accent
+  text on `--panel-2` and `--accent-weak` at 4.30:1 — but in light mode `--bg` **is**
+  `--panel-2` (`#F7F8FA`), so a plain accent link on the app ground fails identically
+  and read as covered for four releases. The most ordinary element in an admin panel.
+
 ## [1.14.1] - 2026-08-12
 
 ### Fixed
