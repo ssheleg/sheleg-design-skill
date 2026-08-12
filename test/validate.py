@@ -95,7 +95,12 @@ BRIDGE_SECTIONS = (
     "## 1. What crosses, and in what shape",
     "## 2. Style packs — the pack is the source of truth",
     "## 3. Figma — one border at a time",
-    "## 4. Lazyweb sweeps — layout crosses, identity does not",
+    # The heading names every server in the slot on purpose: 1.12.1 shipped it
+    # reading "(Lazyweb MCP)" after Mobbin had joined, and a heading is a
+    # discovery surface -- an agent skimming them concluded Mobbin was not there.
+    # Pinning the whole string here is what makes a third server a gate failure
+    # rather than a silent omission.
+    "## 4. Reference sweeps (Lazyweb, Mobbin, Refero) — layout crosses, identity does not",
     "## 5. Live-site extraction — the pack first, the sync second",
     "## 6. What cannot cross",
     "## 7. Round-trip discipline",

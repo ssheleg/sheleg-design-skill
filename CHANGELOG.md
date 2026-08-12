@@ -4,6 +4,33 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.14.0] - 2026-08-12
+
+### Added
+
+- **Refero joins the reference-sweep slot** (`mcp__refero__*`), beside Lazyweb
+  and Mobbin. It searches real UI screens, returns visually and functionally
+  *similar* screens for one you already have, and — alone among the three —
+  returns **flows**: connected steps carrying a goal, an action and a system
+  response each. `DESIGN_SYNC_BRIDGE.md` §4 now says what each of the three is
+  for, since they are not interchangeable, and the section heading names all
+  three: a heading is a discovery surface, which is the lesson 1.12.1 shipped.
+
+### Changed
+
+- **The sweep boundary is now stated against a tool that argues with it.**
+  Refero ships a *style* search whose own description offers "typography,
+  palette, layout/composition, spacing, elevation… the overall design language"
+  — by that description a source of identity, which is the half a pack owns. The
+  rule is unchanged and now explicit: a style found there is a **candidate
+  source**, not a decision. One that should set identity goes through §5
+  live-site extraction into a pack, with measured values and an addressable
+  `Origin:`; applied straight to a page it is a second identity source and the
+  page ends up in two design systems. The one-line test: **a sweep may change
+  what is on the screen and where; only a pack may change what it looks like.**
+- The gate pins the full §4 heading, so a fourth server is a check failure
+  rather than a silent omission.
+
 ## [1.13.1] - 2026-08-12
 
 `scoreboard`'s routing scenario was run the day it shipped, and it found nine
