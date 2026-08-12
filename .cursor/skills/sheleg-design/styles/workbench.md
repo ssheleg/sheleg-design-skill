@@ -25,6 +25,10 @@ scope here; motion is limited to meaningful 120–200ms state transitions (`--du
 Light is the default register; dark is a first-class twin, both from the
 same tokens.
 
+**Not for:** the marketing page a developer lands on before they ever sign in —
+that is [`manpage`](./manpage.md). This pack is the console they reach
+afterwards.
+
 **The fork against [`showroom`](./showroom.md).** Both render dense product UI,
 both use borders rather than shadows inside that UI, both carry one blue accent.
 The test is *which surface you are building*. This pack **is** the tool — it is

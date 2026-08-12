@@ -29,7 +29,8 @@ and motion exists to deliver it, not to compete with it.
 **Not for:** a product with no screenshot worth showing — where what is sold is a
 change of state rather than a surface, use `cyclorama`. An open-source project
 whose front door is a command rather than a UI — `prism`. A page that must read
-as a technical drawing rather than a gallery — `blueprint`. And **not** the
+as a technical drawing rather than a gallery — `blueprint`. A product with no UI
+to exhibit because the interface *is* the call — [`manpage`](./manpage.md). And **not** the
 dashboard itself: this is the page that displays such a dashboard.
 
 ### The fork against [`workbench`](./workbench.md), which is the one people get wrong

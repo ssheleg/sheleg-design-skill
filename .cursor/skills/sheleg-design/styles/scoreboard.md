@@ -33,7 +33,8 @@ else holds still, because a number that moves is a number nobody trusts.
 is a scoreboard reading zero. A surface where the numbers are the user's own
 working data rather than a claim about outcomes: that is the dashboard, and it
 belongs to [`workbench`](./workbench.md). A page whose subject is a screenshot
-rather than a total — `showroom`. Anything editorial or premium-consumer: the
+rather than a total — `showroom`. A developer page whose argument is the API call
+rather than the outcome it produced — [`manpage`](./manpage.md). Anything editorial or premium-consumer: the
 pixel numerals read as arcade furniture the moment there is no metric under them.
 
 ### The fork against [`field-notes`](./field-notes.md)

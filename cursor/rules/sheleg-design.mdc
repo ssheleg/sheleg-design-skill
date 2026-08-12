@@ -33,7 +33,10 @@ numbers are set in an aliased pixel face, for a product whose argument is
 an accumulating number; datasheet — an off-white spec
 sheet whose focal element is a live instrument ruled at radius zero and
 which re-skins itself dark when it detects the reader is hiding, for B2B
-SaaS whose product is a verdict about the visitor or the device);
+SaaS whose product is a verdict about the visitor or the device;
+manpage — a developer landing page set in the reader's own system
+monospace on cream paper, coral label chips that are real headings and a
+dark code frame as the argument, for APIs, SDKs and CLIs);
 otherwise follow the contract below (self-contained on purpose).
 
 ## Whether to animate at all — before how

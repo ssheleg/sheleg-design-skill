@@ -1,8 +1,8 @@
 {
   "_why": "Ratchet floors. A gate whose check count can fall silently cannot detect a deleted requirement: stripping four required headings from one pack made validate.py drop 1270->1269 and sloplint.py 224->223, both still green. Each number is the count measured on the commit named below. Raise freely; lowering one needs a reason in the same commit.",
-  "_measured_on": "feat/datasheet-pack-v1.19.0, 2026-08-12",
-  "validate.py": 1647,
-  "validate_palette.py": 716,
-  "sloplint.py": 366,
-  "_raised": "validate.py 1507 -> 1647: the fourteenth pack adds its structural, enumeration, kit-parity and mirror checks, and validate_counted_claims() gained three sources -- the two plugin manifests and package.json, which carried counts nothing read (marketplace.json said 'twelve pluggable style packs' above a list of thirteen for two releases). validate_palette.py 603 -> 716: datasheet declares two themes and a table base, so both halves' ratios and every stated claim are recomputed on every run. sloplint.py 352 -> 366: one more pack and token layer under the bans. Also validate_contract_split(): the core-contract paragraph's three numbers are now derived from the pack table rather than typed, because that remainder was stale in two consecutive pack releases and a scenario agent found it both times."
+  "_measured_on": "feat/manpage-pack-v1.20.0, 2026-08-12",
+  "validate.py": 1788,
+  "validate_palette.py": 791,
+  "sloplint.py": 422,
+  "_raised": "validate.py 1647 -> 1788: the fifteenth pack adds its structural, enumeration, kit-parity and mirror checks, plus seven reciprocal fork edges (manpage forks against blueprint, datasheet, field-notes, instrument-console, scoreboard, showroom and workbench, and each now links back). validate_palette.py 716 -> 791: manpage declares two themes whose ratios and every stated claim are recomputed on every run -- and the stated-ratio checker earned its keep twice on this pack, catching --ink-strong claimed at 18.98:1 against a computed 19.44 and --on-action-strong at 6.71:1 against 7.76. sloplint.py 366 -> 422: one more pack and token layer under the bans."
 }

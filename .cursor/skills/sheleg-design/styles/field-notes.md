@@ -23,6 +23,10 @@ tooling that has to show its work, agent memory. It suits a product whose
 argument is *here is where this answer came from* — where a dark console would
 make the reader trust the instrument instead of reading the evidence.
 
+**Not for:** a developer page whose mono is the whole body face rather than a
+citation layer — that is [`manpage`](./manpage.md). Its small type carries what
+you would type; this pack's carries where a claim came from.
+
 It is used **standalone**, like `workbench` and `briefing-room`. The reference
 carries no GSAP, Framer, Three or Lenis; its motion is CSS keyframes and one
 `.reveal` transition, all of it behind `prefers-reduced-motion`. You may ride

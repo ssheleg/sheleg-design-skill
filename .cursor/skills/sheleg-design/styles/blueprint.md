@@ -27,6 +27,7 @@ performs stops being a drawing.
 **Not for:** a page whose subject is a running system with a changing value —
 that is `instrument-console`. A warm, humane document arguing from provenance —
 `field-notes`. A page that shows the product rather than draws it — `showroom`.
+A developer page whose argument is a code sample rather than a drawing, set in the reader's own monospace — [`manpage`](./manpage.md).
 And not for **anything that needs a rounded corner**: this pack has no radius
 token to give you, and adding one damages it more than changing its blue would.
 

@@ -22,6 +22,10 @@ products where the aesthetic is calm precision hardware. Single dark
 register across landing and app; brightness (energy) varies per scene, hue
 does not.
 
+**Not for:** a developer marketing page on light paper whose argument is a code
+sample — [`manpage`](./manpage.md). A console persuades by looking like the
+running system; that pack persuades by looking like the documentation.
+
 **The fork against [`maquette`](./maquette.md), which is the one people get
 wrong.** Both are near-black with one pale accent, mono labels and an
 enterprise-infrastructure buyer; on product *category* they overlap completely,
