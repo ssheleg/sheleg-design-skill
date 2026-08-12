@@ -30,8 +30,17 @@ and motion exists to deliver it, not to compete with it.
 change of state rather than a surface, use `cyclorama`. An open-source project
 whose front door is a command rather than a UI — `prism`. A page that must read
 as a technical drawing rather than a gallery — `blueprint`. A product with no UI
-to exhibit because the interface *is* the call — [`manpage`](./manpage.md). And **not** the
+to exhibit because the interface *is* the call — [`manpage`](./manpage.md). A product whose
+argument is not how the app looks but what it *calls each thing* — a filing scheme shown as
+labelled chips — is [`pigeonhole`](./pigeonhole.md). And **not** the
 dashboard itself: this is the page that displays such a dashboard.
+
+**The fork against [`pigeonhole`](./pigeonhole.md).** Both are white, both are
+product-led, both open with a screenshot. The subject is what separates them: this
+pack frames the application **whole** and lets a seven-layer shadow lift it off the
+page, where that one has no framing shadow system at all and puts **one row of the
+app, labelled**, at the centre. *Look how good this looks* is this pack; *look what
+it calls your mail* is that one.
 
 ### The fork against [`workbench`](./workbench.md), which is the one people get wrong
 

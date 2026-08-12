@@ -18,3 +18,7 @@ graphify-out/
 # second answer — is the documented technique, and this is its only residue.
 __pycache__/
 
+
+# Scratch measurement output. A run measures a reference and screenshots it;
+# 646KB of one entered history through a `git add -A` (board B-015).
+.tmp*

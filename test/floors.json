@@ -1,8 +1,8 @@
 {
   "_why": "Ratchet floors. A gate whose check count can fall silently cannot detect a deleted requirement: stripping four required headings from one pack made validate.py drop 1270->1269 and sloplint.py 224->223, both still green. Each number is the count measured on the commit named below. Raise freely; lowering one needs a reason in the same commit.",
-  "_measured_on": "feat/manpage-pack-v1.20.0, 2026-08-12",
-  "validate.py": 1788,
-  "validate_palette.py": 791,
-  "sloplint.py": 422,
-  "_raised": "validate.py 1647 -> 1788: the fifteenth pack adds its structural, enumeration, kit-parity and mirror checks, plus seven reciprocal fork edges (manpage forks against blueprint, datasheet, field-notes, instrument-console, scoreboard, showroom and workbench, and each now links back). validate_palette.py 716 -> 791: manpage declares two themes whose ratios and every stated claim are recomputed on every run -- and the stated-ratio checker earned its keep twice on this pack, catching --ink-strong claimed at 18.98:1 against a computed 19.44 and --on-action-strong at 6.71:1 against 7.76. sloplint.py 366 -> 422: one more pack and token layer under the bans."
+  "_measured_on": "feat/pigeonhole-pack-v1.21.0, 2026-08-12",
+  "validate.py": 1920,
+  "validate_palette.py": 905,
+  "sloplint.py": 436,
+  "_raised": "validate.py 1788 -> 1920: the sixteenth pack adds its structural, enumeration, kit-parity and mirror checks, plus five reciprocal fork edges (pigeonhole forks against cyclorama, showroom, orchard, workbench and manpage, and each now links back). Three routing mentions were left as bare names rather than links, because a link is a claim of confusability and instrument-console, scoreboard and datasheet are not confusable with a white pastel-taxonomy page. validate_palette.py 791 -> 905: pigeonhole declares nine category inks, each with a stated ratio against the deepest tint of its own ramp, and the stated-ratio checker earned its keep on this pack -- it caught nine claims that were the REFERENCE's failing numbers sitting on the line of the derived token, which reads as a claim about the shipped value. sloplint.py 422 -> 436: one more pack and token layer under the bans."
 }

@@ -860,3 +860,44 @@ ambiguities in `SKILL.md`. Reproduced, filed as B-017 through B-020, and not fix
 here: changing a shipped pack's hexes is a visual change to a released design system
 and is not this run's call to make quietly.
 
+## T25 — The filing register, and the fork against the gallery
+
+Added 1.21.0 with the `pigeonhole` pack. Two branches, two fresh contexts, run
+**blind against the bundle directory only** — the agents are forbidden `test/`,
+`docs/`, `kits/`, the README and the CHANGELOG, because this file carries the
+answer beside the prompt (the limitation B-012 recorded). The bundle they read is
+the worktree's, not an installed copy: the pack is unreleased, so a truly blind run
+against an install is impossible until 1.21.0 ships. Stated rather than glossed.
+
+This pair exists because `pigeonhole` and `showroom` are now the two closest packs
+for a product-led company on a white page — both open with a screenshot, both are
+white, both are chosen when the product itself is the argument — and the whole
+distinction is **what the page is about**: the application as an object, or one row
+of it with a name attached.
+
+**T25a — should select `pigeonhole`.** "The marketing site for a tool that watches
+a support team's shared inbox and files every incoming message into categories the
+team defines in plain English — refund request, bug report, billing, press — then
+drafts a first reply for the ones that need one. Buyers are support leads at
+mid-size SaaS companies who are drowning in an unsorted queue. We want the page to
+show what it calls things." Pass: routes to `styles/pigeonhole.md`, quotes the
+clause that decided it, and names the closest rejected pack with the clause that
+ruled it out. Fail: routing to `showroom` because the page shows the product, or to
+`cyclorama` because the palette is pastel.
+
+**T25b — should still select `showroom`.** "The marketing site for a design-review
+tool. Its whole selling point is how good the workspace looks and feels — a canvas,
+side-by-side versions, a comment layer — and our best asset is a set of very
+high-fidelity screenshots of the app at real size. Buyers are design leads. There
+are no categories, no labels and no queue; the argument is the surface itself."
+Pass: stays on `styles/showroom.md` and can say what would have moved it (a
+taxonomy the product names, shown as labelled chips). Fail: routing to
+`pigeonhole` because the newest pack is also white and also product-led — which is
+the failure mode a positive-only branch cannot detect, per standing instruction 4.
+
+Both branches are also asked, after choosing, to read their chosen pack in full and
+report defects with file and quoted text — the same shape that returned nine
+findings on `scoreboard` in T23 and twenty-two on the `datasheet` pair in T24.
+
+**Result: written, not yet run.** Filled in below the moment the two runs return.
+

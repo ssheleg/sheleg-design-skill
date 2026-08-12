@@ -1,0 +1,281 @@
+/* SHELEG Design — Pigeonhole token layer (a white sorting wall: an eleven-hue
+   pastel taxonomy where a hue is a category, a display face that never goes
+   bolder than 400, and one italic word in the headline).
+   Copy verbatim; consume only var(--…) in components.
+
+   Extracted from https://www.getinboxzero.com/ on 2026-08-12 by reading the
+   server-rendered HTML of / (399,558 bytes) together with the two shipped
+   stylesheets (/_next/static/immutable/chunks/0dfx_zuu6iahb.css and
+   26l20pon7rs4c.css, 599,990 bytes combined, 152 custom properties), and then by
+   reading computed styles off the live page through CDP at 1440x900, 768x1024 and
+   390x844 — 912 rendered elements. Ratios were computed by importing this
+   repository's own palette gate, test/validate_palette.py.
+
+   Four families of value appear below and they are not the same kind of claim:
+
+   MEASURED — the literal was in the reference's stylesheet, its markup, or its
+   computed styles.
+   COMPOSITED — the reference paints an alpha over a known field; the value below
+   is that composite resolved in sRGB, so a component never has to know what sat
+   underneath it.
+   SELECTED — the reference paints no value in this role (it is a marketing page
+   and has no error state), so the value is a different *step* of a hue the
+   reference already ships, chosen for WCAG AA on the field it sits on.
+   DERIVED — the reference DOES paint this role and its value fails an
+   accessibility floor. The hue and chroma are held and OKLab L is walked down
+   until the ROUNDED hex clears 4.5:1. Eight bits per channel is where the
+   derivation finishes: an earlier pass of this file read its ratios off the
+   unrounded candidates and would have shipped #007b22 claiming its parent's
+   4.50:1 where the hex itself measures 4.38:1.
+
+   Eight of the reference's nine category inks fail 4.5:1 against the very tints
+   it paints them on — worst #49d1fa at 1.53:1 — so every category ink here is
+   DERIVED. The register survives; the ink does not. Every correction is recorded
+   with its number in the pack's Gotchas.
+
+   No dark theme. The reference's stylesheet carries a .dark block, but it is the
+   *application's* stock shadcn slate theme and nothing on the marketing page
+   consumes it: the page is white at every viewport measured. A dark twin no prose
+   documents is a defect this library already carries once (see field-notes, board
+   B-018), so this pack ships light only and says so. */
+
+:root {
+  color-scheme: light;
+
+  /* ---- The wall --------------------------------------------------------- */
+  /* White on 51 elements, the alt band on 12, the third step on 6. */
+  --bg: #ffffff; /* MEASURED — the page field at every viewport */
+  --surface: #ffffff; /* MEASURED — cards sit at field level and separate by hairline, not by fill */
+  --surface-2: #f9fafb; /* MEASURED — the alternating section band */
+  --surface-3: #fcfcfc; /* MEASURED — the third, barely-there step */
+  --surface-grad-from: #ffffff; /* MEASURED — 19 surfaces carry linear-gradient(#fff, #f9f9f9) */
+  --surface-grad-to: #f9f9f9; /* MEASURED — the same gradient's foot */
+
+  /* ---- Ink -------------------------------------------------------------- */
+  /* The reference ships two neutral families at once: a bespoke ramp for the
+     display and the ledes, and Tailwind's gray/slate defaults for the dominant
+     body copy (#6b7280 on 79 elements against the bespoke #848484 on 47). Both
+     are kept, because both are load-bearing on the page. */
+  --ink: #242424; /* 15.52:1 on --bg — MEASURED: display, section heads, every h2 */
+  --ink-body: #3d3d3d; /* 10.86:1 on --bg — MEASURED: body copy that must carry weight */
+  --ink-soft: #6b7280; /* 4.83:1 on --bg — MEASURED: the dominant body ink, and the one that clears AA */
+  --ink-faint: #9ca3af; /* 2.54:1 on --bg — MEASURED: non-text only, an icon or a disabled glyph. Never a word. */
+
+  /* The reference's own lede ink is #848484 at 3.74:1 — below AA for the 18px
+     regular it is painted at. This pack does not ship it; --ink-soft is the
+     reference's own alternative and it clears the floor. */
+  --ink-lede: #6b7280; /* 4.83:1 on --bg — DERIVED: the reference's own alternative, and it clears the floor */
+
+  /* ---- Lines: this pack divides with hairlines, not with shadow ---------- */
+  --rule: #f3f3f3; /* COMPOSITED — its 1px rgba(231,231,231,0.5) resolved over --bg, on 43 elements */
+  --rule-soft: #f7f7f7; /* MEASURED — the 19-element hairline */
+  --rule-strong: #e3e3e3; /* MEASURED — the single 2px border on the page */
+
+  /* ---- The accent: a two-stop gradient, never a flat fill --------------- */
+  /* The primary CTA is linear-gradient(#2965ec, #5c89f8) with a shadow tinted to
+     its own hue. White on the upper stop is 5.04:1 and on the LOWER stop 3.29:1,
+     so the label passes at the top of the button and fails at the bottom of the
+     same button. The pack's Components section fixes the direction of the ramp
+     rather than the colours; see Gotchas. */
+  --accent: #2965ec; /* MEASURED — the CTA gradient's upper stop */
+  --accent-2: #5c89f8; /* MEASURED — the gradient's lower stop; what white costs on it is in the pack's Gotchas */
+  --accent-strong: #2965ec; /* 5.04:1 on --bg — MEASURED: the accent that may carry a word */
+  --accent-wash: #eff3ff; /* MEASURED — its new-blue-50, the palest step of the same hue */
+  --accent-edge: #d9e2ff; /* MEASURED — its new-blue-100 */
+  --cta-shadow: rgba(75, 131, 253, 0.2); /* MEASURED — 0 2px 10.1px, tinted to the accent */
+  --on-accent: #ffffff; /* 5.04:1 on --accent — MEASURED: the label colour the reference paints */
+
+  /* ---- Status ----------------------------------------------------------- */
+  /* SELECTED, all four. A marketing page paints no error state, so each is a
+     darker step of a hue the reference does ship: the open-source tick's green,
+     the Calendar chip's amber, the Notification chip's red, the CTA's blue.
+     Separation, computed by the gate: the tightest pair is --danger/--warn at
+     13.9 at full colour, above the hard floor of 10; under deuteranopia
+     --danger/--good fall to 3.4 and --good/--warn to 5.0, which is legal only
+     because this pack states that status is never by colour alone. */
+  --good: #008931; /* 4.54:1 on --bg — SELECTED from its #17a34a */
+  --warn: #9f6d00; /* 4.50:1 on --bg — SELECTED from its #d8a40c */
+  --danger: #c94244; /* 4.83:1 on --bg — MEASURED: the Notification chip's ink, which already clears AA on the field */
+  --info: #2965ec; /* 5.04:1 on --bg — MEASURED: an alias of --accent, on purpose */
+
+  /* ---- The taxonomy ----------------------------------------------------- */
+  /* THE POINT OF THIS PACK. Nine categories were measured on the reference, each
+     as an ink plus a four-step tint ramp of its own hue; the stylesheet declares
+     eleven such ramps in total (new-brown and new-pink ship unused as
+     categories). A chip is built from two of the steps — an outer chip in the
+     deeper pair holding an inner chip in the paler one.
+
+     These tokens are deliberately OUTSIDE the palette gate's semantic peer set,
+     and that is a decision rather than an oversight. Eleven hues cannot be
+     simultaneously AA-compliant and mutually distinguishable under dichromacy:
+     darkening them to clear 4.5:1 drops the worst deuteranopic pair
+     (marketing/notification) from ΔE 4.42 to 1.24, well under the gate's hard
+     floor of 10, and no re-stepping fixes that — a dichromatic reader sees a
+     one-dimensional axis where this system wants nine points. So the hue here is
+     a REDUNDANT channel: the chip's label word carries the category, and the pack
+     bans a chip without one. When board B-017's widening reaches the peer set,
+     read this paragraph before adding these tokens to it. */
+
+  /* Every ink below: DERIVED. Ratio stated against the DEEPEST tint of its own
+     ramp (-200), which is the worst surface the hue can sit on. */
+  /* The reference paints #124dff here. It measures 3.89:1 against the deepest tint
+     of this same ramp, so it fails AA where the chip puts it. */
+  --cat-reply-ink: #0940f3; /* 4.51:1 on --cat-reply-200 — DERIVED, hue and chroma held */
+  --cat-reply-50: #eff3ff; /* MEASURED */
+  --cat-reply-100: #d9e2ff; /* MEASURED */
+  --cat-reply-150: #d5defc; /* MEASURED */
+  --cat-reply-200: #c2d0fc; /* MEASURED */
+
+  /* The reference paints #6410ff here. It measures 4.28:1 against the deepest tint
+     of this same ramp, so it fails AA where the chip puts it. */
+  --cat-newsletter-ink: #6100fb; /* 4.52:1 on --cat-newsletter-200 — DERIVED, hue and chroma held */
+  --cat-newsletter-50: #f3eafe; /* MEASURED */
+  --cat-newsletter-100: #e7daff; /* MEASURED */
+  --cat-newsletter-150: #e1d5fc; /* MEASURED */
+  --cat-newsletter-200: #d7c3fc; /* MEASURED */
+
+  /* The reference paints #17a34a here. It measures 2.72:1 against the deepest tint
+     of this same ramp, so it fails AA where the chip puts it. */
+  --cat-marketing-ink: #007b22; /* 4.50:1 on --cat-marketing-200 — DERIVED, hue and chroma held */
+  --cat-marketing-50: #f3ffef; /* MEASURED */
+  --cat-marketing-100: #e1ffd8; /* MEASURED */
+  --cat-marketing-150: #ddf4d3; /* MEASURED */
+  --cat-marketing-200: #cff4c0; /* MEASURED */
+
+  /* The reference paints #d8a40c here. It measures 1.65:1 against the deepest tint
+     of this same ramp and is the second-worst on the page, so it fails AA where the chip puts it. */
+  --cat-calendar-ink: #875600; /* 4.53:1 on --cat-calendar-200 — DERIVED, hue and chroma held */
+  --cat-calendar-50: #fffbef; /* MEASURED */
+  --cat-calendar-100: #fff3da; /* MEASURED */
+  --cat-calendar-150: #e7e0cb; /* MEASURED */
+  --cat-calendar-200: #e7dbb9; /* MEASURED */
+
+  /* The reference paints #c94244 here. It measures 3.09:1 against the deepest tint
+     of this same ramp, so it fails AA where the chip puts it. */
+  --cat-notification-ink: #aa222b; /* 4.52:1 on --cat-notification-200 — DERIVED, hue and chroma held */
+  --cat-notification-50: #ffeef0; /* MEASURED */
+  --cat-notification-100: #ffdadb; /* MEASURED */
+  --cat-notification-150: #fdd3d4; /* MEASURED */
+  --cat-notification-200: #fcc0c0; /* MEASURED */
+
+  /* The reference paints #49d1fa here. It measures 1.53:1 against the deepest tint
+     of this same ramp and is the worst on the page, so it fails AA where the chip puts it. */
+  --cat-cold-ink: #00759a; /* 4.50:1 on --cat-cold-200 — DERIVED, hue and chroma held */
+  --cat-cold-50: #feffff; /* MEASURED */
+  --cat-cold-100: #e5f9ff; /* MEASURED */
+  --cat-cold-150: #e5f9ff; /* MEASURED — the reference repeats the step; kept rather than invented */
+  --cat-cold-200: #d0f4ff; /* MEASURED */
+
+  /* The reference paints #e65707 here. It measures 2.71:1 against the deepest tint
+     of this same ramp, so it fails AA where the chip puts it. */
+  --cat-team-ink: #ba2b00; /* 4.53:1 on --cat-team-200 — DERIVED, hue and chroma held */
+  --cat-team-50: #fff5ef; /* MEASURED */
+  --cat-team-100: #ffe7da; /* MEASURED */
+  --cat-team-150: #fce2d5; /* MEASURED */
+  --cat-team-200: #fcd6c2; /* MEASURED */
+
+  /* The reference paints #c942b2 here. It measures 2.79:1 against the deepest tint
+     of this same ramp, so it fails AA where the chip puts it. */
+  --cat-urgent-ink: #a2138e; /* 4.54:1 on --cat-urgent-200 — DERIVED, hue and chroma held */
+  --cat-urgent-50: #ffeef8; /* MEASURED */
+  --cat-urgent-100: #ffdaec; /* MEASURED */
+  --cat-urgent-150: #fdd3eb; /* MEASURED */
+  --cat-urgent-200: #fdbfe0; /* MEASURED */
+
+  /* The neutral category — the reference spends it on STEP 1/2/3, and it is the
+     one ink that already clears the floor everywhere on its own ramp. */
+  --cat-step-ink: #525252; /* 6.26:1 on --cat-step-200 — MEASURED, no derivation needed */
+  --cat-step-50: #ffffff; /* MEASURED */
+  --cat-step-100: #f6f6f6; /* MEASURED */
+  --cat-step-150: #eeeeee; /* MEASURED */
+  --cat-step-200: #e6e6e6; /* MEASURED */
+
+  /* ---- Type ------------------------------------------------------------- */
+  /* Two families over 912 elements: Geist on 878, Aeonik on 34. The display face
+     is rare AND light — weight 400 at every size it appears at. Both are
+     commercial webfonts on the reference; the stacks below name them first and
+     fall through to the system, so a consumer without a licence still gets the
+     rhythm. */
+  --font-display: aeonikFont, "Aeonik", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: Geist, "Geist Fallback", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; /* MEASURED — declared, and spent on nothing the page shows */
+
+  --weight-display: 400; /* MEASURED — never 500, never 600, at any display size */
+  --weight-body: 400; /* MEASURED */
+  --weight-label: 500; /* MEASURED — control labels and every chip */
+  --weight-emphasis: 600; /* MEASURED — inline emphasis in body copy */
+
+  /* Fluid, by clamp(). Measured: 60px at 1440 and at 768 (both cap), 34px at 390
+     in three lines; section heads 40px, then 27.2px. The reference ships seven
+     ramps; these two are the ones its display and section heads resolve to. */
+  --size-display: clamp(34px, 5.6vw, 60px); /* MEASURED at three viewports */
+  --lh-display: 1; /* MEASURED — 60px on 60px, the tightest in the library */
+  --size-head: clamp(27.2px, 3.6vw, 40px); /* MEASURED */
+  --lh-head: 1.25; /* MEASURED — 50px on 40px */
+  --size-sub: 20px; /* MEASURED — 20px/24px, 9 elements */
+  --size-lede: 18px; /* MEASURED — 18px/28px */
+  --size-body: 14px; /* MEASURED — 14px/24px, the dominant pairing on 59 elements */
+  --lh-body: 1.714; /* MEASURED — 24px on 14px */
+  --size-body-lg: 16px; /* MEASURED — 16px/24px */
+  --size-chip: 12px; /* MEASURED — 12px/16px, weight 500 */
+  --size-micro: 10px; /* MEASURED — 10px/15px, the smallest on the page */
+
+  /* ---- Texture ---------------------------------------------------------- */
+  /* Radii by frequency: 9999 (35), 32 (21), 20 (12), 13 (10), 8 and 7 (12 each),
+     52 (8). The 8/7 pair is the chip's two layers and the reason both are here. */
+  --radius-chip: 8px; /* MEASURED — the outer chip */
+  --radius-chip-inner: 7px; /* MEASURED — the inner chip, 1px inside its parent */
+  --radius-control: 13px; /* MEASURED — every button in the hero and the nav */
+  --radius-control-lg: 14px; /* MEASURED — the same button in-page; the reference is not consistent and this records both */
+  --radius-panel: 32px; /* MEASURED — cards, FAQ rows, product frames */
+  --radius-band: 52px; /* MEASURED — the full-width enterprise band */
+  --radius-pill: 9999px; /* MEASURED — badges */
+
+  /* One shadow does almost all the work: 40 elements carry it. */
+  --shadow-card: 0 3px 12.9px rgba(151, 151, 151, 0.08); /* MEASURED */
+  --shadow-soft: 0 2px 16px rgba(0, 0, 0, 0.03); /* MEASURED — 5 elements */
+  --shadow-hero: 0 14.3px 38.74px 3.9px rgba(0, 0, 0, 0.1), 0 0 4.16px rgba(0, 0, 0, 0.05); /* MEASURED — the one big lift, on the hero frame */
+  --shadow-cta: 0 2px 10.1px rgba(75, 131, 253, 0.2); /* MEASURED — tinted to the accent */
+
+  /* A tinted card's shadow is mixed toward its OWN hue, which is how the page
+     reads coloured while staying white. Measured on the green and blue cards;
+     the pattern generalises and the pack states the rule rather than shipping a
+     token per hue. */
+  --shadow-tint-a: 0 2px 3.4px rgba(207, 249, 222, 0.22); /* MEASURED — the green card's near shadow */
+  --shadow-tint-b: 0 1px 1px rgba(118, 217, 143, 0.11); /* MEASURED — and its contact shadow */
+
+  /* ---- Measure ---------------------------------------------------------- */
+  --container: 1152px; /* MEASURED — the section container at 1440 */
+  --measure-hero: 780px; /* MEASURED — the display column */
+  --measure-lede: 640px; /* MEASURED */
+  --measure-body: 650px; /* MEASURED — on 10 elements, the body measure */
+  --gutter: 24px; /* MEASURED at 390 */
+
+  /* ---- Motion ----------------------------------------------------------- */
+  /* Entrance and hover only. There is NO scroll clock on the reference: zero
+     elements with animation-timeline, zero sticky, zero fixed. */
+  --dur-quick: 0.15s; /* MEASURED — 10 elements, the default transition */
+  --dur-base: 0.2s; /* MEASURED */
+  --dur-slow: 0.3s; /* MEASURED */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1); /* MEASURED — every transition but one */
+  --ease-overshoot: cubic-bezier(0.175, 0.885, 0.32, 2.2); /* MEASURED — exactly one element on the page */
+  --dur-marquee: 100s; /* MEASURED — the logo wall, linear, the page's only keyframe animation */
+  --blur-enter: 6px; /* SELECTED — the hero enters word by word through filter: blur(); the settled state measures 0px and the start value is inside a motion library rather than in CSS */
+  --stagger-word: 0.04s; /* SELECTED — same reason: 20 word spans enter in sequence, the interval is not in the stylesheet */
+}
+
+/* The reference honours reduced motion globally — its first rule collapses
+   transition-duration and animation-duration to 0.01ms on *. A pack that
+   regressed that would be worse than its own source, so the collapse is part of
+   the token layer rather than advice in the prose. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-quick: 0.01ms;
+    --dur-base: 0.01ms;
+    --dur-slow: 0.01ms;
+    --dur-marquee: 0.01ms;
+    --blur-enter: 0px;
+    --stagger-word: 0s;
+    --ease-overshoot: cubic-bezier(0.4, 0, 0.2, 1); /* an overshoot is motion; it degrades to the standard curve */
+  }
+}

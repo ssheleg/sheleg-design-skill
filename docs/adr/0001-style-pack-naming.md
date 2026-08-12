@@ -32,6 +32,18 @@
   live trademark of the company whose stylesheet was measured, which the
   *no trademark surface* clause below already covers; the register name carries no
   such reading. The address is in the pack's `Origin:`.
+- **Applied a ninth time:** 2026-08-12. The sixteenth pack was extracted from
+  `getinboxzero.com` and is named **`pigeonhole`** for the register it encodes (a
+  wall of labelled compartments things get sorted into), not `inboxzero`. This is
+  the third run whose opening request named the source and nothing else — *"давай
+  этот сайт в референсы добавим тоже"* — and it was answered by pointing at this
+  ADR before a file was written. Two alternatives were weighed and rejected on the
+  criteria below: `diptych`, accurate about the page's set piece but silent about
+  the eleven-hue taxonomy that is the pack's whole contribution, and `mailroom`,
+  the most legible of the three but binding a long-lived artifact to the email
+  domain — the register applies equally to ticket triage, file organisers and CRM
+  inboxes, and *selection by intent* is the criterion that decided it. The address
+  is in the pack's `Origin:`.
 - **Corrected:** 2026-08-10. The Decision section named the seventh pack
   `lecture-hall`. That was the name on the branch this ADR was written on, and
   that branch never merged; the pack that shipped from graphify.com is

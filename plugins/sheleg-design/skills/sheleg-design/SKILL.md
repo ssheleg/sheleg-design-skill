@@ -3,7 +3,7 @@ name: sheleg-design
 description: Use when building or upgrading a cinematic scroll-driven landing page, marketing site or hero (particle/WebGL background, scroll-linked animation, parallax, scrubbed sections) — when such a page feels busy or janky or its motion layers drift out of sync — or when styling product UI with its style packs - dashboards, admin panels, internal/dev tools, mobile app screens, design tokens, light/dark themes - or when carrying a visual system across the Figma border (publishing tokens as variables, implementing a design without importing raw values). Triggers - "cinematic landing" / "кинематографичный лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables / figma to code" / "переменные фигмы, фигма в код", "chat/agent UI" / "интерфейс чата или агента", "streaming output" / "стриминг ответа", "mobile screen" / "мобильный экран".
 license: MIT
 metadata:
-  version: 1.20.0
+  version: 1.21.0
 ---
 
 # SHELEG Design
@@ -80,6 +80,7 @@ this table is for choosing, not for reading instead of the pack:
 | [`scoreboard`](./styles/scoreboard.md) | warm paper, ink primary, hot orange that only marks, pixel numerals | products whose argument is an accumulating number — growth, ads, SEO |
 | [`datasheet`](./styles/datasheet.md) | off-white spec sheet, hairline cells at radius 0, one orange, Inter over JetBrains Mono, a dark **alarm state** | B2B SaaS whose product is a verdict about the visitor, request or device — fraud, bot and device intelligence, identity, API products |
 | [`manpage`](./styles/manpage.md) | cream paper, the reader's own **system monospace** (zero webfont bytes), 48px display ceiling, 576px argument column, coral label chips that are real `<h2>`s | developer products whose buyer reads code — APIs, SDKs, CLIs, MCP servers, developer infrastructure |
+| [`pigeonhole`](./styles/pigeonhole.md) | white field, hairlines, a display that never passes weight 400 plus one italic word, and **eleven pastel hues where a hue is a category** — a two-layer chip, 8px outside / 7px inside, label word mandatory | products that file the reader's incoming mess into named categories — email triage, ticket routing, digests, organisers, CRM inboxes |
 
 **A materialized kit answers part of what a core pack leaves out.** `npx
 sheleg-design-skill --kit <pack>` produces `src/styles.css`, whose component half is
@@ -88,12 +89,12 @@ authored CSS for the states a core pack declines to specify — `:hover`,
 reading only this bundle will invent them. Fetch the kit first, and treat any
 difference between kit and pack as a defect in one of them rather than a choice.
 
-**Six of the fifteen are on the core contract, and it changes what you get.**
+**Six of the sixteen are on the core contract, and it changes what you get.**
 A pack marked **core contract** does not specify `## Components`, `## Hero`,
 `## Responsive` or `## Signature element` — so per-component states, the
 opening viewport and its line ceiling, the collapse rules, and the single
 element the page is remembered by are **yours to decide**, and you say so out
-loud when you do. The other nine answer all four. This asymmetry is the one
+loud when you do. The other ten answer all four. This asymmetry is the one
 thing about the library most likely to make you invent a value and believe you
 read it: what a core pack *does* state is measured to two decimals, and that
 precision is not evidence about the half it leaves silent. Each pack declares
@@ -193,7 +194,7 @@ as a definition of done, in that order:
   before writing CSS for a cinematic page. A scene has planes; everything on one
   plane is the failure no amount of easing repairs.
 - **Charts — hand the pack to `dataviz`** (same file), before drawing a chart in
-  any pack. Token names are not uniform across the fifteen — only `--bg` and
+  any pack. Token names are not uniform across the sixteen — only `--bg` and
   `--ink` resolve everywhere — and an undefined custom property does not error,
   it silently falls back. Guessing one is the quietest way to ship a wrong chart.
 - **Mobile surfaces** ([`MOBILE_SURFACES.md`](./MOBILE_SURFACES.md)), when the
