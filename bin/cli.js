@@ -331,6 +331,46 @@ function main() {
       `internal tools) from a standalone pack — on its principles.\n\n` +
       `${c("dim", "Docs: " + pkg.homepage)}\n`,
   );
+
+  offerRouters();
+}
+
+/**
+ * Ask the family launcher to write the routing block, for this member only.
+ *
+ * Delegated rather than reimplemented, for three reasons. The block describes
+ * what the machine actually has, so a lone member rendering the whole thing
+ * would produce a table for routers nobody installed. `--member` limits the
+ * write to the `sheleg-design` section and leaves everyone else's alone, which
+ * is what lets the bundle and a single installer both write. And the launcher is
+ * the only writer that copies the operator's global instruction file before
+ * touching it — that file has no version control behind it.
+ *
+ * The registry name is `sheleg-design`, not the package name
+ * `sheleg-design-skill`. The skill installs into a PROJECT while the block lives
+ * in the agent's GLOBAL instructions, and offering the second from the first is
+ * deliberate: a skill discoverable in one repository and routed to in none is
+ * how the family's composition order goes unread.
+ *
+ * `--no-install` keeps this from silently downloading a package nobody asked
+ * for; when the launcher is absent the command is printed rather than failing,
+ * because ending an install in an error over an OPTIONAL follow-up reads as a
+ * failed install.
+ */
+function offerRouters() {
+  const { spawnSync } = require("child_process");
+  const r = spawnSync(
+    "npx",
+    ["--no-install", "sshlg-skills", "routers", "--member", "sheleg-design"],
+    { stdio: "inherit", shell: process.platform === "win32" },
+  );
+  if (r.status !== 0) {
+    console.log(
+      `To have this skill apply by default in every project, add the family's\n` +
+        `routing block to your agent's global instructions:\n\n` +
+        `  ${c("bold", "npx --yes sshlg-skills routers --member sheleg-design")}\n`,
+    );
+  }
 }
 
 main();
