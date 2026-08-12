@@ -211,8 +211,12 @@ is what lets a two-line headline break where it means to.
   black. This is why the page reads coloured while remaining white, and it is the
   detail most often dropped when this look is copied.
 - **Radii are a vocabulary, not a scale:** `--radius-chip` 8px outside,
-  `--radius-chip-inner` 7px inside, `--radius-control` 13px, `--radius-panel`
-  32px, `--radius-band` 52px, `--radius-pill` 9999px.
+  `--radius-chip-inner` 7px inside, `--radius-control` 13px (and
+  `--radius-control-lg` 14px, which the reference uses in-page — see Gotchas),
+  `--radius-panel-sm` 20px, `--radius-panel` 32px, `--radius-band` 52px,
+  `--radius-pill` 9999px. All seven are measured; the frequencies are 12 for the
+  chip pair, 10 for the control, 12 for 20px, 21 for the panel, 8 for the band and
+  35 for the pill.
 - **Surfaces are barely gradients.** 19 of them carry
   `linear-gradient(var(--surface-grad-from), var(--surface-grad-to))` — white to
   `#f9f9f9`, a fall so shallow it reads as a single tone with a lit top edge.

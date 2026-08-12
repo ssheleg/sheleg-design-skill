@@ -22,7 +22,23 @@ Each ink clears 4.5:1 against the deepest tint of its own ramp. All nine are
 derived from the reference's values, which fail that floor in eight cases out of
 nine; the numbers are in the pack's Gotchas.
 
+## Selected, for categories that are filters
+
+A chip is a label, so it has no pressed state — but where the product's categories
+*are* filters, the reader needs to know which one is on. Add `pg-cat--selected` (or
+`aria-pressed="true"`, which the stylesheet matches): the inner layer takes its
+category's `-150` step instead of `-50` and the ink marks a 2px inset. That inset is
+the one border a chip may carry.
+
+## Two of the nine do not render two layers
+
+`--cat-cold-150` and `--cat-cold-100` are the same measured literal, and
+`--cat-step-50` is the page white — so on Cold Email and on STEP the 8px→7px step
+is invisible against `--surface`. Both are faithful to the reference. Where those
+two must read as two layers, put them on `--surface-2`.
+
 ```tsx
 <CategoryChip category="reply">To Reply</CategoryChip>
 <CategoryChip category="newsletter">Newsletter</CategoryChip>
+<CategoryChip category="marketing" className="pg-cat--selected">Marketing</CategoryChip>
 ```
