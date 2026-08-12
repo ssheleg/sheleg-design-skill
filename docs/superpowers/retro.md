@@ -78,13 +78,30 @@ fired in five run stamps.
    green; and the negative branches are what proved the fork clauses are read
    from both sides.)*
 
-5. **A pack needs an addressable origin before it needs anything else.** A
-   production reference a reader can go and look at — a URL or a bare host —
-   not a product name. No reference, no pack: the contract forbids invented
-   values, and a synthesised palette with a citation attached is an invented
-   value that looks sourced. This retired an eighth pack and a six-pack
-   backfill in one run rather than shipping either.
-   *(Last fired: 2026-08-12 · `e9b753f` — one reference, one URL, and the pack was
+5. **No reachable reference, no claim — for a pack's origin, and for anything else
+   you cannot open right now.** A pack needs a production reference a reader can go
+   and look at: a URL or a bare host, not a product name. No reference, no pack —
+   the contract forbids invented values, and a synthesised palette with a citation
+   attached is an invented value that looks sourced. This retired an eighth pack and
+   a six-pack backfill in one run rather than shipping either.
+
+   **Widened 2026-08-12, because the same failure arrived wearing different
+   clothes.** 1.14.0 shipped the sentence *"Refero — alone among the three — returns
+   flows"* into two repositories. Mobbin returns flows too; its tool surface was
+   invisible because it was registered and unauthenticated, so the comparison could
+   not be checked by the session that wrote it. Nothing stopped it, because the rule
+   was scoped to *palettes* and the claim was about *a tool*. It is the same class:
+   an assertion about something outside the session's reach, written in the voice of
+   something measured, sitting beside things that were. So the rule now reads: **a
+   comparative claim about a capability you cannot exercise in this session is
+   unverified — mark it so, or do not write it.** The sharpest form is a claim
+   written next to the rule that forbids it — `DESIGN_SYNC_BRIDGE.md` §4 says *gate
+   on the tools present, not on the config* two paragraphs above where the sentence
+   went in.
+   *(Last fired: 2026-08-12 · `ada7462` — the widened half, within the hour: signing
+   in to Mobbin exposed `search_flows`, one live query returned a twenty-screen flow,
+   and both repositories were corrected with the wrong claim named rather than
+   quietly replaced. Previously, the original half: 2026-08-12 · `e9b753f` — one reference, one URL, and the pack was
    measured off the reference's own shipped stylesheet rather than off a screenshot. The
    two places a value had no reference behind it — the paper status set and the chart
    ramp — are marked `SELECTED` at the declaration, with the file's header defining what
@@ -230,6 +247,24 @@ fired in five run stamps.
 
 ## Prune log
 
+- **2026-08-12 (`ada7462`) · nothing retired, nothing added (still 10, at cap);
+  instruction 5 widened.** Walked against the three triggers after two same-day
+  releases. **Six fired** — 2 (registry and tags checked before both tags), 5 (the
+  widened half, within the hour of widening it), 6, 7, 8 (nine delegated findings
+  reproduced, one refuted), 9 (published tarballs unpacked and read, both install
+  channels verified by reading files). Instruction 3 fired and **closed its own first
+  debt the same day**, which is the shortest life a board row has had here.
+  Instructions 1, 4 and 10 were walked and found not applicable: no shared-tree
+  hazard arose in `sheleg-design`, though the `super-ux` checkout turned out to be two
+  release commits behind `origin/main` with `package.json` reading a version older
+  than both — caught by that repository's own `release_preflight.py`, which is
+  instruction 1's job done by a script in the other repo.
+  **Instruction 5 was widened rather than duplicated, for the third time this list has
+  chosen widening over addition.** The pattern is now explicit: when a rule catches a
+  defect one noun away from what it says, the rule was right and its scope was narrow.
+  Adding an eleventh would have split one class across two rules, and a class split
+  across two rules is a class nobody owns.
+
 - **2026-08-12 (`e9b753f`) · one retired, one added (still 10, at cap).** All ten
   walked against the three triggers. **Eight fired** — 1 (late, and recorded as late),
   2 (it settled a live registry-vs-manifest ambiguity mid-release), 4 (**half**: T23
@@ -321,8 +356,53 @@ fired in five run stamps.
 | 2026-08-10 | `89a8798` | repeat audit run as application scenarios; the bundle made self-sufficient, the defect class gated, the hook contradiction resolved; **`v1.11.0` shipped** | **yes** |
 | 2026-08-11 | `eb13099` / `13f0a3f` | mobile becomes a named register; Mobbin joins the sweep slot; **`v1.12.0` and `v1.12.1` shipped** | no |
 | 2026-08-12 | `e9b753f` | `scoreboard` style pack from get-ryze.ai, thirteenth kit, two gate defects fixed; **`v1.13.0` shipped** | **yes** |
+| 2026-08-12 | `8df0ede` | T23 run the day it shipped; nine findings reproduced, eight confirmed and one refuted; **`v1.13.1` shipped** | **yes** |
+| 2026-08-12 | `ada7462` | Refero joins the reference-sweep slot in both repositories, and the claim written about the slot was wrong; **`v1.14.0` + `v1.14.1` shipped** | **yes** |
 
 ## Log
+
+### 2026-08-12 — the rule was two paragraphs above the sentence that broke it
+
+**Symptom.** `DESIGN_SYNC_BRIDGE.md` §4 shipped in 1.14.0 saying Refero was *"alone
+among the three"* in returning flows, and `super-ux`'s `ux-flows` said the same. Both
+were false: `mcp__mobbin__search_flows` has always existed. The correction went out an
+hour later, in two repositories, as `1.14.1` and `0.35.1`.
+
+**Surfaced at** the moment Mobbin was authenticated — the tools appeared, and the first
+one in the list refuted the sentence. **Owned by** the session that wrote it, which had
+Mobbin registered, unauthenticated, and invisible.
+
+**Root cause.** The claim was comparative and one of the three things compared could not
+be inspected. Nothing in the session could have confirmed or denied it; it was written
+anyway, in the same declarative voice as the two halves that *were* checked, and it sat
+between them where it inherited their credibility. The rule that forbids exactly this —
+**gate on the tools present in the session, not on the config** — is two paragraphs above
+it in the same file. It was written for the *reader* of the skill and never turned on the
+*author* of the paragraph.
+
+**Why nothing caught it.** Standing instruction 5 covered the same class and was scoped
+to the wrong noun: it said a *pack* needs a reachable reference, and this was a claim
+about a *tool*. Three gates, 2,455 checks and a green CI cannot see it either — no check
+in this repository can open an MCP server and ask what it exposes, and one that tried
+would fail for every reader who has not signed in. This is a class the gates structurally
+cannot hold.
+
+**Fixes by grade.** *Doc:* both files corrected against Mobbin's live tool surface, with
+the wrong claim named as a `[CORRECTION]` rather than silently replaced — the same
+discipline the packs use, for the same reason. *Better than the fix:* the replacement
+distinction is more useful than the false one. Both servers return flows **in different
+media** — Mobbin as preview images per step, Refero as goal/action/system-response text —
+so the guidance is now "read one to draw the diagram, look at the other to check it",
+which is actionable in a way "only one has flows" never was. *Process:* instruction 5
+widened from *a pack's origin* to *any claim about something outside the session's
+reach*.
+
+**The check that catches it next time.** There isn't one, and pretending otherwise would
+be the same defect one level up. What stays human, and is now written into instruction 5:
+**before a comparative sentence ships, ask whether every thing it compares was reachable
+when it was written.** If one was not, mark it unverified or leave it out. An
+authentication prompt is not an obstacle to route around — it is the session telling you
+which half of your sentence you cannot see.
 
 ### 2026-08-12 — the self-test said FAILED and the gate said 0
 
