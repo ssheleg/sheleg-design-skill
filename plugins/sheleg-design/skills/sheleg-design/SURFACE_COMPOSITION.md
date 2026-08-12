@@ -79,7 +79,7 @@ why guessing a token name is the quietest way to ship a wrong chart.
 | `dataviz` parameter | What the pack supplies | Where to find it |
 |---|---|---|
 | Ramps | the pack's tint/step scale, where it has one | its Palette table; not every pack ships a ramp |
-| Categorical order | a fixed hue order drawn from the pack, assigned once, never cycled | Palette + Signature motifs. Most packs carry **one** accent and ban a second hue, so a multi-series chart usually means small multiples, or one accent series against `--border-strong` — or a validated `--chart-1…N` set added to the **token layer** in the same change. Only `field-notes` ships one today |
+| Categorical order | a fixed hue order drawn from the pack, assigned once, never cycled | Palette + Signature motifs. Most packs carry **one** accent and ban a second hue, so a multi-series chart usually means small multiples, or one accent series against `--border-strong` — or a validated `--chart-1…N` set added to the **token layer** in the same change. `field-notes` and `scoreboard` each ship one today |
 | Sequential hue | the pack's single accent hue | `--accent`, or the token its `@role accent:` names |
 | Diverging pair | two poles from the pack, with a neutral grey midpoint | Palette. A one-accent pack has no sanctioned second pole; status colours are state-only and may not stand in. If the pack has no pair, that is a gap to close in the pack |
 | Status palette | the pack's status set, **if it has one**, distinct from categorical | Palette; `editorial-luxury` and `orchard` have none |

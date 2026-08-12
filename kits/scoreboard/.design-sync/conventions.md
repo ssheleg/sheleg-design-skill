@@ -11,11 +11,23 @@ and the orange-red accent: there the numerals are mono and make evidence
 that?* goes there. *How much, and since when?* stays here. Build every screen
 against `var(--…)` and never a literal.
 
-**The accent is a mark, not a voice.** `--accent` `#FF4801` measures 3.23:1 on
-the paper — above the 3:1 floor for a non-text mark, below the one for a word.
-It is the 3×18px tick, the list marker, the focus ring and the link underline.
-Body text, headings and button fills set in it are the fastest way to break this
-system.
+**The accent is a mark, not a voice — and neither is the other orange.**
+`--accent` `#FF4801` measures 3.23:1 on the paper and `--accent-hover` `#E03D00`
+measures 4.12:1; **no orange in this system reaches the WCAG AA floor for a
+word.** The accent is the 3×18px tick, the list marker, the focus ring and the
+link underline — and, filled, a selected chip, where `--on-accent` sits on it at
+4.92:1. A link is `--ink` with an `--accent` underline, never orange text.
+
+**The focus ring is solid.** 1.13.0 shipped the reference's translucent
+`focus-within` glow, which composites to 1.29:1 against the paper — decoration
+wearing an affordance's name. `--ring-focus` is now a solid 2px accent ring, and
+`--ring-focus-sand` is the ink ring for `--surface-sand`, the one surface where
+the accent misses the floor.
+
+**The status chip has no fill.** The word carries the colour on the surface it
+sits on. A 10% tint under an 11px `--warn` label lands at 4.38:1, under AA — and
+a chip whose whole job is to be the secondary encoding cannot itself be the
+thing that fails.
 
 **The action is ink.** `--action` `#0A0A0A` with a white label is the primary
 button. This is measured off the reference, and it is why the accent survives:

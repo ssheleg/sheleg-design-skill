@@ -77,18 +77,22 @@ it verbatim instead of transcribing this table.
 | `--ink-soft` | `#71717B` | labels, meta, secondary copy | 4.58:1 |
 | `--ink-faint` | `#9F9FA9` | placeholder and disabled **only** | 2.49:1 |
 | `--accent` | `#FF4801` | tick, rule, ring, marker — **not text** | 3.23:1 |
-| `--accent-hover` | `#E03D00` | the one orange that may carry a link | 4.12:1 |
+| `--accent-hover` | `#E03D00` | the pressed step of a mark | 4.12:1 — see Gotchas |
 | `--action` | `#0A0A0A` | the primary button fill | 18.79:1 |
-| `--good` / `--warn` / `--danger` / `--info` | `#007A55` / `#BB4D00` / `#9F0712` / `#1447E6` | status on paper | 5.17:1 / 4.81:1 / 7.95:1 / 6.48:1 |
+| `--good` / `--warn` / `--danger` / `--info` | `#007A55` / `#BB4D00` / `#9F0712` / `#1447E6` | status on paper | 5.09:1 / 4.78:1 / 7.93:1 / 6.49:1 |
 
 Four rules carry this palette, and the first two are the pack.
 
-- **The accent is a mark, not a voice.** `#FF4801` measures 3.23:1 against the
-  paper — enough for a non-text mark at the 3:1 floor, not enough for a word.
-  The reference obeys this without ever saying so: across three pages its orange
-  appears as a 3×18px tick, a `::marker`, a focus ring, a selection colour, a
-  link underline and one oversized chevron. Body text set in it is the fastest
-  way to break this pack, and it will look fine to you on your monitor.
+- **The accent is a mark, not a voice — and so is every other orange here.**
+  `#FF4801` measures 3.23:1 against the paper and `--accent-hover` `#E03D00`
+  measures 4.12:1; neither reaches the WCAG AA floor for a word, and **this pack
+  ships no orange that does.** The reference obeys the first half without ever
+  saying so: across three pages its orange appears as a 3×18px tick, a
+  `::marker`, a focus ring, a selection colour, a link underline and one
+  oversized chevron. So a link here is `--ink` with an `--accent` underline, not
+  orange text. The accent's one filled use is a selected chip, where
+  `--on-accent` `#221D16` sits on it at 4.92:1. Text set in either orange is the
+  fastest way to break this pack, and it will look fine to you on your monitor.
 - **The action is ink.** The primary button is `--action` with a white label, not
   an orange fill. This is measured, not a safety choice — but it is also why the
   accent survives: the loudest colour on the page never competes with the thing
@@ -172,8 +176,8 @@ Measured off the reference unless a row says **pack decision**.
 | **Card** | `--surface`, 1px `--line-weak`, `--radius-sm`, `26px 24px` | border → `--line`; no lift | — | — |
 | **Report surface** | `--surface`, `--radius-md`, `--shadow-card`, a 3-dot title bar in `#FF5F57` / `#FEBC2E` / `#28C840` | none | — | — |
 | **Ledger row** | label `--t-base`/500 left, dotted 1px leader in `--panel-leader`, numeral right in `--font-pixel` on an 80px column | none | — | — |
-| **Input / capture form** | `--surface` fill, 1px `--line-weak`, `--radius-sm`, 46px tall, **17px** text | border → `--line` | focus-within: `--ring-focus` plus a `--ring-focus-edge` border | `--ink-faint` text |
-| **Status chip** | its status colour at ~10% as fill, that status as ink, `--radius-xs`, `2px 8px`, 11px uppercase, **always with its word** | none | — | — |
+| **Input / capture form** | `--surface` fill, 1px `--line-weak`, `--radius-sm`, 46px tall, **17px** text, and a visually-hidden label — a placeholder is not one | border → `--line` | focus-within: `--ring-focus`, a solid 2px accent ring | `--ink-faint` text |
+| **Status chip** | **no fill** — the word itself in its status colour on the surface, `--radius-xs`, `2px 8px`, 11px uppercase, **always with its word** | none | — | — |
 | **Live indicator** | a 4px square in `--live-on-dark` with a 35%-alpha square behind it, both pulsing, beside its sentence | none | — | — |
 | **Nav** | fixed, transparent over the hero band, 13px/500 items in `--ink-soft`, 14px gaps | item → `--ink` | — | — |
 | **Loader** | **pack decision:** the ledger row with its numeral column filled by a `--line-weak` block of the same width. Never a spinner where a number will land | — | — | — |
@@ -213,6 +217,13 @@ zoom-on-focus on iOS, and this pack's body size is 15px.
 - **The ledger never reflows to two lines.** Below 768 the label column drops to
   75px and the numeral column to 70px; the dotted leader absorbs the difference.
   A wrapped ledger row is not a row.
+- **The numeral column is a glyph budget, not a width.** Press Start 2P advances
+  a full em per glyph, so at `--t-numeral` 15px the 80px column holds **five
+  glyphs** and the 70px mobile column holds **four**. `3.4x` and `+18%` fit;
+  `$9,840` is six and `$184.6M` is seven, and both overflow. Two legal answers,
+  and only two: shorten the figure (`$9.8K`, `$184M`) or widen `--numeral-col`
+  in the token layer for the whole ledger at once. Never wrap, never shrink one
+  row's face — the column is what makes the rows a column.
 - **The hero stacks** — photograph, headline, capture, then the ledger — and the
   band's padding-top goes 116 → 140px rather than shrinking.
 - Full-height sections use `100dvh` via `--section-min-h`; bare `100vh` is banned.
@@ -289,12 +300,12 @@ packs. Here the page is a board, and a board holds still.
 
 - **Buttons** transition fill over `--dur-fast` and press to `translateY(1px)`.
   Nothing scales and nothing glows.
-- **Focus-visible** is `--ring-focus` — a 2px accent halo at 20% alpha plus a
-  `--ring-focus-edge` border at 40% — following the target's own radius. This is
-  the reference's `focus-within` treatment on its capture form, promoted to the
-  whole pack.
-- **Links** take `--accent-hover` and an underline in the same colour; they never
-  take `--accent` itself.
+- **Focus-visible** is `--ring-focus` — a **solid** 2px `--accent` ring following
+  the target's own radius, and `--ring-focus-sand` on `--surface-sand`, the one
+  surface where the accent misses that floor. 1.13.0 shipped the reference's
+  translucent glow here instead; see Gotchas.
+- **Links** are `--ink` with an `--accent` underline, and move the underline to
+  `--accent-hover` on hover. The text never turns orange.
 - **List markers** are `--accent`. This is one of the few places the raw accent is
   correct, because a marker is not read.
 - **Rows** tint to `--accent-wash` on hover in a data table. Ledger rows have no
@@ -303,8 +314,9 @@ packs. Here the page is a board, and a board holds still.
 
 ## Bans
 
-- **The accent as body text, a heading, or a button fill.** 3.23:1. It is a tick,
-  a rule, a ring and a marker.
+- **Either orange as body text, a heading, or a button fill.** It is a tick, a
+  rule, a ring, a marker, and — filled — a selected chip. Nothing else.
+- **A translucent focus ring.** Solid, or it is decoration.
 - **A second ledger on the page**, or a ledger with a rounded marketing number in
   it, or a ledger with no date under it.
 - **Antialiased pixel type.** Without `font-smooth: never` the numerals are a
@@ -319,6 +331,32 @@ packs. Here the page is a board, and a board holds still.
 - Scroll-linked motion on the ledger. It arrives once and then it is a record.
 
 ## Gotchas
+
+- **[CORRECTION — 1.13.1] The focus ring 1.13.0 shipped was invisible.** The
+  reference's capture form uses a `focus-within` glow — a 20% accent halo with a
+  40% border — and 1.13.0 promoted it to the pack's focus treatment without
+  measuring it. Composited the way a browser does it (in sRGB, not linear
+  light), the halo is **1.29:1** against the paper and the border **1.67:1**,
+  against a WCAG floor of 3:1 for a non-text indicator. Both were decoration
+  wearing an affordance's name. The ring is solid from 1.13.1:
+
+  | Ring | Value | Role | On `--bg` |
+  |---|---|---|---|
+  | `--ring-focus` | `#FF4801` | solid 2px, every surface but one | 3.23:1 |
+  | `--ring-focus-sand` | `#221D16` | `--surface-sand` only, where the accent misses the floor at 2.97:1 | 15.88:1 |
+
+- **[CORRECTION — 1.13.1] No orange in this pack can carry a link.** 1.13.0
+  called `--accent-hover` "the one orange that may carry a link" at 4.12:1 —
+  below the same WCAG AA threshold the pack cites two paragraphs earlier to ban
+  the accent from text. The argument was right and was not applied to its own
+  next sentence. Links are `--ink` with an `--accent` underline.
+
+- **[CORRECTION — 1.13.1] Four status ratios were stated 0.02–0.08 optimistic.**
+  They were computed from the OKLCH the colours were selected from rather than
+  from the 8-bit hex the token layer actually ships. Restated: `--good` 5.09,
+  `--warn` 4.78, `--danger` 7.93, `--info` 6.49. All four still clear AA; the
+  point is that they passed the repository's own gate only because its tolerance
+  is 0.1, which is exactly how a wrong number survives a green check.
 
 - **The reference sets a positive delta in `#00D492` on white — 1.84:1.** It is
   used at 11px, on the metric cards inside the product screenshots, and it is

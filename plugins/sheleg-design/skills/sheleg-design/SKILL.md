@@ -3,7 +3,7 @@ name: sheleg-design
 description: Use when building or upgrading a cinematic scroll-driven landing page, marketing site or hero (particle/WebGL background, scroll-linked animation, parallax, scrubbed sections) — when such a page feels busy or janky or its motion layers drift out of sync — or when styling product UI with its style packs - dashboards, admin panels, internal/dev tools, mobile app screens, design tokens, light/dark themes - or when carrying a visual system across the Figma border (publishing tokens as variables, implementing a design without importing raw values). Triggers - "cinematic landing" / "кинематографичный лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables / figma to code" / "переменные фигмы, фигма в код", "chat/agent UI" / "интерфейс чата или агента", "streaming output" / "стриминг ответа", "mobile screen" / "мобильный экран".
 license: MIT
 metadata:
-  version: 1.13.0
+  version: 1.13.1
 ---
 
 # SHELEG Design
@@ -91,7 +91,7 @@ A pack marked **core contract** does not specify `## Components`, `## Hero`,
 `## Responsive` or `## Signature element` — so per-component states, the
 opening viewport and its line ceiling, the collapse rules, and the single
 element the page is remembered by are **yours to decide**, and you say so out
-loud when you do. The other six answer all four. This asymmetry is the one
+loud when you do. The other seven answer all four. This asymmetry is the one
 thing about the library most likely to make you invent a value and believe you
 read it: what a core pack *does* state is measured to two decimals, and that
 precision is not evidence about the half it leaves silent. Each pack declares

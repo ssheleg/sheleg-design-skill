@@ -49,7 +49,10 @@
   --accent: #ff4801;
   --accent-hover: #e03d00; /* 4.12:1 on --bg — the one orange that may carry a link */
   --accent-wash: #fff7ed; /* MEASURED — selected row, hovered cell */
-  --on-accent: #221d16; /* SELECTED — 4.92:1 on --accent; white would be 3.40:1 */
+  /* The accent's one filled use: a selected chip. 4.92:1 under --on-accent,
+     which clears AA; white on the same fill is 3.40:1 and does not. The accent
+     is still forbidden as body text, a heading and a button fill. */
+  --on-accent: #221d16;
 
   /* ---- The action is ink, not the accent -------------------------------- */
   --action: #0a0a0a; /* the primary button fill */
@@ -62,10 +65,13 @@
      reference paints status only on its dark panels, where its own values
      measure 1.6–2.6:1 against this field — unusable here. The on-dark set
      below is the measured one. */
-  --good: #007a55; /* 5.17:1 on --bg */
-  --warn: #bb4d00; /* 4.81:1 on --bg */
-  --danger: #9f0712; /* 7.95:1 on --bg */
-  --info: #1447e6; /* 6.48:1 on --bg */
+  /* Ratios recomputed from these hexes, not from the oklch they were selected
+     from: rounding to 8-bit moves them, and the first three shipped 0.02-0.08
+     optimistic because the number came from the unrounded colour. */
+  --good: #007a55; /* 5.09:1 on --bg */
+  --warn: #bb4d00; /* 4.78:1 on --bg */
+  --danger: #9f0712; /* 7.93:1 on --bg */
+  --info: #1447e6; /* 6.49:1 on --bg */
 
   /* MEASURED — the reference's own status set, valid only on --panel. */
   --good-on-dark: #00d492; /* 10.21:1 on --panel */
@@ -107,8 +113,15 @@
     0 2px 8px rgba(16, 24, 40, 0.05),
     0 8px 24px rgba(16, 24, 40, 0.05);
   --shadow-lift: 0 14px 40px -18px rgba(0, 0, 0, 0.16); /* modal, floating bar */
-  --ring-focus: 0 0 0 2px rgba(255, 72, 1, 0.2);
-  --ring-focus-edge: rgba(255, 72, 1, 0.4); /* the border colour under the ring */
+  /* [CORRECTION] 1.13.0 shipped the reference's decorative focus-within glow —
+     a 20% halo with a 40% border — as the pack's focus treatment. Composited
+     the way a browser does it, neither reaches the WCAG floor for a non-text
+     indicator, so the ring is solid now. One exception: on --surface-sand the
+     accent falls under that floor, so that surface takes the ink ring instead —
+     the only place in the pack where focus is not orange. The measurements are
+     in the pack's Gotchas, where the table declares what they are against. */
+  --ring-focus: 0 0 0 2px var(--accent);
+  --ring-focus-sand: 0 0 0 2px var(--ink);
 
   /* ---- Radii: this pack is nearly square -------------------------------- */
   /* MEASURED: 2px and 3px carry the page (107 of 143 rounded utilities across
@@ -132,10 +145,10 @@
   --space-16: 4rem;
   --page-max: 1800px; /* MEASURED — the full-bleed shell */
   --content-max: 1260px; /* MEASURED — the reading column inside it */
-  --gutter: 1.5rem; /* 24px, and 48px from --bp-md up */
+  --gutter: 1.5rem; /* 24px, and --gutter-wide 48px from 768px up */
   --gutter-wide: 3rem;
   --nav-h: 64px;
-  --hero-pt: 116px; /* MEASURED — 140px from --bp-lg up */
+  --hero-pt: 116px; /* MEASURED — 140px from 1024px up */
   --hero-min-h: 820px; /* MEASURED — the hero is a fixed band, not a viewport */
   --section-min-h: 100dvh; /* for any section that does want the viewport */
 
@@ -177,7 +190,10 @@
 
   /* The numeral. One size, because the ledger aligns on a column. */
   --t-numeral: 0.9375rem; /* 15px */
-  --numeral-col: 80px; /* 70px below --bp-md */
+  /* 70px below 768px. Press Start 2P advances a full em per glyph, so this
+     column is a glyph budget: 80px / 15px = FIVE glyphs, and 70px = four.
+     "$9,840" is six and overflows. See the pack's Responsive section. */
+  --numeral-col: 80px;
 
   /* ---- Motion ----------------------------------------------------------- */
   /* MEASURED curve and base duration; the durations are this pack's, capped by
@@ -262,7 +278,7 @@
 .sb-btn--ghost:hover:not(:disabled) { color: var(--ink); background-color: var(--surface-2); }
 .sb-btn:active:not(:disabled) { transform: translateY(1px); }
 .sb-btn:disabled { color: var(--ink-faint); background-color: var(--surface-2); cursor: not-allowed; }
-.sb-btn:focus-visible { outline: none; border-color: var(--ring-focus-edge); box-shadow: var(--ring-focus); }
+.sb-btn:focus-visible { outline: none; box-shadow: var(--ring-focus); }
 
 .sb-card { display: block; background-color: var(--surface); border: 1px solid var(--line-weak);
   border-radius: var(--radius-sm); box-shadow: var(--shadow-hairline); padding: 26px var(--space-6); color: var(--ink);

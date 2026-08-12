@@ -608,10 +608,41 @@ from, and developers audit that before they trust it." Pass: stays on
 accumulates rather than a claim it sources). Fail: routing to `scoreboard`
 because both are warm paper with an orange-red accent and mono-ish small type.
 
-**Result: written, not yet run.** The pack, its token layer, its kit and all
-three gates are green (1507 / 597 / 352 checks, plus three self-tests), and all
-four distribution channels were smoke-tested — but this pair has not been
-executed against fresh subagent contexts, because subagent runs were disabled for
-the session that shipped it. It is recorded here as owed rather than reported as
-passed: a scenario whose result line is written before the run is the failure
-this harness exists to prevent.
+**Result, 2026-08-12 (tree `50dc7e6`): GREEN on both branches** — and the run
+paid for itself twice over in findings.
+
+T23a selected `scoreboard`, quoted the fork from **both** sides
+(`scoreboard.md:44-54`, `field-notes.md:50-60`), and closed two further
+near-misses from the files rather than from taste: `showroom` (*"a page whose
+subject is a screenshot rather than a total"*) and `instrument-console` (*"if the
+page has no paper on it, this is the wrong pack"*). It set the dials 6 / 4 / 5
+against the pack's own text, put a four-row dated ledger in the first viewport,
+kept the primary button on `--action`, and declined the `?variant=` harness for
+the reason `SKILL.md` gives — there is no populated page to mount it on.
+
+T23b stayed on `field-notes` and named what would flip it. Worth recording: it
+rejected **`blueprint`**, not `scoreboard`, as the nearest alternative, and never
+reached for the new fork clause at all. The negative branch passed, but not by
+the route the scenario predicted — for a developer-tool brief the confusable
+neighbour is the other cold technical pack, and `scoreboard`'s resemblance only
+becomes dangerous once a page starts counting. The fork is still correct from
+both sides; it is simply not the edge this brief runs along.
+
+**Eight findings came back and each was reproduced against the artifact before
+anything was edited** (standing instruction 8). Seven confirmed, one refuted:
+
+| Finding | Verdict |
+|---|---|
+| The focus ring's 20% halo composites to 1.29:1 and its 40% border to 1.67:1 | **confirmed** — and my own first computation, done in linear light rather than sRGB, was the wrong one. Fixed: a solid ring |
+| `--accent-hover` is authorised as a link colour at 4.12:1, two paragraphs after the pack bans the accent from text for the same reason | **confirmed** — the argument was right and was not applied to its own next sentence |
+| Four stated status ratios are 0.02–0.08 optimistic; they survive only on the gate's 0.1 tolerance | **confirmed** — they were computed from the OKLCH, not from the shipped hex |
+| An 11px `--warn` chip on a 10% tint of itself is 4.38:1 | **confirmed** — the chip carries no fill now, which also removes a pack/kit disagreement neither agent noticed |
+| `--bp-md` / `--bp-lg` are referenced in three token comments and defined nowhere | **confirmed** — replaced with the pixel values |
+| `SKILL.md`: "Six of the thirteen … the other **six** answer all four" | **confirmed** by both branches independently — 6 core + 7 widened; introduced by this release's own count edit |
+| `SURFACE_COMPOSITION.md`: "Only `field-notes` ships a `--chart-1…N` set today" | **confirmed** stale |
+| The numeral column overflows: Press Start 2P advances 1em per glyph, so 80px is five glyphs and `$9,840` is six | **confirmed** by arithmetic — stated as a glyph budget now, with the only two legal answers |
+| `--on-accent` is a dead token with no legal consumer | **refuted** — its consumer is the selected chip at 4.92:1, and a chip is not body text, a heading or a button fill. Recorded because a refuted claim that goes unwritten comes back as folklore |
+
+All nine fixes shipped in `1.13.1`. **The scenario found more in one pair of runs
+than the three gates did in the whole release**, which is the argument for
+running the harness rather than writing it.

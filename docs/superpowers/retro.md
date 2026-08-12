@@ -56,9 +56,12 @@ fired in five run stamps.
    application scenarios sat unrecorded across four releases (2026-08-10), which is what
    an unstated debt looks like after it has been left alone.
    *(Added 2026-08-12 · `e9b753f`, replacing the retired "a stage-0 absent is
-   perishable". First instance: T23, `scoreboard` against `field-notes`, written with
-   both branches and no result — subagent runs were disabled for the session that
-   shipped the pack.)*
+   perishable". First instance: T23, `scoreboard` against `field-notes`, shipped with
+   both branches and no result. **Closed the same day** — the debt was stated, the runs
+   were authorised, and the pair went green with nine findings, eight confirmed against
+   the artifact and one refuted. The rule's whole value showed up in that gap: a written
+   result line is what made the owed run findable an hour later instead of five releases
+   later.)*
 
 4. **A scenario that asserts disambiguation must ship its negative branch.**
    "Does the agent pick the new pack?" cannot fail in the interesting
@@ -159,7 +162,17 @@ fired in five run stamps.
    and a genuinely invalid gradient returned false, so the test discriminated
    and the pack was left alone. Record refuted claims too: a claim disproved and
    never written down comes back as folklore.
-   *(Last fired: 2026-08-10 · `89a8798` — eleven times. Six scenario agents'
+   *(Last fired: 2026-08-12 · `50dc7e6` — nine times, and it corrected **me** rather
+   than the agents. Both T23 branches returned findings on a pack I had written that
+   morning; every one was recomputed against the token layer before an edit. Eight
+   reproduced, including four ratios I had stated from the OKLCH instead of the shipped
+   hex. One was refuted — `--on-accent` was called a dead token, and its consumer is the
+   selected chip at 4.92:1 — and is written into the scenario's result anyway. The
+   sharpest turn: on the focus ring the agents' number (1.29:1) was right and my
+   reproduction (1.16:1) was wrong, because I composited alpha in linear light and a
+   browser composites in sRGB. Reproducing a claim is not the same as reproducing it
+   correctly, and the control that settled it was matching their method rather than
+   defending mine. Previously: 2026-08-10 · `89a8798` — eleven times. Six scenario agents'
    findings were each reproduced against the artifact before any edit, and one of
    mine was refuted that way: I predicted the gate's 1368-vs-1366 gap came from
    untracked `graphify-out/` files, hid the directory, and the count did not move —

@@ -4,6 +4,56 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.13.1] - 2026-08-12
+
+`scoreboard`'s routing scenario was run the day it shipped, and it found nine
+things three green gates had not.
+
+### Fixed
+
+- **The focus ring was invisible.** 1.13.0 promoted the reference's decorative
+  `focus-within` glow — a 20% accent halo with a 40% border — to the pack's focus
+  treatment without measuring it. Composited the way a browser does it, the halo
+  is **1.29:1** against the paper and the border **1.67:1**, against a WCAG floor
+  of 3:1 for a non-text indicator. `--ring-focus` is a solid 2px accent ring now,
+  and `--ring-focus-sand` carries `--surface-sand`, the one field where the accent
+  falls under the floor at 2.97:1.
+- **No orange in the pack can carry a link, and 1.13.0 said one could.**
+  `--accent-hover` was called "the one orange that may carry a link" at 4.12:1 —
+  below the same AA threshold the pack cites two paragraphs earlier to ban the
+  accent from text. A link is `--ink` with an `--accent` underline.
+- **Four status ratios were stated 0.02–0.08 optimistic**, computed from the
+  OKLCH the colours were selected from rather than from the 8-bit hex the token
+  layer ships: `--good` 5.09, `--warn` 4.78, `--danger` 7.93, `--info` 6.49. They
+  passed the repository's own gate only because its tolerance is 0.1, which is
+  how a wrong number survives a green check.
+- **The status chip carried a 10% tint that put an 11px `--warn` label at
+  4.38:1.** The chip has no fill now — the word carries the colour. This also
+  removes a disagreement between the pack doc and the kit, which had never
+  rendered a tint.
+- **`--bp-md` and `--bp-lg` were referenced in three token comments and defined
+  nowhere.** Replaced with the pixel values they meant.
+- **`SKILL.md` miscounted its own library**: "Six of the thirteen are on the core
+  contract … the other **six** answer all four." Six plus seven. Introduced by
+  1.13.0's own count edit and found independently by both scenario branches.
+- **`SURFACE_COMPOSITION.md` said only `field-notes` ships a validated
+  `--chart-1…N` set.** `scoreboard` ships one too.
+- **The numeral column is a glyph budget, and the pack only warned about it.**
+  Press Start 2P advances a full em per glyph, so at 15px the 80px column holds
+  five glyphs and the 70px mobile column four: `3.4x` fits, `$9,840` does not.
+  Stated as a ceiling with the only two legal answers — shorten the figure, or
+  widen the column for the whole ledger.
+
+### Changed
+
+- **T23 has a result.** Both branches run in fresh contexts: `scoreboard` chosen
+  for the tally brief with the fork quoted from both sides, `field-notes` held for
+  the provenance brief. Recorded with every finding's disposition — including one
+  **refuted** (`--on-accent` is not a dead token; its consumer is the selected chip
+  at 4.92:1), because a refuted claim nobody writes down comes back as folklore.
+- `validate_palette.py`'s floor drops 597 → 596, with the reason in
+  `test/floors.json`: a token was deleted rather than a check weakened.
+
 ## [1.13.0] - 2026-08-12
 
 A thirteenth style pack, and it is the first one in the library whose accent is
