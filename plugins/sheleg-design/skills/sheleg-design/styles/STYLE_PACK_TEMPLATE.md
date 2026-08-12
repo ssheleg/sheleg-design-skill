@@ -48,9 +48,36 @@ and no clone.
    you state recomputed from your token layer, plus OKLab separation under
    protanopia / deuteranopia / tritanopia), and slop lint (the skill obeying its
    own bans). Two consequences while authoring: the palette gate cannot compute
-   a value it cannot parse, so keep `color-mix()` and `lab()` out of the token
-   layer; and a markdown link from your pack to another must be reciprocated, so
-   do not fork against a pack you are not also editing.
+   a value it cannot parse, so a colour it cannot read is a **failure** rather
+   than a skip (see rule 5 for what it can read now); and a markdown link from
+   your pack to another must be reciprocated, so do not fork against a pack you
+   are not also editing.
+5. **Derive a colour from a token instead of restating its channels.** Until
+   1.22.0 this rule was the opposite one — `color-mix()` was banned from the token
+   layer — and the reason was never a design position, it was the gate's parser.
+   It parses both now, verified against Chrome's own computed values across eleven
+   cases at a worst ΔE of 0.004:
+
+   - `color-mix(in srgb | srgb-linear | oklab | oklch, A p%, B q%)` — premultiplied,
+     shorter hue arc in the polar space. **Any other space still fails**, because
+     mixing in `srgb` and mixing in `oklab` give visibly different midpoints and a
+     gate that guessed would certify a colour nobody rendered.
+   - `rgb(from <colour> r g b / a)` — the alpha-variant form. `oklch(from …)` and a
+     `calc()` inside a channel still fail: half-implemented CSS maths is worse than
+     an honest refusal.
+   - `var()` now resolves **inside** a value, so `rgb(from var(--accent) r g b / .35)`
+     is readable by the gate.
+
+   Why it matters: 42 declarations across eight shipped token layers restate a
+   token's channels by hand, and a hand-derived literal stops tracking its source
+   the moment either one moves — which is the live defect behind board B-023/B-024.
+   `showroom`'s focus ring is the worked example.
+
+   **One rule when you migrate.** Relative colour is Baseline 2024, so a browser
+   that cannot parse it drops the declaration. Where the token feeds an
+   accessibility-critical property — a focus ring above all — ship the literal
+   first and the derived value second, so the old browser keeps the literal. For
+   an ordinary decorative tint the derived value alone is fine.
 
 ## Register
 

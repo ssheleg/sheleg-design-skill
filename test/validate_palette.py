@@ -109,13 +109,32 @@ OKLCH = re.compile(
 
 BLOCK = re.compile(r"([^{}/]+?)\{([^{}]*)\}", re.S)
 
-# Anything that claims to be a colour. Values we cannot compute (color-mix,
-# relative colour syntax) are a FAIL with a clear ask, not a skip: an unverified
-# colour must not ship behind a green gate.
+# Anything that claims to be a colour. A value we cannot compute is a FAIL with a
+# clear ask, not a skip: an unverified colour must not ship behind a green gate.
+#
+# Two of these used to be uncomputable and are not any more. `color-mix()` in
+# srgb / srgb-linear / oklab / oklch, and relative colour `rgb(from …)`, are
+# computed below, which is what lifted their ban from the pack skeleton: a token
+# layer had been forced to hand-write `rgba(38, 109, 240, 0.35)` where the
+# derivation is `rgb(from var(--accent) r g b / .35)`, and a hand-derived literal
+# stops tracking the token it was derived from the moment either one moves.
+# Everything else in this pattern is still refused, on purpose.
 COLOR_SHAPED = re.compile(
     r"^(#|rgba?\(|hsla?\(|oklch\(|oklab\(|lab\(|lch\(|color\(|color-mix\(|"
     r"(?:white|black|red|green|blue|transparent|currentcolor)\b)", re.I
 )
+
+# color-mix(in <space>, <colour> <pct>?, <colour> <pct>?)
+COLOR_MIX = re.compile(r"^color-mix\(\s*in\s+([a-z-]+)\s*,\s*(.+)\)$", re.I | re.S)
+MIX_SPACES = ("srgb", "srgb-linear", "oklab", "oklch")
+TRAILING_PCT = re.compile(r"^(.*?)\s+([0-9.]+)%$", re.S)
+# Relative colour. Only the rgb() form is computed, because it is the one the
+# library needs (an alpha variant of an existing token) and the one whose channel
+# grammar stays small enough to be checkable. oklch(from …) and any calc() inside
+# a channel are refused rather than guessed at.
+RELATIVE = re.compile(r"^rgb\(\s*from\s+(.+)\)$", re.I | re.S)
+# A var() anywhere inside a value, not only as the whole value.
+VAR_INLINE = re.compile(r"var\(\s*(--[a-z0-9-]+)\s*(?:,\s*([^;]*?))?\)", re.I)
 
 
 def declarations(text: str) -> dict[str, str]:
@@ -144,8 +163,14 @@ def themes(text: str) -> list[tuple[str, dict[str, str]]]:
     for label, decls in blocks[1:]:
         # A block that overrides no colour (a reduced-motion duration reset, say)
         # is not a theme; validating it again would just double the count.
-        if not any(v.strip().startswith("#") or v.strip().lower().startswith("oklch(")
-                   for v in decls.values()):
+        #
+        # The test asks COLOR_SHAPED rather than listing prefixes, because the
+        # hand-written list was `#` or `oklch(` — so a dark theme written in
+        # `color-mix()` or in relative colour would have been read as "overrides no
+        # colour" and skipped entirely. Teaching the parser two new forms without
+        # widening this test would have opened a blind spot in the same commit that
+        # closed a limitation: the exact shape of defect this docstring is about.
+        if not any(COLOR_SHAPED.match(v.strip()) for v in decls.values()):
             continue
         merged = dict(base)
         merged.update(decls)
@@ -163,16 +188,216 @@ def resolve(name: str, decls: dict[str, str], seen=None) -> str | None:
     ref = VAR_REF.fullmatch(value.strip())
     if ref:
         return resolve(ref.group(1), decls, seen)
-    return value
+    # A reference can also sit *inside* the value — `rgb(from var(--accent) …)`.
+    return substitute_vars(value, decls)
 
 
 def srgb_to_linear(c: float) -> float:
     return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
 
 
+def substitute_vars(value: str, decls: dict[str, str], depth: int = 0) -> str:
+    """Replace var() references *inside* a value, not only whole-value ones.
+
+    `resolve()` follows a var() that is the entire value, which was enough while
+    every colour in the library was a literal. A colour derived from another token
+    carries its reference inside a function — `rgb(from var(--accent) r g b / .35)`
+    — and without this the parser reads the word `var` and refuses the value, which
+    is what made hand-written rgba the only option. Depth-bounded, because a cycle
+    here is a stack overflow rather than a finding.
+    """
+    if depth > 8:
+        return value
+
+    def one(m):
+        name, fallback = m.group(1), m.group(2)
+        if name in decls:
+            return substitute_vars(decls[name].strip(), decls, depth + 1)
+        return fallback.strip() if fallback else m.group(0)
+
+    return VAR_INLINE.sub(one, value)
+
+
+def split_top_level(s: str, sep: str = ",") -> list[str]:
+    """Split on `sep` at paren depth zero, so nested functions survive."""
+    parts, depth, cur = [], 0, []
+    for ch in s:
+        if ch == "(":
+            depth += 1
+        elif ch == ")":
+            depth -= 1
+        if ch == sep and depth == 0:
+            parts.append("".join(cur))
+            cur = []
+        else:
+            cur.append(ch)
+    parts.append("".join(cur))
+    return [p.strip() for p in parts]
+
+
+def _to_gamma(c: float) -> float:
+    c = max(0.0, min(1.0, c))
+    return 12.92 * c if c <= 0.0031308 else 1.055 * (c ** (1 / 2.4)) - 0.055
+
+
+def parse_color_mix(value: str):
+    """color-mix(in srgb | srgb-linear | oklab | oklch, A p%?, B q%?).
+
+    Interpolation is premultiplied by alpha, as the spec requires, and the polar
+    space takes the shorter hue arc — the default. A space this does not implement
+    returns None and fails loudly rather than being approximated in the wrong one:
+    mixing in srgb and mixing in oklab give visibly different midpoints, and a gate
+    that guessed would certify a colour nobody rendered.
+    """
+    m = COLOR_MIX.match(value)
+    if not m:
+        return None
+    space = m.group(1).lower()
+    if space not in MIX_SPACES:
+        return None
+    parts = split_top_level(m.group(2))
+    if len(parts) != 2:
+        return None
+
+    colours, weights = [], []
+    for part in parts:
+        pct = TRAILING_PCT.match(part)
+        if pct:
+            part, w = pct.group(1).strip(), float(pct.group(2))
+        else:
+            w = None
+        parsed = parse_color(part)
+        if parsed is None:
+            return None
+        colours.append(parsed)
+        weights.append(w)
+
+    if weights[0] is None and weights[1] is None:
+        weights = [50.0, 50.0]
+    elif weights[0] is None:
+        weights[0] = max(0.0, 100.0 - weights[1])
+    elif weights[1] is None:
+        weights[1] = max(0.0, 100.0 - weights[0])
+    total = weights[0] + weights[1]
+    if total <= 0:
+        return None
+    # Below 100% the result is not fully opaque; above it, the pair is normalised.
+    alpha_multiplier = min(1.0, total / 100.0)
+    w0, w1 = weights[0] / total, weights[1] / total
+
+    (rgb0, a0), (rgb1, a1) = colours
+    alpha = a0 * w0 + a1 * w1
+    # Premultiply, mix, un-premultiply.
+    p0 = [c * a0 for c in rgb0]
+    p1 = [c * a1 for c in rgb1]
+
+    if space == "srgb-linear":
+        mixed = [p0[i] * w0 + p1[i] * w1 for i in range(3)]
+    elif space == "srgb":
+        g0 = [_to_gamma(c) for c in p0]
+        g1 = [_to_gamma(c) for c in p1]
+        mixed = [srgb_to_linear(g0[i] * w0 + g1[i] * w1) for i in range(3)]
+    else:
+        l0 = linear_to_oklab(tuple(p0))
+        l1 = linear_to_oklab(tuple(p1))
+        if space == "oklab":
+            lab = tuple(l0[i] * w0 + l1[i] * w1 for i in range(3))
+        else:  # oklch — polar, shorter hue arc
+            def polar(lab):
+                L, a, b = lab
+                return L, math.hypot(a, b), math.degrees(math.atan2(b, a)) % 360
+            L0, C0, H0 = polar(l0)
+            L1, C1, H1 = polar(l1)
+            dh = ((H1 - H0 + 180) % 360) - 180
+            H = (H0 + dh * w1) % 360
+            L, C = L0 * w0 + L1 * w1, C0 * w0 + C1 * w1
+            lab = (L, C * math.cos(math.radians(H)), C * math.sin(math.radians(H)))
+        mixed = list(oklab_to_linear(lab))
+
+    if alpha > 0:
+        mixed = [c / alpha for c in mixed]
+    return tuple(mixed), alpha * alpha_multiplier
+
+
+def parse_relative(value: str):
+    """rgb(from <colour> <r> <g> <b> [/ <alpha>]).
+
+    A channel is the matching keyword, a number, a percentage or `none`. A calc()
+    inside a channel returns None on purpose: computing it would mean implementing
+    CSS maths, and a gate that half-implements it is worse than one that says so.
+    """
+    m = RELATIVE.match(value)
+    if not m:
+        return None
+    body = m.group(1).strip()
+    # The origin colour is the first token, and it may itself be a function.
+    depth, cut = 0, None
+    for i, ch in enumerate(body):
+        if ch == "(":
+            depth += 1
+        elif ch == ")":
+            depth -= 1
+        elif ch.isspace() and depth == 0:
+            cut = i
+            break
+    if cut is None:
+        return None
+    origin = parse_color(body[:cut].strip())
+    if origin is None:
+        return None
+    rest = body[cut:].strip()
+    if "calc(" in rest.lower():
+        return None
+    chan_part, _, alpha_part = rest.partition("/")
+    chans = chan_part.split()
+    if len(chans) != 3:
+        return None
+
+    rgb_gamma = [_to_gamma(c) * 255.0 for c in origin[0]]
+    keywords = ("r", "g", "b")
+    out = []
+    for i, tok in enumerate(chans):
+        t = tok.strip().lower()
+        if t == keywords[i]:
+            out.append(rgb_gamma[i])
+        elif t == "none":
+            out.append(0.0)
+        elif t.endswith("%"):
+            try:
+                out.append(float(t[:-1]) / 100.0 * 255.0)
+            except ValueError:
+                return None
+        else:
+            try:
+                out.append(float(t))
+            except ValueError:
+                return None
+
+    alpha = origin[1]
+    if alpha_part.strip():
+        t = alpha_part.strip().lower()
+        if t == "alpha":
+            pass
+        elif t.endswith("%"):
+            try:
+                alpha = float(t[:-1]) / 100.0
+            except ValueError:
+                return None
+        else:
+            try:
+                alpha = float(t)
+            except ValueError:
+                return None
+    return tuple(srgb_to_linear(max(0.0, min(1.0, c / 255.0))) for c in out), alpha
+
+
 def parse_color(value: str):
     """-> (linear_rgb, alpha) or None when the value cannot be computed."""
     value = value.strip()
+    if value.lower().startswith("color-mix("):
+        return parse_color_mix(value)
+    if RELATIVE.match(value):
+        return parse_relative(value)
     m = RGB.match(value)
     if m:
         parts = [p.strip() for p in re.split(r"[,\s/]+", m.group(1)) if p.strip()]
@@ -449,6 +674,37 @@ def self_test() -> int:
             {"--bg": "#f4f1ea", "--ink": "#1a1a1a", "--accent": "#b5623f",
              "--line": "#e0dcd2", "--surface": "#ffffff"},
             "default cluster",
+        ),
+        # The four below exist because two colour forms became computable in
+        # 1.22.0. Two of them prove the new code paths are CHECKED rather than
+        # merely tolerated: a mix and a relative colour that miss AA have to fail
+        # on the ratio, which is only possible if the parser really computed them.
+        # The other two prove the refusals still refuse.
+        (
+            "a color-mix() in a space this gate does not implement",
+            {"--bg": "#ffffff", "--ink": "#1a1a1a", "--line": "#dddddd",
+             "--surface2": "#eeeeee",
+             "--accent": "color-mix(in lab, #ff0000 40%, #0000ff)"},
+            "cannot compute",
+        ),
+        (
+            "a computed color-mix() whose ink misses AA on its own field",
+            {"--bg": "#ffffff", "--line": "#dddddd", "--surface2": "#eeeeee",
+             "--ink": "color-mix(in oklab, #000000 35%, #ffffff)"},
+            "below WCAG AA",
+        ),
+        (
+            "a relative colour whose ink misses AA on its own field",
+            {"--bg": "#ffffff", "--line": "#dddddd", "--surface2": "#eeeeee",
+             "--ink": "rgb(from #999999 r g b)"},
+            "below WCAG AA",
+        ),
+        (
+            "a relative colour with a calc() channel, which is refused rather than guessed",
+            {"--bg": "#ffffff", "--ink": "#1a1a1a", "--line": "#dddddd",
+             "--surface2": "#eeeeee",
+             "--accent": "rgb(from #2965ec calc(r * 2) g b)"},
+            "cannot compute",
         ),
     ]
     problems = []
