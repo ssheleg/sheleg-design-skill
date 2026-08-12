@@ -39,18 +39,27 @@ answers *what is this made of*.**
 Ready-made token layer: [`tokens/instrument-console.css`](./tokens/instrument-console.css)
 — copy it verbatim instead of transcribing this table.
 
-| Token | Value | Role |
-|---|---|---|
-| `--base` | `#05070a` | page field (near-black) |
-| `--surface-1/2/3` | `#0a0e14` / `#10151d` / `#161c26` | ascending raised panels |
-| `--hairline` / `-strong` | `#1e2630` / `#2b3542` | panel seams, rules |
-| `--ink` | `#eef2f7` | primary text |
-| `--ink-muted` / `-faint` | `#9aa7b6` / `#5f6b7a` | secondary / captions |
-| `--accent` | `#3392ff` | THE electric-blue signal (CTA, links, particles) |
-| `--accent-dim` / `-bright` | `#1f5fb0` / `#6bb3ff` | pressed / highlighted signal |
-| `--accent-ink` | `#0a0e14` | text **on** the accent — 6.0:1; white on `#3392ff` fails AA |
-| `--accent-glow` | `rgba(51,146,255,0.18)` | the only permitted glow |
-| `--ok` / `--warn` | `#46d39a` / `#e0a030` | status semantics only |
+**This table declares its base**, which until 1.16.0 it did not — and the
+consequence was not cosmetic: `validate_stated_ratios` reads the base out of a
+table header, so with none declared, **not one of this pack's per-token ratios
+was gate-covered.** The library's default dark infrastructure pack was its least
+checked. Every number below is now recomputed from `tokens/instrument-console.css`
+on each run.
+
+| Token | Value | Role | On `--base` |
+|---|---|---|---|
+| `--base` | `#05070a` | page field (near-black) | — |
+| `--surface-1` / `-2` / `-3` | `#0a0e14` / `#10151d` / `#161c26` | ascending raised panels | 1.04 / 1.10 / 1.18 — steps, not contrast |
+| `--hairline` / `-strong` | `#1e2630` / `#2b3542` | panel seams, rules | 1.32 / 1.62 — rules, never text |
+| `--ink` | `#eef2f7` | primary text | **17.94:1** |
+| `--ink-muted` | `#9aa7b6` | secondary text | **8.24:1** |
+| `--ink-faint` | `#5f6b7a` | captions — see Gotchas | 3.72:1 |
+| `--accent` | `#3392ff` | THE electric-blue signal (CTA, links, particles) | **6.43:1** |
+| `--accent-dim` | `#1f5fb0` | pressed signal | 3.19:1 — a fill, not a label |
+| `--accent-bright` | `#6bb3ff` | highlighted signal | **9.14:1** |
+| `--accent-ink` | `#0a0e14` | text **on** the accent — 6.17:1 there; white on `#3392ff` is 3.14 and fails | 1.04 |
+| `--accent-glow` | `rgba(51,146,255,0.18)` | the only permitted glow | — |
+| `--ok` / `--warn` | `#46d39a` / `#e0a030` | status semantics only | **10.61:1** / **8.87:1** |
 
 The particle field, progress rail, and all instruments are tinted with
 `--accent` only — energy per scene changes brightness, never hue.

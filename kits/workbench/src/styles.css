@@ -34,6 +34,27 @@
   --font-ui: -apple-system, "SF Pro", "Segoe UI", sans-serif;
   --font-data: ui-monospace, "SF Mono", Menlo, monospace;
 
+  /* The scale the pack has always stated in prose, tokenised in 1.16.0. It was
+     prose-only for five releases, which made the craft bar's "no ad-hoc font
+     size anywhere in the diff" unachievable in this pack specifically — its own
+     reference kit wrote twenty raw font-size declarations because there was
+     nothing to reference. No value changed; they were lifted from the pack's
+     Type section, not chosen. */
+  --t-chip: 11px; /* chips, meta */
+  --t-label: 12px; /* uppercase labels, tracked .1em */
+  --t-body: 13px; /* body and dense UI — the workhorse */
+  --t-card: 15px; /* card titles */
+  --t-section: 20px; /* section headings */
+  --t-page: 28px; /* page title */
+
+  /* The 4px grid, likewise stated and not shipped. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
   background-color: var(--bg);
   color: var(--ink);
   color-scheme: light; /* the theme is explicit — never let the UA pick */
@@ -86,18 +107,18 @@
   text-wrap: balance;
 }
 .wb-heading--1 {
-  font-size: 28px;
+  font-size: var(--t-page);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.01em;
 }
 .wb-heading--2 {
-  font-size: 20px;
+  font-size: var(--t-section);
   font-weight: 700;
   line-height: 1.3;
 }
 .wb-heading--3 {
-  font-size: 15px;
+  font-size: var(--t-card);
   font-weight: 600;
   line-height: 1.4;
 }
@@ -142,17 +163,17 @@
 .wb-btn--sm {
   min-height: 26px;
   padding: 4px 10px;
-  font-size: 12px;
+  font-size: var(--t-label);
 }
 .wb-btn--md {
   min-height: 32px;
   padding: 6px 12px;
-  font-size: 13px;
+  font-size: var(--t-body);
 }
 .wb-btn--lg {
   min-height: 40px;
   padding: 8px 16px;
-  font-size: 15px;
+  font-size: var(--t-card);
 }
 .wb-btn--primary {
   background: var(--accent);
@@ -217,7 +238,7 @@
   border: 1px solid var(--border);
   border-radius: var(--r-card);
   font-family: var(--font-ui);
-  font-size: 13px;
+  font-size: var(--t-body);
   line-height: 1.5;
   color: var(--ink);
 }
@@ -230,13 +251,13 @@
 }
 .wb-card__title {
   margin: 0;
-  font-size: 15px;
+  font-size: var(--t-card);
   font-weight: 600;
   color: var(--ink);
 }
 .wb-card__meta {
   font-family: var(--font-data);
-  font-size: 11px;
+  font-size: var(--t-chip);
   color: var(--muted);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
@@ -253,7 +274,7 @@
   box-sizing: border-box;
   padding: 2px 8px;
   font-family: var(--font-data);
-  font-size: 11px;
+  font-size: var(--t-chip);
   line-height: 1.45;
   font-variant-numeric: tabular-nums;
   background: var(--panel);
@@ -290,7 +311,7 @@
 }
 .wb-stat__label {
   font-family: var(--font-ui);
-  font-size: 12px;
+  font-size: var(--t-label);
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -298,7 +319,7 @@
 }
 .wb-stat__value {
   font-family: var(--font-data);
-  font-size: 28px;
+  font-size: var(--t-page);
   font-weight: 600;
   line-height: 1.1;
   font-variant-numeric: tabular-nums;
@@ -306,7 +327,7 @@
 }
 .wb-stat__source {
   font-family: var(--font-ui);
-  font-size: 11px;
+  font-size: var(--t-chip);
   line-height: 1.4;
   color: var(--muted);
 }
@@ -317,7 +338,7 @@
   align-items: center;
   gap: 8px;
   font-family: var(--font-ui);
-  font-size: 12px;
+  font-size: var(--t-label);
   color: var(--ink);
 }
 .wb-status__dot {
@@ -361,14 +382,14 @@
   border-collapse: separate;
   border-spacing: 0;
   font-family: var(--font-ui);
-  font-size: 13px;
+  font-size: var(--t-body);
   color: var(--ink);
 }
 .wb-table__caption {
   caption-side: top;
   padding: 12px 12px 8px;
   text-align: left;
-  font-size: 12px;
+  font-size: var(--t-label);
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -381,7 +402,7 @@
   height: 34px;
   padding: 0 12px;
   text-align: left;
-  font-size: 12px;
+  font-size: var(--t-label);
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -400,6 +421,7 @@
 .wb-table__row:hover .wb-table__td {
   background: var(--panel-2);
 }
+.wb-table__row--selected { background-color: var(--accent-weak); box-shadow: inset 2px 0 0 0 var(--accent); }
 .wb-table__th--num,
 .wb-table__td--num {
   text-align: right;
@@ -414,7 +436,7 @@
   flex-direction: column;
   gap: 6px;
   font-family: var(--font-ui);
-  font-size: 12px;
+  font-size: var(--t-label);
   color: var(--muted);
 }
 .wb-progress__head {
@@ -472,7 +494,7 @@
 .wb-seg__opt {
   padding: 4px 12px;
   font-family: var(--font-ui);
-  font-size: 12px;
+  font-size: var(--t-label);
   font-weight: 600;
   background: transparent;
   border: 1px solid transparent;
@@ -510,7 +532,7 @@
   margin: 0;
   max-width: 65ch;
   font-family: var(--font-ui);
-  font-size: 13px;
+  font-size: var(--t-body);
   line-height: 1.5;
   color: var(--muted);
 }

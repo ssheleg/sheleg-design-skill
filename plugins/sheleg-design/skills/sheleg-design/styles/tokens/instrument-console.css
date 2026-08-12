@@ -13,7 +13,7 @@
   --accent: #3392ff;
   --accent-dim: #1f5fb0;
   --accent-bright: #6bb3ff;
-  --accent-ink: #0a0e14; /* text ON the accent — 6.0:1. White on #3392ff fails AA. */
+  --accent-ink: #0a0e14; /* text ON the accent — 6.17:1. White on #3392ff is 3.14 and fails. */
   --accent-glow: rgba(51, 146, 255, 0.18);
   --ok: #46d39a;
   --warn: #e0a030;

@@ -11,6 +11,13 @@ export interface DataTableColumn {
 export interface DataTableRow {
   id: string;
   cells: Record<string, ReactNode>;
+  /**
+   * The pack mandates `--accent-weak` plus a 2px accent inset for the selected
+   * state, and this component shipped without one until 1.16.0 — the single
+   * atom on an admin dashboard that most needs selection was the one that
+   * lacked it, while `Chip` implemented the same state correctly.
+   */
+  selected?: boolean;
 }
 
 export interface DataTableProps {
@@ -46,7 +53,16 @@ export function DataTable({ columns, rows, caption, className }: DataTableProps)
         </thead>
         <tbody>
           {rows.map((row) => (
-            <tr key={row.id} className="wb-table__row">
+            <tr
+              key={row.id}
+              className={[
+                'wb-table__row',
+                row.selected === true ? 'wb-table__row--selected' : undefined,
+              ]
+                .filter(Boolean)
+                .join(' ')}
+              aria-selected={row.selected === true ? true : undefined}
+            >
               {columns.map((column) => (
                 <td
                   key={column.key}

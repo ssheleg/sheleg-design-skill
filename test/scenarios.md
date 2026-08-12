@@ -1,5 +1,15 @@
 # Release test scenarios (run with subagents before every release)
 
+> **Run these against the installed bundle, not this checkout.** Every scenario
+> below states its own pass condition one paragraph from its brief, so an agent
+> with repository access can find its own exam — T5's run said so, unprompted,
+> after selecting the right pack anyway. Point the run at
+> `~/.agents/skills/sheleg-design/` (or any install), which carries the bundle
+> and no `test/` directory, and hand it only the brief. A run against this
+> checkout still has value — the findings are what the last three runs were
+> actually worth — but its **verdict** is not blind and should not be recorded
+> as if it were.
+
 TDD-for-docs harness (superpowers:writing-skills). Each scenario runs as a
 fresh single-shot subagent. Any edit to SKILL.md, a style pack, or the
 reference requires re-running the affected scenarios; a description edit

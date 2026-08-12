@@ -76,8 +76,14 @@ hue.
 - Data face: `ui-monospace / SF Mono` for ALL data — ids, metrics,
   timestamps, counters, chips, logs; `font-variant-numeric: tabular-nums`
   wherever digits align.
-- Compact scale: 11px chips/meta · 12px labels (uppercase, tracked .1em) ·
-  13px body/dense UI · 15px card titles · 20px sections · 28px page title.
+- Compact scale, **and it ships as tokens** (`--t-chip` 11px chips/meta ·
+  `--t-label` 12px labels, uppercase, tracked .1em · `--t-body` 13px body and
+  dense UI · `--t-card` 15px card titles · `--t-section` 20px sections ·
+  `--t-page` 28px page title). It was prose-only until 1.16.0, which made the
+  craft bar's *"no ad-hoc font size anywhere in the diff"* unachievable in this
+  pack — there was nothing to reference, and this pack's own reference kit wrote
+  twenty raw declarations because of it. No value changed in the tokenising.
+- The 4px grid likewise: `--space-1` … `--space-6` = 4 / 8 / 12 / 16 / 24 / 32.
 - Running text ≤65ch; headings `text-wrap: balance`.
 
 ## Texture & surface

@@ -1,8 +1,8 @@
 {
   "_why": "Ratchet floors. A gate whose check count can fall silently cannot detect a deleted requirement: stripping four required headings from one pack made validate.py drop 1270->1269 and sloplint.py 224->223, both still green. Each number is the count measured on the commit named below. Raise freely; lowering one needs a reason in the same commit.",
-  "_measured_on": "fix/scoreboard-focus-and-orange-v1.13.1, 2026-08-12",
-  "_lowered": "validate_palette.py 597 -> 596: `scoreboard`'s --ring-focus-edge was deleted, not weakened. It was an rgba() border under a translucent focus ring, and the ring it belonged to measured 1.29:1 composited — one fewer solid-colour token in one pack is one fewer colour to check. No check was removed; a value that should never have shipped was.",
+  "_measured_on": "fix/scenario-findings-v1.16.0, 2026-08-12",
   "validate.py": 1507,
-  "validate_palette.py": 596,
-  "sloplint.py": 352
+  "validate_palette.py": 603,
+  "sloplint.py": 352,
+  "_raised": "validate_palette.py 596 -> 603: instrument-console's palette table declares its base for the first time, so seven of its per-token ratios are now recomputed on every run. The pack was the library's least-covered until 1.16.0."
 }

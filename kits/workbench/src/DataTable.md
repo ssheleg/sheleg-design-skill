@@ -7,7 +7,7 @@ uppercase, hairline row dividers, and numeric columns right-aligned in the data
 face with tabular figures so digits line up down the column. Mark a column
 `numeric` whenever it holds a quantity — that flag is the whole reason the table
 reads at a glance. Cells take nodes, so a `StatusDot` or a `Chip` drops straight
-in. Rows hover to `--panel-2`; nothing else moves.
+in. Rows hover to `--panel-2` and a selected row takes `--accent-weak` with a 2px accent inset, as the pack mandates; nothing else moves.
 
 ```tsx
 <DataTable

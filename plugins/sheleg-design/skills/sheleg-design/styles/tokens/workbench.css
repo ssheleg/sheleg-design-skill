@@ -34,6 +34,27 @@
   --font-ui: -apple-system, "SF Pro", "Segoe UI", sans-serif;
   --font-data: ui-monospace, "SF Mono", Menlo, monospace;
 
+  /* The scale the pack has always stated in prose, tokenised in 1.16.0. It was
+     prose-only for five releases, which made the craft bar's "no ad-hoc font
+     size anywhere in the diff" unachievable in this pack specifically — its own
+     reference kit wrote twenty raw font-size declarations because there was
+     nothing to reference. No value changed; they were lifted from the pack's
+     Type section, not chosen. */
+  --t-chip: 11px; /* chips, meta */
+  --t-label: 12px; /* uppercase labels, tracked .1em */
+  --t-body: 13px; /* body and dense UI — the workhorse */
+  --t-card: 15px; /* card titles */
+  --t-section: 20px; /* section headings */
+  --t-page: 28px; /* page title */
+
+  /* The 4px grid, likewise stated and not shipped. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
   background-color: var(--bg);
   color: var(--ink);
   color-scheme: light; /* the theme is explicit — never let the UA pick */

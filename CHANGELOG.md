@@ -4,6 +4,44 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.16.0] - 2026-08-12
+
+The five findings T5 and T6 left on the board, actioned.
+
+### Fixed
+
+- **`instrument-console`'s palette table declared no base, so none of its ratios
+  were checked.** `validate_stated_ratios` reads the comparison base out of a
+  table header; with none, the library's default dark infrastructure pack was its
+  **least-covered**, and the one automated fact about it was `--ink` on `--bg`. The
+  table now declares `| On \`--base\` |` and every number in it is recomputed on
+  each run — the palette gate goes 596 → **603 checks**, which is the size of the
+  hole.
+- **`--accent-ink` was stated at 6.0:1 in two places and computes 6.17.** From the
+  unrounded colour rather than the shipped hex, the same way four `scoreboard`
+  ratios were wrong in 1.13.0. Conservative in direction, wrong in kind.
+- **`workbench`'s reference kit had no selected row.** The pack mandates
+  `--accent-weak` plus a 2px accent inset for selected; `Chip` implemented it and
+  `DataTable` did not — the one atom on an admin dashboard that most needs
+  selection was the one that lacked it. `DataTableRow` gains `selected`, with
+  `aria-selected` on the row.
+- **`workbench` stated its type scale and its 4px grid in prose and shipped
+  neither as tokens**, which made the craft bar's *"no ad-hoc font size anywhere
+  in the diff"* unachievable in this pack specifically — and its own kit wrote
+  **twenty** raw `font-size` declarations because there was nothing to reference.
+  `--t-chip` … `--t-page` and `--space-1` … `--space-6` now ship; every value was
+  lifted from the pack's own Type section, none was chosen. The kit is down to
+  zero raw sizes.
+
+### Changed
+
+- **`test/scenarios.md` says out loud that it cannot be blind.** Every scenario
+  states its pass condition a paragraph from its brief, so an agent with
+  repository access can find its own exam — T5's run reported exactly that, after
+  selecting the right pack anyway. Runs are now pointed at an **installed** bundle,
+  which carries no `test/` directory. A run against the checkout still yields
+  findings; its verdict is not blind and must not be recorded as if it were.
+
 ## [1.15.0] - 2026-08-12
 
 Two of the eight unrun scenarios were run. Both passed, and between them they
