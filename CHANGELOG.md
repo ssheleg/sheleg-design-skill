@@ -4,6 +4,25 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.14.1] - 2026-08-12
+
+### Fixed
+
+- **1.14.0 said Refero was "alone among the three" in returning flows. Mobbin
+  returns them too.** `mcp__mobbin__search_flows` has always existed; it was
+  invisible because Mobbin was registered and unauthenticated, so the sentence
+  shipped as a claim nobody in that session could check — in a file whose own
+  rule, two paragraphs away, is **gate on the tools present in the session, not
+  on the config**. The rule was right and was not applied to its own author.
+  Corrected the hour Mobbin was signed in, against its live tool surface.
+- **The distinction that replaces it is the useful one: they answer in different
+  media.** Mobbin returns each step as an evenly-spaced *preview image* — its own
+  tool description says to look at those rather than trust the metadata — and
+  also searches web **sections** (hero, pricing, footer). Refero returns each step
+  as *structure*: a goal, an action, a system response. Drawing a diagram with
+  decision points and recovery paths reads Refero; judging whether a step works on
+  a phone looks at Mobbin.
+
 ## [1.14.0] - 2026-08-12
 
 ### Added

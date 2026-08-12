@@ -88,13 +88,28 @@ A reference sweep answers *what a good version of this screen contains* — sect
 hierarchy, content order. It never answers what it looks like.
 
 Three servers can fill the slot and they are not interchangeable. **Lazyweb** is
-web-product screens and growth mechanics; **Mobbin** is strongest on native iOS and
-Android and carries web; **Refero** searches screens, returns visually and
-functionally *similar* screens for one you already like, and — alone among the three
-— returns **flows**: connected sequences with a goal, an action and a system response
-per step, which is what you read for step count, decision points, recovery paths and
-confirmation. Sweep whichever are present; with more than one, sweep them all and say
-which answered what.
+web-product screens and growth mechanics. **Mobbin** searches screens, **flows** and
+web **sections** (hero, pricing, footer), strongest on native iOS and also carrying
+web; its flows come back as evenly-spaced *preview images* per step, and its own tool
+description says to look at them rather than trust the metadata. **Refero** searches
+screens, returns visually and functionally *similar* screens for one you already
+have, and returns flows as *structure* — a goal, an action and a system response per
+step.
+
+**That is the split worth knowing: two of the three answer "flow", and they answer it
+in different media.** Mobbin shows you what each step looked like; Refero tells you
+what each step did. Drawing a diagram with decision points and recovery paths reads
+Refero; judging whether a step actually works on a phone looks at Mobbin. Sweep
+whichever are present; with more than one, sweep them all and say which answered
+what.
+
+> **[CORRECTION — 1.14.1]** 1.14.0 shipped this paragraph saying Refero was "alone
+> among the three" in returning flows. It is not: `mcp__mobbin__search_flows` has
+> always existed. The claim was written while Mobbin was registered but
+> unauthenticated, so its tool surface was invisible and the sentence could not be
+> checked — which is the whole reason this file says to **gate on the tools present in
+> the session**. The rule was right and the paragraph next to it was written as if it
+> did not apply to the author.
 
 - **A swept reference does not become a component.** It informs how you compose the
   pack's components on a screen; it never justifies a new atom, a second accent, or a
