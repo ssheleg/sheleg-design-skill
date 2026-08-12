@@ -15,7 +15,23 @@ fired in five run stamps.
    mtimes. A HEAD move you did not make, a `feat/*` branch you did not create,
    or a file changing while you test means another pipeline run is live in the
    same directory. Recheck immediately before staging anything — the tree can
-   turn hostile mid-run. *(Last fired: 2026-08-12 · `e9b753f` — and it fired **late**: the
+   turn hostile mid-run.
+
+   **Widened 2026-08-12: detection was never the missing half — the remedy was.**
+   This instruction has caught a concurrent run four times and has never said what
+   to do next, so each time the answer was improvised. It is two commands: build in
+   an isolated `git worktree` (under a gitignored path, so the other run's
+   `git add -A` cannot see it), and commit an **explicit path list**, never `-A`.
+   The run that forced this widening lost nothing only because the collision was
+   caught before staging; the concurrent run's `git add -A` had already swept this
+   run's in-flight brief and a scratch screenshot into its own commit. *(Last fired: 2026-08-12 · `f4f25ce` — **its sharpest firing yet, and the first time it
+   caught a live one.** `git reflog` showed a commit this session did not make sitting at
+   `HEAD@{1}`, between the stage-0 snapshot and the run's own `git checkout -b`: a
+   concurrent agent had committed on `main`, bumped every manifest to the version this run
+   had planned, tagged `v1.18.0` and published it to npm — and swept this run's brief and a
+   scratch screenshot into its commit. The run moved to `1.19.0`, rebuilt in an isolated
+   worktree, and committed an explicit 41-path list. Everything downstream of that catch —
+   the version, the base, the whole release — would have collided. Previously: 2026-08-12 · `e9b753f` — and it fired **late**: the
    prescribed commands were run at close-out rather than before staging, on the strength of
    a clean session-start snapshot and `git status`. Clean either way — one worktree, two
    branches both at `e9b753f`, no foreign HEAD move — but a check run after the staging it
@@ -247,6 +263,33 @@ fired in five run stamps.
 
 ## Prune log
 
+- **2026-08-12 (`f4f25ce`) · nothing retired, nothing added (still 10, at cap);
+  instruction 1 widened.** All ten walked against the three triggers and **all ten
+  fired**, which has not happened before. Instruction 1 caught a live concurrent run
+  (see its own note); 2 caught the registry moving from 1.17.0 to 1.18.0 mid-session,
+  which is what set this run's version; 3 and 4 were satisfied inside the run rather
+  than deferred — T24 shipped with both branches **and** both verdicts, which is the
+  first time a new pack's routing test has not left a debt row; 5 held, and an agent
+  found the half of it this run had missed (54 of 118 token declarations carried
+  neither MEASURED nor SELECTED); 6 fired twice, two new checks each watched saying no
+  with its own message and each given a permanent self-test plant; 7 fired on **my own
+  new check**, which was defined and never called — the same class one layer down, and
+  it was only visible because a stray line broke the suite's syntax and made a grep go
+  quiet; 8 fired twenty-two times, eleven findings confirmed against my own pack, one
+  refuted; 9 read the published tarball, both install channels and the wiki page rather
+  than trusting three green summaries; 10 fired weakly again — one artifact, so the
+  pairwise question went to the existing thirteen and produced five reciprocal forks.
+
+  **Instruction 1 was widened rather than duplicated, for the fourth time this list has
+  chosen widening over addition.** It has now caught a concurrent run four times and
+  had never said what to do about one; the remedy — an isolated worktree under a
+  gitignored path, plus an explicit path list at commit time — is written into it.
+  **An eleventh instruction was considered and rejected on the list's own rule:** the
+  count-edit defect that shipped in two consecutive releases is now
+  `validate_contract_split()`, and a rule that duplicates a mechanical check is a rule
+  nobody reads.
+
+
 - **2026-08-12 (`ada7462`) · nothing retired, nothing added (still 10, at cap);
   instruction 5 widened.** Walked against the three triggers after two same-day
   releases. **Six fired** — 2 (registry and tags checked before both tags), 5 (the
@@ -375,8 +418,73 @@ knowledge.
 | 2026-08-12 | `771dd86` | the skill body brought back inside the token budget (~5478 → ~4988 of 5000); **`v1.16.1` shipped** | *unrecorded* |
 | 2026-08-12 | `abc0ec8` | the scenario harness reaches zero unrun; 121 stated ratios measured and 71 found unguarded (B-013); **`v1.17.0` shipped** | *unrecorded* |
 | 2026-08-12 | `0c23558` | the installer offers the family's routing block (B-06); **`v1.18.0` shipped** — a concurrent run, not this one | *unrecorded* |
+| 2026-08-12 | `f4f25ce` | `datasheet` style pack from fingerprint.com, fourteenth kit, two gate holes closed, T24 run on the day it shipped; **`v1.19.0` shipped** | **yes** |
 
 ## Log
+
+### 2026-08-12 — the style card was wrong, and so was the sentence I wrote about my own table
+
+**Symptom, the one that shaped the pack.** The run opened from a Refero style card
+describing `fingerprint.com` as putting its product panels in *"dark and terminal-like"*
+containers, and the brief's register said the data lives in a dark window cut into the
+page. Measured at 1440x900: the hero's focal element is **light** — a hairline-ruled
+grid of label-over-value cells — and no element on the page has a dark background at
+all. The dark surface exists in 97 rules and every one of them is an incognito
+selector: 134 rules re-skin the instrument **when it detects the reader is hiding**.
+
+**Surfaced at** the first screenshot, before a token was written. **Owned by** stage 0,
+which took a reference-library description as a premise instead of as a hypothesis.
+
+**Root cause.** `DESIGN_SYNC_BRIDGE.md` §4 already says a style found in a reference
+server is a *candidate source* and that identity comes from live extraction. The rule
+was obeyed in the end — but the brief had already written the candidate's claim into
+its register section as though it were measured, and that section is what the design
+would have been built from if the screenshot had come later. Four of the card's
+statements were checkable and wrong: the display weight (600 against a computed **500**),
+the container (1232 against **1248**), the section rhythm (a 48px gap against
+full-bleed alternating bands with `margin: -1px`), and the dark focal panel.
+
+**The better outcome, and it is worth naming.** The measurement did not just correct
+the register, it produced a sharper one. *A dark window in a page* is a layout idea. *An
+instrument that turns dark when it catches you hiding* is the product's argument
+finishing itself without a sentence of copy, and it is the pack's signature element.
+
+**Symptom, the sharper one.** The pack's own routing scenario returned eleven defects
+in the pack shipped in the same commit. Two mattered: in the alarm state the danger
+text on its own tint measured **4.44:1** — a fail, in the one cell that state exists to
+render — and the focus ring at `--accent` measured **2.85:1** on `--accent-wash`, the
+surface the pack's own Micro-interactions section mandates for a selected cell. Both
+were pairs I had never computed: I checked every status against `--bg` and never
+against the tint the components actually put it on.
+
+**Root cause.** A palette gate that checks *field against ink* and *peer against peer*
+does not check *text against the surface a component rule pairs it with*. The gate was
+green through both defects and remains green through the fixes; what found them was an
+agent reading the pack as an implementer would, and asking what the Components section
+would render.
+
+**Symptom, the one that is mine twice over.** `SKILL.md` shipped "Six of the fourteen
+are on the core contract … The other **seven** answer all four" — six plus seven
+against a fourteen-row table, with the new pack as the one left out. I introduced it by
+changing `thirteen` to `fourteen` and leaving the remainder alone. **The identical
+defect shipped in the previous pack release** and was found the same way, by a scenario
+agent, and fixed then as an instance.
+
+**Fixes by grade.** *Mechanical:* `validate_contract_split()` derives all three numbers
+from the pack table, watched saying no on a planted remainder and shipped with a plant
+that reads whatever the paragraph currently claims. *Mechanical:*
+`validate_counted_claims()` now reads the three manifests, where `marketplace.json` had
+said "twelve pluggable style packs" above a list of thirteen for two releases. *Doc:*
+eleven pack fixes, each with its number in Gotchas. *Process:* instruction 1 widened
+with the remedy it never carried.
+
+**What stays human.** Two things a gate here cannot do. It cannot tell whether a
+reference description was measured or repeated — the answer is to open the site before
+writing the register, not after. And it cannot pair a colour with the surface a prose
+rule puts it on; a gate that tried would have to parse Components, which is judgement.
+The available substitute is the one that worked: run the pack's own routing scenario
+**before the tag**, and read every finding as a hypothesis.
+
 
 ### 2026-08-12 — the rule was two paragraphs above the sentence that broke it
 

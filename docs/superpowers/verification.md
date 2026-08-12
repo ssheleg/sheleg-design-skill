@@ -7,7 +7,7 @@ directions: no REQ without a row, no row without a REQ.
 `never` is a legitimate value and the one worth counting: it says a requirement
 was shipped on the strength of an argument rather than an observation.
 
-Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1.**
+Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (REQ-10, carried to board B-004).
 
 | REQ | What must stay true | How it is checked | Last verified | Status |
 |---|---|---|---|---|
@@ -39,6 +39,6 @@ Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1.**
 | REQ-26 | Every count of packs or kits in the library is true, including in the manifests | `validate_counted_claims()`, now reading the three manifests | 2026-08-12 · watched saying no on a planted `eleven` in marketplace.json, plus a permanent self-test plant | **green** |
 | REQ-27 | The core-contract paragraph's three numbers match the pack table | `validate_contract_split()` — new | 2026-08-12 · watched saying no on a planted remainder, with its own message; eleven plants caught in the self-test | **green** |
 | REQ-28 | T24 is written with both branches **and run** in fresh contexts | the two runs; every finding reproduced before an edit | 2026-08-12 · both green; 22 findings, 11 fixed in the same commit, 1 refuted, 4 filed as B-017…B-020 | **green** |
-| REQ-29 | `v1.19.0` is tagged, released and published; the CI verdict read before the tag | `git ls-remote --tags`, `npm view`, the Actions run | — | *pending — stage 7* |
-| REQ-30 | Every local channel serves 1.19.0, verified by reading installed files | the shadow invariant plus reading `SKILL.md` in each channel | — | *pending — stage 8* |
+| REQ-29 | `v1.19.0` is tagged, released and published; the CI verdict read before the tag | `git ls-remote --tags`, `npm view`, the Actions run | 2026-08-12 · validate run 31607435774 green on `f4f25ce` **before** the tag, with 14 of 14 kit jobs including `kits (datasheet)`; release+publish run 31607540101 green; `npm view` 1.19.0; the published tarball unpacked and read — 449 files carrying the pack, its token layer and the kit | **green** |
+| REQ-30 | Every local channel serves 1.19.0, verified by reading installed files | the shadow invariant plus reading `SKILL.md` in each channel | 2026-08-12 · plugin cache `1.19.0/skills/sheleg-design/SKILL.md` reads `version: 1.19.0` and carries `styles/datasheet.md` + its token layer; the hub copy reads 1.19.0 and has the pack; the shadow invariant printed nothing. Read from disk, not from the updater's output | **green** |
 | REQ-31 | The code graph's staleness is restated honestly rather than forced past its shrink guard | `built_at_commit` against HEAD; B-009 left open | 2026-08-12 · `9312a85` against a HEAD of `3be7a63`; B-009 holds the two candidate fixes and this run does not choose between them | **green (as restated)** |
