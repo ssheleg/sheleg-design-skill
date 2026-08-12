@@ -447,8 +447,58 @@ knowledge.
 | 2026-08-12 | `e97a8cc` | `manpage` style pack from zernio.com, fifteenth kit; **`v1.20.0` shipped** | *unrecorded* |
 | 2026-08-12 | `98722cd` | `pigeonhole` style pack from getinboxzero.com, sixteenth kit; the taxonomy's inks re-derived and the deuteranopia argument corrected; T25 written and run before the tag; **`v1.21.0` shipped** | **yes** |
 | 2026-08-13 | `4f78dff` | the modern-CSS audit, and the `color-mix()` ban lifted by teaching the palette gate to compute it — verified against Chrome rather than against the spec; **`v1.22.0` shipped** | **yes** |
+| 2026-08-13 | `c2b271b` | container queries in the kits: a pack's spec the kit had ignored, three kinds of breakpoint rather than two, two new checks; **`v1.23.0` + `v1.23.1` shipped** | **yes** |
 
 ## Log
+
+### 2026-08-13 — the measurement kept improving the finding, twice
+
+**Symptom, and it was mine to begin with.** My own audit wrote the gap as *"0 of 16 kits
+use container queries"*. Two measurements later that sentence was wrong in both
+directions, and each correction made the finding sharper.
+
+**First correction: it was not a missing feature, it was a spec being ignored.**
+`scoreboard.md` has said since it shipped — *"Container queries for the report surface
+and the ledger: `container-type: inline-size`, because both appear inside columns of
+different widths on the same page and neither should size against the viewport"* — and
+the kit was switching on the viewport anyway. So a ledger in a 320px sidebar on a 1440px
+screen kept its wide columns and crushed its leader. "The library has not adopted X" and
+"the pack specified X and the kit did not do it" call for different work: the first is a
+roadmap item, the second is a defect with a check.
+
+**Second correction: only two of the seven queries had a container answer at all.** Five
+turned out to be **PAGE** (a hero's padding, a root token switch — `:root` is inside
+nobody's container) or **SELF**: a property on the element that would *establish* the
+container, which cannot query its own width. A category error was hiding inside the
+count. Sorting them produced the doctrine the release is actually about — three kinds of
+breakpoint, not two — and it is a better artifact than the conversion would have been.
+
+**And the same class bit the prose I wrote in the same hour.** `pigeonhole`'s new answer
+told an implementer to put `container-type` on the labelled row's and the FAQ's
+"wrapper", when those properties sit on the row and the `<dl>` themselves — the SELF case
+verbatim, defined two files away in the same release. Caught by checking every component
+the seven answers name against what each kit exports: five right, two wrong. It shipped
+in 1.23.0 and was corrected in 1.23.1, which is the honest cost of writing seven
+paragraphs of doctrine and its application at the same time.
+
+**A process slip worth writing down.** I staged this release with `git add -A`, which is
+the one thing standing instruction 1's remedy names — *commit an explicit path list,
+never `-A`* — then caught it, reset, and staged 31 paths by name. Nothing was swept,
+because no other run was live. That is luck rather than compliance. **Two days running,
+the remedy was known and the habit was not**: yesterday it was reading a gate from the
+wrong tree, today it was `-A`. Both are instruction 1, and neither is a detection
+problem.
+
+**One thing the new check taught me about checks.** Its first draft looked back a fixed
+400 characters for the marker and missed a five-line reason whose marker sat at
+character 425 — so a block with a *longer* explanation failed while a terse one passed.
+A check that punishes a longer reason teaches authors to write shorter ones, which is
+the opposite of what a declared-exception rule is for. It reads the whole comment now.
+
+**What stays human.** The count was the easy part; the categories were the work. Nothing
+mechanical would have told me that five of seven breakpoints have no container answer —
+that came from asking, per block, *which element establishes the container here*, which
+is the same question as *what is this component, actually*.
 
 ### 2026-08-13 — a green from the wrong tree, and a ban that was really a parser
 

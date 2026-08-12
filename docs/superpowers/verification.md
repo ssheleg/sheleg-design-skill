@@ -82,3 +82,18 @@ Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (R
 | M-08 | `v1.22.0` is tagged, released, published, CI read before the tag | `gh run view`, `npm view`, the tarball | 2026-08-13 · run 31649056089 green on `4f78dff` (18 jobs) **before** the tag; npm 1.22.0; tarball 509 files carrying rule 5 and both ring declarations | **green** |
 | M-09 | Every local channel serves 1.22.0, verified by reading installed files | the resolved install path, the hub copy, the shadow invariant | 2026-08-13 · plugin resolves to `1.22.0` and carries rule 5; hub reads 1.22.0; shadow check clean | **green** |
 | M-10 | The measurement behind the audit is reproducible, not asserted | the sweep script's three-way split | 2026-08-13 · 42 EXACT / 13 NEAR / 45 OWN across sixteen token layers | **green** |
+
+### Container queries in the kits / v1.23.0–1.23.1 — 2026-08-13
+
+| REQ | What must stay true | How it is checked | Last verified | Status |
+|---|---|---|---|---|
+| C-01 | Every widened pack says which components size against their container | `validate_pack_container_answer()` | 2026-08-13 · watched refusing `scoreboard` with its answer removed; 10 of 10 widened packs answer, six core packs exempt | **green** |
+| C-02 | A kit's width query is either a `:root` switch or a declared reason | `validate_kit_breakpoints()` | 2026-08-13 · watched refusing the scoreboard ledger reverted to `@media`; seven blocks found, all now declared | **green** |
+| C-03 | The check does not punish a longer explanation | the marker is read from the whole comment, not a fixed window | 2026-08-13 · its first draft looked back 400 characters and missed a marker at 425; both TODO blocks pass now | **green** |
+| C-04 | `scoreboard`'s ledger sizes against its own box, which its pack has always required | a browser, at a wide viewport | 2026-08-13 · at **viewport 1440** a 220px ledger takes the narrow columns (75/70) and a 900px one the wide (95/80) — the case the viewport query got wrong | **green** |
+| C-05 | `container-type: inline-size` does not collapse the ledger | the same probe | 2026-08-13 · ledger width follows its parent: 900 → 900px, 220 → 220px, 231 → 231px | **green** |
+| C-06 | The ledger's breakpoint is derived, not carried over from 767px | arithmetic on the pack's own tokens | 2026-08-13 · 95 + 12 + 80 + 12 = 199px fixed content + a 32px minimum leader = **231px**; at the boundary the leader measures 62px | **green** |
+| C-07 | Every breakpoint the kits own is classified truthfully, including the ones with no container answer | the marker at each block | 2026-08-13 · two CONTAINER (held, B-032), three SELF, one PAGE, one `:root` — and the mixed blocks were split so no marker describes half a block | **green** |
+| C-08 | Every component named in the seven new answers exists in its kit | each kit's exports against the prose | 2026-08-13 · five right, two wrong and fixed in 1.23.1 (`showroom`'s "table wrapper" → `Specimen`; `pigeonhole`'s wrapper claim → the consumer's list); `maquette`'s "agent prompt" recorded as a pre-existing pack/kit gap | **green** |
+| C-09 | A pack does not tell an implementer to do what the skeleton calls impossible | reading the two answers against the SELF definition shipped beside them | 2026-08-13 · `pigeonhole` did exactly that in 1.23.0 and is corrected in 1.23.1 | **green** |
+| C-10 | `v1.23.0` and `v1.23.1` are tagged, released, published, CI read before each tag | `gh run view`, `npm view` | 2026-08-13 · run 31652390928 green on `bd3a5b4` before the first tag, 31652643202 green on `c2b271b` before the second | **green** |
