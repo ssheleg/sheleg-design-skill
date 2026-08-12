@@ -4,6 +4,58 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.22.0] - 2026-08-13
+
+The palette gate learns two colour forms it had been refusing, and the refusal turns
+out to have been the reason eight token layers restate a token's channels by hand.
+
+### Added
+
+- **`color-mix()` and relative colour are computable, so they are no longer banned.**
+  The gate parses `color-mix(in srgb | srgb-linear | oklab | oklch, A p%, B q%)` —
+  premultiplied, shorter hue arc — and `rgb(from <colour> r g b / a)`, with `var()`
+  now resolved **inside** a value rather than only as a whole value. Verified against
+  Chrome 151's own computed values across eleven cases at a **worst ΔE of 0.004**,
+  which is the browser's six-digit serialisation rather than a disagreement.
+- **Four self-test plants, two of which prove the new paths are checked rather than
+  tolerated.** A `color-mix()` and a relative colour whose ink misses AA must fail on
+  the *ratio* — only possible if the parser really computed them. The other two prove
+  the refusals still refuse: an unimplemented mix space, and a `calc()` inside a
+  channel. Half-implemented CSS maths is worse than an honest refusal.
+- **Rule 5 in the pack skeleton** replaces the ban with the limits and one migration
+  rule: relative colour is Baseline 2024, so where a token feeds an
+  accessibility-critical property — a focus ring above all — the literal ships first
+  and the derived value second, because a dropped declaration on a focus ring is an
+  invisible focus indicator.
+- **`docs/audit/2026-08-13-modern-css-audit.md`** — the whole measurement: what the
+  library is ahead on (OKLab dichromacy checks, `color-scheme` in 16/16,
+  `text-wrap: balance` in 13/16 kits, `tabular-nums` in 10/16), what is a deliberate
+  position rather than a gap, and ten findings with counts.
+
+### Fixed
+
+- **`showroom`'s focus ring now tracks its accent.** `rgba(38, 109, 240, 0.35)` was
+  the accent's channels written out by hand; it is now
+  `rgb(from var(--accent) r g b / 0.35)`, measured **ΔE 0.00** from the literal, with
+  the literal kept as the preceding declaration. Re-tinting `--accent` used to leave
+  the ring on the old blue silently — the live mechanism behind B-023/B-024.
+- **A blind spot closed in the same commit that opened its cause.** `themes()` decided
+  whether a block was a theme by testing for a `#` or an `oklch(` prefix, so a dark
+  theme written in `color-mix()` would have been read as "overrides no colour" and
+  skipped entirely. It asks `COLOR_SHAPED` now.
+
+### Notes
+
+- **The migration itself is not in this release.** 42 declarations across eight token
+  layers are ΔE 0.00 from a token in their own file and could migrate with no visible
+  change; 13 more sit within ΔE 2 without equalling one, and *near is not drift* — a
+  white at 80% beside an off-white field may be deliberately white. The first set is
+  B-027 and needs a per-property support decision; the second is B-028 and needs its
+  author, not a script.
+- Also filed: B-029 (container queries in the kits — 0 of 16, against 7 viewport
+  blocks), B-030 (`text-box-trim`, measure in `ch`, metric-matched fallbacks,
+  `@property`, fluid spacing), B-031 (a DTCG export for the Figma seam).
+
 ## [1.21.0] - 2026-08-12
 
 A sixteenth style pack, whose eleven pastel hues are a filing scheme rather than a
