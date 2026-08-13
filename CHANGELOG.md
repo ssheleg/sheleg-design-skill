@@ -1,36 +1,10 @@
 # Changelog
 
-## 1.25.0 — 2026-08-13
-
-**`editorial-luxury` gets the status set it told surfaces to ask for.**
-
-The pack shipped one semantic colour, `--red`, and instructed any surface needing
-a full set to close the gap *in the pack, deliberately, not at the keyboard*. The
-instruction was right and nobody followed it: a production admin console built on
-this pack had invented amber-as-warning and cyan-as-info on top of an amber that
-was also its entire chrome — so the hue meaning "a provider is backing up" was
-the hue of every button on the page. Seven of that surface's colour pairs sat
-below AA and three under 1.1:1.
-
-`--status-{ok,warn,info,danger}` and their `-weak` tints close it. Three of the
-four are values the pack already owned: `--status-ok` is `--accent-deep`,
-`--status-danger` is `--red`. Only `warn` and `info` are new, each the existing
-amber and cyan family deepened until it clears the AA floor for normal text on
-**all three** cream grounds — `--paper`, `--paper-2` and `--paper-3` — because
-two grounds would have been the same enumerated-list hole one level down. Status
-is still never carried by colour alone: the tint carries the colour, the word
-carries the meaning in `--ink`.
-
-Also: `--dur-hover` and `--dur-state`. The pack said the product register stays
-in the fast range and never named the values, so every product surface built on
-it typed `0.15s` literals — there was nothing to reference.
-
-
 All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
-## [1.25.0] - 2026-08-13
+## [1.26.0] - 2026-08-13
 
 The palette gate computed one contrast per theme — ink against field — and never once
 asked whether a status colour could be read on the surface it sits on. Twenty-eight
@@ -69,6 +43,17 @@ findings in eleven of seventeen packs were waiting behind that.
   `--ink` now (14.65–14.73:1) and the status colour is the chip's tint plus a 6px dot —
   which is the pack's own "never by colour alone" rule applied to the component that
   exists to serve it. Corrected in the pack, the kit and with the numbers.
+- **`validate.py` counted its own worktree.** Both of its ROOT markdown walks read every
+  `.md` under the repository, and this project's standing practice for a concurrent run is
+  an isolated worktree at `.claude/worktrees/<name>` — a full second copy of the tree. So
+  the gate reported **2361 checks** where the same commit measures **2067** clean, and the
+  ratchet in `floors.json` was one commit away from enshrining the inflated number. A floor
+  measured with a worktree present fails the next clean run for a regression that never
+  happened, and the failure names a count, not a cause. Nested checkouts are now excluded
+  by what they **are** — a directory carrying its own `.git` — not by name, because the name
+  is a convention and the next one will differ. The plant is the only one in this suite
+  whose pass condition is silence: a nested checkout must change neither the verdict nor the
+  count, and with the guard removed it reports `MISSED`.
 - **`blueprint` answered separation and never legibility.** Its four category marks clear
   every separation floor under all three dichromacies, which the pack said — and
   `--good` **2.40:1**, `--warning` **1.72:1** and `--info` **1.21:1** on the stock, which
@@ -79,10 +64,43 @@ findings in eleven of seventeen packs were waiting behind that.
 
 - **Nothing else changed colour.** The other twenty-four findings are declarations: the
   packs were right about their own colours and unreadable about it to a machine.
-- Gates: palette 958 → 993, floors raised with the reason. The two remaining `scoreboard`
-  rows (B-033, B-035, B-036) are untouched — a retracted permission still live in its
-  token layer, eight numbers that disagree with the values beside them, and a
-  pixel-numeral rule with no working mechanism outside WebKit.
+- Gates on the merged tree: `validate.py` 2067, palette **1001**, sloplint 450 — palette
+  958 base + 8 from 1.25.0's status set + 35 from this check, additive with nothing hidden
+  in it. Floors raised with the reason.
+- **This release is 1.26.0 because 1.25.0 was taken while it was being built.** Two runs
+  worked the repository at once and both bumped to the same number; the other reached
+  `origin/main`, its tag and npm first, so it keeps 1.25.0 and its entry above. Nothing was
+  discarded and nothing was rewritten — the collision cost this release a version number and
+  twenty-two version references in prose, each of which would otherwise have named a release
+  it is not in.
+- The two remaining `scoreboard` rows (B-033, B-035, B-036) are untouched — a retracted
+  permission still live in its token layer, eight numbers that disagree with the values
+  beside them, and a pixel-numeral rule with no working mechanism outside WebKit.
+
+## [1.25.0] - 2026-08-13
+
+**`editorial-luxury` gets the status set it told surfaces to ask for.**
+
+The pack shipped one semantic colour, `--red`, and instructed any surface needing
+a full set to close the gap *in the pack, deliberately, not at the keyboard*. The
+instruction was right and nobody followed it: a production admin console built on
+this pack had invented amber-as-warning and cyan-as-info on top of an amber that
+was also its entire chrome — so the hue meaning "a provider is backing up" was
+the hue of every button on the page. Seven of that surface's colour pairs sat
+below AA and three under 1.1:1.
+
+`--status-{ok,warn,info,danger}` and their `-weak` tints close it. Three of the
+four are values the pack already owned: `--status-ok` is `--accent-deep`,
+`--status-danger` is `--red`. Only `warn` and `info` are new, each the existing
+amber and cyan family deepened until it clears the AA floor for normal text on
+**all three** cream grounds — `--paper`, `--paper-2` and `--paper-3` — because
+two grounds would have been the same enumerated-list hole one level down. Status
+is still never carried by colour alone: the tint carries the colour, the word
+carries the meaning in `--ink`.
+
+Also: `--dur-hover` and `--dur-state`. The pack said the product register stays
+in the fast range and never named the values, so every product surface built on
+it typed `0.15s` literals — there was nothing to reference.
 
 ## [1.24.0] - 2026-08-13
 

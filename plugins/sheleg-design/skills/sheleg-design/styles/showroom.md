@@ -121,8 +121,8 @@ Three rules carry this palette.
   The reason there is one token is that 4.64:1 clears AA in the hardest role it
   takes (text), so the link, the focus ring and the filled button can share it
   with no "on-dark" variant. Do not add one.
-- **[CORRECTION — 1.25.0] The chip's label is `--ink`, not its status colour.** Until
-  1.25.0 this row read *"that status's ink"*, and the kit did what it said: the label was
+- **[CORRECTION — 1.26.0] The chip's label is `--ink`, not its status colour.** Until
+  1.26.0 this row read *"that status's ink"*, and the kit did what it said: the label was
   painted in the status colour, which measures **2.03:1** for `--good` on
   `--accent-wash`, **1.54:1** for `--warning` and **2.65:1** for `--danger` on
   `--surface-2` — the pack's own status colours, unreadable at the 12px the same row

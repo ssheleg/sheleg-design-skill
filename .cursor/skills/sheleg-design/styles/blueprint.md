@@ -119,7 +119,7 @@ Three rules carry this palette.
   under all three dichromacies, so telling two marks apart is not the problem here.
 - **And a mark is never by colour alone, because on this stock it cannot be.**
   *Separation* and *legibility on the field* are different questions, and the pack
-  answered only the first until 1.25.0. Measured against `--bg`: `--good` **2.40:1**,
+  answered only the first until 1.26.0. Measured against `--bg`: `--good` **2.40:1**,
   `--warning` **1.72:1**, `--info` **1.21:1** — all three under the 3:1 floor a mark
   needs to be understood on its own (WCAG 1.4.11). So each mark carries its name, and
   what used to be advice here — *"label them anyway, because a legend of four coloured

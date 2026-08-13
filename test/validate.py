@@ -525,11 +525,43 @@ def validate_cursor_rules():
 LINK_RE = re.compile(r"\[[^\]]*\]\(([^)\s]+)\)")
 SKIP_PREFIXES = ("http://", "https://", "mailto:", "#")
 
+# ------------------------------------------------- what counts as this tree
+#
+# A nested checkout is not content. This project's standing practice is one
+# isolated worktree per concurrent run, at `.claude/worktrees/<name>` -- and that
+# is a FULL second copy of the tree, so a walk from ROOT reads every pack, doc and
+# link twice. Measured 2026-08-13 on one commit: 2361 checks with a worktree
+# present, 2067 on the same commit clean.
+#
+# A count that moves with whether a worktree happens to exist is the one thing the
+# ratchet in floors.json cannot survive. Enshrine the inflated number and the next
+# clean run fails for a regression that never happened; enshrine the clean one and
+# a run with a worktree passes a floor it never had to clear. Either way the
+# failure names a count and not a cause, which is the expensive kind.
+#
+# Excluded by what it IS -- a directory carrying its own `.git` -- rather than by
+# name: the name is a convention, and the next convention will have another.
+PRUNE_DIRS = {".git", "node_modules", "graphify-out", "dist", "build"}
+# The self-test's copytree needs the same list plus nothing: a plant copied a
+# nested worktree into every fixture before this, five times per run.
+COPY_IGNORE = (".git", "node_modules", "graphify-out", "dist", ".claude")
+
+
+def walk_md(root: Path):
+    """Every markdown file that IS this tree's content."""
+    for dirpath, dirnames, filenames in os.walk(root):
+        here = Path(dirpath)
+        if here != root and (here / ".git").exists():
+            dirnames[:] = []  # its own tree, with its own gates
+            continue
+        dirnames[:] = sorted(d for d in dirnames if d not in PRUNE_DIRS)
+        for name in filenames:
+            if name.endswith(".md"):
+                yield here / name
+
 
 def validate_links():
-    for md in sorted(ROOT.rglob("*.md")):
-        if any(part in (".git", "node_modules") for part in md.parts):
-            continue
+    for md in sorted(walk_md(ROOT)):
         text = read(md) or ""
         for match in LINK_RE.finditer(text):
             target = match.group(1)
@@ -885,10 +917,9 @@ def validate_contract_terminology():
     # spellings -- in the comment explaining why this check exists, and in the
     # self-test fixture that plants one -- and a checker that fails on its own
     # explanation teaches people to delete the explanation.
-    for md in sorted(ROOT.rglob("*.md")):
+    for md in sorted(walk_md(ROOT)):
         parts = set(md.parts)
-        if parts & {".git", "node_modules", "graphify-out", "test", "audit",
-                     "superpowers"} or md.name == "CHANGELOG.md":
+        if parts & {"test", "audit", "superpowers"} or md.name == "CHANGELOG.md":
             # A dated record states the contract of its own day, and an audit
             # report has to be able to quote the stale spelling it found.
             continue
@@ -1227,10 +1258,7 @@ def self_test() -> int:
     for label, rel, mutate in PLANTS:
         with tempfile.TemporaryDirectory() as tmp:
             dst = Path(tmp) / "repo"
-            shutil.copytree(
-                src, dst,
-                ignore=shutil.ignore_patterns(".git", "node_modules", "graphify-out", "dist"),
-            )
+            shutil.copytree(src, dst, ignore=shutil.ignore_patterns(*COPY_IGNORE))
             target = dst / rel
             before = target.read_text(encoding="utf-8")
             after = mutate(before)
@@ -1249,6 +1277,36 @@ def self_test() -> int:
                 ok = False
             else:
                 print(f"  caught  {label}")
+
+    # The one plant whose pass condition is silence. Every other fixture proves the
+    # validator says no; this one proves a nested checkout changes neither the
+    # verdict nor the count -- because the failure it guards against is a floor
+    # measured against a tree that had a second copy of itself inside it.
+    with tempfile.TemporaryDirectory() as tmp:
+        dst = Path(tmp) / "repo"
+        shutil.copytree(src, dst, ignore=shutil.ignore_patterns(*COPY_IGNORE))
+        argv = [sys.executable, str(Path(__file__).resolve())]
+        env = {**os.environ, "SHELEG_ROOT": str(dst)}
+        clean = subprocess.run(argv, capture_output=True, text=True, env=env)
+        nest = dst / ".claude" / "worktrees" / "concurrent-run"
+        (nest / "docs").mkdir(parents=True)
+        (nest / ".git").write_text("gitdir: /nowhere\n", encoding="utf-8")
+        # Both things the two ROOT walks look for, so a regression at either site shows.
+        (nest / "docs" / "STOWAWAY.md").write_text(
+            "# a file in a worktree\n\n[gone](./no-such-file.md)\n\nthirteen headings\n",
+            encoding="utf-8",
+        )
+        dirty = subprocess.run(argv, capture_output=True, text=True, env=env)
+        if dirty.returncode != 0:
+            print("  MISSED  a nested checkout FAILED the gate -- it walked a worktree")
+            ok = False
+        elif dirty.stdout != clean.stdout:
+            print(f"  MISSED  a nested checkout moved the count: "
+                  f"{clean.stdout.strip()} -> {dirty.stdout.strip()}")
+            ok = False
+        else:
+            print("  caught  a nested checkout changes neither verdict nor count")
+
     if not ok:
         print("\nself-test FAILED: a planted defect went undetected", file=sys.stderr)
         return 1

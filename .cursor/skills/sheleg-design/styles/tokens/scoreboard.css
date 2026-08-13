@@ -232,7 +232,7 @@
   --action-hover: #e4e4e7;
   --on-action: #0a0a0a;
 
-  /* The status set has to be remapped here, and until 1.25.0 it was not. The block
+  /* The status set has to be remapped here, and until 1.26.0 it was not. The block
      already remapped eleven tokens for exactly this reason -- --ink-soft among them --
      and left --good, --warn, --danger and --info pointing at the paper values, so
      `var(--good)` painted 3.69:1 on this band while --good-on-dark had 10.21 waiting
