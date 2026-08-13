@@ -448,8 +448,55 @@ knowledge.
 | 2026-08-12 | `98722cd` | `pigeonhole` style pack from getinboxzero.com, sixteenth kit; the taxonomy's inks re-derived and the deuteranopia argument corrected; T25 written and run before the tag; **`v1.21.0` shipped** | **yes** |
 | 2026-08-13 | `4f78dff` | the modern-CSS audit, and the `color-mix()` ban lifted by teaching the palette gate to compute it — verified against Chrome rather than against the spec; **`v1.22.0` shipped** | **yes** |
 | 2026-08-13 | `c2b271b` | container queries in the kits: a pack's spec the kit had ignored, three kinds of breakpoint rather than two, two new checks; **`v1.23.0` + `v1.23.1` shipped** | **yes** |
+| 2026-08-13 | `cf06b75` | `roster` style pack from babylovegrowth.ai, seventeenth kit; a lab() palette resolved from painted pixels, T26 run before the tag, and a refuted finding that corrected two shipped packs; **`v1.24.0` shipped** | **yes** |
 
 ## Log
+
+### 2026-08-13 — a rule I had shipped twice was too strong, and a subagent's wrong finding is what proved it
+
+**Symptom.** `pigeonhole` (1.21.0) and `roster` both stated, in their Motion flavor sections,
+that *a duration cannot stop an infinite animation — at 0.01ms it strobes*. A blind routing
+run then accused a third pack, `scoreboard`, of shipping that very defect: its reduced-motion
+branch sets `--scan-period: 0s` on an infinite scan line.
+
+**Surfaced at** stage 6, by T26b, as a finding **against the wrong pack**. **Owned by** the
+two packs that had generalised from one measurement.
+
+**Root cause, and the finding was wrong in a way that made it valuable.** Measured in Chrome
+151 rather than argued from the spec: an infinite animation at `0.01ms` yields **two
+different computed transforms** when sampled 40ms apart, and the same animation at **`0s`
+yields `none` and never moves.** So `scoreboard` is correct — and my sentence was not. A
+duration *can* stop an infinite animation; it just has to be exactly zero, and 0.01ms — which
+is what a global `*` reduced-motion rule almost always writes, and what `pigeonhole`'s
+reference wrote — is the one value that strobes. I had measured the 0.01ms case, drawn a rule
+about durations in general, and shipped it in two packs.
+
+**Fixes by grade.** *Doc:* both packs now carry the precise rule with the measurement, and
+the accusation against `scoreboard` is recorded as refuted in `test/scenarios.md` rather than
+dropped. *Process:* the class is **a rule generalised from one instance of a two-valued
+question.** The instance was true; the generalisation covered a value I never tested.
+
+**A second thing the same run found, and it was this session's own regression.**
+`scoreboard`'s pack still documented *"Below 768 the label column drops"* while its kit has
+used `@container (max-width: 231px)` since 1.23.0 — a divergence I introduced yesterday while
+fixing the kit and not its pack. `SKILL.md` calls a pack/kit difference a defect in one of
+them, and nothing checks it: the gate compares a kit's spine to `workbench` and its token
+block to the pack, and never compares a kit's *breakpoints* to the pack's prose. Fixed in the
+pack; the missing check is not filed because a check that reads prose against CSS is the
+"tell a measurement from an argument" problem that B-013 has been open on since 2026-08-12.
+
+**And the finding that paid for the whole run.** Four of `roster`'s five derived colours clear
+AA on the white field and on **none** of its three tinted surfaces — 4.32, 4.10, 4.06 — while
+the token layer claimed they cleared "BOTH surfaces", meaning two of the four it ships. The
+eyebrow is one of those colours, so an eyebrow on the mint panel rendered at 4.10:1. I had
+derived each colour against `--bg` and `--surface-2`, written "both", and never enumerated
+what the layer actually ships.
+
+**What stays human.** Nothing here can tell a *tested* rule from an *extrapolated* one. Both
+read the same on the page: a sentence with a number in it. The habit that catches the next
+one: when a rule quantifies over a range — every duration, both surfaces, all four — count
+the range and test its ends, because the sentence will not tell you which member you actually
+measured.
 
 ### 2026-08-13 — the measurement kept improving the finding, twice
 
