@@ -1,8 +1,8 @@
 {
   "_why": "Ratchet floors. A gate whose check count can fall silently cannot detect a deleted requirement: stripping four required headings from one pack made validate.py drop 1270->1269 and sloplint.py 224->223, both still green. Each number is the count measured on the commit named below. Raise freely; lowering one needs a reason in the same commit.",
-  "_measured_on": "feat/container-queries-v1.23.0, 2026-08-13",
-  "validate.py": 1938,
-  "validate_palette.py": 906,
-  "sloplint.py": 436,
-  "_raised": "validate.py 1920 -> 1938: two new checks. validate_pack_container_answer() asks each of the ten widened packs which components size against their container -- a bullet the skeleton has carried since 1.5.0 and which seven packs left blank, so the contract asked and nothing checked. validate_kit_breakpoints() reads every width media query in the sixteen kits and requires either a :root-only block or a declared PAGE / SELF / TODO-CONTAINER reason; it found seven, and the first version of its own marker search looked back a fixed 400 characters and missed a five-line reason whose marker sat at 425 -- a check that fails on a longer explanation teaches shorter ones. validate_palette.py and sloplint.py are unchanged at 906 and 436."
+  "_measured_on": "feat/roster-pack-v1.24.0, 2026-08-13",
+  "validate.py": 2066,
+  "validate_palette.py": 956,
+  "sloplint.py": 450,
+  "_raised": "validate.py 1938 -> 2066: the seventeenth pack adds its structural, enumeration, kit-parity and mirror checks, four reciprocal fork edges (roster forks against scoreboard, showroom, pigeonhole and manpage, and each links back), the container-query answer the 1.23.0 gate requires of a widened pack, and eleven kit component docs. validate_palette.py 906 -> 956: roster states thirteen ratios whose base its table declares, and the stated-ratio checker earned its keep three times on this pack -- each of the reference's FAILING numbers had been left on the derived token's own declaration line, where it reads as a claim about the shipped value, which is exactly the class pigeonhole hit one release earlier. sloplint.py 436 -> 450: one more pack and token layer under the bans."
 }

@@ -85,6 +85,17 @@ product using this pack for its marketing page and `workbench` for its
 application is a coherent pair, and the chip system is the seam where they should
 agree.
 
+### The fork against [`roster`](./roster.md)
+
+Both are white pages built on labelled things, and the labels belong to opposite parties.
+Here the labels are **the product's own taxonomy applied to the reader's mess** — nine
+categories the product invented and controls, which is why the chip can be specified down
+to its 8px/7px step. `roster`'s labels are **other companies' identities**: every mark in
+its industry columns arrives with its own colours, its own optical weight and its own
+opinion about spacing, and the only naming that pack does itself is the six industry pills.
+A pack that can specify its labels is this one; a pack that must host labels it did not
+design is that one.
+
 ## Palette
 
 Ratios recomputed from `styles/tokens/pigeonhole.css` by the palette gate.

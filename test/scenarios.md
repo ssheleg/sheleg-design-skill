@@ -965,3 +965,38 @@ does not own: twenty-three against `showroom` (board B-021 … B-024) and three 
 pack skeleton's Components contract (B-025). Filing them here rather than acting on them is
 the boundary this run kept; several are serious, and the board rows carry the numbers.
 
+## T26 — The proof register, and the fork against the ledger
+
+Added 1.24.0 with the `roster` pack. Two branches, two fresh contexts, run **blind against
+the bundle directory only** — `test/`, `docs/`, `kits/`, the README and the CHANGELOG are
+forbidden, because this file carries the answer beside the prompt.
+
+This pair exists because `roster` and `scoreboard` now serve the **same product category**
+— growth, ads, SEO — and the category is not the distinction. `scoreboard` is built around
+a figure that ticks up; `roster` around a name that appears. A router that reads the
+category and stops will pick wrong half the time, which is precisely what the negative
+branch is for.
+
+**T26a — should select `roster`.** "The marketing site for a tool that gets B2B software
+companies recommended inside ChatGPT and Google's AI answers. Our strongest assets are the
+engines we already show up in and the 300 customers who let us name them, sorted by
+industry. Buyers are heads of growth who do not have an SEO team. We want the page to make
+the case with who is already on board." Pass: routes to `styles/roster.md`, quotes the
+clause that decided it, and names the closest rejected pack with the clause that ruled it
+out. Fail: routing to `scoreboard` because the category is SEO, or to `showroom` because
+the page is white and product-led.
+
+**T26b — should still select `scoreboard`.** "The marketing site for an ad-spend analytics
+product. The hero is a live counter of managed spend, every section is a metric that has
+moved since last quarter, and the case studies are all percentage lifts. Buyers are
+performance marketers. We have no customer logos we are allowed to show." Pass: stays on
+`styles/scoreboard.md` and can say what would have moved it (proof that arrives as a name
+rather than a figure). Fail: routing to `roster` because the newest pack also serves an
+SEO-adjacent buyer — the failure a positive-only branch cannot detect, per standing
+instruction 4.
+
+Both branches are also asked, after choosing, to read their chosen pack in full and report
+defects with file and quoted text.
+
+**Result: written, not yet run.** Filled in the moment the two runs return.
+

@@ -243,6 +243,17 @@ zoom-on-focus on iOS, and this pack's body size is 15px.
   `container-type: inline-size`, because both appear inside columns of different
   widths on the same page and neither should size against the viewport.
 
+**The fork against [`roster`](./roster.md), and a router will reach for the wrong one.**
+Both serve growth, ads and SEO products, so the category cannot decide it. **The kind of
+proof can.** This pack is built around a figure that ticks up — the pixel numeral, the
+dotted-leader ledger, the dark band of results — and its reader is watching a number grow.
+`roster` is built around a name that appears: an engine's wordmark inside the headline,
+client logotypes in labelled industry columns, a score a third party computed. Ask what the
+page loses if you delete its proof. If the answer is *the numbers*, it is this pack; if the
+answer is *the logos*, it is that one. A page cannot be built around both, and the giveaway
+is that `roster` sets its largest figure — *4,000+* — in the same 16px eyebrow as
+everything else.
+
 ## Motion tokens
 
 - **One curve, `cubic-bezier(0.4, 0, 0.2, 1)`**, and `cubic-bezier(0, 0, 0.2, 1)`

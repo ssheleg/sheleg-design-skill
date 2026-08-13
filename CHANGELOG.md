@@ -4,6 +4,71 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.24.0] - 2026-08-13
+
+A seventeenth style pack, whose whole argument is other people's names — and a reference
+whose `h1` is one pixel wide.
+
+### Added
+
+- **`roster`** — the seventeenth pack, extracted from `babylovegrowth.ai` off the
+  server-rendered HTML of `/en` (1,415,414 bytes), its two shipped stylesheets (466,577
+  bytes, 410 custom properties) and then off **computed styles on the live page** at
+  1440×900, 768×1168 and 390×790 — **5,936 rendered elements** at the widest. A white
+  field in a faint grid of squares, hairlines instead of shadows, the pill as the most
+  frequent shape, and one orange that may never carry a word. For products whose argument
+  is *who already carries them*: AI-search and GEO visibility, SEO and content platforms,
+  agencies, marketplaces. Widened contract, a light-only token layer, a full reference kit,
+  and reciprocal forks written into `scoreboard`, `showroom`, `pigeonhole` and `manpage`.
+- **The fork against `scoreboard` is the pack's reason to exist.** Both serve growth, ads
+  and SEO products, so the category cannot decide it — the **kind of proof** can. One is
+  built around a figure that ticks up; the other around a name that appears. Ask what the
+  page loses if you delete its proof, and the giveaway is that `roster` sets its largest
+  figure (*4,000+*) in the same 16px eyebrow as everything else.
+- **`RESOLVED`, a fourth provenance family.** The reference computes its neutrals in
+  `lab()`, which the palette gate refuses on purpose, so each was resolved to the sRGB the
+  browser actually paints — **34 distinct values**, each painted into a 1×1 canvas and read
+  back as bytes. They turn out to be Tailwind v4's defaults: 7,234 borders at
+  `lab(91.6229 …)` = `#e5e7eb`. The bespoke layer beside them is four near-blacks and two
+  oranges wide, and the pack ships one of each with the criterion written at the
+  declaration.
+- **`IndustryColumn`, the signature element** — a pill-labelled column of other companies'
+  marks, hairline-divided, six across at 1440 — plus `LogoTile`, `Eyebrow` and `StepCard`.
+  Both container breakpoints are **derived from the component's own geometry** (220px for
+  the column's two-up mark grid, 640px for the step card's split) rather than carried over
+  from the viewport, which is what B-032 exists to prevent.
+
+### Fixed
+
+- **The pack refuses the reference's heading structure.** Its `h1` is `.sr-only` — 1×1px,
+  white, `clip-path: inset(50%)` — and the visible 68px line is a `<span>`, while all
+  sixteen `h2`s are small orange eyebrows. So the document outline says *eyebrow* where the
+  page says *section head*, and the largest text on the page is not a heading at all. This
+  pack teaches the opposite and `manpage` now carries the fork from the other end.
+- **The accent may not carry a word.** `#fa5c12` is 3.18:1 on white; white on `#f25533` at
+  the nav pill's 16px/600 is **3.43:1**. The pack ships `--accent-ink` at 4.52:1 for
+  anything read, keeps the accent for fills and large text, and makes the primary button
+  black — 19.66:1, which is what the reference itself does for its hero.
+- **The dominant secondary ink fails on its own band**: `#6a7282` is 4.84:1 on white and
+  **4.35:1** on the `#f0f3f8` band it is painted on. `--ink-soft` is the darkened form and
+  clears both.
+- **No `--warn` is shipped.** The reference paints no amber anywhere, so one here would be
+  invented rather than selected. Stated in the Palette instead of filled in.
+
+### Notes
+
+- **Reduced motion covers six of the reference's animations out of roughly twenty.** Its
+  branch names classes one by one, leaving `arrow-nudge`, `skeleton-blink`, both spinners,
+  `settings-ripple`, `meta-preview-float` and the accordions running — the opposite failure
+  to `pigeonhole`'s reference, which collapsed everything with one `*` rule and strobed its
+  marquee by doing so. This pack collapses unconditionally and pauses its two floats in the
+  component layer.
+- **A claim the measurement refused.** The hero sets a third party's wordmark inline after
+  the word *from*; it was sampled seven times across 5.4 seconds with no change, so the
+  pack specifies **one mark chosen per page** and makes no claim that it rotates.
+- Gates: validate 1938 → 2066, palette 906 → 956, sloplint 436 → 450, floors raised with
+  the reason.
+
 ## [1.23.1] - 2026-08-13
 
 Two of the seven answers 1.23.0 shipped told an implementer to do something the same
