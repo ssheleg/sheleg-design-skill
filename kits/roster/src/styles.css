@@ -8,8 +8,8 @@
    stylesheets (/_next/static/chunks/5c41227b903d5dae.css and 9ae1360431bd741f.css,
    466,577 bytes combined, 410 custom properties), and then by reading computed styles
    off the live page through CDP at 1440x900, 768x1168 and 390x790 — 5,936 rendered
-   elements at the widest. Ratios were computed by importing this repository's own
-   palette gate, test/validate_palette.py.
+   elements at the widest. Every ratio below is WCAG 2.x relative luminance against the
+   8-bit hexes in this file, so any of them can be checked without leaving it.
 
    FOUR families of value appear below, and the third is new to this library:
 
@@ -21,7 +21,9 @@
    prescribed technique (docs/superpowers/specs/2026-08-09-four-packs-brief.md), and it
    is the pixel that is the oracle rather than the serialisation — `ctx.fillStyle`
    read-back no longer converts in Chrome 151, it returns the value in its original
-   space. Thirty-four distinct lab() values were resolved this way.
+   space. Thirty-four distinct lab() values were resolved this way, and the method above is
+   the whole instruction: a reader of the installed bundle needs nothing from the
+   repository to repeat it.
    SELECTED — the reference paints several values in one role and this pack ships one of
    them, or paints none and the value is a different step of a hue it does ship.
    DERIVED — hue and chroma held, OKLab L walked down until the ROUNDED hex clears
@@ -54,8 +56,10 @@
 
   /* The reference's dominant secondary ink is #6a7282 (RESOLVED from lab(47.7841 …)),
      and it measures 4.35:1 on the very band it is painted on — below AA. Darkened until
-     the rounded hex clears the floor on BOTH surfaces, so one token serves everywhere
-     instead of two that a component has to choose between. */
+     the rounded hex clears 4.5:1 on ALL FOUR surfaces this layer ships rather than two of
+     them: --bg 5.05, --surface-3 4.83, --surface-mint 4.58, --surface-2 4.54. It is the
+     only derived token here that survives everywhere, which is why the other four carry a
+     surface restriction at their own declarations. */
   --ink-soft: #676f7f; /* 5.05:1 on --bg — DERIVED; 4.54:1 on --surface-2, which is the case that forced it */
   --ink-faint: #9f9fa9; /* 2.62:1 on --bg — RESOLVED from lab(65.6464 …): an icon or a disabled glyph, and the label of a disabled control, which WCAG 1.4.3 exempts. Never live text. */
 
@@ -71,7 +75,17 @@
      is 3.43:1 at the nav pill's 16px/600, and #fa5c12 is 3.18:1 on white. The accent is
      therefore a FILL and a large-text colour; --accent-ink is what carries a word. */
   --accent: #fa5c12; /* MEASURED — the headline phrase and the gradient's head */
-  --accent-2: #f25533; /* MEASURED — the nav fill and the eyebrow; what white costs on it is in the pack's Gotchas */
+  /* The reference spends this on its nav fill AND on its eyebrows. The pack keeps it for
+     the fill and overrides the eyebrow to --accent-ink, because at the eyebrow's 16px this
+     value measures 3.43:1. The override is in the pack's Components. */
+  --accent-2: #f25533; /* MEASURED — the reference's nav fill */
+  /* WHITE FIELD ONLY, and the same restriction holds for the three colours below it.
+     Each one clears the AA floor on the white field and misses it on every tinted surface
+     this layer ships: roughly 4.32 on the near-white step, 4.10 on the mint panel, 4.06 on
+     the blue-grey band — all under the bar, none by much, and all of them fails.
+     A word in one of these colours belongs on the white field; inside a tinted panel it
+     becomes the body ink instead, and the pack's Palette carries that rule with its
+     numbers. */
   --accent-ink: #da3d00; /* 4.52:1 on --bg — DERIVED from --accent: the accent that may carry a word */
   --accent-grad-to: #b73f06; /* MEASURED — the foot of linear-gradient(to right in oklab, …) */
   --accent-glow: rgba(242, 85, 51, 0.18); /* MEASURED — the radial glow behind the hero */
@@ -106,6 +120,11 @@
   /* Two families with the division of labour inverted from the usual one: the hero
      display is set in the BODY face at 68px, and the section heads are a different
      family. Over 5,936 elements: Plus Jakarta Sans 5,738, Inter 116, Raleway 78. */
+  /* NOT A SECOND FAMILY. --font-display is byte-identical to --font-body on purpose: this
+     reference sets its 68px headline in the BODY face, and --font-head is the other family.
+     The name is kept so a component written against another pack still resolves, and it is
+     flagged here because reading it as "the display face" and setting a section head in it
+     loses the pack's single most distinctive decision. */
   --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-head: Raleway, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-body: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -144,7 +163,17 @@
   --radius-card: 16px; /* MEASURED — 46 */
   --radius-panel: 24px; /* MEASURED — 7 */
 
-  --pattern-grid: url("squares-bg-1.svg"); /* MEASURED — the faint grid of squares under the hero. SELECTED as a token name: the file is the reference's and a consumer ships their own. */
+  /* The grid is measured rather than pointed at. The reference ships a 480x572 SVG of
+     <rect>s: 8.367px squares at 0.85px radius, #7f99d1 at 12% opacity -- #f4f6fa
+     composited over white -- hairline-stroked white at 0.3px, on a 9.667px pitch. Those
+     five numbers ARE the motif, so a consumer needs no asset from anybody: a
+     repeating-linear-gradient or a small inline SVG data URI reproduces it. The
+     reference's own filename is in the pack's Gotchas for anyone who wants to compare. */
+  --pattern-tile: #f4f6fa; /* COMPOSITED — #7f99d1 at 12% over --bg */
+  --pattern-square: 8.367px; /* MEASURED */
+  --pattern-pitch: 9.667px; /* MEASURED — the square plus 1.3px of gap */
+  --pattern-radius: 0.85px; /* MEASURED */
+  --pattern-stroke: 0.3px; /* MEASURED — white, and it is what separates the squares */
   --tile: 40px; /* MEASURED — the ceiling on the 34 square logo tiles scattered over the grid */
 
   /* ---- Measure ---------------------------------------------------------- */
@@ -155,18 +184,18 @@
   /* There is no scroll clock: zero elements with animation-timeline, scroll-behavior
      auto, one sticky and one fixed element (the nav). */
   --dur-quick: 0.15s; /* MEASURED — 54 elements */
-  --dur-base: 0.2s; /* MEASURED */
+  --dur-base: 0.2s; /* MEASURED — 4 elements, opacity */
   --dur-slow: 0.3s; /* MEASURED — opacity reveals */
-  --dur-reveal: 0.5s; /* MEASURED */
+  --dur-reveal: 0.5s; /* MEASURED — 3 elements: the section entrance */
   --dur-accordion: 0.7s; /* MEASURED — the one max-height transition on the page */
   --ease: cubic-bezier(0.4, 0, 0.2, 1); /* MEASURED — every transition on the page */
   --dur-float-a: 5.5s; /* MEASURED — ebook-float-primary, ease-in-out */
   --dur-float-b: 6.5s; /* MEASURED — ebook-float-secondary, and the offset is the point */
 }
 
-/* The reference's reduced-motion branch names six classes one by one and leaves roughly
-   fourteen of its own animations running — see the pack's Gotchas, where they are
-   counted. A pack that copied that would inherit the omission, so the collapse here is
+/* The reference's reduced-motion branch names six classes one by one and leaves the rest
+   of its own animations running; the pack's Gotchas names the survivors it could identify.
+   A pack that copied that shape would inherit the omission, so the collapse here is
    unconditional. */
 @media (prefers-reduced-motion: reduce) {
   :root {
@@ -175,10 +204,12 @@
     --dur-slow: 0.01ms;
     --dur-reveal: 0.01ms;
     --dur-accordion: 0.01ms;
-    /* The two floats are infinite. A duration cannot stop an infinite animation — at
-       0.01ms it strobes — so the component layer pauses them with
-       animation-play-state: paused, which no custom property can express. The lesson is
-       pigeonhole's, one release old, and it is applied here rather than relearned. */
+    /* These two are deliberately NOT collapsed, so "every duration" is true of the five
+       above and false of these. They drive infinite animations, and a duration cannot stop
+       one — at 0.01ms it strobes at exactly the reader this query protects. They keep
+       their values and the component layer pauses them with animation-play-state: paused,
+       which no custom property can express. The lesson is pigeonhole's, one release old,
+       applied here rather than relearned. */
     --dur-float-a: 5.5s;
     --dur-float-b: 6.5s;
   }

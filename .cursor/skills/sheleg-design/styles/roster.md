@@ -31,8 +31,9 @@ showing them, sorted.
 
 It rides the SHELEG cinematic layer at low intensity: entrance and hover, two slow
 offset floats on the hero art, and **no scroll clock anywhere** — measured, not assumed:
-zero elements with `animation-timeline`, `scroll-behavior: auto`, one sticky element and
-one fixed one, both the nav.
+zero elements carry an `animation-timeline`, the document's `scroll-behavior` computes to
+`auto` rather than `smooth`, and exactly two elements are positioned — one sticky and one
+fixed, both the nav.
 
 **Not for:** a page whose subject is an accumulating figure — that is
 [`scoreboard`](./scoreboard.md), and it is the fork worth reading twice. A product whose
@@ -77,12 +78,13 @@ its own opinion about spacing.
 
 ## Palette
 
-Ratios recomputed from `styles/tokens/roster.css` by the palette gate.
+Ratios recomputed from `tokens/roster.css`, which sits beside this file.
 
 | Token | Value | On `--bg` |
 |---|---|---|
 | `--bg` | `#ffffff` | the field, on 169 elements |
 | `--surface-2` | `#f0f3f8` | the pale blue-grey section band |
+| `--surface-3` | `#f9fafb` | the near-white step under it, on 5 elements |
 | `--surface-mint` | `#e8f7f4` | the mint panel |
 | `--ink` | `#171717` | 17.93:1 — display, heads |
 | `--ink-body` | `#364153` | 10.30:1 — body copy that carries weight |
@@ -94,6 +96,16 @@ Ratios recomputed from `styles/tokens/roster.css` by the palette gate.
 | `--good` | `#008850` | 4.53:1 |
 | `--danger` | `#ec0f28` | 4.50:1 |
 | `--link` | `#2470f0` | 4.52:1 — and **4.06:1 on `--surface-2`**, so a link inside a band takes `--ink-body` underlined, at 9.26:1 there |
+
+**Four of the derived colours are white-field only, and this is the pack's sharpest
+constraint.** `--accent-ink`, `--good`, `--danger` and `--link` each clear 4.5:1 on `--bg`
+and on **none** of the three tinted surfaces this pack ships: on `--surface-3` they measure
+4.31–4.33, on `--surface-mint` 4.08–4.11, on `--surface-2` 4.05–4.07. Only `--ink-soft`
+survives everywhere (5.05 / 4.83 / 4.58 / 4.54). So a word in one of those four colours
+belongs on the white field; inside any tinted panel it becomes `--ink-body`, which is
+9.26:1 on `--surface-2`. **That includes the eyebrow** — an eyebrow on the mint panel in
+`--accent-ink` renders at 4.10:1, which is the one trap this pack sets for someone who reads
+only the Components section.
 
 **Status is never by colour alone, and here the number says why.** An orange accent and a
 red danger cannot be far apart: the gate measures `--accent` against `--danger` at **10.2**
@@ -116,19 +128,27 @@ and two oranges wide.
 
 Two families, and the division of labour is the inverse of the usual one.
 
-| Role | Token | Measured |
+| Role | Tokens | Measured |
 |---|---|---|
-| Hero display | `--size-display` 68px, `--lh-display` 1.176 | in the **body** face, weight 600 |
-| Section head | `--size-head` 52px, `--lh-head` 1.25 | in `--font-head` (Raleway), weight 600, on 6 elements |
-| Eyebrow | `--size-eyebrow` 16px, `--track-eyebrow` 0.4px | uppercase, `--accent-ink`, and the only tracked type on the page |
-| Body | `--size-body` 16px, `--lh-body` 1.75 | **weight 300** — the dominant pairing, on 44 elements |
-| Body, emphasis | same size | weight 600, on 49 |
-| Small | `--size-small` 14px | on 44 |
-| Chip | `--size-chip` 12px | weight 500, on 60 |
+| Hero display | `--font-display`, `--size-display` 68px, `--lh-display` 1.176, `--weight-display` | in the **body** face — see below |
+| Section head | `--font-head`, `--size-head` 52px, `--lh-head` 1.25, `--weight-head` | Raleway 600, on 6 elements |
+| Eyebrow | `--font-head`, `--size-eyebrow` 16px, `--lh-eyebrow` 1.5, `--track-eyebrow` 0.4px | uppercase, `--accent-ink`, the only tracked type on the page |
+| Body | `--font-body`, `--size-body` 16px, `--lh-body` 1.75, `--weight-body` | **300** — the dominant pairing, on 44 elements |
+| Body, emphasis | `--weight-emphasis` | 600, on 49 |
+| Small | `--size-small` 14px, `--lh-small` 1.429 | on 44 |
+| Chip | `--size-chip` 12px, `--lh-chip` 1.333, `--weight-label` | 500, on 60 |
+
+**`--font-display` is not a second family.** It is byte-identical to `--font-body`, because
+this reference sets its 68px headline in the body face; the other family is `--font-head`.
+The token keeps its name so a component written against another pack still resolves — and
+setting a section head in `--font-display` silently discards the pack's most distinctive
+decision, which is why the name is flagged here and at its declaration.
 
 **The hero is set in the body face and the section heads are not.** Plus Jakarta Sans
-covers 5,738 of 5,936 rendered elements including the 68px headline; Raleway covers 78 —
-the six section heads and the sixteen eyebrows. Copying this pack means accepting that
+covers 5,738 of 5,936 rendered elements including the 68px headline; Raleway covers 78, of
+which the six section heads and the sixteen eyebrows are the twenty-two this pack
+specifies — the rest are chrome the pack does not model. (`Inter` covers a further 116 and
+is given no token: it is a leftover, not a decision.) Copying this pack means accepting that
 inversion: a display face that only ever appears at 52px, and a body face that has to
 hold a poster.
 
@@ -164,14 +184,27 @@ the other end, where its visible label chip is a real `<h2>`.
   composite. Separation is by hairline — `--rule` `#e5e7eb` on 7,234 borders,
   `--rule-strong` `#cecece` on 30 — and by pill. Adding a shadow adds a layer the
   reference does not have.
-- **The field is patterned.** A repeating grid of small squares (`--pattern-grid`) sits
-  under the hero with **34 square logo tiles** at `--tile` 40px or less scattered over it.
-  The tiles are other people's marks; the grid is what stops them reading as a random
+- **The field is patterned, and the pattern is five numbers rather than a file.**
+  `--pattern-square` 8.367px at `--pattern-radius` 0.85px in `--pattern-tile` `#f4f6fa`
+  (the reference's `#7f99d1` at 12% over white), separated by a white
+  `--pattern-stroke` 0.3px on a `--pattern-pitch` of 9.667px. A
+  `repeating-linear-gradient` or a small inline data URI reproduces it, so nothing has to
+  ship an asset. **34 square logo tiles** at `--tile` 40px or less are scattered over it:
+  the tiles are other people's marks, and the grid is what stops them reading as a random
   scatter.
+- **Two tinted surfaces and the wide radius have one home each.** `--surface-mint`
+  `#e8f7f4` is the callout panel behind a claim (11 elements on the reference);
+  `--surface-3` `#f9fafb` is the near-white step under a band (5); `--radius-panel` 24px is
+  the corner of both. Anything set on them obeys the white-field restriction in the Palette:
+  `--ink` and `--ink-body` are safe there, the four derived colours are not.
 - **Gradients interpolate in oklab**, and copying that is the point rather than the
   colours: `linear-gradient(to right in oklab, var(--accent), var(--accent-grad-to))`,
   plus a radial `--accent-glow` behind the hero.
-- **Container `--container` 1152px** at all three viewports, inside a 1440px shell.
+- **Container `--container` 1152px**, measured at 1440 and **capped by the viewport below
+  it** — at 768 and 390 the declared max-width is the same 1152px and the rendered width is
+  the screen minus its gutter, which is a different statement from "1152px at three
+  viewports". `--shell` 1440px is the full-bleed width the patterned bands run to while the
+  content stays at 1152.
 
 ## Components
 
@@ -247,6 +280,10 @@ Measured at three viewports rather than derived from breakpoint names.
 The industry wall goes six columns → three → two, and its hairline dividers survive every
 step, because the divider is what makes it a wall rather than a pile.
 
+- **Viewport.** Full-height sections use `100dvh`, never bare `100vh` — and the reference
+  is the argument rather than the authority here: it ships `100dvh` once and `80dvh` twice
+  while leaving **13 bare `100vh`** in its stylesheets, which is the address-bar jump the
+  rule exists to prevent, on a page whose mobile document is 16,686px tall.
 - **Container queries.** The **industry column** and the **step card** are the container
   cases: both are dropped into grids of different widths on the same page, so each takes
   `container-type: inline-size` and its own contents answer to that box — the column's
@@ -261,9 +298,9 @@ step, because the divider is what makes it a wall rather than a pile.
 | Token | Value | Where it was measured |
 |---|---|---|
 | `--dur-quick` | 0.15s | 54 elements — the default transition |
-| `--dur-base` | 0.2s | |
+| `--dur-base` | 0.2s | 4 elements, opacity |
 | `--dur-slow` | 0.3s | opacity reveals |
-| `--dur-reveal` | 0.5s | |
+| `--dur-reveal` | 0.5s | 3 elements: the section entrance |
 | `--dur-accordion` | 0.7s | the one `max-height` transition on the page |
 | `--ease` | `cubic-bezier(0.4, 0, 0.2, 1)` | **every** transition on the page |
 | `--dur-float-a` | 5.5s, ease-in-out | `ebook-float-primary` |
@@ -300,13 +337,23 @@ Entrance and hover, plus two floats. The floats are the only continuous motion a
 exist to keep the hero art from reading as a screenshot; at 5.5s and 6.5s they drift out
 of phase, which is why both tokens exist instead of one.
 
-Every transition on the page runs on `--ease`, and the pack names it here because a pack
-that ships no curve inherits the motion doctrine's three.
+Every **transition** on the page runs on `--ease`, and the pack names it here because a
+pack that ships no curve inherits the motion doctrine's three. The two floats are
+**animations**, not transitions, and they run `ease-in-out` — the one curve in this pack
+that `--ease` does not govern, stated because the exception is otherwise invisible.
 
-Under `prefers-reduced-motion: reduce` the token layer collapses every duration to
-0.01ms, and the two floats are **paused** in the component layer with
-`animation-play-state: paused` — a duration cannot stop an infinite animation, it strobes
-it. That lesson is one release old and it is applied here rather than relearned.
+Under `prefers-reduced-motion: reduce` the token layer collapses **five** of its seven
+durations to 0.01ms and deliberately leaves `--dur-float-a` and `--dur-float-b` at their
+measured values, because those two drive **infinite** animations and **0.01ms does not stop
+an infinite animation — it strobes it.** Measured in Chrome 151: an infinite animation at
+`0.01ms` yields two different computed transforms when sampled 40ms apart, while the same
+animation at **`0s` yields `none` and never moves.** So a duration *can* stop an infinite
+animation, but only at exactly zero, and 0.01ms — which is what a global reduced-motion
+rule usually writes — is the value that strobes. This pack pauses the floats in the
+component layer instead, with `animation-play-state: paused`, which no custom property can
+express and which holds whichever number the durations carry. That lesson is one release old and it is applied here rather
+than relearned. **The kit ships that rule; a bundle-only implementer has to write it**, and
+this paragraph is the whole of it.
 
 ## Micro-interactions
 
@@ -344,8 +391,9 @@ recomputed by the palette gate at write time.
 1. **The nav CTA's label fails.** White on `#f25533` at 16px/600 measures **3.43:1**. The
    hero's black CTA measures 19.66:1, so the page's own hierarchy already had the answer.
 2. **The headline's accent phrase passes only because it is huge.** `#fa5c12` on white is
-   **3.18:1** — legal for the 68px phrase as large text, illegal for anything smaller, and
-   the same orange is used on the nav fill where it is not large.
+   **3.18:1** — legal for the 68px phrase as large text and illegal for anything smaller.
+   The reference's *other* orange, `#f25533`, is the one on the nav fill (item 1); between
+   them the page has two oranges and neither can carry a word.
 3. **The dominant secondary ink fails on its own band.** `#6a7282` measures 4.84:1 on white
    and **4.35:1** on the `#f0f3f8` band it is painted on. `--ink-soft` is the darkened form
    and clears both.
@@ -363,6 +411,11 @@ recomputed by the palette gate at write time.
 and one accent and marks both as selected. If a value here looks arbitrary, that is
 because the choice was between four arbitrary values and the criterion is written at the
 declaration.
+
+**The grid is the reference's `squares-bg-1.svg`**, a 480×572 file of `<rect>`s, and the
+pack deliberately does not point at it: a token holding `url("squares-bg-1.svg")` resolves
+to nothing in anybody else's tree and paints silently, so the five measured numbers are in
+the token layer instead. The filename is here only so the two can be compared.
 
 **A cream `#f6f1eb` appears twice** and the pack does not adopt it. Two elements is not a
 surface.

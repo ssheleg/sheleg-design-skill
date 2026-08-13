@@ -168,7 +168,9 @@ not with emptiness. Say which row you took and why when two fire.
   are not cinematic; `MOTION_INTENSITY` above 3 on either is a misread of the
   pack, not a bold choice. `pigeonhole` is cinematic but at the family's floor: it bans the scroll clock,
 scrubbing, parallax and a sticky nav, so `MOTION_INTENSITY` above **4** on it has
-nothing legal to buy. `field-notes` is standalone **by default** and may
+nothing legal to buy. **`roster` has the same ceiling of 4** for the same reason —
+entrance, hover and two slow floats are its whole budget, and it bans scrubbing,
+parallax and `animation-timeline`; it keeps a sticky nav, which is the only difference. `field-notes` is standalone **by default** and may
   opt into the cinematic layer — it carries a `## Motion flavor` section saying
   how — so it is the one standalone pack without a hard ceiling. Read that
   section before turning the dial up on it.
