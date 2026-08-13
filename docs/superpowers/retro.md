@@ -17,6 +17,15 @@ fired in five run stamps.
    same directory. Recheck immediately before staging anything — the tree can
    turn hostile mid-run.
 
+   **Widened 2026-08-13: "before staging" is not the last moment the tree can turn.**
+   The 1.26.0 run did recheck before staging — `git reflog -2` showed only its own
+   reset — and then merged into `main` and found a commit it had never seen sitting
+   between its base and its merge, with the version it had planned already tagged and
+   published. Staging is one of four moments, and the other three are the ones that
+   touch shared state: **`git fetch` immediately before the merge, before the push, and
+   before the tag.** The check that costs one command is the one that catches a
+   collision while it is still only a version number.
+
    **Widened 2026-08-12: detection was never the missing half — the remedy was.**
    This instruction has caught a concurrent run four times and has never said what
    to do next, so each time the answer was improvised. It is two commands: build in
@@ -24,7 +33,17 @@ fired in five run stamps.
    `git add -A` cannot see it), and commit an **explicit path list**, never `-A`.
    The run that forced this widening lost nothing only because the collision was
    caught before staging; the concurrent run's `git add -A` had already swept this
-   run's in-flight brief and a scratch screenshot into its own commit. *(Last fired: 2026-08-12 · `f4f25ce` — **its sharpest firing yet, and the first time it
+   run's in-flight brief and a scratch screenshot into its own commit. *(Last fired:
+   2026-08-13 · `a9c497e` — **its fifth catch, its second on a live run, and its first
+   late one.** The recheck before staging was clean, so the run staged 21 paths by name
+   and merged — and the merge brought in a commit from a concurrent session that had
+   bumped every manifest to 1.25.0, tagged it and published it to npm while this run
+   was building the same number. Caught by the merged tree not matching the tree CI had
+   verified, which is a downstream symptom: the tag was withheld, the version moved to
+   1.26.0, and nothing on either side was discarded. Cost: a version number and 22
+   version references in prose. Had the run tagged on the strength of its branch's green,
+   it would have overwritten a published release. This is the firing that widened the
+   instruction above. Previously: 2026-08-12 · `f4f25ce` — **the first time it
    caught a live one.** `git reflog` showed a commit this session did not make sitting at
    `HEAD@{1}`, between the stage-0 snapshot and the run's own `git checkout -b`: a
    concurrent agent had committed on `main`, bumped every manifest to the version this run
@@ -46,7 +65,13 @@ fired in five run stamps.
    origin` and `npm view <pkg> version` before a brief writes a version
    anywhere. This repo carried `1.4.0` in three manifests, a full CHANGELOG
    entry and a commit subject for a release that was never tagged and never
-   published. *(Last fired: 2026-08-12 · `e9b753f` — `npm view` 1.13.0 against
+   published. *(Last fired: 2026-08-13 · `a9c497e` — **and it is the only reason the
+   collision resolved without loss.** The manifests said 1.25.0 and so did the CHANGELOG,
+   on both sides; three sources disagreed with none of it. `git tag --sort=v:refname`,
+   `git ls-remote --tags origin` and `npm view` all answered v1.25.0 **already shipped**,
+   which is what turned "two entries claim one number" into "theirs is published, mine
+   moves." Read from the registry the manifests could not have answered it: the other run
+   bumped the same three files this one did. Previously: 2026-08-12 · `e9b753f` — `npm view` 1.13.0 against
    `ls-remote --tags | sort -V` v1.13.0 after the release, and it settled a live
    ambiguity: a local `npm publish` returned 403 "cannot publish over the previously
    published versions" while the registry showed 1.13.0 published *seconds later* with
@@ -149,7 +174,16 @@ fired in five run stamps.
    can be evaded by rephrasing the very sentence it protects: prefer an
    unconditional assertion, and prove each planted defect fails with **its own
    check's message**, not merely that the suite went red.
-   *(Last fired: 2026-08-12 · `e9b753f` — and the class was **the entry point that
+   *(Last fired: 2026-08-13 · `a9c497e` — the class was **a measurement that moves with
+   local scratch state**, and its shape here was `validate.py` walking every `.md` under
+   ROOT while this project's own concurrency remedy puts a full second copy of the tree at
+   `.claude/worktrees/<name>`: 2361 checks against 2067 on one commit. Watched saying no
+   in the only form that fits a defect whose symptom is silence — the plant asserts a
+   nested checkout changes neither verdict nor count, and with the guard replaced by
+   `if False:` it reported `MISSED`. Class swept rather than the string grepped: the other
+   two gates were read, not searched — `sloplint.py` walks `SKILL_DIR.rglob`,
+   `validate_palette.py` does not recurse at all, so only these two sites were ever
+   exposed. Previously: 2026-08-12 · `e9b753f` — the class was **the entry point that
    drops a status the script already computed**, which is the 2026-08-05 argv defect one
    layer down: `validate.py --self-test` printed FAILED and exited 0 because `main()`
    returned the status and `__main__` called it bare. Watched saying no by breaking a
@@ -174,7 +208,11 @@ fired in five run stamps.
    while CI ran one for a whole release cycle, so a merge's green described a
    third of the suite. Instruction 6 says a gate must be watched saying no;
    this one says it must be watched saying anything at all.
-   *(Last fired: 2026-08-12 · `e9b753f` — diffed again, and this is the run where it
+   *(Last fired: 2026-08-13 · `a9c497e` — diffed and cited, not assumed: `validate.yml:30-32`
+   runs all three `--self-test` invocations, so the new nested-checkout plant was already
+   watched by CI in the same commit that introduced it (run 31661837515, 19 jobs). No
+   workflow change was needed, and the reason is a line number rather than a memory.
+   Previously: 2026-08-12 · `e9b753f` — diffed again, and this is the run where it
    would have mattered: the self-test whose exit code was dropped runs in CI through
    `npm run selftest`, so CI had been reporting green for a self-test that could not fail
    it. No workflow change was needed — the fix was in the script CI already runs — but
@@ -229,7 +267,22 @@ fired in five run stamps.
    doc's numbers against a fresh measurement. This is instruction 6 pointed at
    the close-out instead of at the gates — a green nobody watched land is not
    evidence there either.
-   *(Last fired: 2026-08-12 · `e9b753f` — the published tarball was pulled from the
+
+   **Widened 2026-08-13: the report you must not trust includes the one your own script
+   just printed.** A throwaway script written for this run printed `floors: _measured_on
+   now names the merged tree` after a `str.replace` that matched nothing — the file it
+   was editing was not in the list the earlier step had bumped, so the pattern searched
+   for a string that did not exist yet. Exit 0, a confident line of output, no change on
+   disk. A tool's success line is somebody else's claim about your artifact; your own
+   script's success line is your claim about it, which is worse, because you will believe
+   it. Read the file.
+   *(Last fired: 2026-08-13 · `a9c497e` — three artifacts read rather than reported: the
+   published tarball pulled from the registry (1.26.0 in both manifests, `@role non-text`
+   present, **0** stale `1.25.0` references outside the CHANGELOG, 17 packs), the local
+   channels read as installed files (`~/.claude/plugins/cache/.../1.26.0/skills/sheleg-design/SKILL.md`
+   and the hub copy both `version: 1.26.0`, no shadowing plain copy), and `floors.json`
+   read after the script that claimed to have edited it — which is the read that caught
+   the widening above. Previously: 2026-08-12 · `e9b753f` — the published tarball was pulled from the
    registry and read: 418 files carrying `styles/scoreboard.md`, its token layer and the
    whole kit. The local channels were verified by reading installed files rather than the
    updater's output — the hub copy's `SKILL.md` says `version: 1.13.0` and its `styles/`
@@ -262,6 +315,32 @@ fired in five run stamps.
    unconditional.)*
 
 ## Prune log
+
+**2026-08-13, the status-on-field run (`a9c497e`) — nothing retired, two widened, and
+the retirement trigger itself is the finding.** Five instructions fired here: 1 (a
+concurrent run, its fifth catch — and its first *late* one, see the entry below), 2
+(`git tag`, `ls-remote --tags` and `npm view` are what proved 1.25.0 was already
+published rather than merely claimed), 6 (a defect found in one gate, the class named
+and swept across both siblings), 7 (`npm test` diffed against `validate.yml:30-32`;
+all three self-tests run in CI, so the new plant shipped already watched), 9 (the
+tarball read from the registry, the installed files read rather than the updater's
+output — and my own script's success line caught lying about a no-op). 3, 4, 8 and 10
+did not fire: no scenario was written or run, nothing was delegated, and no batch of
+artifacts landed to check against itself.
+
+**By the letter of the third trigger, that should have retired instruction 2 — and
+it would have been wrong.** Its note says *last fired 2026-08-12 · `e9b753f`*, which
+is thirteen stamps back, but stamp 23 records `v1.24.0` reading the registry before
+its tag and stamps 21–23 all did the same. The trigger is computed from annotations
+runs forget to update, so an instruction that fires every release can look dormant.
+Same shape on 3, 4, 5 and 8: stamp 23 alone evidences firings none of their notes
+record. The arithmetic is only as good as the bookkeeping, and the bookkeeping is the
+part a run does last. Noted rather than fixed by inventing firings I did not make:
+the five that fired here have their notes updated, and the rest keep theirs.
+
+Cap 10, current 10, none retired; 1 and 9 widened, so no slot was needed for either
+of this run's two new classes.
+
 
 **2026-08-12, the `pigeonhole` run (`98722cd`) — nothing retired, and the walk is
 recorded because "I checked" is not a check.** All ten instructions fired in this
@@ -449,8 +528,58 @@ knowledge.
 | 2026-08-13 | `4f78dff` | the modern-CSS audit, and the `color-mix()` ban lifted by teaching the palette gate to compute it — verified against Chrome rather than against the spec; **`v1.22.0` shipped** | **yes** |
 | 2026-08-13 | `c2b271b` | container queries in the kits: a pack's spec the kit had ignored, three kinds of breakpoint rather than two, two new checks; **`v1.23.0` + `v1.23.1` shipped** | **yes** |
 | 2026-08-13 | `cf06b75` | `roster` style pack from babylovegrowth.ai, seventeenth kit; a lab() palette resolved from painted pixels, T26 run before the tag, and a refuted finding that corrected two shipped packs; **`v1.24.0` shipped** | **yes** |
+| 2026-08-13 | `a9c497e` | a status colour measured against the field it sits on: `validate_status_on_field()`, `@role non-text:`, 28 findings and three real fixes; then a version a concurrent run had already published, and `validate.py` found counting its own worktree as content; **`v1.26.0` shipped**, 1.25.0 left to the other run | **yes** |
 
 ## Log
+
+### 2026-08-13 — the remedy for one concurrent run became a defect in the gate that measures it
+
+**Symptom.** Two things, and the second is only visible because of the first. A concurrent
+session bumped every manifest to 1.25.0, tagged it and published it to npm while this run was
+building the same number; the collision surfaced *after* the merge, when `main`'s tree stopped
+matching the tree CI had verified. Then, while re-verifying the merged tree, the gates
+disagreed with arithmetic: `validate_palette.py` was cleanly additive (958 base + 8 from their
+status set + 35 from this run's check = 1001) and `validate.py` reported **2361** where both
+parents measure 2066 and 2067. Neither side had added 294 checks.
+
+**Surfaced at** stage 7, twice — once by the tree-hash comparison before the tag, once by the
+count not adding up. **Owned by** stage 5 for the collision (the recheck ran before staging and
+not before the merge) and by instruction 1's own remedy for the count.
+
+**Root cause.** `validate.py` walks every `.md` under ROOT, and this project's standing answer
+to a concurrent run is *build in an isolated `git worktree` under a gitignored path* —
+`.claude/worktrees/<name>`, which is a full second copy of the tree. The gate counted the
+remedy as content. So the instruction that exists to survive concurrency is what made the
+measurement of concurrency wrong, and the two only ever fire together: a run without a
+collision never has a worktree to double-count.
+
+The ratchet in `floors.json` was one commit from enshrining 2361. That is the expensive shape,
+not the inflated number: a floor measured with a worktree present fails the **next** clean run,
+which reports a regression that never happened and names a count rather than a cause.
+
+**Fixes by grade.** *Code:* both ROOT walks skip nested checkouts, identified by what they are
+— a directory carrying its own `.git` — rather than by name, because the name is a convention
+and the next one will differ. *Test:* the only plant in this suite whose pass condition is
+silence — a nested checkout must change neither verdict nor count — watched reporting `MISSED`
+with the guard replaced by `if False:`. *Process:* instruction 1 widened, because "recheck
+before staging" named the wrong last moment; the moments that touch shared state are the merge,
+the push and the tag. *Class:* **a measurement that moves with local scratch state.** Swept by
+reading the siblings rather than grepping them — `sloplint.py` walks `SKILL_DIR.rglob`,
+`validate_palette.py` does not recurse — so only these two sites were ever exposed.
+
+**What the collision cost, and what it did not.** A version number and 22 version references
+in prose and token comments (`since 1.25.0`, `[CORRECTION — 1.25.0]`, `Closed in v1.25.0`),
+each of which would otherwise have named a release it is not in. Nothing was discarded and
+nothing of theirs was rewritten: 1.25.0 stays exactly as published, its CHANGELOG entry only
+moved under the preamble it had landed above. The tag was withheld until the **merged** commit
+had its own CI verdict — run 31661837515, 19 jobs, tree `279af78` identical to `main^{tree}`.
+
+**A third, smaller one, with the same shape as instruction 9.** A throwaway script for the
+version move printed `floors: _measured_on now names the merged tree` after a replacement that
+matched nothing — `floors.json` was not in the list the previous step had bumped, so the
+pattern searched for a string that did not exist yet. Exit 0, confident output, no change on
+disk. Caught by reading the file. A tool's success line is someone else's claim about your
+artifact; your own script's is your claim about it, and you will believe that one.
 
 ### 2026-08-13 — a rule I had shipped twice was too strong, and a subagent's wrong finding is what proved it
 

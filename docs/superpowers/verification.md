@@ -122,3 +122,23 @@ Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (R
 | R-18 | The published tarball carries the pack, its tokens and the kit | the tarball pulled from the registry and read | 2026-08-13 · see the close-out | **green** |
 | R-19 | Every local channel serves 1.24.0, verified by reading installed files | the resolved install path, the hub copy, the shadow invariant | 2026-08-13 · see the close-out | **green** |
 | R-20 | ADR-0001 records the naming, with the rejected alternatives and why | the file | 2026-08-13 · tenth application; `pegboard`, `directory` and `lobby` rejected on the ADR's own criteria | **green** |
+
+### A status colour on its own field / v1.26.0 — 2026-08-13
+
+| REQ | What must stay true | How it is checked | Last verified | Status |
+|---|---|---|---|---|
+| S-01 | Every semantic colour is measured against the field of **its own theme**, not the pack's first one | `validate_status_on_field()` | 2026-08-13 · first run found 28 findings in 11 of 17 packs; `scoreboard`'s panel band was the mechanical one | **green** |
+| S-02 | The three tiers are enforced, not described: ≥4.5 text, ≥3.0 declared, <3.0 declared **and** the pack says status is never by colour alone | two plants, one per tier | 2026-08-13 · both watched failing; the check's core was split out so a plant can be a token layer as a string | **green** |
+| S-03 | `@role non-text:` is a canonical marker, documented beside `@role accent:` | `SURFACE_COMPOSITION.md`; the regex in the gate | 2026-08-13 · 11 packs declare it; five prose phrasings replaced by one greppable form | **green** |
+| S-04 | `scoreboard`'s dark band uses the on-dark status set its own Bans require | the token layer, measured | 2026-08-13 · 10.21 / 11.49 / 6.92 / 7.51 on the panel, where they had been 3.69 / 3.94 / 2.37 / 2.90 (B-034 closed) | **green** |
+| S-05 | `showroom`'s status chip does not paint its label in its own status colour | the pack and the kit read against each other | 2026-08-13 · label is `--ink` at 14.65–14.73:1, the colour is the tint plus a 6px dot; was 2.03 / 1.54 / 2.65 (B-021 closed) | **green** |
+| S-06 | `blueprint` states legibility, not only separation | the pack | 2026-08-13 · `--good` 2.40, `--warning` 1.72, `--info` 1.21 on the stock named in the pack, with the colour-alone rule | **green** |
+| S-07 | No colour changed that did not have to | the diff | 2026-08-13 · 3 packs changed values, 24 findings were declarations only | **green** |
+| S-08 | The `.cursor` mirror and the kits carry every token edit | `validate.py` mirror parity | 2026-08-13 · green; propagated in the same change | **green** |
+| S-09 | A gate's check count does not move with whether a worktree exists | the nested-checkout plant, whose pass condition is silence | 2026-08-13 · **found by the merge disagreeing with itself**: 2361 with a worktree present, 2067 clean on one commit; watched reporting `MISSED` with the guard removed | **green** |
+| S-10 | The class is swept, not just the site that showed it | reading the sibling gates | 2026-08-13 · `sloplint.py` walks `SKILL_DIR.rglob`, `validate_palette.py` does not recurse; only `validate.py`'s two ROOT walks were exposed | **green** |
+| S-11 | Floors are the counts of the merged tree, and the raise carries its reason | `test/floors.json`, re-measured | 2026-08-13 · 2067 / 1001 / 450; palette additive as 958 base + 8 concurrent + 35 this check | **green** |
+| S-12 | A version taken by a concurrent run costs nothing but a number | the tag, the registry, the prose | 2026-08-13 · 1.25.0 left exactly as published, its entry reseated under the preamble; 22 version references in prose moved with the release | **green** |
+| S-13 | `v1.26.0` tagged, released, published; CI read **before** the tag | `gh run view`, `npm view` | 2026-08-13 · run 31661837515 green on `a9c497e`, 19 jobs, tree `279af78` identical to `main^{tree}` | **green** |
+| S-14 | The published tarball carries the check, the marker and no stale version | the tarball pulled from the registry and read | 2026-08-13 · 1.26.0 in both manifests, `@role non-text` present, **0** stale `1.25.0` references outside the CHANGELOG, 17 packs | **green** |
+| S-15 | Every local channel serves 1.26.0, verified by reading installed files | the resolved install path, the hub copy, the shadow invariant | 2026-08-13 · plugin cache `.../1.26.0/skills/sheleg-design/SKILL.md` and `~/.agents/skills/sheleg-design/SKILL.md` both `version: 1.26.0`; no plain copy in `~/.claude/skills`; 17 packs + template installed | **green** |
