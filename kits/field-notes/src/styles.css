@@ -299,6 +299,7 @@
     --dur-marquee: 0s;
   }
 }
+
 /* ── components ── */
 
 /* Everything below consumes var(--…) only. Colour never appears as a literal:

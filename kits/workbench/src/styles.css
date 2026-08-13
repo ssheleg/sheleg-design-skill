@@ -9,6 +9,10 @@
   --muted: #5b6472;
   --border: #e6e9ef;
   --border-strong: #d7dce4;
+  /* @role non-text: --accent, --info — 4.30:1 in both themes, just under AA. The accent
+     fills buttons and marks selection and --accent-ink is the text that sits ON it;
+     --info deliberately IS the accent hue, for "running / working", and it is a dot and a
+     bar rather than a word. */
   --accent: #2f6feb;
   --accent-weak: #eaf0fe;
   --accent-ink: #ffffff; /* text ON the accent — 4.57:1 on --accent */

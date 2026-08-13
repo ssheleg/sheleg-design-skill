@@ -61,7 +61,12 @@ the runnable palette validation; a pack is the *parameter set* it consumes.
 This table is by *role*, not by token, because the names are not uniform across
 the seventeen: only `--bg` and `--ink` resolve in every pack. The accent is
 `--accent` in fifteen, `--brand` in `field-notes` and `--cta` in `orchard` (each
-declares `@role accent:` in its token layer). Status colours are the least uniform
+declares `@role accent:` in its token layer). **A second marker joins it in 1.25.0:**
+a semantic colour that sits below WCAG AA on its own field declares
+`@role non-text:` with the reason and the ratio, because eleven of the seventeen packs
+had such a colour and each said so in a different phrasing — "never text on the field",
+"a FILL and large-text colour", "a fill, not a text colour", "No coral word under 24px",
+"category marks" — which is exactly why nothing could check it. Status colours are the least uniform
 thing in the library, so the full map is here rather than summarised: the pair
 `--ok` / `--warn` in `workbench` and `instrument-console`; the pair `--good` /
 `--warning` in `blueprint`, `cyclorama`, `maquette`, `prism` and `showroom`;

@@ -55,6 +55,12 @@
      deuteranopia — the classic pair, under the floor of 8. Legal only with the
      secondary encoding the pack declares: a status is a chip with a word in it,
      never a bare dot. */
+  /* @role non-text: --good, --warning, --danger — 2.33:1, 1.78:1 and 3.05:1 on the
+     field. Since 1.25.0 the status chip's LABEL is --ink and these three are the chip's
+     tint and its 6px dot; before that the label was painted in them, at 2.03, 1.54 and
+     2.65 against the fills the kit actually uses. All three are at or under the 3:1
+     non-text floor, so the word is the message — which is what the pack's own "never by
+     colour alone" rule has always said. */
   --good: #0fc27b;
   --warning: #f5b900;
   --danger: #ff5b59;
@@ -243,10 +249,21 @@
 
 .sw-status { display: inline-flex; align-items: center; border-radius: var(--radius-sm);
   padding: 2px var(--space-2); font-family: var(--font-mono); font-size: var(--t-xs); }
-.sw-status--good { background-color: var(--accent-wash); color: var(--good); }
-.sw-status--warning { background-color: var(--surface-2); color: var(--warning); }
-.sw-status--danger { background-color: var(--surface-2); color: var(--danger); }
-.sw-status--neutral { background-color: var(--surface-2); color: var(--ink-soft); }
+/* The label is --ink and the status colour is the dot. Until 1.25.0 the label WAS the
+   status colour, which measured 2.03:1 for good, 1.54 for warning and 2.65 for danger at
+   the 12px this chip is set in; --ink on the same fills is 14.65-14.73. The pack's own
+   "never by colour alone" rule is what the dot implements. */
+.sw-status { color: var(--ink); gap: var(--space-1); }
+.sw-status::before { content: ""; width: 6px; height: 6px; border-radius: 999px;
+  background-color: currentColor; }
+.sw-status--good { background-color: var(--accent-wash); }
+.sw-status--good::before { background-color: var(--good); }
+.sw-status--warning { background-color: var(--surface-2); }
+.sw-status--warning::before { background-color: var(--warning); }
+.sw-status--danger { background-color: var(--surface-2); }
+.sw-status--danger::before { background-color: var(--danger); }
+.sw-status--neutral { background-color: var(--surface-2); }
+.sw-status--neutral::before { background-color: var(--ink-soft); }
 
 .sw-col { display: flex; align-items: center; gap: var(--space-2); height: 36px; padding: 0 var(--space-4);
   border-bottom: 1px solid var(--line); font-size: var(--t-xs); color: var(--ink-soft);

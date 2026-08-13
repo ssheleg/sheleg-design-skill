@@ -38,6 +38,11 @@
      This pack does not propagate it: the cyan is a fill, a rule, a chart series
      and a mark. Ink on it is 8.02:1, which is what --on-accent is for. Where a
      heading needs the accent's family in text, it takes --accent-ink. */
+  /* @role non-text: --accent, --good, --info, --warning — an iridescent pack whose
+     status hues are mint, cyan and orange: --good 1.33:1, --accent 2.36:1, --info 2.36:1,
+     --warning 3.33:1 on the field. The pack already calls --good "a fill, not a text
+     colour"; the other three are the same kind. Three of the four are under the 3:1
+     non-text floor, so the word carries the meaning and the pack says so. */
   --accent: #00b3ff; /* FILL ONLY — 2.36:1 as text on --bg */
   --accent-hover: #0077ad;
   --accent-ink: #1493cc; /* 3.4:1 — large display text only, never body */

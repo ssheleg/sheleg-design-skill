@@ -75,6 +75,7 @@
      cross-pack document can name them truthfully. Alias, never a new colour. */
   --bg: var(--paper); /* role alias -> --paper, this pack's field */
 }
+
 /* ── components ── */
 
 /* Everything below consumes var(--…) only. The token block above is the whole
