@@ -19,6 +19,25 @@
   --accent-on-dark: #9fd9bc;
   --terra: #b5623f;
   --red: #a83a2b;
+
+  /* Status set — added 2026-08-13. Three of the four are values this pack
+     already owned; only warn and info are new, each its own family deepened
+     until it clears the AA floor for normal text on every cream ground this
+     pack renders on, not only the two obvious ones. The three ratios beside
+     each value are those grounds, lightest first. The status word renders in
+     --ink on the -weak tint, so status is never carried by colour alone. */
+  --status-ok:        #2f5e47;   /* 6.93 / 6.25 / 5.72 — = --accent-deep */
+  --status-warn:      #7d5416;   /* 6.19 / 5.58 / 5.11 */
+  --status-info:      #2f5c7d;   /* 6.61 / 5.96 / 5.46 */
+  --status-danger:    #a83a2b;   /* 5.90 / 5.32 / 4.87 — = --red */
+  --status-ok-weak:     rgba(47,94,71,0.12);
+  --status-warn-weak:   rgba(125,84,22,0.12);
+  --status-info-weak:   rgba(47,92,125,0.12);
+  --status-danger-weak: rgba(168,58,43,0.12);
+
+  /* Product register durations — the range the pack described in prose. */
+  --dur-hover: 0.12s;
+  --dur-state: 0.18s;
   --hair: rgba(36, 28, 20, 0.13);
   --hair-strong: rgba(36, 28, 20, 0.22);
 

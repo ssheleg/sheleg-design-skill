@@ -1,5 +1,31 @@
 # Changelog
 
+## 1.25.0 — 2026-08-13
+
+**`editorial-luxury` gets the status set it told surfaces to ask for.**
+
+The pack shipped one semantic colour, `--red`, and instructed any surface needing
+a full set to close the gap *in the pack, deliberately, not at the keyboard*. The
+instruction was right and nobody followed it: a production admin console built on
+this pack had invented amber-as-warning and cyan-as-info on top of an amber that
+was also its entire chrome — so the hue meaning "a provider is backing up" was
+the hue of every button on the page. Seven of that surface's colour pairs sat
+below AA and three under 1.1:1.
+
+`--status-{ok,warn,info,danger}` and their `-weak` tints close it. Three of the
+four are values the pack already owned: `--status-ok` is `--accent-deep`,
+`--status-danger` is `--red`. Only `warn` and `info` are new, each the existing
+amber and cyan family deepened until it clears the AA floor for normal text on
+**all three** cream grounds — `--paper`, `--paper-2` and `--paper-3` — because
+two grounds would have been the same enumerated-list hole one level down. Status
+is still never carried by colour alone: the tint carries the colour, the word
+carries the meaning in `--ink`.
+
+Also: `--dur-hover` and `--dur-state`. The pack said the product register stays
+in the fast range and never named the values, so every product surface built on
+it typed `0.15s` literals — there was nothing to reference.
+
+
 All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).

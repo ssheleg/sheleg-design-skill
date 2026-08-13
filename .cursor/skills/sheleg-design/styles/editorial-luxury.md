@@ -45,6 +45,11 @@ Ready-made token layer: [`tokens/editorial-luxury.css`](./tokens/editorial-luxur
 | `--accent-on-dark` | `#9fd9bc` | the accent brightened for espresso sections |
 | `--terra` | `#b5623f` | rare editorial highlight only |
 | `--red` | `#a83a2b` | negatives ONLY (comparison "without") |
+| `--status-ok` | `#2f5e47` | healthy / active / done — **= `--accent-deep`**, not a new hue |
+| `--status-warn` | `#7d5416` | a human is needed, and nothing else |
+| `--status-info` | `#2f5c7d` | running / working |
+| `--status-danger` | `#a83a2b` | failed — **= `--red`**, unchanged |
+| each `-weak` | `rgba(…, 0.12)` of its own hue | chip and banner fill; the status **word** on top is `--ink` |
 | `--hair` / `-strong` | `rgba(36,28,20,0.13)` / `rgba(36,28,20,0.22)` | hairline rules |
 
 Contrast: body on cream must clear 4.5:1 — `--ink` / `--ink-soft`, never
@@ -74,7 +79,10 @@ sage accent switches to `--accent-on-dark`.
   0.3, 1)`; the pack wins, per SHELEG_DESIGN §10.
 - Spring `cubic-bezier(0.32, 0.72, 0, 1)` — press/magnetic feedback only.
 - Base duration `0.7s` for brand-register reveals; product register stays in
-  the SHELEG fast/base range (≤0.32s).
+  the SHELEG fast/base range (≤0.32s), and that range now ships as values rather
+  than as a sentence: `--dur-hover` `0.12s` for a paint-only hover, `--dur-state`
+  `0.18s` for a state change. Prose-only, every product surface built on this
+  pack typed `0.15s` literals — there was nothing to reference.
 
 ## Signature motifs
 
@@ -114,11 +122,21 @@ How this pack rides the SHELEG motion layer (brand register only):
 
 ## Bans
 
-- **A status palette this pack barely has.** `editorial-luxury` ships one
-  semantic colour, `--red`, for negatives only. There is no green, amber or
-  blue here to confuse with it. State is carried by a word; if a surface needs
-  a full status set, that is a gap to close in this pack deliberately, not a
-  set of hues invented at the keyboard — status is **never by colour alone**.
+- **The status set is four colours and no more, and three of them already
+  existed.** This pack shipped one semantic colour, `--red`, and told any surface
+  needing a full set to close the gap *in the pack, deliberately, not at the
+  keyboard*. It was closed on 2026-08-13, and what closed it is the evidence for
+  why the instruction was worth writing: an admin console had invented
+  amber-as-warning and cyan-as-info on top of an amber that was also its entire
+  chrome — so the hue meaning "a provider is backing up" was the hue of every
+  button on the page, and seven of its pairs sat below AA with three under
+  1.1:1. `--status-ok` is `--accent-deep` unchanged, `--status-danger` is `--red`
+  unchanged, and only `--status-warn` and `--status-info` are new values, each
+  the existing amber and cyan family deepened until it clears **4.5:1 on all
+  three grounds this pack renders on** — `--paper`, `--paper-2` and `--paper-3`.
+  Two grounds would have been the same enumerated-list hole one level down.
+  Status is still **never by colour alone**: the tint carries the colour, the
+  word carries the meaning in `--ink` (11.8:1 on every tint).
   *(Corrected 2026-08-10: this bullet was copy-pasted into six of the twelve and
   claimed a measurement across "several pairs" that one colour cannot form.)*
 - No gradient text, no side-stripe accent borders, no glassmorphism, no
