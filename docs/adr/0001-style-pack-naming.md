@@ -44,6 +44,16 @@
   domain — the register applies equally to ticket triage, file organisers and CRM
   inboxes, and *selection by intent* is the criterion that decided it. The address
   is in the pack's `Origin:`.
+- **Applied a tenth time:** 2026-08-13. The seventeenth pack was extracted from
+  `babylovegrowth.ai` and is named **`roster`** for the register it encodes — proof by the
+  list of names that already belong — not `babylovegrowth`. The fourth run whose opening
+  request was an address and nothing else. Three alternatives were weighed and rejected on
+  this ADR's own criteria: **`pegboard`**, which names the square-grid *texture* rather
+  than the register and would route a brief by its wallpaper; **`directory`**, which reads
+  as a product category and would mis-route anyone building a listing site; and
+  **`lobby`**, the best metaphor for a wall of client logos, rejected because it collides
+  with `atrium` in the same building-space family and *selection by intent* is the
+  criterion that decides. The address is in the pack's `Origin:`.
 - **Corrected:** 2026-08-10. The Decision section named the seventh pack
   `lecture-hall`. That was the name on the branch this ADR was written on, and
   that branch never merged; the pack that shipped from graphify.com is

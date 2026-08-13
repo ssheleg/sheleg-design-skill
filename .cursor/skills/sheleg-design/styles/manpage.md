@@ -21,6 +21,13 @@ that look like printed tags and answers laid out as a definition list.
 
 Contract: widened — all thirteen headings.
 
+> **The heading fork against [`roster`](./roster.md).** These two make the same point
+> about markup from opposite ends. Here the visible label chip **is** a real `<h2>`, so the
+> page's structure and its outline are the same object. `roster`'s reference does the
+> reverse — an `.sr-only` `h1` at 1×1px with the visible 68px line as a `<span>`, and all
+> sixteen of its `<h2>`s spent on small eyebrows — which that pack records as a defect and
+> refuses to teach. If you are deciding where a heading lives, read both.
+
 ## Register
 
 Choose this pack for **a developer product whose buyer reads code for a living**:

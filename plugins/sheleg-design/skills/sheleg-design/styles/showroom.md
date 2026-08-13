@@ -78,6 +78,15 @@ A gallery frame with a seven-layer shadow versus a ruled grid with none is the
 fastest tell, and the deeper one is whose data is on screen: a customer's, or the
 reader's own.
 
+**The fork against [`roster`](./roster.md).** Both are white, both are product-led, and
+both are chosen when the product is the point. The first viewport separates them: this pack
+puts the application in it at real size under a seven-layer framing shadow, where `roster`
+puts **no screenshot above the fold at all** — a claim, a black button, a review badge — and
+lets the product arrive 1,400px later inside a step card. And `roster` has no shadow system
+to lift anything with: its reference paints an all-transparent ring composite on 101
+elements, so it separates by hairline. If the app is the exhibit, it is this pack. If the
+exhibit is who already uses the app, it is that one.
+
 ## Palette
 
 Ready-made token layer: [`tokens/showroom.css`](./tokens/showroom.css) — copy it

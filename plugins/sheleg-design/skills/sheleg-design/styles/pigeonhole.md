@@ -85,6 +85,17 @@ product using this pack for its marketing page and `workbench` for its
 application is a coherent pair, and the chip system is the seam where they should
 agree.
 
+### The fork against [`roster`](./roster.md)
+
+Both are white pages built on labelled things, and the labels belong to opposite parties.
+Here the labels are **the product's own taxonomy applied to the reader's mess** — nine
+categories the product invented and controls, which is why the chip can be specified down
+to its 8px/7px step. `roster`'s labels are **other companies' identities**: every mark in
+its industry columns arrives with its own colours, its own optical weight and its own
+opinion about spacing, and the only naming that pack does itself is the six industry pills.
+A pack that can specify its labels is this one; a pack that must host labels it did not
+design is that one.
+
 ## Palette
 
 Ratios recomputed from `styles/tokens/pigeonhole.css` by the palette gate.
@@ -409,7 +420,10 @@ above.
 Under `prefers-reduced-motion: reduce` every duration in the token layer collapses
 to 0.01ms, the blur goes to 0, the stagger goes to 0 and the overshoot degrades to
 `--ease`. **One case needs more than a duration:** an infinite animation at 0.01ms
-does not stop, it strobes — so the marquee is paused with
+does not stop, it strobes — measured in Chrome 151, where it yields two different computed
+transforms sampled 40ms apart, while the same animation at **`0s` yields `none` and never
+moves.** So the precise rule is that 0.01ms strobes and exactly zero freezes; since this
+layer collapses to 0.01ms for parity with its reference, the marquee is paused with
 `animation-play-state: paused` in the component layer, which no custom property can
 express. The reference honours reduced motion globally and a pack that regressed
 that would be worse than its own source; a duration alone would have regressed it.

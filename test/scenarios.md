@@ -965,3 +965,99 @@ does not own: twenty-three against `showroom` (board B-021 … B-024) and three 
 pack skeleton's Components contract (B-025). Filing them here rather than acting on them is
 the boundary this run kept; several are serious, and the board rows carry the numbers.
 
+## T26 — The proof register, and the fork against the ledger
+
+Added 1.24.0 with the `roster` pack. Two branches, two fresh contexts, run **blind against
+the bundle directory only** — `test/`, `docs/`, `kits/`, the README and the CHANGELOG are
+forbidden, because this file carries the answer beside the prompt.
+
+This pair exists because `roster` and `scoreboard` now serve the **same product category**
+— growth, ads, SEO — and the category is not the distinction. `scoreboard` is built around
+a figure that ticks up; `roster` around a name that appears. A router that reads the
+category and stops will pick wrong half the time, which is precisely what the negative
+branch is for.
+
+**T26a — should select `roster`.** "The marketing site for a tool that gets B2B software
+companies recommended inside ChatGPT and Google's AI answers. Our strongest assets are the
+engines we already show up in and the 300 customers who let us name them, sorted by
+industry. Buyers are heads of growth who do not have an SEO team. We want the page to make
+the case with who is already on board." Pass: routes to `styles/roster.md`, quotes the
+clause that decided it, and names the closest rejected pack with the clause that ruled it
+out. Fail: routing to `scoreboard` because the category is SEO, or to `showroom` because
+the page is white and product-led.
+
+**T26b — should still select `scoreboard`.** "The marketing site for an ad-spend analytics
+product. The hero is a live counter of managed spend, every section is a metric that has
+moved since last quarter, and the case studies are all percentage lifts. Buyers are
+performance marketers. We have no customer logos we are allowed to show." Pass: stays on
+`styles/scoreboard.md` and can say what would have moved it (proof that arrives as a name
+rather than a figure). Fail: routing to `roster` because the newest pack also serves an
+SEO-adjacent buyer — the failure a positive-only branch cannot detect, per standing
+instruction 4.
+
+Both branches are also asked, after choosing, to read their chosen pack in full and report
+defects with file and quoted text.
+
+**Result, 2026-08-13 (tree `feat/roster-pack-v1.24.0`): GREEN on both branches**, and the
+pair returned thirty-seven findings — fifteen against `roster`, twenty-two against
+`scoreboard`.
+
+T26a selected `roster`, quoted the SKILL row and the pack's own *"a product whose argument
+is who already carries it"*, rejected `scoreboard` on the fork clause **from both sides**,
+and named `pigeonhole` second and `showroom` third. Dials 7 / 4 / 4, each move licensed by a
+quotation — and it noticed that `SKILL.md` grants `pigeonhole` a numeric motion ceiling in
+writing and gave `roster` none, which is why 1.24.0 states one.
+
+T26b stayed on `scoreboard`, quoted its Register's first sentence, buried `roster` with the
+brief's own constraint (*"no customer logos we are allowed to show"* against a pack whose
+signature element is a logo wall), and answered what would move it in **six** directions with
+a citation each. The negative branch did not merely resist the newest pack; it mapped the
+neighbourhood.
+
+**Fifteen findings against `roster`, all reproduced before an edit, all fixed in this
+commit.** The sharpest was one the pack had genuinely got wrong: four of its five derived
+colours clear AA on the white field and on **none** of its three tinted surfaces — 4.32 on
+the near-white step, 4.10 on the mint panel, 4.06 on the band — while the token layer claimed
+they cleared "BOTH surfaces", meaning two of the four it ships. The eyebrow is
+`--accent-ink`, so an eyebrow on the mint panel rendered at 4.10:1 with nothing warning the
+reader. Also fixed: a token comment that read as an instruction to paint the eyebrow at
+3.43:1; a Gotcha that attributed the nav fill to the wrong orange; *"Raleway covers 78 — the
+six section heads and the sixteen eyebrows"*, where six plus sixteen is twenty-two; a
+sentence that parsed as *zero elements have `scroll-behavior: auto`*; the missing **Viewport**
+bullet, which the template asks for and eight of the ten widened packs carry; a container
+claim measured once and declared three times; two motion tokens with an empty "where
+measured" cell; and `--font-display`, which is byte-identical to `--font-body` in the one pack
+whose thesis is that the display is set in the body face.
+
+**And one motif went from unbuildable to specified.** `--pattern-grid` held
+`url("squares-bg-1.svg")` — a file that ships with nobody, so a faithful copy paints nothing
+and raises nothing. The reference's SVG was fetched and measured: 8.367px squares at 0.85px
+radius in `#7f99d1` at 12% (`#f4f6fa` over white), hairline-stroked white at 0.3px, on a
+9.667px pitch. Five numbers replace the filename, and the filename moved to Gotchas.
+
+**One finding refuted, and it corrected two shipped packs instead.** T26b argued that
+`scoreboard`'s `--scan-period: 0s` under reduced motion ships the very defect `roster`
+records — that a duration cannot stop an infinite animation. Measured in Chrome 151: an
+infinite animation at **0.01ms yields two different computed transforms** sampled 40ms apart,
+and the same animation at **`0s` yields `none` and never moves**. So `scoreboard` is correct
+and **both `pigeonhole` (1.21.0) and `roster` were over-stating the rule**: a duration *can*
+stop an infinite animation, but only at exactly zero, and 0.01ms — what a global
+reduced-motion rule usually writes — is the value that strobes. Both packs now carry the
+precise version with the measurement.
+
+**One finding was a regression this session introduced.** T26b noticed that `scoreboard`'s
+pack still documents *"Below 768 the label column drops"* while its kit has used
+`@container (max-width: 231px)` since 1.23.0 — a pack/kit divergence, which `SKILL.md` calls
+a defect in one of them. The pack now states the container rule and why the viewport number
+was replaced.
+
+**Twenty of `scoreboard`'s twenty-two are filed rather than fixed** (B-033 … B-036), because
+they belong to a shipped pack this run does not own. Four were reproduced first: its token
+layer still licenses *"the one orange that may carry a link"* at 4.12:1 which the pack
+retracted in 1.13.1; `#00D492` is stated at 1.84:1 "on white" and measures **1.94** there
+(1.84 is against the paper); the `[data-surface="panel"]` block remaps eleven tokens and
+**not** the status set, so `var(--good)` on the dark band paints **3.69:1** where
+`--good-on-dark` would give 10.21; and `--ink-faint` collapses onto the panel's `--ink-soft`,
+making a disabled control indistinguishable from secondary copy on the pack's own hero
+surface.
+

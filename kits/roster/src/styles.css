@@ -1,0 +1,604 @@
+/* SHELEG Design — Roster token layer (a white page in a faint grid of squares whose
+   argument is other people's names: an engine's wordmark inside the headline, a wall of
+   client logotypes in labelled industry columns, a review badge someone else scored).
+   Copy verbatim; consume only var(--…) in components.
+
+   Extracted from https://www.babylovegrowth.ai/en on 2026-08-13 by reading the
+   server-rendered HTML of /en (1,415,414 bytes) together with the two shipped
+   stylesheets (/_next/static/chunks/5c41227b903d5dae.css and 9ae1360431bd741f.css,
+   466,577 bytes combined, 410 custom properties), and then by reading computed styles
+   off the live page through CDP at 1440x900, 768x1168 and 390x790 — 5,936 rendered
+   elements at the widest. Every ratio below is WCAG 2.x relative luminance against the
+   8-bit hexes in this file, so any of them can be checked without leaving it.
+
+   FOUR families of value appear below, and the third is new to this library:
+
+   MEASURED — the literal was in the reference's stylesheet, its markup, or its computed
+   styles.
+   RESOLVED — the reference computes the value in `lab()` or `oklab()`, which the palette
+   gate refuses on purpose, so it was resolved to the sRGB the browser actually paints:
+   painted into a 1x1 canvas and read back as bytes. That is this repository's own
+   prescribed technique (docs/superpowers/specs/2026-08-09-four-packs-brief.md), and it
+   is the pixel that is the oracle rather than the serialisation — `ctx.fillStyle`
+   read-back no longer converts in Chrome 151, it returns the value in its original
+   space. Thirty-four distinct lab() values were resolved this way, and the method above is
+   the whole instruction: a reader of the installed bundle needs nothing from the
+   repository to repeat it.
+   SELECTED — the reference paints several values in one role and this pack ships one of
+   them, or paints none and the value is a different step of a hue it does ship.
+   DERIVED — hue and chroma held, OKLab L walked down until the ROUNDED hex clears
+   4.5:1. Eight bits per channel is where a derivation finishes.
+
+   The reference's bespoke layer is small and it is not disciplined: FOUR near-blacks
+   (#2c2f2e on 42 elements, #212427 on 34, #171717 on 30, #0f0a0a on the hero CTA) and
+   TWO oranges (#fa5c12 on the headline phrase, #f25533 on the nav fill). A pack cannot
+   ship four inks and two accents, so one of each is selected and the choice is marked.
+
+   No dark theme. Nothing on the page paints one, and inventing one would be inventing
+   values. */
+
+:root {
+  color-scheme: light;
+
+  /* ---- The field -------------------------------------------------------- */
+  --bg: #ffffff; /* MEASURED — white on 169 elements */
+  --surface: #ffffff; /* MEASURED — cards sit at field level and separate by hairline */
+  --surface-2: #f0f3f8; /* MEASURED — the pale blue-grey section band, on 21 elements */
+  --surface-3: #f9fafb; /* RESOLVED — lab(98.2596 -0.247031 -0.706708) */
+  --surface-mint: #e8f7f4; /* MEASURED — the pale mint panel, on 11 elements */
+
+  /* ---- Ink -------------------------------------------------------------- */
+  /* The reference paints four near-blacks. This pack ships the one the VISIBLE display
+     line is painted in, which is the only principled way to pick among them: at 1440 the
+     68px headline span computes to rgb(23, 23, 23). */
+  --ink: #171717; /* 17.93:1 on --bg — SELECTED from the reference's four near-blacks */
+  --ink-body: #364153; /* 10.30:1 on --bg — RESOLVED from lab(27.1134 -0.956401 -12.3224), on 458 elements */
+
+  /* The reference's dominant secondary ink is #6a7282 (RESOLVED from lab(47.7841 …)),
+     and it measures 4.35:1 on the very band it is painted on — below AA. Darkened until
+     the rounded hex clears 4.5:1 on ALL FOUR surfaces this layer ships rather than two of
+     them: --bg 5.05, --surface-3 4.83, --surface-mint 4.58, --surface-2 4.54. It is the
+     only derived token here that survives everywhere, which is why the other four carry a
+     surface restriction at their own declarations. */
+  --ink-soft: #676f7f; /* 5.05:1 on --bg — DERIVED; 4.54:1 on --surface-2, which is the case that forced it */
+  --ink-faint: #9f9fa9; /* 2.62:1 on --bg — RESOLVED from lab(65.6464 …): an icon or a disabled glyph, and the label of a disabled control, which WCAG 1.4.3 exempts. Never live text. */
+
+  /* ---- Lines: this pack has no elevation system ------------------------- */
+  /* The value on 101 elements is Tailwind's all-transparent ring composite — a shadow
+     slot with nothing in it. The page separates by hairline and by pill, and a pack that
+     added a shadow here would be adding a layer the reference does not have. */
+  --rule: #e5e7eb; /* RESOLVED — lab(91.6229 -0.159115 -2.26791), on 7,234 borders */
+  --rule-strong: #cecece; /* MEASURED — the heavier hairline, on 30 elements */
+
+  /* ---- The accent, which may not carry a word -------------------------- */
+  /* Both of the reference's oranges fail AA as a text or label colour: white on #f25533
+     is 3.43:1 at the nav pill's 16px/600, and #fa5c12 is 3.18:1 on white. The accent is
+     therefore a FILL and a large-text colour; --accent-ink is what carries a word. */
+  --accent: #fa5c12; /* MEASURED — the headline phrase and the gradient's head */
+  /* The reference spends this on its nav fill AND on its eyebrows. The pack keeps it for
+     the fill and overrides the eyebrow to --accent-ink, because at the eyebrow's 16px this
+     value measures 3.43:1. The override is in the pack's Components. */
+  --accent-2: #f25533; /* MEASURED — the reference's nav fill */
+  /* WHITE FIELD ONLY, and the same restriction holds for the three colours below it.
+     Each one clears the AA floor on the white field and misses it on every tinted surface
+     this layer ships: roughly 4.32 on the near-white step, 4.10 on the mint panel, 4.06 on
+     the blue-grey band — all under the bar, none by much, and all of them fails.
+     A word in one of these colours belongs on the white field; inside a tinted panel it
+     becomes the body ink instead, and the pack's Palette carries that rule with its
+     numbers. */
+  --accent-ink: #da3d00; /* 4.52:1 on --bg — DERIVED from --accent: the accent that may carry a word */
+  --accent-grad-to: #b73f06; /* MEASURED — the foot of linear-gradient(to right in oklab, …) */
+  --accent-glow: rgba(242, 85, 51, 0.18); /* MEASURED — the radial glow behind the hero */
+
+  /* ---- The primary action is black, and that is the reference's own choice */
+  --cta: #0f0a0a; /* MEASURED — the hero CTA's fill */
+  --on-cta: #ffffff; /* 19.66:1 on --cta — MEASURED */
+
+  /* ---- Status ----------------------------------------------------------- */
+  /* Two only. The reference is a marketing page: it paints no error state, and it paints
+     no amber ANYWHERE, so a --warn here would be invented rather than selected. The pack
+     says so in its Palette instead of shipping one.
+     Both are DERIVED from hues the page does paint. --good's hue is the review badge's
+     green, which belongs to a third party as a brand and to nobody as a hue.
+     Separation, computed by the gate: --accent and --danger are 10.2 apart at full colour
+     against a hard floor of 10, and 8.1 under deuteranopia against a floor of 8. An
+     orange accent and a red danger cannot be far apart, so the pack bans a danger state
+     that arrives without its word or icon. */
+  /* The page paints #00b67a here and it measures 2.63:1 on white, which fails AA. */
+  --good: #008850; /* 4.53:1 on --bg — DERIVED, hue and chroma held */
+  /* The page paints #fb2c36 here, resolved from lab(55.4814 75.0732 48.8528), and it
+     measures 3.81:1 on white — a fail. */
+  --danger: #ec0f28; /* 4.50:1 on --bg — DERIVED, hue and chroma held */
+
+  /* ---- Links ------------------------------------------------------------ */
+  /* Clears AA on the white field and NOT on the band: 4.06:1 on --surface-2. Inside a
+     tinted band a link takes --ink-body with an underline, which is 9.26:1 there. */
+  /* The page's link blue is #2a76f6 and it measures 4.18:1 on white, which just fails. */
+  --link: #2470f0; /* 4.52:1 on --bg — DERIVED, hue and chroma held */
+
+  /* ---- Type ------------------------------------------------------------- */
+  /* Two families with the division of labour inverted from the usual one: the hero
+     display is set in the BODY face at 68px, and the section heads are a different
+     family. Over 5,936 elements: Plus Jakarta Sans 5,738, Inter 116, Raleway 78. */
+  /* NOT A SECOND FAMILY. --font-display is byte-identical to --font-body on purpose: this
+     reference sets its 68px headline in the BODY face, and --font-head is the other family.
+     The name is kept so a component written against another pack still resolves, and it is
+     flagged here because reading it as "the display face" and setting a section head in it
+     loses the pack's single most distinctive decision. */
+  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-head: Raleway, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --weight-display: 600; /* MEASURED */
+  --weight-head: 600; /* MEASURED — Raleway at 52px */
+  --weight-body: 300; /* MEASURED — the dominant body pairing is 16px/28px at 300, on 44 elements */
+  --weight-emphasis: 600; /* MEASURED — 16px/28px at 600, on 49 */
+  --weight-label: 500; /* MEASURED — 12px/16px, on 60 */
+  --weight-cta: 700; /* MEASURED — the hero CTA's 18px label */
+
+  /* The display STEPS at breakpoints. Neither stylesheet contains a single clamp(), so a
+     fluid ramp here would be invented: 36px at 390, 60px at 768, 68px at 1440, each
+     measured. The token carries the widest and the pack's Responsive section carries the
+     other two. */
+  --size-display: 68px; /* MEASURED at 1440 */
+  --lh-display: 1.176; /* MEASURED — 80px on 68px */
+  --size-head: 52px; /* MEASURED — Raleway, on 6 elements */
+  --lh-head: 1.25; /* MEASURED — 65px on 52px */
+  --size-eyebrow: 16px; /* MEASURED — and every one of the 16 is marked up as an h2 */
+  --lh-eyebrow: 1.5; /* MEASURED — 24px on 16px */
+  --track-eyebrow: 0.4px; /* MEASURED — the only tracked type on the page */
+  --size-body: 16px; /* MEASURED */
+  --lh-body: 1.75; /* MEASURED — 28px on 16px */
+  --size-small: 14px; /* MEASURED */
+  --lh-small: 1.429; /* MEASURED — 20px on 14px */
+  --size-chip: 12px; /* MEASURED */
+  --lh-chip: 1.333; /* MEASURED — 16px on 12px */
+
+  /* ---- Texture ---------------------------------------------------------- */
+  /* The pill is the most frequent shape on the page: 102 elements, computed as
+     3.35544e+07px, which is the clamped maximum rather than a chosen radius. */
+  --radius-pill: 9999px; /* MEASURED — 102 elements */
+  --radius-chip: 8px; /* MEASURED — 78 */
+  --radius-control: 12px; /* MEASURED — 77; BOTH CTAs are 12px, not pills */
+  --radius-card: 16px; /* MEASURED — 46 */
+  --radius-panel: 24px; /* MEASURED — 7 */
+
+  /* The grid is measured rather than pointed at. The reference ships a 480x572 SVG of
+     <rect>s: 8.367px squares at 0.85px radius, #7f99d1 at 12% opacity -- #f4f6fa
+     composited over white -- hairline-stroked white at 0.3px, on a 9.667px pitch. Those
+     five numbers ARE the motif, so a consumer needs no asset from anybody: a
+     repeating-linear-gradient or a small inline SVG data URI reproduces it. The
+     reference's own filename is in the pack's Gotchas for anyone who wants to compare. */
+  --pattern-tile: #f4f6fa; /* COMPOSITED — #7f99d1 at 12% over --bg */
+  --pattern-square: 8.367px; /* MEASURED */
+  --pattern-pitch: 9.667px; /* MEASURED — the square plus 1.3px of gap */
+  --pattern-radius: 0.85px; /* MEASURED */
+  --pattern-stroke: 0.3px; /* MEASURED — white, and it is what separates the squares */
+  --tile: 40px; /* MEASURED — the ceiling on the 34 square logo tiles scattered over the grid */
+
+  /* ---- Measure ---------------------------------------------------------- */
+  --container: 1152px; /* MEASURED at all three viewports */
+  --shell: 1440px; /* MEASURED — the full-bleed shell */
+
+  /* ---- Motion ----------------------------------------------------------- */
+  /* There is no scroll clock: zero elements with animation-timeline, scroll-behavior
+     auto, one sticky and one fixed element (the nav). */
+  --dur-quick: 0.15s; /* MEASURED — 54 elements */
+  --dur-base: 0.2s; /* MEASURED — 4 elements, opacity */
+  --dur-slow: 0.3s; /* MEASURED — opacity reveals */
+  --dur-reveal: 0.5s; /* MEASURED — 3 elements: the section entrance */
+  --dur-accordion: 0.7s; /* MEASURED — the one max-height transition on the page */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1); /* MEASURED — every transition on the page */
+  --dur-float-a: 5.5s; /* MEASURED — ebook-float-primary, ease-in-out */
+  --dur-float-b: 6.5s; /* MEASURED — ebook-float-secondary, and the offset is the point */
+}
+
+/* The reference's reduced-motion branch names six classes one by one and leaves the rest
+   of its own animations running; the pack's Gotchas names the survivors it could identify.
+   A pack that copied that shape would inherit the omission, so the collapse here is
+   unconditional. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-quick: 0.01ms;
+    --dur-base: 0.01ms;
+    --dur-slow: 0.01ms;
+    --dur-reveal: 0.01ms;
+    --dur-accordion: 0.01ms;
+    /* These two are deliberately NOT collapsed, so "every duration" is true of the five
+       above and false of these. They drive infinite animations, and a duration cannot stop
+       one — at 0.01ms it strobes at exactly the reader this query protects. They keep
+       their values and the component layer pauses them with animation-play-state: paused,
+       which no custom property can express. The lesson is pigeonhole's, one release old,
+       applied here rather than relearned. */
+    --dur-float-a: 5.5s;
+    --dur-float-b: 6.5s;
+  }
+}
+
+/* ── components ── */
+/* Authored CSS for the states the pack's Components section specifies and the
+   reference paints none of. Everything below consumes var(--…) only: the gate rejects
+   a raw colour literal past this line. */
+
+/* ---- Button ------------------------------------------------------------- */
+/* The primary action is black, which is the reference's own choice and the only one
+   of its two CTAs that clears AA: white on --cta is 19.66:1, where white on the
+   accent is 3.43:1. */
+.ro-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: var(--weight-cta);
+  line-height: 1.333;
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  padding: 16px 32px;
+  cursor: pointer;
+  transition: background-color var(--dur-quick) var(--ease),
+    color var(--dur-quick) var(--ease),
+    border-color var(--dur-quick) var(--ease),
+    transform var(--dur-quick) var(--ease);
+}
+
+.ro-btn--sm { padding: 12px 24px; font-size: var(--size-body); }
+.ro-btn--md { padding: 16px 32px; }
+.ro-btn--lg { padding: 20px 40px; }
+
+.ro-btn--primary {
+  background-color: var(--cta);
+  color: var(--on-cta);
+}
+
+.ro-btn--primary:hover { transform: translateY(-1px); }
+
+/* The accent variant carries --ink, not white. White on the accent is 3.43:1 at this
+   size, which is the reference's one clear failure; an accent button that must be
+   light-on-dark has to reach large text (>=24px, or >=18.66px bold) first. */
+.ro-btn--secondary {
+  background-color: var(--accent);
+  color: var(--ink);
+}
+
+.ro-btn--secondary:hover { background-color: var(--accent-2); }
+
+.ro-btn--ghost {
+  background-color: transparent;
+  color: var(--ink-body);
+  border-color: var(--rule);
+}
+
+.ro-btn--ghost:hover { border-color: var(--rule-strong); }
+
+/* --accent is 3.18:1 and too little for a ring a keyboard user has to find, so the
+   ring is the derived ink. */
+.ro-btn:focus-visible,
+.ro-tile:focus-visible,
+.ro-chip:focus-visible {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 2px;
+}
+
+.ro-btn:disabled {
+  background-color: var(--surface-2);
+  color: var(--ink-faint);
+  border-color: var(--rule);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ---- Card --------------------------------------------------------------- */
+/* No shadow anywhere in this pack: the reference's shadow slot holds an
+   all-transparent ring composite on 101 elements. Separation is hairline and pill. */
+.ro-card {
+  background-color: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-card);
+  padding: 28px;
+  transition: border-color var(--dur-quick) var(--ease);
+}
+
+.ro-card:hover { border-color: var(--rule-strong); }
+
+.ro-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.ro-card__title {
+  font-family: var(--font-body);
+  font-size: var(--size-body);
+  font-weight: var(--weight-emphasis);
+  line-height: var(--lh-body);
+  color: var(--ink);
+  margin: 0;
+}
+
+.ro-card__meta {
+  font-size: var(--size-chip);
+  font-weight: var(--weight-label);
+  color: var(--ink-soft);
+}
+
+.ro-card__body {
+  font-size: var(--size-body);
+  font-weight: var(--weight-body);
+  line-height: var(--lh-body);
+  color: var(--ink-soft);
+}
+
+/* ---- Chip --------------------------------------------------------------- */
+.ro-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--size-chip);
+  font-weight: var(--weight-label);
+  line-height: var(--lh-chip);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-chip);
+  padding: 4px 10px;
+}
+
+.ro-chip--neutral { background-color: var(--surface); color: var(--ink-soft); }
+.ro-chip--accent { background-color: var(--surface); color: var(--accent-ink); }
+.ro-chip--selected { border-color: var(--rule-strong); color: var(--ink); }
+
+/* ---- Eyebrow ------------------------------------------------------------ */
+/* The only tracked type in the pack, and a <p> rather than an <h2>. */
+.ro-eyebrow {
+  margin: 0 0 16px;
+  font-family: var(--font-head);
+  font-size: var(--size-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+
+/* ---- IndustryColumn — the signature ------------------------------------ */
+/* A pill label over a column of other companies' marks, divided by a hairline. It
+   establishes a container, so its rows answer to the column's own width: the same
+   column is dropped into six-, three- and two-across grids on one page. */
+.ro-col {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 0 24px;
+  border-inline-start: 1px solid var(--rule);
+}
+
+.ro-col:first-child { border-inline-start: 0; }
+
+.ro-col__label {
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--rule);
+  padding: 6px 16px;
+  font-family: var(--font-body);
+  font-size: var(--size-small);
+  font-weight: var(--weight-label);
+  line-height: var(--lh-small);
+  color: var(--ink-body);
+  white-space: nowrap;
+}
+
+.ro-col__marks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  gap: 20px 24px;
+  width: 100%;
+}
+
+/* Below a column width that cannot hold two marks side by side, the grid goes to
+   one. 220px is derived rather than carried over from a viewport: two marks at the
+   ro-tile ceiling of 40px each, plus the 24px column gap, plus 24px of padding on
+   each side, is 152px -- and a logotype is wider than its tile, so the pair needs
+   roughly 220px before it starts crowding. */
+@container (max-width: 220px) {
+  .ro-col__marks { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---- LogoTile ---------------------------------------------------------- */
+.ro-tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--tile);
+  block-size: var(--tile);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-control);
+  background-color: var(--surface);
+  filter: grayscale(1);
+  transition: filter var(--dur-quick) var(--ease);
+}
+
+/* Full colour on hover, and nothing moves. */
+.ro-tile:hover { filter: grayscale(0); }
+
+.ro-tile--scattered { position: absolute; }
+
+/* ---- StepCard --------------------------------------------------------- */
+.ro-step {
+  container-type: inline-size;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px;
+  align-items: center;
+  background-color: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-card);
+  padding: 40px;
+}
+
+/* The split is a fact about the card's own box, not the screen's: the same card runs
+   full-bleed and inside a narrower column on one page. 640px is the width below
+   which two minmax(0, 1fr) tracks stop holding a 16px/28px paragraph and a cropped
+   screenshot side by side -- 2 x (the 280px the copy needs to avoid a two-word
+   measure) plus the 32px gap plus 80px of padding. */
+@container (max-width: 640px) {
+  .ro-step { grid-template-columns: minmax(0, 1fr); }
+}
+
+.ro-step__number {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--size-body);
+  font-weight: var(--weight-emphasis);
+  line-height: var(--lh-body);
+  color: var(--accent-ink);
+}
+
+.ro-step__title {
+  margin: 8px 0 12px;
+  font-family: var(--font-body);
+  font-size: 20px;
+  font-weight: var(--weight-emphasis);
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+.ro-step__copy {
+  font-size: var(--size-body);
+  font-weight: var(--weight-body);
+  line-height: var(--lh-body);
+  color: var(--ink-soft);
+}
+
+.ro-step__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ro-step__chip {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-pill);
+  padding: 4px 12px;
+  font-size: var(--size-chip);
+  font-weight: var(--weight-label);
+  line-height: var(--lh-chip);
+  color: var(--ink-body);
+}
+
+.ro-step__figure { min-inline-size: 0; }
+
+/* ---- Stat ------------------------------------------------------------- */
+/* No pixel numerals here: the biggest figure on the reference is set in the same
+   16px eyebrow as everything else, which is what separates this pack from
+   scoreboard. */
+.ro-stat { display: flex; flex-direction: column; gap: 4px; }
+
+.ro-stat__label {
+  font-family: var(--font-head);
+  font-size: var(--size-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.ro-stat__value {
+  font-family: var(--font-body);
+  font-size: var(--size-head);
+  font-weight: var(--weight-head);
+  line-height: var(--lh-head);
+  color: var(--ink);
+}
+
+.ro-stat__source { font-size: var(--size-chip); color: var(--ink-faint); }
+
+/* ---- Heading ---------------------------------------------------------- */
+/* Level 1 is the display and it is set in the BODY face; level 2 is the section head
+   and it is set in the other one. That inversion is the pack. */
+.ro-heading { margin: 0; color: var(--ink); }
+
+.ro-heading--1 {
+  font-family: var(--font-display);
+  font-size: var(--size-display);
+  font-weight: var(--weight-display);
+  line-height: var(--lh-display);
+}
+
+.ro-heading--2 {
+  font-family: var(--font-head);
+  font-size: var(--size-head);
+  font-weight: var(--weight-head);
+  line-height: var(--lh-head);
+}
+
+.ro-heading--3 {
+  font-family: var(--font-body);
+  font-size: 20px;
+  font-weight: var(--weight-emphasis);
+  line-height: 1.4;
+}
+
+/* PAGE — the display's steps are the page's opening viewport, and the reference sets
+   them at breakpoints with no clamp() anywhere in either stylesheet. A container
+   query here would be answering a question the page asks. */
+@media (max-width: 767px) {
+  .ro-heading--1 { font-size: 36px; line-height: 1.5; }
+}
+
+/* PAGE — the middle step of the same display ramp, for the same reason. */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .ro-heading--1 { font-size: 60px; line-height: 1.167; }
+}
+
+/* ---- Rule ------------------------------------------------------------- */
+.ro-rule { border: 0; border-top: 1px solid var(--rule); margin: 0; }
+.ro-rule--strong { border-top-color: var(--rule-strong); }
+
+/* ---- FaqList ---------------------------------------------------------- */
+.ro-faq { margin: 0; }
+
+.ro-faq__row { border-top: 1px solid var(--rule); padding: 20px 0; }
+
+.ro-faq__q {
+  font-size: var(--size-body);
+  font-weight: var(--weight-emphasis);
+  line-height: var(--lh-body);
+  color: var(--ink);
+}
+
+.ro-faq__a {
+  margin: 6px 0 0;
+  font-size: var(--size-body);
+  font-weight: var(--weight-body);
+  line-height: var(--lh-body);
+  color: var(--ink-soft);
+}
+
+/* ---- Reduced motion --------------------------------------------------- */
+/* The durations collapse in the token layer. These are the things a duration cannot
+   switch off: a transform, a filter, and an INFINITE animation -- the two hero floats
+   are paused rather than shortened, because at 0.01ms an infinite animation strobes
+   at exactly the reader this query protects. */
+@media (prefers-reduced-motion: reduce) {
+  .ro-btn--primary:hover { transform: none; }
+  .ro-tile:hover { filter: grayscale(1); }
+  .ro-float-a,
+  .ro-float-b { animation-play-state: paused; }
+}
+
+/* ---- The hero floats -------------------------------------------------- */
+/* Two, offset by a second, so the pair never syncs. */
+.ro-float-a { animation: ro-float var(--dur-float-a) ease-in-out infinite; }
+.ro-float-b { animation: ro-float var(--dur-float-b) ease-in-out infinite; }
+
+@keyframes ro-float {
+  from { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  to { transform: translateY(0); }
+}

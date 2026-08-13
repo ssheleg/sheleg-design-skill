@@ -226,9 +226,14 @@ zoom-on-focus on iOS, and this pack's body size is 15px.
 - **Breakpoints** 400 / 768 / 1024 / 1280 / 1920px. The last one is the
   reference's own fourth tier for ultra-wide displays, where the shell reaches
   `--page-max` and the ledger gains its 95px label column.
-- **The ledger never reflows to two lines.** Below 768 the label column drops to
-  75px and the numeral column to 70px; the dotted leader absorbs the difference.
-  A wrapped ledger row is not a row.
+- **The ledger never reflows to two lines.** The label column drops to 75px and the
+  numeral column to 70px; the dotted leader absorbs the difference. A wrapped ledger row is
+  not a row. **The switch is the ledger's own width, not the viewport's** — the reference
+  did it below 768px of screen, and since 1.23.0 the kit does it below **231px of the
+  ledger**, derived from the row's own geometry (label 95 + gap 12 + numeral 80 + gap 12 =
+  199, plus a 32px minimum leader). That is what this pack's own container-query rule
+  requires two bullets down, and the viewport number was a statement about phones rather
+  than about this box.
 - **The numeral column is a glyph budget, not a width.** Press Start 2P advances
   a full em per glyph, so at `--t-numeral` 15px the 80px column holds **five
   glyphs** and the 70px mobile column holds **four**. `3.4x` and `+18%` fit;
@@ -242,6 +247,17 @@ zoom-on-focus on iOS, and this pack's body size is 15px.
 - **Container queries** for the report surface and the ledger:
   `container-type: inline-size`, because both appear inside columns of different
   widths on the same page and neither should size against the viewport.
+
+**The fork against [`roster`](./roster.md), and a router will reach for the wrong one.**
+Both serve growth, ads and SEO products, so the category cannot decide it. **The kind of
+proof can.** This pack is built around a figure that ticks up — the pixel numeral, the
+dotted-leader ledger, the dark band of results — and its reader is watching a number grow.
+`roster` is built around a name that appears: an engine's wordmark inside the headline,
+client logotypes in labelled industry columns, a score a third party computed. Ask what the
+page loses if you delete its proof. If the answer is *the numbers*, it is this pack; if the
+answer is *the logos*, it is that one. A page cannot be built around both, and the giveaway
+is that `roster` sets its largest figure — *4,000+* — in the same 16px eyebrow as
+everything else.
 
 ## Motion tokens
 
