@@ -4,6 +4,31 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.27.0] - 2026-08-13
+
+A ban that said "no side-stripe accent borders" was measured against a real consumer for
+the first time, and it turned out to forbid the wrong thing. Narrowed to what it always
+meant.
+
+### Changed
+
+- **`editorial-luxury` — the side-stripe ban now says which stripe.** The bare wording
+  banned every `border-left` accent, and a production app on this pack has **42** of them.
+  Reading them one at a time is what settled it: four are 1px hairlines on code blocks and
+  TOC drawers, so not accents at all; three are `transparent`, reserving the gutter for a
+  **selected-state** marker; the remaining thirty-five are 2–3px rules on TEXT BLOCKS —
+  blockquotes, callouts, toasts, notices, log entries. That is the oldest editorial device
+  there is, and a pack whose display face is Fraunces and whose field is cream paper has no
+  business banning it. What the list actually collects is **ornament** — its neighbours are
+  gradient text, glassmorphism, outer glow and purple — so the ban now names the ornament:
+  the full-height accent rule down the side of a card, carrying no state and no semantic
+  role, put there to make the card look designed. The line to hold is stated with it: a
+  stripe must mean something, and must never be drawn in a colour nobody chose.
+
+  Why it matters beyond wording: a guard written to the literal reading fails on all 42
+  sites at once, and a gate nobody can satisfy is a gate that gets bypassed — so the
+  over-broad ban was buying zero enforcement while looking like doctrine.
+
 ## [1.26.0] - 2026-08-13
 
 The palette gate computed one contrast per theme — ink against field — and never once

@@ -29,8 +29,12 @@ inside a card.
 
 **Bans** (verbatim from the pack):
 
-- No gradient text, no side-stripe accent borders, no glassmorphism, no
-  neon/outer-glow shadows, no purple.
+- No gradient text, no glassmorphism, no neon/outer-glow shadows, no purple.
+- No decorative accent stripe on a card (the full-height accent rule that carries no
+  state and no meaning). A 2-3px rule on a text block — quote, callout, notice — is an
+  editorial device and is allowed; it must mean something and must never be drawn in a
+  colour nobody chose. Narrowed 2026-08-13 after the literal reading was measured
+  against a consumer and failed on all 42 of its border-left rules.
 - No emojis in product UI; no Inter/system display fonts (Fraunces owns
   display).
 - Never flatten the cream identity into generic white; never let motion

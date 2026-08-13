@@ -139,8 +139,22 @@ How this pack rides the SHELEG motion layer (brand register only):
   word carries the meaning in `--ink` (11.8:1 on every tint).
   *(Corrected 2026-08-10: this bullet was copy-pasted into six of the twelve and
   claimed a measurement across "several pairs" that one colour cannot form.)*
-- No gradient text, no side-stripe accent borders, no glassmorphism, no
-  neon/outer-glow shadows, no purple.
+- No gradient text, no glassmorphism, no neon/outer-glow shadows, no purple.
+- **No decorative accent stripe on a card** — the full-height rule down the side of a
+  panel, in the accent, carrying no state and no semantic role, put there to make the
+  card look designed. That is the ornament this list is about, and its neighbours above
+  are the same kind of thing.
+  *(Narrowed 2026-08-13, and narrowed because the bare wording "no side-stripe accent
+  borders" was measured against a real consumer and found to ban the wrong thing.* A
+  production app on this pack had **42** `border-left` rules, and reading them one by one
+  is what settled it: four are 1px hairlines on code blocks and TOC drawers — not accents
+  at all; three are `transparent`, reserving the gutter for a **selected-state** marker;
+  the rest are 2–3px rules on TEXT BLOCKS — blockquotes, callouts, toasts, notices, log
+  entries — which is the oldest editorial device there is, and a pack whose display face
+  is Fraunces and whose field is cream paper has no business banning it. A guard written
+  to the literal reading failed on all 42, and a gate nobody can satisfy is a gate that
+  gets bypassed. **The line to hold:** a stripe must mean something — state, severity, or
+  "this block is quoted" — and must never be drawn in a colour nobody chose.)*
 - No emojis in product UI; no Inter/system display fonts (Fraunces owns
   display).
 - Never flatten the cream identity into generic white; never let motion
