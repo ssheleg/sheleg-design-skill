@@ -919,7 +919,7 @@ def validate_contract_terminology():
     # explanation teaches people to delete the explanation.
     for md in sorted(walk_md(ROOT)):
         parts = set(md.parts)
-        if parts & {"test", "audit", "superpowers"} or md.name == "CHANGELOG.md":
+        if parts & {"test", "audit", "evidence"} or md.name == "CHANGELOG.md":
             # A dated record states the contract of its own day, and an audit
             # report has to be able to quote the stale spelling it found.
             continue
@@ -1235,7 +1235,7 @@ PLANTS = (
         f"{PLUGIN_DIR}/skills/{PLUGIN}/DESIGN_SYNC_BRIDGE.md",
         lambda t: t.replace(
             "## 7. Round-trip discipline",
-            "## 7. Round-trip discipline\n\nSee `docs/superpowers/backlog.md` for the open rows.",
+            "## 7. Round-trip discipline\n\nSee `docs/evidence/backlog.md` for the open rows.",
             1,
         ),
     ),
@@ -1368,7 +1368,7 @@ def validate_core_vocabulary():
 # the reader to use something only the repository has, and each time the rule
 # read as authoritative right up to the moment someone tried to follow it:
 #
-#   1.10.0  the `Contract: core` note cited `docs/superpowers/backlog.md`
+#   1.10.0  the `Contract: core` note cited `docs/evidence/backlog.md`
 #   1.11.0  §7 said to record the pack version, in a bundle carrying none
 #   1.11.0  §1 built an argument on "the same six component names" and named none
 #

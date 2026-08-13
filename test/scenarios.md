@@ -530,7 +530,7 @@ to recruit `--ok`/`--danger` as series colours because the pack marks them
 state-only. That refusal is the whole point of the rewritten handoff.
 
 **Four findings came back from these three runs, all reproduced and fixed in the
-same commit:** the `Contract: core` note cited `docs/superpowers/backlog.md`, a
+same commit:** the `Contract: core` note cited `docs/evidence/backlog.md`, a
 repo-only path absent from any install (the exact failure the 0.9.0 baseline
 records for `STYLE_PACK_TEMPLATE.md`); `tokens/atrium.css` still said "three
 shadows" after the pack was corrected to four — a fix that half-landed, in the

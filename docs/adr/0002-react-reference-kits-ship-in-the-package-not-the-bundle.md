@@ -4,8 +4,8 @@
 - **Consequences / affects:** `README.md`, `package.json` (`files[]`), `bin/cli.js`,
   `install.sh`, `test/validate.py`, `plugins/sheleg-design/skills/sheleg-design/DESIGN_SYNC_BRIDGE.md`
 - **Source:** run `2026-08-04-design-sync-bridge` · brief
-  `docs/superpowers/specs/2026-08-04-design-sync-bridge-brief.md`
-- **Partially supersedes:** `docs/superpowers/specs/2026-07-19-canon-sync-design.md`
+  `docs/evidence/specs/2026-08-04-design-sync-bridge-brief.md`
+- **Partially supersedes:** `docs/evidence/specs/2026-07-19-canon-sync-design.md`
   → *Out of scope* → "Project templates — the skill seeds no application code"
 
 Claude Code's bundled `/design-sync` skill pushes a **React** design system to
