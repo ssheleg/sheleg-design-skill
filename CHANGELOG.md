@@ -4,6 +4,15 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.27.1] - 2026-08-13
+
+This project's own pipeline paperwork moved from `docs/superpowers/` to
+`docs/evidence/`, following `task-pipeline` v1.53.0, which renamed the default and made
+the root resolvable. **A patch, deliberately: nothing a consumer of this skill can see
+changed.** The directory, this repository's own validator paths and its CI plants moved
+together; the records inside the directory were NOT rewritten — a brief describes where
+things were when it was written.
+
 ## [1.27.0] - 2026-08-13
 
 A ban that said "no side-stripe accent borders" was measured against a real consumer for

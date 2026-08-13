@@ -73,7 +73,7 @@ drift.
    signature components, `src/styles.css` opening with `styles/tokens/<pack>.css`
    copied **byte for byte**, and `.design-sync/{config.json,conventions.md}`. The
    validator refuses a pack without one. See
-   `docs/superpowers/specs/2026-08-04-design-sync-bridge-design.md`.
+   `docs/evidence/specs/2026-08-04-design-sync-bridge-design.md`.
 7. Add or update a scenario in `test/scenarios.md` if the pack changes routing
    behavior.
 

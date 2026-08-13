@@ -8,9 +8,9 @@ it. Seeded 2026-08-04 by the `2026-08-04-design-sync-bridge` pipeline run.
 | Register | Home | Id form |
 |---|---|---|
 | **Decisions** | `docs/adr/` | `ADR-NNNN` (`0001-slug.md`, sequential, never renumbered) |
-| Design records (per pipeline run) | `docs/superpowers/specs/` | `YYYY-MM-DD-<topic>-{brief,design,carryover}.md` |
-| Plans | `docs/superpowers/plans/` | `YYYY-MM-DD-<topic>.md` |
-| Retrospective | `docs/superpowers/retro.md` | standing instructions, capped at ten |
+| Design records (per pipeline run) | `docs/evidence/specs/` | `YYYY-MM-DD-<topic>-{brief,design,carryover}.md` |
+| Plans | `docs/evidence/plans/` | `YYYY-MM-DD-<topic>.md` |
+| Retrospective | `docs/evidence/retro.md` | standing instructions, capped at ten |
 
 There is **no** `docs/DECISIONS.md` and there must not be: `docs/adr/` is the
 decision home. A run that settles something records it as an ADR.
