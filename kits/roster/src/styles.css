@@ -74,6 +74,9 @@
   /* Both of the reference's oranges fail AA as a text or label colour: white on #f25533
      is 3.43:1 at the nav pill's 16px/600, and #fa5c12 is 3.18:1 on white. The accent is
      therefore a FILL and a large-text colour; --accent-ink is what carries a word. */
+  /* @role non-text: --accent — 3.18:1 on the field, which is legal for the 68px
+     headline phrase as large text and for a fill, and illegal for anything smaller.
+     --accent-ink is what carries a word. */
   --accent: #fa5c12; /* MEASURED — the headline phrase and the gradient's head */
   /* The reference spends this on its nav fill AND on its eyebrows. The pack keeps it for
      the fill and overrides the eyebrow to --accent-ink, because at the eyebrow's 16px this

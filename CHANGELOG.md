@@ -4,6 +4,60 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.25.0] - 2026-08-13
+
+The palette gate computed one contrast per theme — ink against field — and never once
+asked whether a status colour could be read on the surface it sits on. Twenty-eight
+findings in eleven of seventeen packs were waiting behind that.
+
+### Added
+
+- **`validate_status_on_field()`** — every semantic colour is checked against the field
+  of **its own theme**, in three tiers, which is what the packs already argued and
+  nothing enforced:
+  - **≥ 4.5:1** — text, no declaration needed.
+  - **≥ 3.0:1** — declared `@role non-text:`, a mark that can be understood on its own.
+  - **< 3.0:1** — declared **and** the pack states status is never by colour alone,
+    because below the non-text floor the colour is reinforcement and the word is the
+    message.
+- **`@role non-text:`, a second canonical role marker**, beside the `@role accent:` this
+  library already had. It is the whole point of the release: eleven packs *did* say their
+  status colours were not text — in five different phrasings ("never text on the field",
+  "a FILL and large-text colour", "a fill, not a text colour", "No coral word under
+  24px", "category marks") — and a class nobody can grep for is a class nobody checks.
+  Documented in `SURFACE_COMPOSITION.md` beside the accent marker.
+- Two plants, one per tier, and the check's core was split out so a plant can be a token
+  layer written as a string rather than an edit to a real file.
+
+### Fixed
+
+- **`scoreboard`'s dark band inherited the paper status set** (board B-034). Its
+  `[data-surface="panel"]` block remapped eleven tokens — `--ink-soft` among them, for
+  exactly this reason — and left the four statuses pointing at the paper values, so
+  `var(--good)` painted **3.69:1** on that band while `--good-on-dark` had **10.21:1**
+  waiting three lines away in the same file. The pack has always said to use the on-dark
+  set there; now the token layer does it.
+- **`showroom`'s status chip painted its label in its own status colour** (board B-021).
+  Measured against the fills the kit actually uses: `--good` **2.03:1**, `--warning`
+  **1.54:1**, `--danger` **2.65:1**, at the 12px the same row specifies. The label is
+  `--ink` now (14.65–14.73:1) and the status colour is the chip's tint plus a 6px dot —
+  which is the pack's own "never by colour alone" rule applied to the component that
+  exists to serve it. Corrected in the pack, the kit and with the numbers.
+- **`blueprint` answered separation and never legibility.** Its four category marks clear
+  every separation floor under all three dichromacies, which the pack said — and
+  `--good` **2.40:1**, `--warning` **1.72:1** and `--info` **1.21:1** on the stock, which
+  it did not. Its own advice, *"label them anyway, because a legend of four coloured
+  squares is a legend nobody reads"*, is now the requirement it always was.
+
+### Notes
+
+- **Nothing else changed colour.** The other twenty-four findings are declarations: the
+  packs were right about their own colours and unreadable about it to a machine.
+- Gates: palette 958 → 993, floors raised with the reason. The two remaining `scoreboard`
+  rows (B-033, B-035, B-036) are untouched — a retracted permission still live in its
+  token layer, eight numbers that disagree with the values beside them, and a
+  pixel-numeral rule with no working mechanism outside WebKit.
+
 ## [1.24.0] - 2026-08-13
 
 A seventeenth style pack, whose whole argument is other people's names — and a reference

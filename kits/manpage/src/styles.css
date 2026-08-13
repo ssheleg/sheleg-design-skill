@@ -53,6 +53,9 @@
      spends it on the wordmark, the button fill, a 12px label chip and a link.
      The chip and the link are the two that do not clear the floor; see
      --accent-ink, which is what this pack paints a word in. */
+  /* @role non-text: --accent, --action — 3.61:1 on cream, which is why the pack's own
+     Bans read "No coral word under 24px" and point at --accent-ink. The coral fills, it
+     rules, and it sets large type; it does not set a sentence. */
   --accent: #eb3514; /* MEASURED — its --color-coral, and its <meta name=theme-color> */
   --accent-ink: #660202; /* 11.59:1 on --bg — MEASURED (--color-burgundy): the accent that may carry a word */
   --accent-wash: #f0e0da; /* COMPOSITED — bg-coral/8 over --bg */

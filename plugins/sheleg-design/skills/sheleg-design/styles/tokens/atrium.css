@@ -24,6 +24,10 @@
   --accent-gradient: linear-gradient(#b05a36, rgba(216, 161, 131, 0.96));
 
   /* ---- Semantics (fills and icons — NOT text; see Gotchas) ------------- */
+  /* @role non-text: --good, --info — the pack has always said so in words ("fills and
+     icons only", "never carries a word"); this is the same statement in the one form a
+     gate can read. --good 2.11:1 and --info 3.41:1 on the field, and --danger 5.0:1 is
+     the one semantic here that may be text. */
   --good: #79bd8b; /* 2.1:1 on --bg — never carries a word */
   --good-tint: #f1f3e5;
   --info: #488ad5; /* 3.4:1 — large text / UI marks only */

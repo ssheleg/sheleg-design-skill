@@ -18,6 +18,9 @@
   --on-primary: #fffef4; /* only on --primary-deep, never on --primary */
 
   /* ---- Brand green ----------------------------------------------------- */
+  /* @role non-text: --primary, --cta — sage at 3.42:1 and the candy orange at 2.75:1
+     are fills and large-text colours, which both declarations already say; --primary-deep
+     is the text-safe green at 4.9:1. */
   --primary: #78934a; /* sage — 3.4:1 on --bg: a FILL and large-text colour */
   --primary-deep: #61783b; /* the text-safe green: 4.9:1 under --on-primary */
   --primary-light: #aaca73; /* the mark / illustration green */

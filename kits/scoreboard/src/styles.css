@@ -46,6 +46,9 @@
      non-text mark. The reference obeys this without saying so: its orange is a
      3x18 tick, a ::marker, a focus ring, a link underline and one oversized
      chevron. Its primary button is ink. See the pack's Palette. */
+  /* @role non-text: --accent — 3.23:1 on the paper. In this pack the accent "only
+     marks": a 3x18px tick, a chip edge, a rule. --accent-ink is the one that may carry a
+     word, and the 1.13.1 correction says no orange here may carry a link. */
   --accent: #ff4801;
   --accent-hover: #e03d00; /* 4.12:1 on --bg — the one orange that may carry a link */
   --accent-wash: #fff7ed; /* MEASURED — selected row, hovered cell */
@@ -228,6 +231,19 @@
   --action: #ffffff;
   --action-hover: #e4e4e7;
   --on-action: #0a0a0a;
+
+  /* The status set has to be remapped here, and until 1.25.0 it was not. The block
+     already remapped eleven tokens for exactly this reason -- --ink-soft among them --
+     and left --good, --warn, --danger and --info pointing at the paper values, so
+     `var(--good)` painted 3.69:1 on this band while --good-on-dark had 10.21 waiting
+     three lines away in the same file. The pack has always said to use the on-dark set
+     here; nothing made the token layer do it, because the palette gate checked ink
+     against field and never a status against field. validate_status_on_field() checks it
+     now, and this is the defect it was written for (board B-034). */
+  --good: #00d492; /* 10.21:1 on this band — was inheriting the paper value at 3.69 */
+  --warn: #ffb900; /* 11.49:1 — was 3.94 */
+  --danger: #ff637e; /* 6.92:1 — was 2.37 */
+  --info: #51a2ff; /* 7.51:1 — was 2.90 */
 }
 
 /* The reference ships no reduced-motion branch. This pack requires one: every

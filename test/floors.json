@@ -1,8 +1,8 @@
 {
   "_why": "Ratchet floors. A gate whose check count can fall silently cannot detect a deleted requirement: stripping four required headings from one pack made validate.py drop 1270->1269 and sloplint.py 224->223, both still green. Each number is the count measured on the commit named below. Raise freely; lowering one needs a reason in the same commit.",
-  "_measured_on": "feat/roster-pack-v1.24.0, 2026-08-13",
-  "validate.py": 2066,
-  "validate_palette.py": 958,
+  "_measured_on": "feat/status-on-field-v1.25.0, 2026-08-13",
+  "validate.py": 2067,
+  "validate_palette.py": 993,
   "sloplint.py": 450,
-  "_raised": "validate.py 1938 -> 2066: the seventeenth pack adds its structural, enumeration, kit-parity and mirror checks, four reciprocal fork edges (roster forks against scoreboard, showroom, pigeonhole and manpage, and each links back), the container-query answer the 1.23.0 gate requires of a widened pack, and eleven kit component docs. validate_palette.py 906 -> 956: roster states thirteen ratios whose base its table declares, and the stated-ratio checker earned its keep three times on this pack -- each of the reference's FAILING numbers had been left on the derived token's own declaration line, where it reads as a claim about the shipped value, which is exactly the class pigeonhole hit one release earlier. sloplint.py 436 -> 450: one more pack and token layer under the bans. Raised once more, 956 -> 958, when T26a's findings added the pattern tokens the grid motif needed: the pack had been pointing at the reference's own SVG filename, which resolves to nothing in anybody else's tree and paints silently."
+  "_raised": "validate_palette.py 958 -> 993: validate_status_on_field() checks every semantic colour against the field of its own theme, which nothing did before -- validate_theme() computed one contrast, ink against field, and went straight to peer separation. On its first run it found 28 findings in 11 of 17 packs, and the worst was mechanical: scoreboard's [data-surface=\"panel\"] block remapped eleven tokens and not the status set, so var(--good) painted 3.69:1 on the dark band while --good-on-dark had 10.21 three lines away. Two plants, one per tier. validate.py and sloplint.py are unchanged at 2066 and 450. validate.py 2066 -> 2067: SURFACE_COMPOSITION.md documents the new role marker, which adds one relative-link check."
 }

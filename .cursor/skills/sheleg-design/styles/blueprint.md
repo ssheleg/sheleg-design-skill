@@ -116,9 +116,15 @@ Three rules carry this palette.
   white. `validate_palette.py` now recomputes every stated ratio.)*
 - **These are category marks, not statuses.** The pack labels *kinds* — an index
   type, a tier, a language — not health. Every pair clears both separation floors
-  under all three dichromacies, so no secondary-encoding declaration is required
-  here; label them anyway, because a legend of four coloured squares is a legend
-  nobody reads.
+  under all three dichromacies, so telling two marks apart is not the problem here.
+- **And a mark is never by colour alone, because on this stock it cannot be.**
+  *Separation* and *legibility on the field* are different questions, and the pack
+  answered only the first until 1.25.0. Measured against `--bg`: `--good` **2.40:1**,
+  `--warning` **1.72:1**, `--info` **1.21:1** — all three under the 3:1 floor a mark
+  needs to be understood on its own (WCAG 1.4.11). So each mark carries its name, and
+  what used to be advice here — *"label them anyway, because a legend of four coloured
+  squares is a legend nobody reads"* — is the requirement. The three are declared
+  `@role non-text:` in the token layer, and `validate_status_on_field()` is what asked.
 - **`--ink-faint` is furniture.** At 2.5:1 it draws a grid line or a tick and
   never a word.
 

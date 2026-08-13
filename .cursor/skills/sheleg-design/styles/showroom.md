@@ -121,6 +121,15 @@ Three rules carry this palette.
   The reason there is one token is that 4.64:1 clears AA in the hardest role it
   takes (text), so the link, the focus ring and the filled button can share it
   with no "on-dark" variant. Do not add one.
+- **[CORRECTION — 1.25.0] The chip's label is `--ink`, not its status colour.** Until
+  1.25.0 this row read *"that status's ink"*, and the kit did what it said: the label was
+  painted in the status colour, which measures **2.03:1** for `--good` on
+  `--accent-wash`, **1.54:1** for `--warning` and **2.65:1** for `--danger` on
+  `--surface-2` — the pack's own status colours, unreadable at the 12px the same row
+  specifies. `--ink` on those fills is 14.65–14.73:1. The status colour keeps the tint
+  and gains a 6px dot, which is the *"never by colour alone"* rule below applied to the
+  component that exists to serve it. The three status tokens are declared
+  `@role non-text:` in the token layer as a result.
 - **Status is never by colour alone.** `--good` and `--danger` separate by 33.7 at
   full colour but only **4.9 under deuteranopia**, which is the classic pair and
   the one nobody catches by looking. Every status renders as a chip containing its
@@ -185,7 +194,7 @@ Measured off the reference unless a row says **pack decision**.
 | **Nav item** | transparent, `--radius-lg`, `0 12px`, 15px/500, `--ink-2` | fill → `--surface-2`, colour → `--ink` over `0.3s` | — | — |
 | **Specimen frame** | `--surface` fill, `--radius-3xl`, `--shadow-specimen`, a 3-dot title bar | none — it is an exhibit, not a control | — | — |
 | **Data row** | transparent on `--surface`, `1px --line-weak` bottom rule, 36px tall | fill → `--accent-wash` | fill → `--accent-wash`, left edge 2px `--accent` | — |
-| **Status chip** | tinted fill of its own status at ~12%, that status's ink, `--radius-sm`, `2px 8px`, 12px mono, **always with its word** | none | — | — |
+| **Status chip** | tinted fill of its own status, **`--ink` as the label**, a 6px dot of the status colour before the word, `--radius-sm`, `2px 8px`, 12px mono, **always with its word** | none | — | — |
 | **Column header** | `--ink-soft`, 12px/500, an icon at 14px, `1px --line` bottom | fill → `--surface-2` | sorted: `--ink` plus a caret | — |
 | **Input** | `--surface`, `1px --line`, `--radius-lg`, `8px 12px`, **16px** Inter | border → `--line-strong` | focus: `--accent` border plus `--ring-focus` | `--disabled` text |
 | **Loader** | **pack decision:** a skeleton whose geometry matches the row it replaces — same height, same radius, `--surface-2` fill, no shimmer | — | — | — |

@@ -670,6 +670,25 @@ def self_test() -> int:
             "never by colour alone",
         ),
         (
+            # The class measured on 2026-08-13: twenty-eight semantic colours below AA
+            # on their own field across eleven packs, invisible because validate_theme
+            # checked ink against field and never a status against field.
+            "a status below AA on its own field with nothing saying it is not text",
+            None,
+            ("_planted_", ":root {\n  --bg: #ffffff;\n  --ink: #1a1a1a;\n"
+                          "  --line: #dddddd;\n  --surface2: #eeeeee;\n"
+                          "  --good: #7bd48f;\n}\n", ""),
+            "nothing says it is not text",
+        ),
+        (
+            "a declared non-text status below the 3:1 floor whose pack never says the word carries it",
+            None,
+            ("_planted_", "/* @role non-text: --good */\n:root {\n"
+                          "  --bg: #ffffff;\n  --ink: #1a1a1a;\n  --line: #dddddd;\n"
+                          "  --surface2: #eeeeee;\n  --good: #b6f0c6;\n}\n", ""),
+            "below the 3.0:1 non-text floor",
+        ),
+        (
             "a generated-default palette with no provenance",
             {"--bg": "#f4f1ea", "--ink": "#1a1a1a", "--accent": "#b5623f",
              "--line": "#e0dcd2", "--surface": "#ffffff"},
@@ -708,9 +727,17 @@ def self_test() -> int:
         ),
     ]
     problems = []
-    for label, decls, expected in cases:
-        _reset()
-        validate_theme("_planted_", ":root", decls)
+    for case in cases:
+        # Three-tuple: plant a decls dict into validate_theme. Four-tuple: plant a whole
+        # token layer as text, for a check that reads the file rather than the dict.
+        if len(case) == 3:
+            label, decls, expected = case
+            _reset()
+            validate_theme("_planted_", ":root", decls)
+        else:
+            label, _, (stem, text, pack), expected = case
+            _reset()
+            _status_on_field(stem, text, pack)
         fired = [f for f in failures if expected in f]
         print(f"  {'caught ' if fired else 'MISSED '} {label}")
         if not fired:
@@ -798,6 +825,99 @@ def _theme_maps(text: str) -> list[tuple[str, dict, tuple | None]]:
         field_name = pick(decls, FIELD_TOKENS)
         out.append((label, solids, solids.get(field_name)))
     return out
+
+
+# The tokens that carry meaning by colour. A -wash / -tint / -weak variant is a
+# background, not one of these.
+SEMANTIC_ROLES = ("good", "ok", "success", "warn", "warning", "danger", "error", "info",
+                  "live", "accent", "brand", "cta", "primary", "action", "link")
+# The escape, and it extends `@role accent:` rather than inventing a convention.
+ROLE_NON_TEXT = re.compile(r"@role\s+non-text\s*:\s*([^\n*]*)", re.I)
+# WCAG 1.4.11: a mark that must be understood on its own needs 3:1. Below that a
+# colour can only be decorative reinforcement beside a word.
+NON_TEXT_FLOOR = 3.0
+
+
+def validate_status_on_field(css: Path) -> None:
+    """Every semantic colour is readable on its own field, or says it is not text.
+
+    validate_theme() computed exactly one contrast -- ink against field -- and then went
+    to peer separation, so no status was ever checked against the surface it sits on.
+    That hole hid a class across the library: measured 2026-08-13, twenty-one semantic
+    colours in eight packs sit below AA on their own field, and ten of them below the
+    3:1 non-text floor as well. The worst was mechanical rather than chosen --
+    scoreboard's `[data-surface="panel"]` block remaps eleven tokens and not the status
+    set, so `var(--good)` painted 3.69:1 on the dark band where `--good-on-dark` had
+    10.21 waiting (board B-034).
+
+    Most of the twenty-one are legitimately not text: a dot, a chip tint, a chart
+    series. The packs said so -- in five different phrasings ("never text on the field",
+    "a FILL and large-text colour", "a fill, not a text colour", "No coral word under
+    24px", "category marks"), which is exactly why nothing could check it. So the ask is
+    a canonical marker rather than a colour change, and the marker is the one the
+    library already uses for the accent role.
+
+    Three tiers, which is what the packs already argue:
+      >= 4.5   text, no declaration needed
+      >= 3.0   declared non-text: a mark that can carry meaning on its own
+      <  3.0   declared non-text AND the pack states status is never by colour alone,
+               because below the non-text floor the colour is reinforcement and the
+               word is the message
+    """
+    stem = css.stem
+    pack_md = PACKS / f"{stem}.md"
+    _status_on_field(stem, css.read_text(encoding="utf-8"),
+                     pack_md.read_text(encoding="utf-8") if pack_md.is_file() else "")
+
+
+def _status_on_field(stem: str, text: str, pack: str) -> None:
+    """The core, split out so the self-test can plant a token layer as a string.
+
+    A check that can only be exercised by editing a real file is a check whose plant
+    drifts from the tree it is meant to protect.
+    """
+    encoded = bool(re.search(r"never\s+by\s+colou?r\s+alone", pack, re.I))
+    declared = set()
+    for m in ROLE_NON_TEXT.finditer(text):
+        declared |= set(re.findall(r"--[a-z0-9-]+", m.group(1)))
+
+    for label, decls in themes(text):
+        solids = {}
+        for name in decls:
+            raw = resolve(name, decls)
+            if not raw:
+                continue
+            parsed = parse_color(raw)
+            if parsed and parsed[1] >= 0.999:
+                solids[name] = parsed[0]
+        field_name = pick(decls, FIELD_TOKENS)
+        if field_name not in solids:
+            continue
+        field = solids[field_name]
+        for name in sorted(solids):
+            if is_variant(name) or name.lstrip("-") not in SEMANTIC_ROLES:
+                continue
+            ratio = contrast(solids[name], field)
+            if ratio >= 4.5:
+                continue
+            where = f"tokens/{stem}.css [{label}]"
+            if not check(
+                name in declared,
+                f"{where}: {name} is {ratio:.2f}:1 on {field_name} and nothing says it is "
+                f"not text -- declare it in an '@role non-text:' list with the reason, or "
+                f"give the role a value that clears AA",
+            ):
+                continue
+            if ratio < NON_TEXT_FLOOR:
+                check(
+                    encoded,
+                    f"styles/{stem}.md: {name} is {ratio:.2f}:1 on {field_name}, below the "
+                    f"{NON_TEXT_FLOOR}:1 non-text floor, so the colour cannot carry the "
+                    f"meaning by itself -- the pack must state that status is never by "
+                    f"colour alone",
+                )
+            else:
+                notes.append(f"  {stem} [{label}]: {name} at {ratio:.2f}:1 -- declared non-text")
 
 
 def validate_stated_ratios(css: Path) -> None:
@@ -990,6 +1110,7 @@ def main() -> int:
     check(len(files) >= 2, "styles/tokens: expected at least two token layers")
     for css in files:
         validate_pack(css)
+        validate_status_on_field(css)
         validate_stated_ratios(css)
     for line in notes:
         print(line)

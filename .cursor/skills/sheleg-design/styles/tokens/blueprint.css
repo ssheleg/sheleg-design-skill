@@ -55,6 +55,11 @@
   /* Every pair clears both separation floors under all three dichromacies, so
      no secondary-encoding declaration is required here. It is still good
      practice to label them; the pack asks for it without needing to. */
+  /* @role non-text: --good, --info, --warning — on a drawing sheet these four are
+     CATEGORY MARKS, not labels: a swatch, a rule, a chip fill. Measured on the field:
+     --good 2.40:1, --warning 1.72:1, --info 1.21:1. All three are under the 3:1 non-text
+     floor as well, so the word beside the mark is the message and the pack says status is
+     never by colour alone. */
   --good: #86af80;
   --info: #8bf6ff;
   --danger: #a440ce;
