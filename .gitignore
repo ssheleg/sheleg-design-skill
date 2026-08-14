@@ -22,3 +22,11 @@ __pycache__/
 # Scratch measurement output. A run measures a reference and screenshots it;
 # 646KB of one entered history through a `git add -A` (board B-015).
 .tmp*
+
+# agent-sync run state — per-machine, never shared
+.agent-sync/
+
+# ...except the coordination config, which is shared state, not local Claude state.
+# The rest of .claude/ stays ignored deliberately; this one file has no other home,
+# because agent-sync resolves a project by `<root>/.claude/agent-sync.json` and nowhere else.
+!.claude/agent-sync.json
