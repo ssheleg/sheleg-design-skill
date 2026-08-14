@@ -123,6 +123,13 @@ npm publish --access public
 npx --yes sshlg-skills@latest list   # the new number must appear here
 ```
 
+## Coordinating with other agents
+
+`docs/AGENT_SYNC.md` describes how coordination is wired in this repository and
+what it does **not** guarantee. It is generated from `.claude/agent-sync.json`:
+read it before editing a file that config guards, and regenerate it with
+`agent_sync.py setup` in the same change that alters the config.
+
 ## Reporting
 
 Issues and PRs: <https://github.com/ssheleg/sheleg-design-skill/issues>. For a
