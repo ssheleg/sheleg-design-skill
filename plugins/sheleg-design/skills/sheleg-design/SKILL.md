@@ -3,7 +3,7 @@ name: sheleg-design
 description: Use when building or upgrading a cinematic scroll-driven landing page, marketing site or hero (particle/WebGL background, scroll-linked animation, parallax, scrubbed sections) — when such a page feels busy or janky or its motion layers drift out of sync — or when styling product UI with its style packs - dashboards, admin panels, internal/dev tools, mobile app screens, design tokens, light/dark themes - or when carrying a visual system across the Figma border (publishing tokens as variables, implementing a design without importing raw values). Triggers - "cinematic landing" / "кинематографичный лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables / figma to code" / "переменные фигмы, фигма в код", "chat/agent UI" / "интерфейс чата или агента", "streaming output" / "стриминг ответа", "mobile screen" / "мобильный экран".
 license: MIT
 metadata:
-  version: 1.27.1
+  version: 1.29.0
 ---
 
 # SHELEG Design
@@ -82,6 +82,7 @@ this table is for choosing, not for reading instead of the pack:
 | [`manpage`](./styles/manpage.md) | cream paper, the reader's own **system monospace** (zero webfont bytes), 48px display ceiling, 576px argument column, coral label chips that are real `<h2>`s | developer products whose buyer reads code — APIs, SDKs, CLIs, MCP servers, developer infrastructure |
 | [`pigeonhole`](./styles/pigeonhole.md) | white field, hairlines, a display that never passes weight 400 plus one italic word, and **nine categories in which a hue is the category**, from an eleven-ramp pastel system — a two-layer chip, 8px outside / 7px inside, label word mandatory | products that file the reader's incoming mess into named categories — email triage, ticket routing, digests, organisers, CRM inboxes |
 | [`roster`](./styles/roster.md) | white field in a faint square grid, hairline instead of shadow, the display in the **body** face and the heads in another, one orange that never carries a word | products whose argument is **who already carries them** — AI-search visibility, SEO and content platforms, agencies, marketplaces |
+| [`paperclip`](./styles/paperclip.md) | neutral coal with **no functional colour at all** — every control monochrome, hairlines for elevation, and the whole chromatic budget spent on a curtain of 96 gradient capsules and twelve gradient section badges that cannot be clicked; a tight grotesque over a plain one over a monospace, and the capsule as the shape of everything from a button to a 10 × 20 schedule tick | products that ask a person to **run something that runs itself** — agent teams and orchestrators, autonomous back-office, schedulers, job runners, budget-governed compute |
 
 **A materialized kit answers part of what a core pack leaves out.** `npx
 sheleg-design-skill --kit <pack>` produces `src/styles.css`, whose component half is
@@ -90,12 +91,12 @@ authored CSS for the states a core pack declines to specify — `:hover`,
 reading only this bundle will invent them. Fetch the kit first, and treat any
 difference between kit and pack as a defect in one of them rather than a choice.
 
-**Six of the seventeen are on the core contract, and it changes what you get.**
+**Six of the eighteen are on the core contract, and it changes what you get.**
 A pack marked **core contract** does not specify `## Components`, `## Hero`,
 `## Responsive` or `## Signature element` — so per-component states, the
 opening viewport and its line ceiling, the collapse rules, and the single
 element the page is remembered by are **yours to decide**, and you say so out
-loud when you do. The other eleven answer all four. This asymmetry is the one
+loud when you do. The other twelve answer all four. This asymmetry is the one
 thing about the library most likely to make you invent a value and believe you
 read it: what a core pack *does* state is measured to two decimals, and that
 precision is not evidence about the half it leaves silent. Each pack declares

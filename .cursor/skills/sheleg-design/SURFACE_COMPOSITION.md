@@ -59,11 +59,11 @@ the runnable palette validation; a pack is the *parameter set* it consumes.
 
 **Read the chosen pack's own token names before you write a single `var()`.**
 This table is by *role*, not by token, because the names are not uniform across
-the seventeen: only `--bg` and `--ink` resolve in every pack. The accent is
-`--accent` in fifteen, `--brand` in `field-notes` and `--cta` in `orchard` (each
+the eighteen: only `--bg` and `--ink` resolve in every pack. The accent is
+`--accent` in sixteen, `--brand` in `field-notes` and `--cta` in `orchard` (each
 declares `@role accent:` in its token layer). **A second marker joins it in 1.26.0:**
 a semantic colour that sits below WCAG AA on its own field declares
-`@role non-text:` with the reason and the ratio, because eleven of the seventeen packs
+`@role non-text:` with the reason and the ratio, because twelve of the eighteen packs
 had such a colour and each said so in a different phrasing — "never text on the field",
 "a FILL and large-text colour", "a fill, not a text colour", "No coral word under 24px",
 "category marks" — which is exactly why nothing could check it. Status colours are the least uniform
@@ -88,7 +88,7 @@ why guessing a token name is the quietest way to ship a wrong chart.
 | Sequential hue | the pack's single accent hue | `--accent`, or the token its `@role accent:` names |
 | Diverging pair | two poles from the pack, with a neutral grey midpoint | Palette. A one-accent pack has no sanctioned second pole; status colours are state-only and may not stand in. If the pack has no pair, that is a gap to close in the pack |
 | Status palette | the pack's status set, **if it has one**, distinct from categorical | Palette; `editorial-luxury` and `orchard` have none |
-| Surfaces | `--bg` for light, the pack's dark field for dark | resolves in all seventeen |
+| Surfaces | `--bg` for light, the pack's dark field for dark | resolves in all eighteen |
 | Texture fill | the pack's grain or hatch, for the print and forced-colours case | Texture & surface — several packs ship none, in which case the forced-colours fallback is shape and label, not fill |
 
 Two rules survive the handoff unchanged: **never a dual-axis chart**, and

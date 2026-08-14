@@ -49,6 +49,16 @@ number ticks while the reader watches, it belongs here. If it is a result, it
 belongs there. That pack does ship a dark surface, but as an alarm state on the
 instrument alone, never as the page's field.
 
+### Against [`paperclip`](./paperclip.md)
+
+Both are near-black pages about machines doing work, and the test is **what the
+colour is for**. Here the one electric accent is functional: it marks the live
+value, the threshold, the trace the reader is meant to follow. In `paperclip`
+nothing coloured can be clicked — the whole chromatic budget is spent on an
+ornament the copy sits on top of, and every control, card and readout is
+monochrome. Ask what happens if you delete every colour from the page: this pack
+loses its meaning, that one loses only its poster.
+
 ## Palette
 
 Ready-made token layer: [`tokens/instrument-console.css`](./tokens/instrument-console.css)

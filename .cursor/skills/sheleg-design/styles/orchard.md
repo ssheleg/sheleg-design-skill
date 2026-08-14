@@ -50,6 +50,15 @@ pills and its tint is decoration in service of approachability; that one works o
 category, each label word mandatory. A warm field says *this is pleasant*; a white
 field with nine labelled hues says *this is sorted*.
 
+**The fork against [`paperclip`](./paperclip.md)** is warmth against neutrality.
+Both round generously — this pack's soft-3D pills and that pack's capsules are
+the same instinct — and both put colour where the reader looks first. The
+difference is the field underneath and who colour is *for*. Warm oat with tinted
+slabs invites a consumer to touch something; neutral coal with one loud
+ornament on it tells an operator the interface will stay out of the way. A
+friendly register belongs here; a page that must look like it will not spend
+your money belongs there.
+
 ## Palette
 
 Ready-made token layer: [`tokens/orchard.css`](./tokens/orchard.css) — copy it

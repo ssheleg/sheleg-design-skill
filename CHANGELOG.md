@@ -4,6 +4,85 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.29.0] - 2026-08-14
+
+An eighteenth pack, **`paperclip`**, extracted from a live reference rather than composed:
+<https://paperclip.ing>, read from the two shipped stylesheets
+(`/_next/static/chunks/0sw-z-v7xc9dd.css`, 622 rules; `/_next/static/chunks/19xj4kovk13jy.css`,
+712 rules), the hero's inline SVG and the `@font-face` block. It is the first pack whose
+thesis is that **colour is ornament**: there is no functional colour anywhere in the
+interface, and the whole chromatic budget is spent on two things a reader cannot click.
+
+**The version number is provisional.** This work was authored on `feat/paperclip-pack`
+while a concurrent run held the `PACK-TENOR` lease on the same checkout and had already
+claimed 1.28.0; 1.29.0 was taken to leave that number alone. Re-check it at merge — a
+version another run has already taken is a defect this repository has shipped before.
+
+### Added
+
+- **`styles/paperclip.md` + `styles/tokens/paperclip.css` — widened contract, all thirteen
+  headings.** A neutral coal field (`#0a0a0a`) with `#fafafa` ink at 18.97:1, and a light
+  twin on pure white at 19.80:1 that has **no elevation step at all**: the reference sets
+  `--background` and `--card` to the same white and separates a card from the page with a
+  1px rule and nothing else.
+- **The accent is the inverted field, and colour is ornament.** Every control is
+  monochrome — `.navbar-cta`, `.hero-btn-primary`, `.sim-submit` and `.cta-btn` are one
+  component wearing four names — and the pack's central rule is one sentence: a gradient
+  that can be clicked, hovered or focused has left the pack. The corollary is what makes
+  the four status hues land: because colour is spent entirely on things that do nothing,
+  anything coloured reads as scenery.
+- **The capsule curtain as the signature element.** 96 capsules in 8 columns on a 70px
+  pitch, each 70 × 170 at `rx: 35`, stepped 34.5px so every capsule covers all but a
+  34.5px band of the one above it. The 45 gradients filling them are **generated, not
+  chosen**: the top stop rotates forward around the hue wheel by ~12.4° per capsule and
+  the bottom stop backward by ~10.3°, at near-constant saturation and lightness — so the
+  stops stay near-complementary and each column inverts its own gradient between its first
+  capsule and its last. Measured across all 45 gradients and 89 distinct stops.
+- **One noise recipe, on every saturated surface and nowhere else.** `fractalNoise`,
+  `baseFrequency 2.95`, 5 octaves, seed 9, tiled at 256px under `isolation: isolate` with
+  `mix-blend-mode: overlay` — 12% on a section badge, 86% over the artwork through an
+  alpha mask of the capsules themselves. The same seed on both, which is why a
+  twelve-gradient page does not band.
+- **Twelve section-badge gradients, each with its own hand-picked label ink** — white on
+  six, and `#2a1530` / `#3d3010` / `#1a2a40` / `#2a2340` / `#1a3a38` on the five light
+  ramps, because a 90° gradient has two ends and one label has to clear both.
+- **`kits/paperclip/` — the React reference kit**, the six-name spine plus seven signature
+  components: `CapsuleCurtain`, `SectionBadge`, `HairlineGrid`, `OrgNode`, `LedgerRow`,
+  `ScheduleLane`, `Terminal`. `src/styles.css` opens with the token layer byte for byte,
+  and four of the seven carry `container-type: inline-size`, so no component in the kit is
+  sized by the screen.
+- **`T27` in `test/scenarios.md`** — the operator register and its fork against the
+  console, with the negative branch. **Written and not yet run**, and the scenario says so
+  in its own Result line rather than in a footnote.
+
+### Fixed — in the pack, against its own reference
+
+- **`--info` is derived and marked derived.** The reference's dark block overrides five
+  status *icon* colours and leaves the four base status colours at their light values, so
+  `--status-task-in_progress` renders at **3.83:1** on the coal field and is set as text
+  (`● 1 live`). The pack ships `#60a5fa`, the 400 step of the same ramp, at 7.79:1.
+- **The focus ring is kept.** The reference's one text input sets `outline: none` on focus
+  and replaces the ring with a 1px border colour change.
+- **Two 1.5s infinite loops are stopped under `prefers-reduced-motion`.** `dotPulse` and
+  `statusBlink` survive the reference's own reduced-motion blocks, which do calm the hero,
+  the parallax, the marquee tracks and the modal.
+- **The budget bar animates `transform: scaleX()`**, not `width` for 1.2s per bar with six
+  bars in view.
+
+### Changed
+
+- `instrument-console`, `workbench` and `orchard` each gain the reciprocal fork clause
+  against `paperclip`; a one-way fork is a dead end for whoever reaches the other pack
+  first.
+- Counts moved from seventeen to eighteen in the README, `bin/cli.js`, the three manifests,
+  `SURFACE_COMPOSITION.md` and `MOBILE_SURFACES.md`; the `@role non-text:` tally there is
+  recomputed (twelve of eighteen, from eleven of seventeen) and the accent tally with it
+  (sixteen, from fifteen).
+- `/sheleg-design`'s by-name fast path said "the fourteen are" over a list of seventeen —
+  a count no gate reads, because it has no counted noun after it. It now says eighteen and
+  lists them.
+- `SKILL.md`'s core-contract paragraph: six of the eighteen, the other twelve.
+
 ## [1.27.1] - 2026-08-13
 
 This project's own pipeline paperwork moved from `docs/superpowers/` to

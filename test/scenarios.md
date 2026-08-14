@@ -1061,3 +1061,48 @@ retracted in 1.13.1; `#00D492` is stated at 1.84:1 "on white" and measures **1.9
 making a disabled control indistinguishable from secondary copy on the pack's own hero
 surface.
 
+
+## T27 — The operator register, and the fork against the console
+
+Added with the `paperclip` pack. Two branches, two fresh contexts, run **blind against
+the bundle directory only** — `test/`, `docs/`, `kits/`, the README and the CHANGELOG are
+forbidden, because this file carries the answer beside the prompt.
+
+This pair exists because `paperclip` and `instrument-console` now serve the **same visual
+first impression** — a near-black page about machines doing work — and the field colour is
+not the distinction. `instrument-console` spends one electric blue on the value the reader
+must follow; `paperclip` spends its entire colour budget on an ornament nobody can click
+and leaves every control monochrome. A router that reads "dark page, agents, telemetry"
+and stops will pick wrong half the time, which is precisely what the negative branch is
+for. The one-line test both branches should arrive at: **delete every colour from the
+page — does it lose its meaning, or only its poster?**
+
+**T27a — should select `paperclip`.** "The marketing site for a product where you hire a
+team of AI agents, give them an org chart and a monthly budget, and approve what they
+propose. The page has to show the org chart, the schedule each agent wakes on, and a
+ledger of what each one spent against its cap. Buyers are founders and heads of ops who
+are nervous about runaway spend. We want the page to feel like the tool will stay out of
+the way." Pass: routes to `styles/paperclip.md`, quotes the clause that decided it, and
+names the closest rejected pack with the clause that ruled it out. Fail: routing to
+`instrument-console` because the page is dark and the subject is agents, or to `workbench`
+because three of the four surfaces named are product UI.
+
+**T27b — should still select `instrument-console`.** "The marketing site for a
+distributed-tracing product. The hero is a live request-rate dial that moves while you
+watch it, every section is a latency or saturation reading against a threshold, and the
+proof is a p99 that drops after you install it. Buyers are SREs. There is no org chart and
+nothing to budget." Pass: stays on `styles/instrument-console.md` and can say what would
+have moved it (a page whose colour is ornament rather than a value to follow). Fail:
+routing to `paperclip` because the newest pack is also near-black and also renders
+machines at work — the failure a positive-only branch cannot detect, per standing
+instruction 4.
+
+Both branches are also asked, after choosing, to read their chosen pack in full and report
+defects with file and quoted text.
+
+**Result: NOT YET RUN.** The pack ships with the scenario written and unexecuted, which is
+the honest state and not a passing one: `validate.py` does not read this file, so nothing
+in `npm test` covers T27, and the row in the propagation matrix that says "the scenario run
+by a fresh subagent" is undischarged until a person runs it and stamps the result with a
+commit. Every other claim in the `paperclip` pack is measured off the reference or computed
+by a gate; this is the single outstanding one.

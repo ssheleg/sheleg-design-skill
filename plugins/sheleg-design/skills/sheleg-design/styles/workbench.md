@@ -48,6 +48,16 @@ working data, in a surface they operate — filter it, sort it, act on it.
 is that they accumulate. A metric the reader can drill into belongs here; a
 metric the reader is being shown belongs there.
 
+**The fork against [`paperclip`](./paperclip.md)** is the *which surface* test
+one more time, and these two are deliberately close: both build elevation out of
+hairlines and never shadows, both set data in a monospace, both ship a light
+theme and a dark one. This pack **is** the application — no hero, no ornament
+layer, one blue accent doing functional work. `paperclip` is the marketing page
+arguing for an application of exactly this kind, and it spends its whole colour
+budget on a single chromatic object that cannot be clicked, leaving every
+control monochrome. A company selling an agent console needs both, and the mocks
+inside a `paperclip` page should be the `workbench` build.
+
 ## Palette
 
 Ready-made token layer: [`tokens/workbench.css`](./tokens/workbench.css)

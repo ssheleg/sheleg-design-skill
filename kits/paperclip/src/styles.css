@@ -1,0 +1,946 @@
+/* SHELEG Design — Paperclip token layer (dark default + light twin).
+   Copy verbatim; consume only var(--…) in components.
+
+   Measured 2026-08-14 from https://paperclip.ing, stylesheets
+   /_next/static/chunks/0sw-z-v7xc9dd.css (the product/shell layer) and
+   /_next/static/chunks/19xj4kovk13jy.css (the landing layer), plus the hero's
+   inline SVG. Every value below is either lifted from those files or marked
+   DERIVED with the reason.
+
+   Theme switch: set data-theme="light" on :root. Dark is the default here
+   because it is the default there — the shipped page carries data-theme="dark"
+   and every screenshot of the product is on the coal field.
+
+   The stationery names below (--bond, --manila, --parchment, --graphite,
+   --aluminum, --charcoal, --stone) are the reference's own. They are kept
+   because they are the pack's whole idea in a naming scheme: a paper stock and
+   a metal, which is what an office is made of, and what the product is named
+   after. --bg / --ink / --muted are the roles; the stock names are the stock. */
+
+:root {
+  color-scheme: dark; /* the theme is explicit — never let the UA pick */
+
+  /* ── field: three coal steps, and a terminal that is warm where nothing else is ──
+     --bg → --surface → --surface-quiet is the whole elevation ladder, and it is
+     built from fill alone: there is no shadow on a resting element anywhere in
+     the reference. The terminal is the one surface with a hue — #1f1d1a is warm
+     against a neutral #0a0a0a — because it is quoting a real shell. */
+  --bg: #0a0a0a; /* --background (dark) */
+  --surface: #171717; /* --card, --popover — the default container, 1.10:1 */
+  --surface-quiet: #262626; /* --muted, --secondary, --accent — chip fills, 1.31:1 */
+  --terminal: #1f1d1a; /* .terminal body — warm, and darker than --surface */
+  --terminal-head: #161412; /* .terminal-header */
+  --terminal-rule: #2f2c28; /* .terminal border and tab fill */
+  --terminal-dim: #6a6560; /* prompt glyph, inactive tab — 2.92:1 ON --terminal */
+  --terminal-mid: #9a958a; /* tab hover — 5.64:1 on --terminal */
+
+  --ink: #fafafa; /* --foreground, 18.97:1 on --bg */
+  --muted: #a1a1a1; /* --muted-foreground, 7.66:1 */
+
+  /* Hairlines are alpha, not a colour: the same token reads correctly over the
+     field, over --surface and over the terminal. --border-strong is the
+     reference's own --input value, one step up, for a control that must be
+     found. */
+  --border: #ffffff1a; /* --border, white at 10% */
+  --border-strong: #ffffff26; /* --input, white at 15% */
+
+  /* ── THE accent, and it is the inverted field ───────────────────────────
+     There is no brand hue in the interface. Every control that must be pressed
+     goes solid ink with a field-coloured label — .navbar-cta, .hero-btn-primary,
+     .sim-submit, .cta-btn are one component wearing four names. Colour exists on
+     this page, but it is never functional: it is the hero artwork and the
+     section badges, and neither can be clicked. */
+  --accent: #fafafa;
+  --accent-ink: #0a0a0a; /* text ON the accent — 18.97:1 */
+  --accent-hover: #ffffff; /* --cream / --bond: dark hover goes hollow, see paperclip.md */
+
+  /* ── the stationery names, kept from the reference ─────────────────────── */
+  --bond: #ffffff; /* the whitest stock — button fill on hover */
+  --manila: #ffffff; /* terminal ink */
+  --parchment: #fafafa; /* the light theme's hover fill */
+  --charcoal: #141413; /* the dark band a section sits on */
+  --graphite: #52585d; /* the darkest metal, 2.75:1 — non-text */
+  --aluminum: #a8aeb2; /* idle, 8.83:1 */
+  --stone: #e5e5e5; /* the light theme's hairline */
+
+  /* ── status: four states, and each one carries its word ────────────────── */
+  --good: #34d06f; /* --status-task-icon-done (dark), 9.80:1 */
+  --warn: #fbbf24; /* --status-task-icon-todo (dark), 11.86:1 */
+  --danger: #fb2c36; /* --destructive (dark), 5.20:1 */
+  /* DERIVED. The dark block overrides five status ICON colours and leaves the
+     four base status colours at their light-theme values, so the reference's own
+     --status-task-in_progress (#2563eb) renders at 3.83:1 on the coal field —
+     below AA, and it is set as TEXT in the sidebar ("● 1 live"). This pack ships
+     the 400-step of the same blue ramp instead: same hue, 7.79:1, text-safe. */
+  --info: #60a5fa;
+  --review: #9474f0; /* --status-task-icon-in_review (dark), 5.67:1 — not a peer of the four */
+  --idle: #9a958a; /* --status-task-icon-backlog (dark), 6.64:1 — absence, not a state */
+
+  /* ── the twelve section-badge gradients ────────────────────────────────────
+     The one place colour is allowed to be loud, and it is always ornament: a
+     badge is a label, never a control. Each pair ships with the ink the
+     reference chose for it — hand-picked per gradient, not computed, because a
+     90deg ramp has two ends and one label has to clear both. Use them in order;
+     a section takes the next one, and no gradient repeats on one page. */
+  --badge-01-from: #dc2f68; --badge-01-to: #1f7a3a; --badge-01-ink: #ffffff;
+  --badge-02-from: #c9a9e8; --badge-02-to: #ee79a1; --badge-02-ink: #2a1530;
+  --badge-03-from: #28164b; --badge-03-to: #7a1530; --badge-03-ink: #ffffff;
+  --badge-04-from: #f3e6c4; --badge-04-to: #e3a21a; --badge-04-ink: #3d3010;
+  --badge-05-from: #1f4dd6; --badge-05-to: #2f844a; --badge-05-ink: #ffffff;
+  --badge-06-from: #d83a16; --badge-06-to: #5a1122; --badge-06-ink: #ffffff;
+  --badge-07-from: #7eb6e3; --badge-07-to: #ee79a1; --badge-07-ink: #1a2a40;
+  --badge-08-from: #9ce8a7; --badge-08-to: #bd7ff0; --badge-08-ink: #2a2340;
+  --badge-09-from: #c94e38; --badge-09-to: #1f4ed4; --badge-09-ink: #ffffff;
+  --badge-10-from: #f2d95f; --badge-10-to: #4fbcba; --badge-10-ink: #1a3a38;
+  --badge-11-from: #6b6bc7; --badge-11-to: #5e3450; --badge-11-ink: #ffffff;
+  --badge-12-from: #32807e; --badge-12-to: #2f844a; --badge-12-ink: #ffffff;
+
+  /* ── the hero spectrum: four anchors, and everything between them is derived ──
+     The hero art is 96 capsules in 8 columns, filled from 45 generated
+     gradients. Nothing is hand-picked: each column interpolates its TOP stop
+     forward around the hue wheel and its BOTTOM stop backward, at near-constant
+     saturation and lightness, so every capsule is a near-complementary pair and
+     the column inverts its own gradient from first cap to last. These four are
+     the ends of the two ramps the reference actually ships. */
+  --spectrum-violet: #3c23fb; /* top stop, cap 0 — H 247° S 96% L 56% */
+  --spectrum-orange: #fb8b24; /* bottom stop, cap 0 — H 29° S 96% L 56% */
+  --spectrum-ember: #e36414; /* top stop, cap 11 — H 23° S 84% L 48% */
+  --spectrum-iris: #5c1a8f; /* bottom stop, cap 11 — H 274° S 69% L 33% */
+  --hero-hue-step-top: 12.4deg; /* the top stop rotates forward, per capsule */
+  --hero-hue-step-bottom: -10.3deg; /* the bottom stop rotates backward */
+
+  /* ── grain: one noise recipe, applied to every saturated surface ─────────
+     fractalNoise, baseFrequency 2.95, 5 octaves, seed 9, tiled at 256px and
+     composited with mix-blend-mode: overlay. It is on the badges at .12 and on
+     the hero artwork at .86 through an alpha mask of the capsules themselves.
+     It is the reason a twelve-gradient page does not band. */
+  --dither-tile-size: 256px;
+  --dither-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.95' numOctaves='5' seed='9' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --dither-opacity-badge: 0.12;
+  --dither-opacity-art: 0.86;
+
+  /* ── radius: one root, and the ladder is multiplication ───────────────────
+     --radius: .5rem with six derived steps is the reference's own ladder. The
+     alias row beneath it is the one the components actually spend, and it SKIPS
+     --radius-md and --radius-lg — see the Gotchas in paperclip.md. Kept as
+     shipped, because a pack that silently repairs its reference stops being a
+     measurement. */
+  --radius: 0.5rem; /* 8px — the root */
+  --radius-sm: calc(var(--radius) * 0.6); /* 4.8px */
+  --radius-md: calc(var(--radius) * 0.8); /* 6.4px — defined, never spent */
+  --radius-lg: var(--radius); /* 8px */
+  --radius-xl: calc(var(--radius) * 1.4); /* 11.2px */
+  --radius-2xl: calc(var(--radius) * 1.8); /* 14.4px */
+  --radius-3xl: calc(var(--radius) * 2.2); /* 17.6px */
+
+  --r-sm: var(--radius-sm); /* 4.8px — copy buttons, terminal tabs, tags */
+  --r-md: var(--radius); /* 8px — cards, inputs, mock frames, terminals */
+  --r-lg: var(--radius-xl); /* 11.2px — modals, the largest panels */
+  --r-pill: 9999px; /* buttons, badges, org nodes, schedule dots — the pack's shape */
+
+  /* ── elevation: a hairline, and a shadow only where something floats ────── */
+  --shadow-modal: 0 32px 64px -24px #00000080; /* .sim-card, the only resting shadow */
+  --shadow-alert: 0 2px 8px #f59e0b26; /* the one interrupt that drops onto a lane */
+
+  /* ── type: three families, and the display face is a grotesque ───────────
+     The reference calls it --font-serif and it is Inter Tight. The name is
+     inherited and wrong; the ROLE is display. Anything reaching for the "serif"
+     slot in this pack gets a tight grotesque — see Gotchas. */
+  --font-display: "Inter Tight", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  /* Display ramp — the tracking closes as the size opens. */
+  --fs-hero: 60px; /* fixed above 768px; clamp(2.25rem, 11.5vw, 3.75rem) below */
+  --lh-hero: 0.98;
+  --track-hero: -0.035em;
+  --fs-section: clamp(2rem, 4.5vw, 4rem); /* 32px → 64px, the section headline */
+  --lh-section: 1.05;
+  --track-section: -0.03em;
+  --fs-h2: clamp(2rem, 4vw, 3.5rem); /* 32px → 56px */
+  --fs-h3: clamp(2rem, 4vw, 2.8rem); /* the two-column feature heading */
+  --fs-h4: clamp(1.25rem, 2vw, 1.5rem); /* a step title */
+  --track-h4: -0.02em;
+  --fs-card-title: 1rem; /* a feature card's title, weight 600 */
+  --track-card-title: -0.01em;
+  --fs-wordmark: 44px; /* the footer wordmark, tracking -0.045em */
+  --track-wordmark: -0.045em;
+
+  /* Body ramp — Inter, and the line-height never drops below 1.5. */
+  --fs-lede: clamp(1rem, 2vw, 1.125rem);
+  --lh-lede: 1.6;
+  --fs-body-lg: 1.125rem;
+  --fs-body: 1rem;
+  --lh-body: 1.65;
+  --fs-body-sm: 0.9rem;
+  --lh-body-sm: 1.6;
+  --fs-caption: 0.875rem;
+  --lh-caption: 1.6;
+
+  /* Mono ramp — px-anchored, and the tracking opens as the size closes. */
+  --fs-badge: 0.75rem; /* 12px, the section badge */
+  --track-badge: 0.08em;
+  --fs-mono: 0.8rem; /* 12.8px, a step number */
+  --fs-mono-sm: 0.75rem; /* 12px, a handle */
+  --fs-mono-xs: 0.65rem; /* 10.4px, a cadence */
+  --fs-mono-2xs: 0.62rem; /* 9.9px, an axis mark */
+  --track-label: 0.05em; /* an uppercase column heading */
+  --track-eyebrow: 0.06em; /* a goal label */
+
+  /* ── space: the reference's own scale, fluid from --space-lg up ─────────── */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: clamp(2rem, calc(1.5rem + 1.5vw), 3rem);
+  --space-xl: clamp(3rem, calc(2rem + 3vw), 5rem);
+  --space-2xl: clamp(4rem, calc(2.5rem + 4.5vw), 7rem);
+  --space-3xl: clamp(5rem, calc(3rem + 6vw), 10rem);
+  --space-section: clamp(6.25rem, calc(5.75rem + 0.75vw), 6.9rem);
+  --space-section-gap: clamp(2rem, 5vw, 6rem);
+  --page-max: 1600px; /* --max-width — wide, because the marquee runs edge to edge */
+  --nav-height: 60px; /* 52px below 768px */
+
+  /* ── z: named, so nothing is written as a number at the call site ───────── */
+  --z-raised: 3;
+  --z-sticky: 100;
+  --z-overlay: 200;
+
+  /* ── motion: two curves, three durations, and one spring with one owner ─── */
+  --ease-enter: cubic-bezier(0.2, 0.8, 0.2, 1); /* everything the reader triggers */
+  --ease-exit: cubic-bezier(0.4, 0, 1, 0.6); /* declared; the page never spends it */
+  --ease-hero: cubic-bezier(0.22, 1, 0.36, 1); /* entrances and bar fills */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* overshoot — the interrupt only */
+  --t-micro: 0.15s; /* colour on hover */
+  --t-short: 0.25s; /* the default state change */
+  --t-medium: 0.4s; /* a card revealing, a panel opening */
+  --t-fill: 1.2s; /* a budget bar reaching its value */
+  --t-hero-art: 1.1s; /* the hero artwork's entrance */
+  --t-hero-copy: 0.9s; /* the headline's, 220ms behind it */
+  --stagger: 0.14s; /* ONE stagger constant: org nodes, swim lanes, everything */
+
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  /* The light twin has NO surface step: --background and --card are both pure
+     white in the reference, so a card is separated from the page by a hairline
+     and nothing else. --parchment is the hover fill, not a resting surface. */
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-quiet: #f5f5f5; /* --muted, --secondary */
+  --terminal: #1f1d1a; /* still the dark warm block — the idea survives the theme */
+  --terminal-head: #161412;
+  --terminal-rule: #2f2c28;
+
+  --ink: #0a0a0a; /* --foreground, 19.80:1 on --bg */
+  --muted: #737373; /* --muted-foreground, 4.74:1 — AA, with nothing to spare */
+
+  --border: #e5e5e5; /* --border, 1.26:1 — a seam, never a mark */
+  --border-strong: #a1a1a1;
+
+  --accent: #0a0a0a;
+  --accent-ink: #ffffff;
+  --accent-hover: #ffffff;
+
+  --parchment: #fafafa; /* the feature card's hover fill, 1.04:1 */
+  --graphite: #52585d; /* 7.21:1 here — the same metal, text-safe on paper */
+  --aluminum: #a8aeb2; /* 2.24:1 — non-text on paper */
+
+  /* Status drops to the base half of each ramp, which is the reference's own
+     arrangement: one hue at two lightnesses rather than two colours. */
+  --good: #22c55e; /* 2.28:1 on paper */
+  --warn: #f59e0b; /* 2.15:1 */
+  --danger: #dc2626; /* 4.83:1 */
+  --info: #2563eb; /* 5.17:1 */
+  --review: #7c3aed;
+  --idle: #a8aeb2;
+}
+
+/* @role non-text: --good and --warn in the LIGHT theme, at 2.28:1 and 2.15:1 on
+   paper — below the 3:1 non-text floor there, so they are bar fills, dots and
+   chip tints and the WORD beside them carries the meaning. In dark all four
+   clear AA and may be set as text. The rule that makes this safe is in
+   paperclip.md: status is never colour alone, in either theme. */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --t-micro: 0s;
+    --t-short: 0s;
+    --t-medium: 0s;
+    --t-fill: 0s;
+    --t-hero-art: 0s;
+    --t-hero-copy: 0s;
+    --stagger: 0s;
+  }
+}
+
+/* ── components ── */
+/* Authored CSS for the states the pack's Components section specifies. Everything
+   below consumes var(--…) only: the gate rejects a raw colour literal past this
+   line, and every breakpoint below is a @container query except the two marked
+   SELF, because a kit ships components a consumer drops into an arbitrary box. */
+
+/* ---- Button ------------------------------------------------------------- */
+/* The capsule is the pack's shape and the primary action is the inverted field.
+   Its hover is theme-dependent on purpose: on paper the fill goes whiter, on coal
+   it goes away and leaves an outline — there is nowhere brighter to go on white
+   and nowhere darker to go on black. */
+.pc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.2;
+  border: 1px solid transparent;
+  border-radius: var(--r-pill);
+  padding: 0.8rem 2rem;
+  cursor: pointer;
+  transition: background-color var(--t-short) var(--ease-enter),
+    color var(--t-short) var(--ease-enter),
+    border-color var(--t-short) var(--ease-enter);
+}
+
+.pc-btn--sm { padding: 0.45rem 1rem; font-size: 0.8rem; }
+.pc-btn--md { padding: 0.8rem 2rem; }
+.pc-btn--lg { padding: 0.9rem 2.25rem; font-size: 1rem; }
+
+.pc-btn--primary {
+  background-color: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+
+/* Light: go whiter. The token resolves to the brightest stock in the pack. */
+:root[data-theme='light'] .pc-btn--primary:hover {
+  background-color: var(--accent-hover);
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+/* Dark: go hollow. The fill leaves, the label and the border stay. */
+.pc-btn--primary:hover {
+  background-color: transparent;
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* The one button in the pack that is not a capsule — the path not recommended. */
+.pc-btn--secondary {
+  background-color: transparent;
+  color: var(--muted);
+  border-color: var(--border);
+  border-radius: var(--r-md);
+}
+
+.pc-btn--secondary:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.pc-btn--ghost {
+  background-color: transparent;
+  color: var(--muted);
+  border-color: transparent;
+  padding-inline: 0;
+}
+
+.pc-btn--ghost:hover { color: var(--ink); }
+
+.pc-btn:disabled { opacity: 0.6; cursor: default; }
+
+/* Nothing presses: there is no :active transform anywhere in this pack. */
+
+/* ---- Focus -------------------------------------------------------------- */
+/* The ring is the ink, so it inverts with the theme and is always the
+   highest-contrast mark on screen. The reference removes it on its one text
+   input and replaces it with a border colour change; that is a defect, and the
+   kit does not inherit it. */
+.pc-btn:focus-visible,
+.pc-chip:focus-visible,
+.pc-term__tab:focus-visible,
+.pc-node:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* ---- Card --------------------------------------------------------------- */
+.pc-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--space-lg) var(--space-md);
+}
+
+.pc-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-bottom: 0.4rem;
+}
+
+.pc-card__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-card-title);
+  font-weight: 600;
+  letter-spacing: var(--track-card-title);
+  color: var(--ink);
+  margin: 0;
+}
+
+.pc-card__meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
+.pc-card__body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  line-height: var(--lh-body-sm);
+  color: var(--muted);
+}
+
+/* ---- Chip --------------------------------------------------------------- */
+.pc-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  line-height: 1.2;
+  color: var(--muted);
+  background-color: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  padding: 0.45rem 0.7rem;
+  transition: color var(--t-micro) var(--ease-enter),
+    border-color var(--t-micro) var(--ease-enter),
+    background-color var(--t-micro) var(--ease-enter);
+}
+
+.pc-chip:hover { color: var(--ink); border-color: var(--ink); }
+
+/* Selected is the same inversion as the primary action — one idea, not two. */
+.pc-chip--selected {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.pc-chip--accent { color: var(--ink); border-color: var(--border-strong); }
+
+/* ---- Stat --------------------------------------------------------------- */
+/* Label above the value, because the value changes while the reader watches and
+   a label beneath it would move with the number. */
+.pc-stat { display: flex; flex-direction: column; gap: 0.25rem; }
+
+.pc-stat__label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-xs);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.pc-stat__value {
+  font-family: var(--font-display);
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  letter-spacing: var(--track-h4);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.pc-stat__source {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-2xs);
+  color: var(--muted);
+}
+
+/* ---- Heading ------------------------------------------------------------ */
+/* The tracking closes as the size opens; that gradient is the pack. */
+.pc-heading {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+}
+
+.pc-heading--1 {
+  font-size: var(--fs-hero);
+  line-height: var(--lh-hero);
+  letter-spacing: var(--track-hero);
+}
+
+.pc-heading--2 {
+  font-size: var(--fs-section);
+  line-height: var(--lh-section);
+  letter-spacing: var(--track-section);
+}
+
+.pc-heading--3 {
+  font-size: var(--fs-card-title);
+  line-height: 1.3;
+  letter-spacing: var(--track-card-title);
+}
+
+/* ---- Rule --------------------------------------------------------------- */
+.pc-rule { border: 0; border-top: 1px solid var(--border); margin: 0; }
+.pc-rule--strong { border-top-width: 1.5px; border-top-color: var(--border-strong); }
+
+/* ---- SectionBadge ------------------------------------------------------- */
+/* A label, never a control. isolation: isolate keeps the overlay blend from
+   reaching the field behind it. */
+.pc-badge {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-family: var(--font-mono);
+  font-size: var(--fs-badge);
+  font-weight: 500;
+  letter-spacing: var(--track-badge);
+  text-transform: uppercase;
+  border-radius: var(--r-pill);
+  padding: 0.4rem 0.9rem;
+  margin-bottom: var(--space-md);
+}
+
+/* The pack's single noise recipe, at the badge's own strength. */
+.pc-badge::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: var(--dither-url);
+  background-size: var(--dither-tile-size) var(--dither-tile-size);
+  background-repeat: repeat;
+  opacity: var(--dither-opacity-badge);
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+.pc-badge--g01 { color: var(--badge-01-ink); background-image: linear-gradient(90deg, var(--badge-01-from), var(--badge-01-to)); }
+.pc-badge--g02 { color: var(--badge-02-ink); background-image: linear-gradient(90deg, var(--badge-02-from), var(--badge-02-to)); }
+.pc-badge--g03 { color: var(--badge-03-ink); background-image: linear-gradient(90deg, var(--badge-03-from), var(--badge-03-to)); }
+.pc-badge--g04 { color: var(--badge-04-ink); background-image: linear-gradient(90deg, var(--badge-04-from), var(--badge-04-to)); }
+.pc-badge--g05 { color: var(--badge-05-ink); background-image: linear-gradient(90deg, var(--badge-05-from), var(--badge-05-to)); }
+.pc-badge--g06 { color: var(--badge-06-ink); background-image: linear-gradient(90deg, var(--badge-06-from), var(--badge-06-to)); }
+.pc-badge--g07 { color: var(--badge-07-ink); background-image: linear-gradient(90deg, var(--badge-07-from), var(--badge-07-to)); }
+.pc-badge--g08 { color: var(--badge-08-ink); background-image: linear-gradient(90deg, var(--badge-08-from), var(--badge-08-to)); }
+.pc-badge--g09 { color: var(--badge-09-ink); background-image: linear-gradient(90deg, var(--badge-09-from), var(--badge-09-to)); }
+.pc-badge--g10 { color: var(--badge-10-ink); background-image: linear-gradient(90deg, var(--badge-10-from), var(--badge-10-to)); }
+.pc-badge--g11 { color: var(--badge-11-ink); background-image: linear-gradient(90deg, var(--badge-11-from), var(--badge-11-to)); }
+.pc-badge--g12 { color: var(--badge-12-ink); background-image: linear-gradient(90deg, var(--badge-12-from), var(--badge-12-to)); }
+
+/* ---- CapsuleCurtain ----------------------------------------------------- */
+/* Decoration, and it stays decoration: no pointer events, no information. */
+.pc-curtain {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+.pc-curtain__grain {
+  opacity: var(--dither-opacity-art);
+  mix-blend-mode: overlay;
+}
+
+/* ---- HairlineGrid ------------------------------------------------------- */
+/* The gap is the rule. No cell owns a border, so no two cells double one, and
+   the container's radius cuts the cells instead of being fought by them. */
+.pc-grid {
+  display: grid;
+  gap: 1px;
+  background-color: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+.pc-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.pc-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.pc-grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+.pc-grid__cell {
+  display: block;
+  background-color: var(--bg);
+  padding: var(--space-lg) var(--space-md);
+  color: var(--ink);
+  text-decoration: none;
+  transition: background-color var(--t-short) var(--ease-enter),
+    color var(--t-short) var(--ease-enter);
+}
+
+.pc-grid__cell:hover { background-color: var(--surface); }
+:root[data-theme='light'] .pc-grid__cell:hover { background-color: var(--parchment); }
+
+/* Inside the grid the ring goes inward: there is no gap to spare, because the
+   gap is the rule. */
+.pc-grid__cell:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
+}
+
+@container (max-width: 34rem) {
+  .pc-grid--2,
+  .pc-grid--3,
+  .pc-grid--4 { grid-template-columns: 1fr; }
+}
+
+/* ---- OrgNode ------------------------------------------------------------ */
+/* 1.5px, not 1px: a hairline disappears at diagram scale. */
+.pc-node {
+  position: relative;
+  container-type: inline-size;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background-color: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-pill);
+  padding: 12px 14px;
+  transition: border-color var(--t-short) var(--ease-enter),
+    box-shadow var(--t-short) var(--ease-enter);
+}
+
+.pc-node__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background-color: var(--surface);
+  color: var(--muted);
+}
+
+.pc-node__body { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+
+.pc-node__name {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pc-node__model {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  line-height: 1.3;
+  color: var(--muted);
+}
+
+.pc-node__dot {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--r-pill);
+  background-color: var(--warn);
+}
+
+.pc-node--live {
+  border-color: var(--good);
+  box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--good) 25%, transparent);
+}
+
+/* The word, not the ring, is what carries the state. */
+.pc-node__live {
+  position: absolute;
+  top: -9px;
+  right: 10px;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-radius: var(--r-pill);
+  padding: 1px 7px;
+  color: var(--good);
+  background-color: color-mix(in srgb, var(--good) 15%, var(--bg));
+}
+
+@container (max-width: 12rem) {
+  .pc-node { justify-content: center; padding: 8px 10px; gap: 8px; }
+  .pc-node__icon { display: none; }
+  .pc-node__body { align-items: center; text-align: center; }
+  .pc-node__name { font-size: 0.72rem; }
+  .pc-node__model { font-size: 0.62rem; }
+}
+
+/* ---- LedgerRow ---------------------------------------------------------- */
+.pc-ledger {
+  container-type: inline-size;
+  display: grid;
+  grid-template-columns: 160px 1fr 100px;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0.65rem 0;
+}
+
+.pc-ledger__agent { display: flex; align-items: center; gap: 0.6rem; min-width: 0; }
+
+.pc-ledger__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background-color: var(--surface);
+  color: var(--muted);
+}
+
+.pc-ledger__id { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+
+.pc-ledger__name {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.pc-ledger__model {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--muted);
+}
+
+/* A flat 4px, not a capsule: a bar has to read as a measurement with a square
+   end rather than as a lozenge. */
+.pc-ledger__track {
+  display: block;
+  height: 18px;
+  border-radius: 4px;
+  background-color: var(--surface-quiet);
+  overflow: hidden;
+}
+
+/* scaleX from a left origin — never a width transition, which lays out every
+   frame for the whole 1.2s, per bar. */
+.pc-ledger__fill {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background-color: var(--ink);
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform var(--t-fill) var(--ease-hero);
+}
+
+.pc-ledger__cost {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 0.3rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.pc-ledger__spent { font-size: 0.9rem; color: var(--muted); }
+.pc-ledger__budget { font-size: 0.75rem; color: var(--muted); }
+.pc-ledger__note { font-size: 0.68rem; color: var(--warn); }
+
+@container (max-width: 30rem) {
+  .pc-ledger { grid-template-columns: 80px 1fr 76px; gap: 0.6rem; }
+  .pc-ledger__icon,
+  .pc-ledger__model { display: none; }
+}
+
+/* ---- ScheduleLane ------------------------------------------------------- */
+.pc-lane {
+  container-type: inline-size;
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  padding: 18px 0;
+}
+
+.pc-lane__label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-right: 16px;
+  transition: opacity var(--t-medium) var(--ease-enter);
+}
+
+.pc-lane__name {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.pc-lane__cadence {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-xs);
+  color: var(--muted);
+}
+
+.pc-lane--asleep .pc-lane__label { opacity: 0.45; }
+.pc-lane--awake .pc-lane__name { color: var(--good); }
+
+.pc-lane__track { position: relative; height: 40px; }
+
+.pc-lane__line {
+  position: absolute;
+  inset-inline: 0;
+  top: 50%;
+  height: 2px;
+  transform: translateY(-50%);
+  background-color: var(--border-strong);
+}
+
+/* A capsule, not a circle: a point has no ends, and this pack is made of ends. */
+.pc-lane__mark {
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 20px;
+  border-radius: var(--r-pill);
+  border: 2px solid var(--idle);
+  background-color: var(--bg);
+  transform: translate(-50%, -50%);
+  transition: width var(--t-short) var(--ease-enter),
+    height var(--t-short) var(--ease-enter),
+    background-color var(--t-short) var(--ease-enter),
+    border-color var(--t-short) var(--ease-enter);
+}
+
+.pc-lane__mark--active {
+  width: 12px;
+  height: 22px;
+  border-color: var(--good);
+  background-color: var(--good);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--good) 60%, transparent);
+}
+
+.pc-lane__work {
+  position: absolute;
+  bottom: calc(50% + 14px);
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 0.6rem;
+  font-weight: 500;
+  border-radius: var(--r-pill);
+  padding: 2px 7px;
+  color: var(--good);
+  background-color: color-mix(in srgb, var(--good) 15%, var(--bg));
+}
+
+@container (max-width: 26rem) {
+  .pc-lane { grid-template-columns: 86px 1fr; }
+  .pc-lane__label { padding-right: 8px; }
+  .pc-lane__cadence { display: none; }
+}
+
+/* ---- Terminal ----------------------------------------------------------- */
+/* The only warm surface in the pack, because it is quoting a real shell. */
+.pc-term {
+  border-radius: var(--r-md);
+  background-color: var(--terminal);
+  border: 1px solid var(--terminal-rule);
+  overflow: hidden;
+  text-align: left;
+}
+
+.pc-term__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background-color: var(--terminal-head);
+  border-bottom: 1px solid var(--terminal-rule);
+}
+
+.pc-term__dots { display: flex; gap: 6px; }
+
+.pc-term__dots i {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--r-pill);
+  background-color: var(--terminal-rule);
+}
+
+/* --r-sm inside a bar carrying --r-md with 2px of padding: 8 − 2 ≈ 4.8, which
+   is --r-sm exactly. Concentric, so it reads machined rather than dropped on. */
+.pc-term__tabs {
+  display: flex;
+  gap: 2px;
+  margin-left: auto;
+  padding: 2px;
+  border-radius: var(--r-sm);
+  background-color: var(--terminal);
+}
+
+.pc-term__tab {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--terminal-dim);
+  background-color: transparent;
+  border: 0;
+  border-radius: var(--r-sm);
+  padding: 3px 10px;
+  cursor: pointer;
+  transition: color var(--t-micro) var(--ease-enter),
+    background-color var(--t-micro) var(--ease-enter);
+}
+
+.pc-term__tab:hover { color: var(--terminal-mid); }
+
+.pc-term__tab--active {
+  color: var(--manila);
+  background-color: var(--terminal-rule);
+}
+
+.pc-term__body {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.1rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--manila);
+}
+
+.pc-term__prompt { color: var(--terminal-dim); }
+.pc-term__cmd { flex: 1; overflow-x: auto; }
+
+/* ---- Reveal ------------------------------------------------------------- */
+/* One stagger constant for every diagram on the page, so three unrelated
+   figures share a metronome and the scroll reads as one document. */
+.pc-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity var(--t-medium) var(--ease-enter),
+    transform var(--t-medium) var(--ease-enter);
+  transition-delay: calc(var(--i, 0) * var(--stagger));
+}
+
+.pc-reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .pc-reveal { opacity: 1; transform: none; transition: none; }
+  .pc-ledger__fill { transition: none; }
+}
