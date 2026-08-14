@@ -63,6 +63,17 @@ theme, at data density. Take Paperclip for the page that sells that application:
 composition is the argument that the boring monochrome console behind the
 marketing page is the same object.
 
+**And one a screenshot will not separate.** [`ora`](./ora.md) is also dark by
+default, also refuses a brand hue, also sets every machine fact in a monospace,
+and also spends its accent as the inverted field. Three tests tell them apart.
+**Colour:** Ora has none beyond a status set and a six-step verdict ramp, and
+every one of those carries meaning; this pack has a great deal of it and none is
+functional. **Type:** there a serif does the sans job and every human sentence is
+a serif; here there is no serif at all — a tight grotesque over a plain one over
+a monospace. **What the page renders:** a machine's verdict *about the reader*
+there, against *a team the reader is running* here. A number with a grade goes to
+Ora; an org chart, a schedule and a ledger stay here.
+
 ## Palette
 
 Ready-made token layer: [`tokens/paperclip.css`](./tokens/paperclip.css) — copy

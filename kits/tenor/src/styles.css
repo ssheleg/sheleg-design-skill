@@ -1,0 +1,646 @@
+/* SHELEG Design — Tenor token layer (paper default + a dark SECTION, not a theme).
+   Copy verbatim; consume only var(--…) in components.
+
+   Measured 2026-08-14 from https://heytenor.com, stylesheet /assets/home.css?v=45
+   — 33,822 bytes of hand-authored CSS, not a compiled utility bundle, so the
+   system below is the reference's own vocabulary rather than a reconstruction.
+   Every value is lifted from that file or marked DERIVED with the reason.
+
+   The dark block is `[data-surface="dark"]`, applied to a SECTION. This pack has
+   no dark theme: the page is paper, and one or two bands invert inside it. */
+
+:root {
+  color-scheme: light; /* the theme is explicit — never let the UA pick */
+
+  /* ── field: one paper, one deeper paper, and nothing else ────────────────
+     Two fields for the whole site. --bg-deep is not an elevation step; it marks
+     a section as a different room (the reference spends it on one band and on
+     the closing panel), and it never appears inside a card. */
+  --paper: #f7f6f2;
+  --bg: var(--paper); /* the family's core role name */
+  --bg-deep: #eeece6; /* --paper-deep */
+
+  --ink: #10100f; /* 17.61:1 on --bg */
+  --ink-soft: #777773; /* 4.16:1 — see the pack's Gotchas before setting body copy in it */
+  --ink-faint: #a3a29d; /* 2.36:1 — the hero's grey clause, and it fails even AA-large */
+
+  /* Separation is a hairline over ink at 16%, and there is no second border
+     weight. --line-light is the same idea inverted, for the dark band. */
+  --line: rgb(16 16 15 / 0.16);
+  --line-light: rgb(247 246 242 / 0.2);
+
+  /* ── THE accent, and it is a hover state ────────────────────────────────
+     One hue in the entire system. At rest nothing is orange except a 25px
+     square behind the Y of the investor lockup; every other appearance is a
+     hover fill or the focus ring. That is the pack: the accent is what happens
+     when you touch something, not what the page looks like. */
+  --orange: #e9672a;
+  --accent: var(--orange); /* 3.02:1 on --bg — a fill and a ring, never a word */
+  --accent-ink: var(--paper); /* text ON the accent — 3.02:1, so large text only; see the pack's Gotchas */
+
+  /* @role non-text: --accent, --warn — 3.02:1 on --bg. The orange is a fill, a
+     25px lockup square and the 2px focus ring; the reference never sets a word
+     in it and neither may you. Both clear the 3:1 non-text floor and neither
+     clears AA. */
+
+  /* ── severity is VALUE, not hue ──────────────────────────────────────────
+     The reference's guardrail chips prove it: ALWAYS ASK is the orange, LIMIT
+     is a grey, NEVER is the ink. Three levels, one hue, and the word carries
+     the meaning in every one of them. Keep this ramp before reaching for a
+     colour. */
+  --sev-ask: var(--orange);
+  --sev-limit: var(--bg-deep);
+  --sev-never: var(--ink);
+
+  /* DERIVED — the reference has no success state and no error state, because a
+     marketing site paints neither. These two exist for the product surfaces the
+     pack also dresses, and they are the smallest addition that works: --warn is
+     the accent itself (which is what the reference already does), --danger is
+     the ink (which is what NEVER already is), and only --good is a new value.
+     #296b46 was chosen against the gate: 5.91:1 on --bg, and 10.7 from the
+     accent under protanopia, where the family's floor is 8.0. Status is never
+     by colour alone here — every severity in the reference carries its word. */
+  --good: #296b46;
+  --warn: var(--orange);
+  --danger: var(--ink);
+
+  /* The staircase's two middle rungs. The only oklch in the reference and the
+     only achromatic values in it: pure neutrals sitting between a warm paper and
+     a warm ink, so they read faintly cool against their own field. Kept as
+     measured — see the pack's Gotchas before warming them. */
+  --stair-2: oklch(89% 0 0);
+  --stair-3: oklch(62% 0 0);
+
+  /* ── geometry: there is no radius and there are no shadows ───────────────
+     Zero occurrences of border-radius and zero of box-shadow in the whole
+     stylesheet. Separation is the hairline; emphasis is a filled rectangle. */
+  --radius: 0;
+
+  --shell: 1440px; /* the page shell, centred */
+  --shell-pad: clamp(22px, 4vw, 68px);
+  --header-height: 78px; /* 72px below 1080px */
+  --section-space: clamp(40px, 4.5vw, 64px);
+  --section-space-tight: clamp(24px, 2.5vw, 36px);
+  --content-space: clamp(32px, 3.5vw, 48px);
+
+  /* ── type: two families, two weights, and tracking that runs both ways ───
+     Instrument Sans is loaded as a variable font across wdth 75..100 and wght
+     400..600 and is used at exactly one instance: weight 400, default width.
+     IBM Plex Mono is loaded at 400 and 500 and both are used — 500 for every
+     label, 400 for the copyright line alone. */
+  --sans: "Instrument Sans", "Helvetica Neue", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --weight-sans: 400;
+  --weight-mono: 500;
+
+  /* The display ramp is fluid end to end — the reference declares twenty
+     distinct clamps and not one fixed display size. Line-height goes BELOW one
+     and tracking goes negative; both tighten as the size grows. */
+  --fs-hero: clamp(2.55rem, 4.6vw, 4.65rem);
+  --lh-hero: 0.91;
+  --track-hero: -0.065em;
+  --fs-display: clamp(3rem, 6.5vw, 6.6rem);
+  --lh-display: 0.93;
+  --track-display: -0.06em;
+  --fs-display-xl: clamp(4rem, 8vw, 8rem); /* the FAQ word, and nothing else */
+  --fs-h2: clamp(2.6rem, 4.6vw, 4.9rem);
+  --lh-h2: 0.94;
+  --fs-h3: clamp(2.25rem, 4.4vw, 4.6rem);
+  --lh-h3: 0.98;
+  --track-h3: -0.055em;
+  --fs-card: clamp(1.45rem, 2.4vw, 2.2rem);
+  --lh-card: 1.05;
+  --track-card: -0.035em;
+  --fs-card-sm: clamp(1.2rem, 2.1vw, 1.9rem);
+  --track-card-sm: -0.03em;
+  --fs-lead: clamp(1rem, 1.35vw, 1.25rem);
+  --lh-lead: 1.55;
+  --fs-body: 0.94rem;
+  --lh-body: 1.55;
+  --fs-body-sm: 0.84rem;
+  --lh-body-sm: 1.48;
+
+  /* The mono ramp is fixed, small, and tracked the other way. */
+  --fs-nav: 0.7rem;
+  --track-nav: 0.08em;
+  --fs-eyebrow: 0.67rem;
+  --fs-label: 0.65rem;
+  --track-label: 0.12em;
+  --fs-micro: 0.62rem;
+  --fs-cta: 0.65rem;
+  --track-cta: 0.09em;
+  --fs-cta-lg: 0.72rem;
+
+  /* Measure is set in `ch` on the display and in px on the prose. The narrow
+     display measure is what forces the three- and four-line stacks the pack is
+     recognised by. */
+  --measure-hero: 12ch;
+  --measure-h2: 9.5ch;
+  --measure-h3: 10ch;
+  --measure-thesis: 8ch;
+  --measure-card: 11ch;
+  --measure-lead: 580px;
+  --measure-body: 32ch;
+
+  /* ── motion: two curves, and the second one is only for a grid ─────────── */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1); /* everything the reader triggers */
+  --ease-grid: cubic-bezier(0.25, 1, 0.5, 1); /* cell inversion and the drift */
+  --dur-hover: 180ms;
+  --dur-cell: 200ms; /* a use-case cell inverting */
+  --dur-panel: 240ms; /* a capability cell inverting */
+  --dur-nav: 260ms; /* the nav underline wipe */
+  --dur-reveal-opacity: 640ms;
+  --dur-reveal-shift: 820ms;
+  --dur-stagger: 110ms; /* per step, four steps deep */
+  --shift-reveal: 28px; /* how far a revealed block travels */
+  --dur-drift: 10s; /* the one ambient loop */
+
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: var(--weight-sans);
+}
+
+/* The dark band. A SECTION attribute, not a theme: the page stays paper and one
+   or two bands invert inside it, which is why the greys below are composites of
+   the paper over the ink rather than a second neutral ramp. The reference writes
+   them as color-mix() with transparent so they sit over a video frame; these are
+   the same values resolved to solids so they can be measured. */
+[data-surface="dark"] {
+  color-scheme: dark;
+
+  --bg: #10100f;
+  --bg-deep: #10100f;
+  --ink: #f7f6f2; /* 17.61:1 on --bg */
+  --ink-soft: #a4a3a0; /* paper at 64% over the ink — 7.55:1 */
+  --ink-faint: #7f7e7c; /* paper at 48% — 4.69:1, labels only */
+  --line: rgb(247 246 242 / 0.2);
+  --line-light: rgb(16 16 15 / 0.16);
+
+  --accent-ink: #f7f6f2;
+  --sev-limit: #4a4a48;
+  /* DERIVED, same reasoning as the light block and re-measured on this field:
+     8.45:1 on --bg, and 10.7 from the accent under deuteranopia. A surface
+     block that remaps eleven tokens and forgets the status set is a defect this
+     library has already shipped once. */
+  --good: #57c08c;
+  --danger: #f7f6f2;
+}
+
+/* Reduced motion. The reference collapses every duration to 0.01ms with
+   iteration-count clamped to 1, which lands an animation on its final frame
+   rather than strobing it, and then names its one infinite loop separately to
+   hold the FIRST frame instead. Both are correct; this pack ships 0s because a
+   duration of zero cannot be misread, and keeps the named stop for the loop. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-hover: 0s;
+    --dur-cell: 0s;
+    --dur-panel: 0s;
+    --dur-nav: 0s;
+    --dur-reveal-opacity: 0s;
+    --dur-reveal-shift: 0s;
+    --dur-stagger: 0s;
+    --dur-drift: 0s;
+    --shift-reveal: 0px;
+  }
+}
+
+/* ── components ── */
+/* Authored CSS for the states the pack's Components section specifies. Everything
+   below consumes var(--…) only: the gate rejects a raw colour literal past this line.
+   Every breakpoint here is a @container query, because a kit ships components a
+   consumer drops into an arbitrary box. There is no border-radius in this file, and
+   that is not an omission — the pack has one corner value and it is zero. */
+
+/* ---- the focus ring, once, for everything ------------------------------- */
+/* The orange is 3.02:1 on the paper, above the 3:1 non-text floor and nothing
+   more, so the 4px offset is load-bearing rather than decorative. */
+.tn-btn:focus-visible,
+.tn-chip:focus-visible,
+.tn-cell:focus-visible,
+.tn-stair__step:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* ---- Button ------------------------------------------------------------- */
+.tn-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  min-height: 44px;
+  padding: 0 17px;
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  color: var(--accent-ink);
+  font-family: var(--mono);
+  font-size: var(--fs-cta);
+  font-weight: var(--weight-mono);
+  line-height: 1;
+  letter-spacing: var(--track-cta);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background var(--dur-hover) ease, border-color var(--dur-hover) ease,
+    color var(--dur-hover) ease, transform var(--dur-hover) ease;
+}
+
+.tn-btn--sm { min-height: 42px; padding: 0 19px; gap: 14px; font-size: var(--fs-nav); }
+.tn-btn--md { min-height: 44px; min-width: 158px; }
+.tn-btn--lg { min-height: 58px; min-width: 170px; padding: 0 24px; font-size: var(--fs-cta-lg); }
+
+/* The hover IS the accent, and it is the only place the page carries colour. */
+.tn-btn--primary:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.tn-btn--lg.tn-btn--primary:hover { transform: translateY(-2px); }
+
+/* Where the label is the only statement of what the control does, the fill stays
+   ink and the BORDER takes the accent: a paper label on an orange fill is 3.02:1,
+   which a 10.4px mono cap cannot legally use. */
+.tn-btn--secondary {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.tn-btn--secondary:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+.tn-btn--ghost {
+  min-height: 0;
+  padding: 0;
+  background: transparent;
+  border-color: transparent;
+  color: var(--ink-soft);
+}
+
+.tn-btn--ghost:hover { color: var(--ink); }
+
+/* Not specified by the reference — this pack's decision, stated in Components. */
+.tn-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ---- Card --------------------------------------------------------------- */
+.tn-card {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: var(--content-space);
+  padding: clamp(25px, 3vw, 42px);
+  background: var(--bg);
+  border: 1px solid var(--line);
+}
+
+.tn-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.tn-card__title {
+  margin: 0;
+  max-width: var(--measure-card);
+  font-family: var(--sans);
+  font-size: var(--fs-card);
+  font-weight: var(--weight-sans);
+  letter-spacing: var(--track-card);
+  line-height: var(--lh-card);
+  color: var(--ink);
+}
+
+.tn-card__meta {
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  font-weight: var(--weight-mono);
+  letter-spacing: var(--track-nav);
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.tn-card__body { color: var(--ink); font-size: var(--fs-body); line-height: var(--lh-body); }
+
+/* CONTAINER — the head stacks against the card's own width. */
+@container (max-width: 26rem) {
+  .tn-card__head { flex-direction: column; align-items: flex-start; gap: 6px; }
+}
+
+/* ---- Chip --------------------------------------------------------------- */
+.tn-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 9px;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  font-weight: var(--weight-mono);
+  line-height: 1;
+  letter-spacing: var(--track-nav);
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: border-color var(--dur-hover) ease, color var(--dur-hover) ease;
+}
+
+.tn-chip:hover { border-color: var(--ink); color: var(--ink); }
+.tn-chip--accent { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.tn-chip--selected { background: var(--ink); border-color: var(--ink); color: var(--accent-ink); }
+
+/* ---- Stat --------------------------------------------------------------- */
+.tn-stat {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tn-stat__label {
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  font-weight: var(--weight-mono);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.tn-stat__value {
+  font-family: var(--mono);
+  font-size: var(--fs-card-sm);
+  font-weight: var(--weight-mono);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.tn-stat__source {
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  color: var(--ink-soft);
+}
+
+/* ---- Heading ------------------------------------------------------------ */
+.tn-heading {
+  margin: 0;
+  font-family: var(--sans);
+  font-weight: var(--weight-sans);
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.tn-heading--1 {
+  max-width: var(--measure-hero);
+  font-size: var(--fs-hero);
+  line-height: var(--lh-hero);
+  letter-spacing: var(--track-hero);
+}
+
+.tn-heading--2 {
+  max-width: var(--measure-h2);
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--track-display);
+}
+
+.tn-heading--3 {
+  max-width: var(--measure-card);
+  font-size: var(--fs-card);
+  line-height: var(--lh-card);
+  letter-spacing: var(--track-card);
+}
+
+/* ---- Rule --------------------------------------------------------------- */
+/* One weight, deliberately: --strong resolves to the same hairline, because a
+   heavier line is not this pack's answer to a divider that reads too quietly. */
+.tn-rule { height: 1px; border: 0; margin: 0; background: var(--line); }
+.tn-rule--strong { background: var(--line); }
+
+/* ---- Eyebrow ------------------------------------------------------------ */
+.tn-eyebrow {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: 0 0 clamp(16px, 2vw, 28px);
+  font-family: var(--mono);
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--weight-mono);
+  letter-spacing: var(--track-label);
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.tn-eyebrow__index { font-variant-numeric: tabular-nums; }
+
+/* ---- SplitHeadline — the two-clause sentence ---------------------------- */
+.tn-split {
+  margin: 0;
+  font-family: var(--sans);
+  font-weight: var(--weight-sans);
+  text-wrap: balance;
+  color: var(--ink);
+}
+
+.tn-split--1 {
+  max-width: var(--measure-hero);
+  font-size: var(--fs-hero);
+  line-height: var(--lh-hero);
+  letter-spacing: var(--track-hero);
+}
+
+.tn-split--2 {
+  max-width: var(--measure-h2);
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--track-display);
+}
+
+.tn-split__muted,
+.tn-split__claim { display: block; }
+.tn-split__muted { color: var(--ink-faint); }
+.tn-split__claim { color: var(--ink); }
+
+/* ---- Staircase — the signature element ---------------------------------- */
+.tn-stair {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tn-stair__step {
+  display: grid;
+  grid-template-columns: clamp(48px, 5vw, 72px) minmax(0, 1fr);
+  align-items: center;
+  min-height: clamp(86px, 7.6vw, 116px);
+  padding: 18px clamp(20px, 2.6vw, 38px);
+  background: var(--bg);
+  border: 1px solid var(--line);
+}
+
+/* The hairlines share an edge instead of doubling. */
+.tn-stair__step + .tn-stair__step { margin-top: -1px; }
+
+/* Four rungs, each 3% narrower and 3% further right, each a step darker. */
+.tn-stair__step--2 { width: 97%; margin-left: 3%; background: var(--stair-2); }
+/* Step 3 keeps the INK label: the ink is 5.23:1 on this rung and the paper only
+   3.37:1, so the inversion happens once, on step 4, and not twice. */
+.tn-stair__step--3 { width: 94%; margin-left: 6%; background: var(--stair-3); }
+.tn-stair__step--4 { width: 91%; margin-left: 9%; background: var(--ink); color: var(--accent-ink); }
+
+.tn-stair__index {
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  font-weight: var(--weight-mono);
+  letter-spacing: var(--track-nav);
+  opacity: 0.62;
+}
+
+.tn-stair__text {
+  max-width: 24ch;
+  margin: 0;
+  font-family: var(--sans);
+  font-size: var(--fs-card-sm);
+  font-weight: var(--weight-sans);
+  letter-spacing: var(--track-card-sm);
+  line-height: 1.08;
+}
+
+/* CONTAINER — the index column collapses onto the text below 20rem of the
+   staircase's own width, not the screen's. */
+@container (max-width: 20rem) {
+  .tn-stair__step { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .tn-stair__step--2,
+  .tn-stair__step--3,
+  .tn-stair__step--4 { width: 100%; margin-left: 0; }
+}
+
+/* ---- Lattice ------------------------------------------------------------ */
+/* The container draws top and left; each cell draws right and bottom. That is
+   what lets a cell go solid on hover with no seam along its own border. */
+.tn-lattice {
+  container-type: inline-size;
+  display: grid;
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+
+.tn-lattice--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.tn-lattice--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+@container (max-width: 52rem) {
+  .tn-lattice--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@container (max-width: 30rem) {
+  .tn-lattice--2,
+  .tn-lattice--3 { grid-template-columns: minmax(0, 1fr); }
+}
+
+.tn-cell {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+  padding: clamp(25px, 3vw, 42px);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  transition: background var(--dur-panel) ease, color var(--dur-panel) ease;
+}
+
+.tn-cell__index {
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  font-weight: var(--weight-mono);
+  letter-spacing: var(--track-nav);
+  color: var(--ink-soft);
+  transition: color var(--dur-panel) ease;
+}
+
+.tn-cell__title {
+  max-width: var(--measure-card);
+  margin: auto 0 0;
+  font-family: var(--sans);
+  font-size: var(--fs-card);
+  font-weight: var(--weight-sans);
+  letter-spacing: var(--track-card);
+  line-height: var(--lh-card);
+}
+
+.tn-cell__body {
+  max-width: var(--measure-body);
+  margin: 17px 0 0;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--ink-soft);
+  transition: color var(--dur-panel) ease;
+}
+
+/* The pack's only hover fill, and it never lifts — there is nothing to lift into. */
+.tn-cell--invert:hover { background: var(--ink); color: var(--accent-ink); }
+.tn-cell--invert:hover .tn-cell__index,
+.tn-cell--invert:hover .tn-cell__body { color: var(--ink-faint); }
+
+@container (max-width: 22rem) {
+  .tn-cell { min-height: 0; padding: 20px; }
+  .tn-cell__title { margin-top: 24px; }
+  .tn-cell__body { display: none; }
+}
+
+/* ---- FilmFrame ---------------------------------------------------------- */
+.tn-film {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.tn-film--light { background: var(--bg-deep); }
+.tn-film--dark { background: var(--ink); }
+
+.tn-film__video { width: 100%; height: 100%; object-fit: contain; }
+
+/* ---- Guardrail ---------------------------------------------------------- */
+.tn-guard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0;
+  padding: 8px 10px;
+  background: var(--bg-deep);
+}
+
+.tn-guard__chip {
+  flex: 0 0 auto;
+  min-width: 88px;
+  padding: 5px 8px;
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  font-weight: var(--weight-mono);
+  letter-spacing: var(--track-nav);
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.tn-guard--ask .tn-guard__chip { background: var(--sev-ask); color: var(--accent-ink); }
+.tn-guard--limit .tn-guard__chip { background: var(--sev-limit); color: var(--ink); }
+.tn-guard--never .tn-guard__chip { background: var(--sev-never); color: var(--accent-ink); }
+
+.tn-guard__text { font-size: var(--fs-body); line-height: var(--lh-body); color: var(--ink); }
+
+/* ---- degrade to calm ---------------------------------------------------- */
+/* The duration tokens already collapse to 0s in the token block above; these are
+   the two properties that are not driven by a token. */
+@media (prefers-reduced-motion: reduce) {
+  .tn-btn:hover,
+  .tn-btn--lg.tn-btn--primary:hover { transform: none; }
+}

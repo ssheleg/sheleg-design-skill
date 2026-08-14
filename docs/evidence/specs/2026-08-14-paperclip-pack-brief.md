@@ -1,4 +1,4 @@
-# Brief — `paperclip`, the eighteenth style pack
+# Brief — `paperclip`, the twentieth style pack
 
 - **Run:** `feat/paperclip-pack`, opened 2026-08-14 from `main` at `cc3b471`, **in its own
   worktree** at `/Users/sshlg/DATA/sshlg-skills-wt-paperclip`
@@ -27,10 +27,17 @@ edit — and had claimed **1.28.0**.
 
 1. The worktree branches from `main`, which holds **seventeen** packs. Every count this
    run writes is true of eighteen and will be wrong the moment `ora` and `tenor` land. The
-   merge owes a recount, not a re-read.
+   merge owes a recount, not a re-read. **Discharged at 20:05** — that run landed both
+   packs as 1.29.0, the merge recounted every site to twenty, and the counted-claims gate
+   named all eleven of them rather than leaving one to be noticed later.
 2. **1.29.0 was taken to leave 1.28.0 alone.** The number is provisional and the CHANGELOG
    entry says so at the top. A version another run had already taken is a defect this
-   repository shipped once already (`a9c497e`).
+   repository shipped once already (`a9c497e`). **And it happened anyway:** the other run
+   skipped 1.28.0 and shipped `ora` + `tenor` **as 1.29.0**, so the collision this branch
+   tried to avoid arrived from the other side. The merge moved this pack to 1.30.0. The
+   lesson is not "pick a higher number" — it is that a version is not reservable by
+   guessing, and the only reservation that would have worked is a lease on the number
+   itself.
 
 `agent-sync`'s own status could not have prevented this: its `fs` backend keys the run id
 off the repository's shared `.agent-sync/run-id`, so it reported *this* session as
@@ -58,12 +65,13 @@ curtain of gradient capsules, and twelve gradient section badges — and both ar
 scenery.
 
 The identity in one sentence: **delete every colour from this page and it loses its
-poster, not its meaning.** That is also the test the T27 pair is built around.
+poster, not its meaning.** That is also the test the T29 pair is built around.
 
-## Why the library has room for it, at eighteen packs
+## Why the library has room for it, at twenty packs
 
-The pairwise question, asked against all seventeen (standing instruction 10). Three forks
-are sharp enough to matter, and two of them are written into the packs on both sides:
+The pairwise question, asked against all seventeen at authoring time and re-asked against
+`ora` and `tenor` at merge (standing instruction 10). Four forks are sharp enough to
+matter, and every one of them is written into the packs on both sides:
 
 - **`instrument-console`** — the near-twin on first impression: near-black, mono, machines
   at work. The distinction is what colour is *for*. There, one electric blue marks the
@@ -77,9 +85,18 @@ are sharp enough to matter, and two of them are written into the packs on both s
   Warm oat invites a consumer to touch; neutral coal tells an operator the interface will
   stay out of the way. Reciprocal clause added.
 
+- **`ora`** — added at merge, and the sharpest of the four because a thumbnail separates
+  none of it: dark by default, no brand hue, accent as the inverted field, monospace for
+  machine facts. Three tests do separate them, and both packs now carry all three — colour
+  (meaningful there, ornament here), type (a serif does the sans job there, no serif exists
+  here), and what the page renders (a verdict about the reader, against a team the reader
+  is running). Reciprocal clause added in both directions; no gate could have asked for it,
+  because neither pack existed in the other's tree.
+
 Nothing in the library holds the "colour is ornament" thesis. `prism` has an iridescent
 wash but spends it as identity; `briefing-room` and `maquette` are dark with a functional
-hue; `roster` and `scoreboard` are white pages about proof. The gap is real.
+hue; `roster` and `scoreboard` are white pages about proof; `ora` is dark and has no
+ornament at all. The gap is real.
 
 ## What the reference gets wrong, and the pack does not inherit
 

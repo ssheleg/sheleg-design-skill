@@ -28,6 +28,10 @@ performs stops being a drawing.
 that is `instrument-console`. A warm, humane document arguing from provenance —
 `field-notes`. A page that shows the product rather than draws it — `showroom`.
 A developer page whose argument is a code sample rather than a drawing, set in the reader's own monospace — [`manpage`](./manpage.md).
+A page that also refuses radius outright but on **warm** paper, whose structure is an
+organisation rather than a drawing and whose proof is the product on video —
+[`tenor`](./tenor.md); the tell is the marks, since this pack draws registration marks
+over a visible grid and that one has neither.
 And not for **anything that needs a rounded corner**: this pack has no radius
 token to give you, and adding one damages it more than changing its blue would.
 

@@ -52,7 +52,11 @@ verdict about the visitor, proven by returning it live —
 [`datasheet`](./datasheet.md). A product that sorts the reader's incoming mess into
 named categories, and proves it by colour-coding the categories —
 [`pigeonhole`](./pigeonhole.md), which shares this pack's motion posture: the two
-are the quietest in the family, entrance-only, with no scroll clock between them. And **not** the product UI itself: this is the
+are the quietest in the family, entrance-only, with no scroll clock between them.
+A developer page whose focal element is a score a machine assigned the reader,
+on a coal field, with a serif carrying the prose — [`ora`](./ora.md); it refuses
+a second family for the same reason this pack does and then spends the freedom
+the other way, mono for facts and serif for sentences. And **not** the product UI itself: this is the
 marketing page a developer lands on, not the dashboard they log into afterwards,
 which is [`workbench`](./workbench.md).
 

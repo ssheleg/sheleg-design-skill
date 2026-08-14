@@ -68,7 +68,7 @@ and pretending otherwise is worse than the gap.
    - **Binding the root size to the platform's text-size setting is yours**, and
      so is re-checking every line ceiling you set at the largest step — a
      three-line headline ceiling is a three-line ceiling only at one text size.
-     Nothing in the eighteen packs states a value for this and this file does not
+     Nothing in the twenty packs states a value for this and this file does not
      invent one; the honest move is to say out loud that you decided it. WCAG
      1.4.4 (200% resize) is the floor you are working against, and it is not
      satisfied by a `vw` ramp.

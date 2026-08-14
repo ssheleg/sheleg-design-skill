@@ -234,7 +234,7 @@ ${c("bold", "What it installs")}
   DESIGN_SYNC_BRIDGE.md   the Claude Design contract (what a pack sends, and
                        what does not cross)
   AI_PRODUCT_PATTERNS.md  chat / agent / streaming surfaces (honest state)
-  styles/              eighteen style packs — instrument-console (dark console),
+  styles/              twenty style packs — instrument-console (dark console),
                        editorial-luxury (warm editorial), workbench (light/dark
                        product UI), briefing-room (dark 16:9 presentation deck),
                        atrium (warm cream consumer health), orchard (friendly
@@ -251,7 +251,11 @@ ${c("bold", "What it installs")}
                        pigeonhole (a white sorting wall whose nine pastel
                        categories are a filing scheme, one hue each),
                        roster (a white wall of other people's marks: the proof
-                       is a name rather than a number),
+                       is a name rather than a number), ora (a warm coal field
+                       whose accent is the inverted field, a serif over mono,
+                       and a terminal cut below the page), tenor (warm paper at
+                       zero radius and zero shadow, one orange that exists only
+                       on hover, and proof delivered as silent looping video),
                        paperclip (neutral coal with no functional colour at all
                        and one curtain of gradient capsules that cannot be
                        clicked, for products that run themselves) —

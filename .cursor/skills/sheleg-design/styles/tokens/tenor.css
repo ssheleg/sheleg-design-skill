@@ -1,0 +1,207 @@
+/* SHELEG Design — Tenor token layer (paper default + a dark SECTION, not a theme).
+   Copy verbatim; consume only var(--…) in components.
+
+   Measured 2026-08-14 from https://heytenor.com, stylesheet /assets/home.css?v=45
+   — 33,822 bytes of hand-authored CSS, not a compiled utility bundle, so the
+   system below is the reference's own vocabulary rather than a reconstruction.
+   Every value is lifted from that file or marked DERIVED with the reason.
+
+   The dark block is `[data-surface="dark"]`, applied to a SECTION. This pack has
+   no dark theme: the page is paper, and one or two bands invert inside it. */
+
+:root {
+  color-scheme: light; /* the theme is explicit — never let the UA pick */
+
+  /* ── field: one paper, one deeper paper, and nothing else ────────────────
+     Two fields for the whole site. --bg-deep is not an elevation step; it marks
+     a section as a different room (the reference spends it on one band and on
+     the closing panel), and it never appears inside a card. */
+  --paper: #f7f6f2;
+  --bg: var(--paper); /* the family's core role name */
+  --bg-deep: #eeece6; /* --paper-deep */
+
+  --ink: #10100f; /* 17.61:1 on --bg */
+  --ink-soft: #777773; /* 4.16:1 — see the pack's Gotchas before setting body copy in it */
+  --ink-faint: #a3a29d; /* 2.36:1 — the hero's grey clause, and it fails even AA-large */
+
+  /* Separation is a hairline over ink at 16%, and there is no second border
+     weight. --line-light is the same idea inverted, for the dark band. */
+  --line: rgb(16 16 15 / 0.16);
+  --line-light: rgb(247 246 242 / 0.2);
+
+  /* ── THE accent, and it is a hover state ────────────────────────────────
+     One hue in the entire system. At rest nothing is orange except a 25px
+     square behind the Y of the investor lockup; every other appearance is a
+     hover fill or the focus ring. That is the pack: the accent is what happens
+     when you touch something, not what the page looks like. */
+  --orange: #e9672a;
+  --accent: var(--orange); /* 3.02:1 on --bg — a fill and a ring, never a word */
+  --accent-ink: var(--paper); /* text ON the accent — 3.02:1, so large text only; see the pack's Gotchas */
+
+  /* @role non-text: --accent, --warn — 3.02:1 on --bg. The orange is a fill, a
+     25px lockup square and the 2px focus ring; the reference never sets a word
+     in it and neither may you. Both clear the 3:1 non-text floor and neither
+     clears AA. */
+
+  /* ── severity is VALUE, not hue ──────────────────────────────────────────
+     The reference's guardrail chips prove it: ALWAYS ASK is the orange, LIMIT
+     is a grey, NEVER is the ink. Three levels, one hue, and the word carries
+     the meaning in every one of them. Keep this ramp before reaching for a
+     colour. */
+  --sev-ask: var(--orange);
+  --sev-limit: var(--bg-deep);
+  --sev-never: var(--ink);
+
+  /* DERIVED — the reference has no success state and no error state, because a
+     marketing site paints neither. These two exist for the product surfaces the
+     pack also dresses, and they are the smallest addition that works: --warn is
+     the accent itself (which is what the reference already does), --danger is
+     the ink (which is what NEVER already is), and only --good is a new value.
+     #296b46 was chosen against the gate: 5.91:1 on --bg, and 10.7 from the
+     accent under protanopia, where the family's floor is 8.0. Status is never
+     by colour alone here — every severity in the reference carries its word. */
+  --good: #296b46;
+  --warn: var(--orange);
+  --danger: var(--ink);
+
+  /* The staircase's two middle rungs. The only oklch in the reference and the
+     only achromatic values in it: pure neutrals sitting between a warm paper and
+     a warm ink, so they read faintly cool against their own field. Kept as
+     measured — see the pack's Gotchas before warming them. */
+  --stair-2: oklch(89% 0 0);
+  --stair-3: oklch(62% 0 0);
+
+  /* ── geometry: there is no radius and there are no shadows ───────────────
+     Zero occurrences of border-radius and zero of box-shadow in the whole
+     stylesheet. Separation is the hairline; emphasis is a filled rectangle. */
+  --radius: 0;
+
+  --shell: 1440px; /* the page shell, centred */
+  --shell-pad: clamp(22px, 4vw, 68px);
+  --header-height: 78px; /* 72px below 1080px */
+  --section-space: clamp(40px, 4.5vw, 64px);
+  --section-space-tight: clamp(24px, 2.5vw, 36px);
+  --content-space: clamp(32px, 3.5vw, 48px);
+
+  /* ── type: two families, two weights, and tracking that runs both ways ───
+     Instrument Sans is loaded as a variable font across wdth 75..100 and wght
+     400..600 and is used at exactly one instance: weight 400, default width.
+     IBM Plex Mono is loaded at 400 and 500 and both are used — 500 for every
+     label, 400 for the copyright line alone. */
+  --sans: "Instrument Sans", "Helvetica Neue", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --weight-sans: 400;
+  --weight-mono: 500;
+
+  /* The display ramp is fluid end to end — the reference declares twenty
+     distinct clamps and not one fixed display size. Line-height goes BELOW one
+     and tracking goes negative; both tighten as the size grows. */
+  --fs-hero: clamp(2.55rem, 4.6vw, 4.65rem);
+  --lh-hero: 0.91;
+  --track-hero: -0.065em;
+  --fs-display: clamp(3rem, 6.5vw, 6.6rem);
+  --lh-display: 0.93;
+  --track-display: -0.06em;
+  --fs-display-xl: clamp(4rem, 8vw, 8rem); /* the FAQ word, and nothing else */
+  --fs-h2: clamp(2.6rem, 4.6vw, 4.9rem);
+  --lh-h2: 0.94;
+  --fs-h3: clamp(2.25rem, 4.4vw, 4.6rem);
+  --lh-h3: 0.98;
+  --track-h3: -0.055em;
+  --fs-card: clamp(1.45rem, 2.4vw, 2.2rem);
+  --lh-card: 1.05;
+  --track-card: -0.035em;
+  --fs-card-sm: clamp(1.2rem, 2.1vw, 1.9rem);
+  --track-card-sm: -0.03em;
+  --fs-lead: clamp(1rem, 1.35vw, 1.25rem);
+  --lh-lead: 1.55;
+  --fs-body: 0.94rem;
+  --lh-body: 1.55;
+  --fs-body-sm: 0.84rem;
+  --lh-body-sm: 1.48;
+
+  /* The mono ramp is fixed, small, and tracked the other way. */
+  --fs-nav: 0.7rem;
+  --track-nav: 0.08em;
+  --fs-eyebrow: 0.67rem;
+  --fs-label: 0.65rem;
+  --track-label: 0.12em;
+  --fs-micro: 0.62rem;
+  --fs-cta: 0.65rem;
+  --track-cta: 0.09em;
+  --fs-cta-lg: 0.72rem;
+
+  /* Measure is set in `ch` on the display and in px on the prose. The narrow
+     display measure is what forces the three- and four-line stacks the pack is
+     recognised by. */
+  --measure-hero: 12ch;
+  --measure-h2: 9.5ch;
+  --measure-h3: 10ch;
+  --measure-thesis: 8ch;
+  --measure-card: 11ch;
+  --measure-lead: 580px;
+  --measure-body: 32ch;
+
+  /* ── motion: two curves, and the second one is only for a grid ─────────── */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1); /* everything the reader triggers */
+  --ease-grid: cubic-bezier(0.25, 1, 0.5, 1); /* cell inversion and the drift */
+  --dur-hover: 180ms;
+  --dur-cell: 200ms; /* a use-case cell inverting */
+  --dur-panel: 240ms; /* a capability cell inverting */
+  --dur-nav: 260ms; /* the nav underline wipe */
+  --dur-reveal-opacity: 640ms;
+  --dur-reveal-shift: 820ms;
+  --dur-stagger: 110ms; /* per step, four steps deep */
+  --shift-reveal: 28px; /* how far a revealed block travels */
+  --dur-drift: 10s; /* the one ambient loop */
+
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: var(--weight-sans);
+}
+
+/* The dark band. A SECTION attribute, not a theme: the page stays paper and one
+   or two bands invert inside it, which is why the greys below are composites of
+   the paper over the ink rather than a second neutral ramp. The reference writes
+   them as color-mix() with transparent so they sit over a video frame; these are
+   the same values resolved to solids so they can be measured. */
+[data-surface="dark"] {
+  color-scheme: dark;
+
+  --bg: #10100f;
+  --bg-deep: #10100f;
+  --ink: #f7f6f2; /* 17.61:1 on --bg */
+  --ink-soft: #a4a3a0; /* paper at 64% over the ink — 7.55:1 */
+  --ink-faint: #7f7e7c; /* paper at 48% — 4.69:1, labels only */
+  --line: rgb(247 246 242 / 0.2);
+  --line-light: rgb(16 16 15 / 0.16);
+
+  --accent-ink: #f7f6f2;
+  --sev-limit: #4a4a48;
+  /* DERIVED, same reasoning as the light block and re-measured on this field:
+     8.45:1 on --bg, and 10.7 from the accent under deuteranopia. A surface
+     block that remaps eleven tokens and forgets the status set is a defect this
+     library has already shipped once. */
+  --good: #57c08c;
+  --danger: #f7f6f2;
+}
+
+/* Reduced motion. The reference collapses every duration to 0.01ms with
+   iteration-count clamped to 1, which lands an animation on its final frame
+   rather than strobing it, and then names its one infinite loop separately to
+   hold the FIRST frame instead. Both are correct; this pack ships 0s because a
+   duration of zero cannot be misread, and keeps the named stop for the loop. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-hover: 0s;
+    --dur-cell: 0s;
+    --dur-panel: 0s;
+    --dur-nav: 0s;
+    --dur-reveal-opacity: 0s;
+    --dur-reveal-shift: 0s;
+    --dur-stagger: 0s;
+    --dur-drift: 0s;
+    --shift-reveal: 0px;
+  }
+}

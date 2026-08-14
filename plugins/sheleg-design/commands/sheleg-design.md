@@ -12,9 +12,9 @@ Invoke the `sheleg-design` skill and apply it to the current request.
   how a keyboard path ends up animated.
 - Task: $ARGUMENTS — if empty, ask what page or section to build/upgrade.
 - **If the arguments name a style pack, use that pack without re-asking.** The
-  eighteen are `instrument-console`, `editorial-luxury`, `workbench`,
+  twenty are `instrument-console`, `editorial-luxury`, `workbench`,
   `briefing-room`, `atrium`, `orchard`, `field-notes`, `cyclorama`, `showroom`,
-  `blueprint`, `prism`, `maquette`, `scoreboard`, `datasheet`, `manpage`, `pigeonhole`, `roster`, `paperclip`. Otherwise pick per the `SKILL.md` table,
+  `blueprint`, `prism`, `maquette`, `scoreboard`, `datasheet`, `manpage`, `pigeonhole`, `roster`, `ora`, `tenor`, `paperclip`. Otherwise pick per the `SKILL.md` table,
   and say which pack you picked and why before you build.
 - **Set the three dials out loud before any layout exists** — `DESIGN_VARIANCE`,
   `MOTION_INTENSITY`, `VISUAL_DENSITY`, with one line of reasoning. The

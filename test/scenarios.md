@@ -1061,8 +1061,85 @@ retracted in 1.13.1; `#00D492` is stated at 1.84:1 "on white" and measures **1.9
 making a disabled control indistinguishable from secondary copy on the pack's own hero
 surface.
 
+## T27 — The graded verdict, and the fork against the spec sheet
 
-## T27 — The operator register, and the fork against the console
+Added 1.28.0 with the `ora` pack. Two branches, two fresh contexts, run **blind against
+the bundle directory only** — `test/`, `docs/`, `kits/`, the README and the CHANGELOG are
+forbidden, because this file carries the answer beside the prompt.
+
+This pair exists because `ora` and `datasheet` now serve the **same argument shape** — a
+verdict the product renders about the visitor — and the argument shape is not the
+distinction. `datasheet` is built around a **row of recovered fields**; `ora` around a
+**single number with a grade letter**, plus the raw response a machine received. A router
+that reads "verdict about the visitor" and stops will pick wrong half the time, which is
+precisely what the negative branch is for.
+
+**T27a — should select `ora`.** "The marketing site and the live report page for a product
+that scans a domain and scores how usable it is for AI agents. It returns a number out of
+100 with a letter grade, a breakdown across four weighted layers, and the raw HTTP response
+the crawler actually got. Buyers are heads of growth and platform engineers. The marketing
+argument and the working report sit on the same scroll." Pass: routes to `styles/ora.md`,
+quotes the clause that decided it, and names the closest rejected pack with the clause that
+ruled it out. Fail: routing to `datasheet` because the product renders a verdict about the
+visitor, or to `instrument-console` because the field is dark.
+
+**T27b — should still select `datasheet`.** "The marketing page for a device-intelligence
+API. The hero is a live panel that fingerprints the visitor's own request and prints the
+fields it recovered — IP, ASN, headless flags, TLS fingerprint — one hairline row at a
+time. There is no score and no grade; the argument is the completeness of the row. Buyers
+are fraud teams." Pass: stays on `styles/datasheet.md` and can say what would have moved it
+(a verdict that arrives as one graded number, with the raw machine response shown as
+output). Fail: routing to `ora` because the newest pack also renders a verdict about the
+visitor — the failure a positive-only branch cannot detect, per standing instruction 4.
+
+Both branches are also asked, after choosing, to read their chosen pack in full and report
+defects with file and quoted text.
+
+**Result: NOT YET RUN.** The pack, its token layer and its kit were authored and gated in
+1.28.0; this pair was written in the same change and has not been executed. Saying so is
+the point — an unrun scenario recorded as green is the one failure this file cannot
+survive. Run it before the next release that touches routing.
+
+## T28 — Zero radius, and the fork against the drawing
+
+Added 1.29.0 with the `tenor` pack. Two branches, two fresh contexts, run **blind against
+the bundle directory only** — `test/`, `docs/`, `kits/`, the README and the CHANGELOG are
+forbidden, because this file carries the answer beside the prompt.
+
+This pair exists because `tenor` and `blueprint` now share the library's most quotable
+constraint — **no border radius anywhere** — and the constraint is not the distinction.
+`blueprint` refuses radius because a drawing has none; `tenor` refuses it because an
+organisation chart is made of rectangles. A router that reads "zero radius" and stops will
+pick wrong half the time, which is what the negative branch is for.
+
+**T28a — should select `tenor`.** "The marketing site for a platform that lets a company
+hire, brief and supervise AI workers the way it supervises people: each one gets a role, a
+manager, a budget and guardrails, and the page has to argue that this is an org-chart
+problem rather than a prompt problem. Our proof is screen recordings of the product doing
+the work. Buyers are heads of revenue operations." Pass: routes to `styles/tenor.md`,
+quotes the clause that decided it, and names the closest rejected pack with the clause
+that ruled it out. Fail: routing to `blueprint` because the brief says the page should be
+square and structural, or to `workbench` because the subject is an operations product.
+
+**T28b — should still select `blueprint`.** "The marketing site for a vector database. The
+argument is recall at a given latency and cost per million vectors, and the page should
+read like a spec drawing: a visible grid, ruled column edges, registration marks in the
+corners. Buyers are infrastructure engineers." Pass: stays on `styles/blueprint.md` and
+can say what would have moved it (a subject that is an organisation rather than a
+mechanism, on warm stock, proved by video). Fail: routing to `tenor` because the newest
+pack also refuses radius — the failure a positive-only branch cannot detect, per standing
+instruction 4.
+
+Both branches are also asked, after choosing, to read their chosen pack in full and report
+defects with file and quoted text.
+
+**Result: NOT YET RUN.** The pack, its token layer and its kit were authored and gated in
+1.29.0; this pair was written in the same change and has not been executed. T27 from
+1.28.0 is also still unrun. Two unrun pairs is the point at which the next release that
+touches routing has to run them before it tags.
+
+
+## T29 — The operator register, and the fork against the console
 
 Added with the `paperclip` pack. Two branches, two fresh contexts, run **blind against
 the bundle directory only** — `test/`, `docs/`, `kits/`, the README and the CHANGELOG are
@@ -1077,17 +1154,23 @@ and stops will pick wrong half the time, which is precisely what the negative br
 for. The one-line test both branches should arrive at: **delete every colour from the
 page — does it lose its meaning, or only its poster?**
 
-**T27a — should select `paperclip`.** "The marketing site for a product where you hire a
+A third pack now sits inside the same silhouette. `ora` arrived the same day, is dark by
+default, refuses a brand hue and spends its accent as the inverted field — so a thumbnail
+separates none of the three. Both branches are therefore asked to name **two** rejected
+packs, not one, and `ora` is the second for T29a.
+
+**T29a — should select `paperclip`.** "The marketing site for a product where you hire a
 team of AI agents, give them an org chart and a monthly budget, and approve what they
 propose. The page has to show the org chart, the schedule each agent wakes on, and a
 ledger of what each one spent against its cap. Buyers are founders and heads of ops who
 are nervous about runaway spend. We want the page to feel like the tool will stay out of
 the way." Pass: routes to `styles/paperclip.md`, quotes the clause that decided it, and
-names the closest rejected pack with the clause that ruled it out. Fail: routing to
-`instrument-console` because the page is dark and the subject is agents, or to `workbench`
-because three of the four surfaces named are product UI.
+names the two closest rejected packs with the clause that ruled each out. Fail: routing to
+`instrument-console` because the page is dark and the subject is agents, to `ora` because
+it is dark and also has no third hue, or to `workbench` because three of the four surfaces
+named are product UI.
 
-**T27b — should still select `instrument-console`.** "The marketing site for a
+**T29b — should still select `instrument-console`.** "The marketing site for a
 distributed-tracing product. The hero is a live request-rate dial that moves while you
 watch it, every section is a latency or saturation reading against a threshold, and the
 proof is a p99 that drops after you install it. Buyers are SREs. There is no org chart and
@@ -1102,7 +1185,7 @@ defects with file and quoted text.
 
 **Result: NOT YET RUN.** The pack ships with the scenario written and unexecuted, which is
 the honest state and not a passing one: `validate.py` does not read this file, so nothing
-in `npm test` covers T27, and the row in the propagation matrix that says "the scenario run
+in `npm test` covers T29, and the row in the propagation matrix that says "the scenario run
 by a fresh subagent" is undischarged until a person runs it and stamps the result with a
 commit. Every other claim in the `paperclip` pack is measured off the reference or computed
 by a gate; this is the single outstanding one.

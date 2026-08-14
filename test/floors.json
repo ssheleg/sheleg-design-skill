@@ -1,8 +1,8 @@
 {
   "_why": "Ratchet floors. A gate whose check count can fall silently cannot detect a deleted requirement: stripping four required headings from one pack made validate.py drop 1270->1269 and sloplint.py 224->223, both still green. Each number is the count measured on the commit named below. Raise freely; lowering one needs a reason in the same commit.",
-  "_measured_on": "feat/paperclip-pack at 572bb0e, 2026-08-14, in a dedicated worktree (the branch is off main at seventeen packs; re-measure after the merge that brings ora and tenor in, because a pack adds checks to all three gates)",
-  "validate.py": 2189,
-  "validate_palette.py": 1125,
-  "sloplint.py": 470,
-  "_raised": "validate.py 2067 -> 2189, validate_palette.py 1001 -> 1125, sloplint.py 450 -> 470: the paperclip pack. Additive and nothing was lowered -- one pack markdown, one token layer, one kit of thirteen components with their docs, three reciprocal fork clauses, seven enumeration sites and a scenario. The palette rise is the largest of the three because the pack ships two themes with a four-colour status set in each, plus twelve badge gradient pairs and their hand-picked inks -- 24 colours no other pack has -- and every one of them is parsed, and the four status colours per theme are separated against each other under three dichromacies. Measured on the commit named above with no nested worktree present."
+  "_measured_on": "merge of feat/paperclip-pack into main, 2026-08-14, twenty packs, clean tree (no nested worktree). Commit stamped in the follow-up that raises these.",
+  "validate.py": 2422,
+  "validate_palette.py": 1280,
+  "sloplint.py": 498,
+  "_raised": "validate.py 2294 -> 2422, validate_palette.py 1156 -> 1280, sloplint.py 478 -> 498: the paperclip pack, merged after ora and tenor. Additive and nothing was lowered -- one pack markdown, one token layer, a kit of thirteen components with their docs, four reciprocal fork clauses and seven enumeration sites. The palette gate moves furthest because paperclip ships twelve badge gradient pairs with their own hand-picked inks -- 24 colours no other pack has -- on top of a four-colour status set per theme, each parsed and each separated against its peers under three dichromacies. Two measurements exist for this branch and only the merged one is a floor: 2189/1125/470 was the branch alone at eighteen packs, and a floor taken there would have been below main's own."
 }
