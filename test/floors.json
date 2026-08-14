@@ -1,6 +1,6 @@
 {
   "_why": "Ratchet floors. A gate whose check count can fall silently cannot detect a deleted requirement: stripping four required headings from one pack made validate.py drop 1270->1269 and sloplint.py 224->223, both still green. Each number is the count measured on the commit named below. Raise freely; lowering one needs a reason in the same commit.",
-  "_measured_on": "merge of feat/paperclip-pack into main, 2026-08-14, twenty packs, clean tree (no nested worktree). Commit stamped in the follow-up that raises these.",
+  "_measured_on": "e35a26f — merge of feat/paperclip-pack into main, 2026-08-14, twenty packs, clean tree with no nested worktree present",
   "validate.py": 2422,
   "validate_palette.py": 1280,
   "sloplint.py": 498,
