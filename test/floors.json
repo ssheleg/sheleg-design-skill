@@ -1,8 +1,8 @@
 {
   "_why": "Ratchet floors. A gate whose check count can fall silently cannot detect a deleted requirement: stripping four required headings from one pack made validate.py drop 1270->1269 and sloplint.py 224->223, both still green. Each number is the count measured on the commit named below. Raise freely; lowering one needs a reason in the same commit.",
-  "_measured_on": "e35a26f — merge of feat/paperclip-pack into main, 2026-08-14, twenty packs, clean tree with no nested worktree present",
+  "_measured_on": "main after the T29 fix pass, 2026-08-14, twenty packs, clean tree with no nested worktree. Commit stamped in the follow-up that raises these.",
   "validate.py": 2422,
-  "validate_palette.py": 1280,
-  "sloplint.py": 498,
-  "_raised": "validate.py 2294 -> 2422, validate_palette.py 1156 -> 1280, sloplint.py 478 -> 498: the paperclip pack, merged after ora and tenor. Additive and nothing was lowered -- one pack markdown, one token layer, a kit of thirteen components with their docs, four reciprocal fork clauses and seven enumeration sites. The palette gate moves furthest because paperclip ships twelve badge gradient pairs with their own hand-picked inks -- 24 colours no other pack has -- on top of a four-colour status set per theme, each parsed and each separated against its peers under three dichromacies. Two measurements exist for this branch and only the merged one is a floor: 2189/1125/470 was the branch alone at eighteen packs, and a floor taken there would have been below main's own."
+  "validate_palette.py": 1287,
+  "sloplint.py": 504,
+  "_raised": "validate_palette.py 1280 -> 1287 and sloplint.py 498 -> 504 on the T29 fix pass; validate.py holds at 2422. The palette rise is three new colour tokens (--terminal-dot, --mark-rest, --scrim) parsed in both theme blocks; the sloplint rise is the reduced-motion rule block the pack now ships as a fenced example, which is linted like a token layer. validate.py not moving is the informative one: twenty-six defects were fixed in this pass and the consistency gate's count did not change by one, because not a single one of them was structural. That is the shape of what a routing scenario buys and a gate cannot."
 }

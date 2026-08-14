@@ -31,8 +31,13 @@
   --terminal: #1f1d1a; /* .terminal body — warm, and darker than --surface */
   --terminal-head: #161412; /* .terminal-header */
   --terminal-rule: #2f2c28; /* .terminal border and tab fill */
-  --terminal-dim: #6a6560; /* prompt glyph, inactive tab — 2.92:1 ON --terminal */
-  --terminal-mid: #9a958a; /* tab hover — 5.64:1 on --terminal */
+  /* @role non-text: --terminal-dim, 2.92:1 on --terminal. The reference spends
+     it on the prompt glyph AND on the inactive tab label; this pack keeps it for
+     the glyph only, which is aria-hidden punctuation, and routes any label a
+     reader can click to --terminal-mid. See paperclip.md, Components. */
+  --terminal-dim: #6a6560; /* the prompt glyph — never a label */
+  --terminal-mid: #9a958a; /* inactive tab label and hover — 5.64:1 on --terminal */
+  --terminal-dot: #3a3836; /* the three inert window dots */
 
   --ink: #fafafa; /* --foreground, 18.97:1 on --bg */
   --muted: #a1a1a1; /* --muted-foreground, 7.66:1 */
@@ -62,6 +67,12 @@
   --graphite: #52585d; /* the darkest metal, 2.75:1 — non-text */
   --aluminum: #a8aeb2; /* idle, 8.83:1 */
   --stone: #e5e5e5; /* the light theme's hairline */
+  --mark-rest: #b5b0a8; /* a schedule tick before it fires — a mark, never text */
+  /* The modal veil, and it does NOT flip with the theme: the reference paints
+     #0a0a0a8c on both, so a light-theme modal is still veiled in coal. Kept as
+     a literal because the palette gate cannot compute a colour-mix into
+     `transparent`, and an unparseable token is a failure rather than a skip. */
+  --scrim: #0a0a0a8c; /* the field at 55%, in both themes */
 
   /* ── status: four states, and each one carries its word ────────────────── */
   --good: #34d06f; /* --status-task-icon-done (dark), 9.80:1 */
@@ -106,8 +117,8 @@
   --spectrum-orange: #fb8b24; /* bottom stop, cap 0 — H 29° S 96% L 56% */
   --spectrum-ember: #e36414; /* top stop, cap 11 — H 23° S 84% L 48% */
   --spectrum-iris: #5c1a8f; /* bottom stop, cap 11 — H 274° S 69% L 33% */
-  --hero-hue-step-top: 12.4deg; /* the top stop rotates forward, per capsule */
-  --hero-hue-step-bottom: -10.3deg; /* the bottom stop rotates backward */
+  --hero-hue-step-top: 12.39deg; /* the top stop rotates forward, per capsule */
+  --hero-hue-step-bottom: -10.45deg; /* the bottom stop rotates backward */
 
   /* ── grain: one noise recipe, applied to every saturated surface ─────────
      fractalNoise, baseFrequency 2.95, 5 octaves, seed 9, tiled at 256px and
@@ -140,7 +151,10 @@
 
   /* ── elevation: a hairline, and a shadow only where something floats ────── */
   --shadow-modal: 0 32px 64px -24px #00000080; /* .sim-card, the only resting shadow */
-  --shadow-alert: 0 2px 8px #f59e0b26; /* the one interrupt that drops onto a lane */
+  /* DERIVED. The reference writes 0 2px 8px #f59e0b26 — its LIGHT-theme amber,
+     hardcoded into a value it only ever paints on the dark field. Derived from
+     --warn instead, so it tracks the token in both themes. */
+  --shadow-alert: 0 2px 8px color-mix(in srgb, var(--warn) 15%, transparent);
 
   /* ── type: three families, and the display face is a grotesque ───────────
      The reference calls it --font-serif and it is Inter Tight. The name is
@@ -205,7 +219,9 @@
   --z-sticky: 100;
   --z-overlay: 200;
 
-  /* ── motion: two curves, three durations, and one spring with one owner ─── */
+  /* ── motion: four curves, six durations, one stagger, one spring ─────────
+     --ease-exit is declared because the reference declares it; the page spends
+     it nowhere, and that is recorded rather than tidied away. */
   --ease-enter: cubic-bezier(0.2, 0.8, 0.2, 1); /* everything the reader triggers */
   --ease-exit: cubic-bezier(0.4, 0, 1, 0.6); /* declared; the page never spends it */
   --ease-hero: cubic-bezier(0.22, 1, 0.36, 1); /* entrances and bar fills */
@@ -819,7 +835,7 @@
   width: 10px;
   height: 20px;
   border-radius: var(--r-pill);
-  border: 2px solid var(--idle);
+  border: 2px solid var(--mark-rest);
   background-color: var(--bg);
   transform: translate(-50%, -50%);
   transition: width var(--t-short) var(--ease-enter),
@@ -880,7 +896,7 @@
   width: 10px;
   height: 10px;
   border-radius: var(--r-pill);
-  background-color: var(--terminal-rule);
+  background-color: var(--terminal-dot);
 }
 
 /* --r-sm inside a bar carrying --r-md with 2px of padding: 8 − 2 ≈ 4.8, which
@@ -897,7 +913,7 @@
 .pc-term__tab {
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  color: var(--terminal-dim);
+  color: var(--terminal-mid); /* not --terminal-dim: 2.92:1 is not a label colour */
   background-color: transparent;
   border: 0;
   border-radius: var(--r-sm);
@@ -907,7 +923,7 @@
     background-color var(--t-micro) var(--ease-enter);
 }
 
-.pc-term__tab:hover { color: var(--terminal-mid); }
+.pc-term__tab:hover { color: var(--manila); }
 
 .pc-term__tab--active {
   color: var(--manila);

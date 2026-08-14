@@ -60,7 +60,7 @@ the two are the same pack. Three tests separate them. **Colour:** Ora has none
 beyond its status set and its verdict ramp, and every one of those carries
 meaning; Paperclip has a great deal and none of it is functional, because its
 whole chromatic budget sits in an ornament nobody can click. **Type:** a serif
-does the sans job here, so a human sentence is always a serif; there, three
+does the sans job here, so a human sentence is always a serif; there, two
 grotesques and a monospace, and no serif exists. **What the page renders:** a
 verdict about the reader, against a team of workers the reader is running. If
 the artefact is a number with a grade, it is this pack; if it is an org chart, a

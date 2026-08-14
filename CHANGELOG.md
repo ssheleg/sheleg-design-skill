@@ -4,6 +4,86 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.31.0] - 2026-08-14
+
+**T29 ran, and the pack it was written for did not survive it intact.** Both branches
+green — the routing worked — and the pair returned forty-one findings, twenty-six of them
+against `paperclip`, a pack that had passed all three gates three times. Every one was
+reproduced before an edit; every one is fixed here.
+
+### Fixed — in `paperclip`, found by T29a
+
+- **`--cream` was prescribed and never declared.** The dark primary button's hover was
+  specified to keep its label and border at `--cream`, a token this pack does not ship. It
+  means `--accent`, and now says so.
+- **The dark card hover was a no-op.** A card rests at `--surface` and the hover was
+  written as `--surface`. A card and a grid cell are now separated: the cell rests at
+  `--bg` and hovers one step toward the card's fill; the card does not hover at all.
+- **`--terminal-dim` at 2.92:1 was the label of a tab a reader has to click.** Repaired to
+  `--terminal-mid` (5.64:1). `--terminal-dim` survives for the prompt glyph, which is
+  `aria-hidden` punctuation, and now carries an `@role non-text:` note saying so.
+- **`--shadow-alert` was a second resting shadow in a pack that claimed one** — and it
+  hardcoded the reference's **light**-theme amber into a value only ever painted on the
+  dark field. Derived from `--warn` with `color-mix()`, and the Texture section now names
+  both shadows.
+- **All three stagger formulas hardcoded `.14s`.** Zeroing `--stagger` under reduced
+  motion would have left every one of them running. They spend `var(--stagger)` now, and
+  the pack says why in the sentence that used to say "change it in one place".
+- **The reduced-motion blanket had no mechanism for half of what it promised.** The
+  marquee and the two 1.5s trace loops are literals inside `animation` shorthands, which no
+  token can zero. The pack now ships the rule block beside the token list.
+- **The signature element's generation rule did not reproduce its own artwork.** The
+  bottom stop was stated at −10.3°/step and does not land on the last capsule; the value
+  implied by the anchors is **−10.45°**. "Near-constant saturation and lightness" was true
+  of the top ramp (S 96→84, L 56→48) and false of the bottom (S 96→69, L 56→33) — the
+  bottom stop darkens as it turns, which is what keeps the curtain's lower edge off the
+  field. Both ramps are now stated separately, and "forty-five gradients" no longer sits
+  two sentences from "every capsule is filled with its own": a column carries twelve and
+  the eight columns reuse the ramps, four of them in reverse.
+- **The concentric-radius rule was arithmetically wrong about a nest that does not exist.**
+  `8 − 2 ≈ 4.8` is 6, and the reference's tab group sits inside a header with no radius.
+  The rule is now declared as the pack's own decision, with a worked example that computes,
+  and the reference's actual behaviour — pick by element size, no arithmetic — recorded.
+- **`--radius-lg` was called "never spent" and is spent five times**, on the three large
+  mock panels. `--radius-md` is the rung that is never spent.
+- Smaller, and all reproduced: the artwork called 1200px *tall* where 1200 is its frame's
+  width (it is a 560 × 630 curtain in a 1200 × 675 frame); "nothing in this pack overlaps"
+  in a pack whose hero is an overlap; a 1.5 line-height floor claimed against a display
+  ramp that runs 0.98; `--font-serif` and `--font-sans` named as if the layer declared
+  them; an icon range of 14–16px that excluded the pack's own 11px nav glyph; a mono ramp
+  called width-invariant beside an axis mark that steps at 768px; a Gotchas count of seven
+  where eight are defects; the grain's 512-unit filter in a 256px tile, which is the
+  reference's own arrangement and doubles the effective frequency to ~5.9 — now stated with
+  its consequence rather than repaired; weight 450 prescribed in a pack that documents 450
+  as unrenderable; and an invented "roughly 22 characters per line", replaced by the two
+  lines the reference actually sets.
+
+### Fixed — in neighbours, found by the same run
+
+- **`ora`'s merge-time fork clause called this pack "three grotesques and a monospace".**
+  It is two grotesques and a monospace; the pack's own Bans cap it at three families.
+- **`SKILL.md` marked three packs `(standalone)` and its ceiling paragraph named four.**
+  `ora`, `tenor` and `paperclip` all declare standalone in their own Registers and all
+  three pin a ceiling — 4, 4 and 5 — that the paragraph never mentioned. An agent choosing
+  any of them off the table alone would have taken `MOTION_INTENSITY` 7 from the marketing
+  row. All three are marked and all three ceilings enumerated.
+
+### Added
+
+- **`--terminal-dot`, `--mark-rest`, `--scrim`** — three colours the pack spent as literals
+  in its Components section. `--scrim` is `#0a0a0a8c` in **both** themes, because the
+  reference veils a light modal in coal too, and it stays a literal because the palette gate
+  cannot compute a `color-mix()` into `transparent` — and an unparseable token is a failure
+  there, not a skip.
+- **`--t-hero-art` and `--t-hero-copy` in the Motion tokens table**, which shipped in the
+  token layer and appeared only as prose. The table is now the whole set.
+- **B-038 … B-043** — fifteen findings against `instrument-console` from T29b, filed rather
+  than fixed because they belong to a shipped pack this run does not own. Four reproduced
+  first: zero `--danger`/`--info` tokens against Bans that legislate for four statuses; a
+  pressed primary label at **3.06:1**; one of only two token layers with no
+  `prefers-reduced-motion` branch, in the pack that mandates a particle field; and a Bans
+  line that forbids coloured shadows "besides `--accent-glow`", which is a colour.
+
 ## [1.30.0] - 2026-08-14
 
 A twentieth pack, **`paperclip`**, extracted from a live reference rather than composed:

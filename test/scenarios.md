@@ -1183,9 +1183,65 @@ instruction 4.
 Both branches are also asked, after choosing, to read their chosen pack in full and report
 defects with file and quoted text.
 
-**Result: NOT YET RUN.** The pack ships with the scenario written and unexecuted, which is
-the honest state and not a passing one: `validate.py` does not read this file, so nothing
-in `npm test` covers T29, and the row in the propagation matrix that says "the scenario run
-by a fresh subagent" is undischarged until a person runs it and stamps the result with a
-commit. Every other claim in the `paperclip` pack is measured off the reference or computed
-by a gate; this is the single outstanding one.
+**Result, 2026-08-14 (tree `main` at `cce0985`): GREEN on both branches**, and the pair
+returned forty-one findings — twenty-six against `paperclip`, fifteen against
+`instrument-console`.
+
+T29a selected `paperclip`, quoted its Register's first sentence, and rejected **`tenor`**
+and **`ora`** — not the two the scenario predicted. That is the more interesting result:
+it rejected `tenor` on *"a page whose proof is a recording of the product working"* against
+a brief whose proof is three static instruments, and `ora` on the separation clause written
+into both packs at merge four hours earlier, quoting it from `ora`'s side. It set dials
+6 / 4 / 5, took the pack's stated ceiling of 5 and went one under, and dropped the marquee
+on the grounds that its only justification — pause-on-hover — fails against the pack's own
+Gotcha 8 (no `@media (hover: hover)` anywhere). A router that reaches the right pack by a
+route the author did not anticipate is the branch working.
+
+T29b stayed on `instrument-console`, quoted its cockpit clause, buried `paperclip` with the
+brief's own negations (*"no org chart and nothing to budget"* against a pack whose register
+names both), and mapped **seven** directions that would move it, each with a citation.
+
+**Twenty-six findings against `paperclip`, all reproduced before an edit, all fixed in this
+commit.** The sharpest were real defects rather than wording: `--cream` was prescribed for
+the dark button's hover and is not a token this pack declares; the dark card hover painted
+`--surface` over `--surface` and did nothing; the concentric-radius worked example asserted
+`8 − 2 ≈ 4.8` (it is 6) about a nest the reference does not have; all three stagger formulas
+hardcoded `.14s`, so zeroing `--stagger` under reduced motion would have left every one of
+them running; the reduced-motion "blanket" had no mechanism for the marquee and the two 1.5s
+loops, which are literals inside `animation` shorthands; the signature element's generation
+rule claimed "near-constant saturation and lightness" against a bottom ramp measuring
+S 96→69 and L 56→33, and its −10.3°/step does not reproduce its own last capsule (−10.45°
+does); "forty-five gradients" sat two sentences from "every capsule is filled with its own";
+`--shadow-alert` was a second resting shadow the pack said it did not have, hardcoding the
+**light** theme's amber into a dark-only value; and `--terminal-dim` at **2.92:1** was
+spent as the label of a tab a reader has to click. Also fixed: the artwork described as
+1200px *tall* when 1200 is its frame's width, "nothing in this pack overlaps" written in a
+pack whose hero is an overlap, a line-height floor claimed for a ramp that runs 0.98, two
+font tokens named that the layer never declares, an icon size range that excluded the pack's
+own 11px nav glyph, a Gotchas count of seven where eight are defects, and an invented
+"roughly 22 characters per line" replaced by the two lines the reference actually sets.
+
+**One finding was corrected rather than accepted.** T29a read the grain's 512-unit filter
+painted into a 256px tile as a contradiction. It is the reference's own arrangement and it
+doubles the effective frequency to ~5.9 — so the pack now states both numbers and what the
+mismatch does, rather than silently repairing one of them.
+
+**A defect the run found in a neighbour it does not own, and fixed anyway:** `ora`'s
+merge-time fork clause described this pack as *"three grotesques and a monospace"*. It is
+two grotesques and a monospace — the pack's own Bans cap it at three families.
+
+**And one the run found in the routing surface itself.** `SKILL.md` marked three packs
+`(standalone)` and its ceiling paragraph named four; `ora`, `tenor` and `paperclip` all
+declare standalone in their own Registers and all three pin a ceiling (4 / 4 / 5) that the
+paragraph never mentioned. An agent choosing any of them off the table alone would have
+taken `MOTION_INTENSITY` 7 from the marketing row. All three are now marked and their
+ceilings enumerated.
+
+**Fifteen findings against `instrument-console` are filed rather than fixed** (B-038 …
+B-043), because they belong to a shipped pack this run does not own. Four were reproduced
+first: it declares **zero** `--danger` / `--info` tokens while its Bans legislate for four
+statuses; its pressed primary label measures **3.06:1** (recomputed from its own token
+layer, where the resting 6.17:1 it states is correct); it is one of only **two** token
+layers with no `prefers-reduced-motion` branch, and the one that mandates a particle field;
+and its Bans forbid coloured shadows *"besides `--accent-glow`"*, which is a colour — the
+shadow it actually mandates, `--signal-glow`, is named nowhere in its prose.

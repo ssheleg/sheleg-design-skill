@@ -3,7 +3,7 @@ name: sheleg-design
 description: Use when building or upgrading a cinematic scroll-driven landing page, marketing site or hero (particle/WebGL background, scroll-linked animation, parallax, scrubbed sections) — when such a page feels busy or janky or its motion layers drift out of sync — or when styling product UI with its style packs - dashboards, admin panels, internal/dev tools, mobile app screens, design tokens, light/dark themes - or when carrying a visual system across the Figma border (publishing tokens as variables, implementing a design without importing raw values). Triggers - "cinematic landing" / "кинематографичный лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables / figma to code" / "переменные фигмы, фигма в код", "chat/agent UI" / "интерфейс чата или агента", "streaming output" / "стриминг ответа", "mobile screen" / "мобильный экран".
 license: MIT
 metadata:
-  version: 1.30.0
+  version: 1.31.0
 ---
 
 # SHELEG Design
@@ -82,9 +82,9 @@ this table is for choosing, not for reading instead of the pack:
 | [`manpage`](./styles/manpage.md) | cream paper, the reader's own **system monospace** (zero webfont bytes), 48px display ceiling, 576px argument column, coral label chips that are real `<h2>`s | developer products whose buyer reads code — APIs, SDKs, CLIs, MCP servers, developer infrastructure |
 | [`pigeonhole`](./styles/pigeonhole.md) | white field, hairlines, a display that never passes weight 400 plus one italic word, and **nine categories in which a hue is the category**, from an eleven-ramp pastel system — a two-layer chip, 8px outside / 7px inside, label word mandatory | products that file the reader's incoming mess into named categories — email triage, ticket routing, digests, organisers, CRM inboxes |
 | [`roster`](./styles/roster.md) | white field in a faint square grid, hairline instead of shadow, the display in the **body** face and the heads in another, one orange that never carries a word | products whose argument is **who already carries them** — AI-search visibility, SEO and content platforms, agencies, marketplaces |
-| [`ora`](./styles/ora.md) | warm coal field, cream ink and **no third hue** — the accent is the inverted field; a serif doing the sans job over mono for every machine fact; a terminal surface cut **below** the page; a six-step verdict ramp | products whose output is **a machine's verdict about the reader** — agent-readiness and crawlability scores, SEO/AEO audits, agent-run traces, MCP and protocol surfaces · **dark by default** |
-| [`tenor`](./styles/tenor.md) | warm paper, **zero radius and zero shadow**, one hairline weight, an orange that only exists on hover and on focus, a sans at weight 400 tracked negative against a mono tracked positive, display at line-height 0.91 in an 8–12ch measure, proof delivered as silent looping video | products arguing a **management thesis** — AI-workforce and agent-operations platforms, autonomous back-office, revenue and sales operations, sold to the director who will have to manage it |
-| [`paperclip`](./styles/paperclip.md) | neutral coal with **no functional colour at all** — every control monochrome, hairlines for elevation, and the whole chromatic budget spent on a curtain of 96 gradient capsules and twelve gradient section badges that cannot be clicked; a tight grotesque over a plain one over a monospace, and the capsule as the shape of everything from a button to a 10 × 20 schedule tick | products that ask a person to **run something that runs itself** — agent teams and orchestrators, autonomous back-office, schedulers, job runners, budget-governed compute |
+| [`ora`](./styles/ora.md) | warm coal field, cream ink and **no third hue** — the accent is the inverted field; a serif doing the sans job over mono for every machine fact; a terminal surface cut **below** the page; a six-step verdict ramp | products whose output is **a machine's verdict about the reader** — agent-readiness and crawlability scores, SEO/AEO audits, agent-run traces, MCP and protocol surfaces · **dark by default** (standalone) |
+| [`tenor`](./styles/tenor.md) | warm paper, **zero radius and zero shadow**, one hairline weight, an orange that only exists on hover and on focus, a sans at weight 400 tracked negative against a mono tracked positive, display at line-height 0.91 in an 8–12ch measure, proof delivered as silent looping video | products arguing a **management thesis** — AI-workforce and agent-operations platforms, autonomous back-office, revenue and sales operations, sold to the director who will have to manage it (standalone) |
+| [`paperclip`](./styles/paperclip.md) | neutral coal with **no functional colour at all** — every control monochrome, hairlines for elevation, and the whole chromatic budget spent on a curtain of 96 gradient capsules and twelve gradient section badges that cannot be clicked; a tight grotesque over a plain one over a monospace, and the capsule as the shape of everything from a button to a 10 × 20 schedule tick | products that ask a person to **run something that runs itself** — agent teams and orchestrators, autonomous back-office, schedulers, job runners, budget-governed compute (standalone) |
 
 **A materialized kit answers part of what a core pack leaves out.** `npx
 sheleg-design-skill --kit <pack>` produces `src/styles.css`, whose component half is
@@ -173,8 +173,11 @@ not with emptiness. Say which row you took and why when two fire.
 scrubbing, parallax and a sticky nav, so `MOTION_INTENSITY` above **4** on it has
 nothing legal to buy. **`roster` has the same ceiling of 4** for the same reason —
 entrance, hover and two slow floats are its whole budget, and it bans scrubbing,
-parallax and `animation-timeline`; it keeps a sticky nav, which is the only difference. `field-notes` is standalone **by default** and may
-  opt into the cinematic layer — it carries a `## Motion flavor` section saying
+parallax and `animation-timeline`; it keeps a sticky nav, which is the only difference.
+  **Three more standalone packs pin their own, and each states it in its own Register:**
+  `ora` at **4**, `tenor` at **4**, `paperclip` at **5** — the last one higher because it
+  is the only pack in the family that spends a native scroll-driven parallax.
+  `field-notes` is standalone **by default** and may opt into the cinematic layer — it carries a `## Motion flavor` section saying
   how — so it is the one standalone pack without a hard ceiling. Read that
   section before turning the dial up on it.
 

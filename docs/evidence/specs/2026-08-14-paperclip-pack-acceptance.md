@@ -20,7 +20,7 @@ twice — 1.29.0 while the other run was assumed to hold 1.28.0, then 1.30.0 onc
 | REQ-09 — no raw colour literal in kit components | ✅ | `color-mix(in srgb, …)` for every tint below the marker; gate green |
 | REQ-10 — the pack is chosen-able everywhere | ✅ | all seven enumeration sites name it; `validate_pack_enumerations()` green |
 | REQ-11 — forks are reciprocal | ✅ | `instrument-console`, `workbench`, `orchard` and `ora` each link back; `validate_fork_reciprocity()` green |
-| REQ-12 — the routing scenario exists with its negative branch | ⚠️ | `T29a` / `T29b` written, with two rejected packs rather than one; **not run** |
+| REQ-12 — the routing scenario exists with its negative branch, and has run | ✅ | `T29a` / `T29b` run blind against the bundle, **green on both**; 41 findings, 26 fixed here and 15 filed as B-038 … B-043 |
 
 ## The gate, run
 
@@ -37,17 +37,23 @@ Every one rose at every step; none was lowered. `npm test` exits 0, self-tests g
 
 `kits/paperclip`: `npm install && npm run build` → exit 0, `dist/` regenerated and ignored.
 
-## The one thing that is not discharged
+## The one thing that was not discharged, and now is
 
-**T29 has not been run.** `validate.py` does not read `test/scenarios.md`, so nothing in
-`npm test` covers routing behaviour, and the propagation matrix's proof for that row is *a
-person running the scenario against a fresh context and stamping the result with a
-commit*. The scenario's own Result line says `NOT YET RUN` rather than leaving the reader
-to infer it from silence. It matters more after the merge than before it: `ora` landed the
-same day inside the same silhouette, so T29a now has **two** packs to reject rather than
-one, and nothing has yet watched a fresh context choose between them.
+**T29 has run.** Both branches green, blind against the bundle directory only. The
+scenario's Result line carries the findings rather than a verdict, because a routing
+scenario that only says "it chose correctly" tests nothing the pack table could not have
+answered: what the pair is for is the twenty-six defects it found in a pack every gate had
+already passed.
 
-Everything else in this pack is either measured off the reference or computed by a gate.
+Two of those are worth carrying forward as a class. The first: **the gates cannot see a
+claim about a value, only a value.** `--cream` was prescribed in prose and never declared;
+`--terminal-dim` was spent as a clickable label at 2.92:1; all three stagger formulas
+hardcoded the literal the token exists to hold. Every one of those passed
+`validate.py`, `validate_palette.py` and `sloplint.py` three times. The second: **a
+scenario finds defects in whatever it reads, not in what it was written to test.** T29a was
+built to separate this pack from `instrument-console`; it rejected `tenor` and `ora`
+instead, on clauses that were better than the ones the scenario predicted — and then found
+that `SKILL.md` had never marked any of the three newest packs standalone.
 
 ## What the merge owed, and what it did
 
