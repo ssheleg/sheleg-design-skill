@@ -1,0 +1,219 @@
+/* SHELEG Design — Ora token layer (dark default + light twin).
+   Copy verbatim; consume only var(--…) in components.
+
+   Measured 2026-08-14 from https://ora.ai and https://journey.ora.ai (era labs),
+   stylesheet /_next/static/chunks/feb8eaf5618096ba.css. Every value below is
+   either lifted from that file or marked DERIVED with the reason.
+
+   Theme switch: set data-theme="light" on :root. Dark is the default here
+   because it is the default there — the reference paints its dark values on
+   `:root:not([data-theme=light])`, so an unattributed root is dark. */
+
+:root {
+  color-scheme: dark; /* the theme is explicit — never let the UA pick */
+
+  /* ── field: four coal steps, plus a terminal darker than the page ────────
+     The reference names them --coal-900…--coal-500 and spends them as
+     background / card / card-raised / secondary. The terminal surface is the
+     only one below the page: a block of machine output reads as cut INTO the
+     page rather than raised off it, which is the pack's whole elevation idea. */
+  --bg: #141210; /* --background, --coal-800 */
+  --surface: #1b1917; /* --card, --coal-700 — the default container */
+  --surface-raised: #23201d; /* --card-raised, --coal-600 — popovers, menus */
+  --surface-quiet: #282521; /* --secondary, --muted, --coal-500 — chip fills */
+  --terminal: #0a0908; /* --terminal, --coal-900 — command output, logs */
+
+  --ink: #f7f2e5; /* --foreground, --cream-100 */
+  --muted: #c2bdae; /* --muted-foreground, --cream-200 */
+  --terminal-ink: #f7f2e5; /* --terminal-foreground */
+
+  --border: #23201c; /* --border, --coal-border — container edge, 1.15:1, never a mark */
+  /* DERIVED. The reference declares --border-strong once, in the light :root,
+     and never re-declares it for dark — so its dark theme inherits #d6cfbc and
+     paints a paper-coloured hairline at 12.02:1 on the coal field. That reads as
+     deliberate on the /mcp timeline ticks and as a mistake on a card. This pack
+     ships a dark step of its own: #38342f is the reference's own dark --perf-na,
+     i.e. the next coal step above --border, used here in a new role. */
+  --border-strong: #38342f;
+
+  /* ── THE accent, and it is the ink ──────────────────────────────────────
+     There is no third hue. The reference's primary action is
+     `bg-foreground text-background`, and it names the pair --accent-signature /
+     --accent-signature-foreground: the accent IS the inverted field, in both
+     themes. Anything that must be pressed goes solid ink; everything else is a
+     hairline. --accent-hover is the reference's own hover value. */
+  --accent: #f7f2e5;
+  --accent-ink: #141210; /* text ON the accent — 16.72:1 */
+  --accent-hover: rgb(from var(--accent) r g b / 0.9); /* --primary at 90%, the measured hover */
+
+  /* ── status: a verdict the page renders about the reader ─────────────────
+     Two ramps in the reference, and both are the same six hues at two
+     lightnesses: -base for the light field, -bright for the dark one. The dark
+     theme takes the bright half. Status is never carried by colour alone — see
+     styles/ora.md — so the pairs that collapse under dichromacy are safe. */
+  --good: #34d399; /* --green-bright, 9.72:1 on --bg */
+  --warn: #fbbf24; /* --amber-bright, 11.19:1 */
+  --danger: #f87171; /* --red-bright, 6.76:1 */
+  --info: #60a5fa; /* --blue-bright, 7.35:1 */
+
+  /* The six-step verdict ramp. Not peers of the status set above: this is one
+     ordered scale, read as a position, and its letter is always rendered beside
+     it. A/A+ and D/F are deliberately close — the ramp is a gradient, not a
+     legend. */
+  --grade-a-plus: #14b8a6; /* --teal-bright */
+  --grade-a: #34d399;
+  --grade-b: #a3e635; /* --lime-bright */
+  --grade-c: #fbbf24;
+  --grade-d: #f87171;
+  --grade-f: #ef4444; /* --red-base — the one place the dark theme takes a base value */
+
+  /* Three-state instrument fill: a bar segment, never a word. */
+  --perf-good: #34d399;
+  --perf-warn: #fbbf24;
+  --perf-bad: #f87171;
+  --perf-na: #38342f; /* the hatched segment — a measurement that does not apply */
+
+  /* @role non-text: --good, --warn, --danger, --info — in the LIGHT theme only,
+     where the base half of the ramp sits at 2.01:1–4.83:1 on paper. They are
+     bar fills, dots and chip tints there; the word beside them carries the
+     meaning. In dark every one of them clears AA and may be text. */
+
+  /* ── radius: one root, and everything is a ratio of it ───────────────────
+     The reference sets --radius: .5rem and derives the rest by multiplication
+     rather than by choosing new numbers. Keep the ladder; do not add a step. */
+  --radius: 0.5rem; /* 8px — the root */
+  --radius-chip: calc(var(--radius) * 0.5); /* 4px */
+  --radius-control: var(--radius); /* 8px — buttons, inputs, terminal blocks */
+  --radius-card: calc(var(--radius) * 1.5); /* 12px — cards, panels, modals */
+  --radius-pill: 9999px; /* dots, live indicators, progress tracks */
+
+  /* ── elevation: a hairline first, a shadow only when something floats ──── */
+  --shadow-input: 0 1px 2px rgb(26 24 21 / 0.06);
+  --shadow-card: 0 1px 3px rgb(26 24 21 / 0.08), 0 8px 24px -12px rgb(26 24 21 / 0.12);
+  --shadow-pop: 0 28px 70px -12px rgb(26 24 21 / 0.22); /* overlays only */
+
+  /* ── type: two families, and one of them is a serif doing the sans job ───
+     --font-sans and --font-serif resolve to the SAME face in the reference.
+     There is no sans. Every human sentence is Lora; every machine fact is
+     Space Mono. Sora and Geist Mono are loaded on <html> and referenced zero
+     times in the stylesheet — do not carry them. */
+  --font-display: "Lora", Georgia, "Times New Roman", serif;
+  --font-body: var(--font-display);
+  --font-mono: "Space Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  /* Prose ramp — rem, serif, weight 400 throughout. */
+  --fs-display: clamp(2.5rem, 5vw, 3.75rem);
+  --lh-display: 1.05;
+  --fs-h1: 2.25rem;
+  --lh-h1: 1.1;
+  --fs-h2: 1.5rem;
+  --lh-h2: 1.2;
+  --fs-h3: 1.25rem;
+  --lh-h3: 1.3;
+  --fs-lead: 1.25rem;
+  --lh-lead: 1.5;
+  --fs-body-lg: 1.125rem;
+  --lh-body-lg: 1.7;
+  --fs-body: 1rem;
+  --lh-body: 1.625;
+  --fs-body-sm: 0.875rem;
+  --lh-body-sm: 1.5;
+
+  /* Mono ramp — px, and the tracking opens as the size closes. */
+  --fs-label: 0.8125rem; /* 13px, tracking .01em, weight 500 */
+  --lh-label: 1.4;
+  --fs-caption: 0.75rem; /* 12px, tracking .02em */
+  --lh-caption: 1.4;
+  --fs-micro: 0.6875rem; /* 11px, tracking .05em */
+  --lh-micro: 1.3;
+  --fs-nano: 0.625rem; /* 10px, tracking .05em, UPPERCASE */
+  --lh-nano: 1.2;
+  --fs-pico: 0.5rem; /* 8px, tracking .05em, UPPERCASE */
+  --lh-pico: 1.2;
+
+  --track-label: 0.01em;
+  --track-caption: 0.02em;
+  --track-micro: 0.05em;
+  --track-eyebrow: 0.14em; /* section labels */
+  --track-wordmark: 0.18em; /* the sub-wordmark beside the logo */
+
+  /* ── space: the four the reference names, plus the page shell it measures ── */
+  --space-stack: 1rem;
+  --space-section: 4rem;
+  --space-page-x: 1.5rem;
+  --space-header: 0.5rem;
+  --page-max: 72rem; /* max-w-6xl on the marketing surfaces */
+  --page-max-app: 65rem; /* max-w-[1040px] on the run surface */
+  --rule-band: 3.5rem; /* the h-14 band a section label sits in */
+
+  /* ── z: named, so nothing is written as a number at the call site ──────── */
+  --z-raised: 10;
+  --z-sticky: 20;
+  --z-dropdown: 30;
+  --z-overlay: 40;
+  --z-modal: 50;
+  --z-toast: 60;
+
+  /* ── motion: three durations, three curves, and no fourth ─────────────── */
+  --dur-fast: 0.15s; /* hover, colour only */
+  --dur: 0.2s; /* the default state change */
+  --dur-slow: 0.3s;
+  --dur-slower: 0.5s;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1); /* the site-wide decelerate */
+  --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* overshoot — badges only */
+  --dur-breathe: 7s; /* the hero glow's own clock */
+  --dur-caret: 1.1s; /* the terminal caret */
+
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: #f9f7f2; /* --paper-100 */
+  --surface: #fcfbf8; /* --paper-50 */
+  --surface-raised: #ffffff; /* --paper-0 */
+  --surface-quiet: #ede9dd; /* --paper-200 */
+  --terminal: #1e1c19; /* --ink-800 — still darker than the page, so the idea survives */
+
+  --ink: #1a1a1a; /* --ink-900, 16.26:1 on --bg */
+  --muted: #5c5953; /* --ink-500, 6.52:1 */
+  --terminal-ink: #f9f7f2;
+
+  --border: #e3dfcf; /* --paper-300 */
+  --border-strong: #d6cfbc; /* --paper-400 */
+
+  --accent: #161616; /* the journey scope's light accent — the inverted field again */
+  --accent-ink: #f9f7f2;
+  --accent-hover: #000000;
+
+  --good: #22c55e; /* --green-base */
+  --warn: #f59e0b; /* --amber-base */
+  --danger: #ef4444; /* --red-base */
+  --info: #2563eb; /* --blue-base, 4.83:1 — the only status that is text-safe here */
+
+  --grade-a-plus: #0d9488;
+  --grade-a: #22c55e;
+  --grade-b: #84cc16;
+  --grade-c: #f59e0b;
+  --grade-d: #ef4444;
+  --grade-f: #dc2626;
+
+  --perf-good: #22c55e;
+  --perf-warn: #f59e0b;
+  --perf-bad: #ef4444;
+  --perf-na: #e5e5e3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0s;
+    --dur: 0s;
+    --dur-slow: 0s;
+    --dur-slower: 0s;
+    --dur-breathe: 0s;
+    --dur-caret: 0s;
+  }
+}

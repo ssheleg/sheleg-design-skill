@@ -40,7 +40,11 @@ fixed, both the nav.
 best argument is the application at real size is [`showroom`](./showroom.md). A product
 whose labels are its *own* taxonomy applied to the reader's mess is
 [`pigeonhole`](./pigeonhole.md). An open-source front door whose step one is a command is
-`prism`. And not a warm consumer field: this one is cold white over a framework's greys.
+`prism`. A page that also spends one orange and also forbids it from carrying a word, but
+argues **how the work is organised** rather than who is already on the list —
+[`tenor`](./tenor.md); it puts the orange on hover only, refuses radius entirely, and
+proves itself with video instead of other people's marks.
+And not a warm consumer field: this one is cold white over a framework's greys.
 
 ### The fork against [`scoreboard`](./scoreboard.md), which is the one a router will get wrong
 

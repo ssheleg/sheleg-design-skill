@@ -11,7 +11,7 @@ problem — invented colors, six accent hues, dark mode retrofitted later.
 
 This skill is the taste layer. It gives a coding agent **one motion
 methodology** for cinematic, scroll-driven pages, **a motion doctrine** that
-decides whether to animate before it decides how, and **seventeen locked style
+decides whether to animate before it decides how, and **nineteen locked style
 packs** with ready-made design tokens, so what it builds reads as one system
 instead of a pile of effects.
 
@@ -62,6 +62,8 @@ into the cinematic layer, and says so in its own *Motion flavor* section.
 | `manpage` | cream paper under the reader's own system monospace — zero webfont bytes for the display face — a 48px display that never grows louder, a 576px argument column, coral label chips that are real `<h2>`s, `└` tree glyphs in their own grid column, and one dark code frame as the focal point | developer products whose buyer reads code — APIs, SDKs, CLIs, MCP servers, developer infrastructure, where the honest hero is the call itself |
 | `pigeonhole` | a white field ruled by hairlines, a display face that never passes weight 400 with exactly one italic word, and **nine categories in which a hue is the category**, drawn from an eleven-ramp pastel system — each rendered as a two-layer chip, 8px outside and 7px inside, whose label word is mandatory because the hue cannot carry the meaning alone | products whose job is to sort the reader's incoming mess into named categories — email triage, ticket routing, notification digests, file organisers, CRM inboxes |
 | `roster` | a white field in a faint grid of squares, hairlines instead of shadows, a display set in the **body** face while the section heads take another, and one orange that may never carry a word | products whose argument is **who already carries them** — AI-search and GEO visibility, SEO and content platforms, agencies, marketplaces, integration-led tooling |
+| `ora` | a warm coal field with cream ink and **no third hue** — the accent is the inverted field, so the one solid object on a page is the one meant to be pressed — a serif doing the sans job over a monospace that carries every machine fact, a terminal surface cut *below* the page plane, a six-step verdict ramp, and dark as the default theme rather than the option | products whose output is **a machine's verdict about the reader** — agent-readiness and crawlability scores, SEO and answer-engine audits, agent-run traces, MCP and protocol surfaces, bot observability |
+| `tenor` | warm paper with **zero radius and zero shadow anywhere**, a single hairline weight assembling every lattice, and one orange that exists only on hover and on focus — so the page screenshots with no colour in it at all — a sans held at weight 400 and tracked negative against a mono tracked positive, display at a line-height below one in an eight-to-twelve-character measure, and proof delivered as silent looping video in a 1px rectangle | products arguing a **management thesis** — that a new kind of thing has to be run like an existing organisation: AI-workforce and agent-operations platforms, autonomous back-office, revenue and sales operations, sold to the director who will have to manage it |
 
 Each pack locks palette, type, texture, motion tokens, signature motifs and
 bans — and ships a `tokens/<pack>.css` to copy verbatim, so the agent never
@@ -136,7 +138,7 @@ skills.
 | `DESIGN_SYNC_BRIDGE.md` | The Claude Design contract: what a pack sends to claude.ai/design and in what shape, the rule for each of the four reference types, and the border motion does not cross |
 | `FIGMA_BRIDGE.md` | The design↔code contract: how a pack's tokens map onto Figma variable collections and modes, how to implement a design without importing raw values, and what cannot cross the border |
 | `AI_PRODUCT_PATTERNS.md` | The surfaces a model drives: the five states of a call, streaming instead of spinners, latency, provenance and uncertainty, agent confirmations, and the bans that keep it honest |
-| `styles/*.md` | The seventeen style packs — palette, type, texture, motion tokens, motifs, bans, and the traps each one carries |
+| `styles/*.md` | The nineteen style packs — palette, type, texture, motion tokens, motifs, bans, and the traps each one carries |
 | `styles/tokens/*.css` | The ready-made token layer per pack, copied verbatim instead of transcribed (`workbench` and `field-notes` each ship a light `:root` plus a `data-theme="dark"` twin) |
 | `styles/STYLE_PACK_TEMPLATE.md` | The pack contract as a skeleton, so a new style is authored against the same headings rather than improvised |
 
@@ -207,7 +209,7 @@ cd ./ds-workbench && npm install && npm run build
 then `/design-sync` in that directory, from Claude Code. Three layers cross: the
 pack's **bans** as the design system's own README, `styles.css` built from
 `tokens/<pack>.css` verbatim, and the components — a six-name spine that is
-identical in all seventeen kits, so switching packs swaps identity rather than API,
+identical in all nineteen kits, so switching packs swaps identity rather than API,
 plus each pack's signature parts. **Motion does not cross**, exactly as it does
 not cross into Figma: a kit is the static half of a pack, and saying so is what
 stops an agent inventing motion to fill the silence.
@@ -253,7 +255,7 @@ a pack's four widened sections used to make two gates *quieter* and still green.
 One honest limit: the npx installer is checked by asserting its runtime bundle
 walker exists, not by reading a file list — it has none by design. What proves
 it ships the right files is CI, which installs the bundle through **both**
-installers and `diff -r`s the result against the source, then builds all seventeen
+installers and `diff -r`s the result against the source, then builds all nineteen
 kits.
 
 `test/scenarios.md` (T1–T19) is the behavioral harness: fresh subagents given a

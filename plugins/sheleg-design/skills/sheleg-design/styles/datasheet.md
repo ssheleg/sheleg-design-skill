@@ -40,7 +40,11 @@ while you watch, on a field that is dark throughout —
 [`instrument-console`](./instrument-console.md). A developer page whose focal element is a call the reader will write rather than a reading the product returns — [`manpage`](./manpage.md); it sets its body copy in mono too, which this pack reserves for readings.
 A product sold on auditability,
 whose output is a claim that must be traceable to a source —
-[`field-notes`](./field-notes.md). And **not** the product UI itself: this is the
+[`field-notes`](./field-notes.md). A product whose verdict is a **score with a
+grade letter** rather than a row of fields, and which must also show the raw
+response a machine received — [`ora`](./ora.md); it is dark by default and
+carries no orange, so the two are never confused on a screenshot.
+And **not** the product UI itself: this is the
 marketing page that embeds a working instrument, not the console the customer logs
 into, which is `workbench`.
 

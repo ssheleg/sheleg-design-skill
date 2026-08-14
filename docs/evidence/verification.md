@@ -142,3 +142,51 @@ Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (R
 | S-13 | `v1.26.0` tagged, released, published; CI read **before** the tag | `gh run view`, `npm view` | 2026-08-13 · run 31661837515 green on `a9c497e`, 19 jobs, tree `279af78` identical to `main^{tree}` | **green** |
 | S-14 | The published tarball carries the check, the marker and no stale version | the tarball pulled from the registry and read | 2026-08-13 · 1.26.0 in both manifests, `@role non-text` present, **0** stale `1.25.0` references outside the CHANGELOG, 17 packs | **green** |
 | S-15 | Every local channel serves 1.26.0, verified by reading installed files | the resolved install path, the hub copy, the shadow invariant | 2026-08-13 · plugin cache `.../1.26.0/skills/sheleg-design/SKILL.md` and `~/.agents/skills/sheleg-design/SKILL.md` both `version: 1.26.0`; no plain copy in `~/.claude/skills`; 17 packs + template installed | **green** |
+
+### The Ora pack / v1.28.0 — 2026-08-14
+
+Extracted from a live reference rather than composed. Rows written at authoring time;
+what has **not** been observed is stated as `never` rather than assumed.
+
+| REQ | What must stay true | How it is checked | Last verified | Status |
+|---|---|---|---|---|
+| O-01 | Every value in the pack was read off the reference, not chosen | the shipped stylesheet `/_next/static/chunks/feb8eaf5618096ba.css` and the route bundles, fetched and parsed | 2026-08-14 · token blocks `:root`, `[data-theme=dark]`, `[data-theme=light]`, `.ora-journey` dumped and transcribed; the two derived values are marked DERIVED at their declaration | **green** |
+| O-02 | Every ratio the pack states is computed from its own token layer | `validate_stated_ratios()` | 2026-08-14 · eight stated ratios were wrong on first write and the gate named each one with the value it computes; all corrected, gate green | **green** |
+| O-03 | The status set separates under dichromacy, or the pack says status is never by colour alone | `validate_theme()` peer separation, `validate_status_on_field()` | 2026-08-14 · four pairs below the 8.0 CVD floor (danger/good 6.5 dark and 7.4 light, good/info 7.7 dark, good/warn 6.4 light), all above the 10.0 hard floor; the rule is stated and the `Verdict` component makes `grade` and `label` required props | **green** |
+| O-04 | The pack ships the widened contract, not the nine | `validate_contract_declaration()`, `validate_contract_split()` | 2026-08-14 · all thirteen headings present, `Contract: widened`, split recomputed as six of eighteen / the other twelve | **green** |
+| O-05 | The kit compiles and its spine is byte-identical to `workbench` | `npm install && npm run build`, `validate_kits()` | 2026-08-14 · `tsc` exit 0; six spine `*Props` bodies match after comment stripping | **green** |
+| O-06 | No kit component is sized by the screen | `validate_kit_breakpoints()` | 2026-08-14 · both breakpoints in `kits/ora/src/styles.css` are `@container`; zero viewport width queries | **green** |
+| O-07 | The kit's token block is the pack's token layer byte for byte | `validate_kits()` rule 6 | 2026-08-14 · `styles.css` opens with `tokens/ora.css`, compared as a prefix | **green** |
+| O-08 | Every count moved seventeen → eighteen, manifests included | `validate_counted_claims()`, `validate_pack_enumerations()` | 2026-08-14 · eleven sites; the accent-role tally (16) and the `@role non-text:` tally (12) were **recounted from the token layers**, not incremented | **green** |
+| O-09 | Reciprocal forks exist against the packs it is confusable with | `validate_fork_reciprocity()` | 2026-08-14 · `datasheet` and `manpage` both link back; a third fork against `orchard` was dropped rather than shipped one-way | **green** |
+| O-10 | A claim about the reference's behaviour is checked against the reference, not the screenshot | re-reading the shipped bundles | 2026-08-14 · **caught two wrong claims before release**: the pack banned a sticky nav and described the nav as never shadowed, where the reference ships `sticky top-0 z-50 bg-background` with a 1px shadow faded in on scroll. Both corrected in the pack, the ban and the kit's conventions | **green** |
+| O-11 | The bans that name an absence were verified as absent | grep across every shipped bundle of both hosts | 2026-08-14 · zero occurrences of `animation-timeline`, `scroll-timeline`, GSAP or ScrollTrigger; `useScroll` present and accounted for by the nav shadow and the one pinned section | **green** |
+| O-12 | Floors rise with the additive checks and no check was weakened | `test/floors.json`, all three self-tests | 2026-08-14 · 2067→2179, 1001→1095, 450→464; every planted defect still caught | **green** |
+| O-13 | The `.cursor` mirror carries every edit | `validate.py` mirror parity, `diff -r` | 2026-08-14 · identical | **green** |
+| O-14 | The routing scenario and its negative branch have **run** | T27a / T27b in fresh contexts | **never** — written in this change, not executed. Recorded as unrun in `test/scenarios.md` rather than assumed | **never** |
+| O-15 | `v1.28.0` tagged, released, published; every local channel serves it | `gh run view`, `npm view`, the resolved install paths | **never** — the change is authored and gated, not released | **never** |
+
+### The Tenor pack / v1.29.0 — 2026-08-14
+
+Second live-site extraction of the day, and the first from a hand-authored stylesheet.
+Rows written at authoring time; what has **not** been observed is stated as `never`.
+
+| REQ | What must stay true | How it is checked | Last verified | Status |
+|---|---|---|---|---|
+| T-01 | Every value in the pack was read off the reference, not chosen | `/assets/home.css?v=45` (33,822 bytes), `/assets/home.js?v=7`, the easter-egg script and the served HTML, fetched and parsed | 2026-08-14 · `:root` dumped whole; weights, tracking values, eases, durations and clamps counted from the source rather than sampled | **green** |
+| T-02 | The two absences the pack is built on are absences, not assumptions | counted in the stylesheet | 2026-08-14 · `border-radius` **0** occurrences, `box-shadow` **0**, in 33,822 bytes | **green** |
+| T-03 | Every ratio the pack states is computed from its own token layer | `validate_stated_ratios()` plus hand recomputation of the prose numbers | 2026-08-14 · **three prose ratios were wrong on first write** and were caught by recomputing rather than by the gate, which skips a line naming no partner: `--accent-ink` on the accent was written 3.36 and is 3.02 (contrast is symmetric), and the dark band's two greys were written 7.87 / 4.34 against 7.55 / 4.69. All corrected in the pack and in the token layer | **green** |
+| T-04 | A derived value is marked derived at its declaration | reading `tokens/tenor.css` | 2026-08-14 · `--good` is the only new value; `--warn` resolves to the accent and `--danger` to the ink, which is what the reference's own severity chips already do | **green** |
+| T-05 | The status set separates under dichromacy on **both** declaration blocks | `validate_theme()`, `validate_status_on_field()` | 2026-08-14 · `--good` re-derived for the dark band (`#57c08c`, 8.45:1) rather than inherited — the `scoreboard` B-034 failure planted back in and refused | **green** |
+| T-06 | The pack ships the widened contract | `validate_contract_declaration()`, `validate_contract_split()` | 2026-08-14 · thirteen headings, `Contract: widened`, split recomputed as six of nineteen / the other thirteen | **green** |
+| T-07 | The kit compiles and its spine is byte-identical to `workbench` | `npm install && npm run build`, `validate_kits()` | 2026-08-14 · `tsc` exit 0; six spine `*Props` bodies match after comment stripping | **green** |
+| T-08 | No kit component is sized by the screen | `validate_kit_breakpoints()` | 2026-08-14 · six `@container` queries in `kits/tenor/src/styles.css`, zero viewport width queries | **green** |
+| T-09 | Every count moved eighteen → nineteen, manifests included | `validate_counted_claims()`, `validate_pack_enumerations()` | 2026-08-14 · eleven sites; the accent-role tally (17) and the `@role non-text:` tally (13) recounted from the token layers rather than incremented | **green** |
+| T-10 | Reciprocal forks exist against the packs it is confusable with | `validate_fork_reciprocity()` | 2026-08-14 · `blueprint` and `roster` both link back | **green** |
+| T-11 | The enumeration gate's known under-report was closed, not worked around | reading `bin/cli.js` against the pack list | 2026-08-14 · **found by this run**: `ora` had passed the check since 1.28.0 only because it is a substring of `cyclorama`; both names are now written out | **green** |
+| T-12 | A component that would carry the reference's accessibility defect forward says so at the API | reading the kit against the pack | 2026-08-14 · `Guardrail.label` and `Staircase.steps` are required and typed to prevent the failure; `Button.md` states why `secondary` exists, which is that a `primary` label stops being conformant on hover | **green** |
+| T-13 | A claim about the reference's behaviour is checked against the reference | re-reading the source before writing each ban | 2026-08-14 · the staircase's step-3 label was written as paper and corrected to ink after measuring 3.37:1 against 5.23:1 — the reference had it right and the first draft of the kit did not | **green** |
+| T-14 | Floors rise with the additive checks and no check was weakened | `test/floors.json`, all three self-tests | 2026-08-14 · 2179→2294, 1095→1156, 464→478; every planted defect still caught | **green** |
+| T-15 | The `.cursor` mirror carries every edit | `validate.py` mirror parity, `diff -r` | 2026-08-14 · identical | **green** |
+| T-16 | The routing scenario and its negative branch have **run** | T28a / T28b in fresh contexts | **never** — written in this change, not executed. Recorded as unrun in `test/scenarios.md` | **never** |
+| T-17 | `v1.29.0` tagged, released, published; every local channel serves it | `gh run view`, `npm view`, the resolved install paths | **never** — the change is authored and gated, not released | **never** |

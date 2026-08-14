@@ -4,6 +4,151 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.29.0] - 2026-08-14
+
+A nineteenth pack, **`tenor`**, and the first one in the library extracted from a
+**hand-authored stylesheet** rather than a compiled bundle: <https://heytenor.com> ships
+33,822 bytes of CSS somebody wrote, so the token names, the ratios between them and the
+reasons they exist were all legible in the source instead of having to be reconstructed.
+
+### Added
+
+- **`styles/tenor.md` + `styles/tokens/tenor.css` — widened contract, all thirteen
+  headings.** Warm paper `#f7f6f2` under near-black ink at 17.61:1, **zero `border-radius`
+  and zero `box-shadow` in the entire reference**, and one border weight for the whole
+  system. The colour argument is the pack: at rest the page carries a single 25px orange
+  square, and every other appearance of the accent is a hover fill or the focus ring — a
+  page in this pack screenshots with no colour in it at all.
+- **Severity as value rather than hue.** The reference's guardrail chips settle it in one
+  row: ALWAYS ASK is the orange, LIMIT is a grey, NEVER is the ink, and the *word* carries
+  the meaning in all three. The pack ships `--sev-ask` / `--sev-limit` / `--sev-never` as
+  the primary system; `--warn` is the accent and `--danger` is the ink, so `--good`
+  `#296b46` is the only value in the pack the reference does not contain, and it is marked
+  DERIVED at its declaration.
+- **Type: two families, two weights, and tracking that runs both ways.** The sans is held
+  at weight 400 and tracks negative, tightening to `-0.065em` on the hero; the mono is 500
+  and tracks positive, opening to `0.12em` on the smallest label. Display line-height goes
+  **below one** — 0.91 at a `12ch` measure — which is what turns every heading into a
+  three- or four-line stack.
+- **`kits/tenor/` — the React reference kit**, the six-name spine plus seven signature
+  components: `Staircase` (the signature element, typed as a **four-tuple** so the value
+  ramp cannot grow a fifth rung), `SplitHeadline`, `Lattice` + `LatticeCell`, `FilmFrame`,
+  `Guardrail` and `Eyebrow`. Every breakpoint in `src/styles.css` is a `@container` query;
+  `FilmFrame` deliberately does not call `play()`, because the page owns the motion policy
+  and a kit is the static half of a pack.
+
+### Changed
+
+- **The library is nineteen packs**, and every counted claim moved with it: `SKILL.md`
+  (the routing table, the core-contract split — six of the nineteen, the other thirteen —
+  and the token-vocabulary note), `README.md`, `bin/cli.js`, `install.sh`, the three
+  manifests, the Cursor rule, the slash command, `MOBILE_SURFACES.md`,
+  `SURFACE_COMPOSITION.md` (`--accent` in seventeen packs, `@role non-text:` in thirteen of
+  the nineteen) and `DESIGN_SYNC_BRIDGE.md` (nineteen kits).
+- **`blueprint` and `roster` fork against it, reciprocally.** `blueprint` also refuses
+  radius outright and also builds from hairlines — the tell is the marks, since it draws
+  registration marks over a visible grid and `tenor` has neither. `roster` also spends one
+  orange on a light field and also forbids it from carrying a word — it argues *who
+  already uses you*, where `tenor` argues *how the work is organised*.
+- **`bin/cli.js` now names `ora` as well.** The enumeration gate had passed it since
+  1.28.0 because `ora` is a substring of `cyclorama` — the under-reporting the machine's
+  own notes warn about, found by the same check failing honestly on `tenor`.
+- **Ratchet floors raised** to 2294 / 1156 / 478, purely additive; all three self-tests
+  still catch every planted defect.
+
+### Six defects in the reference, recorded in the pack rather than copied
+
+- **`--ink-soft` is 4.16:1** on the paper and carries every lead paragraph at 16px, which
+  is not large text — short of AA by a margin no one notices and every audit finds.
+- **`--ink-faint` is 2.36:1** and carries the grey half of the hero headline at 40.8px to
+  74.4px, below even the 3:1 that large text is allowed.
+- **The accent clears its non-text floor by 0.02**, and contrast is symmetric — so a paper
+  label on an orange fill is the same 3.02:1. Both of the reference's orange-filled
+  elements put a label below the large-text threshold on it, including **every CTA at the
+  moment it is hovered**, where the label falls from 17.61:1 to 3.02:1.
+- **A variable font is loaded across two axes and used at one point**: Instrument Sans is
+  requested as `wdth,wght@75..100,400..600` against zero `font-stretch` declarations, zero
+  `font-variation-settings` and exactly one weight in 33,822 bytes.
+- **The mobile panel ships the pre-`dvh` viewport unit as its base** with a `@supports`
+  upgrade, so it jumps on every browser that lacks the upgrade.
+- **Seven display selectors carry hand-written `<br>` tags** whose visibility is then
+  managed at 620px, and one of them appears in both the hide rule and the re-show rule.
+
+## [1.28.0] - 2026-08-14
+
+> Authored and gated on its own, **released inside `v1.29.0`**: the `tenor` pack followed
+> it in the same session before a tag was cut, and splitting the two after the fact would
+> have produced an intermediate commit whose ratchet floors no longer matched its own
+> tree. There is no `v1.28.0` tag; this section is the record of what it added.
+
+An eighteenth pack, **`ora`**, extracted from a live reference rather than composed:
+<https://ora.ai> and <https://journey.ora.ai>, read from the shipped stylesheet
+`/_next/static/chunks/feb8eaf5618096ba.css` and the route bundles beside it. It is the
+first pack in the library whose **default theme is dark** — because that is the
+reference's own arrangement, which paints its dark values on
+`:root:not([data-theme=light])`, so an unattributed root is dark.
+
+### Added
+
+- **`styles/ora.md` + `styles/tokens/ora.css` — widened contract, all thirteen
+  headings.** A warm coal field, cream ink, and **no third hue**: the accent is the
+  inverted field, which the reference names out loud as
+  `--accent-signature` / `--accent-signature-foreground` and spends as
+  `bg-foreground text-background` on its one primary action. Both themes ship: coal
+  `#141210` with cream `#f7f2e5` at 16.72:1, paper `#f9f7f2` with `#1a1a1a` at 16.26:1.
+- **Two families and one of them is a serif doing the sans job.** `--font-sans`,
+  `--font-serif` and `--default-font-family` all resolve to Lora, so there is no sans
+  anywhere in the system; Space Mono carries every machine fact. The rule the pair
+  encodes — a serif means a person said it, mono means a machine reported it — is what
+  the whole page is read through, and the pack bans adding a sans for that reason.
+- **`kits/ora/` — the React reference kit**, the six-name spine plus six signature
+  components: `Verdict` (the signature element), `LayerBar`, `Terminal`, `StepLog`,
+  `SectionRule`, `StatusDot`. `src/styles.css` opens with the token layer byte for byte;
+  every breakpoint in it is a `@container` query, so no component is sized by the screen.
+- **The verdict numeral as the signature element.** One number in the display serif in
+  its grade colour, a hairline `/ 100` at half its size, and the letter plus the word
+  beneath. `grade` and `label` are **required props** on the component, which is the
+  palette rule made into an API: under deuteranopia `--good` and `--danger` separate by
+  6.5 in dark and 7.4 in light, below the 8.0 CVD floor, so the letter and the word are
+  what make the verdict legible.
+
+### Changed
+
+- **The library is eighteen packs**, and every counted claim moved with it: `SKILL.md`
+  (the routing table, the core-contract split — six of the eighteen, the other twelve —
+  and the token-vocabulary note), `README.md`, `bin/cli.js`, `install.sh`, the three
+  manifests, the Cursor rule, the slash command, `MOBILE_SURFACES.md`,
+  `SURFACE_COMPOSITION.md` (`--accent` in sixteen packs, `@role non-text:` in twelve of
+  the eighteen) and `DESIGN_SYNC_BRIDGE.md` (eighteen kits).
+- **`datasheet` and `manpage` fork against it, reciprocally.** Both are verdict-shaped
+  and both refuse a second family, so an agent reaching either first now learns the
+  distinction: `datasheet` when the artefact is a row of cells, `manpage` when the page
+  is documentation, `ora` when the artefact is a number with a grade and the reader must
+  be shown the raw response a machine received.
+- **Ratchet floors raised** to 2179 / 1095 / 464, purely additive; all three self-tests
+  still catch every planted defect.
+
+### Six defects in the reference, recorded in the pack rather than copied
+
+Named in `## Gotchas` because a pack extracted from a live site inherits its accidents
+unless someone reads them:
+
+- `--border-strong` is declared once in the light `:root` and never re-declared for
+  dark, so the reference paints a paper-coloured hairline at **12.02:1** on the coal
+  field. This pack ships a dark value of its own and marks it derived at the declaration.
+- `--shadow-pop` is a complete shadow in the app scope and a bare **colour** in the
+  journey scope. Copying the wrong one produces an invalid declaration, so the shadow
+  disappears silently rather than erroring.
+- The shadcn `--accent` is a raised **surface**, not an accent — an agent reading token
+  names alone concludes the pack has none.
+- Two dark greys in one product: warm coal `#141210` against neutral `#151515`, each
+  with its own ladder and its own accent.
+- Two radius systems: the proportional ladder off `--radius: .5rem`, and
+  `rounded-[7px]` / `rounded-[9px]` literals that sit on no ladder.
+- Four webfont families are loaded on `<html>` and two are referenced in the stylesheet;
+  the progress fill is animated with `transition-all`, which animates `width` and lays
+  out every frame.
+
 ## [1.27.1] - 2026-08-13
 
 This project's own pipeline paperwork moved from `docs/superpowers/` to

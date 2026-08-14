@@ -14,7 +14,7 @@ Invoke the `sheleg-design` skill and apply it to the current request.
 - **If the arguments name a style pack, use that pack without re-asking.** The
   fourteen are `instrument-console`, `editorial-luxury`, `workbench`,
   `briefing-room`, `atrium`, `orchard`, `field-notes`, `cyclorama`, `showroom`,
-  `blueprint`, `prism`, `maquette`, `scoreboard`, `datasheet`, `manpage`, `pigeonhole`, `roster`. Otherwise pick per the `SKILL.md` table,
+  `blueprint`, `prism`, `maquette`, `scoreboard`, `datasheet`, `manpage`, `pigeonhole`, `roster`, `ora`, `tenor`. Otherwise pick per the `SKILL.md` table,
   and say which pack you picked and why before you build.
 - **Set the three dials out loud before any layout exists** — `DESIGN_VARIANCE`,
   `MOTION_INTENSITY`, `VISUAL_DENSITY`, with one line of reasoning. The
