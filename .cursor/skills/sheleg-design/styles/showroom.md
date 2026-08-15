@@ -95,6 +95,14 @@ to lift anything with: its reference paints an all-transparent ring composite on
 elements, so it separates by hairline. If the app is the exhibit, it is this pack. If the
 exhibit is who already uses the app, it is that one.
 
+**And one that shares the white wall.** [`awning`](./awning.md) also frames a
+product screenshot on white and also lets that screenshot hold the only colour
+on the page — but it frames *fifteen* of them down a catalogue a buyer scrolls to
+compare, under a single three-layer shadow, with a black pill for every action.
+Take this pack when the shot is **the exhibit** and the page is built to frame
+one. Take Awning when the shot is one section among many and the page is a
+capability list for somebody deciding what to run their business on.
+
 ## Palette
 
 Ready-made token layer: [`tokens/showroom.css`](./tokens/showroom.css) — copy it

@@ -86,6 +86,7 @@ this table is for choosing, not for reading instead of the pack:
 | [`tenor`](./styles/tenor.md) | warm paper, **zero radius and zero shadow**, one hairline weight, an orange that only exists on hover and on focus, a sans at weight 400 tracked negative against a mono tracked positive, display at line-height 0.91 in an 8–12ch measure, proof delivered as silent looping video | products arguing a **management thesis** — AI-workforce and agent-operations platforms, autonomous back-office, revenue and sales operations, sold to the director who will have to manage it (standalone) |
 | [`ledger`](./styles/ledger.md) | warm cream paper ruled by a hairline at 12% ink — no shadow on any card — radius 15 nested concentrically, an **ink** primary button, and a terracotta that never fills a control and mostly appears as a 10px mono uppercase kicker; every card that states a number carries a seal saying how the number is known | the console of a product that answers questions **about data** — AI analysts, BI surfaces, query workspaces, agents that read a warehouse and write back a figure (standalone) |
 | [`paperclip`](./styles/paperclip.md) | neutral coal with **no functional colour at all** — every control monochrome, hairlines for elevation, and the whole chromatic budget spent on a curtain of 96 gradient capsules and twelve gradient section badges that cannot be clicked; a tight grotesque over a plain one over a monospace, and the capsule as the shape of everything from a button to a 10 × 20 schedule tick | products that ask a person to **run something that runs itself** — agent teams and orchestrators, autonomous back-office, schedulers, job runners, budget-governed compute (standalone) |
+| [`awning`](./styles/awning.md) | white forecourt where **the accent is black** and no hue reaches the chrome at all; a pill whose radius is a declared component token, one variable grotesque at **420 / 550 with no 700**, two rule weights and a single three-layer shadow | commerce and platform front doors — the surface that sells a system other businesses will run their storefront, payroll, billing or logistics on (standalone) · **core contract** |
 
 **A materialized kit answers part of what a core pack leaves out.** `npx
 sheleg-design-skill --kit <pack>` produces `src/styles.css`, whose component half is
@@ -94,7 +95,7 @@ authored CSS for the states a core pack declines to specify — `:hover`,
 reading only this bundle will invent them. Fetch the kit first, and treat any
 difference between kit and pack as a defect in one of them rather than a choice.
 
-**Six of the twenty-one are on the core contract, and it changes what you get.**
+**Seven of the twenty-two are on the core contract, and it changes what you get.**
 A pack marked **core contract** does not specify `## Components`, `## Hero`,
 `## Responsive` or `## Signature element` — so per-component states, the
 opening viewport and its line ceiling, the collapse rules, and the single
@@ -208,7 +209,7 @@ as a definition of done, in that order:
   before writing CSS for a cinematic page. A scene has planes; everything on one
   plane is the failure no amount of easing repairs.
 - **Charts — hand the pack to `dataviz`** (same file), before drawing a chart in
-  any pack. Token names are not uniform across the twenty-one — only `--bg` and
+  any pack. Token names are not uniform across the twenty-two — only `--bg` and
   `--ink` resolve everywhere — and an undefined custom property does not error,
   it silently falls back. Guessing one is the quietest way to ship a wrong chart.
 - **Mobile surfaces** ([`MOBILE_SURFACES.md`](./MOBILE_SURFACES.md)), when the

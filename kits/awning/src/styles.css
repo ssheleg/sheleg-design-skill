@@ -1,0 +1,363 @@
+/* SHELEG Design — Awning token layer (a white forecourt with no accent hue at all).
+   Copy verbatim; consume only var(--…) in components.
+
+   Measured 2026-08-15 from https://www.shopify.com — the served HTML plus the six
+   linked stylesheets it loads (542 KB resolved). Unlike most marketing sites this
+   one ships a **three-tier token system in the delivered CSS**: primitives
+   (`--color-shade-*`), semantic roles (`--color-theme-bg-cta`), and per-component
+   states (`--color-component-button-primary-bg-hover`) — so the names, the
+   indirection and the states below are the reference's own vocabulary rather than
+   a reconstruction. Every value is lifted from that layer or marked DERIVED with
+   the reason.
+
+   The pack's whole argument: **the accent is black.** `--color-theme-bg-cta`
+   resolves to `#000`, its hover to `#3f3f46`, its active to `#71717a` — one
+   neutral ramp and no hue anywhere in the control set. What carries identity
+   instead is the SHAPE: the button's radius is pinned to a declared
+   `--radius-theme-full`, so the pill is a decision about a component rather than
+   a value someone typed. */
+
+:root {
+  color-scheme: light; /* the theme is explicit — never let the UA pick */
+
+  /* ── the shade ramp, and it is the whole palette ─────────────────────────
+     Eight steps, no hue. The reference names them `--color-shade-*`; the values
+     are Tailwind's zinc renamed, which is worth knowing rather than hiding —
+     a bought ramp used deliberately is not the same as a bought theme used by
+     default (see the pack's Gotchas). */
+  --shade-10: #f4f4f5;
+  --shade-20: #e4e4e7;
+  --shade-30: #d4d4d8;
+  --shade-40: #a1a1aa;
+  --shade-50: #71717a;
+  --shade-60: #52525b;
+  --shade-70: #3f3f46;
+  --shade-90: #18181b;
+
+  /* ── field ───────────────────────────────────────────────────────────────
+     The forecourt is pure white and the second field is one step off it. There
+     is no third: a section is white or it is `--bg-deep`, and nothing nests. */
+  --bg: #ffffff;
+  --bg-deep: var(--shade-10);
+
+  --ink: var(--shade-90); /* 17.72:1 on --bg */
+  --ink-soft: var(--shade-60); /* 7.73:1 on --bg — this is the prose value */
+  /* Measured, and it does NOT clear AA on the second field: 4.83:1 on --bg but
+     4.40:1 on --bg-deep. The reference spends it on meta lines that sit on both.
+     Use it for non-text marks and large text; prose takes --ink-soft. Gotcha 1. */
+  --ink-faint: var(--shade-50);
+
+  /* Separation is two weights, unlike most of this library. The reference uses
+     the lighter one between rows and the heavier one around a control. */
+  --line: var(--shade-20); /* 1.27:1 on --bg */
+  --line-strong: var(--shade-30); /* 1.48:1 on --bg */
+
+  /* ── THE accent, and it is black ─────────────────────────────────────────
+     Not a stylistic absence — a resolved chain. `--color-component-button-
+     primary-bg` → `--color-theme-bg-cta` → `#000`, with every state declared
+     beside it. A page in this pack can be screenshotted in full colour and
+     contain no hue whatsoever, and that is the register rather than a gap. */
+  --accent: #000000; /* 21.00:1 on --bg */
+  --accent-ink: var(--bg); /* white on the accent — 21.00:1 */
+  --accent-hover: var(--shade-70); /* 10.44:1 on --bg */
+  --accent-active: var(--shade-50); /* 4.83:1 on --bg */
+  --accent-disabled: var(--shade-30);
+  /* The label does not stay white when the fill lightens on hover; the reference
+     moves it to shade-30, which is 14.21:1 on the accent and reads as pressed
+     rather than as faded. */
+  --accent-ink-hover: var(--shade-30);
+  --accent-ink-disabled: var(--shade-50);
+
+  /* The single surviving tint of a green ramp the rest of which is gone from the
+     delivered CSS: `--color-aloe-10`. It is a section wash and nothing else —
+     1.17:1 on --bg, so it may never carry a mark, a border or a word. */
+  --wash-mint: #c1fbd4;
+
+  /* ── DERIVED — the front door paints no status at all ────────────────────
+     There is no success, warning or error token anywhere in the reference's
+     theme layer, because a marketing page has no state to report. These three
+     exist for the product surfaces this pack also dresses and are the smallest
+     set that holds: each clears AA on BOTH fields, which is the floor
+     `--ink-faint` misses.
+     --good is 6.61:1 on --bg, and 6.01:1 on --bg-deep.
+     --warn is 6.33:1 on --bg, and 5.76:1 on --bg-deep.
+     --danger is 6.54:1 on --bg, and 5.95:1 on --bg-deep.
+     Status is never by colour alone here — every state carries its word, which
+     is what lets a red and a green sit in one column at all. */
+  --good: #0b6b3a;
+  --warn: #8a5300;
+  --danger: #b3261e;
+
+  /* ── geometry: two shapes, and the second one is declared ────────────────
+     A radius scale for surfaces, and the button pinned to full. The reference
+     writes `--radius-component-button: var(--radius-theme-full)`, so the pill is
+     a statement about what a button IS rather than a number on a rule. Keep the
+     indirection when you copy this: flattening it to `9999px` on the button loses
+     the only place the system says why. */
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-full: 9999px;
+  --radius-button: var(--radius-full);
+
+  /* One shadow in the whole system, and it is three layers: a wide ambient, a
+     close contact, and a hairline edge that keeps the card's boundary legible on
+     white where the ambient alone would dissolve it. Do not add a second. */
+  --shadow-1: 0 8px 48px #06060814, 0 4px 8px #18181b0a, 0 0 2px #18181b40;
+
+  /* ── type: one variable grotesque, tuned off the standard axis ───────────
+     The signature fact of this pack. Body is **420** and bold is **550**; there
+     is no 700 anywhere in the system. A variable font is being used as one, and
+     the result is a page that reads substantial without reading heavy. */
+  --sans: "Inter-Variable", Inter, Helvetica, Arial, sans-serif;
+  --display: "NeueHaasGrotesk", Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --weight-body: 420;
+  --weight-body-lg: 400;
+  --weight-bold: 550;
+
+  /* The display and title ramp, with its leading declared in rem rather than as a
+     ratio — so a size and its leading move together and cannot drift apart. The
+     display sits at 1.08, which is tight for a face this size. */
+  --fs-dsp: 3.5rem;      --lh-dsp: 3.78rem;      --track-dsp: -0.01em;
+  --fs-t1: 2.75rem;      --lh-t1: 2.97rem;       --track-t1: -0.005em;
+  --fs-t2: 2.25rem;      --lh-t2: 2.52rem;       --track-t2: 0;
+  --fs-t3: 1.875rem;     --lh-t3: 2.1375rem;     --track-t3: 0;
+  --fs-t4: 1.625rem;     --lh-t4: 1.8525rem;     --track-t4: 0;
+  --fs-t5: 1.375rem;     --lh-t5: 1.625rem;      --track-t5: -0.005em;
+  --fs-t6: 1.125rem;     --lh-t6: 1.4625rem;     --track-t6: 0;
+  --fs-t7: 1rem;         --lh-t7: 1.3rem;        --track-t7: -0.05em;
+  --fs-t8: 0.875rem;     --lh-t8: 1.1375rem;     --track-t8: 0;
+
+  /* The body ramp, and it tracks the other way. */
+  --fs-b1: 1.25rem;      --lh-b1: 1.625rem;      --track-b1: 0.015em;
+  --fs-b2: 1.125rem;     --lh-b2: 1.4625rem;     --track-b2: 0.015em;
+  --fs-b3: 1rem;         --lh-b3: 1.3rem;        --track-b3: 0.015em;
+  --fs-b4: 0.875rem;     --lh-b4: 1.094rem;      --track-b4: 0.04em;
+  --fs-b5: 0.75rem;      --lh-b5: 1.125rem;      --track-b5: 0.015em;
+  --fs-b6: 0.75rem;      --lh-b6: 1.125rem;      --track-b6: 0.02em;
+
+  /* ── space, and it doubles then jumps ───────────────────────────────────── */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 2.5rem;
+  --space-3xl: 4rem;
+  --space-4xl: 5rem;
+  --space-5xl: 8rem;
+
+  --bp-xs: 340px;
+  --bp-sm: 640px;
+  --bp-md: 900px;
+  --bp-lg: 1200px;
+  --bp-xl: 1600px;
+
+  /* ── motion: three curves named, zero durations named ────────────────────
+     The reference declares the eases as tokens and then writes every duration
+     inline — ten distinct values from .1s to .45s, with no name on any of them.
+     The three below are its curves; the four durations are DERIVED, because a
+     system that names its curves and not its durations cannot hold a duration
+     rule, and MOTION_DOCTRINE's ceiling is what fills the gap. See Gotchas.
+
+     --ease-in is kept because the reference declares it, and it is BANNED in UI
+     by the doctrine: it belongs to something leaving the screen entirely. */
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --dur-hover: 150ms;  /* DERIVED — the reference's most common inline value */
+  --dur-control: 200ms; /* DERIVED — dropdowns and selects, doctrine §3 */
+  --dur-panel: 300ms;   /* DERIVED — modals and sheets, doctrine §3 */
+  --dur-reveal: 450ms;  /* DERIVED — the reference's longest, for entrance only */
+
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: var(--weight-body);
+}
+
+/* The base layer. This pack bans no weight and no slant, so `<strong>` and `<em>`
+   are left to the browser deliberately — but `<strong>` is pointed at this
+   system's own bold so it lands on 550 rather than on the UA's 700, which is the
+   one number this system does not contain. */
+strong, b { font-weight: var(--weight-bold); }
+
+/* Reduced motion. Every duration collapses to zero; the eases are left declared
+   because a curve with no duration costs nothing and a missing token does. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-hover: 0s;
+    --dur-control: 0s;
+    --dur-panel: 0s;
+    --dur-reveal: 0s;
+  }
+}
+
+/* ── components ── */
+/* Authored CSS for the states the pack's Register and Micro-interactions specify.
+   Everything below consumes var(--…) only; no literal reaches a declaration. */
+
+/* ---- the focus ring, once, for everything ------------------------------- */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* ---- Button: the black pill, and its radius comes from the button token -- */
+.aw-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  border: 1px solid transparent;
+  border-radius: var(--radius-button);
+  font-family: var(--sans);
+  font-weight: var(--weight-bold);
+  line-height: 1.5rem;
+  letter-spacing: 0;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color var(--dur-hover) var(--ease-out),
+              border-color var(--dur-hover) var(--ease-out),
+              color var(--dur-hover) var(--ease-out);
+}
+.aw-btn--sm { padding: var(--space-sm) var(--space-md); font-size: var(--fs-b4); }
+.aw-btn--lg { padding: var(--space-md) var(--space-lg); font-size: var(--fs-b3); }
+
+.aw-btn--primary { background: var(--accent); color: var(--accent-ink); }
+.aw-btn--primary:hover:not(:disabled) { background: var(--accent-hover); color: var(--accent-ink-hover); }
+.aw-btn--primary:active:not(:disabled) { background: var(--accent-active); }
+.aw-btn--primary:disabled { background: var(--accent-disabled); color: var(--accent-ink-disabled); cursor: default; }
+
+/* Transparent at every state — the border and the label carry the whole control. */
+.aw-btn--secondary { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+.aw-btn--secondary:hover:not(:disabled) { border-color: var(--accent-hover); }
+.aw-btn--secondary:active:not(:disabled) { border-color: var(--accent-active); color: var(--accent-active); }
+.aw-btn--secondary:disabled { border-color: var(--accent-disabled); color: var(--accent-ink-disabled); cursor: default; }
+
+.aw-btn--ghost { background: transparent; color: var(--ink-soft); }
+.aw-btn--ghost:hover:not(:disabled) { background: var(--bg-deep); color: var(--ink); }
+.aw-btn--ghost:disabled { color: var(--accent-ink-disabled); cursor: default; }
+
+/* ---- Card: the one shadow, three layers -------------------------------- */
+.aw-card {
+  padding: var(--space-lg);
+  background: var(--bg);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-1);
+}
+.aw-card__head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: var(--space-md); margin-bottom: var(--space-md);
+}
+.aw-card__title {
+  font-size: var(--fs-t6); line-height: var(--lh-t6); letter-spacing: var(--track-t6);
+  font-weight: var(--weight-bold); color: var(--ink);
+}
+.aw-card__meta {
+  font-size: var(--fs-b5); line-height: var(--lh-b5); color: var(--ink-soft);
+}
+.aw-card--r-lg { border-radius: var(--radius-lg); }
+.aw-card--r-xl { border-radius: var(--radius-xl); }
+.aw-card--r-2xl { border-radius: var(--radius-2xl); }
+.aw-card--raised { box-shadow: var(--shadow-1); }
+.aw-card--flat { background: var(--bg-deep); box-shadow: none; }
+
+/* ---- Chip: the second pill --------------------------------------------- */
+.aw-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-full);
+  background: var(--bg-deep);
+  color: var(--ink-soft);
+  font-size: var(--fs-b5);
+  line-height: var(--lh-b5);
+  letter-spacing: var(--track-b5);
+  white-space: nowrap;
+}
+.aw-chip--accent, .aw-chip--selected { background: var(--accent); color: var(--accent-ink); }
+
+/* ---- Heading: paired size and leading, never a ratio -------------------- */
+.aw-h { margin: 0; font-family: var(--sans); font-weight: var(--weight-bold); color: var(--ink); }
+.aw-h--1 { font-size: var(--fs-dsp); line-height: var(--lh-dsp); letter-spacing: var(--track-dsp); }
+.aw-h--2 { font-size: var(--fs-t1); line-height: var(--lh-t1); letter-spacing: var(--track-t1); }
+.aw-h--3 { font-size: var(--fs-t3); line-height: var(--lh-t3); letter-spacing: var(--track-t3); }
+
+/* ---- Rule: two weights, and the difference is load-bearing -------------- */
+.aw-rule { border: 0; margin: 0; }
+.aw-rule { border-top: 1px solid var(--line); }
+.aw-rule--strong { border-top-color: var(--line-strong); }
+
+/* ---- Stat --------------------------------------------------------------- */
+.aw-stat { display: flex; flex-direction: column; gap: var(--space-xs); }
+.aw-stat__label {
+  font-size: var(--fs-b4); line-height: var(--lh-b4); letter-spacing: var(--track-b4);
+  color: var(--ink-soft);
+}
+.aw-stat__value {
+  font-size: var(--fs-t1); line-height: var(--lh-t1); letter-spacing: var(--track-t1);
+  font-weight: var(--weight-bold); color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.aw-stat__sub { font-size: var(--fs-b5); line-height: var(--lh-b5); color: var(--ink-soft); }
+
+/* ---- ProductFrame: colourless chrome around full-colour content --------- */
+.aw-frame {
+  margin: 0;
+  padding: var(--space-sm);
+  background: var(--bg);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+}
+.aw-frame > * { display: block; width: 100%; border-radius: var(--radius-lg); }
+
+/* ---- PlanCard: featured by fill, because there is no hue to tint with ---- */
+.aw-plan {
+  display: flex; flex-direction: column; gap: var(--space-sm);
+  padding: var(--space-xl);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-2xl);
+}
+.aw-plan--featured { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.aw-plan__name {
+  font-size: var(--fs-b4); line-height: var(--lh-b4); letter-spacing: var(--track-b4);
+  color: var(--ink-soft);
+}
+.aw-plan--featured .aw-plan__name,
+.aw-plan--featured .aw-plan__cadence { color: var(--line-strong); }
+.aw-plan__price {
+  font-size: var(--fs-t1); line-height: var(--lh-t1); letter-spacing: var(--track-t1);
+  font-weight: var(--weight-bold);
+}
+.aw-plan__cadence { font-size: var(--fs-b5); color: var(--ink-soft); }
+.aw-plan__features {
+  list-style: none; margin: var(--space-md) 0 0; padding: 0;
+  display: flex; flex-direction: column; gap: var(--space-sm);
+  font-size: var(--fs-b3); line-height: var(--lh-b3); letter-spacing: var(--track-b3);
+}
+.aw-plan__action { margin-top: auto; padding-top: var(--space-lg); }
+
+/* ---- FeatureRow: the catalogue unit ------------------------------------- */
+.aw-feature { display: flex; gap: var(--space-lg); padding: var(--space-lg) 0; }
+.aw-feature__index {
+  flex: none; min-width: 2.5rem;
+  font-family: var(--mono); font-size: var(--fs-b5);
+  color: var(--ink-faint);
+}
+.aw-feature__body { display: flex; flex-direction: column; gap: var(--space-xs); }
+.aw-feature__title {
+  font-size: var(--fs-t6); line-height: var(--lh-t6); letter-spacing: var(--track-t6);
+  font-weight: var(--weight-bold); color: var(--ink);
+}
+/* --ink-soft, not --ink-faint: the faint step misses AA on --bg-deep (Gotcha 1). */
+.aw-feature__text {
+  margin: 0;
+  font-size: var(--fs-b3); line-height: var(--lh-b3); letter-spacing: var(--track-b3);
+  color: var(--ink-soft);
+}

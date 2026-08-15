@@ -68,6 +68,58 @@ table that stopped at twenty and a regex that read one modifier word.
   check that would have caught it — a name in a context that routes to it — is
   not written.
 
+## [1.35.0] - 2026-08-15
+
+**A twenty-second pack, and the reference it was asked for did not survive measurement.**
+The request was "a pack in the style of taskip.net". Taskip turned out to be WordPress and
+Elementor over a bought theme (Xilancer), carrying **three token systems that disagree** —
+the theme's declared primary `#6074f6` appears nowhere on the rendered page, the visible
+emerald lives in a second sheet, and a third set of values is Tailwind slate. Twelve radius
+values, six shadows, seven weights, four font families, and `.3s` / `0.3s` / `300ms` written
+as three different things. That is a page-builder output, not a vocabulary, and this library
+exists on the premise that a pack is the reference's own vocabulary rather than a
+reconstruction of one. It was declined as a source and the register was re-sourced instead.
+
+### Added — `awning`, the twenty-second pack
+
+Origin: <https://www.shopify.com>, read 2026-08-15 from the served HTML plus its six linked
+stylesheets. Chosen after measuring five candidates on the same axes; it was the only one
+that paired the register with a real system.
+
+- **The accent is black, and it is a resolved chain rather than a stylistic absence.**
+  `--color-component-button-primary-bg` → `--color-theme-bg-cta` → `#000`, with hover, active
+  and disabled declared beside it. No hue reaches the chrome at all, which is what leaves
+  every colour on the page belonging to the product screenshot inside it.
+- **A three-tier token layer** — primitives, semantic roles, per-component states — so the
+  pack ships the indirection rather than the resolved values. `--radius-component-button:
+  var(--radius-theme-full)` is the only place the system says *why* a button is a pill.
+- **420 and 550, and no 700 anywhere.** A variable grotesque used as one. Setting a heading
+  in 700 here is not a small deviation; it is the one number the system was built to avoid.
+- **Tracking crosses zero inside one family** — negative on the display ramp, positive on the
+  body ramp, crossover around 1.375rem — where most packs in this library split tracking
+  across two faces.
+- **Leading ships paired with size in `rem`**, not as a ratio, and the ratio *changes* down
+  the ramp: 1.08 at display, 1.12 at t2, 1.30 at t7.
+- **One shadow, three layers** — ambient, contact, and a `0 0 2px` hairline edge that is what
+  stops a card dissolving on pure white. That third layer is the one people drop when they
+  copy a shadow by eye.
+- Six Gotchas, three of them defects in the reference: `--ink-faint` at **4.40:1 on the
+  system's own second field**; three eases named as tokens against **ten unnamed inline
+  durations**; and `ease-in` shipped as a token while the doctrine bans it in UI.
+- Routed through all seven surfaces the validator checks, mirrored to `.cursor`, added to
+  `install.sh`, and shipped with `kits/awning` — the six-name spine on the canonical API plus
+  `ProductFrame`, `PlanCard` and `FeatureRow`.
+
+### Fixed
+
+- `paperclip` and `showroom` now link **back** to `awning`. The validator caught the one-way
+  fork: a neighbour reference that only points one direction is a dead end for anyone who
+  reaches the other pack first.
+- Nine stated counts moved from twenty-one to twenty-two across `SKILL.md`, `README.md`,
+  `package.json`, both manifests, `bin/cli.js`, `MOBILE_SURFACES.md`, `SURFACE_COMPOSITION.md`
+  and `DESIGN_SYNC_BRIDGE.md`, plus core-contract packs from six to seven. Every one was
+  caught by the gate rather than remembered.
+
 ## [1.34.0] - 2026-08-15
 
 **The pack was applied correctly and the result still read as somebody else's typography.**

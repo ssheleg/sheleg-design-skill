@@ -234,7 +234,7 @@ ${c("bold", "What it installs")}
   DESIGN_SYNC_BRIDGE.md   the Claude Design contract (what a pack sends, and
                        what does not cross)
   AI_PRODUCT_PATTERNS.md  chat / agent / streaming surfaces (honest state)
-  styles/              twenty-one style packs — instrument-console (dark console),
+  styles/              twenty-two style packs — instrument-console (dark console),
                        editorial-luxury (warm editorial), workbench (light/dark
                        product UI), briefing-room (dark 16:9 presentation deck),
                        atrium (warm cream consumer health), orchard (friendly
@@ -261,7 +261,11 @@ ${c("bold", "What it installs")}
                        clicked, for products that run themselves),
                        ledger (warm cream paper ruled by a hairline at 12% ink,
                        an ink primary button, a terracotta that only labels, and
-                       a seal on every card saying how its number is known) —
+                       a seal on every card saying how its number is known),
+                       awning (a white forecourt where the accent is black and
+                       no hue reaches the chrome, a pill whose radius is a
+                       declared component token, and one variable grotesque at
+                       420/550 with no 700) —
                        plus a ready-made token CSS per pack and
                        STYLE_PACK_TEMPLATE.md for authoring more
 `);

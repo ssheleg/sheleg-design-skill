@@ -67,6 +67,15 @@ theme, at data density. Take Paperclip for the page that sells that application:
 composition is the argument that the boring monochrome console behind the
 marketing page is the same object.
 
+[`awning`](./awning.md) reaches the same conclusion from the opposite field: it
+also refuses functional colour outright and also makes every control monochrome,
+but its forecourt is **pure white**, its accent is black rather than an inverted
+coal, and it spends nothing on ornament at all — where this pack's whole
+chromatic budget goes into a curtain of gradient capsules, Awning's goes nowhere,
+so the only colour on its page is the product screenshot. Take Awning when the
+product is infrastructure other businesses resell on, and Paperclip when it is a
+thing that runs itself.
+
 **And one a screenshot will not separate.** [`ora`](./ora.md) is also dark by
 default, also refuses a brand hue, also sets every machine fact in a monospace,
 and also spends its accent as the inverted field. Three tests tell them apart.
