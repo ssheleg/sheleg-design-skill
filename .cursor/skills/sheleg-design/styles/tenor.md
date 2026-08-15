@@ -39,7 +39,11 @@ ambient gradient, so `MOTION_INTENSITY` above **4** has nothing legal to buy.
 **Not for:** consumer, playful or brand-led registers where colour carries
 identity — there is one hue here and it only appears under the cursor. Not for
 dense operator chrome: with no radius, no shadow and one border weight, a fourth
-nested panel has nothing to sit on, and that is `workbench`'s half. Not for a
+nested panel has nothing to sit on, and that is `workbench`'s half. That refusal
+is narrower than it reads, and
+[On a product surface](#on-a-product-surface) measures where it actually bites —
+a dashboard's panels and stat lattice carry the pack unchanged; a status chip
+repeated down a table column is where the single hairline stops separating. Not for a
 page whose argument is an accumulating figure (`scoreboard`) or a documentation
 page whose focal element is a command (`manpage`).
 
@@ -67,21 +71,41 @@ verbatim instead of transcribing this table.
 | `--bg` | `#f7f6f2` | the page, and the fill of anything that is not inverted | — |
 | `--bg-deep` | `#eeece6` | a different room, not a raised surface | 1.09:1 |
 | `--ink` | `#10100f` | display, headings, every filled control | 17.61:1 |
-| `--ink-soft` | `#777773` | supporting prose and mono labels | 4.16:1 |
+| `--ink-soft` | `#777773` | the tracked mono labels — **not prose**, see Gotcha 1 | 4.16:1 |
+| `--ink-soft-aa` | `#6b6b67` | **derived** — supporting prose, on either field | 4.95:1 |
 | `--ink-faint` | `#a3a29d` | the hero's grey clause, and nothing smaller | 2.36:1 |
 | `--line` | `rgb(16 16 15 / 0.16)` | the only border weight in the system | — |
 | `--accent` | `#e9672a` | hover fill, focus ring, one 25px lockup square | 3.02:1 |
-| `--accent-ink` | `#f7f6f2` | text ON the accent | — |
+| `--accent-ink` | `#10100f` | text ON the accent — **corrected**, see below | — |
 | `--good` | `#296b46` | **derived** — success on a product surface | 5.91:1 |
-| `--warn` | `#e9672a` | attention, and it is the accent | 3.02:1 |
+| `--warn` | `#e9672a` | attention as a **mark**, and it is the accent | 3.02:1 |
+| `--warn-ink` | `#94400f` | **derived** — attention as a **word** | 6.47:1 |
 | `--danger` | `#10100f` | prohibition, and it is the ink | 17.61:1 |
+
+**`--accent-ink` is the coal, and this is the one place the pack overrules its
+reference.** The site puts the paper on its orange fills, which measures 3.02:1 —
+the same figure as the fill on the field, because contrast is symmetric — so
+every CTA in the reference fails AA at the instant it is hovered. The coal on
+that same fill measures **5.84:1**. Since the orange does not change between the
+paper page and the dark band, neither does the only label that can be read on it,
+which is why the token layer declares `--accent-ink` once and the dark block does
+not override it. The consequence is worth stating plainly: **the hover fill is
+legal after all.** Gotcha 3 used to route around it by moving the border instead
+of the fill; that workaround is no longer the answer.
 
 **The dark band is a section, not a theme.** `[data-surface="dark"]` inverts one
 strip inside a paper page — the reference uses it for the use-case grid and the
 footer, and never for a whole page. Its greys are composites of the paper over
 the ink, which is why they are neutral rather than a second warm ramp: `--ink`
 `#f7f6f2` at 17.61:1, `--ink-soft` `#a4a3a0` at 7.55:1, `--ink-faint` `#7f7e7c`
-at 4.69:1, and `--good` re-derived to `#57c08c` at 8.45:1.
+at 4.69:1, and `--good` re-derived to `#57c08c` at 8.45:1. On this field the
+orange clears AA on its own, so `--warn-ink` is remapped back to the accent — the
+value-axis variant exists for the paper alone.
+
+`--bg-deep` on the band is **derived** rather than measured: the reference aliases
+it to the field, because a band has no hover and no resting chip and therefore
+needs no second room. `#222221` is paper at 8% over the coal, and a product
+surface has both — see [On a product surface](#on-a-product-surface).
 
 **The accent is a hover state.** This is the pack's whole colour argument, so it
 is stated before anything else follows from it. At rest the page has one orange
@@ -90,10 +114,13 @@ other appearance is triggered — a filled control turning orange under the
 cursor, the 2px focus ring, one guardrail chip that means *ask first*. Three
 consequences: a page can be screenshotted with no colour in it at all and still
 be this pack; a resting orange fill is a design error rather than a variant; and
-because the orange sits at 3.02:1 on the paper, **it may never carry a word**.
-Contrast is symmetric, so paper on the orange is the same 3.02:1 — a label on an
-orange fill needs large text (24px, or 18.66px bold) to be conformant, and the
-reference's two orange-filled elements are both below that. See Gotchas.
+because the orange sits at 3.02:1 on the paper, **nothing may be set in it**.
+
+Text *on* the orange is the other direction and a different measurement, and the
+two get conflated: the paper on it is the same 3.02:1, but the coal on it is
+5.84:1. So the rule has two halves and only one of them is a prohibition — the
+orange never colours a word, and a word may sit on the orange provided it is
+`--accent-ink`. See Gotcha 3.
 
 **Severity is value, not hue.** The guardrail chips prove it in one row: `ALWAYS
 ASK` is the orange, `LIMIT` is a grey, `NEVER` is the ink. Three levels, one hue,
@@ -231,8 +258,54 @@ disabled; where the reference paints no such state, the derivation is marked.
   loading state on a marketing surface; on a product surface, a 1px `--line`
   skeleton whose geometry matches the block it replaces, and no spinner.
 - **Empty states.** Also absent from the reference. Derived: a mono label, one
-  sentence of `--ink-soft` prose in the `32ch` measure, and the single action
+  sentence of `--ink-soft-aa` prose in the `32ch` measure, and the single action
   that fills it, as a section CTA. No illustration.
+
+### On a product surface
+
+Everything above is measured off a marketing page. The pack is also spent on the
+dashboards and admin screens behind such a page, and five things break there that
+a page never exercises. Each answer below is **derived**; all were found by
+mounting the pack on a populated twenty-route dashboard rather than reasoned about.
+
+- **There is no dark theme, and a product that has one needs a decision.** The
+  reference inverts a band inside a paper page; it never inverts the page. A
+  product with a theme toggle has three options and only the third is honest:
+  drop the toggle, invent a second ramp (which is inventing values), or **promote
+  the band's own measured greys to a theme** and add the one thing a band does
+  not have — a second field, `--bg-deep` `#222221`. Take the third and say so,
+  because a reader who knows the pack will otherwise assume the dark screens were
+  extracted and they were not.
+- **Ranking by value costs the link its affordance.** With `--accent` moved onto
+  the ink so it can carry a word, a link is the same colour as the sentence
+  beside it. The pack already owns the fix and spends it only in the header: the
+  rule under the word whose origin flips, `right` at rest and `left` on hover.
+  Use it for a section's action link. For a link repeated down a table, use a
+  plain static underline in `--line` instead — fifty animated rules is the
+  "more than one marquee" ban wearing a different costume.
+- **The selected row of a rail is the lattice cell's inversion, held open.** Not
+  an accent tint: there is no second hue to tint with, and `--accent-weak` on
+  this pack is just the deeper paper. Fill it `--ink`, set the label `--bg`, and
+  drop any suffix count to 63% — the same treatment a capability cell takes on
+  hover.
+- **A column of chips is where the hairline stops working, and it is the pack's
+  own density warning made specific.** One border weight, no radius and no fill
+  means fifteen status chips down a table column read as a texture rather than as
+  fifteen states. The threshold measured here: a lattice of chips is legible
+  while they are *comparable and few* — a header row, a summary strip — and stops
+  being legible the moment they repeat per row. In a table, drop the box and set
+  the status as the word alone in its severity value, with `--warn` kept for the
+  mark beside it. Panels and tiles are unaffected: the same lattice at four cells
+  across a dashboard's stat row reads exactly as it does on the page.
+- **Prose sits on two fields at once and `--ink-soft` fails on the second.** This
+  is what produced `--ink-soft-aa`; see Gotcha 1.
+
+What does **not** change on a product surface: the spacing scale and the type
+ramp. Tenor's section rhythm is `clamp(40px, 4.5vw, 64px)` and its display slope
+runs to 8rem in an 8–12ch measure — both are page values, and a dashboard has
+neither a section rhythm nor display type. Keep the product's own scale and take
+the pack's *surface*: the field, the zero radius, the single hairline, the hue
+that only appears under the cursor, and the two tracking ramps.
 
 ## Hero
 
@@ -411,24 +484,43 @@ reference itself, which is exactly why a copy of it inherits them.
    **4.16:1** on the paper, and it carries every lead paragraph and every
    supporting sentence at `clamp(1rem, 1.35vw, 1.25rem)` — 16px at the small end,
    which is not large text. It is short of 4.5:1 by a margin no one will notice
-   and every audit will. Darken it to at least `#6f6f6b` for prose, or reserve it
-   for the mono labels where it is used at tracked caps.
+   and every audit will. Reserve it for the mono labels, where it is used at
+   tracked caps, and set prose in `--ink-soft-aa`.
+
+   **The remedy this Gotcha used to give was itself short.** It said "darken it
+   to at least `#6f6f6b`", which clears the floor on the paper at 4.67:1 and
+   reaches only **4.27:1** on `--bg-deep` — a field the pack spends on a whole
+   section, so the fix failed on the pack's own second room and did so silently,
+   because nobody re-measures a remedy. `--ink-soft-aa` `#6b6b67` is 4.95:1 and
+   4.53:1, the smallest step that holds on both. Found by putting the pack on a
+   product surface where muted text sits on both fields at once.
 2. **`--ink-faint` sets the hero and fails even the large-text floor.** At
    `#a3a29d` it is **2.36:1**, below the 3:1 that large text is allowed. It
    carries the grey half of the headline at 40.8px to 74.4px. The device is worth
    keeping and the value is not: the pack's rule is that the muted clause must
    clear 3:1, which is `#8a8985` or darker on this paper.
-3. **The accent clears its floor by 0.02, and both of its filled elements sit on
-   the wrong side of it.** `#e9672a` is **3.02:1** on `#f7f6f2` — legal as a
-   non-text mark, with no margin at all, so one step lighter and the focus ring
-   stops being conformant. Contrast is symmetric, so a paper label on an orange
-   fill is the same 3.02:1, and both places the reference fills with orange put a
-   label on it below the large-text threshold: the investor lockup's `Y` at
-   12.5px, and **every CTA at the moment it is hovered**, where the mono label at
-   ~10.4px falls from 17.61:1 to 3.02:1. The rule this pack takes from the
-   measurement: the orange may fill a control whose label is decorative or
-   duplicated elsewhere, and a control whose label is the only statement of what
-   it does keeps its ink fill and moves its **border** to the accent instead.
+3. **The accent clears its floor by 0.02, and the reference puts the wrong label
+   on it.** `#e9672a` is **3.02:1** on `#f7f6f2` — legal as a non-text mark, with
+   no margin at all, so one step lighter and the focus ring stops being
+   conformant. Contrast is symmetric, so a *paper* label on an orange fill is the
+   same 3.02:1, and both places the reference fills with orange put one there
+   below the large-text threshold: the investor lockup's `Y` at 12.5px, and
+   **every CTA at the moment it is hovered**, where the mono label at ~10.4px
+   falls from 17.61:1 to 3.02:1.
+
+   **The fix is the label, not the fill.** The coal on that same orange is
+   **5.84:1** — it clears AA at any size, on the paper page and on the dark band
+   alike, because the orange is the same orange in both. So a hovered control
+   changes two properties rather than one: the fill goes to `--accent` and the
+   label goes to `--accent-ink`. Nothing has to give up the hover fill, which is
+   this pack's most recognisable interaction.
+
+   *This entry used to end differently.* It said the orange may fill only a
+   control whose label is decorative or duplicated, and that a control whose
+   label is its only statement should keep its ink fill and move its **border**
+   to the accent. That workaround was derived from measuring one direction and
+   never the other; it is superseded, and a page still following it is not
+   wrong, only more cautious than it needs to be.
 4. **A variable font is loaded across two axes and used at one point.**
    Instrument Sans is requested as `wdth,wght@75..100,400..600`; the stylesheet
    contains zero `font-stretch` declarations, zero `font-variation-settings`, and

@@ -4,6 +4,65 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.32.0] - 2026-08-15
+
+**The pack met a product surface, and three of its own measurements did not survive
+the meeting.** `tenor` was mounted on a populated twenty-route dashboard behind a
+`?pack=` switch — the "mount them, don't imagine them" procedure `SKILL.md` prescribes
+— and every finding below came from a screen with real data on it rather than from a
+re-read. Each is reproduced by a number the token layer now carries and
+`validate_stated_ratios` now checks.
+
+### Fixed — in `tenor`
+
+- **The reference puts the wrong label on its own accent, and the pack copied the
+  workaround instead of the fix.** Gotcha 3 measured `--paper` on the orange at 3.02:1,
+  correctly, and concluded that a control whose label is its only statement must keep
+  its ink fill and move its *border* to the accent. It never measured the other
+  direction: `--coal` on the same orange is **5.84:1**. `--accent-ink` is the coal now,
+  declared once and deliberately not overridden on the dark band — the orange does not
+  change between fields, so neither does the only label readable on it. The hover fill,
+  which is this pack's most recognisable interaction, is legal after all.
+- **Gotcha 1's remedy was short on the pack's own second field.** It said to darken
+  `--ink-soft` "to at least `#6f6f6b`", which clears 4.67:1 on `--bg` and only **4.27:1**
+  on `--bg-deep` — a field the pack spends on a whole section. A remedy nobody
+  re-measures is a defect with a citation attached. **New `--ink-soft-aa` `#6b6b67`**:
+  4.95:1 and 4.53:1, the smallest step that holds on both. `--ink-soft` keeps the
+  reference's value and is now marked for the tracked mono labels, not for prose.
+- **`--warn` is the accent, and a product surface sets warn as a word.** At 3.02:1 the
+  orange cannot carry one. **New `--warn-ink` `#94400f`** — the same hue on the value
+  axis, 6.47:1 on `--bg` and 5.93:1 on `--bg-deep`. `--warn` stays the mark (the dot,
+  the edge rule, the fill); the two are one severity in two roles, which is the split
+  `--sev-ask`/`--sev-limit`/`--sev-never` already models. On the dark band the orange
+  clears AA unaided, so `--warn-ink` remaps back to the accent there.
+- **The dark band's `--bg-deep` resolved to the field it sits on.** Correct for a band,
+  which has no hover and no resting chip; a rule that silently does nothing on a product
+  surface, which has both. Derived to `#222221` — paper at 8% over the coal, 1.20:1
+  against `--bg`, and `--ink` 14.73:1 / `--ink-soft` 6.31:1 / `--good` 7.07:1 on it.
+
+### Added — in `tenor`
+
+- **`--coal`**, beside `--paper`. The pack has two materials and named only one, which is
+  why the dark band restated `#f7f6f2` as a literal that then had to agree with the light
+  block by hand. `--ink` is `var(--coal)` on the paper and `var(--paper)` on the band.
+- **`### On a product surface`**, inside `## Components`. Five things a marketing page
+  never exercises, each derived and each found on the dashboard: no dark theme exists and
+  a product with a toggle has to pick one of three answers; ranking by value costs the
+  link its affordance, and the pack's own flipped-origin rule is the fix (static
+  underline in a table — fifty animated rules is the marquee ban in another costume); a
+  rail's selected row is the lattice cell's inversion held open; **a column of chips is
+  where the single hairline stops separating**, which makes the Register's "not for dense
+  operator chrome" specific rather than a blanket refusal; and prose sits on two fields
+  at once. What does not change: the spacing scale and the type ramp, which are page
+  values.
+
+### Note
+
+`--bg-deep` on the dark band was written into this changelog's draft as 1.41:1 against
+`--bg` and is **1.20:1**. The number was asserted rather than computed, and
+`validate_stated_ratios` caught it before the commit — the check earning its keep on the
+run that extended it.
+
 ## [1.31.0] - 2026-08-14
 
 **T29 ran, and the pack it was written for did not survive it intact.** Both branches

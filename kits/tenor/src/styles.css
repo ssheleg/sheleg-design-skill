@@ -17,11 +17,25 @@
      a section as a different room (the reference spends it on one band and on
      the closing panel), and it never appears inside a card. */
   --paper: #f7f6f2;
+  /* The two materials. Everything here is one of them, a step between them, or
+     the one hue — and naming the coal is what lets the dark band say
+     `--ink: var(--paper)` instead of restating a literal that then has to agree. */
+  --coal: #10100f;
   --bg: var(--paper); /* the family's core role name */
   --bg-deep: #eeece6; /* --paper-deep */
 
-  --ink: #10100f; /* 17.61:1 on --bg */
-  --ink-soft: #777773; /* 4.16:1 — see the pack's Gotchas before setting body copy in it */
+  --ink: var(--coal); /* 17.61:1 on --bg */
+  --ink-soft: #777773; /* 4.16:1 as measured — it FAILS AA; prose takes --ink-soft-aa */
+  /* DERIVED — the value above is the reference's, and it does not clear AA;
+     Gotcha 1 records that. The remedy that Gotcha used to give, #6f6f6b, clears
+     the floor on the paper and reaches only 4.27 against the deeper field —
+     which this pack spends on a whole section, so the remedy failed on the
+     pack's own second room. This is the smallest step that holds on both:
+     --ink-soft-aa is 4.95:1 on --bg,
+     and --ink-soft-aa is 4.53:1 on --bg-deep.
+     Set prose in this; keep --ink-soft for the tracked mono labels, where it is
+     used at caps and the reference's value is what was read. */
+  --ink-soft-aa: #6b6b67;
   --ink-faint: #a3a29d; /* 2.36:1 — the hero's grey clause, and it fails even AA-large */
 
   /* Separation is a hairline over ink at 16%, and there is no second border
@@ -36,11 +50,23 @@
      when you touch something, not what the page looks like. */
   --orange: #e9672a;
   --accent: var(--orange); /* 3.02:1 on --bg — a fill and a ring, never a word */
-  --accent-ink: var(--paper); /* text ON the accent — 3.02:1, so large text only; see the pack's Gotchas */
+  /* CORRECTED, and it is the one place this pack overrules its reference. The
+     site puts the paper on its orange fills, and
+     --paper is 3.02:1 on --accent
+     — the same figure as the fill on the field, because contrast is symmetric,
+     so every CTA in the reference fails AA at the moment it is hovered
+     (Gotcha 3). The coal on the same fill clears it outright:
+     --accent-ink is 5.84:1 on --accent.
+     The orange does not change between the paper page and the dark band, so
+     neither does the only label that can be read on it — which is why this is
+     `var(--coal)` rather than `var(--ink)`, and why the dark block below does
+     not override it. */
+  --accent-ink: var(--coal); /* text ON the accent */
 
   /* @role non-text: --accent, --warn — 3.02:1 on --bg. The orange is a fill, a
-     25px lockup square and the 2px focus ring; the reference never sets a word
-     in it and neither may you. Both clear the 3:1 non-text floor and neither
+     25px lockup square and the 2px focus ring; nothing set in the ORANGE carries
+     a word. (Text ON the orange is a different measurement and a different token:
+     see --accent-ink above.) Both clear the 3:1 non-text floor and neither
      clears AA. */
 
   /* ── severity is VALUE, not hue ──────────────────────────────────────────
@@ -63,6 +89,17 @@
   --good: #296b46;
   --warn: var(--orange);
   --danger: var(--ink);
+  /* DERIVED — the accent pushed onto the value axis until it can carry a word.
+     `--warn` is the orange because that is what the reference does, and on a
+     marketing page warn is always a fill or a chip. A product surface sets warn
+     as TEXT — a count, a retention tag, a table cell — and at 3.02:1 the orange
+     cannot. This is the same hue pushed down the value axis until it can:
+     --warn-ink is 6.47:1 on --bg,
+     and --warn-ink is 5.93:1 on --bg-deep.
+     Use --warn for the mark (the dot, the 3px edge rule, the fill) and
+     --warn-ink for the word beside it; they are the same severity in two roles,
+     which is the pattern --sev-ask/--sev-limit/--sev-never already sets. */
+  --warn-ink: #94400f;
 
   /* The staircase's two middle rungs. The only oklch in the reference and the
      only achromatic values in it: pure neutrals sitting between a warm paper and
@@ -169,15 +206,30 @@
 [data-surface="dark"] {
   color-scheme: dark;
 
-  --bg: #10100f;
-  --bg-deep: #10100f;
-  --ink: #f7f6f2; /* 17.61:1 on --bg */
+  --bg: var(--coal);
+  /* DERIVED — the reference aliases this to the field, because a band has no
+     hover and no resting chip and therefore needs no second room. A product
+     surface has both (see the pack's `## Product surface`), and a token that
+     resolves to the field it sits on is a rule that silently does nothing.
+     Paper at 8% over the coal, and everything still clears AA on it:
+     --ink is 14.73:1 on --bg-deep,
+     --ink-soft is 6.31:1 on --bg-deep,
+     --good is 7.07:1 on --bg-deep.
+     And --bg-deep is 1.20:1 on --bg — a different room rather than an elevation
+     step, which is exactly what --bg-deep means on the paper, where the same
+     pair is 1.09:1. */
+  --bg-deep: #222221;
+  --ink: var(--paper); /* 17.61:1 on --bg */
   --ink-soft: #a4a3a0; /* paper at 64% over the ink — 7.55:1 */
+  /* On this field the accent is 5.84:1 and clears AA outright, so warn keeps the
+     real hue here; the value-axis variant exists for the paper alone. */
+  --warn-ink: var(--orange);
   --ink-faint: #7f7e7c; /* paper at 48% — 4.69:1, labels only */
   --line: rgb(247 246 242 / 0.2);
   --line-light: rgb(16 16 15 / 0.16);
 
-  --accent-ink: #f7f6f2;
+  /* --accent-ink is deliberately NOT overridden: the orange is the same orange
+     on both fields, so the one label that can be read on it is the same coal. */
   --sev-limit: #4a4a48;
   /* DERIVED, same reasoning as the light block and re-measured on this field:
      8.45:1 on --bg, and 10.7 from the accent under deuteranopia. A surface
