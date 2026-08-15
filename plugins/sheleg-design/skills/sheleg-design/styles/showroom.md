@@ -35,6 +35,14 @@ argument is not how the app looks but what it *calls each thing* — a filing sc
 labelled chips — is [`pigeonhole`](./pigeonhole.md). And **not** the
 dashboard itself: this is the page that displays such a dashboard.
 
+**The fork against [`ledger`](./ledger.md).** Both put a real product surface on
+screen, and that is where the likeness stops: this pack frames a screenshot as a
+*specimen* to argue with, under a seven-layer shadow, on a marketing page. That
+one **is** the surface — a console with no hero and no framing shadow at all,
+whose cards are drawn with a hairline. If the reader can click the data, it is
+`ledger`; if they can only admire it, it is this pack, and the specimen inside a
+`showroom` page for a data product should be the `ledger` build.
+
 **The fork against [`pigeonhole`](./pigeonhole.md).** Both are white, both are
 product-led, both open with a screenshot. The subject is what separates them: this
 pack frames the application **whole** and lets a seven-layer shadow lift it off the

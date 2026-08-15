@@ -54,6 +54,18 @@
   **`lobby`**, the best metaphor for a wall of client logos, rejected because it collides
   with `atrium` in the same building-space family and *selection by intent* is the
   criterion that decides. The address is in the pack's `Origin:`.
+- **Applied an eleventh time:** 2026-08-15. The twenty-first pack was extracted
+  from `basedash.com` and is named **`ledger`** for the register it encodes — a
+  ruled warm-paper record where every figure has a line behind it — not
+  `basedash`. The fifth run whose opening request was an address and a brief to
+  "make a brandkit out of it". Two alternatives were weighed and rejected on this
+  ADR's criteria: **`counting-house`**, accurate about the register and too long
+  to type as a pack argument, and **`abacus`**, which names an instrument for
+  *computing* a number where this pack's whole subject is **checking** one that a
+  model already computed. *Selection by intent* decided it: the reader arriving
+  here is asking "is this figure right and where did it come from", which is a
+  ledger question. The address is in the pack's `Origin:`.
+
 - **Corrected:** 2026-08-10. The Decision section named the seventh pack
   `lecture-hall`. That was the name on the branch this ADR was written on, and
   that branch never merged; the pack that shipped from graphify.com is

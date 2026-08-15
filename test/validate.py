@@ -798,13 +798,24 @@ NUMBER_WORDS = {
     8: "eight", 9: "nine", 10: "ten", 11: "eleven", 12: "twelve",
     13: "thirteen", 14: "fourteen", 15: "fifteen", 16: "sixteen",
     17: "seventeen", 18: "eighteen", 19: "nineteen", 20: "twenty",
+    21: "twenty-one", 22: "twenty-two", 23: "twenty-three", 24: "twenty-four",
+    25: "twenty-five", 26: "twenty-six", 27: "twenty-seven",
+    28: "twenty-eight", 29: "twenty-nine", 30: "thirty",
 }
 WORD_NUMBERS = {w: n for n, w in NUMBER_WORDS.items()}
+# Longest first, so "twenty-one" wins over "one"; and a lookbehind that refuses
+# a match starting mid-compound. The twenty-first pack is what surfaced this:
+# the table stopped at twenty, so every correct "twenty-one packs" was read as
+# "one packs" and failed, and the hyphenated form of a count nobody had needed
+# yet was the only thing missing.
+_COUNT_WORDS = "|".join(sorted(WORD_NUMBERS, key=len, reverse=True))
 COUNTED = re.compile(
-    r"\b(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|"
-    r"thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|\d{1,2})"
+    r"(?<![-\w])(" + _COUNT_WORDS + r"|\d{1,2})"
     r" (?:locked |named |shipped |pluggable |real |React |reference )*"
-    r"(?:visual |style )?(pack|kit|scenario|heading)s\b",
+    # `*`, not `?`: plugin.json says "twenty pluggable VISUAL STYLE packs", and a
+    # single optional modifier meant that count was never read as one. It sat
+    # stale at twenty while twenty-one shipped, in the file an agent host reads.
+    r"(?:visual |style )*(pack|kit|scenario|heading)s\b",
     re.I,
 )
 # "A fork between two packs" counts a relationship, not the library. A hyphen
@@ -993,7 +1004,7 @@ def validate_contract_split():
     if not check(total > 0, "SKILL.md: no pack table rows found -- the contract split "
                             "cannot be checked against anything"):
         return
-    m = re.search(r"\*\*(\w+) of the (\w+) are on the core contract", skill)
+    m = re.search(r"\*\*([\w-]+) of the ([\w-]+) are on the core contract", skill)
     if check(m is not None, "SKILL.md: the core-contract paragraph does not state "
                             "'<N> of the <M> are on the core contract'"):
         said_core, said_total = (WORD_NUMBERS.get(g.lower()) for g in m.groups())
@@ -1002,7 +1013,7 @@ def validate_contract_split():
               f"marks {core}")
         check(said_total == total,
               f"SKILL.md: says the library holds {m.group(2)!r} packs; the table has {total}")
-    m = re.search(r"The other (\w+) answer all four", skill)
+    m = re.search(r"The other ([\w-]+) answer all four", skill)
     if check(m is not None, "SKILL.md: the core-contract paragraph does not state "
                             "'The other <N> answer all four'"):
         check(
@@ -1183,7 +1194,7 @@ PLANTS = (
         "a count that is true of an older release",
         "README.md",
         lambda t: re.sub(
-            r"\*\*[a-z]+ locked style\npacks\*\*", "**six locked style\npacks**", t, count=1
+            r"\*\*[a-z-]+ locked style\npacks\*\*", "**six locked style\npacks**", t, count=1
         ),
     ),
     (
@@ -1208,7 +1219,7 @@ PLANTS = (
         # manifest currently claims, for the reason given at the first plant.
         "a count that is true of an older release, in a manifest",
         ".claude-plugin/marketplace.json",
-        lambda t: re.sub(r"[a-z]+ (pluggable style packs)", r"six \1", t, count=1),
+        lambda t: re.sub(r"[a-z-]+ (pluggable style packs)", r"six \1", t, count=1),
     ),
     (
         "the contract called by a stale number",

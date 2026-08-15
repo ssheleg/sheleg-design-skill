@@ -3,7 +3,7 @@ name: sheleg-design
 description: Use when building or upgrading a cinematic scroll-driven landing page, marketing site or hero (particle/WebGL background, scroll-linked animation, parallax, scrubbed sections) — when such a page feels busy or janky or its motion layers drift out of sync — or when styling product UI with its style packs - dashboards, admin panels, internal/dev tools, mobile app screens, design tokens, light/dark themes - or when carrying a visual system across the Figma border (publishing tokens as variables, implementing a design without importing raw values). Triggers - "cinematic landing" / "кинематографичный лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables / figma to code" / "переменные фигмы, фигма в код", "chat/agent UI" / "интерфейс чата или агента", "streaming output" / "стриминг ответа", "mobile screen" / "мобильный экран".
 license: MIT
 metadata:
-  version: 1.34.0
+  version: 1.35.0
 ---
 
 # SHELEG Design
@@ -84,6 +84,7 @@ this table is for choosing, not for reading instead of the pack:
 | [`roster`](./styles/roster.md) | white field in a faint square grid, hairline instead of shadow, the display in the **body** face and the heads in another, one orange that never carries a word | products whose argument is **who already carries them** — AI-search visibility, SEO and content platforms, agencies, marketplaces |
 | [`ora`](./styles/ora.md) | warm coal field, cream ink and **no third hue** — the accent is the inverted field; a serif doing the sans job over mono for every machine fact; a terminal surface cut **below** the page; a six-step verdict ramp | products whose output is **a machine's verdict about the reader** — agent-readiness and crawlability scores, SEO/AEO audits, agent-run traces, MCP and protocol surfaces · **dark by default** (standalone) |
 | [`tenor`](./styles/tenor.md) | warm paper, **zero radius and zero shadow**, one hairline weight, an orange that only exists on hover and on focus, a sans at weight 400 tracked negative against a mono tracked positive, display at line-height 0.91 in an 8–12ch measure, proof delivered as silent looping video | products arguing a **management thesis** — AI-workforce and agent-operations platforms, autonomous back-office, revenue and sales operations, sold to the director who will have to manage it (standalone) |
+| [`ledger`](./styles/ledger.md) | warm cream paper ruled by a hairline at 12% ink — no shadow on any card — radius 15 nested concentrically, an **ink** primary button, and a terracotta that never fills a control and mostly appears as a 10px mono uppercase kicker; every card that states a number carries a seal saying how the number is known | the console of a product that answers questions **about data** — AI analysts, BI surfaces, query workspaces, agents that read a warehouse and write back a figure (standalone) |
 | [`paperclip`](./styles/paperclip.md) | neutral coal with **no functional colour at all** — every control monochrome, hairlines for elevation, and the whole chromatic budget spent on a curtain of 96 gradient capsules and twelve gradient section badges that cannot be clicked; a tight grotesque over a plain one over a monospace, and the capsule as the shape of everything from a button to a 10 × 20 schedule tick | products that ask a person to **run something that runs itself** — agent teams and orchestrators, autonomous back-office, schedulers, job runners, budget-governed compute (standalone) |
 
 **A materialized kit answers part of what a core pack leaves out.** `npx
@@ -93,12 +94,12 @@ authored CSS for the states a core pack declines to specify — `:hover`,
 reading only this bundle will invent them. Fetch the kit first, and treat any
 difference between kit and pack as a defect in one of them rather than a choice.
 
-**Six of the twenty are on the core contract, and it changes what you get.**
+**Six of the twenty-one are on the core contract, and it changes what you get.**
 A pack marked **core contract** does not specify `## Components`, `## Hero`,
 `## Responsive` or `## Signature element` — so per-component states, the
 opening viewport and its line ceiling, the collapse rules, and the single
 element the page is remembered by are **yours to decide**, and you say so out
-loud when you do. The other fourteen answer all four. This asymmetry is the one
+loud when you do. The other fifteen answer all four. This asymmetry is the one
 thing about the library most likely to make you invent a value and believe you
 read it: what a core pack *does* state is measured to two decimals, and that
 precision is not evidence about the half it leaves silent. Each pack declares
@@ -167,9 +168,11 @@ not with emptiness. Say which row you took and why when two fire.
   A static page announcing 7 is broken. If working motion will not fit the
   scope, drop the dial to 3 and ship a clean still page; never half-build motion
   that stalls, cuts off, or jumps.
-- **A standalone pack pins its own ceiling.** `workbench` and `briefing-room`
-  are not cinematic; `MOTION_INTENSITY` above 3 on either is a misread of the
-  pack, not a bold choice. `pigeonhole` is cinematic but at the family's floor: it bans the scroll clock,
+- **A standalone pack pins its own ceiling.** `workbench`, `briefing-room` and
+  `ledger` are not cinematic; `MOTION_INTENSITY` above 3 on any of the three is a
+  misread of the pack, not a bold choice — `ledger` allows exactly three loops,
+  all of them state (a typing cursor, thinking dots, a live heartbeat), and stops
+  all three under reduced motion. `pigeonhole` is cinematic but at the family's floor: it bans the scroll clock,
 scrubbing, parallax and a sticky nav, so `MOTION_INTENSITY` above **4** on it has
 nothing legal to buy. **`roster` has the same ceiling of 4** for the same reason —
 entrance, hover and two slow floats are its whole budget, and it bans scrubbing,
@@ -205,7 +208,7 @@ as a definition of done, in that order:
   before writing CSS for a cinematic page. A scene has planes; everything on one
   plane is the failure no amount of easing repairs.
 - **Charts — hand the pack to `dataviz`** (same file), before drawing a chart in
-  any pack. Token names are not uniform across the twenty — only `--bg` and
+  any pack. Token names are not uniform across the twenty-one — only `--bg` and
   `--ink` resolve everywhere — and an undefined custom property does not error,
   it silently falls back. Guessing one is the quietest way to ship a wrong chart.
 - **Mobile surfaces** ([`MOBILE_SURFACES.md`](./MOBILE_SURFACES.md)), when the

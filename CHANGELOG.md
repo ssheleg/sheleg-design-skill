@@ -4,6 +4,70 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.35.0] - 2026-08-15
+
+**The twenty-first pack, and two counts that had been wrong for eight releases.**
+`ledger` was extracted from `basedash.com` — a warm cream console for a product
+that answers questions about data. Adding it walked the library past twenty for
+the first time, which is where two gates turned out to have been counting with a
+table that stopped at twenty and a regex that read one modifier word.
+
+### Added
+
+- **`ledger` — style pack 21 (widened contract, standalone product UI).** Warm
+  cream field `#fcf9f5` under `#14100c` ink, elevation as a **1px hairline at 12%
+  ink and no shadow on any card**, the reference's ×1.25 radius ramp nested
+  concentrically (a 15px track with 4px of padding holds a 10px thumb), an **ink**
+  primary button, and a terracotta `#c2410c` that **never fills a control** — of
+  eleven accent-coloured elements on the reference, five are a 10px monospace
+  uppercase kicker and none is a button. 32px data rows in the system monospace;
+  the large figure on a stat tile is the UI face at 34px, not the mono, which is
+  what the reference actually does. Light `:root` plus a `[data-theme="dark"]`
+  twin whose alpha ramp is a different set of steps rather than the light one
+  inverted.
+  - **Signature element: the seal in a card's title row** — `Verified` /
+    `Inferred` / `Unverified`, linking to the proof. It is
+    `AI_PRODUCT_PATTERNS.md` §4's provenance tag applied to a card instead of a
+    span, and it maps onto three tokens the pack already ships, so implementing
+    it adds no hue.
+  - **`--warn` is derived and says so at the declaration**, per the template's
+    rule 3: the reference declares an amber in its theme layer and never paints a
+    warning. The step differs per theme because at amber-500 the *dark* accent and
+    the warning are 7.1 apart at full colour — one colour with two meanings, below
+    the hard floor. amber-300 is 16.2 apart and clears every dichromacy.
+  - **`--chart-1` … `--chart-5` are named for shadcn/ui**, so a Recharts series
+    reads the pack's chart ramp through `ChartConfig` with no adapter.
+- **`kits/ledger`** — twelve components: the six-name spine plus `Seal`,
+  `Kicker`, `DataTable`, `SegmentedControl`, `StatusDot` and an `EmptyState` that
+  carries the capability and two runnable example questions.
+
+### Fixed
+
+- **The counted-claims gate could not count past twenty.** `NUMBER_WORDS` stopped
+  there, so every correct "twenty-one packs" was read as **"one packs"** and
+  failed, in nine files at once. The table now runs to thirty, the alternation is
+  longest-first, and a lookbehind refuses a match that starts mid-compound. Two
+  planted-defect fixtures had the same hyphen blindness and one of them had
+  stopped mutating anything — a plant that changes nothing reports BROKEN, which
+  is how it was found.
+- **A count with two modifier words was never read as a count at all.** The regex
+  allowed one of `visual `/`style `, and both manifests say "pluggable **visual
+  style** packs". Widening it to `*` immediately surfaced two stale numbers: the
+  plugin description said **twenty** on the day twenty-one shipped, and
+  `marketplace.json`'s own top-level description had said **thirteen** since the
+  thirteenth pack — eight releases, in the two files an agent host reads first.
+- **The core-contract paragraph's two regexes matched `\w+`**, so a hyphenated
+  total failed to parse and the check reported the paragraph missing rather than
+  wrong.
+
+### Known limitation
+
+- `validate_pack_enumerations` tests membership by **substring**, so `ledger`
+  passed in four files that merely described `scoreboard` as carrying "a dark
+  ledger". The four were filled in by hand and are now genuinely exhaustive; the
+  check that would have caught it — a name in a context that routes to it — is
+  not written.
+
 ## [1.34.0] - 2026-08-15
 
 **The pack was applied correctly and the result still read as somebody else's typography.**

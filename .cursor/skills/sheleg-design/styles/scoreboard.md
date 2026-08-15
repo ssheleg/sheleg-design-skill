@@ -248,6 +248,14 @@ zoom-on-focus on iOS, and this pack's body size is 15px.
   `container-type: inline-size`, because both appear inside columns of different
   widths on the same page and neither should size against the viewport.
 
+**The fork against [`ledger`](./ledger.md).** Both are warm-paper packs whose
+subject is a number, and the fork is the same *which surface* test the library
+asks everywhere else. This pack renders a claim **about** numbers on a page the
+reader cannot touch — the figure ticks up and the argument is that it keeps
+ticking. `ledger` renders the reader's **own** numbers in a console they operate,
+each one carrying a seal saying how it was obtained. A metric being shown belongs
+here; a metric being checked belongs there.
+
 **The fork against [`roster`](./roster.md), and a router will reach for the wrong one.**
 Both serve growth, ads and SEO products, so the category cannot decide it. **The kind of
 proof can.** This pack is built around a figure that ticks up — the pixel numeral, the

@@ -58,6 +58,17 @@ budget on a single chromatic object that cannot be clicked, leaving every
 control monochrome. A company selling an agent console needs both, and the mocks
 inside a `paperclip` page should be the `workbench` build.
 
+**The fork against [`ledger`](./ledger.md)** is the closest call in the family,
+because both are standalone product-UI packs, both build elevation out of
+hairlines and never shadows, and both set data in a monospace. The test is what
+the reader is doing with the numbers. This pack is the console you **operate** —
+cool neutral greys, a blue accent that fills the primary button, a surface built
+to disappear while you filter, sort and act. `ledger` is the console you
+**audit**: warm cream paper, an accent forbidden from filling any control, and a
+per-card seal stating how each number was obtained. A product whose numbers a
+model produced needs that seal; a product whose numbers the system already knows
+does not, and paying for it is how a tool starts apologising for itself.
+
 ## Palette
 
 Ready-made token layer: [`tokens/workbench.css`](./tokens/workbench.css)
