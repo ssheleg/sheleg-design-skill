@@ -51,6 +51,14 @@
      the lighter one between rows and the heavier one around a control. */
   --line: var(--shade-20); /* 1.27:1 on --bg */
   --line-strong: var(--shade-30); /* 1.48:1 on --bg */
+  /* DERIVED, and it exists because rendering the pack found the reference short.
+     A secondary control here is transparent in every state, so its border IS the
+     control — and WCAG's floor for a UI component boundary is 3:1, which
+     --line-strong misses by half. --shade-40 does not reach it either (2.56:1).
+     --control-border is 4.83:1 on --bg, the first step on the ramp that clears
+     the floor. Use --line-strong for a decorative edge and this for anything a
+     reader is meant to press. See Gotcha 7. */
+  --control-border: var(--shade-50);
 
   /* ── THE accent, and it is black ─────────────────────────────────────────
      Not a stylistic absence — a resolved chain. `--color-component-button-
@@ -232,7 +240,7 @@ strong, b { font-weight: var(--weight-bold); }
 .aw-btn--primary:disabled { background: var(--accent-disabled); color: var(--accent-ink-disabled); cursor: default; }
 
 /* Transparent at every state — the border and the label carry the whole control. */
-.aw-btn--secondary { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+.aw-btn--secondary { background: transparent; color: var(--ink); border-color: var(--control-border); }
 .aw-btn--secondary:hover:not(:disabled) { border-color: var(--accent-hover); }
 .aw-btn--secondary:active:not(:disabled) { border-color: var(--accent-active); color: var(--accent-active); }
 .aw-btn--secondary:disabled { border-color: var(--accent-disabled); color: var(--accent-ink-disabled); cursor: default; }
@@ -303,7 +311,11 @@ strong, b { font-weight: var(--weight-bold); }
   font-weight: var(--weight-bold); color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
-.aw-stat__sub { font-size: var(--fs-b5); line-height: var(--lh-b5); color: var(--ink-soft); }
+/* --ink-faint, not --ink-soft: rendered, the label above and the sub below were
+   the same grey and the number read as sandwiched between two equal lines. This
+   is 4.83:1 on --bg. A Stat placed on --bg-deep must move its sub to --ink-soft,
+   where --ink-faint drops to 4.40:1 (Gotcha 1). */
+.aw-stat__sub { font-size: var(--fs-b5); line-height: var(--lh-b5); color: var(--ink-faint); }
 
 /* ---- ProductFrame: colourless chrome around full-colour content --------- */
 .aw-frame {
@@ -348,6 +360,9 @@ strong, b { font-weight: var(--weight-bold); }
 .aw-feature__index {
   flex: none; min-width: 2.5rem;
   font-family: var(--mono); font-size: var(--fs-b5);
+  /* The title's cap-height, not the row's top — rendered, a top-aligned index
+     floats above a line set at a larger size and reads as unattached. */
+  line-height: var(--lh-t6);
   color: var(--ink-faint);
 }
 .aw-feature__body { display: flex; flex-direction: column; gap: var(--space-xs); }

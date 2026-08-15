@@ -4,6 +4,45 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.36.0] - 2026-08-16
+
+**`awning` shipped as a specification and had never been rendered.** Asked whether the
+design itself had been done, the answer was no: a pack, a token layer and a nine-component
+kit that typechecks, and not one pixel looked at. A page was built in the kit and
+photographed, and it produced three findings the token layer could not — two of them
+defects in the reference that survived the 1.35.0 release precisely because that release
+was read rather than seen.
+
+### Fixed — in `awning`
+
+- **A secondary control's border misses the contrast floor for a control boundary.**
+  `--line-strong` `#d4d4d8` is **1.48:1** on white against WCAG's **3:1** for a UI component
+  boundary — short by half. It matters more here than it would anywhere else, because a
+  secondary button in this system is `transparent` at rest, hover, active *and* disabled: the
+  border is not decoration around the control, it **is** the control. `--shade-40` does not
+  reach the floor either (2.56:1). **New `--control-border`** `#71717a`, 4.83:1, the first
+  step on the ramp that clears it. Found by looking at a "Talk to sales" button beside a
+  black pill and seeing it nearly disappear.
+- **The second field is declared and a page built from the pack will not use it.**
+  `--bg-deep` existed from the first release and the first page rendered ran fifteen sections
+  on pure white without touching it, because nothing forces the alternation and white is the
+  default of everything. A front door in this register is long; a long page on one field
+  reads as one endless scroll. Recorded as a trap with the instruction to alternate by
+  section and to spend the change where the argument changes.
+- **A `Stat`'s label and its sub were the same grey**, so the number read as sandwiched
+  between two equal lines rather than as the thing the block is about. The sub drops to
+  `--ink-faint`; the constraint that comes with it — 4.40:1 on `--bg-deep`, so a Stat on the
+  second field moves its sub back to `--ink-soft` — is written beside it.
+- **A `FeatureRow`'s mono index was top-aligned** against a title set larger, and floated
+  free of the line it belongs to. It takes the title's leading now.
+
+### Note
+
+Gotchas went from six to eight, and the header now says which of them were found by
+rendering rather than by reading. That distinction is the point of this release: the pack
+passed three validators, both `--strict` runs and a typecheck at 1.35.0 with two
+accessibility defects in it, and neither was reachable without building a page.
+
 ## [1.35.0] - 2026-08-15
 
 **The twenty-first pack, and two counts that had been wrong for eight releases.**

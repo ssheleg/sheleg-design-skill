@@ -68,7 +68,8 @@ file verbatim instead of transcribing this table.
 | `--ink-soft` | `#52525b` | **prose** — the value that holds on both fields | 7.73:1 |
 | `--ink-faint` | `#71717a` | meta and non-text marks — **not prose**, see Gotcha 1 | 4.83:1 |
 | `--line` | `#e4e4e7` | between rows | 1.27:1 |
-| `--line-strong` | `#d4d4d8` | around a control | 1.48:1 |
+| `--line-strong` | `#d4d4d8` | a decorative edge | 1.48:1 |
+| `--control-border` | `#71717a` | **derived** — the boundary of a pressable control | 4.83:1 |
 | `--accent` | `#000000` | every primary action | 21.00:1 |
 | `--accent-ink` | `#ffffff` | text ON the accent | — |
 | `--good` | `#0b6b3a` | **derived** — success on a product surface | 6.61:1 |
@@ -257,19 +258,37 @@ why a copy inherits them.
    lands in the exact moment after a click when the reader is watching hardest.
    The reference ships it as a token, which makes reaching for it easy; keep it
    for something leaving the screen entirely, and prefer `ease-in-out` even then.
-4. **The shade ramp is Tailwind's `zinc`, renamed.** `#f4f4f5`, `#e4e4e7`,
+4. **A secondary control's border misses the floor for a control boundary.**
+   `--line-strong` `#d4d4d8` is **1.48:1** on white, and WCAG's floor for a UI
+   component boundary is **3:1** — so it fails by half. This matters more here
+   than it would in most packs, because a secondary button in this system is
+   `transparent` at rest, hover, active *and* disabled: the border is not
+   decoration around the control, it **is** the control. `--shade-40` does not
+   reach the floor either (2.56:1). `--control-border` `#71717a` is the first
+   step on the ramp that clears it, at 4.83:1. Found by rendering a page in the
+   pack and looking at a "Talk to sales" button beside a black pill, where it
+   nearly disappeared — not by reading the token layer, which is why it survived
+   the first release.
+5. **The second field exists and a page built from this pack will not use it.**
+   `--bg-deep` is declared, and the first page rendered in this pack ran fifteen
+   sections on pure white without touching it — because nothing in the token
+   layer forces the alternation and white is the default of everything. A front
+   door in this register is long and sectioned, and a long page on one field
+   reads as one endless scroll. **Alternate the field by section**, and use the
+   change to mark where the argument changes, not decoratively.
+6. **The shade ramp is Tailwind's `zinc`, renamed.** `#f4f4f5`, `#e4e4e7`,
    `#d4d4d8`, `#a1a1aa`, `#71717a`, `#52525b`, `#3f3f46`, `#18181b` are that
    palette exactly. This is not a criticism — a bought ramp used deliberately,
    with semantic roles layered over it, is a different thing from a bought theme
    used by default. But it matters when someone asks whether the greys are
    "yours": they are chosen, not authored, and a second product on the same ramp
    will look related whether or not you meant it.
-5. **The token layer is three tiers deep and a copy usually flattens it.**
+7. **The token layer is three tiers deep and a copy usually flattens it.**
    `--color-component-button-primary-bg` → `--color-theme-bg-cta` → `#000` is
    three lookups to reach one colour, and it is worth every one of them: the theme
    tier is where a co-brand or a locale swaps in. Flatten the chain when copying
    and the system still renders, having lost the only seam it was built around.
-6. **The delivered CSS is 542 KB and most of it is a utility bundle.** Counting
+8. **The delivered CSS is 542 KB and most of it is a utility bundle.** Counting
    `border-radius` across the whole payload returns nineteen values and counting
    transitions returns twenty-five, which reads as sprawl. It is not: the *system*
    is `--radius-*` (four values plus full), one shadow and three weights, and the

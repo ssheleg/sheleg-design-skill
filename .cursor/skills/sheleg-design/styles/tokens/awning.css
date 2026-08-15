@@ -51,6 +51,14 @@
      the lighter one between rows and the heavier one around a control. */
   --line: var(--shade-20); /* 1.27:1 on --bg */
   --line-strong: var(--shade-30); /* 1.48:1 on --bg */
+  /* DERIVED, and it exists because rendering the pack found the reference short.
+     A secondary control here is transparent in every state, so its border IS the
+     control — and WCAG's floor for a UI component boundary is 3:1, which
+     --line-strong misses by half. --shade-40 does not reach it either (2.56:1).
+     --control-border is 4.83:1 on --bg, the first step on the ramp that clears
+     the floor. Use --line-strong for a decorative edge and this for anything a
+     reader is meant to press. See Gotcha 7. */
+  --control-border: var(--shade-50);
 
   /* ── THE accent, and it is black ─────────────────────────────────────────
      Not a stylistic absence — a resolved chain. `--color-component-button-
