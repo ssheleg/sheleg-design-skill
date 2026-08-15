@@ -236,8 +236,9 @@ costs a dropped declaration.
 
 ## Gotchas
 
-Six traps, measured on 2026-08-15. Three are defects in the reference, which is
-why a copy inherits them.
+Eight traps, measured on 2026-08-15 and 2026-08-16. Five are defects in the
+reference, which is why a copy inherits them — and **two of those five were
+found only by rendering a page in this pack**, not by reading its token layer.
 
 1. **`--ink-faint` does not clear AA on the system's own second field.** At
    `#71717a` it is **4.83:1** on `#ffffff` and **4.40:1** on `#f4f4f5`, and the

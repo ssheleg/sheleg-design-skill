@@ -430,6 +430,28 @@ def validate_skills():
         # All-or-nothing on the widened four. A pack that copied the current
         # skeleton and kept only the cheap headings would otherwise pass while
         # teaching the next author that the four are optional.
+        # A pack that opens its Gotchas with "Six traps" and then lists eight is
+        # asserting a number nobody recomputed. Shipped exactly that in `awning`
+        # 1.36.0: the two traps found by rendering the pack were added correctly
+        # and the header above them was not, and every other gate passed --
+        # because the generic count check below counts packs and kits, not the
+        # things a pack says about itself. A count is checkable, so it is checked.
+        gotchas = text.split("## Gotchas", 1)
+        if len(gotchas) == 2:
+            listed = len(re.findall(r"^\d+\. \*\*", gotchas[1], re.M))
+            m = re.match(r"\s*(\w+) traps\b", gotchas[1])
+            # `.lower()` is load-bearing: NUMBER_WORDS is keyed lowercase and the
+            # pack writes "Eight traps" capitalised, so the first draft of this
+            # check looked up "Eight", got None, and skipped every pack in silence
+            # — a gate that cannot fail, which is the defect it was written for.
+            said = WORD_NUMBERS.get(m.group(1).lower()) if m else None
+            if said is not None and listed:
+                check(
+                    said == listed,
+                    f"{rel}: the Gotchas open with '{m.group(1)} traps' and the section "
+                    f"lists {listed} -- a count is checkable, so it is checked",
+                )
+
         adopted = [s for s in PACK_SECTIONS_WIDENED_ONLY if has_heading(text, s)]
         if adopted:
             missing = [s for s in PACK_SECTIONS_WIDENED_ONLY if not has_heading(text, s)]

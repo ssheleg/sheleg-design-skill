@@ -4,6 +4,29 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.36.1] - 2026-08-16
+
+**1.36.0 added two traps and left the sentence above them saying six.** The Gotchas section
+of `awning` opened with "Six traps" over a list of eight, because the edit that added them
+matched on a guessed line wrap and the header replacement silently did not apply. Every gate
+passed: the repository's counted-claims check counts **packs and kits**, not the things a
+pack says about itself.
+
+### Fixed
+
+- The header now reads "Eight traps" and names which five are the reference's — and which
+  **two of those five were found only by rendering**.
+
+### Added
+
+- **`validate.py` now checks a pack's stated trap count against its own list.** No other
+  pack in the library disagreed, measured; the class was simply ungated.
+- **And the check's first draft could not fail.** `NUMBER_WORDS` is keyed lowercase, the pack
+  writes "Eight" capitalised, so the lookup returned `None` and every pack was skipped in
+  silence — a gate that passes everything, which is precisely the defect it exists to catch.
+  Caught by planting the defect and watching for a failure that never came. `.lower()` added,
+  re-planted, and watched failing before being kept. 2653 → **2657** checks.
+
 ## [1.36.0] - 2026-08-16
 
 **`awning` shipped as a specification and had never been rendered.** Asked whether the
