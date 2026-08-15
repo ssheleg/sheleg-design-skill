@@ -4,6 +4,55 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.33.0] - 2026-08-15
+
+**Three things the pack asserts that a running page disproved.** Same dashboard as 1.32.0,
+audited a second time — but by walking the **computed styles of every element** rather
+than by re-reading the source. That is the difference this entry is about: all three
+findings are invisible to a grep over the stylesheets, and two of them are invisible to
+the stylesheets entirely.
+
+### Fixed — in `tenor`
+
+- **The second-hue ban was being broken by the pack's own token, on every render.** Bans
+  said "the orange is the entire chromatic budget", flatly, while the Palette section
+  three hundred lines above derived `--good` and explained why a product surface needs it.
+  Measured on a live screen, hue 150 appeared **36 times on one page** — checklist marks
+  and success chips. The ban now names its exception and states the real rule: no hue you
+  did not find in this file, and the only two in it are the orange and `--good`.
+- **Two bans the browser breaks for you, with no stylesheet involved.** `<strong>` renders
+  at **700** against "no weight above 500" and `<em>` renders italic against "no italics".
+  Neither appears in any CSS, so neither is greppable and neither surfaces in review;
+  both were found by reading computed styles. `tokens/tenor.css` now ships the three-line
+  base layer, and emphasis resolves the pack's own way — by **value**, not by weight or
+  slant. **Every pack in this library that bans a weight or a slant owes the same block**,
+  and none of the twenty ships one; filed as `B-044`.
+- **The 25px orange rule conflated a measurement with a limit.** It is the size of the
+  reference's investor lockup, not a threshold derived from anything, and a product's own
+  lockup will not be 25px. The rule it stands for is *one small resting orange object per
+  screen*; the entry now says which half is which.
+
+### Added — in `tenor`
+
+- **`--data-rest`**, a role over the value ramp the staircase already spends — `--stair-3`
+  on the paper (3.37:1 on `--bg`, over the non-text floor) and `--ink-faint` on the band.
+  It exists because this pack has **one border weight**: a design system carrying
+  `--border` and `--border-strong` as two steps collapses both onto `--line` here, and a
+  chart that reached for the stronger of the two paints its resting bars in the exact
+  colour of the rule between its own rows. Measured on a dashboard's account table — the
+  two resolved identically and the bars matched the row separator to the byte. Nothing
+  errors, because both names resolve; that is the failure mode.
+- The `### On a product surface` section gains the chart rule, and repeats the standing
+  instruction that charts in any pack go through `dataviz` first.
+
+### Note
+
+Two contrast claims in this diff named `--line`, which is declared with alpha and is
+therefore dropped from the validator's solids — so no claim naming it can ever be checked.
+`validate_stated_ratios` caught the one that sat on a checkable line and stayed silent on
+the one that did not, which is the hole `B-003` already describes. Both are now written as
+arguments with their resolved hex rather than as measurements.
+
 ## [1.32.0] - 2026-08-15
 
 **The pack met a product surface, and three of its own measurements did not survive

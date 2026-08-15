@@ -299,6 +299,21 @@ mounting the pack on a populated twenty-route dashboard rather than reasoned abo
   across a dashboard's stat row reads exactly as it does on the page.
 - **Prose sits on two fields at once and `--ink-soft` fails on the second.** This
   is what produced `--ink-soft-aa`; see Gotcha 1.
+- **A data mark must not borrow the hairline, and in this pack it silently will.**
+  Tenor has one border weight and no strong variant, so a design system that
+  carries `--border` and `--border-strong` as two steps collapses them onto one
+  value here. A sparkline whose resting bars were painted with the *stronger* of
+  those two is then painted in the exact colour of the rule between the rows it
+  sits in — a quantity rendered in the token reserved for chrome, and nothing
+  errors, because both names resolve. Measured on a dashboard's account table:
+  the two resolved identically and the bars matched the row separator to the
+  byte. **Use `--data-rest`**, which the token layer maps onto the value ramp the
+  staircase already spends: `--stair-3` on the paper (3.37:1 on `--bg`, and 2.38
+  against `--line`, so it separates from the rule) and `--ink-faint` on the band.
+  The emphasised mark stays `--accent-ink`-on-`--ink` or whatever the chart's own
+  emphasis rule says; only the resting one changes. Charts in any pack go through
+  `dataviz` first — token names are not uniform across the twenty, and an aliased
+  one fails exactly this quietly.
 
 What does **not** change on a product surface: the spacing scale and the type
 ramp. Tenor's section rhythm is `clamp(40px, 4.5vw, 64px)` and its display slope
@@ -457,11 +472,35 @@ hierarchy is spent.
   drawing.
 - **No shadows, and no elevation model at all.** Something is either filled or it
   is not. A card with a shadow is a different pack.
-- **No second hue.** The orange is the entire chromatic budget, and it is spent on
-  hover and focus. A resting orange fill larger than 25px is out of register.
+- **No second hue — with one named exception, and it is `--good`.** The orange is
+  the chromatic budget of the *page*, spent on hover and focus. The pack also
+  ships a derived success value at hue 150 for the product surfaces it dresses,
+  because a marketing site paints no success state and a dashboard has to. So the
+  ban as it stands is: **no hue you did not find in this file**, and the only two
+  in it are the orange and `--good`. A screen may carry both; nothing else.
+
+  *This used to read "the orange is the entire chromatic budget", flatly, while
+  the Palette section three hundred lines above derived `--good` and said why.
+  Measured on a dashboard running this pack, hue 150 appeared **36 times on one
+  screen** — checklist marks and success chips — so the ban was being broken by
+  the pack's own token on every render.*
+
+  A resting orange fill larger than 25px is out of register. **That number is a
+  measurement of the reference's investor lockup, not a limit derived from
+  anything** — a product's own lockup will not be 25px, and the rule it stands
+  for is *one small resting orange object per screen*. Treat the size as the
+  reference's and the count as the rule.
 - **No weight above 500, and no weight above 400 in the sans.** Emphasis comes
   from size, measure and fill.
 - **No italics.** The reference contains none.
+- **Both of the two above need a base layer, because the browser breaks them for
+  you.** `<strong>` renders at **700** and `<em>` renders italic with no
+  stylesheet involved, so neither violation appears in any CSS a grep can read
+  and neither shows up in review. `tokens/tenor.css` ships the reset; emphasis
+  resolves the pack's own way, by **value** — `<strong>` takes weight 500 and the
+  full `--ink` against prose set in `--ink-soft-aa`, and `<em>` drops the slant
+  and takes the ink too. Any pack in this library that bans a weight or a slant
+  owes the same three lines.
 - **No gradient with a hue in it.** The one gradient in the system is an
   achromatic greyscale wash behind a single feature cell.
 - **No centred display type**, except the hero below 620px and the closing panel.

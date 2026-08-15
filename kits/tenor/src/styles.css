@@ -108,6 +108,20 @@
   --stair-2: oklch(89% 0 0);
   --stair-3: oklch(62% 0 0);
 
+  /* A resting data mark — a sparkline bar, an unemphasised column, a track.
+     A role name over the value ramp above rather than a new value, on the same
+     pattern as --sev-*. It exists because this pack has ONE border weight, so a
+     system carrying `--border` and `--border-strong` as two steps collapses both
+     onto --line here, and a chart that reached for the stronger of the two ends
+     up painting a quantity in the colour of the rule between its own rows.
+     --stair-3 resolves to #868686, and
+     --data-rest is 3.37:1 on --bg — over the 3:1 non-text floor for a mark.
+     Against the hairline it is 2.38, computed on the resolved #d2d1ce and NOT
+     checkable from here: --line is declared with alpha, so the validator drops
+     it from the solids and no claim naming it can be verified. Stated as an
+     argument rather than as a measurement, deliberately. */
+  --data-rest: var(--stair-3);
+
   /* ── geometry: there is no radius and there are no shadows ───────────────
      Zero occurrences of border-radius and zero of box-shadow in the whole
      stylesheet. Separation is the hairline; emphasis is a filled rectangle. */
@@ -231,12 +245,37 @@
   /* --accent-ink is deliberately NOT overridden: the orange is the same orange
      on both fields, so the one label that can be read on it is the same coal. */
   --sev-limit: #4a4a48;
+  /* The value ramp is a paper-page device and inverts to nothing useful here, so
+     the resting mark takes the band's own faint ink instead, where
+     --data-rest is 4.69:1 on --bg. Against the hairline it is 2.64 on the
+     resolved #3e3e3c — same caveat as the light block: --line carries alpha and
+     cannot be checked from here. */
+  --data-rest: var(--ink-faint);
   /* DERIVED, same reasoning as the light block and re-measured on this field:
      8.45:1 on --bg, and 10.7 from the accent under deuteranopia. A surface
      block that remaps eleven tokens and forgets the status set is a defect this
      library has already shipped once. */
   --good: #57c08c;
   --danger: #f7f6f2;
+}
+
+/* The base layer, and it is three lines because the browser breaks two of this
+   pack's bans on its own. `<strong>` renders at 700 against "no weight above
+   500", and `<em>` renders italic against "no italics" — with no stylesheet
+   involved either time, so neither violation is greppable and neither appears in
+   review. Found by walking the computed styles of a running page rather than the
+   source.
+
+   Emphasis resolves the pack's own way, by VALUE: both take the full ink against
+   prose set in --ink-soft-aa, and `<strong>` stops at the pack's ceiling weight.
+   Any pack in this library that bans a weight or a slant owes the same block. */
+strong, b {
+  font-weight: var(--weight-mono);
+  color: var(--ink);
+}
+em, i {
+  font-style: normal;
+  color: var(--ink);
 }
 
 /* Reduced motion. The reference collapses every duration to 0.01ms with
