@@ -4,6 +4,48 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.34.0] - 2026-08-15
+
+**The pack was applied correctly and the result still read as somebody else's typography.**
+Everything measured green — zero radius, zero shadow, two hues, AA on every pair — and the
+dashboard was flat. This release is what the flatness turned out to be, and most of it is a
+correction to the `### On a product surface` section shipped two versions ago.
+
+### Fixed — in `tenor`
+
+- **"A dashboard has no display type" threw away the rule that makes this pack legible.** The
+  section rhythm is a page value and stays out; the *tracking rule* is not, and it only acts on
+  type large enough to show it. A screen title at 30px tracked `-0.02em` is the rule acting on
+  nothing. The section now separates the **ramp** (out) from the **rule** (in) and gives the three
+  steps a dashboard actually has — screen title, section head, metric — with sizes, tracking and
+  line-height for each. All three at weight **400**: ranking by size is this pack's device and
+  ranking by weight is the one it replaced. Measured against a ramp of 30 / 16 / 13, where the
+  jump from title to section head was **3:1 with nothing between** — two sizes that far apart stop
+  reading as a hierarchy.
+- **A stat row built as four bordered boxes breaks the inversion.** `## Components` already said
+  three equal blocks share one lattice and never read as three cards; what it did not say is that
+  the construction is load-bearing on a product surface. Container draws top and left, each cell
+  draws right and bottom, **gap zero**. Build it with boxes 12px apart and the hover inversion
+  leaves a seam down every border it touches.
+- **A colour earns its place where the column varies, and the chip rule only covered half of it.**
+  1.32.0 dropped the box from a chip repeated down a table; the hue stayed. Measured across twenty
+  routes: on the agent-connections screen, **82 rows all reading `ACTIVE` and 421 green marks**,
+  none of which told the reader anything, because a value that never changes is not a status. Two
+  screens away the audit log spends the same green across 200 rows against the warn value and it
+  carries the whole distinction. Set the severity value only on rows that differ from the column's
+  norm; leave the norm in `--ink`.
+
+### Added — in `tenor`
+
+- **The motion budget of a product surface, stated.** Every motion token in this pack is a page
+  value — a 640ms fade, an 820ms travel, a 110ms stagger four steps deep — spent on a block a
+  reader scrolls to once. `MOTION_DOCTRINE.md` §1 puts a dashboard's screens in the row where
+  animation is cut to the floor, so **the entrance budget on a product surface is zero**: nothing
+  plays on load, on client navigation or on a keystroke. What remains is the whole budget and it is
+  enough — the cell inversion, the nav underline, the focus ring, the fill on a hovered control.
+  Each is caused by the reader's own pointer, which is what makes it read as a response rather
+  than as a delay.
+
 ## [1.33.0] - 2026-08-15
 
 **Three things the pack asserts that a running page disproved.** Same dashboard as 1.32.0,

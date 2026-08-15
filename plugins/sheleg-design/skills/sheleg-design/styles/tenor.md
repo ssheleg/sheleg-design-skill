@@ -297,6 +297,16 @@ mounting the pack on a populated twenty-route dashboard rather than reasoned abo
   the status as the word alone in its severity value, with `--warn` kept for the
   mark beside it. Panels and tiles are unaffected: the same lattice at four cells
   across a dashboard's stat row reads exactly as it does on the page.
+
+  **And dropping the box is only half of it: a colour earns its place where the
+  column varies.** Measured across twenty routes of one dashboard — on the screen
+  listing agent connections, **82 rows all reading `ACTIVE`, 421 green marks, and
+  not one of them told the reader anything**, because a value that never changes
+  is not a status. Two screens away the audit log spends the same green across 200
+  rows against the warn value, and there it carries the whole distinction. The
+  rule: **set the severity value only on the rows that differ from the column's
+  own norm**, and leave the norm in `--ink`. A constant column is prose, and prose
+  is not coloured here.
 - **Prose sits on two fields at once and `--ink-soft` fails on the second.** This
   is what produced `--ink-soft-aa`; see Gotcha 1.
 - **A data mark must not borrow the hairline, and in this pack it silently will.**
@@ -315,12 +325,59 @@ mounting the pack on a populated twenty-route dashboard rather than reasoned abo
   `dataviz` first — token names are not uniform across the twenty, and an aliased
   one fails exactly this quietly.
 
-What does **not** change on a product surface: the spacing scale and the type
-ramp. Tenor's section rhythm is `clamp(40px, 4.5vw, 64px)` and its display slope
-runs to 8rem in an 8–12ch measure — both are page values, and a dashboard has
-neither a section rhythm nor display type. Keep the product's own scale and take
-the pack's *surface*: the field, the zero radius, the single hairline, the hue
-that only appears under the cursor, and the two tracking ramps.
+**The type ramp is where this section was wrong, and the correction matters more
+than the error.** It used to say a dashboard has "neither a section rhythm nor
+display type" and to keep the product's own scale outright. The first half holds
+— the section rhythm is a page value. The second half threw away the thing that
+makes this pack legible: **the tracking rule only acts on type large enough to
+show it.** A screen title at 30px tracked `-0.02em` is the rule acting on
+nothing, and a product mounted that way reads as the pack's palette with somebody
+else's typography inside it.
+
+So the distinction is between the *ramp* and the *rule*. The marketing ramp stays
+out: no `clamp(3rem, 6.5vw, 6.6rem)`, no 8–12ch measures, no section head at
+6.6rem. The tracking rule comes in, and a dashboard has exactly **three steps**
+for it to act on:
+
+| Step | Size | Tracking | Weight |
+|---|---|---|---|
+| The screen title — one per screen | `clamp(2.35rem, 3vw, 3.15rem)` | `-0.04em` | 400 |
+| A section head | `clamp(1.2rem, 1.4vw, 1.45rem)` | `-0.03em` | 400 |
+| A metric — the argument of the screen | `clamp(2.1rem, 2.4vw, 2.75rem)` | `-0.045em` | 500, mono |
+
+Line-height goes to `0.98` on the title and `1` on the metric — below the prose
+leading, which is what makes a title read as a drawn object rather than as a
+large sentence. **All three drop to weight 400 in the sans**, because ranking by
+size is the pack's device and ranking by weight is the one it replaced; a heading
+distinguished by being semibold at body size is a heading with no step under it.
+Measured on a dashboard whose ramp was 30 / 16 / 13: the jump from title to
+section head was 3:1 with nothing between, and two sizes that far apart stop
+reading as a hierarchy and start reading as two unrelated decisions.
+
+**A stat row is a lattice, and it is built per cell or the inversion breaks.**
+The `## Components` entry says three equal blocks share one lattice and never read
+as three cards; on a product surface that is the row of metric tiles, and the
+construction is load-bearing rather than stylistic. The container draws its top
+and left edge, each cell draws its right and bottom, and **the gap is zero** — a
+lattice has no gap. Build it with four bordered boxes 12px apart and the hover
+inversion leaves a seam down every border it touches, which is the exact failure
+`border-collapse` and a background line also produce.
+
+**Motion on a product surface is pointer-driven and nothing else.** Tenor's motion
+tokens are page values — a 640ms fade, an 820ms travel, a 110ms stagger four steps
+deep — and every one of them is spent on a block a reader scrolls to once.
+`MOTION_DOCTRINE.md` §1 puts a dashboard's screens in the row where animation is
+cut to the floor, because the same screen is opened tens of times a day, so **the
+entrance budget on a product surface is zero**: nothing plays on load, on client
+navigation, or on a keystroke. What is left is the whole budget and it is enough —
+the cell inversion at `--dur-panel`, the nav underline at `--dur-nav`, the focus
+ring, and the fill on a hovered control. Each is caused by the reader's own
+pointer, which is what makes it feel like a response rather than like a delay.
+
+What still does **not** change: the spacing scale and the section rhythm. Keep the
+product's own spacing and take the pack's *surface* — the field, the zero radius,
+the single hairline, the hue that only appears under the cursor, and the two
+tracking ramps.
 
 ## Hero
 
