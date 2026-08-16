@@ -1,9 +1,9 @@
 ---
 name: sheleg-design
-description: Use when deciding how something LOOKS or MOVES. Cinematic scroll-driven landing pages, marketing sites and heroes — particle/WebGL backgrounds, scroll-linked animation, parallax, scrubbed sections — and when such a page feels busy or its motion layers drift apart. Product UI through its style packs: dashboards, admin panels, internal tools, mobile screens, chat and agent interfaces. Design tokens, light/dark themes, palettes and colours, typography and fonts. And the Figma border: tokens as variables, a design implemented without raw values. Triggers - "cinematic landing" / "кинематографичный лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы", "mobile screen" / "мобильный экран", "palette" / "палитра", "colors" / "цвета", "typography" / "типографика", "font" / "шрифт", "how it looks" / "выглядит", "make it prettier" / "красивее".
+description: Use when deciding how something LOOKS or MOVES. Cinematic scroll-driven landing pages, marketing sites and heroes — particle/WebGL backgrounds, scroll-linked animation, parallax, scrubbed sections — and when such a page feels busy or its motion layers drift apart. Product UI through its style packs: dashboards, admin panels, internal tools, mobile screens, chat and agent interfaces. Design tokens, light/dark themes, palettes and colours, typography and fonts. And the Figma border: tokens as variables, a design implemented without raw values. Triggers - "cinematic landing" / "кинематографичный лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы, фигма в код", "mobile screen" / "мобильный экран", "palette" / "палитра", "colors" / "цвета", "typography" / "типографика", "font" / "шрифт", "how it looks" / "выглядит", "make it prettier" / "красиво, красивее".
 license: MIT
 metadata:
-  version: 1.37.0
+  version: 1.37.1
 ---
 
 # SHELEG Design

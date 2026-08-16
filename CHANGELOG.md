@@ -4,6 +4,23 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.37.1] - 2026-08-16
+
+### Fixed
+
+- **The 1.37.0 rewrite dropped a phrase a router still fires on.** Rewording the
+  description to advertise plain visual words also replaced
+  `"figma variables / figma to code" / "переменные фигмы, фигма в код"` with the
+  shorter pair — and `фигма в код` is a live trigger in the family umbrella's routing
+  hook. A trigger whose skill no longer claims the words is a hook firing on a promise
+  nobody made, so the phrase is restored.
+
+  **This pack's own gate cannot see that failure, and that is the finding.** The
+  trigger table lives in `sshlg-skills`, not here; `npm test` was green on 1.37.0 and
+  the umbrella's `test/triggers_test.js` caught it minutes later. The invariant it
+  holds — every trigger is a word the skill itself advertises — is enforced one
+  repository away from the file that can break it.
+
 ## [1.37.0] - 2026-08-16
 
 ### Changed
