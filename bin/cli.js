@@ -234,7 +234,7 @@ ${c("bold", "What it installs")}
   DESIGN_SYNC_BRIDGE.md   the Claude Design contract (what a pack sends, and
                        what does not cross)
   AI_PRODUCT_PATTERNS.md  chat / agent / streaming surfaces (honest state)
-  styles/              twenty-two style packs — instrument-console (dark console),
+  styles/              twenty-seven style packs — instrument-console (dark console),
                        editorial-luxury (warm editorial), workbench (light/dark
                        product UI), briefing-room (dark 16:9 presentation deck),
                        atrium (warm cream consumer health), orchard (friendly
@@ -265,7 +265,18 @@ ${c("bold", "What it installs")}
                        awning (a white forecourt where the accent is black and
                        no hue reaches the chrome, a pill whose radius is a
                        declared component token, and one variable grotesque at
-                       420/550 with no 700) —
+                       420/550 with no 700),
+                       router (a near-white field with a trace of blue, hairline
+                       seams instead of shadows, body at 14px and weight 450, and
+                       a status triplet where the painted colour is not the
+                       written one), daylight (a cool portal field whose whole
+                       depth is one very large soft shadow spent on one object),
+                       notation (hairlines instead of cards, a light serif over
+                       a monospace, an ink primary and one chamfered corner),
+                       almanac (oatmeal paper at 2px with no 1px anywhere and a
+                       display set below a line-height of one), vitrine (a white
+                       hairline field with a serif display, an ink primary, and
+                       one framed record carrying the evidence) —
                        plus a ready-made token CSS per pack and
                        STYLE_PACK_TEMPLATE.md for authoring more
 `);

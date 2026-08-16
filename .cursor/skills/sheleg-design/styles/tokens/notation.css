@@ -1,0 +1,130 @@
+/* SHELEG Design — Notation token layer (light default + dark twin).
+   Copy verbatim; consume only var(--…) in components.
+   Theme switch: set data-theme="dark" on :root.
+
+   Measured from twenty.com on 2026-08-15, read off its live computed styles. The
+   reference is a near-white developer-product page whose argument is RESTRAINT — one
+   hairline family instead of cards, radii of 2 and 4px, and a serif at weight 300
+   against a monospace, with almost no filled surface anywhere.
+
+   The primary control is INK, not the accent. That is the reference's own decision and
+   it is what keeps the single accent available for meaning: on a page with this little
+   colour, spending it on a button leaves nothing to mark a link with. */
+:root {
+  --bg: #ffffff;
+  --panel: #fafafa;
+  --panel-2: #f2f2f2;
+  --ink: #1c1c1c;
+  --muted: #5f5f5f;
+  --border: #dfdfdf;
+  --border-strong: #cccccc;
+  --edge: #8d8d8d;
+
+  --accent: #1f5fb0;
+  --accent-weak: #e9eef4;
+  --accent-ink: #ffffff;
+
+  --ok: #1c6b45;
+  --ok-weak: #e9efec;
+  --warn: #8a5200;
+  --warn-weak: #f1ede7;
+  /* DERIVED, not measured — the reference paints no error state. Authored to clear
+     AA on the field, the panel and its own tint (6.54 / 6.26 / 5.50). */
+  --danger: #b3261e;
+  --danger-weak: #f4e9e9;
+  --info: #1f5fb0;
+  --info-weak: #e9eef4;
+
+  /* The primary control is the ink. See the header. */
+  --control: #1c1c1c;
+  --control-ink: #ffffff;
+
+  --r-control: 4px;
+  --r-card: 4px;
+  --r-pill: 999px;
+  /* The chamfer, and it is the pack's signature: a 10px corner cut on the primary,
+     built from two clipped layers because `clip-path` clips an inset `box-shadow`
+     and a chamfered outline drawn any other way has no line on its diagonal. */
+  --chamfer: 10px;
+
+  --shadow-1: 0 2px 4px rgba(0, 0, 0, 0.04);
+
+  --motion-ease: cubic-bezier(0.2, 0, 0, 1);
+  --dur-state: 0.14s;
+  --dur-hover: 0.1s;
+
+  --font-display: Aleo, Georgia, "Times New Roman", serif;
+  --font-ui: Inter, system-ui, sans-serif;
+  --font-data: "Geist Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  --t-meta: 12px;
+  --t-body: 16px;
+  --t-card: 19px;
+  --t-title: 24px;
+  --t-section: 32px;
+  --t-page: 38px;
+  --t-hero: 60px;
+
+  --w-display: 300;
+  --w-body: 400;
+  --w-med: 500;
+  --w-semi: 500;
+  --w-bold: 500;
+
+  --track-tight: -0.02em;
+  --track-wide: 0.08em;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  background-color: var(--bg);
+  color: var(--ink);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #141414;
+  --panel: #1c1c1c;
+  --panel-2: #242424;
+  --ink: #f2f2f2;
+  --muted: #a0a0a0;
+  --border: #2b2b2b;
+  --border-strong: #3a3a3a;
+  --edge: #686868;
+
+  --accent: #3392ff;
+  --accent-weak: #1e252e;
+  --accent-ink: #141414;
+
+  --ok: #46d39a;
+  --ok-weak: #1f2a26;
+  --warn: #e0a030;
+  --warn-weak: #2b261e;
+  --danger: #ff7b72; /* derived — 7.31 field / 6.76 panel / 6.03 own tint */
+  --danger-weak: #2e2323;
+  --info: #3392ff;
+  --info-weak: #1e252e;
+
+  /* On ink the control inverts to the accent: an ink button on an ink field is a
+     rectangle nobody can see. */
+  --control: #3392ff;
+  --control-ink: #141414;
+
+  --shadow-1: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Light is the default register. To follow the OS instead, have the app set
+   data-theme="dark" from a prefers-color-scheme listener — keep one switch,
+   never two sources of truth for the theme. */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-state: 0s;
+    --dur-hover: 0s;
+  }
+}

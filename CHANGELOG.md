@@ -4,6 +4,86 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.39.0] - 2026-08-17
+
+**Five packs at once, and the library goes from twenty-two to twenty-seven.** All five
+were extracted from live references while building one product's landing site and are
+ported back here whole: `router`, `daylight`, `notation`, `almanac` and `vitrine`. Every
+one is on the **widened** contract, carries an addressable origin, a token layer whose
+every stated ratio the palette gate recomputes, and a reference kit whose spine props are
+byte-identical to `workbench`'s.
+
+### Added
+
+- **`router`**, from [openrouter.ai](https://openrouter.ai) — and **the first pack in this
+  library measured from a running product rather than from a served stylesheet.** A
+  near-white field with a trace of blue and white cards standing on that tint, hairline
+  seams instead of shadows anywhere, body at 14px and weight 450, one royal blue at 97%
+  saturation doing every accent job and none of the chart work. The second reading
+  corrected three values the first had wrong, all named in the pack's Gotchas: their
+  `--text-xs` is 14px and not 12, the sidebar is 224 and not 244, and the border asymmetry
+  that reads as a register decision belongs to `--sidebar-border` alone.
+- **`daylight`**, from [taskip.net](https://taskip.net) — a cool portal field with generous
+  radii whose whole depth is **one very large soft shadow spent on a single object per
+  screen**, Inter Tight 700 tracked negative over Manrope 400.
+- **`notation`**, from [twenty.com](https://twenty.com) — a near-white page drawn **entirely
+  in hairlines instead of cards**, radii of 2 and 4px, a slab serif held at 300 against a
+  monospace, **no bold anywhere**, an ink primary, and one chamfered corner per page.
+- **`almanac`**, from [auxia.io](https://www.auxia.io) — **oatmeal paper rather than white**,
+  seams at 2px with **no 1px anywhere**, a 104px display at weight 500 set **below a
+  line-height of one**, and uppercase mono tags notched through the edges of drawn boxes.
+- **`vitrine`**, from [attio.com](https://attio.com) — a white hairline field with a serif
+  display, an **ink primary** so the accent stays free to mark what can be read, and one
+  framed record with a 1px inset highlight carrying the page's evidence.
+- **Five reference kits**, each with the six-component spine plus `StatusDot`, `Skeleton`
+  and the pack's own signature component — `LiftPanel`, `Eyebrow`, `TaggedBox`, `Frame`.
+
+### The idiom worth naming: the status triplet
+
+Every status in `router` holds **three** tokens rather than one — `--ok-mark` is painted,
+`--ok` is written, `--ok-weak` is laid under. The reference's own delta is drawn in
+`#00bf6f` and set in `#007544`: *the colour you paint with is not the colour you write
+with.* The `-mark` values are identical in both registers because only the words have to
+be read, and the split is what lets a 97%-saturated hue be an accent without becoming an
+unreadable label. `StatusDot` ships it as one object with a **required** label.
+
+### What the gates decided, rather than taste
+
+- **`router`'s `--info` was authored as a teal and refused**: 9.0 apart from `--ok` at full
+  colour against a hard floor of 10.0 — two semantic states in one colour, which secondary
+  encoding does not excuse. The reference had already answered it; its `--color-info` and
+  its `--or-royal` are the same hex.
+- **`almanac`'s derived `--danger` is a crimson, not a red**, for the same reason: an
+  orange-red beside its burnt-orange `--warn` measured 6.4 apart. Moved along the hue until
+  it separated at the floor.
+- **`router`'s dark `--danger` is not the reference's.** Theirs is 5.02 on the field and
+  clears, but **4.38 on its own chip tint** — and a danger chip is where the word most
+  needs to be read.
+- **`vitrine`'s `--shadow-1` had to be reordered.** Written colour-first the palette gate
+  reads it as a colour it cannot compute; written length-first it is the same shadow and
+  is checkable.
+- **Three packs ship a derived `--danger`** — `daylight`, `notation` and `almanac`, whose
+  references are marketing sites that paint no error state. Each is marked derived **at
+  the declaration**, so a later reader cannot mistake it for a measurement.
+
+### Two findings from the palette work, recorded in the packs' Gotchas
+
+- **Six chart series will not fit and the arithmetic says so.** Six distinguishable steps
+  need about 60 L* of range; the dark end is bounded by usefulness and the light end runs
+  into the page, so the palest measured **1.38** against the field. Four is what clears, at
+  3.31 light and 4.61 dark. **The number of series is a decision of the palette, not of the
+  data.**
+- **A monochrome chart palette is the weakest, not the safest** — it holds two series on
+  white (3.22) and three on ink (4.25); a third ink step on white lands at 2.72, under the
+  non-text floor.
+
+### Changed
+
+- Every counted claim moved from twenty-two to twenty-seven, in all nine sources the
+  counted-claims check reads. **The remainder beside the total moved with it** — the stale
+  remainder is precisely the failure that check was written for, and it fired once during
+  this change, exactly as its own comment predicts.
+
 ## [1.38.0] - 2026-08-16
 
 ### The routing table stopped being a second copy of the packs

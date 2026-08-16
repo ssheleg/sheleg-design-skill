@@ -1,0 +1,145 @@
+/* SHELEG Design — Almanac token layer (light default + dark twin).
+   Copy verbatim; consume only var(--…) in components.
+   Theme switch: set data-theme="dark" on :root.
+
+   Measured from auxia.io on 2026-08-16 — the cleanest extraction in this library,
+   because the reference publishes its own token layer: `auxia.shared` declares 30
+   `--base-color-*` properties, so the palette below is read from the stylesheet the
+   reference serves rather than sampled off rendered pixels.
+
+   The field is OATMEAL and not white — `#f0efe3` is the reference's own
+   `neutral--white`, and it is the whole first impression of the page. Seams are 2px
+   and 4px; there is no 1px anywhere in the reference. Display runs to 104px at weight
+   500 with a line-height BELOW ONE, which locks the lines together into a block.
+
+   The pack holds ONE dark and ONE light and uses them in both orders: the inverted
+   band on the light register is the ground on the dark one. */
+:root {
+  --bg: #f0efe3;
+  --panel: #f7f7f0;
+  --panel-2: #e2e1d3;
+  --ink: #232323;
+  --muted: #5c5b52;
+  /* At 2px these are read by mass rather than by contrast, which is why they sit far
+     under a hairline pack's values and are not a defect. */
+  --border: #bebdad;
+  --border-strong: #a7a592;
+  --edge: #858370;
+
+  /* NOT the reference's `#0b4fff`: that measures 4.46 on the reference's own deeper
+     oatmeal, under AA on a ground it lands on. This is a shift inside one hue rather
+     than a change of hue — the first ported reference that was already blue. */
+  --accent: #1f5fb0;
+  --accent-weak: #e6ebeb;
+  --accent-ink: #ffffff;
+
+  --ok: #17603d;
+  --ok-weak: #e6ebe2;
+  /* The reference's orange `#fa6838` is 2.32 on the oatmeal and cannot carry a word
+     there, so on this register it is darkened until it clears. The bright value has
+     exactly one home and the dark register is it. */
+  --warn: #993f0e;
+  --warn-weak: #f0e9de;
+  /* DERIVED — the reference paints no error state, so this is a pack decision and
+     says so here. It is a CRIMSON rather than the red the other packs derive: this
+     pack's `--warn` is a burnt orange, and an orange-red danger beside it measured
+     6.4 apart at full colour against the palette gate's hard floor of 10.0 — two
+     semantic states in one colour, which no secondary encoding excuses. Moved along
+     the hue until it separates. 6.76 field / 7.27 panel / 6.34 own tint. */
+  --danger: #a01050;
+  --danger-weak: #f0e5e4;
+  --info: #1f5fb0;
+  --info-weak: #e6ebeb;
+
+  --r-control: 8px;
+  --r-card: 16px;
+  --r-pill: 100vw;
+  --r-lg: 24px;
+  /* There is no 1px anywhere in the reference. */
+  --border-width: 2px;
+
+  /* One object floats per page, and the shadow is layered rather than single — the
+     reference stacks four stops and the deepest is 162px of blur. */
+  --shadow-1: 0 120px 60px rgba(35, 35, 35, 0.02), 0 60px 40px rgba(35, 35, 35, 0.05),
+    0 16px 32px rgba(35, 35, 35, 0.06), 0 4px 12px rgba(35, 35, 35, 0.05);
+
+  --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-state: 0.16s;
+  --dur-hover: 0.12s;
+
+  --font-ui: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  --t-meta: 12px;
+  --t-body: 16px;
+  --t-card: 24px;
+  --t-title: 32px;
+  --t-section: 48px;
+  --t-page: 64px;
+  --t-hero: 104px;
+
+  --w-body: 400;
+  --w-med: 500;
+  --w-semi: 500;
+  --w-bold: 500;
+
+  --track-tight: -0.03em;
+  --track-wide: 0.06em;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  background-color: var(--bg);
+  color: var(--ink);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  /* The reference has no dark register and the first cut of this one borrowed its
+     navy `#080331`. Overruled: a dark theme is dark, and that one was blue. What
+     replaces it is the oatmeal's own opposite — a warm near-black — so the paper
+     identity survives the inversion instead of becoming another company's page. */
+  --bg: #15140f;
+  --panel: #1e1c15;
+  --panel-2: #26241b;
+  --ink: #f0efe3;
+  --muted: #b3b0a2;
+  --border: #3c3a31;
+  --border-strong: #504e45;
+  --edge: #6f6d64;
+
+  --accent: #3392ff;
+  --accent-weak: #202527;
+  --accent-ink: #15140f;
+
+  --ok: #46d39a;
+  --ok-weak: #212a1f;
+  /* The reference's orange, in its one readable home. */
+  --warn: #fa6838;
+  --warn-weak: #2f2218;
+  /* Derived, and crimson for the same reason: the dark register's warn is the
+     reference's own bright orange. 7.02 field / 6.49 panel / 5.82 own tint. */
+  --danger: #ff6f9a;
+  --danger-weak: #2e2225;
+  --info: #3392ff;
+  --info-weak: #202527;
+
+  --shadow-1: 0 120px 60px rgba(0, 0, 0, 0.3), 0 60px 40px rgba(0, 0, 0, 0.4),
+    0 16px 32px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Light is the default register. To follow the OS instead, have the app set
+   data-theme="dark" from a prefers-color-scheme listener — keep one switch,
+   never two sources of truth for the theme. */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-state: 0s;
+    --dur-hover: 0s;
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "pkg": "@sheleg-design/router",
+  "globalName": "ShelegRouter",
+  "shape": "package",
+  "buildCmd": "npm run build",
+  "srcDir": "src",
+  "tsconfig": "tsconfig.json",
+  "cssEntry": "src/styles.css",
+  "docsDir": "src",
+  "readmeHeader": ".design-sync/conventions.md",
+  "guidelinesGlob": [
+    "guidelines/*.md"
+  ]
+}

@@ -3,7 +3,7 @@ name: sheleg-design
 description: Use when deciding how something LOOKS or MOVES. Cinematic scroll-driven landing pages, marketing sites and heroes — particle/WebGL backgrounds, scroll-linked animation, parallax — and when such a page feels busy or its motion layers drift apart. Product UI through its style packs — dashboards, admin panels, internal tools, mobile screens, chat and agent interfaces. Design tokens, light/dark themes, palettes and colours, typography and fonts. Triggers - "design a landing" / "дизайн лендинга", "build a landing page" / "сделай лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы, фигма в код", "mobile screen" / "мобильный экран", "palette" / "палитра", "colors" / "цвета", "typography" / "типографика", "font" / "шрифт", "how it looks" / "выглядит", "make it prettier" / "красиво, красивее".
 license: MIT
 metadata:
-  version: 1.38.0
+  version: 1.39.0
 ---
 
 # SHELEG Design
@@ -87,6 +87,11 @@ this table is for choosing, not for reading instead of the pack:
 | [`ledger`](./styles/ledger.md) | warm cream paper ruled by a hairline at 12% ink — no shadow on any card — radius 15 nested concentrically | the console of a product that answers questions **about data** — AI analysts, BI surfaces, query workspaces, agents that read a warehouse and write back a figure (standalone) |
 | [`paperclip`](./styles/paperclip.md) | neutral coal with **no functional colour at all** — every control monochrome | products that ask a person to **run something that runs itself** — agent teams and orchestrators, autonomous back-office, schedulers, job runners, budget-governed compute (standalone) |
 | [`awning`](./styles/awning.md) | white forecourt where **the accent is black** and no hue reaches the chrome at all; a pill whose radius is a declared component token | commerce and platform front doors — the surface that sells a system other businesses will run their storefront, payroll, billing or logistics on (standalone) · **core contract** |
+| [`router`](./styles/router.md) | near-white field with a trace of blue, white cards standing on it, **hairline seams instead of shadows anywhere** — body at 14px and weight 450 | **product consoles and the pages that have to look like them** — dashboards, admin and developer platforms, billing and usage surfaces, and a landing page whose argument is an inventory rather than a promise (standalone) |
+| [`daylight`](./styles/daylight.md) | cool near-white portal field with generous radii and **one very large soft shadow spent on a single object per screen** | **client-facing portals and the pages that sell them** — onboarding, workspaces a customer logs into, service dashboards, scheduling and billing (standalone) |
+| [`notation`](./styles/notation.md) | near-white page drawn **entirely in hairlines**, radii of 2 and 4px, a slab serif at weight 300 against a monospace, **no bold anywhere** | **developer and technical products sold on restraint** — open source front pages, workspaces for people who dislike being sold to, documentation homes (standalone) |
+| [`almanac`](./styles/almanac.md) | **oatmeal paper rather than white**, seams at 2px with **no 1px anywhere**, a display set below a line-height of one, mono tags notched through drawn boxes | **pages that assert a category** — a manifesto, a company saying what this kind of thing is, a product whose argument is editorial rather than functional (standalone) |
+| [`vitrine`](./styles/vitrine.md) | white field drawn **entirely in hairlines**, a serif display over a sans body, an ink primary, and one framed record with a 1px inset highlight | **the front door of a product sold on trust** — B2B software under evaluation, security and compliance surfaces, specification and comparison pages (standalone) |
 
 **A materialized kit answers part of what a core pack leaves out.** `npx
 sheleg-design-skill --kit <pack>` produces `src/styles.css`, whose component half is
@@ -95,12 +100,12 @@ authored CSS for the states a core pack declines to specify — `:hover`,
 reading only this bundle will invent them. Fetch the kit first, and treat any
 difference between kit and pack as a defect in one of them rather than a choice.
 
-**Seven of the twenty-two are on the core contract, and it changes what you get.**
+**Seven of the twenty-seven are on the core contract, and it changes what you get.**
 A pack marked **core contract** does not specify `## Components`, `## Hero`,
 `## Responsive` or `## Signature element` — so per-component states, the
 opening viewport and its line ceiling, the collapse rules, and the single
 element the page is remembered by are **yours to decide**, and you say so out
-loud when you do. The other fifteen answer all four. This asymmetry is the one
+loud when you do. The other twenty answer all four. This asymmetry is the one
 thing about the library most likely to make you invent a value and believe you
 read it: what a core pack *does* state is measured to two decimals, and that
 precision is not evidence about the half it leaves silent. Each pack declares
@@ -188,7 +193,7 @@ as a definition of done, in that order:
   before writing CSS for a cinematic page. A scene has planes; everything on one
   plane is the failure no amount of easing repairs.
 - **Charts — hand the pack to `dataviz`** (same file), before drawing a chart in
-  any pack. Token names are not uniform across the twenty-two — only `--bg` and
+  any pack. Token names are not uniform across the twenty-seven — only `--bg` and
   `--ink` resolve everywhere — and an undefined custom property does not error,
   it silently falls back. Guessing one is the quietest way to ship a wrong chart.
 - **Mobile surfaces** ([`MOBILE_SURFACES.md`](./MOBILE_SURFACES.md)), when the

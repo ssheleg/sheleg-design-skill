@@ -1,0 +1,475 @@
+/* SHELEG Design — Router token layer (light default + dark twin).
+   Copy verbatim; consume only var(--…) in components.
+   Theme switch: set data-theme="dark" on :root.
+
+   Measured from openrouter.ai on 2026-08-16 — the served stylesheets for the scale,
+   and `getComputedStyle` on the running dashboard for what a stylesheet cannot answer.
+   Three values a stylesheet-only reading got wrong: their `--text-xs` is 14px and not
+   12 (only `--overline` is 12), the sidebar is 224px and not 244, and the border
+   asymmetry that looks like a design decision belongs to `--sidebar-border` alone —
+   the main seam is symmetric by construction, the ink at 7.8% on light and the cloud
+   at 7.8% on dark.
+
+   THE TRIPLET, and it is the one idea worth carrying out of this reference. Every
+   status holds three tokens rather than one: `--ok-mark` is painted, `--ok` is written,
+   `--ok-weak` is laid under. The reference's own delta is drawn in `#00bf6f` and set in
+   `#007544`, and the split is what lets a 97%-saturated hue be an accent without
+   becoming an unreadable label. The `-mark` values are identical in both themes,
+   because only the words have to be read. */
+:root {
+  --bg: #f9fbfe;
+  --panel: #ffffff; /* the card is white ON the tinted field — that step is the look */
+  --panel-2: #f1f3f6;
+  --ink: #151b24; /* 16.69 on --bg · 17.30 on --panel */
+  --muted: #5c6068; /* 6.09 · 6.31 */
+  --border: #e3e6e9; /* ΔL* 7.40 — meets the dark twin's 7.48 rather than its own alpha */
+  --border-strong: #ced1d5; /* ΔL* 14.83 against 14.94 */
+  /* The control edge is NOT the seam. WCAG 1.4.11 wants 3:1 for the visual boundary of
+     a control and the seam above is 1.35 — right for a rule between two paragraphs,
+     useless as the edge of a button. On this field no reasonable alpha of the ink
+     reaches 3:1 (0.46 gives 2.94), so this is solved rather than stepped. */
+  --edge: #8e9197; /* 3.05 */
+
+  /* The reference's own `--or-royal`, 97% saturated. Its `--primary` is the violet
+     `#7624f4`, refused for a measured reason: 6.31 on white but 3.14 on ink, where it
+     cannot carry a word. The reference agrees — flipping its own register swaps
+     `--primary`, `--ring` and `--link` to the acid `#c8ff00`. Changing hue by register
+     is its solution too; this pack lifts within one hue instead. */
+  --accent: #035ade; /* 5.75 on --bg · 5.96 on --panel */
+  --accent-weak: #ebf2fc; /* the accent at the reference's own 7.8% over --panel */
+  --accent-ink: #ffffff; /* text ON the accent — 5.96 */
+
+  --ok: #007544; /* 5.58 · 5.79 */
+  --ok-weak: #ebfaf4;
+  --ok-mark: #00bf6f; /* the reference's own, painted and never written */
+  --warn: #8a6100; /* 5.34 · 5.54 */
+  --warn-weak: #fdf8eb;
+  --warn-mark: #e5a000;
+  --danger: #bf0024; /* 6.25 · 6.48 */
+  --danger-weak: #ffeff2;
+  --danger-mark: #ff2d55;
+  /* **`--info` IS the accent, and that is the reference's own decision rather than a
+     shortcut.** Its `--color-info` is `#035ade`, the same value as `--or-royal`. A teal
+     was tried here first and the palette gate refused it: 9.0 apart from `--ok` at full
+     colour against a hard floor of 10.0 — two semantic states in one colour, which no
+     amount of secondary encoding excuses. Blue against green separates; teal against
+     green does not. */
+  --info: #035ade; /* 5.75 · 5.96 — an alias of --accent, measured, not inherited */
+  --info-weak: #ebf2fc;
+
+  /* The series, and they are deliberately NOT the accent: a bar wearing the button's
+     colour tells the reader the bar is clickable. Two hues (252°, 172°) at two OKLCH
+     lightness steps each. Six equal-lightness hues were built first and the arithmetic
+     refused them — six distinguishable steps need ~60 L* of range, the dark end is
+     bounded by usefulness and the light end runs into the page, so the palest measured
+     1.38 against the field. The number of series is a decision of the palette, not of
+     the data. Four is what clears: worst 3.31 here, 4.61 in the dark twin. */
+  --series-1: #2d88e2; /* 3.66 on --panel */
+  --series-2: #025397; /* 7.82 */
+  --series-3: #019d7e; /* 3.43 */
+  --series-4: #00614d; /* 7.45 */
+
+  --r-control: 6px; /* the reference's most-used radius; every control wears it */
+  --r-card: 8px;
+  --r-pill: 9999px;
+
+  /* Their `box-shadow` is `none` almost everywhere. One lift exists and it is a menu. */
+  --shadow-1: 0 1px 2px rgba(21, 27, 36, 0.04), 0 8px 24px rgba(21, 27, 36, 0.08);
+
+  --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-state: 0.14s;
+  --dur-hover: 0.1s;
+
+  /* Their brand face is `gordita`, self-hosted and not licensable to check a stylesheet
+     against, so it is not approximated silently — the voice here is `jakarta`, the
+     second family they already serve. The mono is theirs unchanged. */
+  --font-ui: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-data: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Their scale, named by role. Body at 14 and NOT 16 is the density of the whole
+     interface, and `--t-meta` at 12 is the only step below it. */
+  --t-meta: 12px; /* overline, chip, table caption */
+  --t-body: 14px; /* body and dense UI — the workhorse */
+  --t-card: 16px; /* card titles, section headings */
+  --t-title: 20px;
+  --t-section: 24px;
+  --t-page: 30px;
+  --t-hero: 36px;
+
+  /* Weight 450 rather than 400 is measured: `--font-weight-normal: 450`. It is why
+     their body copy reads denser than 14px suggests, and rounding it to 400 or 500
+     loses the half step the reference is built on. */
+  --w-body: 450;
+  --w-med: 500;
+  --w-semi: 600;
+  --w-bold: 700;
+
+  --track-tight: -0.025em;
+  --track-wide: 0.05em;
+
+  --space-1: 4px; /* their spacing unit is 0.25rem */
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  background-color: var(--bg);
+  color: var(--ink);
+  color-scheme: light; /* the theme is explicit — never let the UA pick */
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #10151d;
+  --panel: #181d25;
+  --panel-2: #20252c;
+  --ink: #f5f7f9; /* 17.05 · 15.75 */
+  --muted: #a0a3a7; /* 7.23 · 6.68 */
+  --border: #20242c; /* ΔL* 7.48 */
+  --border-strong: #30343b; /* 14.94 */
+  --edge: #606369; /* 3.04 */
+
+  --accent: #4d8dff; /* 5.73 · 5.29 — the reference's own dark-register promo value */
+  --accent-weak: #1c2636;
+  --accent-ink: #10151d; /* text ON the accent — 5.73. White on #4d8dff fails AA. */
+
+  --ok: #34dfaa; /* 10.71 · 9.89 */
+  --ok-weak: #162a2b;
+  --ok-mark: #00bf6f;
+  --warn: #e5a000; /* 8.16 · 7.54 */
+  --warn-weak: #282722;
+  --warn-mark: #e5a000;
+  /* **Not `#ff2d55`, which is what the reference uses here.** On this field it is 5.02
+     and clears, but on its OWN chip tint it measures 4.38 — and a danger chip is where
+     the word most needs to be read. Lifted until it clears the tint it sits on: 5.13. */
+  --danger: #ff5470; /* 5.89 · 5.44 · 5.13 on --danger-weak */
+  --danger-weak: #2a1e29;
+  --danger-mark: #ff2d55;
+  --info: #4d8dff; /* 5.73 · 5.29 — the alias holds in both registers */
+  --info-weak: #1c2636;
+
+  /* Same two hues, lifted: OKLCH L .60/.80 at C .15. Worst 4.26 on --panel. */
+  --series-1: #2f82d6;
+  --series-2: #8dc2fe;
+  --series-3: #089678;
+  --series-4: #22dcb3;
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.32), 0 8px 24px rgba(0, 0, 0, 0.36);
+}
+
+/* Light is the default register. To follow the OS instead, have the app set
+   data-theme="dark" from a prefers-color-scheme listener — keep one switch,
+   never two sources of truth for the theme. */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-state: 0s;
+    --dur-hover: 0s;
+  }
+}
+
+/* ── components ── */
+
+/* Every value below is a token. The pack's whole elevation model is the seam, so
+   there is no shadow in this file outside the one --shadow-1 the token layer owns,
+   and no colour literal at all — the gate reads this section for both. */
+
+.rt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 36px;
+  padding-inline: var(--space-4);
+  border: 1px solid transparent;
+  border-radius: var(--r-control);
+  font-family: var(--font-ui);
+  font-size: var(--t-body);
+  font-weight: var(--w-med);
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-hover) var(--motion-ease),
+    border-color var(--dur-hover) var(--motion-ease),
+    color var(--dur-hover) var(--motion-ease);
+}
+
+.rt-btn--sm {
+  min-height: 28px;
+  padding-inline: var(--space-3);
+}
+
+.rt-btn--lg {
+  min-height: 44px;
+  padding-inline: var(--space-5);
+}
+
+/* The label colour is stated here rather than inherited: an anchor reset that says
+   `color: inherit` outranks a bare utility and paints ink on the accent. */
+.rt-btn--primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.rt-btn--primary:hover:not(:disabled) {
+  background: var(--info);
+  border-color: var(--info);
+}
+
+.rt-btn--secondary {
+  background: var(--panel);
+  border-color: var(--edge);
+  color: var(--ink);
+}
+
+.rt-btn--secondary:hover:not(:disabled) {
+  border-color: var(--muted);
+}
+
+.rt-btn--ghost {
+  background: transparent;
+  color: var(--muted);
+}
+
+.rt-btn--ghost:hover:not(:disabled) {
+  color: var(--ink);
+}
+
+.rt-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* One focus idiom on every control — a button, an input and a link get the same
+   ring, because three focus treatments is three things to learn. */
+.rt-btn:focus-visible,
+.rt-chip:focus-visible,
+.rt-status:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-weak);
+  border-color: var(--accent);
+}
+
+.rt-card {
+  container-type: inline-size;
+  display: block;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+}
+
+.rt-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: 14px var(--space-5);
+  border-bottom: 1px solid var(--border);
+}
+
+.rt-card__title {
+  margin: 0;
+  font-size: var(--t-card);
+  font-weight: var(--w-semi);
+  letter-spacing: var(--track-tight);
+  color: var(--ink);
+}
+
+.rt-card__meta {
+  font-family: var(--font-data);
+  font-size: var(--t-meta);
+  letter-spacing: var(--track-wide);
+  color: var(--muted);
+}
+
+.rt-card__body {
+  padding: var(--space-5);
+}
+
+/* CONTAINER, not PAGE: the head stacks against the card's own width, so a card in a
+   narrow column behaves the same wherever the column happens to be. */
+@container (max-width: 30rem) {
+  .rt-card__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1);
+  }
+}
+
+.rt-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 24px;
+  padding-inline: var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--r-pill);
+  font-family: var(--font-ui);
+  font-size: var(--t-meta);
+  font-weight: var(--w-med);
+  white-space: nowrap;
+}
+
+.rt-chip--neutral {
+  background: var(--panel-2);
+  color: var(--muted);
+}
+
+.rt-chip--accent {
+  background: var(--accent-weak);
+  color: var(--accent);
+}
+
+/* The rail — the one place the accent is a shape rather than a word. */
+.rt-chip--selected {
+  position: relative;
+  padding-left: var(--space-4);
+  color: var(--ink);
+}
+
+.rt-chip--selected::before {
+  content: "";
+  position: absolute;
+  left: var(--space-2);
+  top: 25%;
+  bottom: 25%;
+  width: 2px;
+  border-radius: var(--r-pill);
+  background: var(--accent);
+}
+
+.rt-stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.rt-stat__label {
+  font-size: var(--t-body);
+  color: var(--muted);
+}
+
+.rt-stat__value {
+  font-size: var(--t-section);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--track-tight);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.rt-stat__source {
+  font-family: var(--font-data);
+  font-size: var(--t-meta);
+  letter-spacing: var(--track-wide);
+  color: var(--muted);
+}
+
+.rt-heading {
+  margin: 0;
+  letter-spacing: var(--track-tight);
+  color: var(--ink);
+}
+
+.rt-heading--1 {
+  font-size: var(--t-page);
+  font-weight: var(--w-bold);
+  line-height: 1.2;
+}
+
+.rt-heading--2 {
+  font-size: var(--t-section);
+  font-weight: var(--w-bold);
+  line-height: 1.2;
+}
+
+/* Level 3 is body size and separates by weight alone, which is what stops a dense
+   screen from becoming a ladder of sizes. */
+.rt-heading--3 {
+  font-size: var(--t-card);
+  font-weight: var(--w-semi);
+  line-height: 1.35;
+}
+
+.rt-rule {
+  height: 1px;
+  margin: 0;
+  border: 0;
+  background: var(--border);
+}
+
+.rt-rule--strong {
+  background: var(--border-strong);
+}
+
+.rt-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 24px;
+  padding-inline: var(--space-3);
+  border-radius: var(--r-pill);
+  font-family: var(--font-ui);
+  font-size: var(--t-meta);
+  font-weight: var(--w-med);
+  white-space: nowrap;
+}
+
+.rt-status__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--r-pill);
+  flex: none;
+  background: currentColor;
+}
+
+.rt-status--ok {
+  background: var(--ok-weak);
+  color: var(--ok);
+}
+
+.rt-status--ok .rt-status__dot {
+  background: var(--ok-mark);
+}
+
+.rt-status--warn {
+  background: var(--warn-weak);
+  color: var(--warn);
+}
+
+.rt-status--warn .rt-status__dot {
+  background: var(--warn-mark);
+}
+
+.rt-status--danger {
+  background: var(--danger-weak);
+  color: var(--danger);
+}
+
+.rt-status--danger .rt-status__dot {
+  background: var(--danger-mark);
+}
+
+.rt-status--neutral {
+  background: var(--panel-2);
+  color: var(--muted);
+}
+
+.rt-status--neutral .rt-status__dot {
+  background: var(--muted);
+}
+
+.rt-skeleton {
+  display: block;
+  border-radius: var(--r-control);
+  background: var(--panel-2);
+}
+
+/* Static by decision. The reference's skeletons do not animate, and a shimmer is
+   motion spent telling the reader something they already know. */
+@media (prefers-reduced-motion: reduce) {
+  .rt-btn {
+    transition: none;
+  }
+}

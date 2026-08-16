@@ -63,7 +63,7 @@ the twenty-one: only `--bg` and `--ink` resolve in every pack. The accent is
 `--accent` in eighteen, `--brand` in `field-notes` and `--cta` in `orchard` (each
 declares `@role accent:` in its token layer). **A second marker joins it in 1.26.0:**
 a semantic colour that sits below WCAG AA on its own field declares
-`@role non-text:` with the reason and the ratio, because fifteen of the twenty-two packs
+`@role non-text:` with the reason and the ratio, because fifteen of the twenty-seven packs
 had such a colour and each said so in a different phrasing — "never text on the field",
 "a FILL and large-text colour", "a fill, not a text colour", "No coral word under 24px",
 "category marks" — which is exactly why nothing could check it. Status colours are the least uniform

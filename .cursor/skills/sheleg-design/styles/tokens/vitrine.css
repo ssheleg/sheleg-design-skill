@@ -1,0 +1,126 @@
+/* SHELEG Design — Vitrine token layer (light default + dark twin).
+   Copy verbatim; consume only var(--…) in components.
+   Theme switch: set data-theme="dark" on :root.
+
+   Extracted from attio.com. A white field on which structure is drawn entirely in
+   hairlines — no card fill, no shadow doing elevation — with a serif display over a
+   sans body, and one accent that is never spent on a button.
+
+   The primary control is INK. On a page whose whole language is a hairline, an
+   accent-filled button is the loudest object by a wide margin, and the accent's job
+   here is to mark what can be read rather than what can be pressed.
+
+   Three of the reference's own colour roles fail WCAG on its own canvas and are not
+   copied. Each value below is the reference's EXCEPT where a measurement says it
+   cannot be. */
+:root {
+  --bg: #ffffff;
+  --panel: #f3f4f6;
+  --panel-2: #ffffff;
+  --ink: #1c1d1f;
+  --muted: #505967;
+  --border: #dadde4;
+  --border-strong: #c8ced7;
+  --edge: #898e95;
+
+  --accent: #1f5fb0;
+  --accent-weak: #e2e8f1;
+  --accent-ink: #ffffff;
+
+  --ok: #075a39;
+  --ok-weak: #e1e8e7;
+  --warn: #705500;
+  --warn-weak: #e9e8e3;
+  --danger: #772322;
+  --danger-weak: #e9e4e5;
+  --info: #1f5fb0;
+  --info-weak: #e2e8f1;
+
+  /* The primary control is the ink. See the header. */
+  --control: #1c1d1f;
+  --control-ink: #ffffff;
+
+  --r-control: 6px;
+  --r-card: 10px;
+  --r-pill: 999px;
+
+  --shadow-1: 0 1px 0 0 rgba(0, 0, 0, 0.06) inset, 0 8px 24px -12px rgba(16, 24, 40, 0.08);
+
+  --motion-ease: cubic-bezier(0.2, 0, 0, 1);
+  --dur-state: 0.16s;
+  --dur-hover: 0.12s;
+
+  --font-display: Newsreader, Georgia, "Times New Roman", serif;
+  --font-ui: Inter, system-ui, sans-serif;
+  --font-data: ui-monospace, "SF Mono", Menlo, monospace;
+
+  --t-meta: 12px;
+  --t-body: 16px;
+  --t-card: 18px;
+  --t-title: 24px;
+  --t-section: 32px;
+  --t-page: 40px;
+  --t-hero: 60px;
+
+  --w-body: 400;
+  --w-med: 500;
+  --w-semi: 600;
+  --w-bold: 700;
+
+  --track-tight: -0.02em;
+  --track-wide: 0.06em;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  background-color: var(--bg);
+  color: var(--ink);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #101112;
+  --panel: #17191b;
+  --panel-2: #17191b;
+  --ink: #f7f8f9;
+  --muted: #b8c0cb;
+  --border: #26292d;
+  --border-strong: #343941;
+  --edge: #60656d;
+
+  --accent: #3392ff;
+  --accent-weak: #19222d;
+  --accent-ink: #101112;
+
+  --ok: #3fcf7f;
+  --ok-weak: #1a2723;
+  --warn: #ffb020;
+  --warn-weak: #29251b;
+  --danger: #ff7b72;
+  --danger-weak: #292122;
+  --info: #3392ff;
+  --info-weak: #19222d;
+
+  /* On ink the control inverts to the ink of THIS register, which is the cloud —
+     the pack keeps "the primary is the ink" in both orders. */
+  --control: #f7f8f9;
+  --control-ink: #101112;
+
+  --shadow-1: 0 1px 0 0 rgba(255, 255, 255, 0.06) inset, 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Light is the default register. To follow the OS instead, have the app set
+   data-theme="dark" from a prefers-color-scheme listener — keep one switch,
+   never two sources of truth for the theme. */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-state: 0s;
+    --dur-hover: 0s;
+  }
+}

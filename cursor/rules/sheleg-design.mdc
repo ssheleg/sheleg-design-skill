@@ -65,6 +65,28 @@ awning — a white forecourt where the accent is black and no hue reaches the
 chrome at all, a pill whose radius is a declared component token, one variable
 grotesque at 420/550 with no 700, two rule weights and a single three-layer
 shadow, for commerce and platform front doors);
+router — a near-white field with a trace of blue and white cards standing on
+that tint, hairline seams instead of shadows anywhere, body at 14px and weight
+450, one royal blue at 97% saturation doing every accent job and none of the
+chart work, and a status triplet in which the colour you paint with is not the
+colour you write with, for product consoles, developer platforms and the landing
+pages that have to look like them;
+daylight — a cool near-white portal field with generous radii whose whole depth
+is one very large soft shadow spent on a single object per screen, Inter Tight
+700 tracked negative over Manrope 400, for client-facing portals and the pages
+that sell them;
+notation — a near-white page drawn entirely in hairlines instead of cards, radii
+of 2 and 4px, a slab serif held at weight 300 against a monospace with no bold
+anywhere, an ink primary that leaves the accent free to mark what can be read,
+and one chamfered corner per page, for developer products sold on restraint;
+almanac — oatmeal paper rather than white, seams at 2px with no 1px anywhere, a
+104px display at weight 500 set below a line-height of one, uppercase mono tags
+notched through the edges of drawn boxes, and one object per page floating on
+four stacked shadow stops, for pages that assert a category;
+vitrine — a white field drawn entirely in hairlines, a serif display over a sans
+body, an ink primary, a grey panel that groups without lifting, and one framed
+record with a 1px inset highlight carrying the page's evidence, for the front
+door of a product sold on trust);
 otherwise follow the contract below (self-contained on purpose).
 
 ## Whether to animate at all — before how

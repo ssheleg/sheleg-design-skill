@@ -1,0 +1,458 @@
+/* SHELEG Design — Vitrine token layer (light default + dark twin).
+   Copy verbatim; consume only var(--…) in components.
+   Theme switch: set data-theme="dark" on :root.
+
+   Extracted from attio.com. A white field on which structure is drawn entirely in
+   hairlines — no card fill, no shadow doing elevation — with a serif display over a
+   sans body, and one accent that is never spent on a button.
+
+   The primary control is INK. On a page whose whole language is a hairline, an
+   accent-filled button is the loudest object by a wide margin, and the accent's job
+   here is to mark what can be read rather than what can be pressed.
+
+   Three of the reference's own colour roles fail WCAG on its own canvas and are not
+   copied. Each value below is the reference's EXCEPT where a measurement says it
+   cannot be. */
+:root {
+  --bg: #ffffff;
+  --panel: #f3f4f6;
+  --panel-2: #ffffff;
+  --ink: #1c1d1f;
+  --muted: #505967;
+  --border: #dadde4;
+  --border-strong: #c8ced7;
+  --edge: #898e95;
+
+  --accent: #1f5fb0;
+  --accent-weak: #e2e8f1;
+  --accent-ink: #ffffff;
+
+  --ok: #075a39;
+  --ok-weak: #e1e8e7;
+  --warn: #705500;
+  --warn-weak: #e9e8e3;
+  --danger: #772322;
+  --danger-weak: #e9e4e5;
+  --info: #1f5fb0;
+  --info-weak: #e2e8f1;
+
+  /* The primary control is the ink. See the header. */
+  --control: #1c1d1f;
+  --control-ink: #ffffff;
+
+  --r-control: 6px;
+  --r-card: 10px;
+  --r-pill: 999px;
+
+  --shadow-1: 0 1px 0 0 rgba(0, 0, 0, 0.06) inset, 0 8px 24px -12px rgba(16, 24, 40, 0.08);
+
+  --motion-ease: cubic-bezier(0.2, 0, 0, 1);
+  --dur-state: 0.16s;
+  --dur-hover: 0.12s;
+
+  --font-display: Newsreader, Georgia, "Times New Roman", serif;
+  --font-ui: Inter, system-ui, sans-serif;
+  --font-data: ui-monospace, "SF Mono", Menlo, monospace;
+
+  --t-meta: 12px;
+  --t-body: 16px;
+  --t-card: 18px;
+  --t-title: 24px;
+  --t-section: 32px;
+  --t-page: 40px;
+  --t-hero: 60px;
+
+  --w-body: 400;
+  --w-med: 500;
+  --w-semi: 600;
+  --w-bold: 700;
+
+  --track-tight: -0.02em;
+  --track-wide: 0.06em;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  background-color: var(--bg);
+  color: var(--ink);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #101112;
+  --panel: #17191b;
+  --panel-2: #17191b;
+  --ink: #f7f8f9;
+  --muted: #b8c0cb;
+  --border: #26292d;
+  --border-strong: #343941;
+  --edge: #60656d;
+
+  --accent: #3392ff;
+  --accent-weak: #19222d;
+  --accent-ink: #101112;
+
+  --ok: #3fcf7f;
+  --ok-weak: #1a2723;
+  --warn: #ffb020;
+  --warn-weak: #29251b;
+  --danger: #ff7b72;
+  --danger-weak: #292122;
+  --info: #3392ff;
+  --info-weak: #19222d;
+
+  /* On ink the control inverts to the ink of THIS register, which is the cloud —
+     the pack keeps "the primary is the ink" in both orders. */
+  --control: #f7f8f9;
+  --control-ink: #101112;
+
+  --shadow-1: 0 1px 0 0 rgba(255, 255, 255, 0.06) inset, 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Light is the default register. To follow the OS instead, have the app set
+   data-theme="dark" from a prefers-color-scheme listener — keep one switch,
+   never two sources of truth for the theme. */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-state: 0s;
+    --dur-hover: 0s;
+  }
+}
+/* ── components ── */
+
+/* Every value below is a token. The pack's whole elevation model is the seam, so
+   there is no shadow in this file outside the one --shadow-1 the token layer owns,
+   and no colour literal at all — the gate reads this section for both. */
+
+.vt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 36px;
+  padding-inline: var(--space-4);
+  border: 1px solid transparent;
+  border-radius: var(--r-control);
+  font-family: var(--font-ui);
+  font-size: var(--t-body);
+  font-weight: var(--w-med);
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-hover) var(--motion-ease),
+    border-color var(--dur-hover) var(--motion-ease),
+    color var(--dur-hover) var(--motion-ease);
+}
+
+.vt-btn--sm {
+  min-height: 28px;
+  padding-inline: var(--space-3);
+}
+
+.vt-btn--lg {
+  min-height: 44px;
+  padding-inline: var(--space-5);
+}
+
+/* The label colour is stated here rather than inherited: an anchor reset that says
+   `color: inherit` outranks a bare utility and paints ink on the accent. */
+.vt-btn--primary {
+  background: var(--control);
+  border-color: var(--control);
+  color: var(--control-ink);
+}
+
+.vt-btn--primary:hover:not(:disabled) {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.vt-btn--secondary {
+  background: var(--panel);
+  border-color: var(--edge);
+  color: var(--ink);
+}
+
+.vt-btn--secondary:hover:not(:disabled) {
+  border-color: var(--muted);
+}
+
+.vt-btn--ghost {
+  background: transparent;
+  color: var(--muted);
+}
+
+.vt-btn--ghost:hover:not(:disabled) {
+  color: var(--ink);
+}
+
+.vt-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* One focus idiom on every control — a button, an input and a link get the same
+   ring, because three focus treatments is three things to learn. */
+.vt-btn:focus-visible,
+.vt-chip:focus-visible,
+.vt-status:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-weak);
+  border-color: var(--accent);
+}
+
+.vt-card {
+  container-type: inline-size;
+  display: block;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+}
+
+.vt-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: 14px var(--space-5);
+  border-bottom: 1px solid var(--border);
+}
+
+.vt-card__title {
+  margin: 0;
+  font-size: var(--t-card);
+  font-weight: var(--w-semi);
+  letter-spacing: var(--track-tight);
+  color: var(--ink);
+}
+
+.vt-card__meta {
+  font-family: var(--font-data);
+  font-size: var(--t-meta);
+  letter-spacing: var(--track-wide);
+  color: var(--muted);
+}
+
+.vt-card__body {
+  padding: var(--space-5);
+}
+
+/* CONTAINER, not PAGE: the head stacks against the card's own width, so a card in a
+   narrow column behaves the same wherever the column happens to be. */
+@container (max-width: 30rem) {
+  .vt-card__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1);
+  }
+}
+
+.vt-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 24px;
+  padding-inline: var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--r-pill);
+  font-family: var(--font-ui);
+  font-size: var(--t-meta);
+  font-weight: var(--w-med);
+  white-space: nowrap;
+}
+
+.vt-chip--neutral {
+  background: var(--panel-2);
+  color: var(--muted);
+}
+
+.vt-chip--accent {
+  background: var(--accent-weak);
+  color: var(--accent);
+}
+
+/* The rail — the one place the accent is a shape rather than a word. */
+.vt-chip--selected {
+  position: relative;
+  padding-left: var(--space-4);
+  color: var(--ink);
+}
+
+.vt-chip--selected::before {
+  content: "";
+  position: absolute;
+  left: var(--space-2);
+  top: 25%;
+  bottom: 25%;
+  width: 2px;
+  border-radius: var(--r-pill);
+  background: var(--accent);
+}
+
+.vt-stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.vt-stat__label {
+  font-size: var(--t-body);
+  color: var(--muted);
+}
+
+.vt-stat__value {
+  font-size: var(--t-section);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--track-tight);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.vt-stat__source {
+  font-family: var(--font-data);
+  font-size: var(--t-meta);
+  letter-spacing: var(--track-wide);
+  color: var(--muted);
+}
+
+.vt-heading {
+  margin: 0;
+  letter-spacing: var(--track-tight);
+  color: var(--ink);
+}
+
+.vt-heading--1 {
+  font-size: var(--t-page);
+  font-weight: var(--w-bold);
+  line-height: 1.2;
+}
+
+.vt-heading--2 {
+  font-size: var(--t-section);
+  font-weight: var(--w-bold);
+  line-height: 1.2;
+}
+
+/* Level 3 is body size and separates by weight alone, which is what stops a dense
+   screen from becoming a ladder of sizes. */
+.vt-heading--3 {
+  font-size: var(--t-card);
+  font-weight: var(--w-semi);
+  line-height: 1.35;
+}
+
+.vt-rule {
+  height: 1px;
+  margin: 0;
+  border: 0;
+  background: var(--border);
+}
+
+.vt-rule--strong {
+  background: var(--border-strong);
+}
+
+.vt-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 24px;
+  padding-inline: var(--space-3);
+  border-radius: var(--r-pill);
+  font-family: var(--font-ui);
+  font-size: var(--t-meta);
+  font-weight: var(--w-med);
+  white-space: nowrap;
+}
+
+.vt-status__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--r-pill);
+  flex: none;
+  background: currentColor;
+}
+
+.vt-status--ok {
+  background: var(--ok-weak);
+  color: var(--ok);
+}
+
+.vt-status--ok .vt-status__dot {
+  background: var(--ok-mark);
+}
+
+.vt-status--warn {
+  background: var(--warn-weak);
+  color: var(--warn);
+}
+
+.vt-status--warn .vt-status__dot {
+  background: var(--warn-mark);
+}
+
+.vt-status--danger {
+  background: var(--danger-weak);
+  color: var(--danger);
+}
+
+.vt-status--danger .vt-status__dot {
+  background: var(--danger-mark);
+}
+
+.vt-status--neutral {
+  background: var(--panel-2);
+  color: var(--muted);
+}
+
+.vt-status--neutral .vt-status__dot {
+  background: var(--muted);
+}
+
+.vt-skeleton {
+  display: block;
+  border-radius: var(--r-control);
+  background: var(--panel-2);
+}
+
+/* Static by decision. The reference's skeletons do not animate, and a shimmer is
+   motion spent telling the reader something they already know. */
+@media (prefers-reduced-motion: reduce) {
+  .vt-btn {
+    transition: none;
+  }
+}
+
+.vt-frame {
+  margin: 0;
+}
+
+.vt-frame__cap {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-size: var(--t-meta);
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.vt-frame__glass {
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  background: var(--bg);
+  box-shadow: var(--shadow-1);
+  padding: var(--space-5);
+}
+
+.vt-frame__foot {
+  margin: var(--space-2) 0 0;
+  font-family: var(--font-data);
+  font-size: var(--t-meta);
+  color: var(--muted);
+}

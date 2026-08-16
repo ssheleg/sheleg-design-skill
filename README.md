@@ -11,7 +11,7 @@ problem — invented colors, six accent hues, dark mode retrofitted later.
 
 This skill is the taste layer. It gives a coding agent **one motion
 methodology** for cinematic, scroll-driven pages, **a motion doctrine** that
-decides whether to animate before it decides how, and **twenty-two locked style
+decides whether to animate before it decides how, and **twenty-seven locked style
 packs** with ready-made design tokens, so what it builds reads as one system
 instead of a pile of effects.
 
@@ -66,6 +66,11 @@ into the cinematic layer, and says so in its own *Motion flavor* section.
 | `tenor` | warm paper with **zero radius and zero shadow anywhere**, a single hairline weight assembling every lattice, and one orange that exists only on hover and on focus — so the page screenshots with no colour in it at all — a sans held at weight 400 and tracked negative against a mono tracked positive, display at a line-height below one in an eight-to-twelve-character measure, and proof delivered as silent looping video in a 1px rectangle | products arguing a **management thesis** — that a new kind of thing has to be run like an existing organisation: AI-workforce and agent-operations platforms, autonomous back-office, revenue and sales operations, sold to the director who will have to manage it |
 | `paperclip` | neutral coal with **no functional colour at all** — every control monochrome, elevation made of hairlines, and the whole chromatic budget spent on a curtain of 96 gradient capsules and twelve gradient section badges that cannot be clicked — a tight grotesque over a plain one over a monospace, and the capsule as the shape of everything from a button to a 10 × 20 schedule tick | products that ask a person to **run something that runs itself** — agent teams and orchestrators, autonomous back-office, schedulers, job runners, budget-governed compute |
 | `awning` | white forecourt where **the accent is black** and no hue reaches the chrome at all; a pill whose radius is a declared component token, one variable grotesque at **420 / 550 with no 700**, two rule weights and a single three-layer shadow | commerce and platform front doors — the surface that sells a system other businesses will run their storefront, payroll, billing or logistics on |
+| `router` | a near-white field with a trace of blue and white cards standing on that tint, **hairline seams instead of shadows anywhere** — one lift exists and it is a menu — body at 14px and weight 450, one royal blue at 97% saturation doing every accent job and none of the chart work, and a status triplet in which the colour you paint with is not the colour you write with | **product consoles and the pages that have to look like them** — dashboards, admin and developer platforms, billing and usage surfaces, and a landing page whose argument is an inventory rather than a promise (standalone) |
+| `daylight` | a cool near-white portal field with generous radii and **one very large soft shadow spent on a single object per screen**, Inter Tight 700 tracked negative over Manrope 400, and a four-step blue tile ramp for stacked bands | **client-facing portals and the pages that sell them** — onboarding, workspaces a customer logs into, service dashboards, scheduling and billing (standalone) |
+| `notation` | a near-white page drawn **entirely in hairlines instead of cards**, radii of 2 and 4px, a slab serif held at weight 300 against a monospace, **no bold anywhere**, an ink primary that leaves the accent free to mark what can be read, and one chamfered corner per page | **developer and technical products sold on restraint** — open source front pages, workspaces for people who dislike being sold to, documentation homes (standalone) |
+| `almanac` | **oatmeal paper rather than white**, seams at 2px and 4px with **no 1px anywhere**, a 104px display at weight 500 with a line-height below one that locks its lines into a block, uppercase mono tags notched through the edges of drawn boxes, and one object per page floating on four stacked shadow stops | **pages that assert a category** — a manifesto, a company saying what this kind of thing is, a product whose argument is editorial rather than functional (standalone) |
+| `vitrine` | a white field drawn **entirely in hairlines**, a serif display over a sans body, an ink primary so the accent stays free to mark what can be read, a grey panel that groups without lifting, and **one framed record** with a 1px inset highlight carrying the page's evidence | **the front door of a product sold on trust** — B2B software under evaluation, security and compliance surfaces, specification and comparison pages (standalone) |
 | `ledger` | warm cream paper where elevation is a **1px hairline at 12% ink** and no card casts a shadow, radii of 7.5/10/15/20 nested concentrically, an **ink** primary button, and a terracotta accent forbidden from filling any control — it labels, as a 10px monospace uppercase kicker — over 32px data rows, with a seal on every card stating how its number is known | the console of a product that answers questions **about data** — AI analysts, BI surfaces, query workspaces, agents that read a warehouse and write back a figure |
 
 Each pack locks palette, type, texture, motion tokens, signature motifs and
@@ -141,7 +146,7 @@ skills.
 | `DESIGN_SYNC_BRIDGE.md` | The Claude Design contract: what a pack sends to claude.ai/design and in what shape, the rule for each of the four reference types, and the border motion does not cross |
 | `FIGMA_BRIDGE.md` | The design↔code contract: how a pack's tokens map onto Figma variable collections and modes, how to implement a design without importing raw values, and what cannot cross the border |
 | `AI_PRODUCT_PATTERNS.md` | The surfaces a model drives: the five states of a call, streaming instead of spinners, latency, provenance and uncertainty, agent confirmations, and the bans that keep it honest |
-| `styles/*.md` | The twenty-two style packs — palette, type, texture, motion tokens, motifs, bans, and the traps each one carries |
+| `styles/*.md` | The twenty-seven style packs — palette, type, texture, motion tokens, motifs, bans, and the traps each one carries |
 | `styles/tokens/*.css` | The ready-made token layer per pack, copied verbatim instead of transcribed (`workbench` and `field-notes` each ship a light `:root` plus a `data-theme="dark"` twin) |
 | `styles/STYLE_PACK_TEMPLATE.md` | The pack contract as a skeleton, so a new style is authored against the same headings rather than improvised |
 
@@ -212,7 +217,7 @@ cd ./ds-workbench && npm install && npm run build
 then `/design-sync` in that directory, from Claude Code. Three layers cross: the
 pack's **bans** as the design system's own README, `styles.css` built from
 `tokens/<pack>.css` verbatim, and the components — a six-name spine that is
-identical in all twenty-two kits, so switching packs swaps identity rather than API,
+identical in all twenty-seven kits, so switching packs swaps identity rather than API,
 plus each pack's signature parts. **Motion does not cross**, exactly as it does
 not cross into Figma: a kit is the static half of a pack, and saying so is what
 stops an agent inventing motion to fill the silence.
@@ -258,7 +263,7 @@ a pack's four widened sections used to make two gates *quieter* and still green.
 One honest limit: the npx installer is checked by asserting its runtime bundle
 walker exists, not by reading a file list — it has none by design. What proves
 it ships the right files is CI, which installs the bundle through **both**
-installers and `diff -r`s the result against the source, then builds all twenty-two
+installers and `diff -r`s the result against the source, then builds all twenty-seven
 kits.
 
 `test/scenarios.md` (T1–T19) is the behavioral harness: fresh subagents given a
