@@ -4,6 +4,30 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.37.4] - 2026-08-16
+
+### Fixed
+
+**The description was not valid YAML, and every gate this family owns read it with a
+regex.** B-56 blamed the launcher for two cycles. The launcher was fine: `description`
+carried `style packs: dashboards` — a colon-space inside an unquoted scalar, which YAML
+reads as a nested mapping. `claude plugin validate`, this pack's own 4636 checks, the
+umbrella's trigger fixture and `claude plugin update` all stayed green, because all of
+them match the field with a regular expression. The skills CLI uses a real parser: it
+reported *No valid skills found*, the family launcher exited 1 on this member, and the hub
+copy every non-Claude-Code agent reads sat on the previous version — refreshed by hand
+after each of the last four releases.
+
+Both colon-spaces are gone (`style packs — dashboards`, `the Figma border — tokens as
+variables`) and the front matter parses. The regression was introduced by the 1.37.0
+rewrite that gave this skill its plain vocabulary, so it shipped and broke installation in
+the same release that fixed routing.
+
+**The gate now exists in both places.** `test/validate.py` asks the umbrella's
+`advertised_check.js`, which refuses an unquoted scalar containing `": "` — measured
+across all 69 scalar lines the family ships, two hits, both this defect. The umbrella runs
+the strict form with a real parser over every shipped `SKILL.md`. Watched failing in both.
+
 ## [1.37.3] - 2026-08-16
 
 ### Changed
