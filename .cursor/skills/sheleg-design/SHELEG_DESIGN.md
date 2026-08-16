@@ -706,3 +706,27 @@ Adapt the names to your framework's conventions.
 the chosen `styles/<pack>.md` for the visual half. The north star for both: it
 should feel like a precision instrument responding to your hand — authority
 through accuracy and restraint, not spectacle.*
+
+---
+
+## Three looks that are defaults, not decisions
+
+Left to itself, generated design lands in one of three places, regardless of
+what the product is:
+
+1. **Warm cream field (near `#F4F1EA`) + high-contrast serif display +
+   terracotta accent.**
+2. **Near-black field + a single acid-green or vermilion accent.**
+3. **Broadsheet: hairline rules, zero border-radius, dense newspaper columns.**
+
+Each is legitimate for some brief — and each shows up whether or not the brief
+called for it, which is what makes it a default. This skill's answer is the
+same either way: **the values come from a pack extracted off a live reference,
+never from taste at the keyboard.** If a pack's field happens to sit near one of
+these, that is a measurement; if a page arrives at one without a pack, that is
+the default talking. Say which of the two it is out loud before shipping.
+
+Moved out of `SKILL.md` on 2026-08-16 for the body budget. It sits here because
+it is the same argument this file makes throughout: the values come from a pack
+extracted off a live reference, never from taste at the keyboard.
+

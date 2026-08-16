@@ -268,3 +268,42 @@ Before calling motion done:
 - [ ] `markers` removed.
 - [ ] Reduced motion tested by actually turning it on.
 - [ ] The page still looks like the pack (§8).
+
+---
+
+## How the calibration dials bind
+
+- **The pack wins on values, the dials win on amount.** A dial never invents a
+  colour, a face, or a radius — those come from the pack's token layer. It
+  decides how much asymmetry the grid carries, how much of the page moves, and
+  how tightly it is packed.
+- **`MOTION_INTENSITY` is capped by the frequency table**, not the other way
+  round. A 9 on a settings screen still means the keyboard path does not
+  animate. Read [`MOTION_DOCTRINE.md`](./MOTION_DOCTRINE.md) §1 first; the dial
+  turns up what is left after that table has cut.
+- **Motion claimed is motion shown.** Above 4, the page actually moves —
+  entrance on the hero, reveal on key sections, response on the primary action.
+  A static page announcing 7 is broken. If working motion will not fit the
+  scope, drop the dial to 3 and ship a clean still page; never half-build motion
+  that stalls, cuts off, or jumps.
+- **A standalone pack pins its own ceiling.** `workbench`, `briefing-room` and
+  `ledger` are not cinematic; `MOTION_INTENSITY` above 3 on any of the three is a
+  misread of the pack, not a bold choice — `ledger` allows exactly three loops,
+  all of them state (a typing cursor, thinking dots, a live heartbeat), and stops
+  all three under reduced motion. `pigeonhole` is cinematic but at the family's floor: it bans the scroll clock,
+scrubbing, parallax and a sticky nav, so `MOTION_INTENSITY` above **4** on it has
+nothing legal to buy. **`roster` has the same ceiling of 4** for the same reason —
+entrance, hover and two slow floats are its whole budget, and it bans scrubbing,
+parallax and `animation-timeline`; it keeps a sticky nav, which is the only difference.
+  **Three more standalone packs pin their own, and each states it in its own Register:**
+  `ora` at **4**, `tenor` at **4**, `paperclip` at **5** — the last one higher because it
+  is the only pack in the family that spends a native scroll-driven parallax.
+  `field-notes` is standalone **by default** and may opt into the cinematic layer — it carries a `## Motion flavor` section saying
+  how — so it is the one standalone pack without a hard ceiling. Read that
+  section before turning the dial up on it.
+
+Moved out of `SKILL.md` on 2026-08-16: the body was 6203 tokens against a
+< 5000 budget, and every rule here is about what §1's frequency table has already
+cut. The dial turns up what is left after that table — so the table and the dial
+belong in one file.
+

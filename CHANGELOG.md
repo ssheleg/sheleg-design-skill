@@ -4,6 +4,51 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.38.0] - 2026-08-16
+
+### The routing table stopped being a second copy of the packs
+
+**6203 tokens against a 5000 budget → 4595**, under the 4750 working limit, and
+the **description 1021 → 948 of 1024**, which was three characters from the cap
+and therefore three characters from being unable to advertise the next routed
+trigger at all.
+
+Nothing was deleted. Four sections restated a file `docs/DOCMAP.md` names as
+their single home and are now one pointer each — `AI_PRODUCT_PATTERNS.md`,
+`FIGMA_BRIDGE.md`, `DESIGN_SYNC_BRIDGE.md`, and the real-world-references rule
+that `DESIGN_SYNC_BRIDGE.md` §4 already owns. Two craft sections moved to the
+files whose argument they are:
+
+| Moved | To | Why there |
+|---|---|---|
+| *How they bind* — the calibration dials | `MOTION_DOCTRINE.md` | every rule in it is about what §1's frequency table already cut; the table and the dial belong in one file |
+| *Three looks that are defaults, not decisions* | `SHELEG_DESIGN.md` | it is the same argument that file makes throughout — values come from a pack extracted off a live reference, never from taste at the keyboard |
+
+And the style-pack table's **Look** column is one clause per row instead of
+three. The table's own preamble says each pack file "opens with its own full
+description — this table is for choosing, not for reading instead of the pack",
+and the Look column was the part that read instead of the pack. All 22 packs are
+still named, which is what `ENUMERATION_SITES` requires of this file.
+
+**The description gave up the Figma prose sentence**, not a trigger: `figma
+variables` and `фигма в код` already live in the `Triggers -` half, so the
+sentence was the only place that fact had two homes. **All 32 routed triggers
+still resolve** (`node test/advertised_check.js` → *advertises all 32*), which is
+the invariant B-54 exists to protect.
+
+The `.cursor/` mirror moved with all three files, and the gate compares it in both
+directions.
+
+### Fixed
+
+- A pointer written during this change cited `docs/DOCMAP.md` — a **repository**
+  path with no counterpart in the installed bundle. The gate caught it, which is
+  what that guard is for: an instruction that dead-ends for every reader who did
+  not clone the repo.
+
+Found by the nine-repository audit of 2026-08-16 (umbrella `B-66`;
+`F-sheleg-design-04`, `-05`).
+
 ## [1.37.5] - 2026-08-16
 
 ### Changed
