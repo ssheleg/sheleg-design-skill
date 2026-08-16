@@ -589,6 +589,11 @@ reproduced before an edit; every one is fixed here.
 
 ## [1.30.0] - 2026-08-14
 
+> **Never released on its own.** There is no `v1.30.0` tag and no `1.30.0` on npm,
+> so `npm install sheleg-design-skill@1.30.0` and `git checkout v1.30.0` both fail. This section
+> describes work that shipped inside a later version. The note is here because
+> the section reads as a release (2026-08-17, umbrella `B-71`).
+
 A twentieth pack, **`paperclip`**, extracted from a live reference rather than composed:
 <https://paperclip.ing>, read from the two shipped stylesheets
 (`/_next/static/chunks/0sw-z-v7xc9dd.css`, 622 rules; `/_next/static/chunks/19xj4kovk13jy.css`,
@@ -743,6 +748,11 @@ reasons they exist were all legible in the source instead of having to be recons
   managed at 620px, and one of them appears in both the hide rule and the re-show rule.
 
 ## [1.28.0] - 2026-08-14
+
+> **Never released on its own.** There is no `v1.28.0` tag and no `1.28.0` on npm,
+> so `npm install sheleg-design-skill@1.28.0` and `git checkout v1.28.0` both fail. This section
+> describes work that shipped inside a later version. The note is here because
+> the section reads as a release (2026-08-17, umbrella `B-71`).
 
 > Authored and gated on its own, **released inside `v1.29.0`**: the `tenor` pack followed
 > it in the same session before a tag was cut, and splitting the two after the fact would
@@ -2183,6 +2193,11 @@ and so far only pack on the thirteen-heading contract.
 
 ## [1.5.0] - 2026-08-04
 
+> **Never released on its own.** There is no `v1.5.0` tag and no `1.5.0` on npm,
+> so `npm install sheleg-design-skill@1.5.0` and `git checkout v1.5.0` both fail. This section
+> describes work that shipped inside a later version. The note is here because
+> the section reads as a release (2026-08-17, umbrella `B-71`).
+
 The register the skill was missing for its own audience: a developer tool that
 does not live on a dark console. Six packs could dress a landing page, a
 dashboard, a deck and two kinds of consumer health, and none of them had an
@@ -2268,6 +2283,11 @@ the software the people using this skill actually build.
   saying "six".
 
 ## [1.4.0] - 2026-08-03
+
+> **Never released on its own.** There is no `v1.4.0` tag and no `1.4.0` on npm,
+> so `npm install sheleg-design-skill@1.4.0` and `git checkout v1.4.0` both fail. This section
+> describes work that shipped inside a later version. The note is here because
+> the section reads as a release (2026-08-17, umbrella `B-71`).
 
 Two packs for the warm consumer register, extracted from two production sites
 that solve the same brief in opposite ways — one premium and editorial, one
@@ -2566,6 +2586,11 @@ change what an existing token means. Removing or renaming either is a major.
 
 ## [0.9.1] - 2026-07-28
 
+> **Never released on its own.** There is no `v0.9.1` tag and no `0.9.1` on npm,
+> so `npm install sheleg-design-skill@0.9.1` and `git checkout v0.9.1` both fail. This section
+> describes work that shipped inside a later version. The note is here because
+> the section reads as a release (2026-08-17, umbrella `B-71`).
+
 ### Added
 
 - Optional **Lazyweb MCP** step: when `mcp__lazyweb__*` tools are present, the
@@ -2663,6 +2688,11 @@ Review pass.
 
 ## [0.6.0] - 2026-07-20
 
+> **Published, never tagged.** `0.6.0` is installable from npm but there is no
+> `v0.6.0` tag, so the artifact exists and the commit it was cut from cannot be
+> checked out. A bug report against this version has no source tree to read
+> (2026-08-17, umbrella `B-71`).
+
 ### Added
 
 - Ready-made token layers `styles/tokens/<pack>.css` for all three packs
@@ -2689,6 +2719,11 @@ Review pass.
 
 ## [0.5.0] - 2026-07-20
 
+> **Never released on its own.** There is no `v0.5.0` tag and no `0.5.0` on npm,
+> so `npm install sheleg-design-skill@0.5.0` and `git checkout v0.5.0` both fail. This section
+> describes work that shipped inside a later version. The note is here because
+> the section reads as a release (2026-08-17, umbrella `B-71`).
+
 ### Added
 
 - **`workbench` style pack** — quiet light+dark utilitarian product UI for
@@ -2701,6 +2736,11 @@ Review pass.
   them outright.
 
 ## [0.4.0] - 2026-07-19
+
+> **Published, never tagged.** `0.4.0` is installable from npm but there is no
+> `v0.4.0` tag, so the artifact exists and the commit it was cut from cannot be
+> checked out. A bug report against this version has no source tree to read
+> (2026-08-17, umbrella `B-71`).
 
 ### Added
 
@@ -2716,6 +2756,11 @@ Review pass.
   enforces >=2 packs with required sections.
 
 ## [0.3.0] - 2026-07-19
+
+> **Published, never tagged.** `0.3.0` is installable from npm but there is no
+> `v0.3.0` tag, so the artifact exists and the commit it was cut from cannot be
+> checked out. A bug report against this version has no source tree to read
+> (2026-08-17, umbrella `B-71`).
 
 ### Added
 
@@ -2737,6 +2782,11 @@ Review pass.
   from the new location (installed layout unchanged).
 
 ## [0.2.0] - 2026-07-19
+
+> **Published, never tagged.** `0.2.0` is installable from npm but there is no
+> `v0.2.0` tag, so the artifact exists and the commit it was cut from cannot be
+> checked out. A bug report against this version has no source tree to read
+> (2026-08-17, umbrella `B-71`).
 
 ### Changed
 
