@@ -4,6 +4,40 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.37.0] - 2026-08-16
+
+### Changed
+
+- **The description now advertises the words an operator actually types.** Board row
+  `B-49` in the family umbrella measured it: every one of the fifteen triggers was a
+  compound noun phrase — `cinematic landing`, `design tokens`, `dashboard style` — so the
+  router that owns the visual layer could not be reached by asking for visual work.
+  `сделай paywall красивее` → `[]`. `поменяй палитру` → `[]`. `сделай дизайн лендинга` →
+  `[]`. And **`make the hero more cinematic` → `[]`**, because the trigger was the phrase
+  `cinematic landing` and not the word.
+
+  A trigger may only be a word this description advertises — the family's own check
+  enforces that, which is why the fix starts here. Seven plain pairs are added:
+  `palette` / `палитра`, `colors` / `цвета`, `typography` / `типографика`, `font` /
+  `шрифт`, `how it looks` / `выглядит`, `make it prettier` / `красивее`, and the
+  description is reworded to open with what it is for — *deciding how something looks or
+  moves* — rather than with the most cinematic thing it can do.
+
+  **`landing` alone is deliberately not a trigger.** A landing page is copy as much as it
+  is visual, and the bare noun would take the route from `copywriting`.
+
+  Measured after, and the instrument matters: routing is a model reading a description,
+  not a substring matcher, so the check is *does the description carry a stem the
+  operator's phrase contains* — `палитр`, `красив`, `цвет`, `анимац`, `дизайн`, `hero`.
+  All seven visual phrases reach one; all six controls — a payment bug, a text for a
+  landing page, a production check, a test, a README, a refactor — reach none.
+
+  The first instrument said otherwise and was wrong: it compared exact substrings in a
+  language that declines, so `палитра` missed `палитру` and `красивее` missed `красиво`,
+  and it tokenised the compound trigger `кинематографичный лендинг` into words and then
+  reported the bare `лендинг` leaking onto the copy work it was written to avoid. Three
+  false misses and one false leak, all of them the checker's.
+
 ## [1.36.1] - 2026-08-16
 
 **1.36.0 added two traps and left the sentence above them saying six.** The Gotchas section

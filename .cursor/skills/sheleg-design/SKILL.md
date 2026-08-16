@@ -1,9 +1,9 @@
 ---
 name: sheleg-design
-description: Use when building or upgrading a cinematic scroll-driven landing page, marketing site or hero (particle/WebGL background, scroll-linked animation, parallax, scrubbed sections) — when such a page feels busy or janky or its motion layers drift out of sync — or when styling product UI with its style packs - dashboards, admin panels, internal/dev tools, mobile app screens, design tokens, light/dark themes - or when carrying a visual system across the Figma border (publishing tokens as variables, implementing a design without importing raw values). Triggers - "cinematic landing" / "кинематографичный лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables / figma to code" / "переменные фигмы, фигма в код", "chat/agent UI" / "интерфейс чата или агента", "streaming output" / "стриминг ответа", "mobile screen" / "мобильный экран".
+description: Use when deciding how something LOOKS or MOVES. Cinematic scroll-driven landing pages, marketing sites and heroes — particle/WebGL backgrounds, scroll-linked animation, parallax, scrubbed sections — and when such a page feels busy or its motion layers drift apart. Product UI through its style packs: dashboards, admin panels, internal tools, mobile screens, chat and agent interfaces. Design tokens, light/dark themes, palettes and colours, typography and fonts. And the Figma border: tokens as variables, a design implemented without raw values. Triggers - "cinematic landing" / "кинематографичный лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы", "mobile screen" / "мобильный экран", "palette" / "палитра", "colors" / "цвета", "typography" / "типографика", "font" / "шрифт", "how it looks" / "выглядит", "make it prettier" / "красивее".
 license: MIT
 metadata:
-  version: 1.36.1
+  version: 1.37.0
 ---
 
 # SHELEG Design
