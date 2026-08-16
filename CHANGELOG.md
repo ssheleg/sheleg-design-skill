@@ -4,6 +4,21 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.37.3] - 2026-08-16
+
+### Changed
+
+**`сделай дизайн лендинга` reached no route at all**, and the word that would have fixed it
+is the word that declines the route: bare `дизайн` sits inside «без дизайна», so a trigger
+there would make the refusal unsayable. The two-word phrase clears that and is more precise
+anyway — `дизайн лендинга` / `design a landing` route here, while `напиши текст для
+лендинга` still goes to `copywriting` alone, which the bare noun `лендинг` would have broken.
+
+It **replaces** `"cinematic landing" / "кинематографичный лендинг"` rather than joining it,
+because this description had six characters of budget left. The loss was measured before it
+was taken: nobody types «кинематографичный лендинг», and `make the hero more cinematic` —
+the case that pair was really for — still reaches here through `hero`.
+
 ## [1.37.2] - 2026-08-16
 
 ### Added
