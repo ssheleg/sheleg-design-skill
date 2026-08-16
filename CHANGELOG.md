@@ -4,6 +4,25 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.37.5] - 2026-08-16
+
+### Changed
+
+**`сделай лендинг` reached no route, and neither did `build a landing page`.** A landing
+page is the canonical two-craft surface — how it looks and how it sounds — and the
+unqualified ask for one arrived at nothing at all.
+
+Both phrases now reach **`sheleg-design` and `copywriting` together**, which is what the
+family's composition order says a landing needs. Verb phrases rather than the bare noun,
+and that choice was measured against the alternative rather than argued: with a bare
+`лендинг` trigger, `напиши текст для лендинга` picked up a visual route it did not ask for
+and `почини баг на лендинге` collected three. With the verb phrase, both stay exactly as
+they were — copywriting alone and task-pipeline alone.
+
+Room was made rather than found: `scrubbed sections` and one `implemented` came out of the
+prose, which is 30 characters that were not carrying their weight beside a phrase an
+operator actually types.
+
 ## [1.37.4] - 2026-08-16
 
 ### Fixed
