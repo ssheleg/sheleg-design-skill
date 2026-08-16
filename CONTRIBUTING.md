@@ -102,8 +102,15 @@ fails on a mismatch. The fifth is the only one that ships inside the bundle,
 which is why it exists: an installed reader has nothing else to read a
 version from. Tag `vX.Y.Z`; the release workflow (armed by the
 `RELEASE_ENABLED` repo variable) validates, cuts a GitHub release from the
-matching CHANGELOG section and smoke-tests the tag through `npx`. `npm publish`
-is deliberately a human step.
+matching CHANGELOG section and smoke-tests the tag through `npx`. **It also
+publishes to npm**, with provenance, gated on the `PUBLISH_NPMJS` repo variable.
+
+`npm publish` used to be the one human step here, because 2FA blocks a token
+that is not automation-scoped; the workflow's `publish` job replaced it and this
+paragraph did not move with it. Corrected on 2026-08-17, after the stale
+sentence sent a release's operator looking for a manual step that no longer
+exists. **The tag is the whole release**: push `vX.Y.Z` and GitHub cuts the
+release and publishes the package.
 
 
 ### The family catalogue moves with the release
@@ -113,15 +120,21 @@ member's version in its own `skills.json`. **A release that does not bump that p
 `npx sshlg-skills list` keeps reporting the previous version, `update` keeps installing it, and
 anyone comparing their install against `list` is told the wrong number with nothing to reveal it.
 
-So a release is not finished at `npm publish`:
+So a release is not finished when this package hits npm:
 
 ```bash
 # in ssheleg/sshlg-skills
 #   1. bump this member's "version" in skills.json
-#   2. bump the launcher's own version, changelog, tag
-npm publish --access public
-npx --yes sshlg-skills@latest list   # the new number must appear here
+#   2. move the submodule pointer: git -C skills/sheleg-design checkout vX.Y.Z
+#   3. carry the same number into the README row — the validator compares all three
+#   4. bump the launcher's own version and changelog, then tag
+git push origin main --follow-tags        # the tag publishes the launcher too
+npx --yes sshlg-skills@latest list        # the new number must appear here
 ```
+
+**Steps 2 and 3 are the ones that get forgotten**, and the launcher's validator
+fails on both: a pin that names a version the submodule is not checked out at,
+and a README row that disagrees with `skills.json`.
 
 ## Coordinating with other agents
 
