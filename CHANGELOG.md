@@ -4,6 +4,44 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.40.0] - 2026-08-17
+
+**A reference sweep has been in this pack since the Lazyweb bridge and could never be asked
+for.** `SKILL.md` carries an *Optional — real-world references (Lazyweb, Mobbin, Refero)*
+section, step 1 of *How to Apply* says to sweep before any layout exists to defend, and
+`DESIGN_SYNC_BRIDGE.md` §4 tells the three servers apart by what each returns — Lazyweb web
+products and growth mechanics, Mobbin evenly-spaced preview images per step, Refero visually
+similar screens and flows as structure. None of it was in the `description`, so
+`нужны визуальные референсы` reached no route.
+
+Two triggers now do, and one of them cost nothing at all:
+
+| Trigger | What it cost |
+|---|---|
+| `style pack` | **zero** — the description has said *"Product UI through its style packs"* since the style packs existed. The word was advertised and unroutable for as long as this router has had a table |
+| `visual reference` / `визуальные референсы` | 42 characters, paid for by compressing two clauses |
+
+**The unqualified word went to `super-ux` instead, on this pack's own rule.**
+`DESIGN_SYNC_BRIDGE.md` §4 opens with *"A reference sweep answers what a good version of
+this screen contains — sections, hierarchy, content order. It never answers what it looks
+like."* Structure is `super-ux`'s ground, so `референсы` routes there (`super-ux` 0.43.0) and
+only the visual half lands here. A prompt naming both raises both.
+
+### What was refused, and it is the word the operator actually types
+
+`подбери стиль` reaches nothing and stays that way. Measured against control sentences from
+this machine's own vocabulary: the bare `стиль` fires on «стиль кода» and «стиль коммитов»,
+the phrase `подбери стиль` fires on both as well because the matcher tolerates a qualifier
+between the words, and the English `pick a style` fires on *pick a style guide for python*.
+Every form an operator would naturally type carries a second trade, so the route takes the
+qualified phrases and lets the ambiguous ones reach nothing rather than the wrong craft.
+`вдохновение` was refused the same way — it fires on «вдохновение закончилось».
+
+**Budget, and it was tight before this change.** 948 → 955 characters against a 970 working
+limit: 15 free. Two clauses were compressed to pay for it, and one of them briefly took
+`heroes` out of the description — which the umbrella's `triggers_test.js` caught immediately,
+because `hero` is a routed trigger. The word is back.
+
 ## [1.39.0] - 2026-08-17
 
 **Five packs at once, and the library goes from twenty-two to twenty-seven.** All five

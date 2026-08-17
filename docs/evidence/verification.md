@@ -43,6 +43,19 @@ Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (R
 | REQ-30 | Every local channel serves 1.19.0, verified by reading installed files | the shadow invariant plus reading `SKILL.md` in each channel | 2026-08-12 · plugin cache `1.19.0/skills/sheleg-design/SKILL.md` reads `version: 1.19.0` and carries `styles/datasheet.md` + its token layer; the hub copy reads 1.19.0 and has the pack; the shadow invariant printed nothing. Read from disk, not from the updater's output | **green** |
 | REQ-31 | The code graph's staleness is restated honestly rather than forced past its shrink guard | `built_at_commit` against HEAD; B-009 left open | 2026-08-12 · `9312a85` against a HEAD of `3be7a63`; B-009 holds the two candidate fixes and this run does not choose between them | **green (as restated)** |
 
+### v1.40.0 — visual references become askable, and the natural phrasing is refused
+
+| REQ | What must stay true | How it is checked | Last verified | Status |
+|---|---|---|---|---|
+| The capability long predates the routing | read the bundle | §*Optional — real-world references*, *How to Apply* step 1, `DESIGN_SYNC_BRIDGE.md` §4 — none of it in the `description` | 2026-08-17 | **verified** |
+| `style pack` cost nothing | substring of the shipped description | *"Product UI through its style packs"* — advertised and unroutable for as long as the router has had a table | 2026-08-17 | **verified** |
+| The unqualified word goes to `super-ux`, by this pack's own rule | `DESIGN_SYNC_BRIDGE.md` §4 | *a sweep answers what a screen contains, never what it looks like*; `нужны визуальные референсы` raises both routers | 2026-08-17 | **verified** |
+| The natural phrasing is refused on measurement | each candidate run against ten control sentences | bare `стиль` and `подбери стиль` fire on «стиль кода» and «стиль коммитов»; `pick a style` on *pick a style guide for python*; `вдохновение` on «вдохновение закончилось» | 2026-08-17 | **verified** |
+| A compression removed a routed trigger and was caught | umbrella `test/triggers_test.js` | trimming *"marketing sites and heroes"* dropped `hero`; the fixture failed by name and the word was restored | 2026-08-17 | **verified (watched failing)** |
+| Every routed trigger is still advertised | `node test/advertised_check.js --member sheleg-design` | green after the edit | 2026-08-17 | **verified** |
+| The description has room | the auditor | 948 → **955 of 1024**, inside the 970 working limit | 2026-08-17 | **verified** |
+| The `.cursor/` mirror moved with the bundle | the gate's own drift check | failed until refreshed, green after | 2026-08-17 | **verified (watched failing)** |
+
 ### v1.38.0 — the routing table stopped being a second copy of the packs
 
 | REQ | What must stay true | How it is checked | Last verified | Status |

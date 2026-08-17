@@ -11,7 +11,7 @@
       "displayName": "SHELEG Design",
       "source": "./plugins/sheleg-design",
       "description": "One scroll clock drives many cheap, layered, independently-degradable responses (WebGL particle field, 2D fallback, parallax, scrubbed instruments, progress rail) so a landing page reads as a single precision instrument — plus twenty-seven pluggable style packs: instrument-console, editorial-luxury, workbench, briefing-room, atrium, orchard, field-notes, cyclorama, showroom, blueprint, prism, maquette, scoreboard, datasheet, manpage, pigeonhole, roster, ora, tenor, paperclip, ledger, router, daylight, notation, almanac, vitrine. Skill + architecture reference + motion doctrine + Figma and Claude Design bridges + /sheleg-design command, and awning (a white forecourt where the accent is black and no hue reaches the chrome at all, a pill whose radius is a declared component token, one variable grotesque at 420/550 with no 700, and a single three-layer shadow, for commerce and platform front doors).",
-      "version": "1.39.0",
+      "version": "1.40.0",
       "author": {
         "name": "ssheleg",
         "url": "https://x.com/sshlg93"
