@@ -234,7 +234,7 @@ ${c("bold", "What it installs")}
   DESIGN_SYNC_BRIDGE.md   the Claude Design contract (what a pack sends, and
                        what does not cross)
   AI_PRODUCT_PATTERNS.md  chat / agent / streaming surfaces (honest state)
-  styles/              twenty-seven style packs — instrument-console (dark console),
+  styles/              twenty-eight style packs — instrument-console (dark console),
                        editorial-luxury (warm editorial), workbench (light/dark
                        product UI), briefing-room (dark 16:9 presentation deck),
                        atrium (warm cream consumer health), orchard (friendly
@@ -276,7 +276,11 @@ ${c("bold", "What it installs")}
                        almanac (oatmeal paper at 2px with no 1px anywhere and a
                        display set below a line-height of one), vitrine (a white
                        hairline field with a serif display, an ink primary, and
-                       one framed record carrying the evidence) —
+                       one framed record carrying the evidence),
+                       proscenium (a white field with two cool acts and one deep
+                       indigo act at the middle, a violet filling a control that
+                       stays nearly square at 4px against cards at 16, and a
+                       framed product panel the fold cuts off) —
                        plus a ready-made token CSS per pack and
                        STYLE_PACK_TEMPLATE.md for authoring more
 `);

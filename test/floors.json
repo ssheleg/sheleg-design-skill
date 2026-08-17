@@ -1,8 +1,8 @@
 {
   "_why": "Ratchet floors. A gate whose check count can fall silently cannot detect a deleted requirement: stripping four required headings from one pack made validate.py drop 1270->1269 and sloplint.py 224->223, both still green. Each number is the count measured on the commit named below. Raise freely; lowering one needs a reason in the same commit.",
   "_measured_on": "a3dfcd4 — main after the T29 fix pass, 2026-08-14, twenty packs, clean tree with no nested worktree",
-  "validate.py": 2422,
-  "validate_palette.py": 1287,
-  "sloplint.py": 504,
-  "_raised": "validate_palette.py 1280 -> 1287 and sloplint.py 498 -> 504 on the T29 fix pass; validate.py holds at 2422. The palette rise is three new colour tokens (--terminal-dot, --mark-rest, --scrim) parsed in both theme blocks; the sloplint rise is the reduced-motion rule block the pack now ships as a fenced example, which is linted like a token layer. validate.py not moving is the informative one: twenty-six defects were fixed in this pass and the consistency gate's count did not change by one, because not a single one of them was structural. That is the shape of what a routing scenario buys and a gate cannot."
+  "validate.py": 3222,
+  "validate_palette.py": 1811,
+  "sloplint.py": 615,
+  "_raised": "2422/1287/504 -> 3222/1811/615 on the proscenium release, 2026-08-17. The jump is one pack plus one kit plus a self-test fixture repair: validate.py gains the twenty-eighth pack's structure, routing, mirror and kit checks, the palette gate gains both theme blocks of a new token layer, and the slop lint gains the pack's prose and its kit CSS. The repair is the informative part -- the core-contract remainder plant matched `The other \\w+ answer all four`, which stopped matching the moment the remainder became 'twenty-one', so a plant that changed nothing was reported as a caught defect."
 }

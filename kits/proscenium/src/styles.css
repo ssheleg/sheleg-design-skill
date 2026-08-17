@@ -1,0 +1,589 @@
+/* SHELEG Design — Proscenium token layer (light default + dark twin).
+   Copy verbatim; consume only var(--…) in components.
+   Theme switch: set data-theme="dark" on :root.
+
+   Measured from mailmodo.com on 2026-08-17, read off its live computed styles in a
+   headless Chrome at 1440×1000 rather than transcribed from a screenshot or a
+   stylesheet. The reference is a product-led marketing front door whose argument is a
+   demonstration: a white field carrying two cool acts, one deep indigo act at the
+   middle, and a framed product panel at the top that the fold cuts off.
+
+   THE FRAME is the pack. `--shadow-frame` is a translucent grey fill, a 1px white
+   border and an inset white glow — a proscenium arch around the product, and the page
+   is a sequence of acts staged inside it.
+
+   Three things the reference does that this pack declines, each named where it is
+   declared: it steps the rem base by viewport (10px → 11px → 13px), which overrides
+   the reader's own text size; it paints no error and no success state; and it has no
+   dark register at all. */
+:root {
+  --bg: #ffffff;
+  /* The cool act. Measured: the reference gives its longest act this field and runs
+     3423px of page on it. */
+  --panel: #ffffff;
+  --panel-2: #f4f6fa;
+  /* Measured — the reference's body ink is an indigo, not a grey, and it is the
+     quietest signal that the accent is a violet. */
+  --ink: #101043;
+  /* MEASURED AS PURE BLACK, SHIPPED OFF-BLACK. The reference drops its headings to
+     #000 against an indigo body ink, and that step is the pack's only type colour
+     move — but pure black as a field or an ink is banned library-wide as an
+     unfinished default, so this is #000 pulled one step into the pack's own indigo
+     (20.18:1 on the field against black's 21.00). The move survives; the default
+     does not. */
+  --ink-strong: #05041c;
+  --muted: #475467;
+  /* The seam, measured: the reference's most-used border by a factor of two. */
+  --border: #e5ecf3;
+  --border-strong: #e4e7ea;
+  /* DERIVED, not measured. WCAG 1.4.11 wants 3:1 for the visual boundary of a
+     control, and the seam this pack draws its structure with is far too quiet to
+     carry one. Authored to clear the non-text floor on the field and on the cool
+     act (3.99 / 3.69) rather than sampled. Read it as a pack decision. */
+  --edge: #767f99;
+
+  /* Measured — the fill of every primary control on the reference. */
+  --accent: #5a45fe;
+  /* Measured — the reference's link ink, one step deeper than the fill. */
+  --accent-deep: #4c3bea;
+  --accent-weak: #efedff;
+  --accent-ink: #ffffff;
+
+  /* The stage: measured off the reference's one dark act, gradient stops and all. */
+  --stage-from: #07061d;
+  --stage-to: #2a0b78;
+  --stage: linear-gradient(180deg, var(--stage-from) 0%, var(--stage-to) 86.41%);
+  /* Measured — the dark card the reference stands inside that act. */
+  --stage-panel: #18143a;
+  --stage-ink: #f7f6ff;
+
+  /* The blooms, measured: two soft discs the reference lays behind the field. They
+     are decoration and carry no meaning, which is why they are not statuses. */
+  --bloom-1: #72d0f2;
+  --bloom-2: #82bdff;
+
+  /* DERIVED, not measured. The reference is a marketing site and paints no success
+     and no error state, so both are authored to clear AA on the field, the cool act
+     and their own tint (--ok 6.45 / 5.96 / 5.69, --danger 6.54 / 6.04 / 5.70) rather
+     than sampled. Read them as pack decisions. */
+  --ok: #146c43;
+  --ok-weak: #e9f3ee;
+  /* MEASURED HUE, DARKENED. The reference paints this amber at #9e7613, which is
+     4.15:1 on white — under AA for body text. The hue is the reference's; the step
+     down to AA (5.32 / 4.91 / 4.68) is this pack's. */
+  --warn: #8a6510;
+  --warn-weak: #f6f0e3;
+  --danger: #b3261e;
+  --danger-weak: #fbeceb;
+  /* `--info` IS the accent. The reference has one functional colour and this pack
+     keeps that: "running" is the product's own violet, never a second blue. */
+  --info: #5a45fe;
+  --info-weak: #efedff;
+
+  /* Measured: the reference's button is nearly square at 4px while its cards sit at
+     16. That gap is not an oversight — it is what keeps a roomy page from reading as
+     soft. Do not close it. */
+  --r-control: 4px;
+  --r-inner: 10px;
+  --r-card: 16px;
+  --r-pill: 999px;
+
+  /* THE signature, measured: one very large violet-tinted shadow at almost no
+     offset. It belongs to a card that carries the argument, never to a control. */
+  --shadow-card: 0 4px 94px rgba(17, 3, 98, 0.09);
+  /* Measured: a hard 1px/2px offset in the seam colour, no blur. The reference's
+     quiet card, and the only other elevation on the page. */
+  --shadow-hair: 1px 2px 0 0 #e5ecf3;
+  /* Measured: the primary control's own two-stop shadow. */
+  --shadow-control: 0 4px 4px rgba(8, 8, 8, 0.08), 0 1px 2px rgba(8, 8, 8, 0.2);
+  /* Measured: the proscenium arch itself — the frame around the hero's product panel. */
+  --shadow-frame: 0 0 34px rgba(0, 0, 0, 0.07), inset 0 0 11px rgba(255, 255, 255, 0.34);
+  --frame-fill: rgba(186, 186, 186, 0.22);
+  --frame-edge: #ffffff;
+
+  /* DERIVED. The reference reveals on scroll through AOS and publishes no curve, so
+     the doctrine's enter curve is used unchanged rather than a value invented to look
+     measured. */
+  --motion-ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --dur-state: 0.2s;
+  --dur-hover: 0.12s;
+  --dur-reveal: 0.42s;
+  --stagger: 0.06s;
+
+  /* Measured: one family, nine weights, and no second face anywhere on the page. */
+  --font-display: "Inter", system-ui, sans-serif;
+  --font-ui: "Inter", system-ui, sans-serif;
+  /* DERIVED — the reference ships no monospace. It exists for a figure and a unit
+     inside a product demonstration, never for a label and never for a sentence. */
+  --font-data: ui-monospace, "SF Mono", Menlo, monospace;
+
+  --t-meta: 13px;
+  --t-body: 16px;
+  --t-lead: 18px;
+  --t-card: 26px;
+  --t-feature: clamp(28px, 1.33rem + 1.74vw, 39px);
+  --t-quote: clamp(26px, 0.93rem + 2.84vw, 44px);
+  /* Measured endpoints, 28px at 390 and 62px at 1024, expressed as a slope instead of
+     the reference's own rem-base step. */
+  --t-act: clamp(28px, 0.44rem + 5.36vw, 62px);
+  /* Measured endpoints, 27px at 390 and 62px at 1024. */
+  --t-hero: clamp(27px, 0.34rem + 5.52vw, 62px);
+
+  --lh-hero: 1.048;
+  --lh-act: 1.161;
+  --lh-feature: 1.231;
+  --lh-body: 1.54;
+
+  --w-body: 400;
+  --w-med: 500;
+  --w-semi: 600;
+  --w-bold: 700;
+
+  /* Measured: −1px at the hero's 62px is −0.016em, and the reference tracks its
+     feature headings a tenth of that. */
+  --track-hero: -0.016em;
+  --track-feature: -0.006em;
+  --track-quote: -0.045em;
+  /* DERIVED — the eyebrow above the display is the one place this pack tracks
+     positive, and the reference publishes no value for it. */
+  --track-wide: 0.04em;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  /* Measured: the reference's act rhythm is 115–125px at 1440 and 25px at 390. */
+  --act-rhythm: clamp(25px, -0.64rem + 9.05vw, 120px);
+  /* Measured: 1271px at 1440, 881 at 1024, 736 at 768, 358 at 390. */
+  --page: 1271px;
+
+  background-color: var(--bg);
+  color: var(--ink);
+  color-scheme: light;
+}
+
+/* The dark register is a PACK DECISION in full: the reference has no dark mode to
+   measure. Rather than invent a second palette, it extends the one dark thing the
+   reference does have — the stage act — to the whole page, so the dark register is
+   the measured gradient's own two stops carrying the field and the panel. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #07061d;
+  --panel: #18143a;
+  --panel-2: #0c0a26;
+  --ink: #f7f6ff;
+  --ink-strong: #ffffff;
+  --muted: #a9a6c8;
+  --border: #262159;
+  --border-strong: #322c6e;
+  --edge: #6f6aa0;
+
+  --accent: #8f7dff;
+  --accent-deep: #a595ff;
+  --accent-weak: #1c1750;
+  --accent-ink: #07061d;
+
+  --stage-from: #0c0a26;
+  --stage-to: #2a0b78;
+  --stage-panel: #221c4d;
+  --stage-ink: #f7f6ff;
+
+  --bloom-1: #1d4a63;
+  --bloom-2: #1b3a6b;
+
+  --ok: #4fd39b; /* derived, as above — 10.57 field / 9.27 panel / 8.61 own tint */
+  --ok-weak: #10241d;
+  --warn: #e0a63c; /* 9.20 / 8.07 / 7.76 */
+  --warn-weak: #241c10;
+  --danger: #ff8177; /* 8.22 / 7.22 / 7.13 */
+  --danger-weak: #2a1512;
+  --info: #8f7dff;
+  --info-weak: #1c1750;
+
+  --shadow-card: 0 4px 94px rgba(0, 0, 0, 0.55);
+  --shadow-hair: 1px 2px 0 0 #262159;
+  --shadow-control: 0 4px 4px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-frame: 0 0 34px rgba(0, 0, 0, 0.5), inset 0 0 11px rgba(255, 255, 255, 0.1);
+  --frame-fill: rgba(143, 125, 255, 0.08);
+  --frame-edge: #322c6e;
+}
+
+/* Light is the default register. To follow the OS instead, have the app set
+   data-theme="dark" from a prefers-color-scheme listener — keep one switch,
+   never two sources of truth for the theme. */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-state: 0s;
+    --dur-hover: 0s;
+    --dur-reveal: 0s;
+    --stagger: 0s;
+  }
+}
+
+/* ── components ── */
+
+/* Every value below is a token. This pack's elevation is three named shadows doing
+   three different jobs, and the gate reads this section for colour literals — a raw
+   hex here would mean a component that stops following the theme switch. */
+
+.ps-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding-inline: var(--space-5);
+  border: 1px solid transparent;
+  border-radius: var(--r-control);
+  font-family: var(--font-ui);
+  font-size: var(--t-body);
+  font-weight: var(--w-semi);
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-hover) var(--motion-ease),
+    border-color var(--dur-hover) var(--motion-ease),
+    box-shadow var(--dur-hover) var(--motion-ease),
+    color var(--dur-hover) var(--motion-ease);
+}
+
+.ps-btn--sm {
+  min-height: 36px;
+  padding-inline: var(--space-4);
+  font-size: var(--t-meta);
+}
+
+.ps-btn--lg {
+  min-height: 53px;
+  padding-inline: var(--space-6);
+  font-size: var(--t-lead);
+}
+
+/* The label colour is stated rather than inherited: an anchor reset that says
+   `color: inherit` outranks a bare utility and paints ink on the accent. */
+.ps-btn--primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: var(--shadow-control);
+}
+
+.ps-btn--primary:hover:not(:disabled) {
+  background: var(--accent-deep);
+}
+
+/* Active flattens the shadow instead of translating the control — the pack presses
+   nothing, and a button that moves on click has left it. */
+.ps-btn--primary:active:not(:disabled) {
+  box-shadow: none;
+}
+
+.ps-btn--secondary {
+  background: var(--panel);
+  color: var(--ink);
+  border-color: var(--edge);
+}
+
+.ps-btn--secondary:hover:not(:disabled) {
+  background: var(--panel-2);
+}
+
+.ps-btn--ghost {
+  background: transparent;
+  color: var(--accent-deep);
+}
+
+.ps-btn--ghost:hover:not(:disabled) {
+  background: var(--accent-weak);
+}
+
+.ps-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* The card is two kinds and they are not interchangeable. The default is the quiet
+   container; `--argument` is the one that carries the 94px shadow. */
+.ps-card {
+  container-type: inline-size;
+  display: block;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-hair);
+  padding: var(--space-6);
+}
+
+.ps-card--argument {
+  border-color: transparent;
+  box-shadow: var(--shadow-card);
+}
+
+.ps-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.ps-card__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--t-card);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--track-feature);
+  line-height: var(--lh-feature);
+  color: var(--ink-strong);
+}
+
+.ps-card__meta {
+  font-size: var(--t-meta);
+  color: var(--muted);
+}
+
+.ps-card__body {
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--ink);
+}
+
+/* A chip takes the pill radius. At --r-card it is a lozenge, which the pack names
+   as a mistake rather than a variant. */
+.ps-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 28px;
+  padding-inline: var(--space-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-pill);
+  background: var(--panel);
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: var(--t-meta);
+  font-weight: var(--w-med);
+  transition:
+    background-color var(--dur-hover) var(--motion-ease),
+    border-color var(--dur-hover) var(--motion-ease),
+    color var(--dur-hover) var(--motion-ease);
+}
+
+.ps-chip--accent {
+  background: var(--accent-weak);
+  border-color: var(--accent-weak);
+  color: var(--accent-deep);
+}
+
+.ps-chip--selected {
+  border-color: var(--accent);
+  color: var(--accent-deep);
+}
+
+.ps-stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.ps-stat__label {
+  font-size: var(--t-meta);
+  font-weight: var(--w-med);
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.ps-stat__value {
+  font-family: var(--font-display);
+  font-size: var(--t-card);
+  font-weight: var(--w-semi);
+  line-height: 1.1;
+  color: var(--ink-strong);
+}
+
+.ps-stat__source {
+  font-family: var(--font-data);
+  font-size: var(--t-meta);
+  color: var(--muted);
+}
+
+.ps-heading {
+  margin: 0;
+  font-family: var(--font-display);
+  color: var(--ink-strong);
+}
+
+.ps-heading--1 {
+  font-size: var(--t-hero);
+  font-weight: var(--w-semi);
+  line-height: var(--lh-hero);
+  letter-spacing: var(--track-hero);
+}
+
+.ps-heading--2 {
+  font-size: var(--t-act);
+  font-weight: var(--w-semi);
+  line-height: var(--lh-act);
+}
+
+.ps-heading--3 {
+  font-size: var(--t-feature);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-feature);
+  letter-spacing: var(--track-feature);
+}
+
+.ps-rule {
+  height: 1px;
+  margin: 0;
+  border: 0;
+  background: var(--border);
+}
+
+.ps-rule--strong {
+  background: var(--border-strong);
+}
+
+/* The word is not decoration here: the pack bans status by colour alone, so the
+   label is a required prop and the dot is aria-hidden. */
+.ps-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--t-meta);
+  font-weight: var(--w-med);
+  color: var(--ink);
+}
+
+.ps-status__dot {
+  width: var(--space-2);
+  height: var(--space-2);
+  border-radius: var(--r-pill);
+  background: var(--muted);
+}
+
+.ps-status--ok .ps-status__dot {
+  background: var(--ok);
+}
+
+.ps-status--warn .ps-status__dot {
+  background: var(--warn);
+}
+
+.ps-status--danger .ps-status__dot {
+  background: var(--danger);
+}
+
+.ps-skeleton {
+  display: block;
+  border-radius: var(--r-inner);
+  background: var(--panel-2);
+}
+
+/* THE signature: the proscenium arch. A translucent fill, a hairline edge and an
+   inset glow around a product view — and `--crop` is the part that matters, because
+   the panel is meant to be cut off by the fold rather than to sit complete. */
+.ps-frame {
+  container-type: inline-size;
+  margin: 0;
+  padding: var(--space-5);
+  background: var(--frame-fill);
+  border: 1px solid var(--frame-edge);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-frame);
+}
+
+.ps-frame--cropped {
+  padding-bottom: 0;
+  border-bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.ps-frame__cap {
+  margin-bottom: var(--space-3);
+  font-size: var(--t-meta);
+  font-weight: var(--w-med);
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.ps-frame__glass {
+  overflow: hidden;
+  border-radius: var(--r-inner);
+  background: var(--panel);
+}
+
+.ps-frame__foot {
+  margin: var(--space-3) 0 0;
+  font-size: var(--t-meta);
+  color: var(--muted);
+}
+
+/* The one dark act. One per page — a second turns the page into a section list,
+   which the pack names as its most likely drift. */
+.ps-stage {
+  container-type: inline-size;
+  padding-block: var(--act-rhythm);
+  background: var(--stage);
+  color: var(--stage-ink);
+}
+
+.ps-stage__inner {
+  max-width: var(--page);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+
+/* Inside the act, a card is separated by its own fill and a seam. The 94px shadow
+   is a violet-tinted black at 9% and is invisible here — worse than invisible, it
+   reads as dirt on the gradient. */
+.ps-stage .ps-card {
+  background: var(--stage-panel);
+  border-color: transparent;
+  box-shadow: none;
+  color: var(--stage-ink);
+}
+
+.ps-stage .ps-card__title,
+.ps-stage .ps-heading {
+  color: var(--stage-ink);
+}
+
+.ps-stage .ps-card__body,
+.ps-stage .ps-card__meta {
+  color: var(--stage-ink);
+}
+
+/* One ring on every focusable thing. The literal-free rule is the point: the ring
+   follows the theme switch like everything else. */
+.ps-btn:focus-visible,
+.ps-chip:focus-visible,
+.ps-frame:focus-visible {
+  outline: 3px solid var(--accent-weak);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+/* An entrance is a presence under reduced motion: the token layer zeroes the
+   durations, so this block needs no media query of its own. */
+.ps-reveal {
+  animation: ps-rise var(--dur-reveal) var(--motion-ease) both;
+}
+
+@keyframes ps-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-3));
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

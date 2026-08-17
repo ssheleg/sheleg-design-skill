@@ -1232,7 +1232,12 @@ PLANTS = (
         # edits -- the failure mode of the plant this one sits beside.
         "the core-contract remainder left behind by a count edit",
         f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md",
-        lambda t: re.sub(r"The other \w+ answer all four", "The other five answer all four", t, count=1),
+        # `[\w-]+`, not `\w+`: at the twenty-eighth pack the remainder crossed twenty
+        # and became "twenty-one", which a bare `\w+` cannot match -- so the plant
+        # changed nothing and the self-test reported a check that had quietly stopped
+        # being exercised. A fixture that cannot find its own target is a hole in the
+        # gate, and it opens on exactly the release this plant exists to catch.
+        lambda t: re.sub(r"The other [\w-]+ answer all four", "The other five answer all four", t, count=1),
     ),
     (
         # The same class as the first plant, in a file the source list did not

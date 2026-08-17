@@ -95,6 +95,15 @@ to lift anything with: its reference paints an all-transparent ring composite on
 elements, so it separates by hairline. If the app is the exhibit, it is this pack. If the
 exhibit is who already uses the app, it is that one.
 
+**The fork against [`proscenium`](./proscenium.md).** Both are white, both are
+product-led, and both put a real interface on the page. The split is **tempo**:
+this pack is a gallery — the app gets a white room and the reader is allowed to
+dwell — while Proscenium runs a fixed beat of two acts and a repeated call to
+action, with one dark indigo act at the middle and a framed panel the fold cuts
+off. Take this one when the product is the whole argument and the page can stay
+quiet around it. Take that one when the page has six or more acts to get through
+and the reader needs a beat to hold on to.
+
 **And one that shares the white wall.** [`awning`](./awning.md) also frames a
 product screenshot on white and also lets that screenshot hold the only colour
 on the page — but it frames *fifteen* of them down a catalogue a buyer scrolls to

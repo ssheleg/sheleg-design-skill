@@ -4,6 +4,57 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.42.0] - 2026-08-17
+
+**The twenty-eighth pack, and the first one measured for its tempo rather than its
+surface.** `proscenium` is extracted from [mailmodo.com](https://www.mailmodo.com/), read
+off live computed styles in a headless Chrome at 1440×1000 and at 390, 768 and 1024 for
+the ramp. What it takes from the reference is the *cadence* — two acts, then the same call
+to action, again, with one dark act at the middle — which is why it forks against
+`showroom` on tempo rather than on look.
+
+### Added
+
+- **`proscenium`**, from [mailmodo.com](https://www.mailmodo.com/) — a white field
+  carrying two cool acts and **one deep indigo act at the middle** (`#07061d` to `#2a0b78`
+  at 86.41%, stops measured), ink that is an indigo rather than a grey, an electric violet
+  at `#5a45fe` filling a control that stays **nearly square at 4px against cards at 16**,
+  one family at nine weights, and a framed product panel the fold cuts off. Widened
+  contract, addressable origin, every stated ratio recomputed by the palette gate.
+- **A reference kit**, with the six-component spine plus `StatusDot`, `Skeleton`, `Frame`
+  and this pack's own `Stage` — the one dark act, which the kit's stylesheet teaches to
+  strip elevation from any card standing inside it.
+
+### Three values the reference has and this pack declines, each marked at its declaration
+
+- **The rem base.** Mailmodo steps the root font size by viewport — 10px at 390 and 768,
+  11px at 1024, 13px at 1440 — and lets every rem follow. It is coherent and it overrides
+  the reader's own text-size preference, so the pack takes the *endpoints* (27px→62px on
+  the display, 28px→62px on an act heading) and ships them as clamp slopes with a rem term
+  in the sum.
+- **The heading ink.** The reference sets headings to pure black against an indigo body
+  ink. The move is worth keeping and the literal is not: pure black as a field or an ink is
+  banned library-wide as an unfinished default and the slop lint fails on it, so the pack
+  ships `#05041c` — 20.18:1 on the field against black's 21.00.
+- **The amber.** `#9e7613` is 4.15:1 on white, under AA for body text. The hue is the
+  reference's; the step down to `#8a6510` (5.32 / 4.91 / 4.68) is the pack's.
+
+`--ok`, `--danger` and the entire dark register are pack decisions rather than
+measurements — the reference paints no success and no error state and has no dark mode. The
+dark register is derived from the one dark thing the reference does have: the stage act's
+own two stops carry the field and the panel.
+
+### Fixed
+
+- **A self-test plant that had stopped finding its target.** The core-contract remainder
+  fixture matched `The other \w+ answer all four`; at the twenty-eighth pack the remainder
+  became "twenty-one", which a bare `\w+` cannot match, so the plant changed nothing and
+  the self-test still reported it as caught. A fixture that cannot find its own target is a
+  hole in the gate, and it opens on exactly the release the plant exists to catch.
+
+### Ratchet
+
+`test/floors.json` raised 2422/1287/504 → 3222/1811/615.
 ## [1.41.0] - 2026-08-17
 
 **A style pack is a token layer and a set of rules. It does not ship a button** — and until
