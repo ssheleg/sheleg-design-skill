@@ -33,6 +33,12 @@ geometric sans, sage and orange, packaging pacing). If the product is sold on
 prestige, use `atrium`. If it is sold on *this is for you and it is not
 frightening*, use this one.
 
+A third warm pack now sits in the same thumbnail and the separation is
+mechanical rather than tonal: [`bulletin`](./bulletin.md) draws every object
+with a 1px outline over a hard zero-blur offset, so its surfaces are separated
+by a **line**. Here they are separated by a **gap** — a slab is inset from the
+field and carries no border at all. If the brief wants edges, it wants that pack.
+
 It **rides the SHELEG cinematic layer at one point only**: the hero headline is
 scrubbed to the scroll clock, word by word. Below the fold, motion is a sticky
 visual column beside scrolling copy and nothing else. Do not add a particle

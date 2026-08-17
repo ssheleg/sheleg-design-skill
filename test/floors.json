@@ -1,8 +1,8 @@
 {
   "_why": "Ratchet floors. A gate whose check count can fall silently cannot detect a deleted requirement: stripping four required headings from one pack made validate.py drop 1270->1269 and sloplint.py 224->223, both still green. Each number is the count measured on the commit named below. Raise freely; lowering one needs a reason in the same commit.",
-  "_measured_on": "a3dfcd4 — main after the T29 fix pass, 2026-08-14, twenty packs, clean tree with no nested worktree",
-  "validate.py": 3222,
-  "validate_palette.py": 1811,
-  "sloplint.py": 615,
-  "_raised": "2422/1287/504 -> 3222/1811/615 on the proscenium release, 2026-08-17. The jump is one pack plus one kit plus a self-test fixture repair: validate.py gains the twenty-eighth pack's structure, routing, mirror and kit checks, the palette gate gains both theme blocks of a new token layer, and the slop lint gains the pack's prose and its kit CSS. The repair is the informative part -- the core-contract remainder plant matched `The other \\w+ answer all four`, which stopped matching the moment the remainder became 'twenty-one', so a plant that changed nothing was reported as a caught defect."
+  "_measured_on": "the bulletin release, 2026-08-17, twenty-nine packs and twenty-nine kits, clean tree",
+  "validate.py": 3333,
+  "validate_palette.py": 1912,
+  "sloplint.py": 629,
+  "_raised": "3222/1811/615 -> 3333/1912/629 on the bulletin release, 2026-08-17. One pack plus one kit plus two reciprocal fork edits: validate.py gains the twenty-ninth pack's structure, routing, mirror and kit checks and the two link-back assertions the fork creates, the palette gate gains both theme blocks of a new token layer, and the slop lint gains the pack's prose and its kit CSS. Previous baseline commit was b8bf235."
 }

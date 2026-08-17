@@ -4,6 +4,69 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.43.0] - 2026-08-17
+
+**The twenty-ninth pack, and the first one whose signature is a defect its reference
+ships.** `bulletin` is extracted from [socialchamp.com](https://www.socialchamp.com) by
+enumerating all 748 URLs in its page sitemap, fetching every one, and reading the 58
+distinct stylesheets they resolve to plus the shared layer its theme ships. What it
+takes is the *drawn* elevation — a 1px ink outline over a hard zero-blur ink offset, 185
+of them against roughly 50 blurred shadows across the whole site — and the press that
+goes with it: a control travels exactly as far as its offset shrinks, so the ink
+displaced is constant.
+
+The reference's primary CTA is white on `#ff6900` at 2.89:1, on every one of those 748
+pages. That is under WCAG AA for body text and under the large-text floor as well, so no
+type size rescues it; the pack keeps the measured hue and darkens it in oklab until white
+clears AA. Two more corrections travel with it, and all three are in the pack's Gotchas
+with their numbers.
+
+### Added
+
+- **`bulletin`**, from [socialchamp.com](https://www.socialchamp.com) — warm cream paper
+  (`#fcfaf4`) cut by three flat pastel bands, one ink (`#464646`) doing four jobs at once
+  (text, outline, offset and the dark band), an orange that fills and marks but never
+  carries a word, a display face at **800 inside controls above the headline's 700**, and
+  **zero tracking at every size** — `letter-spacing` appears seven times in 58
+  stylesheets and never on a heading. Widened contract, all thirteen headings.
+- **`styles/tokens/bulletin.css`** — the ready-made token layer, with a
+  `[data-surface="ink"]` block for the dark band measured off the reference's own dark
+  footer, where the outline and the offset both invert to white. Every value is marked
+  MEASURED, SELECTED or DERIVED at its declaration.
+- **`kits/bulletin`** — the twenty-ninth reference kit: the six-name spine plus
+  `StatusDot`, `Rail` (the row of outlined circles that says *many*), `Band`, `Panel` and
+  `Skeleton`. Its `styles.css` opens with the token layer byte for byte.
+
+### Changed
+
+- **`MOTION_DOCTRINE.md` — a fourth standalone pack pins its own ceiling.** `bulletin`
+  caps `MOTION_INTENSITY` at **3**, the lowest in the library, because the reference's
+  entire measured motion budget across 748 pages is an entrance fade, a 0.12s press and a
+  0.3s hover: no scroll clock, no parallax, no scrub, no pinning. Its depth is drawn
+  rather than animated, and animating the offset is what flattens it.
+- **Every count that names the library moves to twenty-nine** — the pack tables in
+  `SKILL.md` and `README.md`, both manifests, the CLI banner, the Cursor rule, the slash
+  command's by-name fast path, and the core-contract remainder (seven core, twenty-two
+  widened).
+
+### Fixed
+
+- **The rail collapsed to a column, and only rendering it showed that.**
+  `container-type: inline-size` applies inline-size containment, so an element stops
+  taking its width from its contents — on a shrink-to-fit box (a grid item under
+  `justify-items: center`, a flex item, an inline-block) `.bl-rail` went to near-zero
+  width, stacked one circle per line and fired its own narrow branch, hiding every
+  platform name. All three gates were green over it, because a gate reads structure and
+  not layout. `width: 100%` is the fix and the reason is now a comment beside it.
+  Rendered and confirmed at 1440×1000, including the press: the primary's offset goes
+  3px → 1px as the control travels 2px, while the secondary beside it keeps its 3px.
+- **Three stale counts in `SURFACE_COMPOSITION.md` that no gate could see.** It said the
+  token names were not uniform "across the twenty-one" when twenty-nine packs ship, and
+  that the accent is `--accent` "in eighteen" when it is twenty-seven — `--brand` in
+  `field-notes` and `--cta` in `orchard` are still the only two exceptions, counted. The
+  third was a count of packs carrying an `@role non-text:` colour, which is now stated as
+  sixteen token layers because that is what the grep returns.
+
 ## [1.42.0] - 2026-08-17
 
 **The twenty-eighth pack, and the first one measured for its tempo rather than its

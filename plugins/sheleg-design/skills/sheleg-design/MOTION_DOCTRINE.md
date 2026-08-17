@@ -295,9 +295,13 @@ scrubbing, parallax and a sticky nav, so `MOTION_INTENSITY` above **4** on it ha
 nothing legal to buy. **`roster` has the same ceiling of 4** for the same reason —
 entrance, hover and two slow floats are its whole budget, and it bans scrubbing,
 parallax and `animation-timeline`; it keeps a sticky nav, which is the only difference.
-  **Three more standalone packs pin their own, and each states it in its own Register:**
+  **Four more standalone packs pin their own, and each states it in its own Register:**
   `ora` at **4**, `tenor` at **4**, `paperclip` at **5** — the last one higher because it
-  is the only pack in the family that spends a native scroll-driven parallax.
+  is the only pack in the family that spends a native scroll-driven parallax —
+  and `bulletin` at **3**, the lowest ceiling in the library, because its whole
+  measured motion budget is an entrance fade, a 0.12s press and a 0.3s hover.
+  Its depth is drawn as a hard ink offset rather than animated, and animating
+  that offset is precisely what flattens it.
   `field-notes` is standalone **by default** and may opt into the cinematic layer — it carries a `## Motion flavor` section saying
   how — so it is the one standalone pack without a hard ceiling. Read that
   section before turning the dial up on it.

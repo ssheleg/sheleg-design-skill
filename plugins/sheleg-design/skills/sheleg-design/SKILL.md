@@ -3,7 +3,7 @@ name: sheleg-design
 description: Use when deciding how something LOOKS or MOVES. Cinematic scroll-driven landing pages and heroes — particle/WebGL backgrounds, scroll-linked animation, parallax — or when one feels busy or its motion drifts. Product UI through its style packs — dashboards, admin panels, internal tools, mobile screens, chat and agent interfaces. Design tokens, light/dark themes, palettes and colours, typography and fonts. Triggers - "design a landing" / "дизайн лендинга", "build a landing page" / "сделай лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы, фигма в код", "mobile screen" / "мобильный экран", "palette" / "палитра", "colors" / "цвета", "typography" / "типографика", "font" / "шрифт", "how it looks" / "выглядит", "make it prettier" / "красиво, красивее", "visual reference" / "визуальные референсы".
 license: MIT
 metadata:
-  version: 1.42.0
+  version: 1.43.0
 ---
 
 # SHELEG Design
@@ -93,6 +93,7 @@ this table is for choosing, not for reading instead of the pack:
 | [`almanac`](./styles/almanac.md) | **oatmeal paper rather than white**, seams at 2px with **no 1px anywhere**, a display set below a line-height of one, mono tags notched through drawn boxes | **pages that assert a category** — a manifesto, a company saying what this kind of thing is, a product whose argument is editorial rather than functional (standalone) |
 | [`vitrine`](./styles/vitrine.md) | white field drawn **entirely in hairlines**, a serif display over a sans body, an ink primary, and one framed record with a 1px inset highlight | **the front door of a product sold on trust** — B2B software under evaluation, security and compliance surfaces, specification and comparison pages (standalone) |
 | [`proscenium`](./styles/proscenium.md) | white field carrying two cool acts and **one deep indigo act at the middle**, an electric violet filling a control that stays nearly square at 4px against cards at 16, one family at nine weights, and a framed product panel the fold cuts off | **product-led marketing front doors whose argument is a demonstration** — SaaS home pages, launch and tour pages, any page with six or more acts that needs a repeated beat (standalone) |
+| [`bulletin`](./styles/bulletin.md) | warm cream paper cut by flat pastel bands, every card and control a 1px ink outline standing on a **hard zero-blur ink offset it travels into when pressed**, a display face at 800 inside controls and 700 in the headline, and **no tracking at any size** | **front doors whose argument is breadth** — a tool doing many things across many channels for many clients, sold cheerfully to a small team or an agency: social and content platforms, scheduling and inbox products, all-in-one SMB SaaS (standalone) |
 
 **A materialized kit answers part of what a core pack leaves out.** `npx
 sheleg-design-skill --kit <pack>` produces `src/styles.css`, whose component half is
@@ -101,12 +102,12 @@ authored CSS for the states a core pack declines to specify — `:hover`,
 reading only this bundle will invent them. Fetch the kit first, and treat any
 difference between kit and pack as a defect in one of them rather than a choice.
 
-**Seven of the twenty-eight are on the core contract, and it changes what you get.**
+**Seven of the twenty-nine are on the core contract, and it changes what you get.**
 A pack marked **core contract** does not specify `## Components`, `## Hero`,
 `## Responsive` or `## Signature element` — so per-component states, the
 opening viewport and its line ceiling, the collapse rules, and the single
 element the page is remembered by are **yours to decide**, and you say so out
-loud when you do. The other twenty-one answer all four. This asymmetry is the one
+loud when you do. The other twenty-two answer all four. This asymmetry is the one
 thing about the library most likely to make you invent a value and believe you
 read it: what a core pack *does* state is measured to two decimals, and that
 precision is not evidence about the half it leaves silent. Each pack declares
@@ -194,7 +195,7 @@ as a definition of done, in that order:
   before writing CSS for a cinematic page. A scene has planes; everything on one
   plane is the failure no amount of easing repairs.
 - **Charts — hand the pack to `dataviz`** (same file), before drawing a chart in
-  any pack. Token names are not uniform across the twenty-eight — only `--bg` and
+  any pack. Token names are not uniform across the twenty-nine — only `--bg` and
   `--ink` resolve everywhere — and an undefined custom property does not error,
   it silently falls back. Guessing one is the quietest way to ship a wrong chart.
 - **Mobile surfaces** ([`MOBILE_SURFACES.md`](./MOBILE_SURFACES.md)), when the

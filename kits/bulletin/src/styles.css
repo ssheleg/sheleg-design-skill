@@ -1,0 +1,671 @@
+/* SHELEG Design — Bulletin token layer (warm paper, flat pastel bands, and
+   every card and control drawn as a 1px ink outline over a hard zero-blur ink
+   offset shadow it travels into when pressed).
+   Copy verbatim; consume only var(--…) in components.
+
+   Extracted from https://www.socialchamp.com on 2026-08-17 by enumerating all
+   748 URLs in its page sitemap, fetching every one, and reading the 58 distinct
+   stylesheets they resolve to plus the shared layer its Bricks theme ships
+   (global-variables.min.css, theme-style-default.min.css, header-style.css,
+   footer-style.css). Frequencies quoted below are counts over that whole set,
+   not over one page. Ratios were computed by importing this repository's own
+   palette gate, test/validate_palette.py.
+
+   Three families of value appear below and they are not the same kind of claim:
+
+   MEASURED — the literal was in the reference's stylesheet.
+   SELECTED — the reference ships no such role, and the value is a step of a ramp
+   the reference already carries, taken deep enough to clear AA on this field.
+   DERIVED — computed from a token in this file, because the reference's own
+   value fails a floor. There is exactly one hue involved and it is the measured
+   accent's; only its lightness moves.
+
+   The corrections are in the pack's Gotchas, and there are three. */
+
+:root {
+  color-scheme: light;
+
+  /* ---- The paper -------------------------------------------------------- */
+  /* MEASURED. The field is the warm near-white the reference paints on nine of
+     the home page's twelve sections; the other three take a flat pastel band,
+     and those are the --band-* tokens. White is a CARD, never the page. */
+  --bg: #fcfaf4;
+  --surface: #ffffff; /* MEASURED — 86 fills, the card */
+  --surface-cream: #fff8ec; /* MEASURED — the theme's own --paper */
+  --surface-blush: #fcefe6; /* MEASURED — the tinted card */
+
+  /* The bands. One per act, full-bleed, flat — never a gradient. */
+  --band-peach: #feefdd; /* MEASURED */
+  --band-sky: #c4d8f9; /* MEASURED — the theme's --sky */
+  --band-lilac: #cdc5ed; /* MEASURED — the theme's --lilac-mid */
+  --band-lilac-soft: #f0eef9; /* MEASURED — the theme's --lilac-soft */
+  --band-lemon: #fdf9c4; /* MEASURED */
+
+  /* ---- Ink -------------------------------------------------------------- */
+  /* One ink does four jobs here — text, outline, shadow and the dark band —
+     which is why it is 700 of the site's colour declarations and why the pack
+     reads as drawn rather than as composed. */
+  --ink: #464646; /* 9.04:1 on --bg */
+  --ink-strong: #333333; /* 12.10:1 on --bg — the 20px card head */
+  --ink-soft: #666666; /* 5.50:1 on --bg — meta, footer links */
+  /* @role non-text: --ink-faint — 3.52:1 on the paper. MEASURED, and the
+     reference sets 18px body copy in it 176 times, which is the correction in
+     the pack's Gotchas. Here it is an icon fill and a disabled label only. */
+  --ink-faint: #7c8697;
+  --on-ink: #ffffff; /* 9.44:1 on --ink */
+
+  /* ---- Lines: the outline IS the elevation ------------------------------ */
+  /* MEASURED — `border: 1px solid #464646` appears 176 times and is the single
+     most repeated declaration in the reference after a colour. Nothing in this
+     pack is separated by a tint; it is separated by a drawn edge. */
+  --line: #464646;
+  --line-weak: #e0e0e0; /* MEASURED — the one soft seam, for a logo rail */
+  --line-w: 1px; /* MEASURED — the card and the button */
+  --line-w-strong: 1.5px; /* MEASURED — the panel and the input */
+
+  /* ---- The accent: a fill and a mark. Not a word. ----------------------- */
+  /* @role non-text: --accent — 2.77:1 on the paper, below the 3:1 non-text
+     floor, so the colour reinforces and the word carries. It fills a control,
+     tints a chip and marks a rule; --action is the one that may sit under a
+     label, and --link is the one that may be a link. */
+  --accent: #ff6900; /* MEASURED — the primary fill, 78 declarations */
+  --accent-hover: #ec6201; /* MEASURED — the reference's own hover */
+  --accent-warm: #f16a21; /* MEASURED — the theme's --sc-orange, nav and rules */
+  --accent-wash: #fff0e6; /* MEASURED — the hovered cell, the selected chip */
+  /* 3.27:1 against --accent. Legal on an accent fill ONLY at WCAG large text —
+     ≥ 24px, or ≥ 18.66px at weight 700, which the display face makes natural.
+     Below that the fill is --action, not --accent. */
+  --on-accent: #464646;
+
+  /* ---- The filled action ------------------------------------------------ */
+  /* DERIVED, and this is the pack's largest departure from its reference. Every
+     primary CTA on all 748 pages is #ffffff on #ff6900 — 2.89:1, under WCAG AA
+     for body text (4.5:1) and under the large-text floor (3:1) as well, so no
+     type size rescues it. The remedy keeps the hue and moves only the lightness:
+     the measured accent mixed toward black in oklab until white clears AA.
+     --on-action is 4.99:1 on --action.
+     --action is 4.78:1 on --bg. */
+  --action: color-mix(in oklab, var(--accent) 80%, #000000 20%);
+  --action-hover: color-mix(in oklab, var(--accent) 72%, #000000 28%); /* 6.29:1 under --on-action */
+  --on-action: #ffffff;
+
+  /* DERIVED — same value, same reason. The reference sets in-content links in
+     #f16a4b at 2.91:1 on this field, which is a word rendered below every text
+     floor there is. A link here is --link plus an underline. */
+  --link: var(--action);
+
+  /* ---- Status. Never by colour alone — see the pack's Palette. ---------- */
+  /* SELECTED, all four: a marketing site paints no error state, so these are
+     steps of the hues the reference already uses (its table check/cross marks,
+     its indigo #5c6bc0, its amber ramp) taken deep enough to clear AA on warm
+     paper. Selected is weaker than measured and is marked here because a
+     derived value read later as a measured one is how a palette drifts. */
+  --good: #00713f; /* 5.86:1 on --bg */
+  --warn: #8a5a00; /* 5.68:1 on --bg */
+  --danger: #b3261e; /* 6.26:1 on --bg */
+  --info: #3454b4; /* 6.55:1 on --bg */
+
+  /* ---- Elevation: a hard offset, and it never blurs --------------------- */
+  /* MEASURED. Across the 58 page bundles the reference draws 185 zero-blur ink
+     offsets against roughly 50 blurred shadows, and the blurred ones are all in
+     third-party chrome. The spread argument is the size dial: 0 for a control,
+     1–3px for a card, and the offset grows with the object. */
+  --shadow-press: 1px 1px 0 0 var(--line); /* the pressed state */
+  --shadow-1: 2px 2px 0 0 var(--line); /* chip, tag, small mark */
+  --shadow-2: 3px 3px 0 0 var(--line); /* button, input, nav CTA */
+  --shadow-2-wide: 3px 3px 0 1px var(--line); /* avatar, round chip */
+  --shadow-3: 4px 4px 0 0 var(--line); /* card, media frame */
+  --shadow-3-wide: 4px 4px 0 2px var(--line); /* the hovered tile */
+  --shadow-4: 4px 4px 0 3px var(--line); /* the one framed panel per page */
+  /* The one inset: an open nav item takes a ring instead of a border so the
+     shape does not shift by 1.5px when it opens. MEASURED. */
+  --ring-open: inset 0 0 0 1.5px var(--line);
+
+  /* MEASURED — the reference's focus treatment, and it is an outline rather
+     than a shadow precisely because the shadow slot is already spent. */
+  --focus-w: 2px;
+  --focus-offset: 2px;
+  --focus-color: var(--ink);
+
+  /* ---- Radii: rounded, and the pill is a real step ---------------------- */
+  /* MEASURED, by frequency across all pages: 12px carries the page (87), then
+     the pill (58) and 5px (58), then 8 (46), 16 (15) and 24 (20). */
+  --r-xs: 5px;
+  --r-sm: 8px;
+  --r-md: 12px; /* the primary control and the media frame */
+  --r-lg: 16px; /* the card */
+  --r-xl: 20px;
+  --r-2xl: 24px; /* the framed panel, the newsletter row */
+  --r-pill: 50px;
+
+  /* ---- Spacing and the page -------------------------------------------- */
+  /* MEASURED — a 5px grid, not a 4px one. 10/15/20/30/50/70 carry every gap and
+     section pad in the reference; 12px exists once, as the button's icon gap. */
+  --space-1: 5px;
+  --space-2: 10px;
+  --space-3: 15px;
+  --space-4: 20px;
+  --space-6: 30px;
+  --space-8: 40px;
+  --space-10: 50px;
+  --space-14: 70px;
+  --gap-icon: 12px; /* MEASURED — label to icon inside a control */
+
+  --page-max: 1920px; /* MEASURED — the full-bleed shell */
+  --content-max: 1440px; /* MEASURED — the framed panel and the reading column */
+  --gutter: 5vw; /* MEASURED — the container is 90% wide, 95% below 478px */
+  --nav-h: 96px; /* MEASURED — the dropdown opens at top: 96px */
+  --dropdown-min-h: 420px; /* MEASURED */
+  --control-h: 56px; /* MEASURED — the primary button */
+  --control-h-sm: 40px; /* MEASURED */
+  --input-h: 52px; /* MEASURED */
+  --section-min-h: 100dvh; /* for any section that does want the viewport */
+
+  /* ---- Type: two families, and no tracking anywhere --------------------- */
+  /* MEASURED, including the fallback: the reference writes the display stack as
+     "Bricolage Grotesque","Alexandria",sans-serif, because Alexandria is what
+     its theme sets on every heading before the page overrides it. */
+  --font-display: "Bricolage Grotesque", "Alexandria", sans-serif;
+  --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
+
+  --t-hero: 5.25rem; /* 84px — MEASURED, the home h1 */
+  --lh-hero: 1.1;
+  --t-page: 3rem; /* 48px — the section headline */
+  --lh-page: 1.2;
+  --t-section: 2.625rem; /* 42px */
+  --t-title: 2rem; /* 32px */
+  --t-card: 1.25rem; /* 20px, weight 600, line-height 1.4 */
+  --lh-card: 1.4;
+
+  --t-lede: 1.3125rem; /* 21px */
+  --t-body: 1rem; /* 16px — the page's real body size */
+  --t-sm: 0.875rem; /* 14px */
+  --t-xs: 0.8125rem; /* 13px — nav and meta at narrow */
+  --t-2xs: 0.75rem; /* 12px */
+  --lh-body: 1.3;
+  --lh-prose: 1.5;
+
+  /* Tracking is zero at every size, and that is a measurement rather than an
+     omission: the reference sets letter-spacing exactly seven times in 58
+     bundles and never on a heading. A negative track on the display face is
+     the fastest way to stop this pack looking like itself. */
+  --track: 0;
+
+  --weight-display: 700; /* the hero and section headlines */
+  --weight-control: 800; /* MEASURED — the button label is heavier than the h1 */
+  --weight-card: 600;
+  --weight-body: 400;
+  --weight-body-strong: 500;
+
+  /* ---- Motion ----------------------------------------------------------- */
+  /* MEASURED curve and durations. The reference's whole motion budget is an
+     entrance fade, a 0.12s press and a 0.3s hover — there is no scroll clock,
+     no parallax and no scrub anywhere in it, which is why the pack pins
+     MOTION_INTENSITY at 3. */
+  --ease: ease; /* MEASURED — what the press transition names */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1); /* the doctrine's, for entrances */
+  --dur-press: 0.12s;
+  --dur-hover: 0.15s;
+  --dur-base: 0.3s;
+  --dur-panel: 0.4s; /* the nav dropdown */
+  --dur-reveal: 0.5s; /* entrance only, and it never gates content */
+  /* The press is a conserved quantity: the control moves exactly as far as its
+     shadow shrinks, so the ink displaced stays constant. */
+  --press-travel: 2px;
+  --press-travel-active: 3px;
+  --reveal-y: 10px; /* MEASURED — the fadeInUp offset */
+
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+/* The dark band. MEASURED off the reference's dark footer variant, and applied
+   to a footer or a single closing band — never to a whole page. The signature
+   inverts with it: the outline and the offset both go white. */
+[data-surface="ink"] {
+  --bg: #464646;
+  --surface: #565656; /* MEASURED */
+  --surface-cream: #565656;
+  --surface-blush: #565656;
+  --ink: #ffffff; /* 9.44:1 on --bg */
+  --ink-strong: #ffffff;
+  --ink-soft: #c9c9c9; /* SELECTED — 5.70:1 on --bg */
+  --ink-faint: #c9c9c9;
+  --on-ink: #464646;
+  --line: #ffffff; /* MEASURED — border-color and box-shadow both go white */
+  --line-weak: rgba(255, 255, 255, 0.25); /* MEASURED — the top seam */
+
+  /* MEASURED elsewhere on the site as a card fill, and the only orange the
+     reference owns that clears AA on this band. #ff6900 is 3.27:1 here. */
+  --accent: #ff9f32; /* 4.61:1 on --bg */
+  --accent-hover: #ffc46d; /* 6.01:1 */
+  --accent-warm: #ff9f32;
+  --accent-wash: #565656;
+  /* 4.61:1 against --accent — the one place in the pack where a label may sit
+     on the accent at any size. On the paper the same pairing is 3.27:1. */
+  --on-accent: #464646;
+
+  /* The filled action inverts rather than darkens: on ink, white IS the fill. */
+  --action: #ffffff;
+  --action-hover: #e6e6e6;
+  --on-action: #464646;
+  --link: #ffc46d; /* 6.01:1 on --bg */
+
+  /* The status set has to be remapped here, and the library has shipped this
+     defect before: a theme block that remaps eleven tokens and leaves the four
+     statuses pointing at the paper values paints 1.3–2.0:1 on the band while
+     the readable value sits three lines away (board B-034, scoreboard). */
+  --good: #7bd7a5; /* SELECTED — 5.44:1 on --bg (the paper value is 1.55) */
+  --warn: #ffd246; /* MEASURED — the theme's --yellow, 6.54:1 (paper value 1.51) */
+  --danger: #ff9d99; /* SELECTED — 4.73:1 (paper value 1.48) */
+  --info: #8fb6ff; /* SELECTED — 4.63:1 (paper value 1.37) */
+}
+
+/* The reference ships no reduced-motion branch at all: zero occurrences of the
+   query across 58 page bundles and the whole shared layer. This pack requires
+   one — every duration collapses and the press stops travelling, so the control
+   still changes colour and still shows its focus outline, and nothing moves. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-press: 0s;
+    --dur-hover: 0s;
+    --dur-base: 0s;
+    --dur-panel: 0s;
+    --dur-reveal: 0s;
+    --press-travel: 0px;
+    --press-travel-active: 0px;
+    --reveal-y: 0px;
+  }
+}
+
+/* ── components ── */
+
+/* Everything below consumes var(--…) only. Colour never appears as a literal:
+   the two blocks above are the whole palette, and a value with no token is a
+   gap in the pack rather than something to inline here.
+
+   Two rules carry this kit and both are in the pack:
+   1. An outline and an offset always travel together. A hard shadow under an
+      edgeless box reads as a rendering fault.
+   2. A control presses INTO its offset; a surface grows OUT of it. One move per
+      kind of object — mixing them is how a copy of this pack feels cheap. */
+
+.bl-heading {
+  margin: 0;
+  font-family: var(--font-display);
+  color: var(--ink);
+  letter-spacing: var(--track);
+  text-wrap: balance;
+}
+.bl-heading--1 {
+  font-size: clamp(2.75rem, 6vw, var(--t-hero));
+  font-weight: var(--weight-display);
+  line-height: var(--lh-hero);
+  max-width: 22ch;
+}
+.bl-heading--2 {
+  font-size: clamp(2rem, 3vw, var(--t-page));
+  font-weight: var(--weight-display);
+  line-height: var(--lh-page);
+}
+.bl-heading--3 {
+  font-size: var(--t-card);
+  font-weight: var(--weight-card);
+  line-height: var(--lh-card);
+  color: var(--ink-strong);
+}
+
+/* Rule — the thing to reach for before a second card. */
+.bl-rule {
+  height: 0;
+  margin: var(--space-4) 0;
+  border: 0;
+  border-top: var(--line-w) solid var(--line-weak);
+}
+.bl-rule--strong {
+  border-top-width: var(--line-w-strong);
+  border-top-color: var(--line);
+}
+
+/* Button — the press, and the whole motion budget of the pack.
+   The travel and the offset move together so the ink displaced is constant. */
+.bl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-icon);
+  height: var(--control-h);
+  padding: 0 var(--space-4);
+  border: var(--line-w) solid var(--line);
+  border-radius: var(--r-md);
+  font-family: var(--font-display);
+  font-size: var(--t-body);
+  font-weight: var(--weight-control);
+  letter-spacing: var(--track);
+  cursor: pointer;
+  transition:
+    transform var(--dur-press) var(--ease),
+    box-shadow var(--dur-press) var(--ease),
+    background-color var(--dur-hover) var(--ease);
+}
+.bl-btn--sm {
+  height: var(--control-h-sm);
+  padding: 0 var(--space-3);
+  font-size: var(--t-sm);
+}
+.bl-btn--lg {
+  height: var(--control-h);
+  padding: 0 var(--space-6);
+  font-size: var(--t-lede);
+}
+.bl-btn--primary {
+  background-color: var(--action);
+  color: var(--on-action);
+  box-shadow: var(--shadow-2);
+}
+.bl-btn--secondary {
+  background-color: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow-2);
+}
+.bl-btn--ghost {
+  background-color: transparent;
+  color: var(--ink);
+  border-color: transparent;
+  box-shadow: none;
+}
+.bl-btn--primary:hover {
+  background-color: var(--action-hover);
+}
+.bl-btn--secondary:hover {
+  background-color: var(--accent-wash);
+}
+.bl-btn--ghost:hover {
+  background-color: var(--accent-wash);
+}
+/* Hover and focus-visible share the press: a keyboard user sees it too. */
+.bl-btn--primary:hover,
+.bl-btn--secondary:hover,
+.bl-btn--primary:focus-visible,
+.bl-btn--secondary:focus-visible {
+  transform: translate(var(--press-travel), var(--press-travel));
+  box-shadow: var(--shadow-press);
+}
+.bl-btn--primary:active,
+.bl-btn--secondary:active {
+  transform: translate(var(--press-travel-active), var(--press-travel-active));
+  box-shadow: none;
+}
+.bl-btn:focus-visible {
+  outline: var(--focus-w) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
+}
+/* Disabled keeps the outline and drops the offset: a control that still stands
+   proud of the paper invites the press it is going to refuse. */
+.bl-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Card — outline plus offset, and hover grows rather than presses. */
+.bl-card {
+  container-type: inline-size;
+  display: block;
+  padding: var(--space-6);
+  background-color: var(--surface);
+  border: var(--line-w) solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-3);
+  transition: box-shadow var(--dur-hover) var(--ease);
+}
+.bl-card:hover {
+  box-shadow: var(--shadow-3-wide);
+}
+.bl-card__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-3);
+}
+@container (min-width: 380px) {
+  .bl-card__head {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+}
+.bl-card__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--t-card);
+  font-weight: var(--weight-card);
+  line-height: var(--lh-card);
+  color: var(--ink-strong);
+}
+.bl-card__meta {
+  font-family: var(--font-sans);
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+}
+.bl-card__body {
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  line-height: var(--lh-prose);
+  color: var(--ink);
+}
+
+/* Chip — the smallest step of the offset ramp. */
+.bl-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  background-color: var(--surface);
+  color: var(--ink);
+  border: var(--line-w) solid var(--line);
+  border-radius: var(--r-pill);
+  box-shadow: var(--shadow-1);
+  font-family: var(--font-sans);
+  font-size: var(--t-xs);
+  font-weight: var(--weight-body-strong);
+}
+/* The accent tints a chip; it never fills one. The fill is for the primary. */
+.bl-chip--accent {
+  background-color: var(--accent-wash);
+}
+.bl-chip--selected {
+  background-color: var(--accent-wash);
+  font-weight: var(--weight-card);
+}
+
+/* Stat — a figure on the bare paper. No card, no offset. */
+.bl-stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.bl-stat__label {
+  font-family: var(--font-sans);
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+}
+.bl-stat__value {
+  font-family: var(--font-display);
+  font-size: var(--t-section);
+  font-weight: var(--weight-display);
+  line-height: var(--lh-page);
+  letter-spacing: var(--track);
+  color: var(--ink);
+}
+.bl-stat__source {
+  font-family: var(--font-sans);
+  font-size: var(--t-2xs);
+  color: var(--ink-soft);
+}
+
+/* StatusDot — the dot reinforces, the word carries. */
+.bl-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--t-sm);
+  color: var(--ink);
+}
+.bl-status__dot {
+  width: 10px;
+  height: 10px;
+  border: var(--line-w) solid var(--line);
+  border-radius: var(--r-pill);
+}
+.bl-status--good .bl-status__dot {
+  background-color: var(--good);
+}
+.bl-status--warn .bl-status__dot {
+  background-color: var(--warn);
+}
+.bl-status--danger .bl-status__dot {
+  background-color: var(--danger);
+}
+.bl-status--info .bl-status__dot {
+  background-color: var(--info);
+}
+
+/* Rail — the row of outlined circles that says "many". */
+/* `container-type: inline-size` applies inline-size containment, so the element
+   stops taking its width from its contents. On a shrink-to-fit box — a grid item
+   under `justify-items: center`, a flex item, an inline-block — that collapses
+   the rail to a column and fires its own narrow branch. `width: 100%` is not
+   cosmetic here: it is what makes the container measurable. */
+.bl-rail {
+  container-type: inline-size;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.bl-rail__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+.bl-rail__mark {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  background-color: var(--surface);
+  border: var(--line-w) solid var(--line);
+  border-radius: var(--r-pill);
+  box-shadow: var(--shadow-2-wide);
+  font-family: var(--font-display);
+  font-size: var(--t-lede);
+  font-weight: var(--weight-control);
+  color: var(--ink);
+}
+.bl-rail__name {
+  font-family: var(--font-sans);
+  font-size: var(--t-2xs);
+  color: var(--ink-soft);
+}
+@container (max-width: 420px) {
+  .bl-rail {
+    gap: var(--space-2);
+  }
+  .bl-rail__name {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* Band — one flat pastel per act, full-bleed. Never a gradient. */
+.bl-band {
+  display: block;
+  padding-block: var(--space-14);
+  background-color: var(--bg);
+}
+.bl-band__inner {
+  width: 90%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+}
+.bl-band--paper {
+  background-color: var(--bg);
+}
+.bl-band--peach {
+  background-color: var(--band-peach);
+}
+.bl-band--sky {
+  background-color: var(--band-sky);
+}
+.bl-band--lilac {
+  background-color: var(--band-lilac);
+}
+.bl-band--lemon {
+  background-color: var(--band-lemon);
+}
+.bl-band--ink {
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+/* Panel — one per page, the widest offset in the ramp. */
+.bl-panel {
+  padding: var(--space-14) var(--space-14);
+  background-color: var(--surface);
+  border: var(--line-w) solid var(--line);
+  border-radius: var(--r-2xl);
+  box-shadow: var(--shadow-4);
+}
+
+/* Skeleton — the outline stays, the offset goes. A skeleton that casts a
+   shadow reads as content that has already arrived. */
+.bl-skel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.bl-skel__line {
+  display: block;
+  height: var(--space-4);
+  background-color: var(--band-lilac-soft);
+  border: var(--line-w) solid var(--line-weak);
+}
+.bl-skel--control .bl-skel__line {
+  border-radius: var(--r-md);
+}
+.bl-skel--card .bl-skel__line {
+  border-radius: var(--r-lg);
+}
+.bl-skel__line:last-child {
+  width: 60%;
+}
+
+/* SELF — the offset is a property of the element that would establish the
+   container, and a container cannot query itself. Below the pack's 767px
+   breakpoint the ramp drops one step: 4px of ink beside a card on a 390px
+   screen is 1% of the viewport spent on a shadow. */
+@media (max-width: 767px) {
+  .bl-card {
+    box-shadow: var(--shadow-2);
+  }
+  .bl-panel {
+    padding: var(--space-6);
+    box-shadow: var(--shadow-3);
+  }
+  .bl-band {
+    padding-block: var(--space-6);
+  }
+}

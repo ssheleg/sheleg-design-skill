@@ -234,7 +234,7 @@ ${c("bold", "What it installs")}
   DESIGN_SYNC_BRIDGE.md   the Claude Design contract (what a pack sends, and
                        what does not cross)
   AI_PRODUCT_PATTERNS.md  chat / agent / streaming surfaces (honest state)
-  styles/              twenty-eight style packs — instrument-console (dark console),
+  styles/              twenty-nine style packs — instrument-console (dark console),
                        editorial-luxury (warm editorial), workbench (light/dark
                        product UI), briefing-room (dark 16:9 presentation deck),
                        atrium (warm cream consumer health), orchard (friendly
@@ -280,7 +280,10 @@ ${c("bold", "What it installs")}
                        proscenium (a white field with two cool acts and one deep
                        indigo act at the middle, a violet filling a control that
                        stays nearly square at 4px against cards at 16, and a
-                       framed product panel the fold cuts off) —
+                       framed product panel the fold cuts off),
+                       bulletin (warm cream paper cut by flat pastel bands,
+                       every card and control a 1px ink outline on a hard
+                       zero-blur ink offset it travels into when pressed) —
                        plus a ready-made token CSS per pack and
                        STYLE_PACK_TEMPLATE.md for authoring more
 `);

@@ -1245,3 +1245,51 @@ layer, where the resting 6.17:1 it states is correct); it is one of only **two**
 layers with no `prefers-reduced-motion` branch, and the one that mandates a particle field;
 and its Bans forbid coloured shadows *"besides `--accent-glow`"*, which is a colour — the
 shadow it actually mandates, `--signal-glow`, is named nowhere in its prose.
+
+## T30 — The outward argument, and the two forks that share a thumbnail
+
+Added with the `bulletin` pack. Three branches, three fresh contexts, run **blind against
+the bundle directory only** — `test/`, `docs/`, `kits/`, the README and the CHANGELOG are
+forbidden, because this file carries the answer beside the prompt.
+
+`bulletin` is confusable on two different axes at once, which is why this scenario has
+three branches rather than the usual two. On **register** it collides with `pigeonhole`:
+both are cheerful, both are pastel, and both are about a person handling many channels.
+On **surface** it collides with `orchard`: both are warm and modular, and a thumbnail
+separates neither. The two one-line tests the branches should arrive at are written into
+all three packs — *does the colour name a category, or divide an act?* and *is the object
+separated by a gap or by a drawn edge?*
+
+**T30a — should select `bulletin`.** "The marketing site for a tool that publishes one
+post to twelve social networks, shows an agency the calendar for all of its clients in one
+place, and reports on what landed. The home page has to carry a logo wall, a row of
+platform marks, a feature grid, three plans and a testimonial slider without any of it
+reading as filler. Buyers are two-person agencies and small in-house teams. We want it
+friendly and busy rather than austere." Pass: routes to `styles/bulletin.md`, quotes the
+clause that decided it, and names the two closest rejected packs with the clause that
+ruled each out. Fail: routing to `pigeonhole` because the product has an inbox and many
+channels, to `orchard` because the field is warm and the sections are modular, or to
+`roster` because a logo wall is named.
+
+**T30b — should still select `pigeonhole`.** "The marketing site for a tool that reads
+everything arriving in a shared support mailbox and files it under one of nine labels the
+team chose. The hero is the same pile shown twice — before and after. Nothing is published
+anywhere; nothing leaves." Pass: stays on `styles/pigeonhole.md` and can say what would
+have moved it (an argument that points outward rather than inward). Fail: routing to
+`bulletin` because the newest pack is also cheerful, also pastel and also about many
+channels — the failure a positive-only branch cannot detect, per standing instruction 4.
+
+**T30c — should still select `orchard`.** "The marketing site for a subscription vitamin
+kit. Every section is a rounded slab, the palette is oat and sage, and the buyer has to
+trust a lab result and a brand voice at the same time." Pass: stays on
+`styles/orchard.md` and names the mechanical difference — separation by gap, not by drawn
+edge. Fail: routing to `bulletin` on warmth and modularity alone.
+
+All three branches are also asked, after choosing, to read their chosen pack in full and
+report defects with file and quoted text.
+
+**Result: NOT YET RUN.** The pack, its token layer and its kit shipped in 1.43.0 with all
+three gates green; this scenario is the behavioural half and `validate.py` does not read
+this file, so nothing above has been observed. The row in `docs/DOCMAP.md` says this
+proof is a person running it and the result is stamped with a commit — until that line
+exists, T30 is an obligation on the record, not a result.

@@ -42,7 +42,10 @@ dark field is `instrument-console`. A page whose subject is an accumulating tota
 is `scoreboard`. A developer product whose buyer wants to see the call is
 [`manpage`](./manpage.md) or `datasheet`. And **not** the sorted inbox itself: this is the
 marketing page a user lands on before the product they log into, which is
-[`workbench`](./workbench.md).
+[`workbench`](./workbench.md). And **not** a page whose argument points the other
+way — one thing written here reaching twelve places out there — which is
+[`bulletin`](./bulletin.md): the pastel there is a full-bleed band dividing an
+act, where the pastel here is a chip naming a category.
 
 ### The fork against [`cyclorama`](./cyclorama.md), which is the one people get wrong
 
