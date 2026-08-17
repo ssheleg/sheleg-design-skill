@@ -3,7 +3,7 @@ name: sheleg-design
 description: Use when deciding how something LOOKS or MOVES. Cinematic scroll-driven landing pages and heroes — particle/WebGL backgrounds, scroll-linked animation, parallax — or when one feels busy or its motion drifts. Product UI through its style packs — dashboards, admin panels, internal tools, mobile screens, chat and agent interfaces. Design tokens, light/dark themes, palettes and colours, typography and fonts. Triggers - "design a landing" / "дизайн лендинга", "build a landing page" / "сделай лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы, фигма в код", "mobile screen" / "мобильный экран", "palette" / "палитра", "colors" / "цвета", "typography" / "типографика", "font" / "шрифт", "how it looks" / "выглядит", "make it prettier" / "красиво, красивее", "visual reference" / "визуальные референсы".
 license: MIT
 metadata:
-  version: 1.40.0
+  version: 1.41.0
 ---
 
 # SHELEG Design
@@ -232,6 +232,45 @@ and the interface has to show both without lying about either. Streaming states,
 confidence, citation, correction and the shape of a refusal are in
 [`AI_PRODUCT_PATTERNS.md`](./AI_PRODUCT_PATTERNS.md), which is their single home.
 Load it when the product has a model in it.
+
+## The component layer — the pack decides the tokens, the kit renders them
+
+A style pack is a **token layer and a set of rules**. It does not ship a button.
+Every product UI therefore needs a second decision the packs deliberately do not
+make: which component kit draws the controls.
+
+**The default is `shadcn/ui`, and the question is asked once per project.** Ask it
+the way `ux-foundation` asks the Figma question — once, at the point design work
+starts, never per screen — and record the answer wherever the style pack is
+recorded: with `super-ux` installed that is the screens record's *Design system*
+line, and without it, whatever file names the pack. Default **yes**; a project
+that already has a component layer has already answered, and migrating one on
+taste is not a design decision.
+
+**Why it composes rather than competes.** `shadcn/ui` is not a theme. It is
+unstyled primitives plus Tailwind, themed through CSS custom properties — so it
+*consumes* a token layer instead of bringing its own look. That is exactly the
+seam a pack is: the pack decides what `--bg` means, the kit decides what a
+`DropdownMenu` is.
+
+**The two vocabularies are different, and this is the trap.** The packs resolve
+`--bg` and `--ink` everywhere and little else by that name; `shadcn/ui` expects
+`--background`, `--foreground`, `--primary`, `--muted` and the rest of its own
+contract. **Map them explicitly in the pack's token file** — an undefined custom
+property does not error, it silently falls back, which is the same failure the
+chart rule above exists for. A kit mounted without that mapping renders in its
+starter palette and looks like nobody chose anything.
+
+**The boundary — product UI, not the cinematic surface.** Dashboards, admin
+panels, internal tools, chat and agent interfaces: yes, and the answer is yes by
+default. A scroll-driven landing page: **no** — there are no controls to reuse
+there, the work is bespoke scroll and WebGL, and reaching for a component kit is
+how a hero ends up looking like a settings screen.
+
+**Who does the work.** This section decides *whether* and *against which tokens*.
+The `shadcn` skill does the adding, searching and composing, and
+`migrate-radix-to-base` handles the Radix→Base move; both are installed and
+trigger on their own words. Do not restate their component docs here.
 
 ## Optional — Figma (design ↔ code)
 

@@ -4,6 +4,39 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.41.0] - 2026-08-17
+
+**A style pack is a token layer and a set of rules. It does not ship a button** — and until
+now nothing in this pack said what draws the controls. Twenty-seven packs, no component-layer
+doctrine at all: no `shadcn`, no Radix, no headless kit named anywhere in the bundle.
+
+**The default is `shadcn/ui`, asked once per project.** Same discipline as
+`ux-foundation`'s Figma question — once, when design work starts, never per screen — and the
+answer is recorded beside the style pack. Default **yes**; a project that already has a
+component layer has already answered, and migrating one on taste is not a design decision.
+
+### Why it composes rather than competes, and the trap in the seam
+
+`shadcn/ui` is not a theme. It is unstyled primitives plus Tailwind, themed through CSS custom
+properties, so it **consumes** a token layer instead of bringing its own look. The pack decides
+what `--bg` means; the kit decides what a `DropdownMenu` is.
+
+**The two vocabularies are different, and that is the part worth writing down.** The packs
+resolve `--bg` and `--ink` and little else by those names; `shadcn/ui` expects `--background`,
+`--foreground`, `--primary`, `--muted`. Map them explicitly in the pack's token file — an
+undefined custom property does not error, it silently falls back, which is the same failure
+the chart rule already exists for. A kit mounted without the mapping renders in its starter
+palette and looks like nobody chose anything.
+
+**The boundary is the pack's own split.** Product UI — dashboards, admin panels, internal
+tools, chat and agent interfaces — yes, by default. A scroll-driven landing page — no: there
+are no controls to reuse, the work is bespoke scroll and WebGL, and reaching for a component
+kit is how a hero ends up looking like a settings screen.
+
+The section decides *whether* and *against which tokens*; the `shadcn` and
+`migrate-radix-to-base` skills do the work and trigger on their own words, so their component
+docs are not restated here.
+
 ## [1.40.0] - 2026-08-17
 
 **A reference sweep has been in this pack since the Lazyweb bridge and could never be asked
