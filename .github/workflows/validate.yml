@@ -46,6 +46,33 @@ jobs:
             echo "validator went red for some other reason -- the reduced-motion check did not fire" >&2
             cat /tmp/nomotion.log >&2; exit 1
           }
+      - name: Validator negative control (must FAIL when the generated coordination page goes stale)
+        run: |
+          set -eu
+          # This one exists because the SELF-TEST CANNOT REACH IT. `COPY_IGNORE`
+          # strips `.claude/` from the copied tree, so the arm of
+          # validate_coordination_claim() that compares docs/AGENT_SYNC.md's
+          # guarded-file list against .claude/agent-sync.json is vacuously true in
+          # every plant -- it only ever runs against a real checkout, which is what
+          # this step is. DOCMAP stopped restating the wiring and points at that
+          # generated page instead, so a page that has drifted from the config is
+          # the whole failure mode the deferral introduced.
+          rm -rf /tmp/staledoc && cp -R . /tmp/staledoc
+          python3 - <<'PY'
+          import json, pathlib
+          p = pathlib.Path("/tmp/staledoc/.claude/agent-sync.json")
+          cfg = json.loads(p.read_text())
+          cfg["guardedFiles"].append("docs/DOCMAP.md")
+          p.write_text(json.dumps(cfg, indent=2) + "\n")
+          PY
+          if python3 /tmp/staledoc/test/validate.py > /tmp/staledoc.log 2>&1; then
+            echo "validator failed to fail on a coordination page stale against its config" >&2
+            exit 1
+          fi
+          grep -q "the page is generated from the config" /tmp/staledoc.log || {
+            echo "validator went red for some other reason -- the coordination check did not fire" >&2
+            cat /tmp/staledoc.log >&2; exit 1
+          }
 
       - name: Palette gate (claimed ratios re-derived; separation under CVD)
         run: python3 test/validate_palette.py

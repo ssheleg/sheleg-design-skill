@@ -90,21 +90,53 @@ rather than a fourth ledger row.
 CI (`.github/workflows/validate.yml`) runs all four gates, all three self-tests,
 a negative test that corrupts a version and requires a failure, a check that each
 gate refuses an unknown argument, both installers with a `diff -r` against the
-source, `claude plugin validate --strict`, and a fourteen-kit build matrix.
-`release.yml` runs every gate too — until 1.10.0 it gated a publish on one of
-three.
+source, `claude plugin validate --strict`, and one build job per kit — a
+twenty-nine-kit matrix today. The number is never typed into the workflow:
+`discover-kits` derives it from `ls -1 kits`
+([`validate.yml:123`](../.github/workflows/validate.yml)), because a
+hand-maintained matrix said six while a seventh kit was built, green and
+invisible to CI. `release.yml` runs every gate too — until 1.10.0 it gated a
+publish on one of three.
+
+That sentence named the count as `fourteen`, hyphenated onto its noun, and stayed
+wrong through every kit release after it — on the page whose own subject is that
+every fact has one home, with the counted-claims check green three lines above it.
+`COUNTED` required a **space** between the number and its noun, so a hyphen hid
+the claim from the one mechanism built to police it. The hole was load-bearing
+before anyone found it: the B-040 run deleted a hyphenated `twenty-nine releases`
+from its own prose rather than write a number this gate could not check. The
+separator is now `[ -]`, so a compound is read like any other tally.
+
+**This file cannot quote a stale count, and that is not a gap in the note.**
+`docs/DOCMAP.md` is one of the sources `validate_counted_claims()` reads, so a
+narration reproducing the old span verbatim would be indistinguishable, in
+whitespace-collapsed text, from the file making the claim again — and the gate
+would be right to refuse it. Stale spellings are narrated where they happened:
+the CHANGELOG and `docs/evidence/`, neither of which is a source.
 
 ## Shared state
 
-`ungated` — no lease mechanism is in force in this repo. agent-sync v1.4.3 is
-installed on the machine but this repo does not use it; concurrent agents are not
-arbitrated here.
+**Gated — and the wiring is not restated here.** `.claude/agent-sync.json` is the
+single home for what this repo arbitrates; [`docs/AGENT_SYNC.md`](./AGENT_SYNC.md)
+is *generated* from it by `agent_sync.py setup` and renders the lease TTL, the id
+registers and the guarded-file list. Read that page. A write to a guarded path
+needs a live lease — `acquire <ID>` before the edit, `release <ID>` on every path
+including failure.
+
+This section said the repo was `ungated` with "no lease mechanism in force" while
+the config gated every path the generated page lists and lease files sat in
+`.agent-sync/leases/`. It is the same defect as a stale count — a fact restated in
+a second place, drifting from its home — and it is now checked the same way, by
+`validate_coordination_claim()` in `test/validate.py`: the generated page must
+carry its generated marker and list exactly the config's guarded paths, and this
+file must not contradict it.
 
 This is not theoretical. On 2026-08-04 two pipeline runs worked in the same checkout
 at once: one committed the other's draft brief into an unrelated commit (`d042b41`)
-and minted `ADR-0001` for a decision the other run had just taken. Until a lease
-mechanism exists, **every concurrent run must take its own `git worktree`**, and
-`docs/adr/` numbers are provisional until merge.
+and minted `ADR-0001` for a decision the other run had just taken. That is what the
+lease now arbitrates, and it is not the whole of it: the lease is exclusive on this
+machine and only advisory across machines, so **every concurrent run still takes its
+own `git worktree`**, and `docs/adr/` numbers are provisional until merge.
 
 **Overridden once, on the record.** The 2026-08-08 `cyclorama` run worked in this
 checkout rather than a worktree, by the operator's explicit choice, after

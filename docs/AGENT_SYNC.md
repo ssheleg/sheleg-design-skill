@@ -1,4 +1,4 @@
-<!-- agent-sync:generated source=sheleg-design-skill@8291650 cfg=7dcedebd99ad at=2026-08-14T14:30:31Z — regenerate with `agent_sync.py setup`, do not hand-edit -->
+<!-- agent-sync:generated source=sheleg-design-skill@7e630cb cfg=7dcedebd99ad at=2026-08-19T12:21:42Z — regenerate with `agent_sync.py setup`, do not hand-edit -->
 
 # How documentation and coordination work in sheleg-design-skill
 

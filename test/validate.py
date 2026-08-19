@@ -831,18 +831,59 @@ WORD_NUMBERS = {w: n for n, w in NUMBER_WORDS.items()}
 # "one packs" and failed, and the hyphenated form of a count nobody had needed
 # yet was the only thing missing.
 _COUNT_WORDS = "|".join(sorted(WORD_NUMBERS, key=len, reverse=True))
+# THE SEPARATOR IS A SPACE **OR** A HYPHEN, and it is captured and
+# back-referenced so a compound is read in one alphabet or the other and never
+# half in each: "twenty locked style packs" and "twenty-nine-style-packs" both
+# parse, "twenty-nine style-packs" is not silently accepted as either.
+#
+# The hyphenated form is the hole this closes. `COUNTED` required a SPACE, so
+# "a fourteen-kit build matrix" in `docs/DOCMAP.md` -- the document whose own
+# subject is that every fact has one home -- stayed wrong through every kit
+# release after it, with the counted-claims check green on the line above. The stale
+# fact is the smaller half. The larger half is that a contributor had ALREADY
+# measured the hole and routed around it: the 2026-08-19 reduced-motion run
+# deleted a hyphenated "twenty-nine releases" from its own prose rather than
+# plant a number this regex could not police. A guard people write around has
+# stopped being a guard, so the coverage is worth more than either fact.
 COUNTED = re.compile(
-    r"(?<![-\w])(" + _COUNT_WORDS + r"|\d{1,2})"
-    r" (?:locked |named |shipped |pluggable |real |React |reference )*"
+    r"(?<![-\w])(?P<num>" + _COUNT_WORDS + r"|\d{1,2})(?P<sep>[ -])"
+    r"(?:(?:locked|named|shipped|pluggable|real|React|reference)(?P=sep))*"
     # `*`, not `?`: plugin.json says "twenty pluggable VISUAL STYLE packs", and a
     # single optional modifier meant that count was never read as one. It sat
     # stale at twenty while twenty-one shipped, in the file an agent host reads.
-    r"(?:visual |style )*(pack|kit|scenario|heading)s\b",
+    r"(?:(?:visual|style)(?P=sep))*"
+    # `s?`, and the plural is required back at the call site for the SPACE form
+    # only. A hyphenated count is a modifier and singular by grammar ("a
+    # fourteen-kit matrix"); a spaced one is a tally and plural ("fourteen kits").
+    # Accepting a spaced singular everywhere would read "one kit per pack" -- a
+    # ratio, not a tally -- as a claim that the library holds one kit.
+    r"(?P<noun>pack|kit|scenario|heading)(?P<plural>s?)\b",
     re.I,
 )
-# "A fork between two packs" counts a relationship, not the library. A hyphen
-# means a compound (`four-packs`, a branch name), not a count.
+# "A fork between two packs" counts a relationship, not the library.
 COUNT_NOT_A_TALLY = re.compile(r"(?i)\b(?:between|either|each|any|both|per|same)\s+$")
+# A hyphen used to mean "not a count" outright, which is what hid `fourteen-kit`.
+# Now that it can carry one, the compounds that are NOT tallies have to be named,
+# because a widened pattern that flags correct prose is its own defect. Measured
+# old-pattern-against-new on one tree at the commit that widened it: **+2** spans
+# inside the source list below, both in `docs/DOCMAP.md`, zero of them false; and
+# **+51** across all 1025 text files, of which 3 are exempted here. The tree figure
+# moves whenever prose is edited, so the source-list figure is the one the floor
+# pins. Two classes in the widening are not claims about the library, and only the
+# first can be settled by a pattern.
+#
+#   1. A count glued into a longer identifier -- `feat/four-packs-v1.9.0`, a
+#      branch name recorded in a spec brief. Prose never puts a tally directly
+#      after a slash or directly before another hyphen, so this is exempted:
+#      a hyphen-form match has to stand alone as a modifier.
+#   2. A hyphenated compound counting something that is NOT the library: "a
+#      six-pack backfill" (retro.md) counts one run's work, and "the nine-heading
+#      contract" (this file, CHANGELOG, two briefs) narrates a contract that has
+#      since widened. No pattern separates those from a stale claim -- only the
+#      SOURCE LIST does, and none of them is in it. That list stays deliberately
+#      short for this reason; widening it means adjudicating each of those spans,
+#      not adding a regex escape.
+COUNT_IS_AN_IDENTIFIER = re.compile(r"^(?:[-/]|\.\w)")
 
 
 def _packs() -> list[str]:
@@ -885,7 +926,15 @@ def validate_counted_claims():
             continue
         flat = " ".join(text.split())
         for m in COUNTED.finditer(flat):
-            raw, noun = m.group(1).lower(), m.group(2).lower()
+            raw, noun = m.group("num").lower(), m.group("noun").lower()
+            hyphenated = m.group("sep") == "-"
+            # See `s?` above: a spaced count is a tally and must be plural.
+            if not hyphenated and not m.group("plural"):
+                continue
+            glued_left = m.start() > 0 and flat[m.start() - 1] == "/"
+            glued_right = COUNT_IS_AN_IDENTIFIER.match(flat[m.end():]) is not None
+            if hyphenated and (glued_left or glued_right):
+                continue
             said = WORD_NUMBERS.get(raw, int(raw) if raw.isdigit() else None)
             if said is None or truth[noun] == 0:
                 continue
@@ -1320,6 +1369,41 @@ PLANTS = (
         lambda t: re.sub(r"(--dur-[a-z]+|--stagger): 0s;", r"\1: 0.4s;", t),
         "collapses no duration to an instant value",
     ),
+    (
+        # SG-03, and the exact string that shipped. `COUNTED` matched a number
+        # only when a SPACE followed it, so this claim stayed wrong in DOCMAP
+        # through every kit release after it while the counted-claims gate ran
+        # green over the same file. The plant is the defect restored verbatim.
+        "a stale count hyphenated onto its noun",
+        "docs/DOCMAP.md",
+        lambda t: t.replace("twenty-nine-kit", "fourteen-kit", 1),
+        "says 'fourteen-kit' but there are 29 kits",
+    ),
+    (
+        # The same hole in digits. Worth its own plant because the number and the
+        # word reach the pattern by different branches of the same alternation,
+        # and a widening that fixed only the spelled form would pass the plant
+        # above while leaving `14-kit` invisible.
+        "a stale count hyphenated onto its noun, in digits",
+        "docs/DOCMAP.md",
+        lambda t: t.replace("twenty-nine-kit", "14-kit", 1),
+        "says '14-kit' but there are 29 kits",
+    ),
+    (
+        # The other half of SG-03: the same class of defect in a wiring fact
+        # rather than a count. DOCMAP opened its "Shared state" section with this
+        # sentence while `.claude/agent-sync.json` carried `"gated": true` and
+        # leases sat on disk. `expect` matters here -- the mutation removes a
+        # bolded lead-in, which several link and prose checks also read.
+        "DOCMAP re-asserting that this repo is ungated",
+        "docs/DOCMAP.md",
+        lambda t: t.replace(
+            "**Gated — and the wiring is not restated here.**",
+            "ungated — no lease mechanism is in force in this repo.",
+            1,
+        ),
+        "'Shared state' re-asserts",
+    ),
 )
 
 
@@ -1553,6 +1637,89 @@ def validate_reduced_motion():
 REPO_ONLY_DIRS = ("docs/", "test/", "kits/", ".github/", "scripts/", "cursor/")
 
 
+# ------------------------------------------------- the coordination claim
+#
+# The second half of the same defect as a stale count, in the same file. DOCMAP's
+# "Shared state" section opened with `ungated` -- "no lease mechanism is in force
+# in this repo" -- while `.claude/agent-sync.json` carried `"gated": true` and a
+# nine-entry `guardedFiles`, and expired lease files sat in `.agent-sync/leases/`.
+# A count and a wiring fact fail identically: restated in a second place, they
+# drift from their home and nothing notices.
+#
+# So DOCMAP stops describing the wiring and points at the generated page instead,
+# and this check holds the derivation together from both ends: the page must be
+# generated (not hand-written) and must agree with the config, and DOCMAP must not
+# reinstate a contradiction of it.
+COORDINATION_DENIED = (
+    "ungated",
+    "no lease mechanism",
+    "does not use it",
+    "concurrent agents are not arbitrated",
+)
+
+
+def validate_coordination_claim():
+    """`docs/AGENT_SYNC.md` is derived from the config, and DOCMAP defers to it."""
+    page = read(ROOT / "docs" / "AGENT_SYNC.md")
+    if page is None:
+        # No coordination page at all is a legitimate state for a consumer
+        # checkout, but it is not this repository's. Assert it and stop, rather
+        # than returning early and quietly dropping three checks from the count.
+        check(False, "docs/AGENT_SYNC.md is missing -- DOCMAP defers the whole of "
+                     "'Shared state' to it, so its absence leaves that fact homeless")
+        return
+    check(
+        page.lstrip().startswith("<!-- agent-sync:generated"),
+        "docs/AGENT_SYNC.md: no 'agent-sync:generated' marker on the first line. "
+        "DOCMAP points here instead of restating the wiring, which only holds "
+        "while this page is regenerated from the config rather than edited",
+    )
+    # The page's own rendering of the fact, not a second opinion about it. If this
+    # repo is ever genuinely ungated the page will say so, and then DOCMAP saying
+    # the same thing is correct rather than stale -- which is the difference
+    # between checking a claim and hard-coding today's answer.
+    rendered = re.search(r"runs recorded \*\*(\w+)\*\*", page)
+    gated = rendered is not None and rendered.group(1) == "gated"
+    docmap = read(ROOT / "docs" / "DOCMAP.md") or ""
+    shared = docmap.partition("## Shared state")[2]
+    stale = [
+        phrase for phrase in COORDINATION_DENIED
+        # Narrating the old claim is allowed; re-asserting it is not. The
+        # difference is the backtick-or-quote form this file uses to quote
+        # itself -- so only a bare, unquoted phrase counts as an assertion.
+        if re.search(rf'(?<![`"]){re.escape(phrase)}(?![`"])', shared)
+    ]
+    check(
+        not (gated and stale),
+        f"docs/DOCMAP.md: 'Shared state' re-asserts {stale} while "
+        f"docs/AGENT_SYNC.md records this repo as gated. That sentence was wrong "
+        f"for the whole of the coordination era; quote it to narrate it",
+    )
+    # The config lives under `.claude/`, which COPY_IGNORE strips from the
+    # self-test's copy of the tree -- so this arm cannot be conditional on the
+    # file existing without making the check COUNT depend on which copy is
+    # running, and a floor that moves between the two turns every planted defect
+    # red for the wrong reason. The check is emitted either way.
+    raw = read(ROOT / ".claude" / "agent-sync.json")
+    if raw is None:
+        ok, msg = True, ""
+    else:
+        try:
+            guarded = json.loads(raw).get("guardedFiles", [])
+        except json.JSONDecodeError:
+            guarded = None
+        listed = re.findall(r"^- `(.+)`$", page.partition(
+            "### Guarded files")[2].partition("###")[0], re.M)
+        ok = guarded is not None and listed == guarded
+        msg = (
+            f"docs/AGENT_SYNC.md: its guarded-file list {listed} is not "
+            f"`.claude/agent-sync.json`'s {guarded} -- the page is generated from "
+            f"the config, so a difference means it is stale. Regenerate it with "
+            f"`agent_sync.py setup`"
+        )
+    check(ok, msg)
+
+
 def validate_bundle_self_sufficiency():
     bundle = ROOT / PLUGIN_DIR / "skills" / PLUGIN
     if not bundle.is_dir():
@@ -1667,6 +1834,7 @@ def main():
     validate_pack_container_answer()
     validate_kit_breakpoints()
     validate_bundle_self_sufficiency()
+    validate_coordination_claim()
     check_routed_triggers_still_advertised()
 
     if failures:
