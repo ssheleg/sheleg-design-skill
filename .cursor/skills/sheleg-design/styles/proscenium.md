@@ -114,7 +114,10 @@ Measures: 62ch prose, 46ch lede under a centred hero.
 
 ## Texture & surface
 
-**Elevation is three shadows and they do different jobs.** `--shadow-card` is
+**Elevation is four shadows and they do different jobs.** `--shadow-frame` is the
+fourth and the quietest: `0 0 34px` of ambient with an inset white bloom, for the
+framed media a scene is built around — never for a card and never for a control.
+`--shadow-card` is
 94px of blur at 4px of offset in a violet-tinted black — the argument-carrying
 card, and it is the pack's signature texture. `--shadow-hair` is a hard
 `1px 2px 0` in the seam colour with no blur at all, for the quiet card that is

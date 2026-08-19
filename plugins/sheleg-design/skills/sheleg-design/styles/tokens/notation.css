@@ -122,6 +122,13 @@
    data-theme="dark" from a prefers-color-scheme listener — keep one switch,
    never two sources of truth for the theme. */
 
+/* The base layer. `--w-semi` and `--w-bold` are both 500 because this pack has no
+   bold — emphasis is the serif, the mono or a rule — so `<strong>` resolves to that
+   500 rather than to the UA's 700, which is the one weight the system does not
+   contain. Without this rule the ban lived only in the Bans list, where no browser
+   reads it. */
+strong, b { font-weight: var(--w-bold); }
+
 @media (prefers-reduced-motion: reduce) {
   :root {
     --dur-state: 0s;

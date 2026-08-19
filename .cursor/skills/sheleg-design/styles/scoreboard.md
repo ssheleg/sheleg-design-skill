@@ -159,17 +159,24 @@ needs no second display weight.
 ## Texture & surface
 
 - **The page divides with rules, not with shadow.** A card is `--surface` on
-  `--bg` with a 1px `--line-weak` and `--shadow-hairline` under it. `--shadow-card`
-  (two layers, 5% and 5%, untinted) is reserved for the one report surface a
-  section is built around; `--shadow-lift` is for something genuinely floating.
+  `--bg` with a 1px `--line-weak` and `--shadow-hairline` under it (one layer,
+  2.5%). `--shadow-panel` (one layer, 4%) seats the `[data-surface="panel"]` band
+  against the paper and is used nowhere else. `--shadow-card` — two layers at 5%
+  and 5%, and **tinted**: `rgba(16, 24, 40, …)` is a blue-black, chosen so the one
+  report surface reads as screen rather than as paper — is reserved for that
+  surface. `--shadow-lift` (one layer, 16%, untinted) is for something genuinely
+  floating: a modal or a floating bar. Four shadows, four jobs; a card that takes
+  any of the other three is the mistake this list exists to prevent.
 - **Radii: 1 / 2 / 3 / 6 / 8**, and the page lives at 2 and 3. Across the three
   reference pages, 107 of 143 radius utilities are `rounded-[2px]` or
   `rounded-[3px]`. This is the pack's most copyable and most-often-lost value: at
   8px everywhere it becomes a generic SaaS page with an orange tick on it.
 - **Radius arithmetic when containers nest:** an inner radius is the outer minus
-  the padding between them. A `--radius-sm` chip inside a `--radius-md` card
-  padded by 3px is `calc(6px - 3px)`, not 6px twice. At this scale the error is
-  visible precisely because the curves are so small.
+  the padding between them. A `--radius-sm` chip inside a `--radius-md` report
+  surface padded by 3px is `calc(6px - 3px)`, not 6px twice. At this scale the
+  error is visible precisely because the curves are so small. The example used to
+  say "card", which the Components table and the kit both set to `--radius-sm` —
+  so the pack gave one component two radii and the arithmetic taught the wrong one.
 - **Spacing is a 4px ramp.** The shell is `--page-max` 1800px, the reading column
   `--content-max` 1260px, gutters 24px and 48px from the medium breakpoint up.
 - **The dark band is a surface, not a theme.** `[data-surface="panel"]` swaps the
@@ -355,12 +362,25 @@ packs. Here the page is a board, and a board holds still.
 - **A translucent focus ring.** Solid, or it is decoration.
 - **A second ledger on the page**, or a ledger with a rounded marketing number in
   it, or a ledger with no date under it.
-- **Antialiased pixel type.** Without `font-smooth: never` the numerals are a
-  novelty face; with it, they are a readout.
+- **Antialiased pixel type**, wherever the engine lets you refuse it. The
+  declaration is the one the Type section ships — `-webkit-font-smoothing: none`
+  with `text-rendering: geometricPrecision` and `font-variant-ligatures: none` —
+  and it is honest about its reach: WebKit and Blink obey it, Firefox on macOS
+  offers only `-moz-osx-font-smoothing: grayscale`, and on Windows nothing
+  disables antialiasing at all. Earlier releases wrote this ban as
+  `font-smooth: never`, which is not a legal value of the property the pack
+  actually sets and is not a property any engine implements — a non-negotiable
+  typographic rule resting on a declaration that does nothing. Where the engine
+  antialiases anyway the numerals are still a readout because their *size* is
+  fixed at one step; the aliasing is the bonus, not the mechanism.
 - **A bare status dot**, and any status carried by colour with no word beside it.
 - **The paper status set on the dark band, or the dark set on paper.** They are
   two sets.
-- **Radii above 8px**, and any radius on the ledger's own rows.
+- **Radii above 8px — except `--radius-pill`**, which the section tick needs and
+  which the Components table requires: a 3×18px bar at 999px is a capsule, and a
+  ban with no exception forbade the pack's own signature motif. The pill is for
+  the tick and for nothing else. Any radius on the ledger's own rows is banned
+  outright.
 - **A spinner where a number will land.** The skeleton is the row.
 - Fluid `clamp()` display type; `transition: all`; `100vh`; a second accent; a
   gradient anywhere except the hero's wash.

@@ -49,7 +49,8 @@ The five principles that make it work:
    then morphs in a short, phase-staggered, arc-curved wave — points fly to new
    posts. Crossfades are banned.
 4. **Earned motion.** Scrubbed animation belongs to instruments that narrate
-   state over time. Hover/entrance motion is sub-500ms and never gates content.
+   state over time. Hover and press stay inside the doctrine's bands; an entrance
+   may run past them when the value is measured, and never gates content.
 5. **Degrade to calm.** `prefers-reduced-motion` / coarse pointer / no-WebGL all
    collapse to a static, fully-legible page. The effect is an enhancement, never
    a dependency.

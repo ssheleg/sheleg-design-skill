@@ -130,8 +130,10 @@ Tracking `-0.025em` on anything 20px and above, `0.05em` on uppercase mono.
 ## Texture & surface
 
 **Elevation is border, not shadow.** The reference sets `box-shadow: none`
-almost everywhere; exactly one lift exists in the whole product and it is a
-menu. A card is `--panel` on `--bg` with a 1px `--border` and radius 8. That is
+almost everywhere; exactly one lift exists in the whole product, it is a menu,
+and it is the single shadow token `--shadow-1` — re-declared at 32–36% for the
+dark theme, because the light values disappear there. A card is `--panel` on
+`--bg` with a 1px `--border` and radius 8. That is
 the entire elevation model, and a pack that adds a second shadow has stopped
 being this pack.
 

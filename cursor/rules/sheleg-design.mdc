@@ -119,7 +119,7 @@ Frequency decides before taste gets a vote. (Full doctrine:
   `linear`. Curves: `--ease-out: cubic-bezier(.23,1,.32,1)`,
   `--ease-in-out: cubic-bezier(.77,0,.175,1)`,
   `--ease-drawer: cubic-bezier(.32,.72,0,1)`.
-- **UI motion stays under 300 ms.** Button press 100–160ms · tooltip 125–200ms ·
+- **UI motion stays at or under 300 ms.** Button press 100–160ms · tooltip 125–200ms ·
   dropdown 150–250ms · modal/drawer 200–500ms. Marketing and scrollytelling are
   deliberately longer.
 - Never animate a property that triggers layout (`width`, `height`, `top`,
@@ -143,7 +143,8 @@ Frequency decides before taste gets a vote. (Full doctrine:
    a short, phase-staggered, arc-curved wave. Crossfades between point sets
    are banned.
 4. **Earned motion.** Scrub only for instruments that narrate state over time
-   (charts, step flows); hover/entrance motion stays sub-500ms and never
+   (charts, step flows); hover and press stay inside the duration bands above,
+   an entrance may run past them when the value is measured, and neither ever
    gates content visibility.
 5. **Degrade to calm.** `prefers-reduced-motion` / coarse pointer / no-WebGL
    collapse to a static, fully-legible page. The effect is a bonus, never a

@@ -133,10 +133,12 @@ to read as a fact.
 - **Elevation is light, not shadow.** The signature material is two inset white
   hairlines — `inset 0 1px 0 rgba(255,255,255,.8)` on top and
   `inset 0 -1px 0 rgba(255,255,255,.35)` on the bottom — which make a flat fill
-  read as a soft extruded pill. The only real drop shadow in the system is
-  `0 9px 14px rgba(250,114,65,.25)`: an ambient glow **in the button's own
-  hue**, not a grey shadow. Cards carry `0 1.4px 1.4px rgba(0,0,0,.02)`, which
-  is almost nothing and should stay that way.
+  read as a soft extruded pill; that pair ships as `--shadow-pill`. The only real
+  drop shadow in the system is `--shadow-cta`, whose third layer is
+  `0 9px 14px var(--cta-glow)` — an ambient glow **in the button's own hue**, not
+  a grey shadow, and `--cta-glow` is the token that hue lives in. Cards carry
+  `--shadow-card` (`0 1.4px 1.4px rgba(0,0,0,.02)`), which is almost nothing and
+  should stay that way.
 - **Nothing has a sharp corner.** `12px` is the default (cards, panels, most
   slabs), `20px` for media cards and chips, `24px` for a full-bleed section
   slab, `6px` for small marks, and a pill radius on every control.

@@ -493,7 +493,9 @@ Cap 10, current 10, none retired.
 
 **Five rows below are marked *unrecorded* in the `Diverged?` column, and they were
 backfilled on 2026-08-12 by the `datasheet` run rather than written by the runs
-they describe.** Between `v1.14.1` and `v1.18.0` this table went five releases
+they describe, and everything from `v1.27.0` to `v1.44.0` was reconstructed the
+same way on 2026-08-20 — twenty-six rows, eighteen releases, after the table sat
+at `v1.26.0` for eighteen versions.** Between `v1.14.1` and `v1.18.0` this table went five releases
 without a stamp, so the retirement trigger in the standing instructions above —
 *has not fired in five run stamps* — was not computable: a list that is short by
 five rows retires whatever it likes. Date, commit and task were derived from
@@ -502,6 +504,16 @@ question is whether the run hit something worth an entry in the Log, and only th
 run knows. It is left as *unrecorded* instead of guessed. Nothing here is a
 substitute for the entries those runs owed; it restores the arithmetic, not the
 knowledge.
+
+**The arithmetic was the whole point, and it had stopped working.** The
+retirement trigger above — *has not fired in five run stamps* — reads a stamp
+count, so a table eighteen releases short made every standing instruction look
+dormant and any of them retirable on a count that did not exist. That is worse
+than a table with no trigger. `validate_release_register()` now fails when a
+CHANGELOG release at or after `1.5.0` has no row here, so this register cannot
+fall behind again without the gate saying so; the reconstructed rows carry no
+*fired-instruction* record, which means the trigger counts stamps and not
+evidence until runs start writing their own again.
 
 | Date | Commit | Task | Diverged? |
 |---|---|---|---|
@@ -529,6 +541,32 @@ knowledge.
 | 2026-08-13 | `c2b271b` | container queries in the kits: a pack's spec the kit had ignored, three kinds of breakpoint rather than two, two new checks; **`v1.23.0` + `v1.23.1` shipped** | **yes** |
 | 2026-08-13 | `cf06b75` | `roster` style pack from babylovegrowth.ai, seventeenth kit; a lab() palette resolved from painted pixels, T26 run before the tag, and a refuted finding that corrected two shipped packs; **`v1.24.0` shipped** | **yes** |
 | 2026-08-13 | `a9c497e` | a status colour measured against the field it sits on: `validate_status_on_field()`, `@role non-text:`, 28 findings and three real fixes; then a version a concurrent run had already published, and `validate.py` found counting its own worktree as content; **`v1.26.0` shipped**, 1.25.0 left to the other run | **yes** |
+| 2026-08-13 | `083509d` | `editorial-luxury`'s side-stripe ban narrowed to the ornament it was always about; **`v1.27.0` shipped** | *unrecorded* |
+| 2026-08-13 | `7ac05cf` | the artifact root follows task-pipeline's new default; **`v1.27.1` shipped** | *unrecorded* |
+| 2026-08-14 | `572bb0e` | `paperclip`, an eighteenth pack, where colour is ornament and nothing coloured can be clicked — **`1.28.0` never tagged**, shipped inside a later version | *unrecorded* |
+| 2026-08-14 | `f8f8996` | `ora` and `tenor`, two references measured off live sites rather than composed; **`v1.29.0` shipped** | *unrecorded* |
+| 2026-08-14 | `e35a26f` | the paperclip merge at twenty packs, and a version that had to move twice — **`1.30.0` never tagged** | *unrecorded* |
+| 2026-08-14 | `02a73bc` | T29 ran and twenty-six defects survived three gates to be found by it; **`v1.31.0` shipped** | *unrecorded* |
+| 2026-08-15 | `40e1a1f` | `tenor` met a product surface and three of its own measurements did not survive it; **`v1.32.0` shipped** | *unrecorded* |
+| 2026-08-15 | `80fc33f` | three things `tenor` asserted that a running page disproved; **`v1.33.0` shipped** | *unrecorded* |
+| 2026-08-15 | `8037f05` | `tenor` applied correctly and still reading flat — the ramp, the lattice and the colour that carried nothing; **`v1.34.0` shipped** | *unrecorded* |
+| 2026-08-15 | `48f24d9` | `ledger`, a twenty-first pack, and two gates that counted with a table stopping at twenty — **the number 1.35.0 was taken by a concurrent run**, so this one was never tagged | *unrecorded* |
+| 2026-08-15 | `e9c0bf6` | `awning`, a twenty-second pack, and the reference it was asked for did not survive measurement; **`v1.35.0` shipped** — the second run to claim that number | *unrecorded* |
+| 2026-08-16 | `fdc99b0` | `awning` had shipped as a specification and had never been rendered; rendering it found two accessibility defects; **`v1.36.0` shipped** | *unrecorded* |
+| 2026-08-16 | `7fb0c6c` | a header saying six traps over a list of eight, and the gate that would have caught it did not exist; **`v1.36.1` shipped** | *unrecorded* |
+| 2026-08-16 | `4c57784` | the description advertises the words an operator types; **`v1.37.0` shipped** | *unrecorded* |
+| 2026-08-16 | `2d59acb` | the 1.37.0 rewrite dropped a phrase a router still fires on; **`v1.37.1` shipped** | *unrecorded* |
+| 2026-08-16 | `792bc6f` | the gate can see an invariant it breaks one repository away; **`v1.37.2` shipped** | *unrecorded* |
+| 2026-08-16 | `809d8f5` | the phrase that reached no route, and the word that could not fix it; **`v1.37.3` shipped** | *unrecorded* |
+| 2026-08-16 | `e331dff` | the description was not valid YAML, and every gate in the family read it with a regex; **`v1.37.4` shipped** | *unrecorded* |
+| 2026-08-16 | `de09f9e` | an unqualified landing page reaches both crafts; **`v1.37.5` shipped** | *unrecorded* |
+| 2026-08-16 | `da33e37` | the routing table stopped being a second copy of the packs — 6203 tokens against a 5000 budget, down to 4595; **`v1.38.0` shipped** | *unrecorded* |
+| 2026-08-17 | `0d4e805` | five packs ported from live references, twenty-two to twenty-seven; **`v1.39.0` shipped** | *unrecorded* |
+| 2026-08-17 | `74ed099` | visual references become askable, and the natural phrasing is refused; **`v1.40.0` shipped** | *unrecorded* |
+| 2026-08-17 | `41b9eca` | the component layer — the pack decides the tokens, the kit renders them; **`v1.41.0` shipped** | *unrecorded* |
+| 2026-08-17 | `b8bf235` | `proscenium`, a twenty-eighth pack, measured for its tempo rather than its surface; **`v1.42.0` shipped** | *unrecorded* |
+| 2026-08-17 | `001a0bd` | `bulletin`, a twenty-ninth pack, elevation drawn rather than blurred; **`v1.43.0` shipped** | *unrecorded* |
+| 2026-08-19 | `30bfbc3` | degrade to calm had no observable, and a hyphenated count had no guard; **`v1.44.0` shipped** | *unrecorded* |
 
 ## Log
 

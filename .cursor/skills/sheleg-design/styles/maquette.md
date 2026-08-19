@@ -133,7 +133,9 @@ Both faces are SIL OFL, so there is no substitution trap here.
 
 ## Texture & surface
 
-- **One shadow, and its direction is not adjustable.** `--shadow-block` is
+- **One shadow direction, two sizes, and the direction is not adjustable.**
+  `--shadow-block-sm` is the same cast at half the offsets, for a small block; a
+  model never mixes the two on one plane. `--shadow-block` is
   `12px 24px 24px rgba(0,0,0,.25)` — displaced on **both** axes, which is what
   makes a block sit on the table under a raking light instead of floating above a
   page. Every block in a model is lit from the same upper-left source. Change the

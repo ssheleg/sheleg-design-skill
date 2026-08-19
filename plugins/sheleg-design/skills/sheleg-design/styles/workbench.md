@@ -117,8 +117,9 @@ hue.
 ## Texture & surface
 
 - **Elevation = border, not shadow**: layers separate via 1px `--border` +
-  `--panel`/`--panel-2` steps. One soft shadow token exists, for true
-  overlays (dialogs, popovers, menus) only.
+  `--panel`/`--panel-2` steps. One soft shadow token exists — `--shadow-1`,
+  `0 4px 16px -8px rgba(26,31,43,.18)` — for true overlays (dialogs, popovers,
+  menus) only.
 - Radii: `--r-control` 6px · `--r-card` 10px · `--r-pill` 999px. Nothing else.
 - 4px base grid; spacing steps 4/8/12/16/24/32; chips 2×8, dense rows
   8×12, cards 12–16. Compact by default.

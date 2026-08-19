@@ -66,13 +66,28 @@ a semantic colour that sits below WCAG AA on its own field declares
 `@role non-text:` with the reason and the ratio, because sixteen of the token layers
 carry such a colour and each said so in a different phrasing — "never text on the field",
 "a FILL and large-text colour", "a fill, not a text colour", "No coral word under 24px",
-"category marks" — which is exactly why nothing could check it. Status colours are the least uniform
-thing in the library, so the full map is here rather than summarised: the pair
-`--ok` / `--warn` in `workbench` and `instrument-console`; the pair `--good` /
-`--warning` in `blueprint`, `cyclorama`, `maquette`, `prism` and `showroom`;
-`--good` **without** a `--warning` in `atrium` and `briefing-room`; `--danger`
-alone in `field-notes`; and **nothing at all** in `editorial-luxury` and
-`orchard`. Writing `var(--warning)` in `atrium` is the trap this paragraph
+"category marks" — which is exactly why nothing could check it.
+
+Status colours are the least uniform thing in the library, so the full map is here
+rather than summarised — and it is a **table** so that
+`validate_status_vocabulary()` can compare every row against the token layers.
+The prose version of this map was wrong in three places at the twenty-ninth
+pack, because a sentence enumerating packs is not something a gate can read.
+
+| Status set (non-variant tokens, root block) | Packs |
+|---|---|
+| `--danger` / `--info` / `--ok` / `--warn` | almanac, daylight, instrument-console, ledger, notation, proscenium, router, vitrine, workbench |
+| `--danger` / `--good` / `--info` / `--warning` | blueprint, cyclorama, maquette, prism, showroom |
+| `--danger` / `--good` / `--info` / `--warn` | bulletin, ora, paperclip, pigeonhole, scoreboard |
+| `--danger` / `--info` / `--success` / `--warning` | datasheet, manpage |
+| `--danger` / `--good` / `--warn` | awning, tenor |
+| `--danger` / `--good` / `--info` | atrium |
+| `--danger` / `--good` | roster |
+| `--danger` | field-notes |
+| `--good` | briefing-room |
+| *(none)* | editorial-luxury, orchard |
+
+Writing `var(--warning)` in `atrium` is the trap this table
 exists to prevent — it is the shape of a token this pack does not have — a pack with no status palette does not
 get one invented for it; the chart uses categorical hues and a label.
 

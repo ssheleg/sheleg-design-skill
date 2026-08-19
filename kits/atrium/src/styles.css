@@ -9,7 +9,11 @@
   --surface-ink: #2a2b2f; /* the ONE inverted surface (media wells, banner) */
   --line: #d1c9bf; /* hairline — decorative strength, see Gotchas */
   --line-strong: #737373; /* borders that carry an affordance (inputs) */
-  --line-ink: #2a2b2f; /* ghost-control border */
+  /* @role drawn-on: --bg, --surface — the ghost-control border, and the SAME hex
+     as --surface-ink (#2a2b2f): on the inverted banner it disappears completely.
+     A ghost control that lands on --surface-ink borders in --on-ink instead
+     (13.47:1), which is what the pack's Gotchas now say. */
+  --line-ink: #2a2b2f;
 
   /* ---- Ink ------------------------------------------------------------- */
   --ink: #2a2b2f; /* 13.5:1 on --bg */
@@ -166,6 +170,13 @@
   color: var(--ink);
   color-scheme: light;
 }
+
+/* The base layer. This pack bans bold outright — its entire emphasis vocabulary is
+   the italic terracotta aside — so `<strong>` is pointed at the one weight above
+   body that the system owns. Left to the UA it renders 700, a weight no face here
+   ships, and inside the 300-weight serif the browser fakes it. `<em>` is deliberately
+   untouched: italic IS this pack's emphasis, and the serif has a real one. */
+strong, b { font-weight: var(--weight-semibold); }
 
 /* The hero effect is a bonus, never a dependency: at reduced motion the canvas
    is REMOVED and the still image underneath is the hero. Do not slow it down —

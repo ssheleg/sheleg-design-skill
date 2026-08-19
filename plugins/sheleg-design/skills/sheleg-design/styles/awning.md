@@ -145,7 +145,8 @@ no `clamp()` anywhere in the type layer.
 copy this: writing `9999px` on the button flattens the only place the system says
 *why* a button is that shape.
 
-**One shadow, three layers.** `0 8px 48px #06060814` is the ambient,
+**One shadow, three layers**, and it ships as `--shadow-1`.
+`0 8px 48px #06060814` is the ambient,
 `0 4px 8px #18181b0a` is the contact, and `0 0 2px #18181b40` is a hairline edge
 that keeps a card's boundary legible on pure white where the ambient alone
 dissolves it. That third layer is the part people drop when they copy a shadow by

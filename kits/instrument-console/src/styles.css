@@ -14,15 +14,41 @@
   --accent-dim: #1f5fb0;
   --accent-bright: #6bb3ff;
   --accent-ink: #0a0e14; /* text ON the accent — 6.17:1. White on #3392ff is 3.14 and fails. */
+  /* Two glows, two jobs, and both are named in the pack's Bans. --accent-glow is
+     the translucent halo behind a focused control; --signal-glow, declared below,
+     is the composite box-shadow the ONE active signal element wears. Until 1.45.0
+     the prose called --accent-glow "the only permitted glow" and then mandated the
+     composite, which it never named -- so the pack banned its own signature. */
   --accent-glow: rgba(51, 146, 255, 0.18);
+
+  /* ---- Status: four roles, and the pack owns three hues ------------------
+     The prose has legislated success, warning, danger and info together since
+     this pack's first release, and the token layer shipped two of them -- so
+     `var(--danger)` was an undefined custom property, which is invalid at
+     computed-value time and falls back with no error anywhere (B-038).
+     --info is the signal hue by decision, not by accident: an infrastructure
+     console's "here is a fact" and its "here is the thing to press" are the same
+     blue, and giving info its own hue would break the pack's one-accent rule.
+     --danger is a PACK DECISION, not a measurement: the reference this pack was
+     read off paints no danger state, so there was nothing to measure. Chosen to
+     clear AA on every field this pack ships (6.02:1 on --base, 5.77 on
+     --surface-1, 5.10 on --surface-3) and to stay above the library's separation
+     floors against every peer, including under simulated CVD -- the numbers are
+     in the pack's Palette. */
   --ok: #46d39a;
   --warn: #e0a030;
+  --danger: #f4526b;
+  --info: var(--accent);
 
   --r-sm: 4px;
   --r-md: 8px;
   --r-lg: 14px;
   --r-pill: 999px;
 
+  /* THE signature shadow: the one active signal element wears it, and nothing
+     else on the page does. Named here and in the pack's Texture, Micro-interactions
+     and Bans -- a mandated composite that appears in no prose is a value a reader
+     has to reconstruct from a literal. */
   --signal-glow: 0 0 0 1px rgba(51, 146, 255, 0.4),
     0 8px 30px rgba(51, 146, 255, 0.18);
 

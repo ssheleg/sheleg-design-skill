@@ -125,6 +125,12 @@
 
   /* ---- Motion ----------------------------------------------------------- */
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Three durations, and the press has its own because the doctrine gives press
+     feedback a band of its own: 100-160 ms. Until 1.45.0 this layer held two, the
+     pack prescribed --dur-fast for the press, and 200 ms is 40 ms past the top of
+     that band with nothing faster in the layer to reach for. --dur-fast stays at
+     the reference's 200 ms for hover and colour, which is inside the UI ceiling. */
+  --dur-press: 0.14s;
   --dur-fast: 0.2s;
   --dur-base: 0.3s;
 

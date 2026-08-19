@@ -37,6 +37,11 @@
   --disabled: #a4adba;
 
   /* ---- Lines: elevation is a ring plus a stack, never a single shadow ---- */
+  /* @role drawn-on: --bg, --surface — --line-weak is the SAME hex as --surface-2
+     (#edeff3), so a hairline in it is invisible on the sunken well. That is a
+     decision, not an accident: hairlines in this pack are drawn on the paper and
+     on the card, never inside the well. If a rule is genuinely needed there it is
+     --line, which measures 1.24:1 against the well. */
   --line-weak: #edeff3;
   --line: #d3d8df;
   --line-strong: #cad0d9;
@@ -46,7 +51,11 @@
      the same blue can be a link and a filled button without a second token. */
   --accent: #266df0;
   --accent-hover: #245bc2;
-  --accent-soft: #94b9ff; /* the focus ring's colour, and chart tint */
+  /* Chart tint and the selected-row edge. NOT the focus ring: --ring-focus is
+     derived from --accent below, at 35% alpha, and said so from 1.30.0 -- this
+     comment went on naming the ring for fourteen releases after the ring stopped
+     using it, in the layer a reader copies verbatim. */
+  --accent-soft: #94b9ff;
   --accent-wash: #e8f0ff; /* selected row, hovered cell */
   --on-accent: #ffffff;
 

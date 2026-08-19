@@ -201,9 +201,20 @@ travels alone here.
   `--line-weak` hairlines the way `workbench` does. The stack lifts the *frame*;
   everything within it is flat. Mixing the two is what makes a screenshot look
   like a collage.
+- **`--line-weak` is the same hex as `--surface-2` (`#edeff3`), so it is drawn on
+  the paper and on the card and never inside the well.** A hairline in it on
+  `--surface-2` is not faint, it is absent — 1.00:1. The well holds the specimen,
+  and the specimen brings its own `--surface`; if a rule is genuinely needed
+  against the well it is `--line`, at 1.24:1. The token layer declares this with
+  `@role drawn-on:` so the collision is a decision a reader can see rather than
+  one they discover.
 - **Radii: `2 / 4 / 6 / 8 / 12 / 16 / 20`**, and they nest — a `--radius-sm` chip
-  inside a `--radius-lg` row inside a `--radius-2xl` specimen frame. An inner
+  inside a `--radius-lg` row inside a **`--radius-3xl`** specimen frame. An inner
   radius is the outer minus the padding between them, never the same value twice.
+  The frame is `--radius-3xl` (20px), which is what the Components table and the
+  kit both ship; this bullet said `--radius-2xl` until 1.45.0, and because the
+  subtraction rule is keyed to the outer value, every inner radius derived from
+  the wrong outer one was wrong by 4px.
 - Spacing is a 4px ramp; the page column is `--page-max` 80rem and the nav is a
   fixed 68px.
 
@@ -216,7 +227,7 @@ Measured off the reference unless a row says **pack decision**.
 | **Primary CTA** | `--ink` fill, `--on-ink` label, `--radius-xl`, `10px 18px`, 16px/500 | fill lightens one step over `--dur-fast` | `translateY(1px)` | `--disabled` label on `--surface-2`, `cursor: not-allowed` |
 | **Secondary CTA** | `--surface` fill, `1px --line`, `--ink` label, same metrics | border → `--line-strong` | as above | as above |
 | **Accent button** | `--accent` fill, white label | `--accent-hover` | as above | as above |
-| **Nav item** | transparent, `--radius-lg`, `0 12px`, 15px/500, `--ink-2` | fill → `--surface-2`, colour → `--ink` over `0.3s` | — | — |
+| **Nav item** | transparent, `--radius-lg`, `0 12px`, 15px/500, `--ink-2` | fill → `--surface-2`, colour → `--ink` over `--dur-base` | — | — |
 | **Specimen frame** | `--surface` fill, `--radius-3xl`, `--shadow-specimen`, a 3-dot title bar | none — it is an exhibit, not a control | — | — |
 | **Data row** | transparent on `--surface`, `1px --line-weak` bottom rule, 36px tall | fill → `--accent-wash` | fill → `--accent-wash`, left edge 2px `--accent` | — |
 | **Status chip** | tinted fill of its own status, **`--ink` as the label**, a 6px dot of the status colour before the word, `--radius-sm`, `2px 8px`, 12px mono, **always with its word** | none | — | — |
@@ -314,7 +325,10 @@ page with a specimen too small to read has a decoration.
 
 If you ride more of the SHELEG stack: keep the scroll clock, use the Reveal set
 at `--dur-panel` on the one curve, and give the specimen **one** scroll-linked
-move — it rises into place as the hero resolves, and then it is done. There is no
+move — it rises into place as the hero resolves, and then it is done.
+`--dur-panel` is 500 ms and that is legal because it is an **entrance**, not UI
+motion: it answers the doctrine's entrance rule, never gates content, and is
+never put on a control. A button at 500 ms in this pack is a defect. There is no
 particle field, no mesh gradient and no WebGL in this pack; the only ambient
 layer permitted is a very faint lavender wash at the bottom of the hero, which is
 what the reference uses to seat the specimen against the white.
@@ -330,9 +344,12 @@ narrative packs. Here the page is a room with one object in it.
   when selected. The tint is the whole feedback; rows do not lift.
 - **Focus-visible** is `--ring-focus`, a 3px accent halo at 35% alpha, following
   the target's own radius — plus the accent border on inputs.
-- **The nav** transitions colour and background over `0.3s`, which is slower than
-  everything else on the page and deliberately so: nav items are large targets and
-  a fast tint on them reads as a flicker.
+- **The nav** transitions colour and background over `--dur-base` (300 ms), which
+  is slower than everything else on the page and deliberately so: nav items are
+  large targets and a fast tint on them reads as a flicker. 300 ms is the
+  doctrine's UI ceiling exactly, not a value past it — this pack sits on the
+  ceiling in one place and nowhere else, and it names the token rather than
+  retyping the number, which is how the figure sat outside the layer in two places.
 - Chips, headers and leaders have no hover state at all. They are labels.
 
 ## Bans

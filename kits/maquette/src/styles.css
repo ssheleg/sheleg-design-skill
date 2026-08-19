@@ -53,7 +53,12 @@
   --model-top: #fff9f4; /* the lit top face — 17.49:1 */
   --model-face: #fff3d6; /* the front face, warmer — 16.56:1 */
   --model-side: #e8ddc8; /* the side in shade */
-  --model-line: #151515; /* the model's own outline: the field colour */
+  /* @role drawn-on: --model-top, --model-face, --model-side — the model's
+     own outline, and it is the SAME hex as --bg on purpose: the cream solids are
+     separated by the table showing between them, which is why the model reads as
+     cut paper rather than as an SVG. It is drawn on the model's own faces and
+     never on the field, where it would be 1.00:1. */
+  --model-line: #151515;
   --leader: #8a8f98; /* the dotted leader from a block to its label */
 
   /* ---- Elevation: ONE shadow, and its direction is not adjustable ------- */

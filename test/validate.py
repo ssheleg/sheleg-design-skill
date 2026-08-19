@@ -70,7 +70,9 @@ PACK_SECTIONS = (
 # The skeleton carries all thirteen from the moment it is widened -- a template
 # that teaches nine while the contract wants thirteen is worse than no template.
 #
-# The six packs shipped before the widening stay on the nine. Backfilling them
+# The packs that shipped before the widening stay on the nine -- there were six of
+# them when this paragraph was written on 2026-08-04 and the number has moved
+# since, so it is computed and printed rather than repeated here. Backfilling them
 # honestly needs re-reading each pack's live reference, and three of them record
 # a product name where an address belongs, so three cannot be re-read at all.
 # Filling those sections from the token layer instead would be inventing values
@@ -116,6 +118,12 @@ CATEGORY_RE = re.compile(r"^category:\s*(\S+)\s*$", re.M)
 
 failures = []
 checks = 0
+# Figures this run measured. A number that appears here is never also written into
+# a comment or a document: the comments below say what was measured and WHEN, and
+# the current value prints. Three stale tallies in this file were the argument for
+# it -- "the six packs shipped before the widening" (seven, since `awning`) and
+# "seven of the ten widened packs" (twenty-two widened now), both true once.
+report: list[str] = []
 
 
 def check(ok, msg):
@@ -958,6 +966,12 @@ def validate_counted_claims():
 # three packs on purpose (they are the ones with a mode trap) and is not here.
 ENUMERATION_SITES = (
     (".claude-plugin/marketplace.json", "the marketplace card an agent host reads"),
+    # package.json was missing until 1.45.0, and it is the surface an npm reader
+    # chooses from -- npmjs.com renders this description and nothing else. Its
+    # COUNT was already checked (validate_counted_claims reads the same file), so
+    # it said "twenty-nine locked style packs" over a list of twenty-seven for two
+    # pack releases: the number was policed and the names beside it were not.
+    ("package.json", "the description npmjs.com renders"),
     (f"{PLUGIN_DIR}/.claude-plugin/plugin.json", "the plugin description an agent host reads"),
     (f"{PLUGIN_DIR}/commands/{PLUGIN}.md", "the slash command's by-name fast path"),
     ("bin/cli.js", "the installer's help and banner"),
@@ -1099,6 +1113,7 @@ def validate_contract_split():
 def validate_contract_declaration():
     styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
     skill = read(styles.parent / "SKILL.md") or ""
+    core: list[str] = []
     for name in _packs():
         text = read(styles / f"{name}.md") or ""
         rel = f"styles/{name}.md"
@@ -1113,11 +1128,16 @@ def validate_contract_declaration():
             f"{'carries' if widened else 'does not carry'} the four widened sections",
         )
         if not widened:
+            core.append(name)
             check(
                 f"styles/{name}.md" in skill and "core contract" in skill,
                 f"SKILL.md: '{name}' is on the core contract and the pack table does not "
                 "say so -- the table is where the pack is chosen",
             )
+    report.append(
+        f"contract split: {len(core)} core / {len(_packs()) - len(core)} widened "
+        f"of {len(_packs())} packs (core: {', '.join(core)})"
+    )
 
 
 CONTAINER_ANSWER = re.compile(r"container-type|container quer|@container", re.I)
@@ -1132,10 +1152,12 @@ def validate_pack_container_answer():
     """A widened pack has to say which components size against their container.
 
     The bullet has been in the skeleton's `## Responsive` section since the contract
-    was widened in 1.5.0, and seven of the ten widened packs left it blank -- so the
-    contract asked and nothing checked, which is the same shape as the nine-heading
-    dead zone the all-or-nothing rule closed. "None, and here is why" is a valid
-    answer; `field-notes` and `cyclorama` were already giving it.
+    was widened in 1.5.0, and when this check was written (2026-08-13, ten widened
+    packs) seven of the ten left it blank -- so the contract asked and nothing
+    checked, which is the same shape as the nine-heading dead zone the
+    all-or-nothing rule closed. The split moves with every release and is printed by
+    this run rather than restated here. "None, and here is why" is a valid answer;
+    `field-notes` and `cyclorama` were already giving it.
 
     Core packs are exempt because they carry no `## Responsive` section at all.
     """
@@ -1390,6 +1412,110 @@ PLANTS = (
         "says '14-kit' but there are 29 kits",
     ),
     (
+        # The status map's live instance: `workbench` had grown a quartet while the
+        # map still said `--ok` / `--warn`. Planted as the smallest possible drift.
+        "the cross-pack status map disagreeing with a token layer",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/SURFACE_COMPOSITION.md",
+        lambda t: t.replace(
+            "| `--danger` / `--good` | roster |", "| `--danger` | roster |", 1),
+        "the status table says 'roster'",
+    ),
+    (
+        # `datasheet.css` explains the reference's rem base with `html { font-size:
+        # 8px }` INSIDE a comment, so a brace scan over the raw text sliced a
+        # nine-character root block and excluded the pack from two sweeps. This
+        # plants a shadow into that pack: it can only be caught if the block scanner
+        # skips comments.
+        "a pack whose root block starts after a comment containing a brace",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/tokens/datasheet.css",
+        lambda t: t.replace(":root {\n", ":root {\n  --shadow-planted: 0 1px 2px rgba(0,0,0,.1);\n", 1),
+        "ships '--shadow-planted'",
+    ),
+    (
+        # Two runs took the number 1.35.0 and the tag went to the second, with the
+        # first one's notes sitting above it -- so a release extractor reading the
+        # first match would have shipped the wrong section.
+        "two CHANGELOG sections under one version",
+        "CHANGELOG.md",
+        lambda t: t.replace(
+            "## [1.43.0] - 2026-08-17",
+            "## [1.44.0] - 2026-08-19\n\n### Changed\n\n- a second section under a "
+            "number that already has one.\n\n## [1.43.0] - 2026-08-17", 1),
+        "appears more than once",
+    ),
+    (
+        # The Run stamps table sat at v1.26.0 while 1.44.0 shipped, and the
+        # retirement trigger in the same file counts rows in it.
+        "a release with no row in the Run stamps table",
+        "docs/evidence/retro.md",
+        lambda t: t.replace("**`v1.44.0` shipped**", "**shipped**", 1),
+        "has no row for 1.44.0",
+    ),
+    (
+        # 1.45.0's four sweeps, one plant each. All four defects are ones the tree
+        # was shipping when the sweeps were written, planted back in.
+        #
+        # A shadow token no prose names. `scoreboard` shipped four shadows under a
+        # comment counting three; sixteen tokens across eleven packs were unnamed.
+        "a shadow token the pack ships and its prose never names",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/scoreboard.md",
+        lambda t: t.replace("`--shadow-panel` (one layer, 4%) seats", "A single wash seats", 1),
+        "ships '--shadow-panel'",
+    ),
+    (
+        # A component given two radii. `showroom` said --radius-2xl in Texture and
+        # --radius-3xl in Components, and its nesting rule subtracts from the outer
+        # value, so every inner radius inherited the 4px error.
+        "one component given two different radii",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/showroom.md",
+        lambda t: t.replace(
+            "| **Specimen frame** | `--surface` fill, `--radius-3xl`",
+            "| **Specimen frame** | `--surface` fill, `--radius-2xl`", 1),
+        "different radii",
+    ),
+    (
+        # A press outside the doctrine's band for a press. `prism` put its CTA press
+        # on --dur-fast at 200ms, 40ms past the top of the band, with nothing faster
+        # in the layer -- and the band is read out of MOTION_DOCTRINE.md, so this
+        # plant also proves the parse works.
+        "a press prescribed over a duration outside the doctrine's band",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/prism.md",
+        lambda t: t.replace(
+            "- **The press** is `translateY(1px)` over `--dur-press` —",
+            "- **The press** is `translateY(1px)` over `--dur-fast` —", 1),
+        "press band",
+    ),
+    (
+        # The same class one layer down: a duration written as a literal where the
+        # pack's own token holds that exact value. `showroom` wrote `0.3s` into two
+        # prose sites while --dur-base was 0.3s in the layer beside them.
+        "a duration literal in prose where a token holds that value",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/showroom.md",
+        lambda t: t.replace(
+            "colour → `--ink` over `--dur-base`", "colour → `--ink` over `0.3s`", 1),
+        "a duration written twice",
+    ),
+    (
+        # And a literal past the ceiling that no token accounts for, on a line that
+        # does not claim to be an entrance.
+        "a control duration past the doctrine's UI ceiling",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/showroom.md",
+        lambda t: t.replace(
+            "colour → `--ink` over `--dur-base`", "colour → `--ink` over `0.42s`", 1),
+        "UI ceiling",
+    ),
+    (
+        # A banned weight with no base layer. `<strong>` renders 700 with no
+        # stylesheet involved, so the ban lived only in prose -- twenty-seven of
+        # twenty-nine packs were in this state. Editing a token layer also trips the
+        # kit-drift and mirror checks, which is why `expect` is not optional here.
+        "a banned weight with no base rule in the token layer",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/tokens/tenor.css",
+        lambda t: t.replace("strong, b {\n  font-weight: var(--weight-mono);",
+                            "strong, b {\n  letter-spacing: 0;", 1),
+        "ships no base rule",
+    ),
+    (
         # The other half of SG-03: the same class of defect in a wiring fact
         # rather than a count. DOCMAP opened its "Shared state" section with this
         # sentence while `.claude/agent-sync.json` carried `"gated": true` and
@@ -1441,6 +1567,33 @@ def self_test() -> int:
                 ok = False
             else:
                 print(f"  caught  {label}")
+
+    # Two checks read `git`, which the copied tree above does not have -- `.git` is
+    # in COPY_IGNORE, and a shallow CI checkout has no tags either. Their plants are
+    # therefore calls rather than file copies, against the real core.
+    for label, args, expect in (
+        (
+            "a CHANGELOG release with no tag and no declared reason",
+            ("## [9.9.9] - 2026-08-20\n", "## Run stamps\n| x | y | 9.9.9 | z |\n## Log\n",
+             ["1.0.0"]),
+            "there is no tag for it",
+        ),
+        (
+            "a declared untagged release whose tag now exists",
+            ("## [1.28.0] - 2026-08-14\n", "## Run stamps\n| x | y | 1.28.0 | z |\n## Log\n",
+             ["1.28.0"]),
+            "the tag exists",
+        ),
+    ):
+        del failures[:]
+        _release_register(*args)
+        fired = [f for f in failures if expect in f]
+        if fired:
+            print(f"  caught  {label}")
+        else:
+            print(f"  MISSED  {label} -- no failure said {expect!r}")
+            ok = False
+    del failures[:]
 
     # The one plant whose pass condition is silence. Every other fixture proves the
     # validator says no; this one proves a nested checkout changes neither the
@@ -1720,6 +1873,503 @@ def validate_coordination_claim():
     check(ok, msg)
 
 
+# --------------------------------------------- the release register
+#
+# Three registers describe the same releases and none of them checked the others.
+# Measured 2026-08-20: `CHANGELOG.md` carried TWO `## [1.35.0] - 2026-08-15`
+# sections -- two different runs took the same number and the tag went to the
+# second, with the first one's notes sitting ABOVE it, so a release extractor
+# reading the first match for that heading would have shipped the wrong notes.
+# `docs/evidence/retro.md`'s Run stamps table stopped at `v1.26.0` while `1.44.0`
+# shipped, eighteen versions later -- and the retirement trigger in that file's
+# standing instructions counts run stamps, so a short table makes every
+# instruction look dormant. And four CHANGELOG sections record releases that have
+# no tag at all.
+#
+# What is GATED and what is REPORTED, deliberately:
+#   - a duplicate version heading FAILS. One number, one release.
+#   - a release with no run stamp FAILS, from the version the table starts at.
+#   - a missing TAG is REPORTED against a declared list. A tag nobody has is not
+#     this run's to invent, and creating one to satisfy a gate would publish a
+#     release that never happened. A missing tag NOT on the list fails, so the
+#     next forgotten tag is caught while the four historical ones stay declared.
+#   - tags are read with `git`, which is absent from the self-test's copied tree
+#     and from a shallow CI checkout. No tags visible means the tag half cannot
+#     run, and it says so rather than passing silently -- the count stays fixed
+#     either way, so the ratchet does not move with whether git is available.
+CHANGELOG_VERSION = re.compile(r"^## \[(\d+\.\d+\.\d+)\] - (\d{4}-\d{2}-\d{2})", re.M)
+# The version this project began stamping runs at: the first row of the Run stamps
+# table. Everything before it predates task-pipeline in this repo.
+STAMPS_FROM = (1, 5, 0)
+# Releases with a CHANGELOG section and no tag, each already carrying a "Never
+# released on its own" note in that section. Declared, not tolerated: an entry
+# added here has to be argued for in the same commit.
+UNTAGGED_RELEASES = {
+    "1.4.0": "built and held; the release went out as 1.6.0",
+    "1.5.0": "built and held; the release went out as 1.6.0",
+    "1.28.0": "shipped inside a later version, see its CHANGELOG note",
+    "1.30.0": "shipped inside a later version, see its CHANGELOG note",
+}
+
+
+def _git_tags() -> list[str]:
+    try:
+        out = subprocess.run(
+            ["git", "-C", str(ROOT), "tag", "-l", "v*"],
+            capture_output=True, text=True, timeout=20,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return []
+    return [] if out.returncode else [l.strip()[1:] for l in out.stdout.split() if l.strip()]
+
+
+def _release_register(changelog: str, retro: str, tags: list[str]) -> None:
+    found = CHANGELOG_VERSION.findall(changelog)
+    versions = [v for v, _ in found]
+    if not check(bool(versions), "CHANGELOG.md: no '## [x.y.z] - date' sections found"):
+        return
+    dupes = sorted({v for v in versions if versions.count(v) > 1},
+                   key=lambda s: tuple(map(int, s.split("."))))
+    check(
+        not dupes,
+        f"CHANGELOG.md: {', '.join(dupes)} appears more than once -- one number, one "
+        f"release. A tag points at one commit, so a second section under the same "
+        f"heading is notes that will never be published or notes that will be "
+        f"published in place of the right ones",
+    )
+
+    key = lambda s: tuple(map(int, s.split(".")))
+    releases = [v for v in versions if key(v) >= STAMPS_FROM]
+
+    # The Run stamps table, read as a table rather than as the whole file: the Log
+    # below it narrates versions too, and a version mentioned in a story is not a
+    # stamp.
+    start = retro.find("## Run stamps")
+    stop = retro.find("## Log", start + 1) if start != -1 else -1
+    if not check(start != -1 and stop != -1,
+                 "docs/evidence/retro.md: no '## Run stamps' table between '## Run stamps' "
+                 "and '## Log' -- the retirement trigger in the standing instructions "
+                 "counts rows in it"):
+        return
+    # ROWS only, not the section. The section's own header paragraph names the
+    # range it was reconstructed over ("from `v1.27.0` to `v1.44.0`"), and reading
+    # the prose let that sentence stand in for twenty-six rows -- the self-test
+    # planted a deleted row and the check stayed green because the header still
+    # mentioned the version.
+    table = "\n".join(l for l in retro[start:stop].splitlines() if l.startswith("|"))
+    # `\b` before the digits does not work: the rows write `` `v1.27.0` ``, and
+    # between `v` and `1` there is no word boundary, so every backticked version in
+    # the table read as absent and forty-six correct rows were reported missing.
+    stamped = set(re.findall(r"(?<![\w.])v?(\d+\.\d+\.\d+)(?![\w.])", table))
+    missing = [v for v in sorted(set(releases), key=key) if v not in stamped]
+    check(
+        not missing,
+        f"docs/evidence/retro.md: '## Run stamps' has no row for "
+        f"{', '.join(missing)} -- a release with no stamp is a release the "
+        f"retirement trigger cannot count, and that trigger retires standing "
+        f"instructions on a count of five",
+    )
+
+    # BOTH branches emit exactly two checks. An early return when git is absent
+    # moved the count by one between a checkout with tags and one without, and the
+    # ratchet caught it inside the hour: the self-test's copied tree has no `.git`,
+    # so the floor measured here failed there. A gate whose count depends on the
+    # environment cannot have a floor.
+    visible = bool(tags)
+    untagged = [v for v in sorted(set(releases), key=key) if v not in set(tags)] if visible else []
+    undeclared = [v for v in untagged if v not in UNTAGGED_RELEASES]
+    check(
+        not undeclared,
+        f"CHANGELOG.md records {', '.join(undeclared)} and there is no tag for it. "
+        f"A tag nobody has is not a gate's to invent, so this is reported and not "
+        f"created: either tag the commit that shipped it, or add it to "
+        f"UNTAGGED_RELEASES with the reason and put a note in its section",
+    )
+    stale = sorted(v for v in UNTAGGED_RELEASES if v in set(tags)) if visible else []
+    check(
+        not stale,
+        f"UNTAGGED_RELEASES declares {', '.join(stale)} as untagged and the "
+        f"tag exists -- a declared exception nobody removed is an exception that "
+        f"stops describing the tree",
+    )
+    report.append(
+        f"release register: {len(set(versions))} versions, {len(tags)} tags, "
+        f"{len(untagged)} declared untagged ({', '.join(untagged) or 'none'})"
+        if visible else
+        "release register: tags are not visible in this checkout (no .git, or a "
+        "shallow clone) -- the duplicate-version and run-stamp halves ran, the "
+        "missing-tag audit did not"
+    )
+
+
+def validate_release_register():
+    _release_register(
+        read(ROOT / "CHANGELOG.md") or "",
+        read(ROOT / "docs/evidence/retro.md") or "",
+        _git_tags(),
+    )
+
+
+# ------------------------------------- the cross-pack status vocabulary
+#
+# `SURFACE_COMPOSITION.md` carries the library's only per-pack map of which status
+# tokens exist where, and an agent handing a pack to `dataviz` reads it to decide
+# whether `var(--warning)` resolves. It was PROSE -- "the pair `--ok` / `--warn` in
+# `workbench` and `instrument-console`; the pair `--good` / `--warning` in
+# blueprint, cyclorama…" -- so nothing could read it, and at twenty-nine packs it
+# was wrong for three of them: `workbench` had grown a full quartet, `atrium` had
+# `--info` and `--danger` the map did not mention, and `instrument-console` was
+# about to. The same class as B-016's accent count, which was fixed by hand twice
+# before `@role accent:` made it derivable.
+#
+# So the map is a table and this reads it. An undefined custom property does not
+# error -- `color: var(--good)` where --good is undefined is invalid at
+# computed-value time and falls back silently -- which is why a wrong entry here is
+# a wrong chart nobody sees fail.
+STATUS_ROLES = ("good", "ok", "success", "warn", "warning", "danger", "error", "info")
+STATUS_VARIANTS = ("-soft", "-weak", "-tint", "-dim", "-deep", "-bright", "-light",
+                   "-on-dark", "-mark", "-ink")
+# The table is found by its header and read to the first non-row line. A bare
+# two-column row pattern over the whole file matched four other tables in it and
+# reported "the status table lists 'lowest contrast', which is not a pack".
+STATUS_TABLE_HEAD = "| Status set (non-variant tokens, root block) | Packs |"
+STATUS_ROW = re.compile(r"^\|\s*(.+?)\s*\|\s*(.+?)\s*\|\s*$")
+
+
+def _status_set(css: str) -> set[str]:
+    """The pack's own status tokens: root block, non-variant, not `--on-*`."""
+    out = set()
+    for m in re.finditer(r"^\s*(--[a-z0-9-]+)\s*:", _root_block(css), re.M):
+        name = m.group(1)
+        if name.startswith("--on-") or name.endswith(STATUS_VARIANTS):
+            continue
+        if name.lstrip("-").split("-")[0] in STATUS_ROLES:
+            out.add(name)
+    return out
+
+
+def validate_status_vocabulary():
+    skill = ROOT / PLUGIN_DIR / "skills" / PLUGIN
+    doc = read(skill / "SURFACE_COMPOSITION.md") or ""
+    tokens = skill / "styles" / "tokens"
+    claimed: dict[str, set[str]] = {}
+    lines = doc.splitlines()
+    try:
+        head = next(i for i, l in enumerate(lines) if l.strip() == STATUS_TABLE_HEAD)
+    except StopIteration:
+        head = -1
+    for line in lines[head + 2:] if head != -1 else []:
+        row = STATUS_ROW.match(line)
+        if not row:
+            break
+        cell, packs = row.group(1), row.group(2)
+        want = set(re.findall(r"--[a-z0-9-]+", cell))
+        for name in re.split(r",\s*", packs.strip()):
+            if name:
+                claimed[name] = want
+    if not check(bool(claimed), "SURFACE_COMPOSITION.md: no status-vocabulary table found -- "
+                                "the per-pack status map has to be readable, or it goes stale "
+                                "silently and a chart resolves an undefined property"):
+        return
+    for name in _packs():
+        css = read(tokens / f"{name}.css")
+        if css is None:
+            continue
+        got = _status_set(css)
+        if not check(name in claimed,
+                     f"SURFACE_COMPOSITION.md: the status table does not list '{name}' "
+                     f"-- every pack is in the map or the map is not a map"):
+            continue
+        check(
+            got == claimed[name],
+            f"SURFACE_COMPOSITION.md: the status table says '{name}' has "
+            f"{', '.join(sorted(claimed[name])) or 'no status tokens'} and its token layer "
+            f"declares {', '.join(sorted(got)) or 'none'} -- var() on a token a pack does "
+            f"not define is invalid at computed-value time and fails silently",
+        )
+    for name in sorted(set(claimed) - set(_packs())):
+        check(False, f"SURFACE_COMPOSITION.md: the status table lists '{name}', "
+                     f"which is not a pack in this library")
+
+
+# ------------------------------------------------- the pack contradicts itself
+#
+# Four sweeps over one class of defect: a pack's TOKEN LAYER and its PROSE stating
+# different rules. A reader copies the token layer verbatim -- every pack says so
+# in its own Palette -- so when the two disagree the layer wins and the prose lies.
+# Every one of these was found by reading two files side by side, which is not a
+# method that scales to twenty-nine packs times two files.
+#
+# All four are scoped to what a machine can settle without guessing intent: a token
+# nobody named, a colour that cannot be seen where it is drawn, a component with two
+# radii, a duration outside a band the doctrine states in a table.
+
+# A shadow or a glow is the one token class a component cannot approximate: an
+# author who cannot find it in the prose invents one, and the pack's whole
+# elevation argument goes with it. `scoreboard` shipped four shadows under a
+# comment that counted "two soft stacks and a hairline" and named three in its
+# Texture section; `instrument-console` mandated `--signal-glow` in three places
+# and never wrote the token's name once, while its Bans permitted only the other
+# glow -- so the pack banned its own signature motif.
+ELEVATION_TOKEN = re.compile(r"^\s*(--(?:shadow|elev)[a-z0-9-]*|--[a-z0-9-]*glow):", re.M)
+
+
+CSS_COMMENT = re.compile(r"/\*.*?\*/", re.S)
+
+
+def _root_block(css: str) -> str:
+    """The first declaration block, which is the pack's own token layer.
+
+    Theme and reduced-motion blocks re-declare the same names; reading the whole
+    file would report a token twice and pin the count to how many themes a pack
+    happens to ship.
+
+    Comments are stripped FIRST. `datasheet.css` carries `html { font-size: 8px }`
+    inside a header comment explaining the reference's rem base, so a brace scan
+    over the raw text found that one, returned nine characters, and silently
+    excluded the whole pack from both sweeps that read this. A block scanner that
+    reads a comment as code skips exactly the packs whose authors explained
+    themselves most.
+    """
+    css = CSS_COMMENT.sub(lambda m: "\n" * m.group(0).count("\n"), css)
+    start = css.find("{")
+    if start == -1:
+        return css
+    depth, i = 1, start + 1
+    while i < len(css) and depth:
+        depth += css[i] == "{"
+        depth -= css[i] == "}"
+        i += 1
+    return css[start + 1:i - 1]
+
+
+def validate_elevation_tokens_named():
+    """Every shadow and glow a pack ships is named in the pack's prose."""
+    styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
+    for name in _packs():
+        css = read(styles / "tokens" / f"{name}.css")
+        prose = read(styles / f"{name}.md")
+        if css is None or prose is None:
+            continue
+        for tok in sorted(set(ELEVATION_TOKEN.findall(_root_block(css)))):
+            check(
+                tok in prose,
+                f"styles/tokens/{name}.css: ships '{tok}' and styles/{name}.md never "
+                f"names it -- a shadow a reader cannot find in the prose is a shadow "
+                f"they will invent, and the pack's elevation argument goes with it",
+            )
+
+
+# A component with two radii. `showroom` specified its specimen frame as
+# `--radius-2xl` in Texture and `--radius-3xl` in Components -- 16px against 20px --
+# and its nesting rule subtracts the padding from the OUTER value, so every inner
+# radius derived from the wrong one was wrong too. The kit shipped 20px, which is
+# how the defect was settled: the implementation is the tiebreak, and the prose is
+# what two readers disagree about.
+#
+# SCOPE. A component is a bolded row label in the pack's `## Components` table --
+# the pack's own list of the things it specifies. A radius is attributed to a
+# component only where the token stands within four words of the component's name,
+# or where it appears in that component's own table row. Anything looser reads the
+# nesting example ("a --radius-sm chip inside a --radius-lg row") as three
+# contradictions instead of one sentence.
+RADIUS_TOKEN = re.compile(r"--(?:radius|r)-[a-z0-9-]+")
+COMPONENT_ROW = re.compile(r"^\|\s*\*\*([^*|]+)\*\*\s*\|", re.M)
+
+
+def _radius_claims(prose: str, component: str) -> dict[str, list[int]]:
+    """{radius token: [line numbers]} for one component name, in one pack."""
+    stem = component.strip().lower().rstrip("s")
+    found: dict[str, list[int]] = {}
+    for lineno, line in enumerate(prose.splitlines(), 1):
+        low = line.lower()
+        if stem not in low:
+            continue
+        if line.startswith("|"):
+            row = COMPONENT_ROW.match(line)
+            if not row or row.group(1).strip().lower().rstrip("s") != stem:
+                continue
+            hits = RADIUS_TOKEN.findall(line)
+        else:
+            # A radius token modifies the noun that FOLLOWS it, so the span read is
+            # from the token to the next radius token or the end of the line. The
+            # first draft read 60 characters either side, and the nesting sentence
+            # every pack writes -- "a --radius-sm chip inside a --radius-lg row
+            # inside a --radius-3xl specimen frame" -- then reported three
+            # contradictions where the sentence states one rule per noun.
+            hits = []
+            spans = [m.start() for m in RADIUS_TOKEN.finditer(line)] + [len(line)]
+            for i, m in enumerate(RADIUS_TOKEN.finditer(line)):
+                if stem in low[m.end():spans[i + 1]]:
+                    hits.append(m.group(0))
+        for h in hits:
+            found.setdefault(h, []).append(lineno)
+    return found
+
+
+def validate_radius_single_valued():
+    """A component's radius is stated once, or the pack states two rules."""
+    styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
+    for name in _packs():
+        prose = read(styles / f"{name}.md")
+        if prose is None:
+            continue
+        table = _section(prose, "## Components")
+        for component in sorted({m.group(1).strip() for m in COMPONENT_ROW.finditer(table)}):
+            claims = _radius_claims(prose, component)
+            if len(claims) < 2:
+                continue
+            where = "; ".join(
+                f"{tok} at {', '.join(str(n) for n in lines)}"
+                for tok, lines in sorted(claims.items())
+            )
+            check(
+                False,
+                f"styles/{name}.md: '{component}' is given {len(claims)} different radii "
+                f"({where}) -- one of them is what the kit ships and the rest are what a "
+                f"reader will copy; and a nesting rule keyed to the outer value carries "
+                f"the error inward",
+            )
+
+
+# A duration outside the band the doctrine states for it. Both numbers are parsed
+# out of MOTION_DOCTRINE.md rather than repeated here, because a gate that hard-codes
+# the doctrine's numbers stops agreeing with the doctrine the first time it is edited
+# -- and the doctrine is the document this library asks packs to obey.
+#
+# `prism` put its CTA press on `--dur-fast` at 200 ms, 40 ms past the top of the
+# press band, with nothing faster in the layer to reach for. `showroom` wrote `0.3s`
+# into two prose sites instead of naming `--dur-base`, which is the same number and
+# is what the layer ships.
+PRESS_ROW = re.compile(r"^\|\s*Button press[^|]*\|\s*(\d+)\s*[–—-]\s*(\d+)\s*ms", re.M | re.I)
+UI_CEILING = re.compile(r"UI motion stays at or under\s+(\d+)\s*ms", re.I)
+DUR_DECL = re.compile(r"^\s*(--dur[a-z0-9-]*)\s*:\s*([0-9.]+)(m?s)\s*;", re.M)
+PRESS_WORD = re.compile(r"\bpress(?:ed|es)?\b", re.I)
+# An entrance is not UI motion and the doctrine says so; a pack claiming the
+# exemption has to use the word, which is also what makes the claim reviewable.
+ENTRANCE_WORD = re.compile(r"\bentrance|\breveal|\bscroll-linked|\bscrub", re.I)
+# "instant on purpose" is a real answer to a press band and `cyclorama` gives it.
+INSTANT = re.compile(r"\b0s\b|instant", re.I)
+
+
+def _ms(value: str, unit: str) -> float:
+    return float(value) * (1.0 if unit == "ms" else 1000.0)
+
+
+def validate_motion_bands():
+    """A press sits inside the doctrine's press band; UI motion sits under its ceiling."""
+    skill_dir = ROOT / PLUGIN_DIR / "skills" / PLUGIN
+    doctrine = read(skill_dir / "MOTION_DOCTRINE.md") or ""
+    band = PRESS_ROW.search(doctrine)
+    ceiling = UI_CEILING.search(doctrine)
+    if not check(band is not None, "MOTION_DOCTRINE.md: no 'Button press feedback' row with a "
+                                   "ms band -- the packs' press durations cannot be checked "
+                                   "against a table that does not state one"):
+        return
+    if not check(ceiling is not None, "MOTION_DOCTRINE.md: no 'UI motion stays at or under N ms' "
+                                      "ceiling -- the boundary has to be a number a gate can apply"):
+        return
+    lo, hi = float(band.group(1)), float(band.group(2))
+    top = float(ceiling.group(1))
+
+    styles = skill_dir / "styles"
+    for name in _packs():
+        css = read(styles / "tokens" / f"{name}.css")
+        prose = read(styles / f"{name}.md")
+        if css is None or prose is None:
+            continue
+        durations = {m.group(1): _ms(m.group(2), m.group(3))
+                     for m in DUR_DECL.finditer(_root_block(css))}
+        # `## Motion flavor` is in scope because that is where a pack prescribes
+        # its entrance set, and an entrance is the one case the ceiling exempts --
+        # so it is also the section where an exemption gets claimed for a control.
+        for heading in ("## Components", "## Micro-interactions", "## Motion flavor"):
+            body = _section(prose, heading)
+            for line in body.splitlines():
+                if not PRESS_WORD.search(line) or INSTANT.search(line):
+                    continue
+                # The token nearest the word `press`, so a line that also prescribes
+                # a hover duration is not read as putting the hover on the press.
+                pos = PRESS_WORD.search(line).start()
+                near = sorted(
+                    ((abs(m.start() - pos), m.group(1)) for m in
+                     re.finditer(r"(--dur[a-z0-9-]*)", line)),
+                )
+                if not near or near[0][1] not in durations:
+                    continue
+                tok = near[0][1]
+                got = durations[tok]
+                check(
+                    lo <= got <= hi,
+                    f"styles/{name}.md: the press is prescribed over {tok} at {got:g}ms, "
+                    f"outside the doctrine's {lo:g}-{hi:g}ms press band -- add a duration "
+                    f"inside the band rather than reaching for the nearest one",
+                )
+            # A raw duration in prose is a value the token layer does not govern.
+            for m in re.finditer(r"`(\d+(?:\.\d+)?)(ms|s)`", body):
+                got = _ms(m.group(1), m.group(2))
+                lineno = body[:m.start()].count("\n") + 1
+                named = [k for k, v in durations.items() if v == got]
+                check(
+                    not named,
+                    f"styles/{name}.md: '{heading}' writes the literal {m.group(0)} where "
+                    f"{'/'.join(named)} is that exact value -- a duration written twice is a "
+                    f"duration that drifts (line {lineno} of the section)",
+                )
+                if named:
+                    continue
+                check(
+                    got <= top or ENTRANCE_WORD.search(body.splitlines()[lineno - 1]) is not None,
+                    f"styles/{name}.md: '{heading}' prescribes {m.group(0)} for a control, past "
+                    f"the doctrine's {top:g}ms UI ceiling, and the line does not say it is an "
+                    f"entrance -- an entrance may run longer, a control may not",
+                )
+
+
+# A pack that bans a weight or a slant and ships no base layer has banned nothing.
+# `<strong>` renders at 700 and `<em>` renders italic with no stylesheet involved, so
+# a ban that lives only in prose is invisible to every grep over CSS and to every
+# browser. Two of twenty-nine shipped the block; `tenor`'s own comment states the
+# rule this check enforces -- "any pack in this library that bans a weight or a slant
+# owes the same block" -- which is a doctrine nothing was reading.
+WEIGHT_BAN = re.compile(
+    r"no\s+(?:bold|700|800|900)\b|there\s+is\s+no\s+bold\b|no\s+weight\s+(?:above|over)\b",
+    re.I,
+)
+SLANT_BAN = re.compile(r"no\s+italics?\b|has\s+no\s+italic\b|never\s+italic\b", re.I)
+# The selector has to be the bare elements. `\b[^{]*\{` accepted
+# `strong, b.disabled {` -- a rule for one class, which leaves every other
+# `<strong>` on the UA default. The self-test found this by planting exactly that.
+WEIGHT_BASE = re.compile(
+    r"^\s*(?:strong|b)\s*,\s*(?:strong|b)\s*(?:,[^{.\[:]*)?\{[^}]*font-weight", re.M | re.S)
+SLANT_BASE = re.compile(
+    r"^\s*(?:em|i)\s*,\s*(?:em|i)\s*(?:,[^{.\[:]*)?\{[^}]*font-style", re.M | re.S)
+
+
+def validate_emphasis_base_layer():
+    """A banned weight or slant is banned in CSS, not only in prose."""
+    styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
+    for name in _packs():
+        prose = read(styles / f"{name}.md")
+        css = read(styles / "tokens" / f"{name}.css")
+        if prose is None or css is None:
+            continue
+        for label, ban, base, elements, prop in (
+            ("weight", WEIGHT_BAN, WEIGHT_BASE, "strong, b", "font-weight"),
+            ("slant", SLANT_BAN, SLANT_BASE, "em, i", "font-style"),
+        ):
+            hit = ban.search(prose)
+            if not hit:
+                continue
+            check(
+                base.search(css) is not None,
+                f"styles/tokens/{name}.css: styles/{name}.md bans a {label} "
+                f"({hit.group(0).strip()!r}) and the token layer ships no base rule for it "
+                f"-- add '{elements} {{ {prop}: … }}', because the UA supplies one whether "
+                f"the pack does or not and the ban is invisible to a grep over CSS",
+            )
+
+
 def validate_bundle_self_sufficiency():
     bundle = ROOT / PLUGIN_DIR / "skills" / PLUGIN
     if not bundle.is_dir():
@@ -1833,6 +2483,12 @@ def main():
     validate_reduced_motion()
     validate_pack_container_answer()
     validate_kit_breakpoints()
+    validate_release_register()
+    validate_status_vocabulary()
+    validate_elevation_tokens_named()
+    validate_radius_single_valued()
+    validate_motion_bands()
+    validate_emphasis_base_layer()
     validate_bundle_self_sufficiency()
     validate_coordination_claim()
     check_routed_triggers_still_advertised()
@@ -1842,6 +2498,8 @@ def main():
             print(f"FAIL: {failure}")
         sys.exit(1)
     check_floor("validate.py", checks)
+    for line in report:
+        print(f"  {line}")
     print(f"OK ({checks} checks)")
 
 

@@ -53,7 +53,8 @@ the style-pack half and nothing else.
 3. **Hold, then redeploy.** Hold a formation ~80% of a section, then morph in a
    short, phase-staggered, arc-curved wave. Crossfades are banned.
 4. **Earned motion.** Scrub only for instruments that narrate state over time;
-   hover/entrance motion stays sub-500ms and never gates content.
+   hover and press stay inside the doctrine's bands, an entrance may run past
+   them when measured, and neither ever gates content.
 5. **Degrade to calm.** Reduced-motion / coarse pointer / no-WebGL collapse to
    a static, fully-legible page. The effect is a bonus, never a dependency.
 

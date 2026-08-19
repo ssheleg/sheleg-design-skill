@@ -288,6 +288,15 @@
   --focus-ring: var(--brand);
 }
 
+/* The base layer, and it is a synthesis rule rather than a weight or a style.
+   Bricolage Grotesque has no italic, so an `<em>` in a display heading gets a
+   browser-slanted fake — the "irregularity is the whole personality" argument in the
+   Gotchas, undone by a shear transform. `font-synthesis-style: none` refuses the
+   fake without touching Geist's real italic, which the body copy does use. The
+   declared `font-style` is the UA's own value, stated so the rule says what it keeps
+   as well as what it removes. */
+em, i { font-style: italic; font-synthesis-style: none; }
+
 /* The reference ships a reduced-motion branch for every animated class, which
    is the right posture and this pack requires it. Durations collapse; the
    reveal resolves to its final state instead of transitioning to it. */

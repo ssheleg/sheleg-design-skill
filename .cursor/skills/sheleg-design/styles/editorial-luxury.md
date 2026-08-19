@@ -69,8 +69,11 @@ sage accent switches to `--accent-on-dark`.
 - Fixed warm radial field + ~4% film-grain multiply overlay (cheap, no blur).
 - Squircle radii 14 / 22 / 30px; double-bezel cards
   (`inset 0 1px 0 rgba(255,251,242,0.7)` highlight).
-- Soft ambient elevation only (`0 18px 50px -28px rgba(36,28,20,0.30)`
-  scale); no harsh dark drops, no outer glows on buttons.
+- Soft ambient elevation only, and it is a three-step scale with a token per
+  step: `--shadow-sm` for a resting card, `--shadow`
+  (`0 18px 50px -28px rgba(36,28,20,0.30)`) for the lifted one, `--shadow-lg` for
+  the single deepest surface on a page. No harsh dark drops, no outer glows on
+  buttons, and no fourth step.
 
 ## Motion tokens
 

@@ -290,6 +290,13 @@ the stat dividers.
   is fine around a card; it is *not* enough for a control whose only affordance
   is that border. Inputs take `--line-strong`, ghost buttons take `--line-ink`,
   outline buttons take `--accent`.
+- **`--line-ink` is the same hex as `--surface-ink` (`#2A2B2F`), so a ghost control
+  on the inverted banner has no border at all** — 1.00:1, not a faint one. On the
+  banner and inside a media well a ghost control borders in `--on-ink` (13.47:1);
+  `--line-ink` is for the light steps, `--bg` and `--surface`, and the token layer
+  says so with `@role drawn-on:`. The pack's one inverted surface is also the one
+  place its ghost button is most likely to be used, which is why this was worth a
+  line rather than a shrug.
 - **The accent fails AA on the cream surface** (4.2:1). This bites exactly where
   it is least visible in review: an accent label inside a card looks correct on
   a laptop and fails an audit. Either put accent text on the field, or size it

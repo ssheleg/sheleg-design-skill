@@ -88,7 +88,8 @@ motion layer never hard-codes a palette.
 3. **Hold, then redeploy.** Hold a formation ~80% of a section, then morph in a
    short, phase-staggered, arc-curved wave. No crossfades.
 4. **Earned motion.** Scrub is for instruments that narrate state over time;
-   entrance motion stays sub-500ms and never gates content.
+   hover and press stay inside the doctrine's bands, an entrance may run past
+   them when measured, and neither gates content.
 5. **Degrade to calm.** Reduced-motion / coarse pointer / no-WebGL collapse to a
    static, fully-legible page.
 

@@ -719,6 +719,28 @@ def self_test() -> int:
             "below WCAG AA",
         ),
         (
+            # One hex doing two jobs. `showroom` and `atrium` both shipped a hairline
+            # the same colour as a surface, which is 1.00:1 -- no rule at all -- and
+            # nothing here compared a line against a surface.
+            "a hairline the same colour as a surface, undeclared",
+            None,
+            ("_planted_", ":root {\n  --bg: #ffffff;\n  --ink: #1a1a1a;\n"
+                          "  --surface-2: #eeeeee;\n  --line-weak: #eeeeee;\n}\n", ""),
+            "are the same colour",
+            _line_surface_collision,
+        ),
+        (
+            # And the escape hatch's own hole: a `drawn-on` list naming a token the
+            # pack does not declare exempts the line from every surface that exists.
+            "a drawn-on declaration naming a surface the pack does not ship",
+            None,
+            ("_planted_", "/* @role drawn-on: --surface-9 */\n:root {\n"
+                          "  --bg: #ffffff;\n  --ink: #1a1a1a;\n"
+                          "  --surface-2: #eeeeee;\n  --line-weak: #eeeeee;\n}\n", ""),
+            "which this pack does not declare",
+            _line_surface_collision,
+        ),
+        (
             "a relative colour with a calc() channel, which is refused rather than guessed",
             {"--bg": "#ffffff", "--ink": "#1a1a1a", "--line": "#dddddd",
              "--surface2": "#eeeeee",
@@ -734,6 +756,12 @@ def self_test() -> int:
             label, decls, expected = case
             _reset()
             validate_theme("_planted_", ":root", decls)
+        elif len(case) == 5:
+            # A fifth element names the core to plant into, so a new text-based
+            # check does not have to be routed through _status_on_field.
+            label, _, (stem, text, _pack), expected, core = case
+            _reset()
+            core(stem, text)
         else:
             label, _, (stem, text, pack), expected = case
             _reset()
@@ -920,6 +948,140 @@ def _status_on_field(stem: str, text: str, pack: str) -> None:
                 notes.append(f"  {stem} [{label}]: {name} at {ratio:.2f}:1 -- declared non-text")
 
 
+# ------------------------------------------- one hex doing two jobs
+#
+# A hairline the same colour as the surface it is drawn on is not a faint
+# hairline, it is no hairline: 1.00:1. Two packs shipped it. `showroom` declares
+# `--line-weak` and `--surface-2` as the same `#edeff3`, so a rule inside the
+# sunken well the specimen sits in is invisible; `atrium` declares `--line-ink`
+# and `--surface-ink` as the same `#2a2b2f`, and `--line-ink` is the ghost
+# control's border while `--surface-ink` is the banner a ghost control most
+# plausibly sits on. Neither is caught by anything else here: `validate_theme`
+# compares ink against field and then separates semantic peers, and a line is
+# neither.
+#
+# SCOPE: lines against surfaces, and identity rather than a low-contrast
+# threshold. Two reasons, both measured on this tree.
+#   1. A threshold is arbitrary and this library's hairlines are deliberately
+#      almost invisible -- `showroom`'s --line-weak is 1.15:1 on --bg and 1.10:1
+#      on --surface, both correct and both under any threshold worth writing.
+#      Identity is not a judgement call.
+#   2. Other family pairs sharing a hex are usually a designed alias, not a
+#      collision: `atrium`'s --on-ink IS --bg because the inverted surface's text
+#      is the field colour, and `workbench` points --info at --accent on purpose.
+#      validate_theme already reports those as aliases.
+#
+# The escape is a declaration, in the idiom this file already uses for the accent
+# and for non-text status: `@role drawn-on: --a, --b` says which surfaces the line
+# is for, and a surface outside that list is out of scope. A collision a reader
+# can see in the token layer is a decision; one they discover in a browser is not.
+# The token list stops at the em dash that starts the reason. The first draft read
+# to the end of the line, so the tokens NAMED IN THE REASON -- "--line-weak is the
+# same hex as --surface-2" -- were read as permitted surfaces, and the check passed
+# the very collision that sentence was describing. A marker that grants whatever it
+# mentions grants everything.
+ROLE_DRAWN_ON = re.compile(r"@role\s+drawn-on\s*:\s*([^\n*\u2014\u2013]*)", re.I)
+# A marker governs the next token declared after it, which is the convention every
+# `@role` comment in this library already follows.
+NEXT_DECL = re.compile(r"^\s*(--[a-z0-9-]+)\s*:", re.M)
+LINE_ROLES = ("line", "hairline", "rule", "border", "seam", "divider", "stroke")
+SURFACE_ROLES = ("bg", "base", "paper", "canvas", "surface", "panel", "field", "well")
+
+
+def _role_family(name: str, roles) -> bool:
+    """True when the token's own name puts it in this family.
+
+    Read from the name's segments rather than by substring: `--line-weak` is a
+    line and `--underline-offset` is not, and `--surface-grad-from` is a surface
+    while `--on-surface` is ink for one.
+    """
+    parts = name.lstrip("-").split("-")
+    if parts and parts[0] == "on":
+        return False
+    return any(part in roles for part in parts)
+
+
+def validate_line_surface_collision(css: Path) -> None:
+    _line_surface_collision(css.stem, css.read_text(encoding="utf-8"))
+
+
+def _line_surface_collision(stem: str, text: str) -> None:
+    """The core, split out so the self-test can plant a token layer as a string.
+
+    Same reason as `_status_on_field`: a check exercised only by editing a real
+    pack has a plant that drifts away from the tree it protects.
+    """
+    for label, decls in themes(text):
+        solids = {}
+        for name in decls:
+            raw = resolve(name, decls)
+            if not raw:
+                continue
+            parsed = parse_color(raw)
+            if parsed and parsed[1] >= 0.999:
+                solids[name] = parsed[0]
+        lines = [n for n in sorted(solids) if _role_family(n, LINE_ROLES)]
+        surfaces = [n for n in sorted(solids) if _role_family(n, SURFACE_ROLES)
+                    and not _role_family(n, LINE_ROLES)]
+        # The declarations are read from the whole file, not per theme: a pack states
+        # where a line is drawn once, and a theme re-declares values, not roles.
+        drawn_on: dict[str, set[str]] = {}
+        for m in ROLE_DRAWN_ON.finditer(text):
+            owner = NEXT_DECL.search(text, m.end())
+            if owner:
+                drawn_on.setdefault(owner.group(1), set()).update(
+                    re.findall(r"--[a-z0-9-]+", m.group(1)))
+        # A surface named in a `drawn-on` list has to exist, or the declaration is
+        # satisfied by a typo -- which is how an escape hatch becomes a bypass.
+        for owner, named in sorted(drawn_on.items()):
+            for tok in sorted(named):
+                check(
+                    tok in decls,
+                    f"tokens/{stem}.css [{label}]: '@role drawn-on:' for {owner} names {tok}, "
+                    f"which this pack does not declare -- a list of surfaces that do not "
+                    f"exist exempts the line from every surface that does",
+                )
+        for ln in lines:
+            declared = drawn_on.get(ln, set())
+            for sf in surfaces:
+                if solids[ln] != solids[sf]:
+                    continue
+                if declared and sf not in declared:
+                    continue  # the pack says this line is not drawn there
+                check(
+                    False,
+                    f"tokens/{stem}.css [{label}]: {ln} and {sf} are the same colour, so a "
+                    f"rule in {ln} on {sf} is 1.00:1 -- not faint, absent."
+                    + (f" '@role drawn-on:' for {ln} names {sf} anyway."
+                       if declared else
+                       " Give the line its own value, or declare '@role drawn-on: …' naming"
+                       " the surfaces it IS drawn on, so the collision is a decision a reader"
+                       " can see."),
+                )
+
+
+# Counted, not restated. Every figure the comment inside this function used to
+# assert is derived here and printed once per run.
+_tally: dict = {"guarded": 0, "unguarded": 0,
+                "packs_guarded": set(), "packs_unguarded": set()}
+# The one measurement anybody ever hand-checked, and its date. Kept as data so the
+# printed line can say plainly which part of the total was verified and which was
+# not -- and so it cannot be mistaken for a statement about the tree today.
+HAND_VERIFIED = (71, 121, 16, "2026-08-12")
+
+
+def stated_ratio_report() -> str:
+    total = _tally["guarded"] + _tally["unguarded"]
+    un, pk = _tally["unguarded"], len(_tally["packs_unguarded"])
+    share = f"{un / total * 100:.0f}%" if total else "n/a"
+    v_un, v_total, v_packs, when = HAND_VERIFIED
+    return (
+        f"stated ratios: {total} claims, {_tally['guarded']} guarded, "
+        f"{un} unguarded ({share}) at {pk} packs. Hand-verified: {v_un} of "
+        f"{v_total} at {v_packs} packs on {when}, and nothing since"
+    )
+
+
 def validate_stated_ratios(css: Path) -> None:
     stem = css.stem
     maps = _theme_maps(css.read_text(encoding="utf-8"))
@@ -980,16 +1142,26 @@ def validate_stated_ratios(css: Path) -> None:
                 partner_names.append(base)
             if not partner_names:
                 # ------------------------------------------------------------
-                # MEASURED AND LEFT UNGUARDED, DELIBERATELY — 2026-08-12.
-                # A ratio whose line names no partner and whose table declares
-                # no base is skipped. That is 71 of the library's 121 stated
-                # ratios (59%), including inside packs whose tables DO declare a
-                # base, because a Gotchas paragraph is not a table row.
+                # LEFT UNGUARDED, DELIBERATELY — and the size of the hole is
+                # COUNTED on every run rather than written here. A ratio whose
+                # line names no partner and whose table declares no base is
+                # skipped, including inside packs whose tables DO declare a base,
+                # because a Gotchas paragraph is not a table row. The counters
+                # below feed the `stated ratios:` line this script prints.
                 #
-                # All 71 were recomputed by hand the day the hole was found and
-                # all 71 were correct, so nothing is wrong today. Two attempts
-                # to guard them were written and both were thrown away, and the
-                # reasons are the finding:
+                # WHAT WAS VERIFIED, AND WHEN. On 2026-08-12 the library held 121
+                # stated ratios, 71 of them unguarded at sixteen packs, and all 71
+                # were recomputed by hand that day and found correct. That is the
+                # whole of the hand-verification and it has never been repeated.
+                # Every claim added since is unguarded AND unverified, and the
+                # printed count is the only honest statement of how many: the
+                # sentence this comment used to carry — "nothing is wrong today" —
+                # was true of a tree with 121 claims in it and was still sitting
+                # here at more than four times that, which is the exact failure
+                # mode this file exists to refuse.
+                #
+                # Two attempts to guard them were written and both were thrown
+                # away, and the reasons are the finding:
                 #
                 #   1. "Can any pair of this pack's tokens produce that number?"
                 #      cannot fail. Thirty solid tokens are ~435 pairs spanning
@@ -1007,9 +1179,9 @@ def validate_stated_ratios(css: Path) -> None:
                 #
                 # So the guard needs to tell a measurement from an argument
                 # about a measurement, and that is a real piece of work rather
-                # than a regex. Filed rather than faked. The honest state is:
-                # these 71 are verified by hand as of this date and unguarded
-                # against the next edit.
+                # than a regex. Filed rather than faked.
+                _tally["unguarded"] += len(claims)
+                _tally["packs_unguarded"].add(stem)
                 continue
                 literal = [
                     parsed[0] for parsed in
@@ -1045,6 +1217,8 @@ def validate_stated_ratios(css: Path) -> None:
             # satisfying the claim is enough; the check is "this pack can produce
             # that number for a token on this row", not "for the first one".
             subjects = names if not subject.startswith("--on-") else [subject]
+            _tally["guarded"] += len(claims)
+            _tally["packs_guarded"].add(stem)
 
             for claim in claims:
                 want = float(claim)
@@ -1111,9 +1285,11 @@ def main() -> int:
     for css in files:
         validate_pack(css)
         validate_status_on_field(css)
+        validate_line_surface_collision(css)
         validate_stated_ratios(css)
     for line in notes:
         print(line)
+    print(f"  {stated_ratio_report()}")
     if failures:
         for f in failures:
             print(f"FAIL: {f}")

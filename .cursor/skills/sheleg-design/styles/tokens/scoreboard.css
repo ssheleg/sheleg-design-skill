@@ -50,7 +50,11 @@
      marks": a 3x18px tick, a chip edge, a rule. --accent-ink is the one that may carry a
      word, and the 1.13.1 correction says no orange here may carry a link. */
   --accent: #ff4801;
-  --accent-hover: #e03d00; /* 4.12:1 on --bg — the one orange that may carry a link */
+  /* 4.12:1 on --bg — the hover step of a MARK, and it may not carry a link either.
+     1.13.0 called this "the one orange that may carry a link"; 1.13.1 retracted that
+     in the pack's Gotchas and left the sentence here, where a reader copies it. A
+     link is --ink with an --accent underline. */
+  --accent-hover: #e03d00;
   --accent-wash: #fff7ed; /* MEASURED — selected row, hovered cell */
   /* The accent's one filled use: a selected chip. 4.92:1 under --on-accent,
      which clears AA; white on the same fill is 3.40:1 and does not. The accent
@@ -105,11 +109,16 @@
   --chart-grid: #e4e4e7;
   --chart-axis: #71717b;
 
-  /* ---- Elevation: two soft stacks and a hairline ------------------------ */
-  /* MEASURED. Both stacks are two layers at 4–5% and neither is tinted. This
-     pack lifts almost nothing: a card is a 1px --line-weak rule with the
-     hairline under it, and --shadow-card is for the one report surface a
-     section is built around. */
+  /* ---- Elevation: a hairline, a panel wash, one stack and one lift ------ */
+  /* MEASURED. Four shadows, and the pack's Texture section names all four:
+     --shadow-hairline (1 layer, 2.5%) sits under every card; --shadow-panel
+     (1 layer, 4%) is the [data-surface="panel"] band's own seat; --shadow-card
+     (2 layers, 5% and 5%, and it IS tinted — rgba(16,24,40) is a blue-black, on
+     purpose: the report surface is the one place the page reads as screen rather
+     than paper) is for the one report surface a section is built around; and
+     --shadow-lift (1 layer, 16%, untinted) is for something genuinely floating.
+     This pack lifts almost nothing: a card is a 1px --line-weak rule with the
+     hairline under it. */
   --shadow-hairline: 0 1px 2px 0 rgba(0, 0, 0, 0.025);
   --shadow-panel: 0 1px 6px rgba(0, 0, 0, 0.04);
   --shadow-card:

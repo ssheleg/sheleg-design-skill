@@ -100,8 +100,14 @@ names its curve explicitly. A pack that ships no curve inherits these three, and
 | Modals, drawers, sheets | 200–500 ms |
 | Marketing, explanatory, scrollytelling | longer, deliberately |
 
-**UI motion stays under 300 ms.** A 180 ms select feels responsive; the same
-select at 400 ms feels like the app is thinking.
+**UI motion stays at or under 300 ms.** A 180 ms select feels responsive; the
+same select at 400 ms feels like the app is thinking. The boundary is stated
+because a gate applies it: 300 ms is the ceiling itself and a control may sit on
+it with a reason, 301 ms is over. **An entrance is not UI motion** and is not
+bounded by this number — it may run longer when the value is measured off a
+reference, provided it never gates content and the pack says which of the two
+rules its token answers to. `--dur-reveal` at 500 ms and `--dur-fast` at 150 ms
+are both correct; the same 500 ms on a button is not.
 
 Speed is not only comfort — it is perceived performance. A faster spinner makes
 an identical load feel shorter. A tooltip that skips its delay after the first
@@ -261,7 +267,7 @@ Before calling motion done:
 - [ ] Every animation survives the "why does this move?" sentence.
 - [ ] Nothing on the 100+/day path animates at all.
 - [ ] No `ease-in` in UI; curves are named, not inherited by accident.
-- [ ] UI durations under 300 ms; the table was consulted, not guessed.
+- [ ] UI durations at or under 300 ms; entrances declared as entrances; the table was consulted, not guessed.
 - [ ] No banned form from §5 appears anywhere in the diff.
 - [ ] Every `scrub` carries `ease: "none"`.
 - [ ] Every ScrollTrigger has a cleanup path.

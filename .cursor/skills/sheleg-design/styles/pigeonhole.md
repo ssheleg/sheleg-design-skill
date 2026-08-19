@@ -218,7 +218,9 @@ is what lets a two-line headline break where it means to.
   `#f7f7f7` on 19, and exactly one 2px `--rule-strong` `#e3e3e3` on the page.
 - **One shadow does almost all the work.** `--shadow-card`
   (`0 3px 12.9px rgba(151,151,151,0.08)`) on 40 elements. `--shadow-hero` is the
-  single exception and belongs to the product frame alone.
+  single exception and belongs to the product frame alone. `--shadow-soft`
+  (`0 2px 16px rgba(0,0,0,0.03)`, measured on 5 elements) is the one below
+  `--shadow-card`: a surface that must not read as lifted at all.
 - **A tinted card's shadow is tinted to its own hue.** `--shadow-tint-a` and
   `--shadow-tint-b` are the measured pair from the green card; the rule
   generalises — mix the shadow toward the card's own tint rather than toward

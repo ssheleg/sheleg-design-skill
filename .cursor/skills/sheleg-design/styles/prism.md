@@ -150,7 +150,7 @@ Measured off the reference unless a row says **pack decision**.
 
 | Component | Resting | Hover | Active / selected | Disabled |
 |---|---|---|---|---|
-| **Primary CTA** | `--ink` fill, `--on-ink` label, `--radius`, `14px 28px`, 16px mono | fill → `--ink-2` over `--dur-fast` | `translateY(1px)` | `opacity: .45`, `cursor: not-allowed` |
+| **Primary CTA** | `--ink` fill, `--on-ink` label, `--radius`, `14px 28px`, 16px mono | fill → `--ink-2` over `--dur-fast` | `translateY(1px)` over `--dur-press` | `opacity: .45`, `cursor: not-allowed` |
 | **Secondary CTA** | `--surface` fill, `1px --line-strong`, `--ink` label, same metrics | border → `--ink-soft` | as above | as above |
 | **Accent CTA** | `--accent` fill, `--on-accent` label (8.02:1) | `--accent-hover` | as above | as above |
 | **Install line** | `--surface-2` fill, `1px --line`, `--radius`, `12px 16px`, mono 14px, a `$` prompt in `--ink-faint`, a copy button at the right | copy button tints | copied: label swaps to `copied`, **not** a colour-only change | — |
@@ -201,8 +201,11 @@ Measured off the reference unless a row says **pack decision**.
 
 ## Motion tokens
 
-- **One curve, `cubic-bezier(0.4, 0, 0.2, 1)`**, two durations: `--dur-fast .2s`
-  for control states and `--dur-base .3s` for reveals.
+- **One curve, `cubic-bezier(0.4, 0, 0.2, 1)`**, three durations: `--dur-press
+  .14s` for the press, `--dur-fast .2s` for hover and colour, and `--dur-base .3s`
+  for reveals. The press is separate because the doctrine bands it separately at
+  100–160 ms; through 1.44.0 the pack put the press on `--dur-fast` at 200 ms and
+  had nothing faster to offer.
 - **The wash never animates.** Not a hue rotation, not a slow pan, not a
   scroll-linked shift. It is a static optical fact; animating it is the single
   change that would turn this pack into `cyclorama` badly.
@@ -254,8 +257,9 @@ hero ends.
 
 ## Micro-interactions
 
-- **Buttons** transition fill and border over `--dur-fast`; press is
-  `translateY(1px)`. Nothing scales.
+- **Buttons** transition fill and border over `--dur-fast`. Nothing scales.
+- **The press** is `translateY(1px)` over `--dur-press` — 140 ms, inside the
+  doctrine's own band for press feedback, which is the reason the token exists.
 - **The copy button** changes its *label* to `copied`, not just its colour — a
   colour-only confirmation is invisible to a third of the people this page is
   for, and it is the same rule as the status marks.

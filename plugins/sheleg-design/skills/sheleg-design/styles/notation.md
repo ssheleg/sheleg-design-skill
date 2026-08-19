@@ -83,8 +83,9 @@ never by getting heavier.
 
 **Structure is drawn, not filled.** A group is a hairline box or a hairline
 above and below; `--panel` exists but is only 2% off the field and is used
-sparingly. There is one shadow token and it is 4% at 2px — it exists so a
-dropdown does not merge with the page and for nothing else.
+sparingly. There is one shadow token, `--shadow-1`, and it is 4% at 2px — it
+exists so a dropdown does not merge with the page and for nothing else. The dark
+theme re-declares it at 50%, because 4% of black on a dark field is nothing.
 
 Radii: `--r-control` 4, `--r-card` 4, `--r-pill` 999, and `--chamfer` 10.
 

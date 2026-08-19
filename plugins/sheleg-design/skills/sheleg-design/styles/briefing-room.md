@@ -76,9 +76,11 @@ only — never body copy.
 
 ## Texture & surface
 
-- Elevation is **surface step + hairline**, never a glow. One card shadow
-  exists (`0 28px 70px -28px rgba(0,0,0,0.85)`) and it is for lifted cards on
-  the dark field; a second, tighter one for popovers.
+- Elevation is **surface step + hairline**, never a glow. Two shadow tokens
+  exist and no more: `--shadow-card` (`0 28px 70px -28px rgba(0,0,0,0.85)`) for a
+  lifted card on the dark field, and `--shadow-pop`
+  (`0 12px 32px -12px rgba(0,0,0,0.7)`), tighter, for a popover. Both are named
+  here so nobody retypes the literal into a component.
 - Radii `4 / 6 / 12 / 18 / 24 / 999`. Chips and pills take 999; cards take
   12–18; the frame itself is square.
 - 4px spacing grid **with deliberate half-steps** (18, 22, 36) — dense

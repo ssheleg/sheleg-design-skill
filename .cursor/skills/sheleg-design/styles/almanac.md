@@ -100,9 +100,11 @@ Measures: 62ch prose, 52ch lede.
 read by mass. Radii cluster at `--r-control` 8, `--r-card` 16 and `--r-lg` 24,
 with a `100vw` pill written the way the reference writes it.
 
-**One object floats per page**, on a layered shadow rather than a single stop —
-four stops, the deepest 162px of blur. A second floating object is the fastest
-way to lose the effect.
+**One object floats per page**, on `--shadow-1` — a layered shadow rather than a
+single stop, four stops deep, the deepest 162px of blur. It is the pack's only
+shadow token and it is re-declared for the dark theme at 30–40% instead of 2–5%,
+because a shadow tuned for paper vanishes on a dark field. A second floating
+object is the fastest way to lose the effect.
 
 **Radius arithmetic when containers nest:** an inner radius is the outer minus
 the padding between them. A control inside a card padded `--space-4` is

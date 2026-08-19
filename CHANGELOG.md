@@ -4,6 +4,130 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Four packs contradicted themselves, and six sweeps now say so
+
+A reader copies the token layer verbatim — every pack's Palette section tells
+them to — so when the layer and the prose disagree, the layer wins and the prose
+lies. Nine such contradictions were filed by hand across `scoreboard`,
+`instrument-console`, `showroom` and `prism`. All nine are fixed, and where the
+class repeats it is a sweep with a planted defect rather than nine edits.
+
+**`scoreboard`** shipped `--accent-hover: #e03d00; /* the one orange that may
+carry a link */` — the exact permission the pack retracted in 1.13.1, still in
+the file a reader copies (B-033). Its elevation comment counted "two soft stacks
+and a hairline" over four shadows, called `--shadow-card` untinted when
+`rgba(16, 24, 40, …)` is a blue-black, and left `--shadow-panel` in no prose at
+all (B-035). Its Bans forbade "radii above 8px" while `--radius-pill: 999px`
+ships and the section tick requires it, and cited `font-smooth: never` — not a
+legal value of the property the pack sets, and not a property any engine
+implements (B-036).
+
+**`instrument-console`** legislated four statuses and shipped two colours, so
+`var(--danger)` and `var(--info)` were undefined custom properties — invalid at
+computed-value time, falling back with no error anywhere — in the pack that
+required them (B-038). Its pressed primary kept a label at **3.06:1**, one row
+under its own warning that `--accent-dim` is a fill and not a label (B-039). And
+it called `--accent-glow` "the only permitted glow" while mandating
+`--signal-glow`, a composite its prose never named — so the pack banned its own
+signature motif (B-041).
+
+**`showroom`** specified its specimen frame at `--radius-2xl` in one section and
+`--radius-3xl` in another, with a subtraction rule keyed to the outer value, so
+every inner radius inherited the 4px error (B-022). It shipped one hex for two
+jobs — `--line-weak` and `--surface-2` are both `#edeff3`, which makes a hairline
+on the sunken well 1.00:1 — and a comment naming a colour the focus ring stopped
+using fourteen releases ago (B-023). Three of its motion values contradicted the
+doctrine in the same bundle (B-024). **`prism`** prescribed its CTA press over
+`--dur-fast` at 200 ms, past the doctrine's 100–160 ms press band, with nothing
+faster in the layer to reach for.
+
+### Six sweeps, twenty-four findings beyond the nine
+
+- **`validate_elevation_tokens_named()`** — every `--shadow-*` and `--*-glow` a
+  pack declares is named in the pack's prose. **Sixteen unnamed tokens across
+  eleven packs** on its first run; `proscenium`'s own "Elevation is three
+  shadows" turned out to be four.
+- **`validate_radius_single_valued()`** — a component is given one radius. It
+  attributes a token to the noun that FOLLOWS it, so the nesting sentence every
+  pack writes reads as one rule per noun. Found `scoreboard`'s card at two radii.
+- **`validate_motion_bands()`** — a press sits inside the doctrine's press band,
+  a duration literal in prose is not a value the layer already holds, and a
+  control stays under the UI ceiling. The band and the ceiling are **parsed out of
+  `MOTION_DOCTRINE.md`**, so the gate cannot disagree with the document it
+  enforces.
+- **`validate_emphasis_base_layer()`** — a pack that bans a weight or a slant
+  ships the base rule for it. `<strong>` renders 700 and `<em>` renders italic
+  with no stylesheet involved, so the ban was invisible to every grep over CSS
+  and to every browser. Two of twenty-nine shipped one; `atrium`, `notation` and
+  `field-notes` now do too (B-044).
+- **`validate_status_vocabulary()`** — the cross-pack status map in
+  `SURFACE_COMPOSITION.md` is a table, compared against every token layer with
+  set equality. It was prose, and wrong in three places (B-016's live half).
+- **`validate_line_surface_collision()`** in the palette gate — a line token and
+  a surface token resolving to the same colour fail unless the layer declares
+  `@role drawn-on:`. Found the unrecorded instance in `atrium` and the
+  deliberate-but-undeclared one in `maquette`.
+
+### The doctrine took two corrections
+
+"UI motion stays **under** 300 ms" is now "**at or under**", because a control may
+sit on the ceiling with a reason and 301 ms is over — and a gate needs a boundary.
+And the "hover/entrance motion stays sub-500ms" sentence in `SKILL.md`,
+`SHELEG_DESIGN.md`, `README.md` and the Cursor rule was the wrong half of its own
+contradiction: it lumped hover with entrance and set a bound that `manpage`,
+`tenor`, `bulletin`, `scoreboard`, `field-notes` and `roster` all exceed with
+measured values. An entrance is not UI motion, may run longer when the value is
+measured, and never gates content.
+
+### Three registers that had stopped describing the tree
+
+- `CHANGELOG.md` carried **two `## [1.35.0] - 2026-08-15` sections** — two runs
+  took the number, the tag went to the second, and the loser's notes sat *above*
+  the winner's, so a release extractor reading the first match would have shipped
+  the wrong notes. One heading now, and the superseded section says what happened.
+- `docs/evidence/retro.md`'s Run stamps table stopped at `v1.26.0` while `1.44.0`
+  shipped — eighteen versions — so the *has not fired in five run stamps*
+  retirement trigger read every standing instruction as dormant. Twenty-six rows
+  reconstructed from `git log`, the tags and the CHANGELOG, with `Diverged?` left
+  *unrecorded* rather than guessed (B-037, SG-04).
+- `validate_release_register()` gates all of it: no duplicate version, a stamp for
+  every release at or after `1.5.0`, and a missing tag reported against a declared
+  list. **Reported, never created** — a tag nobody has is not a gate's to invent.
+
+### Numbers that were restated instead of computed
+
+- `test/validate_palette.py` asserted "71 of 121 (59%) … all 71 were recomputed by
+  hand … nothing is wrong today" at sixteen packs. Counted today: **513 claims,
+  177 unguarded (35%) at 22 packs**, and the hand-verification covered 71 of 121
+  on 2026-08-12 and has never been repeated. The figures print on every run and
+  the comment says plainly which of them was ever verified.
+- `test/validate.py` said "the six packs shipped before the widening" (seven) and
+  "seven of the ten widened packs" (twenty-two widened). The split is printed now.
+- `package.json` said "twenty-nine locked style packs" over a list of **27** —
+  `awning` and `bulletin` were missing. `ENUMERATION_SITES` gained `package.json`,
+  which is the description npmjs.com renders: its count was already policed and
+  the names beside it were not.
+
+### Fixed
+
+- `_root_block()` stripped no comments, so `datasheet.css` — whose header explains
+  the reference's rem base with `html { font-size: 8px }` — sliced a
+  nine-character root block and was silently excluded from two sweeps. A block
+  scanner that reads a comment as code skips exactly the packs whose authors
+  explained themselves most.
+- `validate_release_register()` emitted one check when `git` could see no tags and
+  two when it could, so the check count moved with the environment and the floor
+  measured on a real checkout failed inside the self-test's copy. Both branches
+  emit two now.
+
+### Gate
+
+`npm test` → **3543 / 1924 / 635**, floors raised in `test/floors.json` with the
+delta attributed per function. Ten new plants, all watched being refused; two of
+them found holes in the checks they were written for.
+
 ## [1.44.0] - 2026-08-19
 
 ### Degrade to calm gained an observable
@@ -552,6 +676,75 @@ accessibility defects in it, and neither was reachable without building a page.
 
 ## [1.35.0] - 2026-08-15
 
+> **The number was already in use.** A concurrent run had written a
+> `## [1.35.0]` section for `ledger` before this one, and `v1.35.0` tags this
+> commit — so the ledger notes moved to a heading of their own, directly
+> below. Standing instruction 1 in `docs/evidence/retro.md` is about exactly
+> this, and it caught the collision late rather than never.
+
+**A twenty-second pack, and the reference it was asked for did not survive measurement.**
+The request was "a pack in the style of taskip.net". Taskip turned out to be WordPress and
+Elementor over a bought theme (Xilancer), carrying **three token systems that disagree** —
+the theme's declared primary `#6074f6` appears nowhere on the rendered page, the visible
+emerald lives in a second sheet, and a third set of values is Tailwind slate. Twelve radius
+values, six shadows, seven weights, four font families, and `.3s` / `0.3s` / `300ms` written
+as three different things. That is a page-builder output, not a vocabulary, and this library
+exists on the premise that a pack is the reference's own vocabulary rather than a
+reconstruction of one. It was declined as a source and the register was re-sourced instead.
+
+### Added — `awning`, the twenty-second pack
+
+Origin: <https://www.shopify.com>, read 2026-08-15 from the served HTML plus its six linked
+stylesheets. Chosen after measuring five candidates on the same axes; it was the only one
+that paired the register with a real system.
+
+- **The accent is black, and it is a resolved chain rather than a stylistic absence.**
+  `--color-component-button-primary-bg` → `--color-theme-bg-cta` → `#000`, with hover, active
+  and disabled declared beside it. No hue reaches the chrome at all, which is what leaves
+  every colour on the page belonging to the product screenshot inside it.
+- **A three-tier token layer** — primitives, semantic roles, per-component states — so the
+  pack ships the indirection rather than the resolved values. `--radius-component-button:
+  var(--radius-theme-full)` is the only place the system says *why* a button is a pill.
+- **420 and 550, and no 700 anywhere.** A variable grotesque used as one. Setting a heading
+  in 700 here is not a small deviation; it is the one number the system was built to avoid.
+- **Tracking crosses zero inside one family** — negative on the display ramp, positive on the
+  body ramp, crossover around 1.375rem — where most packs in this library split tracking
+  across two faces.
+- **Leading ships paired with size in `rem`**, not as a ratio, and the ratio *changes* down
+  the ramp: 1.08 at display, 1.12 at t2, 1.30 at t7.
+- **One shadow, three layers** — ambient, contact, and a `0 0 2px` hairline edge that is what
+  stops a card dissolving on pure white. That third layer is the one people drop when they
+  copy a shadow by eye.
+- Six Gotchas, three of them defects in the reference: `--ink-faint` at **4.40:1 on the
+  system's own second field**; three eases named as tokens against **ten unnamed inline
+  durations**; and `ease-in` shipped as a token while the doctrine bans it in UI.
+- Routed through all seven surfaces the validator checks, mirrored to `.cursor`, added to
+  `install.sh`, and shipped with `kits/awning` — the six-name spine on the canonical API plus
+  `ProductFrame`, `PlanCard` and `FeatureRow`.
+
+### Fixed
+
+- `paperclip` and `showroom` now link **back** to `awning`. The validator caught the one-way
+  fork: a neighbour reference that only points one direction is a dead end for anyone who
+  reaches the other pack first.
+- Nine stated counts moved from twenty-one to twenty-two across `SKILL.md`, `README.md`,
+  `package.json`, both manifests, `bin/cli.js`, `MOBILE_SURFACES.md`, `SURFACE_COMPOSITION.md`
+  and `DESIGN_SYNC_BRIDGE.md`, plus core-contract packs from six to seven. Every one was
+  caught by the gate rather than remembered.
+
+## [ledger — shipped inside 1.35.0] - 2026-08-15
+
+> **Two runs took the number 1.35.0, and the tag went to the other one.**
+> `v1.35.0` is `e9c0bf6`, the `awning` release below; this section's work is
+> `48f24d9`, which carried `1.35.0` in every manifest and was never tagged —
+> `git checkout v1.35.0` gets you both, because the ledger commit is an
+> ancestor of the tag. Two identical `## [1.35.0]` headings sat here from
+> 2026-08-15 until 1.45.0, the ledger one ABOVE the tagged one, so a release
+> extractor reading the first match for `## [1.35.0]` would have shipped the
+> wrong notes. The heading is no longer a version because the version was
+> never this section's to hold, and `validate_release_register()` now refuses
+> a duplicate.
+
 **The twenty-first pack, and two counts that had been wrong for eight releases.**
 `ledger` was extracted from `basedash.com` — a warm cream console for a product
 that answers questions about data. Adding it walked the library past twenty for
@@ -613,58 +806,6 @@ table that stopped at twenty and a regex that read one modifier word.
   ledger". The four were filled in by hand and are now genuinely exhaustive; the
   check that would have caught it — a name in a context that routes to it — is
   not written.
-
-## [1.35.0] - 2026-08-15
-
-**A twenty-second pack, and the reference it was asked for did not survive measurement.**
-The request was "a pack in the style of taskip.net". Taskip turned out to be WordPress and
-Elementor over a bought theme (Xilancer), carrying **three token systems that disagree** —
-the theme's declared primary `#6074f6` appears nowhere on the rendered page, the visible
-emerald lives in a second sheet, and a third set of values is Tailwind slate. Twelve radius
-values, six shadows, seven weights, four font families, and `.3s` / `0.3s` / `300ms` written
-as three different things. That is a page-builder output, not a vocabulary, and this library
-exists on the premise that a pack is the reference's own vocabulary rather than a
-reconstruction of one. It was declined as a source and the register was re-sourced instead.
-
-### Added — `awning`, the twenty-second pack
-
-Origin: <https://www.shopify.com>, read 2026-08-15 from the served HTML plus its six linked
-stylesheets. Chosen after measuring five candidates on the same axes; it was the only one
-that paired the register with a real system.
-
-- **The accent is black, and it is a resolved chain rather than a stylistic absence.**
-  `--color-component-button-primary-bg` → `--color-theme-bg-cta` → `#000`, with hover, active
-  and disabled declared beside it. No hue reaches the chrome at all, which is what leaves
-  every colour on the page belonging to the product screenshot inside it.
-- **A three-tier token layer** — primitives, semantic roles, per-component states — so the
-  pack ships the indirection rather than the resolved values. `--radius-component-button:
-  var(--radius-theme-full)` is the only place the system says *why* a button is a pill.
-- **420 and 550, and no 700 anywhere.** A variable grotesque used as one. Setting a heading
-  in 700 here is not a small deviation; it is the one number the system was built to avoid.
-- **Tracking crosses zero inside one family** — negative on the display ramp, positive on the
-  body ramp, crossover around 1.375rem — where most packs in this library split tracking
-  across two faces.
-- **Leading ships paired with size in `rem`**, not as a ratio, and the ratio *changes* down
-  the ramp: 1.08 at display, 1.12 at t2, 1.30 at t7.
-- **One shadow, three layers** — ambient, contact, and a `0 0 2px` hairline edge that is what
-  stops a card dissolving on pure white. That third layer is the one people drop when they
-  copy a shadow by eye.
-- Six Gotchas, three of them defects in the reference: `--ink-faint` at **4.40:1 on the
-  system's own second field**; three eases named as tokens against **ten unnamed inline
-  durations**; and `ease-in` shipped as a token while the doctrine bans it in UI.
-- Routed through all seven surfaces the validator checks, mirrored to `.cursor`, added to
-  `install.sh`, and shipped with `kits/awning` — the six-name spine on the canonical API plus
-  `ProductFrame`, `PlanCard` and `FeatureRow`.
-
-### Fixed
-
-- `paperclip` and `showroom` now link **back** to `awning`. The validator caught the one-way
-  fork: a neighbour reference that only points one direction is a dead end for anyone who
-  reaches the other pack first.
-- Nine stated counts moved from twenty-one to twenty-two across `SKILL.md`, `README.md`,
-  `package.json`, both manifests, `bin/cli.js`, `MOBILE_SURFACES.md`, `SURFACE_COMPOSITION.md`
-  and `DESIGN_SYNC_BRIDGE.md`, plus core-contract packs from six to seven. Every one was
-  caught by the gate rather than remembered.
 
 ## [1.34.0] - 2026-08-15
 

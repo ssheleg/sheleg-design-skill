@@ -80,11 +80,14 @@ on each run.
 | `--ink-muted` | `#9aa7b6` | secondary text | **8.24:1** |
 | `--ink-faint` | `#5f6b7a` | captions — see Gotchas | 3.72:1 |
 | `--accent` | `#3392ff` | THE electric-blue signal (CTA, links, particles) | **6.43:1** |
-| `--accent-dim` | `#1f5fb0` | pressed signal | 3.19:1 — a fill, not a label |
+| `--accent-dim` | `#1f5fb0` | pressed signal — a fill, and the label on it is `--ink` (5.62:1), **never** `--accent-ink` (3.06:1) | 3.19:1 — a fill, not a label |
 | `--accent-bright` | `#6bb3ff` | highlighted signal | **9.14:1** |
 | `--accent-ink` | `#0a0e14` | text **on** the accent — 6.17:1 there; white on `#3392ff` is 3.14 and fails | 1.04 |
-| `--accent-glow` | `rgba(51,146,255,0.18)` | the only permitted glow | — |
+| `--accent-glow` | `rgba(51,146,255,0.18)` | the focus halo — one of the pack's two glows | — |
+| `--signal-glow` | `0 0 0 1px rgba(51,146,255,.4), 0 8px 30px rgba(51,146,255,.18)` | the other one: the composite the ONE active signal element wears | — |
 | `--ok` / `--warn` | `#46d39a` / `#e0a030` | status semantics only | **10.61:1** / **8.87:1** |
+| `--danger` | `#f4526b` | status — **pack decision**, not measured: the reference paints no danger state | **6.02:1** |
+| `--info` | `var(--accent)` | status — the signal hue itself, by decision: info and the CTA are one blue here | **6.43:1** |
 
 The particle field, progress rail, and all instruments are tinted with
 `--accent` only — energy per scene changes brightness, never hue.
@@ -103,9 +106,10 @@ The particle field, progress rail, and all instruments are tinted with
 
 - Flat panels separated by 1px hairlines; radii 4 / 8 / 14px (+ pill) —
   machined, not squircle.
-- Elevation via surface steps (`--surface-1..3`), not shadows; the single
-  glow `0 0 0 1px rgba(51,146,255,0.4), 0 8px 30px rgba(51,146,255,0.18)`
-  is reserved for the active signal element.
+- Elevation via surface steps (`--surface-1..3`), not shadows; the one composite
+  glow — `--signal-glow`, and it has a token so nobody retypes the literal — is
+  reserved for the active signal element. The focus halo is the other glow,
+  `--accent-glow`, and the two are the complete list.
 - No grain, no blur; darkness itself is the texture.
 
 ## Motion tokens
@@ -150,8 +154,13 @@ How this pack rides the SHELEG motion layer:
 
 ## Micro-interactions
 
-- Buttons: surface-step + accent fill on primary; press = 1 shade dimmer
-  (`--accent-dim`), no bounce.
+- Buttons: surface-step + accent fill on primary. Press dims the fill one shade to
+  `--accent-dim` **and swaps the label to `--ink`** — no bounce.
+  The resting label `--accent-ink` measures 6.17:1 on `--accent`.
+  The same label carried into the pressed state is 3.06:1 on `--accent-dim`,
+  which fails AA one row under the Palette's own warning that `--accent-dim` is a
+  fill and not a label — so the label changes with the fill.
+  The pressed label `--ink` is 5.62:1 on `--accent-dim`.
 - Reveal primitives themed per act: Scatter (drift+blur resolve), Lock
   (snap into slot), Clip (mechanical wipe), Pulse (lock acquired).
 - Focus-visible: 1px `--accent` ring + `--accent-glow` halo.
@@ -164,9 +173,17 @@ How this pack rides the SHELEG motion layer:
   pairs sit inside a dichromat's confusion line; re-stepping them would
   invent a colour this pack does not own, so the second signal carries
   the meaning instead.
-- One accent hue — no second color except `--ok`/`--warn` status semantics.
+- One accent hue — no second colour except the status set, which is
+  `--ok` / `--warn` / `--danger` and nothing else. `--info` is not an exception
+  because it *is* the accent: `--info: var(--accent)`. Through 1.44.0 this line
+  named two statuses while the ban above it required four, and the token layer
+  shipped the same two — so `var(--danger)` and `var(--info)` were undefined
+  properties in the pack that legislated them.
 - No gradient text, no glassmorphism/backdrop blur, no purple/neon
-  rainbow, no colored shadows besides `--accent-glow`.
+  rainbow, and no coloured shadow besides the pack's own two: `--accent-glow`
+  (the focus halo) and `--signal-glow` (the active signal element). Through
+  1.44.0 this line named only the first while the Texture section mandated the
+  second, so the pack banned its own signature motif.
 - No light sections — contrast comes from surface steps, not inversion.
 - No decorative serif/display fonts; the console voice is grotesk + mono.
 
