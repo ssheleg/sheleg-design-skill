@@ -4,6 +4,50 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.44.0] - 2026-08-19
+
+### Degrade to calm gained an observable
+
+The promise had none. `sloplint.py` asserted only that the **string**
+`prefers-reduced-motion` appeared in the doctrine — that the rule was mentioned, not that any
+shipped artifact obeyed it. Measured: **2 of 29 token layers shipped no reduce branch**,
+including the pack that mandates a particle field.
+
+`validate_reduced_motion()` asserts two things per layer: a layer declaring `--dur-*` or
+`--ease-*` ships a `prefers-reduced-motion` branch, **and that branch collapses at least one
+time-valued property to ≤1ms**. The second half is the row — doctrine §9 says motion collapses
+"to static or instant, not to slower", so a branch that merely names the query satisfies a grep
+and changes nothing a reader can feel. Durations are matched **by value, not by name**, so
+`paperclip`'s `--t-*` and `instrument-console`'s `--motion-ease` are not read as empty.
+
+`editorial-luxury` and `instrument-console` fixed. Where a motif cannot be reached from a custom
+property — a rAF particle field is not stoppable by a duration — the still is now stated for each:
+field to one static frame, spotlight to every section lit, instruments fully drawn. 29 of 29
+layers now carry a branch that bites. B-040 closed.
+
+### A count hyphenated onto its noun was invisible to the gate that counts it
+
+`docs/DOCMAP.md` said "a fourteen-kit build matrix" against **29** kits, and the counted-claims
+guard ran green over that string for weeks: `COUNTED` never matched a number spelled as a word and
+joined to its noun by a hyphen. A contributor had already routed around the hole rather than
+report it.
+
+The separator is now `[ -]`, **captured and back-referenced**, so a compound is read in one
+alphabet or the other and a half-and-half form is not silently accepted; the plural is required
+for the spaced form only, because a hyphenated count is a singular modifier by grammar.
+Blast radius measured old-pattern-against-new on one tree: the policed set 34 → 36 spans with
+**zero false positives**, the whole tree 333 → 384.
+
+The coordination claim is **derived** rather than reworded — DOCMAP now points at the generated
+`AGENT_SYNC.md`, and a new check holds the derivation from both ends so the page, the config and
+the document cannot disagree.
+
+### Plants
+
+Self-test 16 → 19, each asserting its **message** rather than merely the red — every token layer
+is copied into its kit byte for byte, so any edit trips the kit-drift check and a plant would
+otherwise report "caught" with the intended check never having run.
+
 ## [1.43.0] - 2026-08-17
 
 **The twenty-ninth pack, and the first one whose signature is a defect its reference
