@@ -1912,6 +1912,16 @@ UNTAGGED_RELEASES = {
 }
 
 
+def _git(*args) -> str:
+    """One git question, or the empty string when git cannot answer it."""
+    try:
+        out = subprocess.run(["git", "-C", str(ROOT), *args],
+                             capture_output=True, text=True, timeout=20)
+    except (OSError, subprocess.SubprocessError):
+        return ""
+    return "" if out.returncode else out.stdout.strip()
+
+
 def _git_tags() -> list[str]:
     try:
         out = subprocess.run(
@@ -1975,7 +1985,25 @@ def _release_register(changelog: str, retro: str, tags: list[str]) -> None:
     # ratchet caught it inside the hour: the self-test's copied tree has no `.git`,
     # so the floor measured here failed there. A gate whose count depends on the
     # environment cannot have a floor.
-    visible = bool(tags)
+    # `bool(tags)` treated ONE tag as the whole tag set, and that made the v1.45.0
+    # release red for a reason that had nothing to do with the release: a release
+    # checkout (`actions/checkout` with `ref: v1.45.0`) fetches that ref and nothing
+    # else, so 49 shipped releases looked untagged. The same run on `main` passed
+    # because a shallow checkout fetches NO tags, the check switched itself off, and
+    # the difference between "no view" and "a one-tag view" was invisible.
+    #
+    # So a partial view is now named as one. Two signals, both cheap: a shallow
+    # repository cannot answer this question at all, and a single tag against a
+    # CHANGELOG of dozens is a fetched ref rather than a tag set.
+    shallow = _git("rev-parse", "--is-shallow-repository") == "true"
+    visible = bool(tags) and not shallow and len(tags) > 1
+    if tags and not visible:
+        report.append(
+            f"untagged releases — the tag view here is partial "
+            f"({len(tags)} tag(s){', shallow clone' if shallow else ''}), so which "
+            f"releases carry a tag could not be read. A check that cannot look must "
+            f"not read as one that looked"
+        )
     untagged = [v for v in sorted(set(releases), key=key) if v not in set(tags)] if visible else []
     undeclared = [v for v in untagged if v not in UNTAGGED_RELEASES]
     # The release BEING PREPARED is the one exception, and it has to be, or the bump

@@ -50,6 +50,16 @@ itself: one sweep was reading a declaration out of a header comment and silently
 a whole pack, and a new check emitted a different number of checks with and without git
 tags, which broke the ratchet in its own self-test copy.
 
+**Found by the release, in the release's own gate.** The untagged-release check read
+`bool(tags)` as "the whole tag set is visible". A release checkout fetches the released
+ref and nothing else, so at `v1.45.0` exactly one tag was present and the other 49 shipped
+releases read as untagged — the release went red for a reason with nothing to do with the
+release. The same commit passed on `main` because a shallow checkout fetches NO tags, the
+check switched itself off, and the difference between *no view* and *a one-tag view* was
+invisible. Both are named as partial now, and a partial view is disclosed rather than
+answered. Verified against a `--depth 1 --branch v1.45.0` clone, which is the environment
+that failed.
+
 Checks: `validate.py` 3398 to **3543**, `validate_palette.py` 1912 to **1924**, `sloplint.py`
 635. Ten new plants, all caught; 49 planted defects across the three self-tests, 0 missed.
 
