@@ -47,6 +47,39 @@
   --bg: var(--base); /* role alias -> --base, this pack's field */
 }
 
+/* Degrade to calm — MOTION_DOCTRINE.md §9. The doctrine's hardest line lands on
+   this pack, because this is the pack that mandates a WebGL particle field, a
+   scan/dim attention spotlight and scrubbed SVG instruments, and §9 says WebGL
+   and canvas scenes degrade to their CSS or SVG still. One of those three can
+   be reached from here and two cannot, and saying which at the declaration is
+   the point:
+
+     - The four durations and the stagger collapse. Every transition and every
+       reveal that spends them lands on its final state without travelling —
+       that includes the kit's only transition, .ic-btn's colour swap.
+     - The particle field is a rAF loop, and no custom property can stop one.
+       The scene branches on the reduced-motion hook and renders a single static
+       frame (SHELEG_DESIGN.md:364); `## Motion flavor` in instrument-console.md
+       now states the still for each motif, which is where an implementer of the
+       backdrop is actually reading.
+     - The scan/dim spotlight and the instrument scrub are driven by the scroll
+       clock, not by these tokens: under reduce every section renders lit and
+       every instrument renders drawn. The progress rail was already static.
+
+   `--motion-ease` is left alone: it is an ease-out, not an overshoot, and a
+   curve spent over 0s is inert. That is pigeonhole's lesson applied rather than
+   relearned — a duration collapses what a duration drives, and the rest is
+   stated where the implementer reads it. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0s;
+    --dur-base: 0s;
+    --dur-slow: 0s;
+    --dur-epic: 0s;
+    --stagger: 0s;
+  }
+}
+
 /* ── components ── */
 
 /* Everything below consumes var(--…) only. Colour never appears as a literal.

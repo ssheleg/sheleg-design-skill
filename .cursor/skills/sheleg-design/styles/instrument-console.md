@@ -136,6 +136,17 @@ How this pack rides the SHELEG motion layer:
   (control/system acts), Clip (headlines/panels), Pulse (climax).
 - Instruments: hairline-thin scrubbed SVG with mono annotations; progress
   rail and act badge are first-class chrome.
+- Under `prefers-reduced-motion: reduce`, each motif has a still and the
+  still is the deliverable, not a fallback: the particle field renders a
+  single static frame at its resting formation (a rAF loop cannot be
+  stopped by a duration, so the scene branches on the reduced-motion hook);
+  the scan/dim spotlight stops travelling and every section renders lit;
+  the instruments render fully drawn instead of scrubbing; the rail and the
+  act badge were already static. The token layer collapses the four
+  durations and the stagger, which covers everything they drive —
+  everything above is what a custom property cannot express. This pack
+  shipped neither half from its first release until now, which is the
+  reason §9 is written as a contract and not as advice.
 
 ## Micro-interactions
 

@@ -1191,6 +1191,14 @@ def check_floor(script: str, count: int) -> None:
 # Each planted defect is one this repo actually shipped. The tree is copied, one
 # defect is planted, and THIS file is re-run against the copy -- so what is
 # tested is the validator CI runs, not a re-implementation of it.
+#
+# An entry is (label, path, mutate) or (label, path, mutate, expect). Without
+# `expect` the pass condition is only "the validator went red", which is weaker
+# than it looks the moment a file is read by more than one check: every token
+# layer is also copied into its kit byte for byte, so ANY edit to
+# styles/tokens/<pack>.css also trips the kit-drift check -- and a plant caught by
+# a neighbouring check proves nothing about the check it was written for. The two
+# reduced-motion plants below name the message they must provoke.
 PLANTS = (
     (
         # A widened pack that stops answering the container bullet. Derived from
@@ -1287,13 +1295,40 @@ PLANTS = (
         f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md",
         lambda t: t.replace("styles/maquette.md", "styles/nowhere.md"),
     ),
+    (
+        # B-040, planted back in. `instrument-console` shipped with no branch at
+        # all while mandating a WebGL particle field, and both gates stayed green
+        # because the only thing reading the promise was a string assertion over
+        # MOTION_DOCTRINE.md. The at-rule is removed and the `:root` body left
+        # behind, so what the plant removes is exactly the query -- a plant that
+        # deleted the whole tail would also be a syntax error and could be caught
+        # for the wrong reason.
+        "a token layer that ships motion tokens and no reduced-motion branch",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/tokens/instrument-console.css",
+        lambda t: t.replace("@media (prefers-reduced-motion: reduce) {\n  :root {", "  :root {", 1),
+        "ships no '@media (prefers-reduced-motion: reduce)' branch",
+    ),
+    (
+        # The defect the CHECK would have had if it were a grep, which is the
+        # defect B-040 was really about: sloplint asserts the STRING
+        # `prefers-reduced-motion` occurs in the doctrine, so a branch that
+        # mentions the query and collapses nothing satisfied every gate. §9 says
+        # motion collapses to static or instant, "not to 'slower'" -- 0.4s is
+        # slower, and this plant is the whole reason the check reads values.
+        "a reduced-motion branch that mentions the query and collapses nothing",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/tokens/editorial-luxury.css",
+        lambda t: re.sub(r"(--dur-[a-z]+|--stagger): 0s;", r"\1: 0.4s;", t),
+        "collapses no duration to an instant value",
+    ),
 )
 
 
 def self_test() -> int:
     src = Path(__file__).resolve().parent.parent
     ok = True
-    for label, rel, mutate in PLANTS:
+    for plant in PLANTS:
+        label, rel, mutate = plant[:3]
+        expect = plant[3] if len(plant) > 3 else None
         with tempfile.TemporaryDirectory() as tmp:
             dst = Path(tmp) / "repo"
             shutil.copytree(src, dst, ignore=shutil.ignore_patterns(*COPY_IGNORE))
@@ -1312,6 +1347,13 @@ def self_test() -> int:
             )
             if run.returncode == 0:
                 print(f"  MISSED  {label}  ({rel}) -- validator stayed green")
+                ok = False
+            elif expect is not None and expect not in run.stdout + run.stderr:
+                # Red for some other reason is not proof. A token layer is also
+                # copied into its kit, so an edit here trips the kit-drift check
+                # too, and without this branch the plant would report "caught"
+                # with the check it was written for never having run.
+                print(f"  MISSED  {label}  ({rel}) -- went red without saying {expect!r}")
                 ok = False
             else:
                 print(f"  caught  {label}")
@@ -1396,6 +1438,99 @@ def validate_core_vocabulary():
             f"styles/tokens/{name}.css: the accent role resolves to '{declared}', which "
             f"is not defined here. Define --accent, or declare '@role accent: --X' "
             f"pointing at a token that exists",
+        )
+
+
+# ------------------------------------------------- degrade to calm, observed
+#
+# "Degrade to calm" is one of this pack's five stated principles
+# (SHELEG_DESIGN.md:53) and MOTION_DOCTRINE.md §9 spends a section on it:
+# *"Shipping an animation without a reduced-motion path is a bug, not a polish
+# item."* Until now the only thing that read that promise was sloplint's
+# doctrine table, which asserts the STRING `prefers-reduced-motion` occurs
+# somewhere in MOTION_DOCTRINE.md -- i.e. it checks that the doctrine mentions
+# the rule, never that a shipped artifact obeys it. Measured 2026-08-19 with
+# both gates green: 2 of 29 token layers shipped no branch at all --
+# `instrument-console.css`, the pack that mandates a WebGL particle field, and
+# `editorial-luxury.css` (B-040).
+#
+# Two decisions about how much this check may demand, both taken against what
+# the doctrine WRITES rather than what would be tidy:
+#
+#  1. Mere existence of the at-rule is not enough. An empty
+#     `@media (prefers-reduced-motion: reduce) {}` would satisfy a grep and
+#     change nothing at runtime, and a check a defect can satisfy is the defect
+#     this one exists to remove -- so the block must actually collapse a
+#     duration to an instant value. §9: motion "collapse[s] to static or
+#     instant -- not to 'slower'".
+#  2. It does NOT demand that every declared duration collapse. `roster` keeps
+#     `--dur-float-a/b` at 5.5s/6.5s on purpose, with the reason written at the
+#     declaration: they drive infinite animations, a duration cannot stop one,
+#     and at 0.01ms it strobes at exactly the reader the query protects. The
+#     component layer pauses those with `animation-play-state`, which no custom
+#     property can express. A per-token rule would have to break that or grow an
+#     escape hatch; both are a different rule from the one §9 states. Logged as
+#     B-045 instead of smuggled in here.
+#
+# Durations are detected by VALUE, not by name. `paperclip` spells its
+# durations `--t-micro … --t-hero-copy` and `instrument-console` spells its
+# curve `--motion-ease`, so a check keyed only on `--dur-*` would have read
+# paperclip's branch as empty and passed a layer it never inspected.
+MOTION_NAME = re.compile(r"^[ \t]*(--(?:dur|ease)-[a-z0-9-]+)\s*:", re.M | re.I)
+CSS_TIME = re.compile(r"^[ \t]*(--[a-z0-9-]+)\s*:\s*(-?[0-9.]+)(ms|s)\s*(?:;|$)", re.M | re.I)
+REDUCE_AT = re.compile(r"@media[^{]*prefers-reduced-motion\s*:\s*reduce[^{]*\{", re.I)
+# 1ms. Every layer that ships a branch collapses to `0s` or to `0.01ms` (the
+# value pigeonhole measured off its reference); nothing legitimate sits between
+# 1ms and a duration a reader can see.
+INSTANT_SECONDS = 0.001
+
+
+def _reduce_blocks(text: str) -> list[str]:
+    """Bodies of every `prefers-reduced-motion: reduce` at-rule, brace-balanced.
+
+    Counted rather than sliced to a fixed window for the reason given at
+    validate_kit_breakpoints: `blueprint` and `prism` ship two blocks, and a
+    reader who adds a third must not silently stop being checked.
+    """
+    bodies = []
+    for m in REDUCE_AT.finditer(text):
+        depth, i = 1, m.end()
+        while i < len(text) and depth:
+            depth += text[i] == "{"
+            depth -= text[i] == "}"
+            i += 1
+        bodies.append(text[m.end():i - 1])
+    return bodies
+
+
+def validate_reduced_motion():
+    tokens = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles" / "tokens"
+    for name in _packs():
+        css = read(tokens / f"{name}.css") or ""
+        if not MOTION_NAME.search(css):
+            continue  # a layer that declares no motion owes no degradation
+        bodies = _reduce_blocks(css)
+        if not check(
+            bool(bodies),
+            f"styles/tokens/{name}.css: declares motion tokens and ships no "
+            f"'@media (prefers-reduced-motion: reduce)' branch. MOTION_DOCTRINE.md §9: "
+            f"shipping an animation without a reduced-motion path is a bug, not a polish "
+            f"item -- collapse the durations here, in the layer an implementer copies",
+        ):
+            continue
+        collapsed = []
+        for body in bodies:
+            for prop, num, unit in CSS_TIME.findall(body):
+                seconds = float(num) / (1000.0 if unit.lower() == "ms" else 1.0)
+                if seconds <= INSTANT_SECONDS:
+                    collapsed.append(prop)
+        check(
+            bool(collapsed),
+            f"styles/tokens/{name}.css: the reduced-motion branch collapses no duration to "
+            f"an instant value. §9 says motion collapses to static or instant, not to "
+            f"'slower' -- a branch that sets no duration to 0s (or below "
+            f"{INSTANT_SECONDS * 1000:g}ms) satisfies a grep and changes nothing a reader "
+            f"can feel",
         )
 
 
@@ -1528,6 +1663,7 @@ def main():
     validate_contract_split()
     validate_contract_declaration()
     validate_core_vocabulary()
+    validate_reduced_motion()
     validate_pack_container_answer()
     validate_kit_breakpoints()
     validate_bundle_self_sufficiency()

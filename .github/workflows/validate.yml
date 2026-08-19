@@ -21,6 +21,32 @@ jobs:
           if python3 /tmp/corrupted/test/validate.py; then
             echo "validator failed to fail on a version mismatch" >&2; exit 1
           fi
+      - name: Validator negative control (must FAIL on a stripped reduced-motion branch)
+        run: |
+          set -eu
+          # "Degrade to calm" is a stated principle, and until B-040 the only thing
+          # reading it was a string assertion over MOTION_DOCTRINE.md -- so two of
+          # twenty-nine token layers shipped no branch at all with every gate green.
+          # The block is stripped from the token layer AND from the kit copy, because
+          # a kit carries its pack's token layer byte for byte: strip only one and the
+          # run goes red on kit drift, which would pass this step while proving
+          # nothing. The message is grepped for the same reason.
+          rm -rf /tmp/nomotion && cp -R . /tmp/nomotion
+          for f in \
+            /tmp/nomotion/plugins/sheleg-design/skills/sheleg-design/styles/tokens/instrument-console.css \
+            /tmp/nomotion/.cursor/skills/sheleg-design/styles/tokens/instrument-console.css \
+            /tmp/nomotion/kits/instrument-console/src/styles.css; do
+            perl -0pi -e 's/\@media \(prefers-reduced-motion: reduce\) \{\n  :root \{/  :root {/' "$f"
+          done
+          if python3 /tmp/nomotion/test/validate.py > /tmp/nomotion.log 2>&1; then
+            echo "validator failed to fail on a token layer with no reduced-motion branch" >&2
+            exit 1
+          fi
+          grep -q "ships no '@media (prefers-reduced-motion: reduce)' branch" /tmp/nomotion.log || {
+            echo "validator went red for some other reason -- the reduced-motion check did not fire" >&2
+            cat /tmp/nomotion.log >&2; exit 1
+          }
+
       - name: Palette gate (claimed ratios re-derived; separation under CVD)
         run: python3 test/validate_palette.py
       - name: Slop lint (the skill is held to its own bans)

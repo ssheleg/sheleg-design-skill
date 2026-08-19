@@ -1,8 +1,8 @@
 {
   "_why": "Ratchet floors. A gate whose check count can fall silently cannot detect a deleted requirement: stripping four required headings from one pack made validate.py drop 1270->1269 and sloplint.py 224->223, both still green. Each number is the count measured on the commit named below. Raise freely; lowering one needs a reason in the same commit.",
-  "_measured_on": "the bulletin release, 2026-08-17, twenty-nine packs and twenty-nine kits, clean tree",
-  "validate.py": 3333,
+  "_measured_on": "the reduced-motion observable, 2026-08-19, twenty-nine packs and twenty-nine kits, clean tree",
+  "validate.py": 3391,
   "validate_palette.py": 1912,
-  "sloplint.py": 629,
-  "_raised": "3222/1811/615 -> 3333/1912/629 on the bulletin release, 2026-08-17. One pack plus one kit plus two reciprocal fork edits: validate.py gains the twenty-ninth pack's structure, routing, mirror and kit checks and the two link-back assertions the fork creates, the palette gate gains both theme blocks of a new token layer, and the slop lint gains the pack's prose and its kit CSS. Previous baseline commit was b8bf235."
+  "sloplint.py": 635,
+  "_raised": "3333/1912/629 -> 3391/1912/635 on the B-040 close, 2026-08-19. validate.py +58 = twenty-nine token layers x two checks (the reduced-motion branch is present; it collapses at least one duration to an instant value) -- every layer declares --dur-* or --ease-*, so no layer is skipped. sloplint.py +6 = one new lint target x six BANNED patterns: the reduced-motion clause added to instrument-console.md carries its first inline CSS-shaped span, measured 91 -> 92 targets. validate_palette.py unchanged, as expected -- no colour moved. Previous baseline commit was 001a0bd."
 }

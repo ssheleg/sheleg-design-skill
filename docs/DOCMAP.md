@@ -24,6 +24,7 @@ decision home. A run that settles something records it as an ADR.
 | **A stated contrast ratio** | the token layer — it is derived, not authored | `validate_stated_ratios()` recomputes every claim whose base the document declares |
 | **A count of anything** (packs, kits, scenarios, headings) | derived at check time from the directory | `validate_counted_claims()` |
 | The motion methodology | `SHELEG_DESIGN.md` | `SKILL.md` states the five principles only |
+| **The reduced-motion contract** | `MOTION_DOCTRINE.md` §9 states it; each `styles/tokens/<pack>.css` **keeps** it | `validate_reduced_motion()` in `test/validate.py` reads every layer. Until it existed the only thing reading "degrade to calm" was `sloplint.py`'s doctrine table, which asserts the *string* occurs in the doctrine — so two layers shipped no branch with every gate green (B-040) |
 | The Figma contract | `FIGMA_BRIDGE.md` | — |
 | The Claude Design contract | `DESIGN_SYNC_BRIDGE.md` | — |
 | AI-surface patterns | `AI_PRODUCT_PATTERNS.md` | — |
@@ -39,6 +40,7 @@ decision home. A run that settles something records it as an ADR.
 | **New kit component** | the shared spine stays identical across **every** kit — the count is derived, never typed, in both `validate.py` and the CI matrix · no raw color literal outside the token block · **`<Component>.md` beside it, with a `category:` from the taxonomy** | `python3 test/validate.py` |
 | **Any release** | five-way version sync · CHANGELOG entry · tag · GitHub release · `npm publish` · refresh local installs | `test/validate.py` + `npm view sheleg-design-skill version` + `gh run list` |
 | **Behavior an agent must follow** | a scenario in `test/scenarios.md` | the scenario run by a fresh subagent — **`validate.py` does not read that file**, so this row's proof is a person running it, and the result is stamped with a commit |
+| **A motion token in a token layer** (`--dur-*` / `--ease-*`) | a `@media (prefers-reduced-motion: reduce)` branch in the same file, collapsing at least one duration to `0s` · the `.cursor/` mirror · the kit's `styles.css` token block · anything a duration cannot stop (a rAF loop, an infinite animation) named in the pack's prose **and** stopped in the kit's component layer | `validate_reduced_motion()` in `test/validate.py` |
 | **A fork between two packs** | the pack it forks against gains the mirror clause, as a markdown link in both directions | `validate_fork_reciprocity()` in `test/validate.py` |
 | **A settled decision** | an ADR in `docs/adr/`; if it overrides an earlier record, that record's status line says so | reviewed by hand — `validate.py` resolves relative links but has no ADR status logic. ADR-0001 named a pack that never shipped for four days without any check noticing |
 

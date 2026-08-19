@@ -75,3 +75,29 @@
      cross-pack document can name them truthfully. Alias, never a new colour. */
   --bg: var(--paper); /* role alias -> --paper, this pack's field */
 }
+
+/* Degrade to calm — MOTION_DOCTRINE.md §9: "Shipping an animation without a
+   reduced-motion path is a bug, not a polish item." All eight durations this
+   layer declares are spent — the two product-register values by the kit's
+   hovers, the brand and the SHELEG set by the page's entrances — so all eight
+   collapse to 0s rather than to anything a reader could still perceive as
+   motion. The kit's .el-btn, .el-card and .el-dossier read --dur-fast and
+   --dur-base, so a hover lands on its final state instead of rising into it.
+
+   The two curves stay as declared: a curve spent over 0s is inert, and neither
+   overshoots (both stay inside 0..1 on the value axis), so there is no bounce
+   left to tame. What a custom property cannot express is an infinite animation
+   — this pack declares none, and one added later needs its own stop in the
+   component layer, not a smaller number here. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-hover: 0s;
+    --dur-state: 0s;
+    --dur-brand: 0s;
+    --dur-fast: 0s;
+    --dur-base: 0s;
+    --dur-slow: 0s;
+    --dur-epic: 0s;
+    --stagger: 0s;
+  }
+}
