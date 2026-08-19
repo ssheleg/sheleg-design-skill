@@ -1586,7 +1586,7 @@ def self_test() -> int:
         ),
     ):
         del failures[:]
-        _release_register(*args)
+        _release_register(*args, complete=True)
         fired = [f for f in failures if expect in f]
         if fired:
             print(f"  caught  {label}")
@@ -1933,7 +1933,8 @@ def _git_tags() -> list[str]:
     return [] if out.returncode else [l.strip()[1:] for l in out.stdout.split() if l.strip()]
 
 
-def _release_register(changelog: str, retro: str, tags: list[str]) -> None:
+def _release_register(changelog: str, retro: str, tags: list[str],
+                      complete: bool | None = None) -> None:
     found = CHANGELOG_VERSION.findall(changelog)
     versions = [v for v, _ in found]
     if not check(bool(versions), "CHANGELOG.md: no '## [x.y.z] - date' sections found"):
@@ -1995,8 +1996,14 @@ def _release_register(changelog: str, retro: str, tags: list[str]) -> None:
     # So a partial view is now named as one. Two signals, both cheap: a shallow
     # repository cannot answer this question at all, and a single tag against a
     # CHANGELOG of dozens is a fetched ref rather than a tag set.
-    shallow = _git("rev-parse", "--is-shallow-repository") == "true"
-    visible = bool(tags) and not shallow and len(tags) > 1
+    # `complete` lets a FIXTURE state that its synthetic tag list is the whole set.
+    # Without it the heuristic below switched the check off for the two plants, whose
+    # lists are one tag each by design, and the self-test reported them MISSED — a
+    # guard turned off by the very rule meant to stop it answering blind.
+    if complete is None:
+        shallow = _git("rev-parse", "--is-shallow-repository") == "true"
+        complete = bool(tags) and not shallow and len(tags) > 1
+    visible = bool(tags) and complete
     if tags and not visible:
         report.append(
             f"untagged releases — the tag view here is partial "
