@@ -568,6 +568,7 @@ evidence until runs start writing their own again.
 | 2026-08-17 | `001a0bd` | `bulletin`, a twenty-ninth pack, elevation drawn rather than blurred; **`v1.43.0` shipped** | *unrecorded* |
 | 2026-08-19 | `30bfbc3` | degrade to calm had no observable, and a hyphenated count had no guard; **`v1.44.0` shipped** | *unrecorded* |
 
+| 2026-08-20 | `94c1774` | four packs contradicted their own token layers; six sweeps added, which found 24 more defects on their first run (v1.45.0) | *unrecorded* |
 ## Log
 
 ### 2026-08-13 — the remedy for one concurrent run became a defect in the gate that measures it

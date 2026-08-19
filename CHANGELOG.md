@@ -4,6 +4,55 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.45.0] - 2026-08-20
+
+**Four packs contradicted their own token layers, and the layer is what an implementer
+copies.** `scoreboard` still shipped the `--accent-hover` comment the pack retracted in
+1.13.1 — *"the one orange that may carry a link"*; its elevation comment said "two soft
+stacks and a hairline" where four shadows ship, called both untinted while one is 16% and
+another a blue-black, and left `--shadow-panel` in no prose at all; it banned radii above
+8px while `--radius-pill: 999px` ships and its own section tick requires it.
+`instrument-console` legislated four statuses and shipped two colours, prescribed a pressed
+primary whose label lands at **3.06:1**, and banned "colored shadows besides
+`--accent-glow`" while mandating a composite the prose never named. `showroom` gave its
+signature specimen frame two different radii in two sections, with a subtraction rule keyed
+to the wrong one, and shipped one hex for both `--surface-2` and `--line-weak`, so a
+hairline on a sunken well is invisible. `atrium` had the same collision, unrecorded.
+
+**Six sweeps replace nine hand edits, and they found 24 more defects on their first run:**
+16 shadow or glow tokens no prose names across 11 packs (`proscenium`'s "Elevation is three
+shadows" was four), a card at two radii, three status-map errors, two more hairline
+collisions, a press outside the doctrine's band, three missing base layers. The motion band
+and the UI ceiling are **parsed out of `MOTION_DOCTRINE.md`** rather than restated, and
+`@role drawn-on:` is how a pack declares where a colliding hairline is actually drawn.
+
+Registers that had stopped:
+
+- **Run stamps complete to 1.44.0** — 26 rows reconstructed from `git log`, tags and the
+  CHANGELOG, with `Diverged?` left honestly *unrecorded*; a release at or above 1.5.0 with
+  no row now fails. The register had stopped at v1.26.0, eighteen versions back, which made
+  the "not fired in five run stamps" retirement trigger uncomputable.
+- **The palette gate's own numbers**: it claimed 71 of 121 unguarded ratio claims measured
+  at sixteen packs and asserted all 71 had been hand-verified. Measured today: **513 claims,
+  336 guarded, 177 unguarded at 22 packs** — and the run prints that pair every time, with
+  the hand-verification dated for what it was. Two more restated counts went the same way.
+- **`package.json` said twenty-nine packs and named 27** — `awning` and `bulletin` missing
+  from the surface an npm reader chooses from. It is an enumeration site now.
+- **Two `## [1.35.0]` sections** under one version, and four releases in the CHANGELOG with
+  no tag. The duplicate is resolved; the untagged four are **reported, not created** — a tag
+  nobody has is not this run's to invent.
+- **Every pack that bans a weight or a slant owes a base layer** and two of 29 shipped one:
+  `<strong>` renders 700 and `<em>` italic with no stylesheet involved, so the ban was
+  invisible to a grep over CSS.
+
+Two plants found holes in the checks they were written for, and two bugs the gate found in
+itself: one sweep was reading a declaration out of a header comment and silently excluding
+a whole pack, and a new check emitted a different number of checks with and without git
+tags, which broke the ratchet in its own self-test copy.
+
+Checks: `validate.py` 3398 to **3543**, `validate_palette.py` 1912 to **1924**, `sloplint.py`
+635. Ten new plants, all caught; 49 planted defects across the three self-tests, 0 missed.
+
 ## [Unreleased]
 
 ### Four packs contradicted themselves, and six sweeps now say so

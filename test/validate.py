@@ -1978,6 +1978,24 @@ def _release_register(changelog: str, retro: str, tags: list[str]) -> None:
     visible = bool(tags)
     untagged = [v for v in sorted(set(releases), key=key) if v not in set(tags)] if visible else []
     undeclared = [v for v in untagged if v not in UNTAGGED_RELEASES]
+    # The release BEING PREPARED is the one exception, and it has to be, or the bump
+    # commit is uncommittable: the tag cannot exist before the commit that bumps to it.
+    # It is exactly one version -- the newest CHANGELOG entry, and only while it equals
+    # what `package.json` declares. Every OLDER untagged release still fails, which is
+    # the defect this check was written for (four of them, 1.4.0 through 1.30.0).
+    preparing = None
+    if undeclared:
+        # `Path`, not `pathlib.Path` — this module imports the class, not the package,
+        # and a bare `except Exception` swallowed the NameError so the exemption
+        # silently never applied. Narrowed, so the next mistake here is visible.
+        try:
+            declared = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))["version"]
+        except (OSError, ValueError, KeyError):
+            declared = None
+        newest = sorted(set(releases), key=key)[-1] if releases else None
+        if declared and newest == declared and declared in undeclared:
+            preparing = declared
+            undeclared = [v for v in undeclared if v != declared]
     check(
         not undeclared,
         f"CHANGELOG.md records {', '.join(undeclared)} and there is no tag for it. "
@@ -1985,6 +2003,10 @@ def _release_register(changelog: str, retro: str, tags: list[str]) -> None:
         f"created: either tag the commit that shipped it, or add it to "
         f"UNTAGGED_RELEASES with the reason and put a note in its section",
     )
+    if preparing:
+        report.append(f"release {preparing} is in the CHANGELOG with no tag yet -- a "
+                      f"release in preparation, and the tag is cut after the commit that "
+                      f"bumps to it")
     stale = sorted(v for v in UNTAGGED_RELEASES if v in set(tags)) if visible else []
     check(
         not stale,
