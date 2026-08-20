@@ -239,7 +239,7 @@ resized to match each other's optical weight — a roster that has been normalis
 looking like a roster.
 
 **Logo tile.** A `--tile` square at `--radius-control` on `--surface`, 1px `--rule`,
-holding one third-party mark. Scattered over `--pattern-grid` in the hero, gridded
+holding one third-party mark. Scattered over the square grid in the hero, gridded
 elsewhere.
 
 **Step card.** `--surface`, `--radius-card`, 1px `--rule`: an orange number, a head, body
@@ -266,7 +266,7 @@ The first viewport at 1440×900 holds, in this order: the sticky nav; the displa
 centred at `--size-display` over two lines, whose second line carries the accent phrase in
 `--accent` and **one third-party wordmark set inline after the word "from"**; a two-line
 lede in `--ink-soft`; a single `--cta` button; a money-back line at `--size-small`; and a
-third-party review badge. `--pattern-grid` runs behind all of it with logo tiles scattered
+third-party review badge. The square grid runs behind all of it with logo tiles scattered
 over it.
 
 **No product screenshot appears above the fold.** That is the pack's proportion: the first

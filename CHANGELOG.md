@@ -6,6 +6,44 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### A pack cannot prescribe a token its own layer never defines (B-043)
+
+`instrument-console`'s prose named `--dur-press` and its token layer never declared it.
+`var(--dur-press)` is then an undefined custom property — invalid at computed-value time,
+falling back with no error anywhere — which is board B-038's class, described in a comment
+inside the very file that had just acquired a fresh one. The commit that introduced it was
+the one closing B-042, hours earlier.
+
+`validate_prescribed_tokens_resolve` refuses it, and the naive form of that check was
+measured before it was written rather than after: **19 of 29 packs quote a token their layer
+does not define**, and nearly all of it is a pack quoting its *reference's* vocabulary —
+`datasheet`'s `--gray-6`, `ora`'s `--font-lora`. What separates a promise from a quotation is
+the prefix family: a pack naming `--dur-press` while defining four other `--dur-*` is speaking
+its own vocabulary. That cut 60 candidates to 11; excluding the `--font-` family on principle
+(a pack layer deliberately does not own font loading) left 3; one is a declared exemption with
+its reason and a line reference. Two were real — the second, `roster`'s `--pattern-grid`, is
+fixed in the prose rather than by inventing a token, because the pattern is composed from the
+five `--pattern-*` values the layer does define.
+
+**The plant found a hole in the check itself.** Dropping `--dur-press` from `:root` left the
+reduced-motion block's copy standing, so the token still counted as defined. A declaration
+inside `@media` is not a definition for anyone not asking for reduced motion; `_outside_media`
+now strips those blocks. Zero tokens sit in that position today across 29 layers, which is why
+it was worth closing before the first one does.
+
+**`--section` was the library's only raw `vh`.** `clamp(9rem, 24vh, 20rem)` drove section
+padding off the viewport, re-laying out every section when a mobile address bar shows or hides.
+It is `24svh` now, with the reasoning written where the five packs carrying a `--hero-min-h`
+wrote theirs: a hero wants the viewport visible right now and takes `dvh`; padding wants a
+height that does not move.
+
+Two of B-043's five claims were false and the row says so. The layer is **4869 bytes, 7th
+smallest of 29** — not 1.4 KB and not the smallest; `briefing-room.css` is smaller. And the
+focus-ring claim misread template rule 5, which governs fallback order for derived colour
+rather than requiring a ring token: **20 of 29 packs ship none.** The type-scale half is real,
+library-wide and refiled as B-119 with its measurement: 6 packs token it, 11 state the sizes in
+prose, 12 do neither.
+
 ### One site-wide curve and a mandated scrub cannot both be total (B-042)
 
 `instrument-console` declared *"the one site-wide curve"* and then mandated scrubbed SVG

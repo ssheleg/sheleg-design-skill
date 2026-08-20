@@ -58,8 +58,24 @@
   --dur-slow: 0.55s;
   --dur-epic: 0.8s;
   --stagger: 0.07s;
+  /* Derived, not chosen: MOTION_DOCTRINE.md puts button-press feedback in a
+     100-160 ms band, and this pack's fastest step is 180 ms, so the set above
+     could not express a compliant press. 0.16s is the band's own ceiling — the
+     value inside it nearest this pack's existing step. Named in `## Motion
+     tokens`; a token a pack's prose prescribes and its layer never defines is an
+     undefined custom property, which is invalid at computed-value time and falls
+     back with no error anywhere. That is B-038's class, and this one was
+     introduced by the commit that wrote the prose (B-042) and caught by the
+     check that commit's successor added. */
+  --dur-press: 0.16s;
 
-  --section: clamp(9rem, 24vh, 20rem);
+  /* `svh`, not `vh` or `dvh`, and the choice is the same one the five packs with a
+     `--hero-min-h` wrote into a comment. A hero wants the viewport that is visible
+     right now, so it takes `dvh`. This drives SECTION PADDING, which wants a height
+     that does NOT move: raw `vh` and `dvh` both re-lay out every section the moment
+     a mobile address bar shows or hides. `svh` is the small viewport — measured as
+     though the browser UI were shown — and it is stable for the whole scroll. */
+  --section: clamp(9rem, 24svh, 20rem);
 
   --font-ui: var(--font-geist-sans, "Geist"), system-ui, sans-serif;
   --font-data: var(--font-geist-mono, "Geist Mono"), ui-monospace, monospace;
@@ -99,6 +115,7 @@
 @media (prefers-reduced-motion: reduce) {
   :root {
     --dur-fast: 0s;
+    --dur-press: 0s;
     --dur-base: 0s;
     --dur-slow: 0s;
     --dur-epic: 0s;

@@ -1369,6 +1369,17 @@ def check_floor(script: str, count: int) -> None:
 # reduced-motion plants below name the message they must provoke.
 PLANTS = (
     (
+        # The defect the commit closing B-042 introduced: the prose prescribes
+        # `--dur-press` and the layer stops defining it. Derived -- the declaration
+        # line is dropped whatever its value becomes -- and the `expect` string is
+        # mandatory, because an edit to a token layer also trips the kit-drift and
+        # `.cursor` mirror checks. Without it this plant proves those two work.
+        "a token the prose prescribes and the layer stops defining",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/tokens/instrument-console.css",
+        lambda t: re.sub(r"^\s*--dur-press\s*:[^;]*;[^\n]*\n", "", t, count=1, flags=re.M),
+        "resolves to nothing, silently",
+    ),
+    (
         # The fifth subject, carved on 2026-08-20, with its carve taken back out.
         # Derived rather than pinned: every line matching the carve pattern is
         # dropped, so the plant keeps landing however the wording is rewritten --
@@ -3076,6 +3087,115 @@ def validate_excluded_sets_are_declared():
 RELATIVE_CUSTOM_PROP = re.compile(r"^\s*(--[a-z0-9-]+)\s*:.*\brgb\(\s*from\s")
 
 
+# ------------------------------------- a prescribed token that resolves to nothing
+#
+# A pack's prose tells an implementer which token to spend. Where the layer never
+# defines it, `var(--dur-press)` is an undefined custom property: invalid at
+# computed-value time, inherited or falling back to nothing, and silent everywhere.
+# That is board B-038's class -- `var(--danger)` shipped undefined for four
+# releases -- and the commit closing B-042 introduced a fresh one in the same file
+# whose own comment describes the trap.
+#
+# The naive form of this check is unusable and was measured before it was written:
+# 19 of 29 packs quote a token their layer does not define, and almost all of it is
+# the pack quoting its REFERENCE's vocabulary (`datasheet`'s `--gray-6`, `ora`'s
+# `--font-lora`) rather than promising anything. What separates a promise from a
+# quotation is the PREFIX FAMILY: a pack that names `--dur-press` while defining
+# four other `--dur-*` is speaking its own vocabulary. That cut 60 candidates to 11.
+#
+# The `--font-` family is excluded on principle rather than convenience: a pack
+# layer deliberately does not own font loading (`validate_font_loading_stays_out`),
+# so a `--font-*` name in prose is naming somebody else's variable by design. Eight
+# of the remaining nine false positives were exactly that.
+FAMILY = re.compile(r"^--([a-z]+)-")
+QUOTED_TOKEN = re.compile(r"`(--[a-z0-9-]+)`")
+DEFINED_TOKEN = re.compile(r"^\s*(--[a-z0-9-]+)\s*:", re.M)
+# A pack layer does not own font loading, so a `--font-*` in prose names an
+# outside variable by design.
+UNOWNED_FAMILIES = {"font"}
+# The one case the family test cannot tell apart, declared rather than silently
+# widened. `ora` attributes BOTH halves of the pair to the reference in the same
+# sentence -- "the reference names the pair `--accent-signature` /
+# `--accent-signature-foreground`" -- and adopts only the half it needs, because
+# its primary action is `bg-foreground text-background` and there is no second
+# colour to define. Read 2026-08-20 at ora.md:126-134.
+PRESCRIBED_EXEMPT = {("ora", "--accent-signature")}
+
+
+def _outside_media(css: str) -> str:
+    """The token layer with every `@media` block removed, braces counted.
+
+    A declaration inside `@media (prefers-reduced-motion: reduce)` is not a
+    definition for anybody not asking for reduced motion, so counting it as one
+    makes this check blind to the defect it exists for. Found by the plant below:
+    dropping `--dur-press` from `:root` left the reduce block's copy standing and
+    the check reported the token defined. Zero tokens are in that position today
+    (measured 2026-08-20 across 29 layers) -- which is why it had to be closed
+    now rather than after the first one arrives.
+    """
+    out, i = [], 0
+    while i < len(css):
+        if css.startswith("@media", i):
+            j = css.find("{", i)
+            if j < 0:
+                break
+            depth, j = 1, j + 1
+            while depth and j < len(css):
+                depth += (css[j] == "{") - (css[j] == "}")
+                j += 1
+            i = j
+            continue
+        out.append(css[i])
+        i += 1
+    return "".join(out)
+
+
+def validate_prescribed_tokens_resolve():
+    styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
+    if not styles.is_dir():
+        return
+    packs, dangling = 0, []
+    for md in sorted(styles.glob("*.md")):
+        if md.name == "STYLE_PACK_TEMPLATE.md":
+            continue
+        css = styles / "tokens" / f"{md.stem}.css"
+        prose, layer = read(md), read(css)
+        if prose is None or layer is None:
+            continue
+        packs += 1
+        defined = set(DEFINED_TOKEN.findall(_outside_media(layer)))
+        families: dict[str, set[str]] = {}
+        for d in defined:
+            m = FAMILY.match(d)
+            if m:
+                families.setdefault(m.group(1), set()).add(d)
+        for tok in sorted(set(QUOTED_TOKEN.findall(prose)) - defined):
+            m = FAMILY.match(tok)
+            if not m or m.group(1) in UNOWNED_FAMILIES:
+                continue
+            if (md.stem, tok) in PRESCRIBED_EXEMPT:
+                continue
+            # Two siblings, not one: a family of one is as likely to be the
+            # reference's word as the pack's.
+            if len(families.get(m.group(1), ())) >= 2:
+                dangling.append(f"{md.stem}.md names `{tok}` "
+                                f"({len(families[m.group(1)])} `--{m.group(1)}-*` defined)")
+    if packs < 2:
+        _skips.append("fewer than two packs have both a prose file and a token layer "
+                      "— prescribed tokens were not checked")
+        return
+    check(
+        not dangling,
+        "a pack prescribes a token its own layer never defines, in a family the layer "
+        "does own — so `var()` on it resolves to nothing, silently: "
+        + "; ".join(dangling)
+        + ". Define it, or write the prose so it does not read as a token an "
+          "implementer can spend",
+    )
+    print(f"  prescribed tokens: {packs} packs, {len(dangling)} dangling "
+          f"({len(PRESCRIBED_EXEMPT)} declared exemption)")
+
+
 # ------------------------------------- one curve and a scrub cannot both be total
 #
 # A pack that says "the one site-wide curve" and then mandates scrubbed motion has
@@ -3724,6 +3844,7 @@ def main():
     validate_worked_radius_sums_compute()
     validate_component_classes_are_answered()
     validate_excluded_sets_are_declared()
+    validate_prescribed_tokens_resolve()
     validate_scrub_carves_its_exception()
     validate_relative_colour_is_guarded()
     validate_font_loading_stays_out()
