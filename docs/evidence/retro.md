@@ -569,6 +569,7 @@ evidence until runs start writing their own again.
 | 2026-08-19 | `30bfbc3` | degrade to calm had no observable, and a hyphenated count had no guard; **`v1.44.0` shipped** | *unrecorded* |
 
 | 2026-08-20 | `94c1774` | four packs contradicted their own token layers; six sweeps added, which found 24 more defects on their first run (v1.45.0) | *unrecorded* |
+| 2026-08-20 | `0f8fa82` | B-001/B-002: three packs stay core by decision, and `core` must name what it declines | *unrecorded* |
 ## Log
 
 ### 2026-08-13 — the remedy for one concurrent run became a defect in the gate that measures it

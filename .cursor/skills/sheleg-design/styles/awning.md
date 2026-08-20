@@ -16,7 +16,12 @@ grotesque tuned off the standard axis, with body at **420** and bold at **550** 
 no 700 exists in the system. A page in this pack can be photographed in full
 colour and contain no colour at all.
 
-Contract: core
+Contract: core — this pack does **not** specify `## Components`, `## Hero`,
+`## Responsive` or `## Signature element`. Per-component states (hover, active,
+disabled), the opening viewport and what it may claim, the collapse rules and the
+single element the page is remembered by are **yours to decide** here — and you
+say so out loud when you do, because a decision nobody recorded reads as a value
+the pack forgot. Everything the pack does state is binding.
 
 ## Register
 

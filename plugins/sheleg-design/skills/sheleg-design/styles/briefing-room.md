@@ -6,6 +6,7 @@ request** — the values are extracted from a real system, the name simply isn't
 public. Near-black field tinted with a single blue hue, one electric accent,
 mono slide furniture, 1-bit dithered artwork. It reads like a technical
 briefing: the room is dark, one thing is lit.
+This `Origin:` names a product rather than an address, so a reader cannot check the pack against its source. That is a recorded exception, not an oversight: this pack predates the library's *no reference, no pack* rule, it stays on the `core` contract, and it is **never widened by invention** — the four sections it declines would have to come from taste wearing the authority of a measurement. An addressable reference is what would change that, in one change, with this line rewritten to the address.
 
 Contract: core — this pack does **not** specify `## Components`, `## Hero`,
 `## Responsive` or `## Signature element`. Per-component states (hover,

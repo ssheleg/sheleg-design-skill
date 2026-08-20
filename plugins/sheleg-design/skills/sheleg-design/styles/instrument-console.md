@@ -4,6 +4,7 @@ Origin: Nicegram Business OS landing (the SHELEG reference implementation).
 A near-black aerospace console: deep layered surfaces, hairline seams, one
 electric-blue signal accent, mono telemetry labels. The particle field and
 every instrument read as one precision device responding to the hand.
+This `Origin:` names a product rather than an address, so a reader cannot check the pack against its source. That is a recorded exception, not an oversight: this pack predates the library's *no reference, no pack* rule, it stays on the `core` contract, and it is **never widened by invention** — the four sections it declines would have to come from taste wearing the authority of a measurement. An addressable reference is what would change that, in one change, with this line rewritten to the address.
 
 Contract: core — this pack does **not** specify `## Components`, `## Hero`,
 `## Responsive` or `## Signature element`. Per-component states (hover,

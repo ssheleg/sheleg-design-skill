@@ -1134,6 +1134,20 @@ def validate_contract_declaration():
                 f"SKILL.md: '{name}' is on the core contract and the pack table does not "
                 "say so -- the table is where the pack is chosen",
             )
+            # B-001. `core` must NAME what it declines, not merely be narrow. Six of the
+            # seven core packs already did; `awning` shipped a bare `Contract: core`
+            # (2026-08-20), which reads to an implementer as an unfinished pack rather
+            # than as a decided one — and the difference is the whole value of the line.
+            # An absence and a decision look identical until one of them is written down.
+            declared = text[m.start():m.start() + 400]
+            names = sum(1 for s in PACK_SECTIONS_WIDENED_ONLY if f"## {s}" in declared
+                        or s in declared)
+            check(
+                "not" in declared.lower() and names >= 2,
+                f"{rel}: 'Contract: core' names nothing it declines -- write which of "
+                f"{', '.join(PACK_SECTIONS_WIDENED_ONLY)} this pack leaves to the "
+                "implementer, so a narrow pack reads as decided rather than unfinished",
+            )
     report.append(
         f"contract split: {len(core)} core / {len(_packs()) - len(core)} widened "
         f"of {len(_packs())} packs (core: {', '.join(core)})"
