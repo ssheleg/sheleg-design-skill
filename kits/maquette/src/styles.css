@@ -53,6 +53,13 @@
   --model-top: #fff9f4; /* the lit top face — 17.49:1 */
   --model-face: #fff3d6; /* the front face, warmer — 16.56:1 */
   --model-side: #e8ddc8; /* the side in shade */
+  /* Text ON a cream face. `--ink` is the SAME hex as `--model-top` -- that is
+     the pack's central rule, type and object built from one cream.
+     --ink on --model-top is 1.00:1, so a label placed there is invisible.
+     The Components table
+     prescribed exactly that until 1.46.0 and nothing computed it. The value is
+     the field's own. */
+  --on-model: #151515; /* 17.49:1 on --model-top — the label on a cream face */
   /* @role drawn-on: --model-top, --model-face, --model-side — the model's
      own outline, and it is the SAME hex as --bg on purpose: the cream solids are
      separated by the table showing between them, which is why the model reads as

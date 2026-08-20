@@ -831,6 +831,73 @@ def _composite_plants() -> list[str]:
     return problems
 
 
+def _prescribed_pair_plants() -> list[str]:
+    """The Components sweep, watched discriminating.
+
+    Case two is the one B-050 was filed for: the resting pair is fine and the
+    HOVER swaps the fill out from under a label that stays. That is the shape of
+    B-039 -- a press dimmed the fill and nothing recomputed the label.
+    """
+    import tempfile
+    global TOKENS, PACKS
+    problems = []
+    css = (":root {\n  --bg: #ffffff;\n  --ink: #1a1a1a;\n  --line: #dddddd;\n"
+           "  --surface-2: #eeeeee;\n  --accent: #1f5fb0;\n  --accent-dim: #7f9fd0;\n"
+           # White on --accent is 6.3:1 and on --accent-dim is 2.6:1, so the
+           # RESTING pair passes and only the dimmed state fails -- which is the
+           # shape of B-039. The first version of this fixture used B-039's own
+           # values, where resting already failed, so every case went red for the
+           # wrong reason and three plants proved nothing.
+           "  --on-accent: #ffffff;\n}\n")
+    cases = [
+        ("a resting pair below AA",
+         "| **Btn** | `--accent-dim` fill, `--on-accent` label, 14px/600 | none | none | none |\n",
+         "the resting state prescribes"),
+        ("a hover that swaps the fill out from under the label",
+         "| **Btn** | `--accent` fill, `--on-accent` label, 14px/600 "
+         "| fill -> `--accent-dim` | none | none |\n",
+         "the hover state prescribes"),
+        ("a hover that swaps the fill AND the label with it",
+         "| **Btn** | `--accent` fill, `--on-accent` label, 14px/600 "
+         "| fill -> `--accent-dim`, label -> `--ink` | none | none |\n",
+         None),
+        ("a passing pair with `as above` in every state",
+         "| **Btn** | `--accent` fill, `--on-accent` label, 14px/600 "
+         "| as above | as above | as above |\n",
+         None),
+        ("half a pair -- a fill and no label",
+         "| **Card** | `--surface-2` fill, `--radius`, 14px/400 | none | none | none |\n",
+         None),
+    ]
+    with tempfile.TemporaryDirectory() as d:
+        tmp = Path(d)
+        (tmp / "tokens").mkdir()
+        old_tokens, old_packs = TOKENS, PACKS
+        TOKENS, PACKS = tmp / "tokens", tmp
+        try:
+            for label, md, expect in cases:
+                _reset()
+                _tally["pair_half_stated"] = _tally["pair_unresolved"] = 0
+                (TOKENS / "_planted_.css").write_text(css, encoding="utf-8")
+                (PACKS / "_planted_.md").write_text(md, encoding="utf-8")
+                validate_prescribed_pairs(TOKENS / "_planted_.css")
+                if expect:
+                    ok = any(expect in f for f in failures)
+                elif "half a pair" in label:
+                    ok = not failures and _tally["pair_half_stated"] == 1
+                else:
+                    ok = not failures
+                print(f"  {'caught ' if ok else 'MISSED '} {label}")
+                if not ok:
+                    problems.append(f"{label} — failures: {failures or 'none'}, "
+                                    f"half={_tally['pair_half_stated']}")
+        finally:
+            TOKENS, PACKS = old_tokens, old_packs
+            _reset()
+            _tally["pair_half_stated"] = _tally["pair_unresolved"] = 0
+    return problems
+
+
 def self_test() -> int:
     """Plant a defect of each class and require the matching check to fire.
 
@@ -984,6 +1051,7 @@ def self_test() -> int:
     problems += _ratio_plants()
     problems += _declared_set_plants()
     problems += _composite_plants()
+    problems += _prescribed_pair_plants()
     if problems:
         print("\nself-test FAILED: " + "; ".join(problems))
         return 1
@@ -1267,6 +1335,7 @@ def _line_surface_collision(stem: str, text: str) -> None:
 # assert is derived here and printed once per run.
 _tally: dict = {"computed": 0, "unresolved": 0, "unguarded": 0,
                 "delta_unbound": 0, "composite_unsized": 0,
+                "pair_half_stated": 0, "pair_unresolved": 0,
                 "un_table": 0, "un_argued": 0, "un_prose": 0,
                 "packs_guarded": set(), "packs_unguarded": set()}
 # Every claim that named a partner and still produced no arithmetic, kept with
@@ -2027,6 +2096,93 @@ def _one_composited_cell(stem, lineno, maps, specs, floor, why) -> None:
 
 
 
+# ------------------------------------- the pair a Components row PRESCRIBES
+#
+# A ratio is checked when the document states one. A Components row usually
+# states none: it prescribes a pair -- "`--accent` fill, `--on-accent` label" --
+# and then its hover and active cells REPLACE one half of it. `contrast(label,
+# fill)` is derivable at every state and nothing derived it, which is how
+# `instrument-console` shipped a pressed label at 3.06:1 (B-039): the press
+# swapped the fill to `--accent-dim` and the label stayed.
+#
+# Measured before it was written: 11 rows across 7 packs name BOTH a fill and a
+# label, and they carry 8 state swaps between them. The convention is the
+# library's own -- "`--x` fill, `--y` label", "fill -> `--z`" -- and a row that
+# does not use it is skipped and counted rather than parsed by guess. This check
+# could NOT have caught B-039: `instrument-console` is a core-contract pack with
+# no Components table at all, which is also why the defect survived there.
+# Both halves, in the two phrasings the library actually uses. The narrow pair
+# ("`--x` fill, `--y` label") covers 11 rows; adding "on `--x` fill" and
+# "in `--y`" brings it to 13 and both additions found a defect on their first
+# run -- `maquette`'s leader label is cream ON cream at 1.00:1, and `prism` puts
+# a `$` prompt in a token its own layer calls "furniture only, never text".
+ROW_FILL = re.compile(r"`(--[a-z0-9-]+)`\s+fill\b|\bon\s+`(--[a-z0-9-]+)`\s+fill\b")
+ROW_LABEL = re.compile(r"`(--[a-z0-9-]+)`\s+(?:label|text)\b|\bin\s+`(--[a-z0-9-]+)`")
+ROW_SWAP = re.compile(r"\b(fill|label|text)\s*(?:→|->)\s*`?(--[a-z0-9-]+)`?")
+# A state cell that changes nothing about the pair.
+ROW_INHERIT = re.compile(r"^\s*(?:as above|same|none|-|—|–|n/a)?\s*$", re.I)
+
+
+def validate_prescribed_pairs(css: Path) -> None:
+    stem = css.stem
+    pack_md = PACKS / f"{stem}.md"
+    if not pack_md.is_file():
+        return
+    maps = _theme_maps(css.read_text(encoding="utf-8"))
+    if not maps:
+        return
+    for lineno, line in enumerate(pack_md.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.startswith("|") or line.count("|") < 4:
+            continue
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if len(cells) < 2:
+            continue
+        resting = cells[1]
+        fill_m, label_m = ROW_FILL.search(resting), ROW_LABEL.search(resting)
+        if not (fill_m and label_m):
+            if ROW_FILL.search(resting) or ROW_LABEL.search(resting):
+                # Half a pair is not a pair. Counted, because a row naming a fill
+                # and no label is exactly where the next one of these hides.
+                _tally["pair_half_stated"] += 1
+            continue
+        floor, why = _type_floor(line)
+        base_fill = fill_m.group(1) or fill_m.group(2)
+        base_label = label_m.group(1) or label_m.group(2)
+        if base_fill == base_label:
+            continue        # one token doing both jobs is a row about a surface
+        states = [("resting", base_fill, base_label)]
+        for cell, name in zip(cells[2:], ("hover", "active", "disabled", "state 4")):
+            if ROW_INHERIT.match(cell):
+                continue
+            fill, label = base_fill, base_label
+            swapped = False
+            for what, token in ROW_SWAP.findall(cell):
+                swapped = True
+                if what == "fill":
+                    fill = token
+                else:
+                    label = token
+            if swapped:
+                states.append((name, fill, label))
+        for theme, solids, _field in maps:
+            for name, fill, label in states:
+                if fill not in solids or label not in solids:
+                    _tally["pair_unresolved"] += 1
+                    continue
+                got = contrast(solids[label], solids[fill])
+                check(
+                    got >= floor,
+                    f"styles/{stem}.md:{lineno} [{theme}]: the {name} state "
+                    f"prescribes {label} on {fill} and that is {got:.2f}:1, "
+                    f"below {floor} for {why}. The row states a pair rather than "
+                    f"a ratio, so nothing computed it -- swap the label with the "
+                    f"fill, or state the number the state renders",
+                )
+                notes.append(f"  {stem} [{theme}]: {name} {label} on {fill} "
+                             f"= {got:.2f}:1 (floor {floor})")
+
+
+
 def check_floor(script: str, count: int) -> int:
     """The ratchet. See test/floors.json for why a falling count is a defect."""
     import json as _json
@@ -2069,6 +2225,7 @@ def main() -> int:
         validate_line_surface_collision(css)
         validate_declared_semantic_sets(css)
         validate_composited_fill_contrast(css)
+        validate_prescribed_pairs(css)
         validate_stated_ratios(css)
     for line in notes:
         print(line)

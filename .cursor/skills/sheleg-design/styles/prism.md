@@ -153,7 +153,7 @@ Measured off the reference unless a row says **pack decision**.
 | **Primary CTA** | `--ink` fill, `--on-ink` label, `--radius`, `14px 28px`, 16px mono | fill → `--ink-2` over `--dur-fast` | `translateY(1px)` over `--dur-press` | `opacity: .45`, `cursor: not-allowed` |
 | **Secondary CTA** | `--surface` fill, `1px --line-strong`, `--ink` label, same metrics | border → `--ink-soft` | as above | as above |
 | **Accent CTA** | `--accent` fill, `--on-accent` label (8.02:1 on `--accent`) | `--accent-hover` | as above | as above |
-| **Install line** | `--surface-2` fill, `1px --line`, `--radius`, `12px 16px`, mono 14px, a `$` prompt in `--ink-faint`, a copy button at the right | copy button tints | copied: label swaps to `copied`, **not** a colour-only change | — |
+| **Install line** | `--surface-2` fill, `1px --line`, `--radius`, `12px 16px`, mono 14px, a `$` prompt in `--ink-soft` at 4.70:1 on `--surface-2`, a copy button at the right | copy button tints | copied: label swaps to `copied`, **not** a colour-only change | — |
 | **Card** | `--surface`, `1px --line`, `--radius`, 24px padding, no shadow | border → `--line-strong` | — | — |
 | **Benchmark row** | mono `--t-sm`, numbers right-aligned, `1px --line` bottom rule | fill → `--surface` | — | — |
 | **Status mark** | an 8px dot in its status colour **with its word beside it**, mono `--t-label` | none | — | — |

@@ -106,6 +106,33 @@ observable. A correction that removes the claim removes the coverage with it.
 the kit had as three `width:` literals and the pack as prose numbers. Every value is the
 measured one that was already written down — a token names it, it does not choose it.
 
+### A pair a Components row prescribes was computed by nobody (B-050)
+
+A ratio is checked when the document states one. A Components row usually states none: it
+**prescribes a pair** — *"`--accent` fill, `--on-accent` label"* — and its hover and active
+cells replace one half of it. `contrast(label, fill)` is derivable at every state of every
+component, and nothing derived it. That is how `instrument-console` shipped a pressed label
+at 3.06:1 (B-039): the press dimmed the fill and the label stayed.
+
+`validate_prescribed_pairs()` reads the resting cell for a fill and a label, applies each
+state cell's `fill →` / `label →` swaps, and holds the result to the AA floor for the row's
+type size. 13 rows across 7 packs name both halves and carry 8 state swaps between them.
+
+**Both defects it found sit in the two rows the widened phrasings added:**
+
+- **`maquette`'s leader label is invisible.** The row prescribes `--ink` on a `--model-top`
+  fill, and those are the same hex — `#FFF9F4`, **1.00:1** — in the pack whose central rule
+  is that type and object are built from one cream. The pack now ships `--on-model`
+  (`#151515`, the field's own colour) at 17.49:1, and the token layer says why in the place
+  a reader hits it.
+- **`prism` sets a `$` prompt in `--ink-faint`** at **2.31:1**, a token its own layer calls
+  *"furniture only, never text"*. It is `--ink-soft` at 4.70:1 now — the token that layer
+  says *"MAY carry body copy"*.
+
+As the board row predicted, this check could **not** have caught B-039: `instrument-console`
+is a core-contract pack with no Components table, which is also why the defect survived
+there. 16 rows state half a pair and the count prints on every run (B-059).
+
 ### Gate
 
 - **Coverage is pinned, in both directions.** `check_ratio_coverage()` reads
@@ -143,6 +170,14 @@ measured one that was already written down — a token names it, it does not cho
   first: 44 lines in the library pair a token with a percentage and only two state a
   composite fill AND a type size. The other 42 are filed (B-058), not guessed at.
 - Floors `validate_palette.py` 2087 → 2092, `computed_at_least` 348 → 349.
+- **Five plants for the prescribed pairs**, including the hover-swap path B-039 is made of
+  and the `as above` inheritance. The fixture had to be corrected before they meant
+  anything: it used B-039's own values, where the resting pair already fails, so three of
+  the five were passing for the wrong reason.
+- A claim added in this change had to be rewritten because `on` and its token landed on
+  either side of a line break — the same refusal B-039's own fix met, and correct both
+  times.
+- Floors 2092 → 2119 and `computed_at_least` 349 → 353.
 
 ### Fixed
 

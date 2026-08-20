@@ -86,6 +86,7 @@ verbatim instead of transcribing this table.
 | `--accent` | `#97FDFF` | pale aqua — **works as text** | **15.49:1** |
 | `--on-accent` | `#000000` | the label on an aqua fill | **17.81:1** |
 | `--model-top` / `--model-face` / `--model-side` | `#FFF9F4` / `#FFF3D6` / `#E8DDC8` | the three faces of one cream solid | 17.5 / 16.6 / 13.6 :1 |
+| `--on-model` | `#151515` | the label **on** a cream face — `--ink` is the same hex as `--model-top` | 17.49:1 on `--model-top` |
 | `--leader` | `#8A8F98` | the dotted line from a block to its label | — |
 | `--good` / `--warning` / `--danger` | `#3FCF7F` / `#FFB020` / `#FF5C5C` | status — **a pack decision, see below** | — |
 
@@ -163,7 +164,7 @@ Measured off the reference unless a row says **pack decision**.
 | **Primary CTA** | `--accent` fill, `--on-accent` label, `--radius-pill`, `8px 18px`, 13px Geist | fill → `--accent-deep` over `--dur-fast` | `translateY(1px)` | `opacity: .45`, `cursor: not-allowed` |
 | **Secondary CTA** | `--surface-2` fill, `--ink` label, `--radius-pill`, `6px 18px` | fill → `--surface` | as above | as above |
 | **Model block** | a cream solid: `--model-top`, `--model-face`, `--model-side`, separated by `--model-line`, `--shadow-block` | none — it is a drawing | — | — |
-| **Leader label** | mono `--t-label` in `--ink`, on `--model-top` fill, `--radius-sm`, `4px 10px`, with a 1px dotted `--leader` running to its block | none | — | — |
+| **Leader label** | mono `--t-label` in `--on-model` at 17.49:1 on `--model-top` fill, `--radius-sm`, `4px 10px`, with a 1px dotted `--leader` running to its block | none | — | — |
 | **Panel** | `--surface`, `1px --line`, `--radius`, 20px padding | border → `--line-strong` | — | — |
 | **CLI line** | `--surface-sunken`, `1px --line`, `--radius`, `12px 16px`, mono 14px, a label in `--ink-soft` then the command in `--ink` | copy button tints | copied: the **label changes**, not only a colour | — |
 | **Status mark** | an 8px dot in its status colour **with its word beside it**, mono `--t-label` | none | — | — |
