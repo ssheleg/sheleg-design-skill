@@ -196,6 +196,51 @@ tagged, and the ancestry test says so. Watched passing on this repository's real
 eight members carry it**, and the umbrella requires both halves in each, watched failing when
 either was removed.
 
+### `atrium` is widened, from the reference rather than from its own tokens (B-004)
+
+Three packs were held at `Contract: core` because widening them from the token layer would
+have been *inventing values with a citation attached* — the one thing the pack layer exists
+to prevent. Their references are addressable, so the honest route was always a measurement
+pass, and this is the first of three: `atrium`, read on 2026-08-20 from
+`functionhealth.com`'s own `/_astro/utilities.*.css` and `/_astro/PageSections.*.css`, mapped
+through the reference's **own** token names — `--fill-04` is `--accent`, `--fill-03` is
+`--ink`, `--fill-01` is `--bg`, `--stroke-02` is `--line`.
+
+- **`## Components`** is the reference's single `.fh-button` class and its four skins, with
+  every state: the pill radius (`999px`, not `--radius-lg`), 48px and 40px heights, the exact
+  paddings, and the behaviour that matters — **the press does not dim the accent, it replaces
+  it with the ink**, so the label goes from 4.59:1 to 13.47:1 rather than losing contrast.
+  Hover and focus-visible share a fill, so the 2px accent-at-35% ring is the only thing that
+  separates keyboard from pointer.
+- **`## Hero`** is the numbers of the full-viewport media hero: a 540px text column at the
+  bottom of the stage, `--h1` fluid from **57px to 80px** at weight 300 and `line-height: .9`,
+  the `blur(15px)` eyebrow pill over 7% white, a stat rail with 58px hairline dividers, and
+  what changes below 768px — the stage becomes 666px and the rail leaves the media for a
+  `--bg` bar beneath it.
+- **`## Responsive`** is its **184 media queries, counted**: 768px and 1100px carry 140 of
+  them. It also records the thing a reader would otherwise get wrong — **type does not step at
+  those boundaries, it slides**, `clamp()`-ed between 376px and 1440px, so mixing a fluid
+  heading with a font-size media query breaks the rhythm. And it answers the container
+  question with a technique rather than a shrug: the reference declares `container-type` in
+  exactly one place, a stage whose every dimension is in `em` and whose `font-size` is driven
+  by the container width, so one number scales the whole composition. 152 `vw` expressions
+  against 2 container-relative ones.
+- **`## Signature element`** names the fluted-glass hero that Signature motifs already
+  measured, and says why it is the signature rather than one motif of several.
+
+**The pass found a value the reference does not ship.** `--accent-tint` was `#F7EEEB` —
+which appears **nowhere** in the reference's CSS or its HTML — against its
+`--orange-10p: #F6E9DC`. The mapping is not a guess: its neighbour `--green-10p` is `#f1f3e5`,
+this pack's `--good-tint` to the character. Corrected, with the search that found it recorded
+in the token layer.
+
+It also found what no section had ever said: **`--accent` is 4.17:1 on `--surface`**, below
+AA. The accent is safe as a label on `--bg` and on `--ink`, and not on the cream card. The
+reference never puts one there; now the pack says so.
+
+Contract split **7 core / 22 widened → 6 / 23**. `orchard` (gutgutgoose.com) and
+`editorial-luxury` (prowl.chat) remain, one measurement pass each.
+
 ### Gate
 
 - **Coverage is pinned, in both directions.** `check_ratio_coverage()` reads

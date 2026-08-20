@@ -23,7 +23,13 @@
 
   /* ---- The one accent -------------------------------------------------- */
   --accent: #b05a36; /* terracotta — 4.6:1 on --bg, 4.2:1 on --surface (!) */
-  --accent-tint: #f7eeeb; /* 10% wash — chips, quiet rows */
+  /* CORRECTED 2026-08-20 from the reference's own token layer. This shipped as
+     #f7eeeb, which appears NOWHERE on functionhealth.com — not in
+     /_astro/utilities.css, not in /_astro/PageSections.css, not in the page's
+     HTML. The reference ships --orange-10p: #F6E9DC, and the mapping is proved
+     by its neighbour: --green-10p is #f1f3e5, which is this pack's --good-tint
+     to the character. A wash the reference does not ship is not a measurement. */
+  --accent-tint: #f6e9dc; /* 10% wash — chips, quiet rows */
   --accent-ink: #fef9ef; /* text ON the accent — the field's beige, not white */
   --accent-gradient: linear-gradient(#b05a36, rgba(216, 161, 131, 0.96));
 

@@ -8,15 +8,14 @@ light-weight serif that speaks in italic asides, and photography seen through
 unhurried — a serious clinical claim delivered without a single sterile
 surface.
 
-Contract: core — this pack does **not** specify `## Components`, `## Hero`,
-`## Responsive` or `## Signature element`. Per-component states (hover,
-active, disabled), the opening viewport and its line ceiling, the collapse
-rules, and the single element the page is remembered by are **yours to
-decide** here, and you must say so out loud when you do. Everything the pack
-*does* state is measured; the precision of that half is not evidence about
-this half. The backfill is held rather than written from the token layer,
-because filling these sections from tokens would be inventing values with a
-citation attached — which is the one thing this pack layer exists to prevent.
+Contract: widened — all thirteen sections. The four that were held back until
+1.46.0 are now written from the reference rather than from the token layer,
+which is the only way they were ever going to be honest: `## Components` is
+`functionhealth.com`'s own single control class and its four skins,
+`## Hero` is the numbers of its opening viewport, `## Responsive` is its 184
+media queries counted, and `## Signature element` names what Signature motifs
+already measured. Read on 2026-08-20 from `/_astro/utilities.*.css` and
+`/_astro/PageSections.*.css`; every value carries where it came from.
 
 ## Register
 
@@ -51,7 +50,7 @@ verbatim instead of transcribing this table.
 | `--line` / `-strong` / `-ink` | `#D1C9BF` / `#737373` / `#2A2B2F` | hairline / input border / ghost-control border |
 | `--ink` / `--ink-2` / `--ink-3` | `#2A2B2F` / `#515151` / `#737373` | headings · 13.5:1 / body · 7.6:1 / metadata · 4.5:1 |
 | `--accent` | `#B05A36` | THE signal — terracotta, one per page |
-| `--accent-tint` / `--accent-ink` | `#F7EEEB` / `#FEF9EF` | 10% wash / text **on** the accent |
+| `--accent-tint` / `--accent-ink` | `#F6E9DC` / `#FEF9EF` | 10% wash / text **on** the accent |
 | `--good` (`-tint`) | `#79BD8B` (`#F1F3E5`) | fills and icons only — 2.1:1, never a word |
 | `--info` | `#488AD5` | 3.4:1 — large text and UI marks only |
 | `--danger` | `#DB0000` | 5.0:1 — the one semantic that may be text |
@@ -144,6 +143,130 @@ faster to build and impossible to drift.
   **`--section-y` of 48→99px** top and bottom. Vertical rhythm is the only
   section separator this pack has, so it has to be large and consistent.
 
+## Components
+
+Every value below was read off `functionhealth.com`'s own stylesheets on
+2026-08-20 — `/_astro/utilities.*.css` for the control system and
+`/_astro/PageSections.*.css` for the sections — and mapped onto this pack's
+tokens through the reference's own names: `--fill-04` is `--accent`, `--fill-03`
+is `--ink`, `--fill-01` is `--bg`, `--stroke-02` is `--line`. Nothing here is
+this pack's decision unless it says so.
+
+**The control is a pill and there is only one.** Every button on the reference is
+one class with four skins, so the states below are the whole system rather than a
+per-component invention.
+
+- **Shape and metrics, shared by all four skins** — `border-radius: 999px` (a
+  true pill, not `--radius-lg`), 1px border in the skin's own colour,
+  `font-weight: 600`, `line-height: 1.5`, `gap: 0.875rem` between label and icon,
+  `width: fit-content`, `white-space: nowrap`. Medium: `min-height: 3rem` (48px),
+  padding `0.75rem 1.5625rem` (12px / 25px), 16px. Small: `min-height: 2.5rem`
+  (40px), padding `0 1.25rem`, 14px, `line-height: 1`.
+- **Primary** — `--accent` fill, `--accent-ink` label at **4.59:1 on `--accent`**,
+  border `--accent`. Hover **and** focus-visible: fill and border both go to
+  `--ink`, the label stays `--accent-ink` at **13.47:1 on `--ink`**. The press
+  does not dim the accent — it *replaces* it with the ink, which is why the label
+  gains contrast rather than losing it.
+- **Light** — `--bg` fill, `--accent` label at **4.59:1 on `--bg`**, border
+  `--bg`. Hover: fill and border to `--accent`, label to `--accent-ink`. This is
+  the primary inverted, for use on `--surface-ink`.
+- **Outline accent** — `--bg` fill, `--accent` label, border `--accent`. Hover:
+  fill and border to `--ink`, label to `--accent-ink`.
+- **Outline neutral** — transparent fill, `--ink` label at **13.47:1 on `--bg`**,
+  border `--accent`. The one control where the border and the label disagree
+  about colour, and it is measured, not an oversight. Hover: as outline accent.
+- **Disabled**, all skins — `opacity: .5` and `pointer-events: none`. Nothing
+  else changes.
+- **Focus ring** — `outline: 2px solid` the accent at **35% alpha**,
+  `outline-offset: 2px`. The reference gives hover and focus-visible the same
+  fill, so the ring is the only thing that separates a keyboard focus from a
+  pointer hover.
+- **Transition** — `background-color`, `color` and `border-color`, each `.2s
+  ease`. No transform, no shadow change. A control that lifts is not this pack.
+- **Two controls side by side** take `--s4` between them (16→18px fluid); on the
+  narrow breakpoint the pair becomes a single full-width column.
+
+**A note the pack owes an implementer.** `--accent` measures **4.17:1 on `--surface`**, below AA. An accent label is safe on `--bg` and on `--ink`, and
+not on the cream card. The reference never places one there; this pack now says
+so.
+
+## Hero
+
+One viewport, and the media is the argument. `height: calc(100svh - <banner>)`
+with a full-bleed `object-fit: cover` image or video over an `--ink` field, the
+copy lower-left over it. Every number is the reference's.
+
+- **The text column** is `max-width: 33.75rem` (540px) and stacks with `--s4`
+  between its parts. It sits at the bottom of the stage, not centred: the media
+  above it is the page.
+- **Headline** — `--h1`, which is `clamp(3.5625rem, 2.1617vw + 3.0545rem, 5rem)`:
+  **57px at 376px of viewport, 80px at 1440px**, and fluid between. Weight
+  **300**, `line-height: .9`, colour `--bg` over the media, with a text-shadow
+  the pack carries as `--hero-overlay-heading-shadow`.
+- **The italic phrase** inside the headline is `font-style: italic` and
+  `color: inherit` — on the media hero it stays cream. On a light-field hero the
+  same class takes `--accent` instead. Signature motifs states the device; this
+  states the two colours it takes and when.
+- **The eyebrow pill** — `backdrop-filter: blur(15px)` over `#ffffff12` (7%
+  white), `--radius-xl`, padding `--s2 --s4`, 14px/600 in `--bg`. It is the only
+  place this pack blurs anything.
+- **The stat rail** — three stats along the bottom, separated by 1px `--line`
+  dividers **58px tall**, `--s7` apart. Number: `--h5` at 600; sublabel:
+  16px at 300. Both in `--bg` over the media.
+- **The CTA** carries `box-shadow: 0 2px 12px rgba(0,0,0,.1)` — the one shadow in
+  the hero, and it exists to lift the control off photography rather than to
+  suggest elevation.
+- **Below 768px** the stage stops being the viewport: it becomes **666px** tall,
+  the stat rail leaves the media entirely and reappears as a `--bg` bar beneath
+  it, and the headline takes `line-height: .94`, `letter-spacing: -.01em` and
+  `text-wrap: balance`.
+
+## Responsive
+
+The reference's breakpoints, counted from its own media queries — 184 of them
+across the two stylesheets:
+
+| Boundary | Queries | What it does |
+|---|---|---|
+| **768px** | 66 | the layout breakpoint: every two-column shell becomes one, the hero stops being the viewport, the stat rail moves out of the media |
+| **1100px** | 74 | the reading breakpoint: grid gaps and section padding step down, the sticky banner reflows |
+| 480px | 3 | the narrow tail — stat labels wrap rather than shrink |
+| 1200 / 1280px | 7 | minor, and only inside two sections |
+
+**Type does not step at these boundaries — it slides.** The whole scale is
+`clamp()` between `--min-viewport: 23.5rem` (376px) and `--max-viewport: 90rem`
+(1440px), so a heading has no breakpoint of its own. The layout steps; the type
+does not. Mixing the two — a `clamp()` heading *and* a font-size media query — is
+how this pack's rhythm breaks.
+
+- **The page margin** is `clamp(1.25rem, 4.1353vw + .2782rem, 4rem)`: 20px at
+  376px, 64px at 1440px and above. The content column is `100% - 2 × margin`,
+  capped at `--main` = **1440px**.
+- **Section padding** is `clamp(3rem, 4.812vw + 1.8692rem, 6.2rem)` top and
+  bottom — 48px to 99px — and halves on the small breakpoint.
+- **Two-column shells** are `minmax(0,1fr) minmax(0,1.1fr)` with `--s11` between
+  them; below 768px they become `1fr` with `--s7`.
+- **The one media query that is not width** is `prefers-reduced-motion`, and
+  `hover` — the reference guards hover states behind `@media (hover: hover)`
+  rather than letting a touch device latch them.
+
+**Which components size against their container: exactly one, and it is a
+technique rather than an omission.** The reference declares `container-type:
+inline-size` in a single place — the interactive stage in its *tools* section —
+and there it does something the rest of the page does not: **every dimension
+inside the stage is written in `em`, and the stage's own `font-size` is driven by
+the container width**. `width: 66.625em`, `min-height: 39.975em`, `font-size:
+min(16px, 1.5009cqw)`; below the layout breakpoint the same stage becomes
+`20.9375em × 21.48em` at `clamp(12px, 4.55cqw, 32px)`. One number scales the
+whole composition, and nothing inside it needs a breakpoint.
+
+Everything else sizes against the **viewport**, through the `clamp()` scale
+above — 152 `vw`-based expressions against 2 container-relative ones. That is the
+reference's answer and this pack's: reach for the container only when a
+composition must scale as one object, and write its insides in `em` when you do.
+A component that merely needs to be narrower belongs in the 768px column change,
+not in a container query.
+
 ## Motion tokens
 
 - Durations cluster tight: `--dur-quick 0.16s` · `--dur-base 0.2s` ·
@@ -205,6 +328,21 @@ faster to build and impossible to drift.
   second line, a partner-logo rail, and figures that carry their source. On a
   health page an unsourced number is a liability, and the source line is also
   what keeps the layout from looking like marketing.
+
+## Signature element
+
+**The fluted-glass hero.** If a reader remembers one thing from a page in this
+pack, it is photography seen through vertical reeded glass — not a filter over an
+image, but an image the ribs *clear* as the slide plays. Signature motifs carries
+the shader's numbers; what makes it the signature rather than one motif among
+several is that it is the first viewport, it is full-bleed, and every other
+device on the page is quiet by comparison: one accent, one pill control, hairline
+dividers, no second dark band.
+
+Reproduce it or replace it deliberately. A page in this pack with a flat photo
+hero is not a cheaper version of it — it is a different pack, because the ribs
+are the only place this system spends motion on an image rather than on a
+transition.
 
 ## Motion flavor (cinematic packs only)
 
