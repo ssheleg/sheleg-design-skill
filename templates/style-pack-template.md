@@ -142,10 +142,27 @@ Display / body / data faces (≤3 families), weights, scale, measures.
 Elevation model (border vs shadow vs surface steps), radii set, grain/
 texture, spacing grid.
 
-State the **radius arithmetic** when containers nest: an inner radius is the
-outer radius minus the padding between them (`calc(2rem - 0.375rem)` inside
-`p-1.5`), never the same value twice. Concentric curves are what separates
-machined from stuck-together.
+State the **radius arithmetic** when containers nest, and state **both layers**,
+because they are different rules and conflating them is a recorded defect:
+
+- **The ramp defines the token set.** Radii come from one root by proportion —
+  `--radius-sm: calc(var(--radius) * 0.6)`. That is where a value comes from.
+- **Subtraction adjusts a nested instance.** With a known uniform padding `p`
+  between two boxes, the concentric inner radius is `outer − p`
+  (`calc(2rem - 0.375rem)` inside `p-1.5`). That is what to do at a specific nest.
+
+Never the same value twice: identical radii on both boxes read as two rectangles
+that happen to touch, and concentric curves are what separates machined from
+stuck-together.
+
+**The failure is quoting one to justify the other's number.** `field-notes`
+shipped a subtraction rule whose worked example subtracted **12 from 12** and
+announced **7.2**. Subtraction gives zero there; the 7.2 came from the pack's
+ramp; the implementation used neither. The rule, its example and the code were
+three systems. An agent applying that rule as written would have shipped square tags.
+`ora` is the pack that gets both right and says so: its ramp is `× 0.5` and
+`× 1.5`, and a flush chip inside a control takes `calc(var(--radius-control) -
+4px)`. **If you write a worked example, do the arithmetic.**
 
 ## Components
 

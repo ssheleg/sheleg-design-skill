@@ -491,6 +491,32 @@ writes a ceiling two ways, *"`pigeonhole` … above **4**"* and *"`ora` at **4**
 Corrected, it failed immediately on `proscenium` — where **this run's own default sentence sat
 on top of a Register that already named 4**. Removed. Floor 3795 → 3830.
 
+### The two radius rules were never competing (B-020)
+
+The board said the skeleton teaches a rule a shipped pack records as a defect, and asked which
+one is right. **Both are** — they govern different layers, and the row's framing was the thing
+to fix. Measured across the library: **sixteen packs state radius arithmetic.**
+
+- **The proportional ramp defines the token set.** `--radius-sm: calc(var(--radius) * 0.6)`.
+  That is where a value comes from.
+- **Subtraction adjusts a nested instance** where the padding is known:
+  `calc(var(--radius-control) - 4px)`, and `datasheet`'s 16 − 8 = 8 is subtraction done right.
+
+`ora` uses both and says which is which. `field-notes`' recorded error was **conflating them**:
+its rule said subtraction, its worked example subtracted 12 from 12 and announced 7.2, and its
+token layer used neither — three systems, and an agent applies the one it can read.
+
+The skeleton teaches both layers now, what each governs, and that failure by name. And
+`field-notes`' correction no longer over-reaches: it said *"not by subtraction"*, which reads as
+*subtraction is wrong* rather than *subtraction is the other layer*.
+
+`validate_worked_radius_sums_compute()` refuses a written subtraction that does not compute,
+excluding a `*(Corrected …)*` note because that is a record of an error rather than a claim. It
+ships with **no live subject** — every sum in the sixteen packs computes — so it ships with a
+plant instead. It then caught **this run's own cautionary quote in the skeleton**, where the
+broken sum had been reproduced verbatim: a reader copies what they see, so the warning is now
+written as prose rather than as a copyable equation. Floor 3830 → 3833.
+
 ### Gate
 
 - **Coverage is pinned, in both directions.** `check_ratio_coverage()` reads

@@ -231,10 +231,15 @@ figures, `--shell-max` 1920px for the hero and nav shell.
   **64px section padding** and the **1px rule** between sections.
 - **Radius arithmetic when containers nest:** an inner radius is always
   *smaller* than its outer radius, never the same value twice — the same `12px`
-  on both reads as two rectangles that happen to touch. This pack sets the step
-  **proportionally**, not by subtraction: `tokens/field-notes.css` defines
-  `--radius-sm: calc(var(--radius) * 0.6)`, so a tag at `--radius-sm` (7.2px)
-  inside a card at `--radius-lg` (12px) is correct.
+  on both reads as two rectangles that happen to touch. **This pack's token ramp
+  is proportional, and that is where a radius value comes from**:
+  `tokens/field-notes.css` defines `--radius-sm: calc(var(--radius) * 0.6)`.
+  A tag takes `--radius-sm` (7.2px);
+  a card takes `--radius-lg` (12px); the tag nested in the card is correct.
+  Subtraction is not wrong — it is the other layer, the one that adjusts a
+  specific nest where the padding is known — but it is **not** how a value on
+  this ramp is derived, and reaching for it to explain a ramp number is what went
+  wrong below.
   *(Corrected 2026-08-10. This read "an inner radius is the outer radius minus
   the padding between them … `12 - 12 ≈ 7.2`". Subtraction gives 0, not 7.2, and
   the token layer never used subtraction — the rule, its worked example and the

@@ -1591,6 +1591,13 @@ PLANTS = (
         "'Shared state' re-asserts",
     ),
     (
+        # The sum `field-notes` shipped, put back into a live passage.
+        "a worked radius sum that does not compute",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/ora.md",
+        lambda t: t.replace("(12 − 12 = 0 leaves the", "(12 − 12 = 7.2 leaves the", 1),
+        "does not compute",
+    ),
+    (
         # The state six packs were in before 2026-08-20: marked standalone in the
         # table, silent about the ceiling in their own file.
         "a standalone pack whose Register states no ceiling",
@@ -2713,6 +2720,56 @@ def validate_motion_ceiling_has_one_home():
 
 
 
+# ------------------------------------- a worked radius sum that does not work
+#
+# `field-notes` shipped "an inner radius is the outer radius minus the padding
+# between them … `12 - 12 ~= 7.2`". Subtraction gives 0. The 7.2 came from the
+# pack's proportional ramp, and the token layer used neither — the rule, its
+# worked example and the implementation were three systems, and an agent applying
+# the rule as written would have shipped square tags.
+#
+# Sixteen packs state radius arithmetic and every live example in them computes,
+# so this ships with no live subject and a plant instead. That is deliberate: the
+# defect it catches was found by hand once and cost a correction note.
+#
+# A sum inside a `*(Corrected …)*` note is a RECORD of the error, not a claim, and
+# excluding it is what lets the record stay in the file it belongs to.
+RADIUS_SUM = re.compile(r"(\d+(?:\.\d+)?)\s*[-−]\s*(\d+(?:\.\d+)?)\s*(?:=|≈|~=)\s*(\d+(?:\.\d+)?)")
+RADIUS_CONTEXT = re.compile(r"radius arithmetic|inner radius|concentric", re.I)
+
+
+def validate_worked_radius_sums_compute():
+    styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
+    if not styles.is_dir():
+        return
+    looked = 0
+    for md in sorted(styles.glob("*.md")):
+        text = read(md) or ""
+        if not RADIUS_CONTEXT.search(text):
+            continue
+        looked += 1
+        # paragraph by paragraph, so a sum is judged with the sentence around it
+        for para in re.split(r"\n\s*\n", text):
+            flat = " ".join(para.split())
+            if not RADIUS_CONTEXT.search(flat):
+                continue
+            if "(Corrected" in flat or "*(Corrected" in flat:
+                continue        # the record of a fixed error, not a live claim
+            for a, b, c in RADIUS_SUM.findall(flat):
+                got = float(a) - float(b)
+                check(
+                    abs(got - float(c)) <= 0.35,
+                    f"styles/{md.name}: the worked sum {a} - {b} = {c} does not "
+                    f"compute ({got:g}). A radius rule whose own example is wrong "
+                    f"is three systems — the rule, the example and the token layer "
+                    f"— and an agent applies the one it can read",
+                )
+    if looked < 2:
+        _skips.append("fewer than two packs discuss radius arithmetic — the worked "
+                      "sums were not checked")
+
+
+
 def validate_release_register():
     _release_register(
         read(ROOT / "CHANGELOG.md") or "",
@@ -3203,6 +3260,7 @@ def main():
     validate_theme_split_is_derived()
     validate_table_marks_match_the_contract()
     validate_motion_ceiling_has_one_home()
+    validate_worked_radius_sums_compute()
     validate_status_vocabulary()
     validate_elevation_tokens_named()
     validate_radius_single_valued()
