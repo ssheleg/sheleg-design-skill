@@ -6,6 +6,47 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Five defects the gate could not see, found by three blind readings (B-125…B-130)
+
+`task-pipeline` v1.74.0 closes a node with three independent readings at escalating visibility
+instead of one verdict. Its **first live dispatch** was aimed at this repository's own
+`f88c14b` — the strict reduced-motion gate — and it returned two `fail` verdicts and five
+`breaks` findings against work that had shipped green. What each tier caught is the argument for
+the mechanism, so it is recorded here rather than summarised:
+
+* **The gate matched durations by NAME, and the product tier proved it with a plant.** It removed
+  `--t-hero-art: 0s;` from `paperclip`'s reduced-motion branch in all three copies, left
+  `--t-hero-art: 1.1s` in `:root`, and watched the gate print `0 silent duration(s)` and exit 0.
+  Thirteen time-valued tokens across ten layers were outside the walk entirely — `paperclip`'s six
+  `--t-*`, seven `--stagger*`, `--marquee-cycle`, `--scan-period` — all answered today by the
+  authors' habit rather than by the check. **It matches by value now: 127 durations examined, was
+  112**, and that plant is kept so the name-keyed form cannot return.
+* **The ratchet priced the exception rather than the rule.** The seam tier instrumented `check()`
+  and collapsed `atrium`'s four kept durations — the remediation the requirement names *first* —
+  and measured the count **drop by 4 against a floor of 4026**, turning `npm test` red on the
+  stricter answer, where the only way through was lowering a ratchet whose own `_why` says a
+  falling count is how a deleted requirement hides. The walk now contributes **exactly one check
+  per duration** whatever its answer, so the floor is a property of the corpus.
+* **`docs/DOCMAP.md`'s propagation row still stated the obligation the commit replaced** — one
+  collapsed duration, and the superseded check as its proof. **Both blind tiers found this
+  independently**, which is the clearest signal the two levels are reading different things. An
+  author obeying the row failed the gate; the commit had edited the CHANGELOG, the board, the
+  floors, the gate and the CSS, and not the table that tells a contributor what to do.
+* **A published pair was restated and wrong.** *8 of the library's 11 re-declarations* resolved
+  against no reading of *re-declaration* the document defined. Measured: **112 at `0s`, 9 at the
+  0.01ms idiom, 6 above an instant.** Both figures are computed here now.
+* **B-120's residual scope did not resolve in the repository holding it** — it named
+  `test/*_test.js` and *the other three ratchet files*, and there are exactly three ratchet gates,
+  all covered, and no `*_test.js` in this tree.
+
+Four more findings are filed rather than fixed, because each is a decision rather than a repair:
+the re-declare-with-reason form is enforced by a gate and sanctioned by no document (**B-126**);
+`atrium`'s canvas-removal promise is unverifiable here and reads as covered (**B-127**); `prism`'s
+ambient point cloud has no stated still (**B-128**); the reason window crosses reduce-block
+boundaries (**B-129**); and four competing definitions of *a duration token* now live in one file
+(**B-130**). **B-125** is the one about me: every floor set on 2026-08-20 sits below its true
+count, because the sequence was measure → keep editing → restate.
+
 ### The pairing check the prose ratios needed had been unreachable since it was written (B-053)
 
 Forty-six stated ratios sat in prose that named no partner, and the board carried them as a
@@ -178,7 +219,7 @@ promises a stop in the component layer, the kit is checked for that stop.
 
 Now **29 layers, 0 silent durations, 6 kept with a reason, 2 promising a component-layer stop
 and both keeping it.** `0.01ms` counts as a collapse rather than an exception: it is the
-standard idiom for *instant but still fires `animationend`*, and 8 of the library's 11
+standard idiom for *instant but still fires `animationend`*, and of the 15 in-branch declarations that are not plain `0s`, **9 are that idiom and 6 sit above an instant**. Both figures are computed from the tree, not restated: the pair this paragraph carried until 2026-08-21 was *8 of 11*, and neither number resolved against any reading of *re-declaration* the document defined — the product tier of the certification measured it
 re-declarations are exactly that.
 
 **Two layers were fixed.** `prism` had added `--dur-press: 0.14s` and never updated its branch.

@@ -1369,6 +1369,19 @@ def check_floor(script: str, count: int) -> None:
 # reduced-motion plants below name the message they must provoke.
 PLANTS = (
     (
+        # The hole the product tier of this node's certification proved with a plant:
+        # `REDUCE_DUR_DECL` keyed on a token NAME, so `paperclip`'s six `--t-*`
+        # durations, seven `--stagger*`, `--marquee-cycle` and `--scan-period` -- 13
+        # time-valued tokens across 10 layers -- were outside the walk entirely. The
+        # tier removed this exact line, watched the gate print `0 silent` and exit 0,
+        # and reported it. Matching by value took the walk from 112 durations to 127.
+        # Kept here so the name-keyed form cannot come back.
+        "a time-valued token whose NAME carries no duration word, dropped from its branch",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/tokens/paperclip.css",
+        lambda t: re.sub(r"^\s*--t-hero-art\s*:\s*0s;[^\n]*\n", "", t, count=1, flags=re.M),
+        "says nothing about it",
+    ),
+    (
         # The v1.37.5 regression, planted back: the carrier removed while the edit
         # reads as additive. Derived from the phrase rather than its surroundings.
         "a description edit that drops the phrase a T1 task depends on",
@@ -3667,8 +3680,18 @@ def validate_gate_has_no_shadowed_names():
 # `--dur-marquee` says the marquee is paused with `animation-play-state` and points
 # at `.pg-marquee`; the rule is really there (kits/pigeonhole/src/styles.css:859)
 # and the check now proves it rather than trusting the sentence.
+# Matched by VALUE, not by name. The first version keyed on a name containing
+# `dur|duration|speed|time`, and the product tier of this node's certification
+# planted the proof: it removed `--t-hero-art: 0s;` from `paperclip`'s reduce branch
+# in all three copies, left `--t-hero-art: 1.1s` in `:root`, and the gate still
+# printed `0 silent duration(s)` and exited 0. Thirteen time-valued tokens across
+# ten layers were outside the walk — `paperclip`'s six `--t-*`, seven `--stagger*`,
+# `--marquee-cycle`, `--scan-period` — every one of them answered today by the
+# authors' habit rather than by this check, which is a guard complete by accident.
+# `docs/evidence/verification.md` already recorded the lesson for the floor check
+# above: a name-keyed walk reads paperclip's branch as empty.
 REDUCE_DUR_DECL = re.compile(
-    r"^[ \t]*(--[a-z0-9-]*(?:dur|duration|speed|time)[a-z0-9-]*)\s*:\s*([^;]+);(.*)$",
+    r"^[ \t]*(--[a-z0-9-]+)\s*:\s*(\d+(?:\.\d+)?\s*m?s)\s*;(.*)$",
     re.M | re.I)
 TIME_VALUE = re.compile(r"^([\d.]+)\s*(ms|s)$", re.I)
 # A reason marker on the declaration itself or in the comment block above it.
@@ -3690,7 +3713,7 @@ def validate_every_duration_answers_reduce():
     tokens = styles / "tokens"
     if not tokens.is_dir():
         return
-    layers = silent = kept = promised = 0
+    layers = silent = kept = promised = examined = 0
     for name in _packs():
         css = read(tokens / f"{name}.css")
         if css is None:
@@ -3713,6 +3736,19 @@ def validate_every_duration_answers_reduce():
         in_branch = {m.group(1): (m.group(2).strip(), m.group(3), m.start())
                      for m in REDUCE_DUR_DECL.finditer(inside)}
         for tok, val in sorted(declared):
+            # EXACTLY ONE check per duration, whatever its answer. The first version
+            # asserted only on the exceptions and fell through on a collapse, so the
+            # count this gate contributes was a function of how many exceptions the
+            # library holds rather than how many durations it declares. Collapsing
+            # atrium's four kept durations -- the remediation the requirement names
+            # FIRST -- dropped validate.py by 4 against a ratchet floor and turned
+            # `npm test` red on the stricter answer, and the only way through was
+            # lowering a floor whose own `_why` says a falling count is how a deleted
+            # requirement hides. The second version added a universal check and left
+            # the asymmetry: a kept duration still cost two and a collapsed one, one.
+            # Measured both times rather than reasoned -- the seam tier of this node's
+            # certification instrumented `check()` and collapsed the four in a copy.
+            examined += 1
             if tok not in in_branch:
                 silent += 1
                 check(False,
@@ -3732,17 +3768,19 @@ def validate_every_duration_answers_reduce():
                 # reader this query protects, so the kit pauses it instead. The first
                 # version of this function returned here, and its plant stayed green
                 # -- reproducing the defect the board row exists for, one layer up.
+                # The promise is checked once per LAYER, below.
+                check(True, "")           # the answered case, counted like every other
                 continue
             kept += 1
             # The reason may sit on the line or in the comment block above it.
             above = inside[max(0, rpos - 700):rpos]
-            if not check(
-                    bool(KEPT_MARKER.search(trailing) or KEPT_MARKER.search(above)),
-                    f"styles/tokens/{name}.css: the reduced-motion branch re-declares "
-                    f"`{tok}` at `{rval}` — above an instant — and names no reason. A "
-                    f"value that does not collapse is either a decision or a bug, and "
-                    f"only the file can say which"):
-                continue
+            check(
+                bool(KEPT_MARKER.search(trailing) or KEPT_MARKER.search(above)),
+                f"styles/tokens/{name}.css: the reduced-motion branch re-declares "
+                f"`{tok}` at `{rval}` — above an instant — and names no reason. A "
+                f"value that does not collapse is either a decision or a bug, and "
+                f"only the file can say which")
+
         # The promise is a property of the LAYER, not of one token's verdict: it is
         # made in the branch's prose and it is kept in the kit. Checked once per
         # layer, after the token walk, so a collapsed duration that still needs the
@@ -3769,8 +3807,9 @@ def validate_every_duration_answers_reduce():
         _skips.append("fewer than two layers ship a reduced-motion branch — the strict "
                       "duration check did not run")
         return
-    print(f"  reduce coverage: {layers} layers, {silent} silent duration(s), "
-          f"{kept} kept with a reason, {promised} promise a component-layer stop")
+    print(f"  reduce coverage: {layers} layers, {examined} duration(s) examined, "
+          f"{silent} silent, {kept} kept with a reason, {promised} promise a "
+          f"component-layer stop")
 
 
 # ------------------------------------- a prescribed token that resolves to nothing
