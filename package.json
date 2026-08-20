@@ -23,6 +23,7 @@
     "validate": "python3 test/validate.py && python3 test/validate_palette.py && python3 test/sloplint.py",
     "smoke": "node bin/cli.js --help",
     "palette": "python3 test/validate_palette.py",
+    "sync-kits": "python3 scripts/sync-kit-tokens.py",
     "sloplint": "python3 test/sloplint.py",
     "selftest": "python3 test/validate.py --self-test && python3 test/validate_palette.py --self-test && python3 test/sloplint.py --self-test"
   },

@@ -129,7 +129,7 @@ Three rules carry this palette.
   what used to be advice here — *"label them anyway, because a legend of four coloured
   squares is a legend nobody reads"* — is the requirement. The three are declared
   `@role non-text:` in the token layer, and `validate_status_on_field()` is what asked.
-- **`--ink-faint` is furniture.** At 2.5:1 it draws a grid line or a tick and
+- **`--ink-faint` is furniture.** At 2.5:1 on `--bg` it draws a grid line or a tick and
   never a word.
 
 ### The ink, and why it is not the reference's ink

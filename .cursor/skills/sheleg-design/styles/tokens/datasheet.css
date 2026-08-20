@@ -53,7 +53,7 @@
      floor for a non-text mark and for large text (>=24px). Its measured jobs on
      the reference are exactly those: one word of a 48px headline, the mono
      visitor id, a 2px focus ring, a tick. It is never body copy. */
-  /* @role non-text: --accent — 3.17:1 on the field. This pack's accent is a fill, a
+  /* @role non-text: --accent — 3.17:1 on --bg. This pack's accent is a fill, a
      rule and an alarm tint; --accent-ink is what carries a word. */
   --accent: #f35b22; /* MEASURED — its --orange-7 */
   --accent-deep: #be400f; /* 5.11:1 on --bg — MEASURED (--orange-8): the one orange that may carry a word */

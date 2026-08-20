@@ -26,8 +26,8 @@
      the reference. The terminal is the one surface with a hue — #1f1d1a is warm
      against a neutral #0a0a0a — because it is quoting a real shell. */
   --bg: #0a0a0a; /* --background (dark) */
-  --surface: #171717; /* --card, --popover — the default container, 1.10:1 */
-  --surface-quiet: #262626; /* --muted, --secondary, --accent — chip fills, 1.31:1 */
+  --surface: #171717; /* --card, --popover — the default container, 1.10:1 on --bg */
+  --surface-quiet: #262626; /* --muted, --secondary, --accent — chip fills, 1.31:1 on --bg */
   --terminal: #1f1d1a; /* .terminal body — warm, and darker than --surface */
   --terminal-head: #161412; /* .terminal-header */
   --terminal-rule: #2f2c28; /* .terminal border and tab fill */
@@ -40,7 +40,7 @@
   --terminal-dot: #3a3836; /* the three inert window dots */
 
   --ink: #fafafa; /* --foreground, 18.97:1 on --bg */
-  --muted: #a1a1a1; /* --muted-foreground, 7.66:1 */
+  --muted: #a1a1a1; /* --muted-foreground, 7.66:1 on --bg */
 
   /* Hairlines are alpha, not a colour: the same token reads correctly over the
      field, over --surface and over the terminal. --border-strong is the
@@ -64,8 +64,8 @@
   --manila: #ffffff; /* terminal ink */
   --parchment: #fafafa; /* the light theme's hover fill */
   --charcoal: #141413; /* the dark band a section sits on */
-  --graphite: #52585d; /* the darkest metal, 2.75:1 — non-text */
-  --aluminum: #a8aeb2; /* idle, 8.83:1 */
+  --graphite: #52585d; /* the darkest metal, 2.75:1 on --bg — non-text */
+  --aluminum: #a8aeb2; /* idle, 8.83:1 on --bg */
   --stone: #e5e5e5; /* the light theme's hairline */
   --mark-rest: #b5b0a8; /* a schedule tick before it fires — a mark, never text */
   /* The modal veil, and it does NOT flip with the theme: the reference paints
@@ -75,9 +75,9 @@
   --scrim: #0a0a0a8c; /* the field at 55%, in both themes */
 
   /* ── status: four states, and each one carries its word ────────────────── */
-  --good: #34d06f; /* --status-task-icon-done (dark), 9.80:1 */
-  --warn: #fbbf24; /* --status-task-icon-todo (dark), 11.86:1 */
-  --danger: #fb2c36; /* --destructive (dark), 5.20:1 */
+  --good: #34d06f; /* --status-task-icon-done (dark), 9.80:1 on --bg */
+  --warn: #fbbf24; /* --status-task-icon-todo (dark), 11.86:1 on --bg */
+  --danger: #fb2c36; /* --destructive (dark), 5.20:1 on --bg */
   /* DERIVED. The dark block overrides five status ICON colours and leaves the
      four base status colours at their light-theme values, so the reference's own
      --status-task-in_progress (#2563eb) renders at 3.83:1 on the coal field —
@@ -254,28 +254,28 @@
   --ink: #0a0a0a; /* --foreground, 19.80:1 on --bg */
   --muted: #737373; /* --muted-foreground, 4.74:1 — AA, with nothing to spare */
 
-  --border: #e5e5e5; /* --border, 1.26:1 — a seam, never a mark */
+  --border: #e5e5e5; /* --border, 1.26:1 on --bg — a seam, never a mark */
   --border-strong: #a1a1a1;
 
   --accent: #0a0a0a;
   --accent-ink: #ffffff;
   --accent-hover: #ffffff;
 
-  --parchment: #fafafa; /* the feature card's hover fill, 1.04:1 */
-  --graphite: #52585d; /* 7.21:1 here — the same metal, text-safe on paper */
-  --aluminum: #a8aeb2; /* 2.24:1 — non-text on paper */
+  --parchment: #fafafa; /* the feature card's hover fill, 1.04:1 on --bg */
+  --graphite: #52585d; /* 7.21:1 on --bg here — the same metal, text-safe on paper */
+  --aluminum: #a8aeb2; /* 2.24:1 on --bg — non-text on paper */
 
   /* Status drops to the base half of each ramp, which is the reference's own
      arrangement: one hue at two lightnesses rather than two colours. */
-  --good: #22c55e; /* 2.28:1 on paper */
-  --warn: #f59e0b; /* 2.15:1 */
-  --danger: #dc2626; /* 4.83:1 */
-  --info: #2563eb; /* 5.17:1 */
+  --good: #22c55e; /* 2.28:1 on --bg on paper */
+  --warn: #f59e0b; /* 2.15:1 on --bg */
+  --danger: #dc2626; /* 4.83:1 on --bg */
+  --info: #2563eb; /* 5.17:1 on --bg */
   --review: #7c3aed;
   --idle: #a8aeb2;
 }
 
-/* @role non-text: --good and --warn in the LIGHT theme, at 2.28:1 and 2.15:1 on
+/* @role non-text: --good and --warn in the LIGHT theme, at 2.28:1 on --bg and 2.15:1 on
    paper — below the 3:1 non-text floor there, so they are bar fills, dots and
    chip tints and the WORD beside them carries the meaning. In dark all four
    clear AA and may be set as text. The rule that makes this safe is in

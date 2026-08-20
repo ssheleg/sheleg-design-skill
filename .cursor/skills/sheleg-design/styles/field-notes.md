@@ -116,7 +116,7 @@ copy it verbatim instead of transcribing this table.
 
 Three rules carry this palette:
 
-- **`--ink-soft` is a real body colour here, and that is unusual.** At 5.2:1 it
+- **`--ink-soft` is a real body colour here, and that is unusual.** At 5.2:1 on `--bg` it
   clears AA, so secondary copy does not have to be promoted to full ink the way
   it does in `orchard`. Use it as intended — the whole page reads quieter for it.
 - **`--verify` is a fill and `--brand` is a text colour, and they are not
@@ -432,7 +432,7 @@ first thing to correct when porting this look:
   looks prettiest.
 - **`--verify` is not a text colour.** 3.2:1 on the paper, and white on it is
   3.4:1 — so the reference's own `--verify-foreground: #fff` fails. Labels take
-  `--verify-ink` (5.3:1). The reference gets this right in its tags and wrong in
+  `--verify-ink` (5.3:1 on `--bg`). The reference gets this right in its tags and wrong in
   its token names.
 - **The reference sets `color-scheme` nowhere** despite shipping a complete dark
   theme, so UA form controls and scrollbars follow the OS while the page follows

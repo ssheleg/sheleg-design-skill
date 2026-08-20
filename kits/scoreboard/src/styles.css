@@ -33,7 +33,7 @@
   --ink: #221d16; /* 15.88:1 on --bg — warm near-black, body and display */
   --ink-strong: #0a0a0a; /* 18.79:1 on --bg — the numeral, the total */
   --ink-soft: #71717b; /* 4.58:1 on --bg — labels, meta, secondary copy */
-  --ink-faint: #9f9fa9; /* 2.49:1 — placeholder and disabled ONLY, never content */
+  --ink-faint: #9f9fa9; /* 2.49:1 on --bg — placeholder and disabled ONLY, never content */
   --on-ink: #ffffff; /* 19.80:1 on --ink-strong */
 
   /* ---- Lines: this pack divides with rules, not with shadow ------------- */
@@ -46,7 +46,7 @@
      non-text mark. The reference obeys this without saying so: its orange is a
      3x18 tick, a ::marker, a focus ring, a link underline and one oversized
      chevron. Its primary button is ink. See the pack's Palette. */
-  /* @role non-text: --accent — 3.23:1 on the paper. In this pack the accent "only
+  /* @role non-text: --accent — 3.23:1 on --bg. In this pack the accent "only
      marks": a 3x18px tick, a chip edge, a rule. --accent-ink is the one that may carry a
      word, and the 1.13.1 correction says no orange here may carry a link. */
   --accent: #ff4801;
@@ -85,7 +85,7 @@
   --warn-on-dark: #ffb900; /* 11.49:1 on --panel */
   --danger-on-dark: #ff637e; /* 6.92:1 on --panel */
   --info-on-dark: #51a2ff; /* 7.51:1 on --panel */
-  --live-on-dark: #7bf1a8; /* 14.13:1 — the pulsing square beside "All systems ok" */
+  --live-on-dark: #7bf1a8; /* 14.13:1 on --bg — the pulsing square beside "All systems ok" */
 
   /* ---- The dark readout ------------------------------------------------- */
   /* MEASURED — one dark band per page: the hero, and the ledger panel inside
@@ -262,10 +262,10 @@
      here; nothing made the token layer do it, because the palette gate checked ink
      against field and never a status against field. validate_status_on_field() checks it
      now, and this is the defect it was written for (board B-034). */
-  --good: #00d492; /* 10.21:1 on this band — was inheriting the paper value at 3.69 */
-  --warn: #ffb900; /* 11.49:1 — was 3.94 */
-  --danger: #ff637e; /* 6.92:1 — was 2.37 */
-  --info: #51a2ff; /* 7.51:1 — was 2.90 */
+  --good: #00d492; /* 10.21:1 on --bg on this band — was inheriting the paper value at 3.69 */
+  --warn: #ffb900; /* 11.49:1 on --bg — was 3.94 */
+  --danger: #ff637e; /* 6.92:1 on --bg — was 2.37 */
+  --info: #51a2ff; /* 7.51:1 on --bg — was 2.90 */
 }
 
 /* The reference ships no reduced-motion branch. This pack requires one: every

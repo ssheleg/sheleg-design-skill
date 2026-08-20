@@ -63,9 +63,10 @@ it verbatim instead of transcribing this table.
 
 ### Floors, and what each colour may mean
 
-Every ratio below is computed from the token layer, not asserted. Body ink is
-17.84:1 on the field and 16.49:1 on the cool act; `--muted` is 7.69:1 and
-7.10:1; the accent is 5.65:1 on white and carries white text at the same 5.65:1
+Every ratio below is computed from the token layer, not asserted.
+`--ink` is 17.84:1 on `--bg` and 16.49:1 on `--panel-2`, the cool act.
+`--muted` is 7.69:1 on `--bg` and 7.10:1 on `--panel-2`.
+`--accent` is 5.65:1 on `--bg` and carries white text at the same 5.65:1
 when it fills a control.
 
 **Status is never by colour alone.** Every state is a dot or an icon **plus a

@@ -17,7 +17,7 @@
 
   /* ---- Ink ------------------------------------------------------------- */
   --ink: #2a2b2f; /* 13.5:1 on --bg */
-  --ink-2: #515151; /* 7.6:1 — long-form body on the field */
+  --ink-2: #515151; /* 7.6:1 — long-form body on --bg */
   --ink-3: #737373; /* 4.5:1 — exactly the AA floor: metadata/legal only */
   --on-ink: #fef9ef; /* text on --surface-ink */
 
@@ -30,12 +30,12 @@
   /* ---- Semantics (fills and icons — NOT text; see Gotchas) ------------- */
   /* @role non-text: --good, --info — the pack has always said so in words ("fills and
      icons only", "never carries a word"); this is the same statement in the one form a
-     gate can read. --good 2.11:1 and --info 3.41:1 on the field, and --danger 5.0:1 is
+     gate can read. --good 2.11:1 and --info 3.41:1 on --bg, and --danger 5.0:1 is
      the one semantic here that may be text. */
   --good: #79bd8b; /* 2.1:1 on --bg — never carries a word */
   --good-tint: #f1f3e5;
-  --info: #488ad5; /* 3.4:1 — large text / UI marks only */
-  --danger: #db0000; /* 5.0:1 — the one semantic that may be text */
+  --info: #488ad5; /* 3.4:1 on --bg — large text / UI marks only */
+  --danger: #db0000; /* 5.0:1 on --bg — the one semantic that may be text */
 
   /* ---- Glass & scrims (photography lives behind these) ------------------ */
   --glass-fill: rgba(255, 255, 255, 0.07);

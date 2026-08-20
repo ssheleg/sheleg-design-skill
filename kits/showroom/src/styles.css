@@ -64,7 +64,7 @@
      deuteranopia — the classic pair, under the floor of 8. Legal only with the
      secondary encoding the pack declares: a status is a chip with a word in it,
      never a bare dot. */
-  /* @role non-text: --good, --warning, --danger — 2.33:1, 1.78:1 and 3.05:1 on the
+  /* @role non-text: --good, --warning, --danger — 2.33:1 on --bg, 1.78:1 and 3.05:1 on the
      field. Since 1.26.0 the status chip's LABEL is --ink and these three are the chip's
      tint and its 6px dot; before that the label was painted in them, at 2.03, 1.54 and
      2.65 against the fills the kit actually uses. All three are at or under the 3:1

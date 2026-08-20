@@ -48,7 +48,7 @@
   --ink: #464646; /* 9.04:1 on --bg */
   --ink-strong: #333333; /* 12.10:1 on --bg — the 20px card head */
   --ink-soft: #666666; /* 5.50:1 on --bg — meta, footer links */
-  /* @role non-text: --ink-faint — 3.52:1 on the paper. MEASURED, and the
+  /* @role non-text: --ink-faint — 3.52:1 on --bg. MEASURED, and the
      reference sets 18px body copy in it 176 times, which is the correction in
      the pack's Gotchas. Here it is an icon fill and a disabled label only. */
   --ink-faint: #7c8697;
@@ -238,7 +238,7 @@
   /* MEASURED elsewhere on the site as a card fill, and the only orange the
      reference owns that clears AA on this band. #ff6900 is 3.27:1 here. */
   --accent: #ff9f32; /* 4.61:1 on --bg */
-  --accent-hover: #ffc46d; /* 6.01:1 */
+  --accent-hover: #ffc46d; /* 6.01:1 on --bg */
   --accent-warm: #ff9f32;
   --accent-wash: #565656;
   /* 4.61:1 against --accent — the one place in the pack where a label may sit
@@ -256,9 +256,9 @@
      statuses pointing at the paper values paints 1.3–2.0:1 on the band while
      the readable value sits three lines away (board B-034, scoreboard). */
   --good: #7bd7a5; /* SELECTED — 5.44:1 on --bg (the paper value is 1.55) */
-  --warn: #ffd246; /* MEASURED — the theme's --yellow, 6.54:1 (paper value 1.51) */
-  --danger: #ff9d99; /* SELECTED — 4.73:1 (paper value 1.48) */
-  --info: #8fb6ff; /* SELECTED — 4.63:1 (paper value 1.37) */
+  --warn: #ffd246; /* MEASURED — the theme's --yellow, 6.54:1 on --bg (paper value 1.51) */
+  --danger: #ff9d99; /* SELECTED — 4.73:1 on --bg (paper value 1.48) */
+  --info: #8fb6ff; /* SELECTED — 4.63:1 on --bg (paper value 1.37) */
 }
 
 /* The reference ships no reduced-motion branch at all: zero occurrences of the

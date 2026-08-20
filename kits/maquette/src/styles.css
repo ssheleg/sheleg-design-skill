@@ -50,8 +50,8 @@
      tokens rather than filter values because an axonometric drawing has no
      shading model — the faces are flat fills and their relationship IS the
      lighting. */
-  --model-top: #fff9f4; /* the lit top face — 17.49:1 */
-  --model-face: #fff3d6; /* the front face, warmer — 16.56:1 */
+  --model-top: #fff9f4; /* the lit top face — 17.49:1 on --bg */
+  --model-face: #fff3d6; /* the front face, warmer — 16.56:1 on --bg */
   --model-side: #e8ddc8; /* the side in shade */
   /* Text ON a cream face. `--ink` is the SAME hex as `--model-top` -- that is
      the pack's central rule, type and object built from one cream.

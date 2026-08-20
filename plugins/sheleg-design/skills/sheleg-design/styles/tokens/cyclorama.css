@@ -68,7 +68,7 @@
      reference, not a shortcut taken here. */
   /* @role non-text: --accent, --info, --warning — the accent's own declaration has
      always read "NEVER text on the field", and the two statuses render as a mark plus
-     their word. Measured: --accent 1.86:1, --warning 3.78:1, --info 4.13:1. */
+     their word. Measured: --accent 1.86:1 on --bg, --warning 3.78:1, --info 4.13:1. */
   --accent: #ff8c00; /* fill / dot / chart series. NEVER text on the field */
   --accent-hover: #e69900; /* the accent's hover fill */
   --on-accent: #1a1a1a; /* 7.46:1 on --accent, 7.39:1 on --accent-hover */

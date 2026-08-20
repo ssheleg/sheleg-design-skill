@@ -250,7 +250,7 @@ found only by rendering a page in this pack**, not by reading its token layer.
    `#71717a` it is **4.83:1** on `#ffffff` and **4.40:1** on `#f4f4f5`, and the
    reference spends it on meta lines that appear on both. It is short by a margin
    nobody notices and every audit finds. Reserve it for non-text marks and large
-   text; **prose takes `--ink-soft`** at 7.73:1 and 7.03:1. The same shape has now
+   text; **prose takes `--ink-soft`** at 7.73:1 on `--bg` and 7.03:1. The same shape has now
    been found in two independently-extracted packs in this library, which suggests
    it is a property of how design systems get built rather than a mistake one team
    made.

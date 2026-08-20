@@ -326,7 +326,7 @@ second fill, no image — so that the card is the thing a reader remembers.
   0.068 dark). Raising only the light one coarsens a hairline the pack is drawn
   with; lowering only the dark one flattens the register that reads best.
 - **The control edge cannot be reached by tinting the ink on this field.** No
-  reasonable alpha gets to 3:1 — 0.46 gives 2.94 — so `--edge` is solved
+  reasonable alpha gets to 3:1 on `--bg` — 0.46 gives 2.94 — so `--edge` is solved
   directly rather than stepped off `--border`. A pack that reuses the seam as a
   button's boundary ships controls whose edges fail WCAG 1.4.11, which is the
   defect this token exists to prevent.

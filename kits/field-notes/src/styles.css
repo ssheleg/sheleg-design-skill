@@ -33,7 +33,7 @@
 
   /* ---- Brand: rust ink on paper ---------------------------------------- */
   --brand: #9a3f28; /* 6.3:1 on --bg — safe as text on the paper */
-  --brand-ink: #8f3f1f; /* 6.8:1 — the text-safe rust */
+  --brand-ink: #8f3f1f; /* 6.8:1 on --bg — the text-safe rust */
   --brand-soft: #e8cbb8; /* the rust wash (selected chip) */
   --on-brand: #f8f4ef; /* 6.2:1 on --brand */
   /* The light brand is 2.3:1 on the hero's top stop and 1.4:1 in its middle.
@@ -45,10 +45,10 @@
      a readable label, never as a confidence number. Each state ships a fill,
      a text-safe ink, and a wash. */
   --verify: #0e9e76; /* 3.2:1 on --bg — a FILL and large-text colour ONLY */
-  --verify-ink: #0a7558; /* 5.3:1 — the label colour */
+  --verify-ink: #0a7558; /* 5.3:1 on --bg — the label colour */
   --verify-soft: #d6f1e7;
-  --witness: #b3402a; /* 5.3:1 */
-  --witness-ink: #9a3016; /* 7.0:1 */
+  --witness: #b3402a; /* 5.3:1 on --bg */
+  --witness-ink: #9a3016; /* 7.0:1 on --bg */
   --witness-soft: #f4ded4;
   /* [EXTRACTED] → --verify-ink · [INFERRED] → --brand-ink ·
      [AMBIGUOUS] → --witness-ink.  The third mapping was not rendered on the
@@ -59,7 +59,7 @@
      colour, 0.8 under deuteranopia — so the state is told apart by the
      bracketed word and its border, never by colour alone. A dot, a chart
      series or a legend keyed on these three is unreadable; see Bans. */
-  --danger: #c0442e; /* 4.8:1 — destructive. One hue family with --witness
+  --danger: #c0442e; /* 4.8:1 on --bg — destructive. One hue family with --witness
      (2.8 apart, 1.2 apart in the dark theme): told apart by form, a filled control,
      never an inline tag. The reference's own values; not re-stepped here. */
 
@@ -264,16 +264,16 @@
   --ink-soft: #a89e8f; /* 7.1:1 — comfortably AA */
   --on-ink: #14110e;
 
-  --brand: #cf7a52; /* 5.9:1 */
+  --brand: #cf7a52; /* 5.9:1 on --bg */
   --brand-ink: #cf7a52;
   --brand-soft: #2e1c12;
   --on-brand: #14110e;
   --brand-on-dark: #cf7a52; /* already the dark value */
 
-  --verify: #2bc0a8; /* 8.3:1 — safe as text here, unlike the light theme */
+  --verify: #2bc0a8; /* 8.3:1 on --bg — safe as text here, unlike the light theme */
   --verify-ink: #2bc0a8;
   --verify-soft: #14312a;
-  --witness: #e06a4f; /* 5.7:1 */
+  --witness: #e06a4f; /* 5.7:1 on --bg */
   --witness-ink: #e06a4f;
   --witness-soft: #341711;
   --danger: #e5654c;

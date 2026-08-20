@@ -96,9 +96,9 @@ of the fill; that workaround is no longer the answer.
 **The dark band is a section, not a theme.** `[data-surface="dark"]` inverts one
 strip inside a paper page — the reference uses it for the use-case grid and the
 footer, and never for a whole page. Its greys are composites of the paper over
-the ink, which is why they are neutral rather than a second warm ramp: `--ink`
-`#f7f6f2` at 17.61:1, `--ink-soft` `#a4a3a0` at 7.55:1, `--ink-faint` `#7f7e7c`
-at 4.69:1, and `--good` re-derived to `#57c08c` at 8.45:1. On this field the
+the ink, which is why they are neutral rather than a second warm ramp:
+`--ink` `#f7f6f2` at 17.61:1 on `--bg`, `--ink-soft` `#a4a3a0` at 7.55:1 on `--bg`,
+`--ink-faint` `#7f7e7c` at 4.69:1 on `--bg`, and `--good` re-derived to `#57c08c` at 8.45:1. On this field the
 orange clears AA on its own, so `--warn-ink` is remapped back to the accent — the
 value-axis variant exists for the paper alone.
 

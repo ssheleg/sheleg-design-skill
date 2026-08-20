@@ -27,7 +27,7 @@
   --muted: #c2bdae; /* --muted-foreground, --cream-200 */
   --terminal-ink: #f7f2e5; /* --terminal-foreground */
 
-  --border: #23201c; /* --border, --coal-border — container edge, 1.15:1, never a mark */
+  --border: #23201c; /* --border, --coal-border — container edge, 1.15:1 on --bg, never a mark */
   /* DERIVED. The reference declares --border-strong once, in the light :root,
      and never re-declares it for dark — so its dark theme inherits #d6cfbc and
      paints a paper-coloured hairline at 12.02:1 on the coal field. That reads as
@@ -52,9 +52,9 @@
      theme takes the bright half. Status is never carried by colour alone — see
      styles/ora.md — so the pairs that collapse under dichromacy are safe. */
   --good: #34d399; /* --green-bright, 9.72:1 on --bg */
-  --warn: #fbbf24; /* --amber-bright, 11.19:1 */
-  --danger: #f87171; /* --red-bright, 6.76:1 */
-  --info: #60a5fa; /* --blue-bright, 7.35:1 */
+  --warn: #fbbf24; /* --amber-bright, 11.19:1 on --bg */
+  --danger: #f87171; /* --red-bright, 6.76:1 on --bg */
+  --info: #60a5fa; /* --blue-bright, 7.35:1 on --bg */
 
   /* The six-step verdict ramp. Not peers of the status set above: this is one
      ordered scale, read as a position, and its letter is always rendered beside
@@ -179,7 +179,7 @@
   --terminal: #1e1c19; /* --ink-800 — still darker than the page, so the idea survives */
 
   --ink: #1a1a1a; /* --ink-900, 16.26:1 on --bg */
-  --muted: #5c5953; /* --ink-500, 6.52:1 */
+  --muted: #5c5953; /* --ink-500, 6.52:1 on --bg */
   --terminal-ink: #f9f7f2;
 
   --border: #e3dfcf; /* --paper-300 */
@@ -192,7 +192,7 @@
   --good: #22c55e; /* --green-base */
   --warn: #f59e0b; /* --amber-base */
   --danger: #ef4444; /* --red-base */
-  --info: #2563eb; /* --blue-base, 4.83:1 — the only status that is text-safe here */
+  --info: #2563eb; /* --blue-base, 4.83:1 on --bg — the only status that is text-safe here */
 
   --grade-a-plus: #0d9488;
   --grade-a: #22c55e;

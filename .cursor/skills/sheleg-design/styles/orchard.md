@@ -87,8 +87,8 @@ verbatim instead of transcribing this table.
 Two rules carry this palette, and the reference breaks both — which is exactly
 why they are written down:
 
-- **Sage and orange are fills, never text.** `--primary` is 3.4:1 on the field
-  (large text and UI marks only) and `--cta` is 2.8:1 (nothing, ever). Body
+- **Sage and orange are fills, never text.** `--primary` is 3.4:1 on `--bg`
+  (large text and UI marks only) and `--cta` is 2.8:1 on `--bg` (nothing, ever). Body
   copy on a sage slab must sit on `--primary-deep`, and the CTA label must be
   `--cta-ink`.
 - **The ink is brown.** `#3A1B13` is the black of this system; a true `#000` or
@@ -265,7 +265,7 @@ the first thing to correct when porting this look:
 - **Body copy on the sage slab fails AA.** `--on-primary` on `--primary` is
   **3.4:1** (and oat on sage is **2.96:1**, below even the large-text floor).
   A 44px display heading is fine; 14–18px copy is not. Put small text on
-  `--primary-deep` (**4.9:1**) or on an oat card inside the sage slab.
+  `--primary-deep` (**4.9:1 on `--bg`**) or on an oat card inside the sage slab.
 - **`--ink-soft` is 4.1:1 on oat**, under AA. It is a caption and citation
   colour. Long-form secondary copy takes full `--ink`.
 - **The reference ships no `prefers-reduced-motion` rule anywhere**, so the

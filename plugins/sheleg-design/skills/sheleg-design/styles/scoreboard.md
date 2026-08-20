@@ -404,7 +404,7 @@ packs. Here the page is a board, and a board holds still.
   | `--ring-focus-sand` | `#221D16` | `--surface-sand` only, where the accent misses the floor at 2.97:1 | 15.88:1 |
 
 - **[CORRECTION — 1.13.1] No orange in this pack can carry a link.** 1.13.0
-  called `--accent-hover` "the one orange that may carry a link" at 4.12:1 —
+  called `--accent-hover` "the one orange that may carry a link" at 4.12:1 on `--bg` —
   below the same WCAG AA threshold the pack cites two paragraphs earlier to ban
   the accent from text. The argument was right and was not applied to its own
   next sentence. Links are `--ink` with an `--accent` underline.

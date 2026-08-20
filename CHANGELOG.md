@@ -133,6 +133,32 @@ As the board row predicted, this check could **not** have caught B-039: `instrum
 is a core-contract pack with no Components table, which is also why the defect survived
 there. 16 rows state half a pair and the count prints on every run (B-059).
 
+### 88 prose ratios joined the arithmetic, and four of them were wrong to (B-003, B-053)
+
+140 stated ratios sat in prose that named no partner, so nothing computed them. They were
+not closed by widening the check — a heuristic that guesses the other side is what this
+file has thrown away three guards for. They were closed by testing **one hypothesis**
+against all 140: *this ratio is against the pack's own field.* **88 agreed with it
+arithmetically**, claim by claim, on 77 lines.
+
+Those lines now name `--bg`. Many already said *"on the field"* or *"on the paper"* — the
+same fact, written so a machine cannot read it — and the rest said nothing. Coverage went
+from `353 computed / 150 unguarded` to **`448 / 57`**, 29% unguarded to 11%.
+
+**Four of the 77 went red on the first run and every one was a real find**, because giving
+a line a partner puts its *other* claims under the arithmetic too:
+
+- `blueprint`'s `3:1` is the non-text **floor**, and the word *floor* had wrapped to the
+  next line, so `RATIO_SKIP` could not see it. Reflowed.
+- `proscenium`'s subject was the words *"Body ink"* — no token — and its *"cool act"* is
+  `--panel-2`, which the token layer confirms at **16.49:1**. Both named now.
+- `tenor`'s subject sat on the line above its claim, the same shape as the fifteen the
+  palette run prints as `unpairable`.
+
+The 52 that refused the hypothesis were left alone and stay on the board, because a claim
+whose partner is a panel, a literal the pack does not ship, or a token on the previous line
+needs its own answer, not a rule.
+
 ### Gate
 
 - **Coverage is pinned, in both directions.** `check_ratio_coverage()` reads
@@ -178,6 +204,14 @@ there. 16 rows state half a pair and the count prints on every run (B-059).
   either side of a line break — the same refusal B-039's own fix met, and correct both
   times.
 - Floors 2092 → 2119 and `computed_at_least` 349 → 353.
+- **`scripts/sync-kit-tokens.py`, and `npm run sync-kits`.** A kit's `styles.css` is its
+  pack's token layer verbatim plus its own component half, so every edit to a token
+  layer — down to a comment — makes the kit red until the block is copied again. That
+  copy was done by hand three times today and the third touched **15 kits at once**. The
+  script takes the block boundary from the file's *committed* version instead of guessing
+  it, and a kit that was hand-edited inside its token block reports `STUCK` and is left
+  byte-identical. Watched refusing in a worktree, with the component half intact.
+- Floors 2119 → 2214, `computed_at_least` 353 → 448, `unguarded_at_most` 150 → 57.
 
 ### Fixed
 

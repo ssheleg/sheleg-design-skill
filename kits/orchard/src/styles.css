@@ -18,16 +18,16 @@
   --on-primary: #fffef4; /* only on --primary-deep, never on --primary */
 
   /* ---- Brand green ----------------------------------------------------- */
-  /* @role non-text: --primary, --cta — sage at 3.42:1 and the candy orange at 2.75:1
+  /* @role non-text: --primary, --cta — sage at 3.42:1 on --bg and the candy orange at 2.75:1
      are fills and large-text colours, which both declarations already say; --primary-deep
      is the text-safe green at 4.9:1. */
   --primary: #78934a; /* sage — 3.4:1 on --bg: a FILL and large-text colour */
-  --primary-deep: #61783b; /* the text-safe green: 4.9:1 under --on-primary */
+  --primary-deep: #61783b; /* the text-safe green: 4.9:1 on --bg under --on-primary */
   --primary-light: #aaca73; /* the mark / illustration green */
   --primary-tint: rgba(120, 147, 74, 0.1); /* quiet rows, hover wash */
 
   /* ---- The one action colour ------------------------------------------- */
-  --cta: #fa7241; /* candy orange — 2.8:1: a fill only, never text */
+  --cta: #fa7241; /* candy orange — 2.8:1 on --bg: a fill only, never text */
   --cta-ink: #3a1b13; /* label ON the CTA — 5.6:1. White here fails AA. */
   --cta-glow: rgba(250, 114, 65, 0.25);
   --cta-sheen: radial-gradient(

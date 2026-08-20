@@ -486,7 +486,7 @@ reference's own hover already lands on `--orange-8`; only the resting step moved
 **The 8px mono badge is invisible and this pack refuses it.** The reference sets
 `THIS IS REAL DATA` in `--gray-6` (`#a0a09d`) at 8px, which measures **2.51:1** on
 the field — below even the 3:1 non-text floor, at the smallest size on the page.
-`--ink-faint` here is `--gray-7` (`#8c8c89`, 3.23:1) and is restricted to
+`--ink-faint` here is `--gray-7` (`#8c8c89`, 3.23:1 on `--bg`) and is restricted to
 placeholder and disabled; a badge that must be read takes `--ink-muted` at
 5.06:1. Copying the 8px size without the ink step is the trap.
 

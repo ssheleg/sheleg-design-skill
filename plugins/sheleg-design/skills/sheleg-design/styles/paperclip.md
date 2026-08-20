@@ -145,7 +145,7 @@ the same blue ramp, at 7.79:1. Marked DERIVED at the declaration in the token
 layer so it is never read later as a measured value.
 
 **Status is never by colour alone.** In dark all four clear AA and may be set as
-text. In light `--good` and `--warn` sit at 2.28:1 and 2.15:1 on paper, below
+text. In light `--good` and `--warn` sit at 2.28:1 on `--bg` and 2.15:1 on paper, below
 the 3:1 non-text floor, so there they are bar fills, dots and chip tints and the
 *word* carries the meaning — which is exactly what the reference does: its
 status pill is a coloured chip **with the state written in it** (`In Progress`),

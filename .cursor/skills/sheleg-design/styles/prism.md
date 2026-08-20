@@ -89,13 +89,13 @@ Three rules carry this palette.
   white, and the reference sets 72px display type in it. This pack does not
   propagate that: the cyan fills a button, draws a rule, carries a chart series
   and marks a dot. Where a display word genuinely needs the accent's family it
-  takes `--accent-ink` `#1493CC` at 3.4:1 — **large text only**, never body, and
+  takes `--accent-ink` `#1493CC` at 3.4:1 on `--bg` — **large text only**, never body, and
   never below 24px.
 - **Status is never by colour alone.** `--warning` `#F25C05` and `--danger`
   `#D51F00` separate by only **11.3** at full colour, under the floor of 15 —
   two warm reds a sixth of a hue apart. Every status carries its word. A page of
   bare orange and red dots is unreadable to more people than it looks.
-- **`--ink-soft` is a real body colour** at 5.01:1, which is unusual and worth
+- **`--ink-soft` is a real body colour** at 5.01:1 on `--bg`, which is unusual and worth
   using: secondary copy stays quiet instead of being promoted to full ink.
 
 ## Type
