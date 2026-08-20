@@ -159,6 +159,24 @@ The 52 that refused the hypothesis were left alone and stay on the board, becaus
 whose partner is a panel, a literal the pack does not ship, or a token on the previous line
 needs its own answer, not a rule.
 
+### The board's own table hid two `high` rows for ten iterations
+
+A row's priority and status are read from the column its header names. An unescaped `|`
+inside a row shifts every cell after it, and three rows here carried a shell pipe inside a
+code span — `sort -u`, `cut -d/ -f2`, `grep … | wc -l`. Their status cells came back holding
+`sort -u`, `` `datasheet` run, stage 0 `` and `medium`, so the queue that orders this
+repository's work never saw **B-004** or **B-014**, the only two `high` rows in the file.
+
+The rows were never wrong. The table was, and nothing looked at the table.
+
+`validate_board_columns()` now takes each table's width from its own `| id | … |` header and
+refuses any row that does not match, across `backlog.md` and `verification.md`. Planted with
+an unescaped pipe and watched refusing. Floor 3560 → 3619, one check per row.
+
+Measured across the whole family in the same pass: **13 such rows in five repositories**,
+including rows whose columns were simply missing or doubled. All are fixed and the count is
+zero.
+
 ### Gate
 
 - **Coverage is pinned, in both directions.** `check_ratio_coverage()` reads

@@ -1581,6 +1581,17 @@ PLANTS = (
         ),
         "'Shared state' re-asserts",
     ),
+    (
+        # What three rows in this very file looked like on 2026-08-20: a shell
+        # pipe inside a code span, shifting every cell after it. The rows read
+        # correctly to a human and returned prose where a script asked for the
+        # status, which is how the queue that orders this repository's work
+        # skipped both `high` rows for ten iterations.
+        "an unescaped pipe inside a board row",
+        "docs/evidence/backlog.md",
+        lambda t: t.replace("| B-007 |", "| B-007 | `grep x | wc -l` —", 1),
+        "cells and its header declares",
+    ),
 )
 
 
@@ -2145,6 +2156,60 @@ def _release_register(changelog: str, retro: str, tags: list[str],
     )
 
 
+# ------------------------------------- the board's own columns
+#
+# The board orders every remaining piece of work in this repository, and a
+# reader of it -- human or script -- takes the priority and the status from the
+# column the header names. An unescaped `|` inside a row shifts every cell after
+# it, so the status column comes back holding a fragment of prose and the
+# priority holds another.
+#
+# Measured on 2026-08-20: THREE rows here carried a shell pipe inside a code span
+# (`sort -u`, `cut -d/ -f2`, `grep … | wc -l`). Their status cells read
+# `sort -u`, `` `datasheet` run, stage 0 `` and `medium`, and the queue that
+# orders this loop's work skipped both `high` rows in the file -- B-004 and
+# B-014 -- for ten iterations. The rows were never wrong; the table was.
+#
+# The rule is the cheapest one that catches it: a data row has exactly the cells
+# its own header declares.
+BOARD_FILES = ("docs/evidence/backlog.md", "docs/evidence/verification.md")
+BOARD_ROW = re.compile(r"^\**[A-Z]{1,3}-\d+")
+
+
+def _table_cells(line: str) -> list[str]:
+    return [x.strip() for x in re.split(r"(?<!\\)\|", line.strip().strip("|"))]
+
+
+def validate_board_columns():
+    for rel in BOARD_FILES:
+        text = read(ROOT / rel)
+        if text is None:
+            continue
+        width = None
+        for lineno, line in enumerate(text.splitlines(), 1):
+            if line.startswith("#"):
+                width = None            # a heading ends the previous table
+                continue
+            if not line.startswith("|"):
+                continue
+            cells = _table_cells(line)
+            if cells and cells[0].lower().strip("* ") == "id":
+                width = len(cells)
+                continue
+            if width is None or not BOARD_ROW.match(cells[0]):
+                continue
+            if all(re.fullmatch(r":?-{2,}:?", c) or c == "" for c in cells):
+                continue
+            check(
+                len(cells) == width,
+                f"{rel}:{lineno}: row {cells[0]} has {len(cells)} cells and its "
+                f"header declares {width}. An unescaped `|` inside the row shifts "
+                f"every cell after it, so the status and priority columns come "
+                f"back holding prose -- escape it as `\\|`",
+            )
+
+
+
 def validate_release_register():
     _release_register(
         read(ROOT / "CHANGELOG.md") or "",
@@ -2628,6 +2693,7 @@ def main():
     validate_pack_container_answer()
     validate_kit_breakpoints()
     validate_release_register()
+    validate_board_columns()
     validate_status_vocabulary()
     validate_elevation_tokens_named()
     validate_radius_single_valued()
