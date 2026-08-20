@@ -137,6 +137,29 @@ State contrast rules (WCAG floors) and what each semantic color may mean.
 
 Display / body / data faces (≤3 families), weights, scale, measures.
 
+**Two primitives to reach for, and one thing the library deliberately does not
+own.** Measured across the library on 2026-08-20, so the numbers are today's:
+
+- **`text-box-trim` / `text-box-edge` — 0 uses, and stating a line-height to three
+  decimals is what makes their absence visible.** A 60px display at `line-height:
+  1` is not 60px of cap height; it is 60px of line box with the face's own leading
+  inside it, which is why a hero's optical top never quite matches its stated
+  number. These two trim the box to the text. **Support is the reason it is a
+  recommendation and not a rule**: Chrome and Safari have it, Firefox does not, so
+  a pack that reaches for it states the fallback metric it was eyeballing before —
+  never replaces it silently.
+- **A measure belongs in `ch`, not in `px`.** Counted today: **12** layers declare
+  a measure in `px` or `rem` and **11** use `ch` somewhere. A measure in `px` stops
+  being a measure the moment the typeface changes — 65 characters is the rule, and
+  `65ch` is the rule written down. Where a pack keeps a px measure, say which
+  face it was measured against.
+- **Font loading is not this library's layer, and that is a decision.** There is
+  **no `@font-face` anywhere** in it and **no `font-display` declaration** — the
+  packs name families and the consumer loads them. So `size-adjust` and
+  `ascent-override` have no home here either: metric-matched fallbacks belong in
+  the consumer's `@font-face`, and a pack that wants them should say so in
+  Gotchas rather than ship a descriptor with nothing to attach to.
+
 ## Texture & surface
 
 Elevation model (border vs shadow vs surface steps), radii set, grain/

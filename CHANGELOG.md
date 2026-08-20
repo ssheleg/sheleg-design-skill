@@ -640,6 +640,42 @@ It now reads every `.css`, `.tsx`, `.ts`, `.jsx` and `.js` a kit ships, refuses 
 fewer than two files rather than passing on an empty one, and is planted with a width query in
 a `.tsx` template literal. Floor 3863 → 3865.
 
+### Three of five typographic findings did not hold, and one counted comments (B-030)
+
+The row listed five primitives the library specifies by hand. Re-measured today, **three of
+the five are wrong or have closed themselves**:
+
+| The row said | Measured 2026-08-20 |
+|---|---|
+| 0 declare a measure in `ch` | **11** files use `ch`; 12 declare a px measure |
+| fluid spacing 0 of 16, type fluid in 5 | **6** and **15** |
+| `font-display` in 21 files, `size-adjust` in none — *"a guaranteed reflow"* | `font-display` in **three** places, all the **same comment line**; **zero** `@font-face` blocks |
+
+The third is the one worth dwelling on. That count matched **string occurrences** — a token
+named `--font-display: aeonik`, and a comment in `manpage`'s token layer describing its
+reference. There is no `@font-face` anywhere in this library and no `font-display` declaration,
+so `size-adjust` and `ascent-override` have nowhere to attach: **font loading is the consumer's
+layer, and that is a decision rather than a gap.**
+
+`text-box-trim` / `text-box-edge` and `@property` do stand, both at zero.
+
+The skeleton's `## Type` section now carries all three answers with today's numbers and a
+support line each: `text-box-trim` as a **recommendation** rather than a rule because Firefox
+lacks it — and with the reason it matters, that a 60px display at `line-height: 1` is 60px of
+line box and not of cap height; `ch` as the rule a px measure stops obeying the moment the face
+changes; and font loading as explicitly not this layer, so a pack that wants metric-matched
+fallbacks says so in Gotchas instead of shipping an inert descriptor.
+
+`validate_font_loading_stays_out()` holds that last decision — and **strips comments first**,
+because a comment is exactly what made the original count wrong. Planted both ways.
+
+`@property` is filed rather than done (B-117): the token layers are files a reader is told to
+copy verbatim, and a block per token would roughly double them. The narrow version worth pricing
+is the tokens that are actually animated, and that list has to be measured from the kits'
+transitions rather than guessed.
+
+Floor 3865 → 3981.
+
 ### Gate
 
 - **Coverage is pinned, in both directions.** `check_ratio_coverage()` reads

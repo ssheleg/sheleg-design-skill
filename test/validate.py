@@ -1607,6 +1607,20 @@ PLANTS = (
         "'Shared state' re-asserts",
     ),
     (
+        "an @font-face in a token layer",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/tokens/manpage.css",
+        lambda t: t + "\n@font-face { font-family: X; src: url(x.woff2); }\n",
+        "declares `@font-face`",
+    ),
+    (
+        # A real declaration, not the comment three files already carry — the
+        # check strips comments first, which is what makes the two distinguishable.
+        "a font-display declaration outside any @font-face",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/tokens/manpage.css",
+        lambda t: t + "\n:root { font-display: swap; }\n",
+        "which is a descriptor and only means anything",
+    ),
+    (
         # A width query in a .tsx, which the guard could not see until 2026-08-20.
         "a kit width query outside styles.css",
         "kits/datasheet/src/Button.tsx",
@@ -3042,6 +3056,54 @@ def validate_relative_colour_is_guarded():
 
 
 
+# ------------------------------------- font loading is not this library's layer
+#
+# The pack skeleton now states it: there is no `@font-face` anywhere in this
+# library and no `font-display` declaration, because the packs name families and
+# the consumer loads them. That is a decision, and it is the kind that goes stale
+# silently — B-030 was filed on the reading that `font-display` appears in 21
+# files and metric overrides in none, "a guaranteed reflow". Re-measured
+# 2026-08-20: `font-display` appears in exactly **three** places, all of them the
+# SAME comment line in `manpage`'s token layer describing the reference, and there
+# are **zero** `@font-face` blocks. The defect had no shape here.
+#
+# Comments are stripped before looking, because that comment is what made the
+# original count wrong.
+FONT_FACE = re.compile(r"@font-face\b")
+FONT_DISPLAY_DECL = re.compile(r"(?<!-)\bfont-display\s*:")
+CSS_COMMENT = re.compile(r"/\*.*?\*/", re.S)
+
+
+def validate_font_loading_stays_out():
+    roots = [ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles" / "tokens", ROOT / "kits"]
+    looked = 0
+    for root in roots:
+        if not root.is_dir():
+            continue
+        for css in sorted(root.rglob("*.css")):
+            if "node_modules" in css.parts:
+                continue
+            looked += 1
+            code = CSS_COMMENT.sub(" ", read(css) or "")
+            rel = css.relative_to(ROOT)
+            check(
+                not FONT_FACE.search(code),
+                f"{rel}: declares `@font-face`. This library names font families and "
+                f"leaves loading to the consumer — the skeleton's Type section says so, "
+                f"and a pack that changes that changes the sentence too",
+            )
+            check(
+                not FONT_DISPLAY_DECL.search(code),
+                f"{rel}: declares `font-display`, which is a descriptor and only means "
+                f"anything inside an `@font-face` this library does not ship. Either the "
+                f"pack owns font loading now — and says so — or the declaration is inert",
+            )
+    if looked < 2:
+        _skips.append("fewer than two stylesheets — the font-loading decision was "
+                      "not checked")
+
+
+
 def validate_release_register():
     _release_register(
         read(ROOT / "CHANGELOG.md") or "",
@@ -3536,6 +3598,7 @@ def main():
     validate_component_classes_are_answered()
     validate_excluded_sets_are_declared()
     validate_relative_colour_is_guarded()
+    validate_font_loading_stays_out()
     validate_status_vocabulary()
     validate_elevation_tokens_named()
     validate_radius_single_valued()
