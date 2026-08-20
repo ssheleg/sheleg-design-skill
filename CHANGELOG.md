@@ -270,6 +270,37 @@ On the served page `#FA7241` occurs **only inside SVG `fill=` attributes** and *
 evidence and it does not choose between them, so the pack was **not** rewritten — filed as
 B-110, to be settled in the same rendered pass that `## Components` needs.
 
+### `## Hero` had two readings, one worked example, and no check (B-007)
+
+The board said the standalone reading was missing from the library. **It was not** —
+`ledger` had already written it: *"A console's hero is its first viewport after sign-in"*, with
+a kicker, a title at a console size rather than a display size, the answer before the evidence
+that explains it, and an explicit list of what the screen must not carry. What was missing is
+that **the skeleton did not carry it**, so every console-pack author re-derived the heading
+alone, which is exactly what the T7 author did and said.
+
+The skeleton now names both readings with a worked example each — `datasheet` for the
+marketing page, `ledger` for the console — and states that both owe the same two things.
+
+**And nothing had ever read the answer.** The skeleton has demanded a line ceiling *and the
+container width that keeps it there* since 1.5.0, and no check looked. Across the 23 packs
+that carry a `## Hero` **heading** — never the string, which a `core` pack names in its own
+contract line to decline it — there was exactly one live defect of each kind:
+
+- **`atrium` stated no ceiling.** Widened by this same loop one iteration earlier, with every
+  measurement in place and the one obligation the skeleton spells out left out. Fixed from the
+  reference: **two lines in the 540px column**, and the ceiling is a word budget rather than a
+  CSS rule — the reference's own headline is *"Check your health."*, three words.
+- **`showroom` stated a ceiling with nothing holding it.** Fixed from its reference, and the
+  answer is the interesting one: **no `max-width` holds it at all**. The headline sits in a
+  centred column with side padding only — 24px, 56px, **58px from 1024px** — and
+  `text-wrap: balance` at `line-height .95` does the rest, so the ceiling is a **four-word
+  budget**. The reference's headline is *"Welcome to agentic revenue."*
+
+Two plants, both against `maquette`, chosen by measurement rather than by eye: its hero carries
+exactly one phrase of each kind, so removing one leaves the other standing and each plant
+proves its own half. Floor 3619 → 3667.
+
 ### Gate
 
 - **Coverage is pinned, in both directions.** `check_ratio_coverage()` reads

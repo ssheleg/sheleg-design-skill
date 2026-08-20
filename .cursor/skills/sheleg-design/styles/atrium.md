@@ -203,6 +203,13 @@ copy lower-left over it. Every number is the reference's.
   **57px at 376px of viewport, 80px at 1440px**, and fluid between. Weight
   **300**, `line-height: .9`, colour `--bg` over the media, with a text-shadow
   the pack carries as `--hero-overlay-heading-shadow`.
+- **Line ceiling: two, held by the 540px column** — and the ceiling is a word
+  budget rather than a rule the CSS enforces. The reference's own headline is
+  *"Check your health."*: **three words, 18 characters**, which at 80px in a
+  540px measure lands on two lines. A fourth word crosses to three and the stat
+  rail below it loses the room that makes it read as a rail rather than a list.
+  Below 768px the reference adds `text-wrap: balance` and `letter-spacing:
+  -.01em`, which is what keeps the two lines even rather than ragged.
 - **The italic phrase** inside the headline is `font-style: italic` and
   `color: inherit` — on the media hero it stays cream. On a light-field hero the
   same class takes `--accent` instead. Signature motifs states the device; this

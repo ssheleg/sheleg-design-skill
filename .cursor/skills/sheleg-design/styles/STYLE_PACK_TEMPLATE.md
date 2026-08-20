@@ -133,9 +133,25 @@ described only at rest is half a component.
 ## Hero
 
 The pack's opening architecture: composition, type scale at the top of the
-page, what the first viewport must contain and what it must not. State the
-line ceiling for the display headline and the container width that keeps it
-there — a headline that wraps to five lines is a broken hero, not a long one.
+first screen, what it must contain and what it must not.
+
+**"Hero" has two readings and this heading means whichever one your pack is
+for.** For a scrolling marketing page it is the opening viewport — `datasheet`
+is the worked example. For a product pack it is **the first viewport after
+sign-in**, and `ledger` is the worked example: a kicker, the page title at a
+console size rather than a display size, the answer before the evidence that
+explains it, and an explicit list of what the screen must not carry. A console
+pack that reinterprets this heading from scratch is doing work the library has
+already done; a console pack that writes a marketing hero because the heading
+said so is worse.
+
+**Both readings owe the same two things.** State the line ceiling for the
+headline — a headline that wraps to five lines is a broken hero, not a long one
+— and state **what holds that ceiling**. A container width is the usual answer;
+it is not the only one. `showroom`'s reference holds two lines with
+`text-wrap: balance` at `line-height .95` inside a centred column that has side
+padding and no measure at all, so its answer is a word budget. Any of those is
+an answer. Silence is not: the next author picks one, and it will not be yours.
 
 ## Responsive
 

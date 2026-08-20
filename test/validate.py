@@ -1582,6 +1582,26 @@ PLANTS = (
         "'Shared state' re-asserts",
     ),
     (
+        # Exactly what `atrium` shipped the day before this check existed: a hero
+        # full of measurements and no statement of how many lines the headline may
+        # take. `maquette` is the fixture because its hero carries exactly ONE
+        # phrase of each kind — measured, rather than picked — so removing one
+        # leaves the other standing and each plant proves its own half.
+        "a `## Hero` with no line ceiling",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/maquette.md",
+        lambda t: t.replace("- **Line ceiling: three**, at 66px", "- **Sized** at 66px", 1),
+        "states no line ceiling",
+    ),
+    (
+        # And what `showroom` shipped: the ceiling stated, and nothing saying what
+        # holds it.
+        "a `## Hero` whose ceiling has nothing holding it",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/maquette.md",
+        lambda t: t.replace("- **Line ceiling: three**, at 66px and 1.06 leading.",
+                            "- **Line ceiling: three.**", 1),
+        "and not what holds it",
+    ),
+    (
         # What three rows in this very file looked like on 2026-08-20: a shell
         # pipe inside a code span, shifting every cell after it. The rows read
         # correctly to a human and returned prose where a script asked for the
@@ -2210,6 +2230,66 @@ def validate_board_columns():
 
 
 
+# ------------------------------------- the hero's own two obligations
+#
+# The skeleton has asked for both since 1.5.0 -- "state the line ceiling for the
+# display headline AND the container width that keeps it there" -- and nothing
+# read the answer. Measured 2026-08-20 across the 23 packs that carry a `## Hero`
+# heading: one states no ceiling (`atrium`, widened the day before by the run that
+# then wrote this check) and one states no measure (`showroom`, which gives the
+# ceiling and not what holds it). One live subject each way, which is what makes
+# it a check rather than an assertion.
+#
+# WHAT COUNTS AS A MEASURE is deliberately wide, because the answer is not always
+# a max-width: `showroom`'s reference holds two lines with `text-wrap: balance` at
+# `leading .95` inside a centred column with side padding and no max-width at all.
+# A word budget is an answer too. What is NOT an answer is silence.
+HERO_CEILING = re.compile(
+    r"ceiling|(?:two|three|one|four)\s+lines?\b|max(?:imum)?\s+\S{0,12}\s*lines?"
+    r"|never wraps|wraps to", re.I)
+HERO_MEASURE = re.compile(
+    r"\b\d+(?:\.\d+)?\s*(?:rem|px|ch|em)\b|--container|--page-max|--content"
+    r"|max-width|\bmeasure\b|\bcolumn\b|text-wrap:\s*balance|word budget|\bwords\b", re.I)
+
+
+def validate_hero_states_its_obligations():
+    styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
+    if not styles.is_dir():
+        return
+    looked = 0
+    for md in sorted(styles.glob("*.md")):
+        if md.name == "STYLE_PACK_TEMPLATE.md":
+            continue
+        lines = (read(md) or "").split("\n")
+        # the HEADING, never the string: a `core` pack names `## Hero` inside its
+        # own contract line to say it declines it, and a substring search counted
+        # six such packs as having a hero section.
+        at = [i for i, l in enumerate(lines) if l.rstrip() == "## Hero"]
+        if not at:
+            continue
+        looked += 1
+        i = at[0]
+        j = next((k for k in range(i + 1, len(lines)) if lines[k].startswith("## ")), len(lines))
+        sec = "\n".join(lines[i:j])
+        rel = f"styles/{md.name}"
+        check(
+            bool(HERO_CEILING.search(sec)),
+            f"{rel}: '## Hero' states no line ceiling for the display headline. The "
+            f"skeleton has asked since 1.5.0, and a headline that wraps to five lines "
+            f"is a broken hero rather than a long one -- state the number",
+        )
+        check(
+            bool(HERO_MEASURE.search(sec)),
+            f"{rel}: '## Hero' states a ceiling and not what holds it. A measure, a "
+            f"container token, `text-wrap: balance` or a word budget all count; "
+            f"silence does not, because the next author picks one and it is not yours",
+        )
+    if looked < 2:
+        _skips.append("fewer than two packs carry a '## Hero' heading — the hero "
+                      "obligations were not checked")
+
+
+
 def validate_release_register():
     _release_register(
         read(ROOT / "CHANGELOG.md") or "",
@@ -2694,6 +2774,7 @@ def main():
     validate_kit_breakpoints()
     validate_release_register()
     validate_board_columns()
+    validate_hero_states_its_obligations()
     validate_status_vocabulary()
     validate_elevation_tokens_named()
     validate_radius_single_valued()

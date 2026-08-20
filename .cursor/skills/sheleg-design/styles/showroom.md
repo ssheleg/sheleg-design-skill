@@ -248,8 +248,15 @@ on iOS.
 - **The headline is centred and the specimen is centred.** This is the one pack
   in the library that centres its hero; the symmetry is what makes the page read
   as a gallery wall rather than a document.
-- **Line ceiling: two.** At `--lh-display` 0.95 a third line closes the block up
-  and the specimen loses the room it needs to be the subject.
+- **Line ceiling: two, and no `max-width` holds it.** At `--lh-display` 0.95 a
+  third line closes the block up and the specimen loses the room it needs to be
+  the subject. The reference holds the two lines a different way, and this is
+  worth copying exactly: the headline sits in a **centred column with side
+  padding only** — `24px`, `56px` from 768px, **`58px` from 1024px** — with no
+  measure at all, and `text-wrap: balance` at `line-height .95` does the rest.
+  So the ceiling is a **word budget**: the reference's headline is *"Welcome to
+  agentic revenue."*, **four words**. Five is where a centred, balanced headline
+  at this size starts finding a third line on a laptop.
 - **The specimen is cropped, never scaled.** Shrinking a product surface until it
   fits is the single fastest way to break this pack: the chips become unreadable,
   the type inside it stops matching the type around it, and the page starts
