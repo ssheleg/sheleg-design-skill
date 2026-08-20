@@ -70,7 +70,7 @@ this table is for choosing, not for reading instead of the pack:
 | [`editorial-luxury`](./styles/editorial-luxury.md) | cream and espresso ink | editorial / research / premium B2B · **core contract** |
 | [`workbench`](./styles/workbench.md) | quiet light/dark product UI | dashboards / admin / internal & dev tools (standalone) · **core contract** |
 | [`briefing-room`](./styles/briefing-room.md) | dark 16:9 deck | investor & board decks, briefings, talks as a page (standalone) · **core contract** |
-| [`atrium`](./styles/atrium.md) | cream daylight | consumer health, longevity, wellness, high-trust DTC · **core contract** |
+| [`atrium`](./styles/atrium.md) | cream daylight | consumer health, longevity, wellness, high-trust DTC |
 | [`orchard`](./styles/orchard.md) | warm oat slabs | friendly consumer biotech, DTC wellness, kits & supplements · **core contract** |
 | [`field-notes`](./styles/field-notes.md) | green-cast paper ruled by hairlines | open-source & developer tools sold on auditability (standalone) |
 | [`showroom`](./styles/showroom.md) | white gallery | product-led companies whose best argument is the app on screen |
@@ -100,15 +100,18 @@ this table is for choosing, not for reading instead of the pack:
 sheleg-design-skill --kit <pack>` produces `src/styles.css`, whose component half is
 authored CSS for the states a core pack declines to specify — `:hover`,
 `:focus-visible`, `:disabled`, selected. It does not ship with this skill, so an agent
-reading only this bundle will invent them. Fetch the kit first, and treat any
+reading only this bundle will invent them. **A kit exists for every pack, not only
+the core ones** — fetch it whenever you are building components, and treat any
 difference between kit and pack as a defect in one of them rather than a choice.
+For a widened pack the kit and the pack's `## Components` must agree; for a core
+pack the kit is the only answer either of them gives.
 
-**Seven of the twenty-nine are on the core contract, and it changes what you get.**
+**Six of the twenty-nine are on the core contract, and it changes what you get.**
 A pack marked **core contract** does not specify `## Components`, `## Hero`,
 `## Responsive` or `## Signature element` — so per-component states, the
 opening viewport and its line ceiling, the collapse rules, and the single
 element the page is remembered by are **yours to decide**, and you say so out
-loud when you do. The other twenty-two answer all four. This asymmetry is the one
+loud when you do. The other twenty-three answer all four. This asymmetry is the one
 thing about the library most likely to make you invent a value and believe you
 read it: what a core pack *does* state is measured to two decimals, and that
 precision is not evidence about the half it leaves silent. Each pack declares
@@ -161,6 +164,13 @@ UI"* (DENSITY 6–8). The precedence rule: **the row that names the surface wins
 row that names a mood.** A surface decides how much has to fit; a mood decides how it is
 handled — in a product-UI pack, "quiet" is bought with restraint in colour and motion,
 not with emptiness. Say which row you took and why when two fire.
+
+**A row that names neither is an audience posture** — *"trust-first: regulated,
+public-sector, clinical"* names who reads it, not what they read it on. It does not
+arbitrate DENSITY, because a posture says nothing about how much has to fit; it **wins
+on MOTION and ornament**, because that is the whole of what it constrains. Both T24
+branches hit this and both split two-to-one on MOTION, which is the tell that the rule
+above had no third case.
 
 ### How they bind
 

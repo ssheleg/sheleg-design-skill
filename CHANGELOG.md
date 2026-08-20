@@ -429,6 +429,39 @@ Corrected in all six places it had reached, and `validate_theme_split_is_derived
 computes the split from the declarations and refuses a document that states another. Planted
 with the exact wrong number that shipped.
 
+### Routing: four of five findings held, and correcting one number found two more (B-019)
+
+- **The dial precedence rule had no third case.** *"The row that names the surface wins over
+  the row that names a mood"* does not arbitrate a row naming **neither** — *"trust-first:
+  regulated, public-sector, clinical"* names who reads it, not what they read it on. Both T24
+  branches hit exactly that and both split two-to-one on MOTION, which is the tell. The rule
+  now says an audience posture does not arbitrate DENSITY and **wins on MOTION and ornament**,
+  because that is the whole of what it constrains.
+- **`widened` appeared zero times in the selection text**, although every non-core pack
+  declares it. It appears now, beside the core marks.
+- **"Fetch the kit first" was unconditional inside a core-scoped paragraph.** A kit exists for
+  every pack; for a widened pack the kit and `## Components` must agree, and for a core pack
+  the kit is the only answer either of them gives.
+- **The greenfield contradiction does not hold against the current text.** Lines 219–226 give
+  the path explicitly — *build the page in the pack the brief's register points at*, with
+  `workbench` and `showroom` as the no-signal defaults. Recorded as not-reproduced rather than
+  repeated.
+
+**Correcting one count exposed two more in the same file.** `SKILL.md` said **seven** packs are
+on the core contract where six are; it still marked `atrium` `**core contract**` **eight
+iterations after this loop widened it**; and it said **twenty-two** widened where twenty-three
+are — a remainder the gate's own message records as stale across two consecutive releases.
+
+The check that existed compared the prose *count* with the table, so it could only fire when
+somebody edited the prose. `validate_table_marks_match_the_contract()` now reads the table
+against each pack's own `Contract:` line, **in both directions**: a mark left behind after a
+widening, and a core pack the table forgets to mark. Planted both ways.
+
+Finding (1) is real and larger than the row said — filed as B-114 with the spread measured:
+the motion ceiling has **two homes**, the doctrine names ten packs, four state one in their own
+Register, the overlap is two, and six packs marked `(standalone)` have a ceiling in neither
+place.
+
 ### Gate
 
 - **Coverage is pinned, in both directions.** `check_ratio_coverage()` reads

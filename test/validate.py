@@ -1591,6 +1591,22 @@ PLANTS = (
         "'Shared state' re-asserts",
     ),
     (
+        # Exactly what `atrium` shipped for eight iterations: widened in its own
+        # file, still marked core in the table nobody read against it.
+        "a table mark left behind after a pack was widened",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md",
+        lambda t: t.replace("wellness, high-trust DTC |",
+                            "wellness, high-trust DTC · **core contract** |", 1),
+        "declares `Contract: widened`",
+    ),
+    (
+        "a core pack the table does not mark",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md",
+        lambda t: t.replace("internal & dev tools (standalone) · **core contract** |",
+                            "internal & dev tools (standalone) |", 1),
+        "the table does not mark it",
+    ),
+    (
         # The exact number that shipped over this tree for four hours.
         "a theme split restated wrong in the skeleton",
         f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/STYLE_PACK_TEMPLATE.md",
@@ -2531,6 +2547,51 @@ def validate_theme_split_is_derived():
 
 
 
+# ------------------------------------- the table's marks against the contract
+#
+# A check already compares SKILL.md's PROSE count of core packs with the table's
+# `**core contract**` marks. It fires only when somebody edits the prose — so
+# widening `atrium` on 2026-08-20 and leaving its mark in the table went unseen
+# until an unrelated edit to the sentence beside it. The table was the stale
+# half and nothing read the table against the packs.
+#
+# This does: every pack the table marks `core contract` must declare
+# `Contract: core`, and every pack that declares it must be marked. Two
+# directions, because one alone is the hole this closes.
+def validate_table_marks_match_the_contract():
+    styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
+    skill = read(ROOT / PLUGIN_DIR / "skills" / PLUGIN / "SKILL.md")
+    if skill is None or not styles.is_dir():
+        return
+    marked = set()
+    for line in skill.split("\n"):
+        if not line.startswith("| [`"):
+            continue
+        m = re.match(r"\| \[`([a-z0-9-]+)`\]", line)
+        if m and "**core contract**" in line:
+            marked.add(m.group(1))
+    declared = set()
+    for md in sorted(styles.glob("*.md")):
+        if md.name == "STYLE_PACK_TEMPLATE.md":
+            continue
+        m = re.search(r"(?m)^Contract:\s*(\w+)", read(md) or "")
+        if m and m.group(1).lower() == "core":
+            declared.add(md.stem)
+    for stem in sorted(marked - declared):
+        check(False,
+              f"SKILL.md: the table marks `{stem}` as **core contract** and "
+              f"styles/{stem}.md declares `Contract: widened`. Widening a pack and "
+              f"leaving its mark is how the table went stale for a release")
+    for stem in sorted(declared - marked):
+        check(False,
+              f"SKILL.md: styles/{stem}.md declares `Contract: core` and the table "
+              f"does not mark it, so a reader choosing off the table is not told "
+              f"what the pack declines")
+    if not marked and not declared:
+        _skips.append("no pack declares a contract — the table marks were not checked")
+
+
+
 def validate_release_register():
     _release_register(
         read(ROOT / "CHANGELOG.md") or "",
@@ -3019,6 +3080,7 @@ def main():
     validate_pack_declares_its_silences()
     validate_a_count_names_its_noun()
     validate_theme_split_is_derived()
+    validate_table_marks_match_the_contract()
     validate_status_vocabulary()
     validate_elevation_tokens_named()
     validate_radius_single_valued()
