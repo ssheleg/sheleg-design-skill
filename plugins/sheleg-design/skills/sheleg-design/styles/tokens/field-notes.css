@@ -53,8 +53,15 @@
   /* [EXTRACTED] → --verify-ink · [INFERRED] → --brand-ink ·
      [AMBIGUOUS] → --witness-ink.  The third mapping was not rendered on the
      reference at capture time; it is inferred from the token set, and this
-     comment is the pack practising its own rule. */
-  --danger: #c0442e; /* 4.8:1 — destructive, distinct from --witness */
+     comment is the pack practising its own rule.
+     Measured on these values with the gate's OKLab metric:
+     --brand-ink and --witness-ink are one hue family — 3.2 apart at full
+     colour, 0.8 under deuteranopia — so the state is told apart by the
+     bracketed word and its border, never by colour alone. A dot, a chart
+     series or a legend keyed on these three is unreadable; see Bans. */
+  --danger: #c0442e; /* 4.8:1 — destructive. One hue family with --witness
+     (2.8 apart, 1.2 apart in the dark theme): told apart by form, a filled control,
+     never an inline tag. The reference's own values; not re-stepped here. */
 
   /* ---- App surfaces (see the pack's Register: workbench stays the default
      for neutral product UI; this layer is for a console that must read as the

@@ -111,7 +111,7 @@ copy it verbatim instead of transcribing this table.
 | `--verify-ink` / `-soft` | `#0A7558` / `#D6F1E7` | the label / the wash | **5.3:1** |
 | `--witness` | `#B3402A` | provenance: ambiguous | 5.3:1 |
 | `--witness-ink` / `-soft` | `#9A3016` / `#F4DED4` | the label / the wash | **7.0:1** |
-| `--danger` | `#C0442E` | destructive — kept distinct from `--witness` | 4.8:1 |
+| `--danger` | `#C0442E` | destructive — one hue family with `--witness` (2.8 apart), told apart by form | 4.8:1 |
 | `--deep` / `-2` / `-3` | `#072820` / `#0B332A` / `#041D17` | one dark family, every member **bounded**: the dawn's darkest step · terminal header · terminal body — see Gotchas | — |
 
 Three rules carry this palette:
@@ -126,10 +126,20 @@ Three rules carry this palette:
 - **The neutrals are green-cast and the ink is not black.** `#16211B` beside a
   cool `#18181B` or a true `#000` reads instantly as a component from another
   kit. So does a pure `#FFF` card on this paper.
+- **Rust and red-orange are one hue family, and the provenance state is carried
+  by the word.** Measured on the reference's own values with the palette gate's
+  OKLab metric: `--brand-ink` and `--witness-ink` are **3.2 apart** at full
+  colour and **0.8 under deuteranopia**; `--danger` sits **2.8 apart** from
+  `--witness`, and **1.2 apart** in the dark theme. These are the values the reference
+  ships and this pack does not re-step a hue it read. So `[EXTRACTED]`,
+  `[INFERRED]` and `[AMBIGUOUS]` are told apart by the bracketed word and its
+  border, never by colour alone — and `--danger` is told apart from `--witness`
+  by form: a filled control, never an inline tag.
 
-Three semantic hues and no fourth: rust is the brand, green is *verified*, red-
-orange is *unverified*. A fourth hue means one of them stopped meaning
-something.
+Three semantic ROLES, and two hue families rather than three: rust is the brand,
+green is *verified*, red-orange is *unverified* — and rust and red-orange are one
+family, which is exactly why the role is carried by the word and not the hue. A
+fourth hue means one of them stopped meaning something.
 
 ## Type
 
@@ -384,7 +394,12 @@ nothing generative appears on the paper.
 - A true black, a cool grey, a pure `#FFF` card, or any framework default
   neutral (`#18181B`, `#F2F3F4`) beside the green-cast palette.
 - A fourth semantic hue; the provenance colours used for anything that is not
-  provenance; `--danger` and `--witness` conflated.
+  provenance; `--danger` and `--witness` conflated **in role** — one standing in
+  for the other. They are one hue family by measurement (2.8 apart), so the ban
+  is about which one the component means, not about telling the colours apart.
+- A provenance state carried by colour alone: a bare swatch, a dot, a chart
+  series or a legend keyed on `--verify-ink` / `--brand-ink` / `--witness-ink`.
+  Two of the three are 3.2 apart and 0.8 under deuteranopia.
 - **Italic anywhere.** The display face has none, so `<em>` synthesises a
   slanted fake. Emphasis is a colour change on one phrase, or the mono voice.
 - A hardcoded radius in px; a grey drop shadow where the ring belongs;

@@ -717,6 +717,60 @@ def _ratio_plants() -> list[str]:
     return problems
 
 
+def _declared_set_plants() -> list[str]:
+    """The declared-set check, watched discriminating.
+
+    Four cases, and the third is the one that matters: a file-wide "never by
+    colour alone" must NOT excuse a pair below the hard floor. Without that the
+    check is a phrase-detector, and any pack could add one sentence to silence
+    it.
+    """
+    import tempfile
+    global TOKENS, PACKS
+    problems = []
+    # --a and --b collide (one hue family); --c is far from both.
+    css = (":root {\n  --bg: #ffffff;\n  --ink: #1a1a1a;\n  --line: #dddddd;\n"
+           "  --surface-2: #eeeeee;\n"
+           "  --a: #8f3f1f;\n  --b: #9a3016;\n  --c: #0a7558;\n"
+           "  /* [ONE] -> --a * [TWO] -> --b * [THREE] -> --c */\n}\n")
+    cases = [
+        ("a state map whose two states are one colour, with nothing said",
+         "The pack ships three states.\n",
+         "below the hard floor"),
+        ("a file-wide secondary-encoding phrase reaching a hard-floor pair",
+         "Status is never by colour alone in this pack.\n",
+         "below the hard floor"),
+        ("the pair named, with what separates it -- accepted",
+         "- `--a` and `--b` are one hue family, told apart by the word.\n",
+         None),
+        ("the pair named, and the figure it states is wrong",
+         "- `--a` and `--b` are one hue family, 9.9 apart at full colour.\n",
+         "the disclosure for"),
+    ]
+    with tempfile.TemporaryDirectory() as d:
+        tmp = Path(d)
+        (tmp / "tokens").mkdir()
+        old_tokens, old_packs = TOKENS, PACKS
+        TOKENS, PACKS = tmp / "tokens", tmp
+        try:
+            for label, md, expect in cases:
+                _reset()
+                _tally["delta_unbound"] = 0
+                (TOKENS / "_planted_.css").write_text(css, encoding="utf-8")
+                (PACKS / "_planted_.md").write_text(md, encoding="utf-8")
+                validate_declared_semantic_sets(TOKENS / "_planted_.css")
+                fired = [f for f in failures if expect in f] if expect else []
+                ok = bool(fired) if expect else not failures
+                print(f"  {'caught ' if ok else 'MISSED '} {label}")
+                if not ok:
+                    problems.append(f"{label} — failures: {failures or 'none'}")
+        finally:
+            TOKENS, PACKS = old_tokens, old_packs
+            _reset()
+            _tally["delta_unbound"] = 0
+    return problems
+
+
 def self_test() -> int:
     """Plant a defect of each class and require the matching check to fire.
 
@@ -868,6 +922,7 @@ def self_test() -> int:
         problems.append("false positive on a clean palette: " + "; ".join(failures))
     _reset()
     problems += _ratio_plants()
+    problems += _declared_set_plants()
     if problems:
         print("\nself-test FAILED: " + "; ".join(problems))
         return 1
@@ -1150,6 +1205,7 @@ def _line_surface_collision(stem: str, text: str) -> None:
 # Counted, not restated. Every figure the comment inside this function used to
 # assert is derived here and printed once per run.
 _tally: dict = {"computed": 0, "unresolved": 0, "unguarded": 0,
+                "delta_unbound": 0,
                 "un_table": 0, "un_argued": 0, "un_prose": 0,
                 "packs_guarded": set(), "packs_unguarded": set()}
 # Every claim that named a partner and still produced no arithmetic, kept with
@@ -1258,6 +1314,20 @@ def stated_ratio_report() -> str:
         f"{_tally['un_prose']} prose]. Hand-verified: {v_un} of {v_total} at "
         f"{v_packs} packs on {when}, and nothing since"
     )
+
+
+def declared_set_report() -> str:
+    """What the disclosure check could not bind, said out loud.
+
+    A figure in a sentence that names three tokens belongs to one of three pairs
+    and the document does not say which. Skipping it is right; skipping it
+    silently would make this check read as covering every disclosure in the
+    library, which is the failure the ratio half of this file spent a day on.
+    """
+    n = _tally["delta_unbound"]
+    return (f"declared sets: {n} disclosure figure(s) left unchecked — their "
+            f"sentence names more than two tokens, so which pair the number "
+            f"describes is not stated. Name one pair per sentence to gate it")
 
 
 def validate_stated_ratios(css: Path) -> None:
@@ -1438,6 +1508,328 @@ def validate_stated_ratios(css: Path) -> None:
 FLOORS = Path(__file__).resolve().parent / "floors.json"
 
 
+
+# ------------------------------------- a pack's OWN semantic sets
+#
+# `validate_theme`'s peer set is `STATUS_TOKENS` plus `--accent`/`--primary`/
+# `--cta`, so a pack that carries meaning in tokens of its own naming is compared
+# against nothing. `field-notes` exists to render provenance and its three
+# provenance inks -- `--verify-ink`, `--brand-ink`, `--witness-ink` -- are all
+# excluded by name; two of them were **3.21 apart** (0.83 under deuteranopia) on
+# the two labels a reader most needs to tell apart, and no check could see it.
+#
+# The set is not invented here and it is not a new syntax. Two forms already ship:
+#
+#   1. the state map a pack writes in its token layer as
+#      ``[EXTRACTED] -> --verify-ink * [INFERRED] -> --brand-ink``. Every token in
+#      one map carries a different state of one thing, which is exactly the peer
+#      relation the CVD floors are about.
+#   2. a distinctness CLAIM: ``destructive -- kept distinct from `--witness` ``.
+#      A sentence asserting two tokens are told apart is a claim, and a claim
+#      carries its check.
+#
+# What this deliberately does NOT do is guess a set from token names. `--brand`
+# and `--brand-ink` are one colour's two jobs; `--witness` and `--danger` are two
+# meanings that happen to share a hue family. Nothing in the naming separates
+# those cases, which is why the pack has to say which it means.
+STATE_MAP = re.compile(r"\[([A-Z][A-Z0-9_ -]*)\]\s*(?:->|→)\s*(--[a-z0-9-]+)")
+# "kept distinct from `--witness`", "distinct from --witness"
+DISTINCT_CLAIM = re.compile(r"distinct from\s+`?(--[a-z0-9-]+)`?", re.I)
+# "3.2 apart", "**2.8** from `--witness`" -- a distance the pack states about a
+# pair it names. A disclosure carrying a number is a claim like any other, and
+# `validate_stated_ratios` cannot see it: that check reads contrast ratios, and
+# this is an OKLab distance.
+# Bound to the quantity it names, never to a pool. The first version accepted a
+# match against every theme AND every CVD simulation, so a planted 5.9 found
+# something to agree with and the plant did not fail -- the "cannot fail" shape
+# this file already records twice. `N apart` is a full-colour distance; `N under
+# <kind>` is that simulation. A bare number is not checked, because nothing says
+# what it measures.
+# ONE pattern, because two of them cut a real sentence in half. `maquette` writes
+# "`--good` and `--danger` still sit 6.4 apart under deuteranopia": an `apart`
+# pattern claimed the figure as full-colour and an `under` pattern needed the
+# number adjacent to the word, so the check compared a deuteranopia figure with
+# the full-colour distance and called a correct sentence wrong. The qualifier
+# decides which quantity it is, and a bare number with no qualifier at all is
+# not read.
+DELTA_FIGURE = re.compile(
+    r"\*{0,2}([0-9]+(?:\.[0-9]+)?)\*{0,2}\s*"
+    r"(?:apart\s*)?"
+    r"(?:(?P<full>at full colou?r)"
+    r"|under\s+(?P<cvd>protanopia|deuteranopia|tritanopia)"
+    r"|(?P<bare>apart\b))"
+)
+
+
+def _figures(sentence: str) -> list[tuple[float, str]]:
+    """Every distance the sentence states, each bound to what it measured."""
+    out = []
+    for m in DELTA_FIGURE.finditer(sentence):
+        value = float(m.group(1))
+        out.append((value, m.group("cvd") if m.group("cvd") else "full colour"))
+    return out
+
+
+DELTA_TOL = 0.15
+# The one escape, and it must NAME the carrier. A pack whose values were read off
+# a reference cannot re-step a hex, so where the reference itself renders two
+# meanings in one hue the honest answer is to say so and say what separates them
+# instead -- form, placement, or the word itself. "Never by colour alone" is the
+# phrase the status half already uses; the rest are the ways this library
+# actually writes it.
+NOT_BY_HUE = re.compile(
+    r"never by colou?r alone|one hue family|told apart by (?:form|placement|shape|the word)"
+    r"|separated by (?:form|placement|shape|the word)|not by hue",
+    re.I,
+)
+
+
+def _blocks(text: str) -> list[str]:
+    """One claim per block: a paragraph, or a bullet with its continuation lines.
+
+    Per-LINE matching looked right and checked almost nothing -- in `field-notes`
+    the phrase "one hue family" sits on the bullet's first line and the two token
+    names on its third, so the pack's own numbers were never bound to the pair
+    they describe. Whole paragraphs then over-bound: `cyclorama`'s status bullet
+    list is one paragraph, and every number in it bound to every pair, which
+    reported five failures against five correct sentences.
+    """
+    out, cur = [], []
+    for line in text.splitlines():
+        if not line.strip():
+            if cur:
+                out.append("\n".join(cur)); cur = []
+            continue
+        # A TABLE ROW is one claim. Without this the palette table -- contiguous
+        # lines, no blank line between them -- was a single block holding every
+        # token in the pack and every number beside them, so `--danger`'s
+        # "(2.8 apart)" bound to `--verify-ink` and reported six failures against
+        # six correct rows.
+        if line.lstrip().startswith("|"):
+            if cur:
+                out.append("\n".join(cur)); cur = []
+            out.append(line)
+            continue
+        if re.match(r"\s*[-*]\s", line) and cur:
+            out.append("\n".join(cur)); cur = []
+        cur.append(line)
+    if cur:
+        out.append("\n".join(cur))
+    return out
+
+
+def _sentences(block: str) -> list[str]:
+    """A number binds to the pair named in ITS OWN sentence, not the block's.
+
+    `cyclorama` writes two pairs and three numbers in one bullet, separated by a
+    semicolon: "`--good` and `--danger` separate by 14.0 ... ; `--warning` and
+    `--danger` by 14.8." Binding at block level gave `--warning`/`--danger` the
+    figure 14.0 and called the pack wrong.
+    """
+    return [s for s in re.split(r"(?<=[.;])\s+", block) if s.strip()]
+
+
+def _declared_sets(css_text: str, pack_text: str) -> list[tuple[str, dict[str, str]]]:
+    """Every peer group the pack itself declares, as (why, {label: token}).
+
+    A state map contributes one group per contiguous run of arrows -- two maps in
+    one file are two groups, because a state of one thing is not a peer of a state
+    of another.
+    """
+    groups: list[tuple[str, dict[str, str]]] = []
+    run: dict[str, str] = {}
+    for line in css_text.splitlines():
+        found = STATE_MAP.findall(line)
+        if found:
+            for label, token in found:
+                run[label.strip()] = token
+        elif run and not line.strip().startswith(("*", "/*")) and "-->" not in line:
+            if len(run) >= 2:
+                groups.append(("the state map in the token layer", dict(run)))
+            run = {}
+    if len(run) >= 2:
+        groups.append(("the state map in the token layer", dict(run)))
+
+    # A distinctness claim: the subject is the first token on the line, the object
+    # is the one the phrase names.
+    for source, text in (("styles", pack_text), ("tokens", css_text)):
+        for line in text.splitlines():
+            m = DISTINCT_CLAIM.search(line)
+            if not m:
+                continue
+            names = [n for n in TOKEN_ON_LINE.findall(line) if n != m.group(1)]
+            if not names:
+                continue
+            groups.append((f"a distinctness claim in the {source} file",
+                           {names[0]: names[0], m.group(1): m.group(1)}))
+        # A DISCLOSURE also declares the pair. Correcting a false "distinct from"
+        # into an honest "one hue family" removed the only thing that made the
+        # pair observable: the collision was documented and gated by nothing, so
+        # a later re-step would have made the prose wrong with the gate green.
+        # The sentence that admits the collision is therefore what keeps it
+        # measured.
+        for block in _blocks(text):
+            if not NOT_BY_HUE.search(block):
+                continue
+            names = list(dict.fromkeys(TOKEN_ON_LINE.findall(block)))
+            if len(names) < 2:
+                continue
+            groups.append((f"the pack's own disclosure in the {source} file",
+                           {n: n for n in names}))
+    return groups
+
+
+def _check_stated_delta(stem, a, b, maps, pack_text, css_text) -> None:
+    """A distance the pack states about a pair it names is computed, not read.
+
+    The disclosure is the pack's answer to a hard-floor collision, so the number
+    in it carries the whole argument: "one hue family, 2.8 apart" is only an
+    honest answer while 2.8 is what the values produce. Checked against every
+    theme, because a pack states the light-theme figure and often the dark one on
+    the same line.
+    """
+    for src in (pack_text, css_text):
+        for block in _blocks(src):
+            if not NOT_BY_HUE.search(block):
+                continue
+            named = set(TOKEN_ON_LINE.findall(block))
+            if a not in named or b not in named:
+                continue
+            wanted: list[tuple[float, str]] = []
+            for sentence in _sentences(block):
+                named_here = set(TOKEN_ON_LINE.findall(sentence))
+                if a not in named_here or b not in named_here:
+                    continue
+                figures = _figures(sentence)
+                # EXACTLY TWO tokens, or the number's owner is a guess. A
+                # sentence naming three statuses and three figures -- which is
+                # how `pigeonhole`, `paperclip` and `maquette` write theirs --
+                # gave every figure to every pair and reported six failures
+                # against six correct sentences. The pool that cannot fail and
+                # the pool that fails wrongly are the same mistake in two
+                # directions; the answer both times is to check only what the
+                # document actually pins down.
+                if len(named_here) != 2:
+                    _tally["delta_unbound"] += len(figures)
+                    continue
+                wanted += figures
+            for want, what in wanted:
+                got = []
+                for _lbl, solids, _f in maps:
+                    if a not in solids or b not in solids:
+                        continue
+                    if what == "full colour":
+                        got.append(delta(solids[a], solids[b]))
+                    else:
+                        got.append(delta(simulate(solids[a], what),
+                                         simulate(solids[b], what)))
+                if not got:
+                    continue
+                check(
+                    any(abs(g - want) <= DELTA_TOL for g in got),
+                    f"styles/{stem}.md: the disclosure for {a}/{b} states {want} "
+                    f"{what} and the token layer produces "
+                    f"{', '.join(f'{g:.1f}' for g in sorted({round(x, 1) for x in got}))} "
+                    f"-- the number that answers a hard-floor collision is the "
+                    f"whole answer, so it is computed like one",
+                )
+
+
+def validate_declared_semantic_sets(css: Path) -> None:
+    stem = css.stem
+    text = css.read_text(encoding="utf-8")
+    maps = _theme_maps(text)
+    if not maps:
+        return
+    pack_md = PACKS / f"{stem}.md"
+    pack_text = pack_md.read_text(encoding="utf-8") if pack_md.is_file() else ""
+    groups = _declared_sets(text, pack_text)
+    if not groups:
+        return
+    # The file-wide phrase excuses the SOFT floor only, exactly as it does for the
+    # status peers. Below the hard floor a boilerplate sentence is not an answer:
+    # the pack has to name THIS pair and say what separates it, on one line. That
+    # is the difference between a pack disclosing a property of its reference and
+    # a pack adding a phrase to turn a gate green.
+    soft_excused = bool(NOT_BY_HUE.search(pack_text) or NOT_BY_HUE.search(text))
+
+    def excused_pair(a: str, b: str) -> bool:
+        # Tokens compared EXACTLY, never as substrings: `--witness` is a prefix of
+        # `--witness-ink`, so a line excusing one pair would silently excuse the
+        # other -- a gate passing on a substring is the defect this file hunts.
+        for src in (pack_text, text):
+            for block in _blocks(src):
+                if not NOT_BY_HUE.search(block):
+                    continue
+                named = set(TOKEN_ON_LINE.findall(block))
+                if a in named and b in named:
+                    return True
+        return False
+
+    # One pair, one verdict. `field-notes` writes its distinctness claim in the
+    # pack file AND in the token layer, which is good practice and was reported
+    # as two identical failures per theme.
+    seen: set[tuple[str, str, str]] = set()
+    # The stated figures are a property of the SENTENCE, not of a theme, and the
+    # check already looks at every theme itself -- running it per theme reported
+    # each wrong number twice.
+    figured: set[tuple[str, str]] = set()
+
+    for why, group in groups:
+        by_token = {}
+        for lbl, token in group.items():
+            by_token.setdefault(token, lbl)
+        if len(by_token) < 2:
+            continue
+        for label, solids, _field in maps:
+            present = [(tok, by_token[tok]) for tok in by_token if tok in solids]
+            if len(present) < 2:
+                continue
+            for i, (ta, la) in enumerate(present):
+                for tb, lb in present[i + 1:]:
+                    key = (label, *sorted((ta, tb)))
+                    if key in seen:
+                        continue
+                    d = delta(solids[ta], solids[tb])
+                    worst = min(
+                        (delta(simulate(solids[ta], k), simulate(solids[tb], k)), k)
+                        for k in CVD_MATRICES)
+                    if d >= DELTA_HARD and worst[0] >= DELTA_CVD:
+                        continue
+                    seen.add(key)
+                    states = "" if la == ta else f" ({la} vs {lb})"
+                    where = f"styles/{stem}.md [{label}]"
+                    measured = (f"{d:.1f} apart at full colour and {worst[0]:.1f} "
+                                f"under {worst[1]}")
+                    if d < DELTA_HARD:
+                        check(
+                            excused_pair(ta, tb),
+                            f"{where}: {ta} and {tb}{states} are {measured} — below "
+                            f"the hard floor of {DELTA_HARD}, and they are peers "
+                            f"because of {why}. A hue read off a reference may not be "
+                            f"re-stepped, so the pack must name THIS pair and say what "
+                            f"separates it instead of the hue; a file-wide phrase does "
+                            f"not reach a hard-floor pair, and a claim that they are "
+                            f"distinct when they are not is itself the defect",
+                        )
+                    else:
+                        check(
+                            soft_excused or excused_pair(ta, tb),
+                            f"{where}: {ta} and {tb}{states} separate by {measured} "
+                            f"(floors {DELTA_HARD}/{DELTA_CVD}) and they are peers "
+                            f"because of {why}, and the pack states no secondary "
+                            f"encoding — declare what carries the difference",
+                        )
+                    if excused_pair(ta, tb) or (d >= DELTA_HARD and soft_excused):
+                        notes.append(
+                            f"  {stem} [{label}]: {ta}/{tb} tight ({measured}) — "
+                            f"the pack names what separates them")
+                    fig_key = tuple(sorted((ta, tb)))
+                    if fig_key not in figured:
+                        figured.add(fig_key)
+                        _check_stated_delta(stem, ta, tb, maps, pack_text, text)
+
+
 def check_floor(script: str, count: int) -> int:
     """The ratchet. See test/floors.json for why a falling count is a defect."""
     import json as _json
@@ -1478,6 +1870,7 @@ def main() -> int:
         validate_pack(css)
         validate_status_on_field(css)
         validate_line_surface_collision(css)
+        validate_declared_semantic_sets(css)
         validate_stated_ratios(css)
     for line in notes:
         print(line)
@@ -1486,6 +1879,7 @@ def main() -> int:
     # claim whose partner is written down and whose arithmetic still cannot run.
     for line in _unresolved:
         print(f"    unpairable  {line}")
+    print(f"  {declared_set_report()}")
     if failures:
         for f in failures:
             print(f"FAIL: {f}")

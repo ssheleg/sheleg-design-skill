@@ -37,6 +37,50 @@ offers a different token. Substituting a subject is the same act as guessing a p
 which is what killed attempts one and two. The reason is recorded where the code would
 have gone.
 
+### A pack's own semantic tokens were compared against nothing (B-017)
+
+`validate_theme`'s peer set is `STATUS_TOKENS` plus `--accent`/`--primary`/`--cta`, so a
+pack carrying meaning in tokens of its own naming was checked by nothing. `field-notes`
+exists to render provenance, and all four of its provenance tokens were excluded **by
+name**: `--brand-ink` (`[INFERRED]`) and `--witness-ink` (`[AMBIGUOUS]`) are **3.2 apart**
+at full colour and **0.8 under deuteranopia** — the two labels a reader most needs to tell
+apart, on the pack whose reason to exist is provenance. The dark theme is worse than the
+board recorded: `--witness` and `--danger` are **1.2 apart** there, 0.4 under deuteranopia.
+
+**The peer group is now whatever the pack declares**, and none of the three forms is new
+syntax — all three already ship:
+
+- the state map in a token layer, `[EXTRACTED] → --verify-ink · [INFERRED] → --brand-ink`;
+- a distinctness claim, *"destructive — kept distinct from `--witness`"*;
+- the pack's own disclosure that two tokens share a hue family.
+
+What it deliberately does **not** do is infer a set from token names. `--brand` and
+`--brand-ink` are one colour's two jobs; `--witness` and `--danger` are two meanings that
+share a hue. Nothing in the naming separates those cases, so the pack has to say which it
+means.
+
+**A disclosure carries its own arithmetic.** *"One hue family, 2.8 apart"* is an honest
+answer only while 2.8 is what the values produce, and `validate_stated_ratios` cannot see
+it — that check reads contrast ratios and this is an OKLab distance. Any distance a
+disclosure states is now computed, bound to the quantity it names: `N apart`, `N at full
+colour`, `N under deuteranopia`.
+
+**No hex moved.** `Origin: graphify.com (2026)` makes these values measurements, and a hue
+read off a reference may not be re-stepped. So `field-notes` answers in writing: rust and
+red-orange are one hue family by measurement, the provenance state is carried by the
+bracketed word and its border, and `--danger` is separated from `--witness` by form — a
+filled control, never an inline tag. The sentence *"kept distinct from `--witness`"* was
+false at 2.8 apart and is gone; the Bans now say the conflation they forbid is **in role**,
+and a new ban forbids a provenance state carried by colour alone. `Three semantic hues and
+no fourth` became `three semantic ROLES, and two hue families rather than three`.
+
+**Four false-positive shapes were found by measurement and closed, and each is recorded
+where the code is.** A one-tier floor called a pair 19.7 apart at full colour a hard
+failure. A substring test let a line about `--witness-ink` excuse `--witness`. A
+paragraph-wide bind gave every figure in `cyclorama`'s status bullet to every pair — six
+failures against six correct sentences. And two separate regexes cut *"6.4 apart under
+deuteranopia"* in half, comparing a deuteranopia figure with a full-colour distance.
+
 ### Gate
 
 - **Coverage is pinned, in both directions.** `check_ratio_coverage()` reads
@@ -53,7 +97,15 @@ have gone.
 - `ARGUED` lists only terms that can reach it. `RATIO_SKIP` already drops a floor, a
   bound and a rejected candidate one step earlier, so repeating those would have been
   alternatives that never match — which reads as coverage and is not.
-- Floor `validate_palette.py` 1924 → 1951, all 27 from the newly-checked table claims.
+- Floor `validate_palette.py` 1924 → 1951, all 27 from the newly-checked table claims,
+  then 1951 → 2087 for the declared-set sweep.
+- **Four plants for the declared sets, and the third is the point**: a file-wide
+  *"never by colour alone"* must NOT excuse a pair below the hard floor. Without it the
+  check is a phrase-detector and one sentence silences it.
+- A figure with no qualifier is skipped rather than guessed, and the count of
+  disclosure figures no check could bind prints on every run (7 today, B-055/B-056).
+- The `field-notes` kit's token block was re-copied from the pack's layer, which the
+  copy-never-transcribe check caught on the first run after the comment changed.
 
 ### Fixed
 
