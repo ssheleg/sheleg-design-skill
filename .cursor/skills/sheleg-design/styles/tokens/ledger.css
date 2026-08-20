@@ -25,22 +25,16 @@
   /* @role non-text: --inset — a fill, never a text colour: 1.03:1 on --bg by
      construction (5% ink over the field). It is the segmented track and the
      quiet tile, and anything written on it is --ink or --muted. */
-  --inset: rgba(20, 16, 12, 0.05);
-  --inset: rgb(from var(--ink) r g b / 0.05);
+  --inset: rgba(20, 16, 12, 0.05); /* = --on-ink at 5% */
 
-  --ink-2: rgba(20, 16, 12, 0.72); /* --color-neutral-2 — secondary prose; composites to 7.47:1 */
-  --ink-2: rgb(from var(--ink) r g b / 0.72);
+  --ink-2: rgba(20, 16, 12, 0.72); /* = --on-ink at 72% —  --color-neutral-2 — secondary prose; composites to 7.47:1 */
   /* --muted composites to 4.13:1 on the field and 4.18:1 on --panel-2 — under
      AA by 0.37. It carries column heads, axis ticks and row numbers, where the
      word is repeated by position; a label a decision rests on takes --ink-2. */
-  --muted: rgba(20, 16, 12, 0.55); /* --color-neutral-3 */
-  --muted: rgb(from var(--ink) r g b / 0.55);
-  --faint: rgba(20, 16, 12, 0.22); /* --color-neutral-4 — disabled, hairline ticks */
-  --faint: rgb(from var(--ink) r g b / 0.22);
-  --border: rgba(20, 16, 12, 0.12); /* --color-neutral-5 — THE elevation device */
-  --border: rgb(from var(--ink) r g b / 0.12);
-  --border-strong: rgba(20, 16, 12, 0.22); /* --color-neutral-4 — the hover edge */
-  --border-strong: rgb(from var(--ink) r g b / 0.22);
+  --muted: rgba(20, 16, 12, 0.55); /* = --on-ink at 55% —  --color-neutral-3 */
+  --faint: rgba(20, 16, 12, 0.22); /* = --on-ink at 22% —  --color-neutral-4 — disabled, hairline ticks */
+  --border: rgba(20, 16, 12, 0.12); /* = --on-ink at 12% —  --color-neutral-5 — THE elevation device */
+  --border-strong: rgba(20, 16, 12, 0.22); /* = --on-ink at 22% —  --color-neutral-4 — the hover edge */
 
   --row-hover: #f7f7f7; /* reference --hero-table-row-hover (light) */
 
@@ -52,9 +46,7 @@
   --accent: #c2410c;      /* 4.93:1 on --bg — text-safe */
   --accent-mark: #e8792f; /* @role non-text: --accent-mark — 2.78:1 on --bg, a fill and a stroke */
   --accent-line: rgba(194, 65, 12, 0.30); /* --color-theme-1-line (light) */
-  --accent-line: rgb(from var(--accent) r g b / 0.30);
-  --accent-weak: rgba(232, 121, 47, 0.06); /* --color-theme-1-wash (light) */
-  --accent-weak: rgb(from var(--accent-mark) r g b / 0.06);
+  --accent-weak: rgba(232, 121, 47, 0.06); /* = --accent-mark at 6% —  --color-theme-1-wash (light) */
 
   --on-ink: #fcf9f5; /* text ON --ink — 18.04:1; the primary button's own colour */
 
@@ -65,14 +57,11 @@
      them is --ink. Status is never by colour alone in this pack, which is the rule
      that carries the meaning where the ratio cannot. */
   --ok: #2fa86b;      /* the site's positive delta and chart member 7 */
-  --ok-weak: rgba(47, 168, 107, 0.10);
-  --ok-weak: rgb(from var(--ok) r g b / 0.10);
+  --ok-weak: rgba(47, 168, 107, 0.10); /* = --chart-3 at 10% */
   --danger: #f84747;  /* the site's negative delta */
-  --danger-weak: rgba(248, 71, 71, 0.10);
-  --danger-weak: rgb(from var(--danger) r g b / 0.10);
+  --danger-weak: rgba(248, 71, 71, 0.10); /* = --danger at 10% */
   --info: #0891b2;    /* --color-theme-2 (light) — the "Verified" seal */
   --info-weak: rgba(8, 145, 178, 0.10);
-  --info-weak: rgb(from var(--info) r g b / 0.10);
   /* --warn is DERIVED, not measured in use: the reference declares amber-500 in
      its own theme layer and never paints a warning anywhere on the page. The step
      is this pack's choice, taken because it is the one amber that clears the hard
@@ -80,7 +69,6 @@
      16.2 dark at full colour). */
   --warn: oklch(76.9% 0.188 70.08);
   --warn-weak: rgba(240, 160, 32, 0.12);
-  --warn-weak: rgb(from var(--warn) r g b / 0.12);
 
   /* ── chart ramp ──────────────────────────────────────────────────────── */
   /* Measured off the reference's own dashboard mock, in its stacking order.
@@ -180,39 +168,29 @@
 
   /* The dark ramp is a different set of alphas, not the light one inverted —
      70 / 50 / 20 / 10 / 4 against the light theme's 72 / 55 / 22 / 12 / 5. */
-  --inset: rgba(255, 252, 248, 0.04);
-  --inset: rgb(from var(--ink) r g b / 0.04);
-  --ink-2: rgba(255, 252, 248, 0.70);
-  --ink-2: rgb(from var(--ink) r g b / 0.70);
-  --muted: rgba(255, 252, 248, 0.50);
-  --muted: rgb(from var(--ink) r g b / 0.50);
-  --faint: rgba(255, 252, 248, 0.20);
-  --faint: rgb(from var(--ink) r g b / 0.20);
-  --border: rgba(255, 252, 248, 0.10);
-  --border: rgb(from var(--ink) r g b / 0.10);
-  --border-strong: rgba(255, 252, 248, 0.20);
-  --border-strong: rgb(from var(--ink) r g b / 0.20);
+  --inset: rgba(255, 252, 248, 0.04); /* = --ink at 4% */
+  --ink-2: rgba(255, 252, 248, 0.70); /* = --ink at 70% */
+  --muted: rgba(255, 252, 248, 0.50); /* = --ink at 50% */
+  --faint: rgba(255, 252, 248, 0.20); /* = --ink at 20% */
+  --border: rgba(255, 252, 248, 0.10); /* = --ink at 10% */
+  --border-strong: rgba(255, 252, 248, 0.20); /* = --ink at 20% */
 
   --row-hover: #212121; /* --hero-table-row-hover (dark) */
 
   --accent: #f49556;      /* --color-theme-1-text (dark) — 8.89:1 on --bg */
   --accent-mark: #e8792f; /* the fill is the same hue in both themes */
-  --accent-line: rgba(232, 121, 47, 0.35);
-  --accent-line: rgb(from var(--accent-mark) r g b / 0.35);
-  --accent-weak: rgba(232, 121, 47, 0.08);
-  --accent-weak: rgb(from var(--accent-mark) r g b / 0.08);
+  --accent-line: rgba(232, 121, 47, 0.35); /* = --accent-mark at 35% */
+  --accent-weak: rgba(232, 121, 47, 0.08); /* = --accent-mark at 8% */
 
   --on-ink: #14100c; /* the ink button inverts with the theme, so its text does too */
 
   --info: #22d3ee; /* --color-theme-2 (dark) */
-  --info-weak: rgba(34, 211, 238, 0.10);
-  --info-weak: rgb(from var(--info) r g b / 0.10);
+  --info-weak: rgba(34, 211, 238, 0.10); /* = --info at 10% */
   /* Derived, and a different step from the light theme's: at amber-500 the dark
      accent and the warning are 7.1 apart at full colour — one colour with two
      meanings. amber-300 is 16.2 apart and clears every dichromacy. */
   --warn: oklch(87.9% 0.169 91.605);
   --warn-weak: rgba(250, 204, 100, 0.12);
-  --warn-weak: rgb(from var(--warn) r g b / 0.12);
 
   --shadow-1: 0 0 0 1px #ffffff0a, 0 30px 90px #00000080; /* --hero-demo-shadow (dark) */
 }
@@ -229,5 +207,44 @@
     --dur-lg: 0s;
     --dur-xl: 0s;
     --press-scale: 1;
+  }
+}
+
+
+/* THE LITERALS ABOVE ARE THE FALLBACK, AND THEY ONLY WORK FROM IN HERE.
+   A custom property accepts almost any token sequence, so
+   `--x: rgb(from …)` PARSES even where relative colour is unsupported: it
+   wins the cascade, and the invalidity surfaces only at substitution, as
+   invalid-at-computed-value-time. By then the literal declaration is gone
+   and every `var(--x)` falls back to `unset` — not to the line above it.
+   Measured 2026-08-20: 23 custom properties across this pack and
+   `showroom` shipped literal-then-relative and read as guarded. `@supports`
+   is the mechanism that actually guards them. */
+@supports (color: rgb(from red r g b)) {
+  :root {
+    --inset: rgb(from var(--ink) r g b / 0.05);
+    --ink-2: rgb(from var(--ink) r g b / 0.72);
+    --muted: rgb(from var(--ink) r g b / 0.55);
+    --faint: rgb(from var(--ink) r g b / 0.22);
+    --border: rgb(from var(--ink) r g b / 0.12);
+    --border-strong: rgb(from var(--ink) r g b / 0.22);
+    --accent-line: rgb(from var(--accent) r g b / 0.30);
+    --accent-weak: rgb(from var(--accent-mark) r g b / 0.06);
+    --ok-weak: rgb(from var(--ok) r g b / 0.10);
+    --danger-weak: rgb(from var(--danger) r g b / 0.10);
+    --info-weak: rgb(from var(--info) r g b / 0.10);
+    --warn-weak: rgb(from var(--warn) r g b / 0.12);
+  }
+  [data-theme="dark"] {
+    --inset: rgb(from var(--ink) r g b / 0.04);
+    --ink-2: rgb(from var(--ink) r g b / 0.70);
+    --muted: rgb(from var(--ink) r g b / 0.50);
+    --faint: rgb(from var(--ink) r g b / 0.20);
+    --border: rgb(from var(--ink) r g b / 0.10);
+    --border-strong: rgb(from var(--ink) r g b / 0.20);
+    --accent-line: rgb(from var(--accent-mark) r g b / 0.35);
+    --accent-weak: rgb(from var(--accent-mark) r g b / 0.08);
+    --info-weak: rgb(from var(--info) r g b / 0.10);
+    --warn-weak: rgb(from var(--warn) r g b / 0.12);
   }
 }

@@ -44,7 +44,14 @@
      hairline. --accent-hover is the reference's own hover value. */
   --accent: #f7f2e5;
   --accent-ink: #141210; /* text ON the accent — 16.72:1 */
-  --accent-hover: rgb(from var(--accent) r g b / 0.9); /* --primary at 90%, the measured hover */
+  /* --primary at 90%, the measured hover. The literal is the fallback and it
+     only works because the derived form lives in the `@supports` block at the
+     end of this file: a custom property parses `rgb(from …)` anywhere, wins the
+     cascade, and fails only at substitution — so a second declaration here would
+     leave `var(--accent-hover)` as `unset` rather than as the line above it.
+     `:root[data-theme="light"]` sets its own value, so this literal carries one
+     theme and needs to. */
+  --accent-hover: rgba(247, 242, 229, 0.9);
 
   /* ── status: a verdict the page renders about the reader ─────────────────
      Two ramps in the reference, and both are the same six hues at two
@@ -215,5 +222,13 @@
     --dur-slower: 0s;
     --dur-breathe: 0s;
     --dur-caret: 0s;
+  }
+}
+
+/* See the note at --accent-hover: the literal above is the fallback, and it only
+   survives because the derived form is in here. */
+@supports (color: rgb(from red r g b)) {
+  :root {
+    --accent-hover: rgb(from var(--accent) r g b / 0.9);
   }
 }

@@ -88,18 +88,24 @@
     0 8px 16px -4px rgba(28, 29, 31, 0.04),
     0 16px 32px -8px rgba(28, 29, 31, 0.05),
     0 32px 64px -8px rgba(28, 29, 31, 0.06);
-  /* The ring is the accent at 35%, and it now says so instead of restating the
+  /* The ring is the accent at 35%, and it says so rather than restating the
      accent's channels by hand. Measured equal: rgba(38, 109, 240, 0.35) and
      `rgb(from var(--accent) r g b / .35)` are ΔE 0.00 apart, so nothing a reader
-     sees changes — what changes is that re-tinting --accent now re-tints the ring,
+     sees changes — what changes is that re-tinting --accent re-tints the ring,
      where before it kept the old blue silently (board B-023/B-024).
-     The literal stays as the first declaration on purpose: relative colour is
-     Baseline 2024, and a browser that does not parse the second line keeps the
-     first. For an ordinary colour that would be belt-and-braces; for a FOCUS RING
-     a dropped declaration is an invisible focus indicator, which is the one
-     degradation this library may not ship. */
+
+     CORRECTED 2026-08-20. This used to keep the relative form as a SECOND
+     declaration here and called the literal above it a fallback: "a browser that
+     does not parse the second line keeps the first". That is true of an ordinary
+     property and FALSE of a custom property. `--x: rgb(from …)` parses anywhere —
+     a custom property accepts almost any token sequence — so it wins the cascade
+     everywhere, and the invalidity surfaces only where it is substituted, as
+     invalid-at-computed-value-time. At that point the literal is long gone and
+     `var(--ring-focus)` resolves to `unset`: an INVISIBLE FOCUS RING, on the one
+     degradation this pack says it may not ship. The derived form lives in the
+     `@supports` block at the end of this file, which is the mechanism that
+     actually guards it. */
   --ring-focus: 0 0 0 3px rgba(38, 109, 240, 0.35);
-  --ring-focus: 0 0 0 3px rgb(from var(--accent) r g b / 0.35);
 
   /* ---- Radii ------------------------------------------------------------ */
   --radius-xs: 2px;
@@ -182,5 +188,14 @@
     --dur-fast: 0s;
     --dur-base: 0s;
     --dur-panel: 0s;
+  }
+}
+
+/* THE LITERALS ABOVE ARE THE FALLBACK, AND THEY ONLY WORK FROM IN HERE — see the
+   note at --ring-focus. Measured 2026-08-20: 23 custom properties across this
+   pack and `ledger` shipped literal-then-relative and read as guarded. */
+@supports (color: rgb(from red r g b)) {
+  :root {
+    --ring-focus: 0 0 0 3px rgb(from var(--accent) r g b / 0.35);
   }
 }

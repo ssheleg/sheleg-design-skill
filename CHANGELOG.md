@@ -581,6 +581,40 @@ that set is standing.
 B-017's widening, which this row asked to wait for, shipped earlier the same day. Floor 3835 →
 3839.
 
+### A focus ring was guarded by a mechanism that cannot guard (B-027)
+
+The board asked for 42 hand-restated channel literals to be migrated to relative colour, with
+the rule *"the literal must ship first as a fallback"*. Re-measured, the count is **71 across
+14 packs**, not 42 — it grew with the library and nothing was watching it. And **56 of the 71
+are custom property definitions**, which is what settles the decision:
+
+**For a custom property, a literal above a relative declaration is not a fallback.**
+`--x: rgb(from …)` **parses everywhere** — a custom property accepts almost any token sequence
+— so it wins the cascade unconditionally, and the invalidity surfaces only where the property
+is *substituted*, as invalid-at-computed-value-time. By then the literal declaration is gone
+and every `var(--x)` resolves to `unset`, not to the line above it.
+
+**Twenty-three properties across `ledger` and `showroom` shipped exactly that pattern**, and
+`showroom`'s was **`--ring-focus`**. Its own comment named the stake — *"a dropped declaration
+is an invisible focus indicator, which is the one degradation this library may not ship"* — and
+then relied on the mechanism that cannot deliver it. A twenty-fourth, `ora`'s `--accent-hover`,
+had **no fallback at all**.
+
+All twenty-four are inside `@supports (color: rgb(from red r g b))` now, which is where a
+literal fallback actually survives. `validate_relative_colour_is_guarded()` refuses any
+relative-colour custom property outside such a block, planted with `showroom`'s exact shipped
+pattern. `ora`'s literal is per-theme on purpose: `:root[data-theme="light"]` sets its own
+value, so a single literal carries one theme and needs to.
+
+**The remaining 47 are not migrated, and that is the answer rather than a deferral.** Relative
+colour in a definition needs an `@supports` block per pack, which is machinery in the file a
+reader is told to copy verbatim. The cheaper fix is for each literal to state its source —
+`/* = --on-ink at 72% */`, which `ledger`'s eighteen now do — and for a check to recompute the
+declared relationship, so a token that moves fails in CI instead of drifting silently (B-116).
+
+Floors 3839 → 3863 and 2220 → 2346; the palette count moved because the `@supports` blocks add
+a theme map the palette gate now reads.
+
 ### Gate
 
 - **Coverage is pinned, in both directions.** `check_ratio_coverage()` reads

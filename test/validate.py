@@ -1591,6 +1591,17 @@ PLANTS = (
         "'Shared state' re-asserts",
     ),
     (
+        # showroom's focus ring, put back the way it shipped: a literal, then the
+        # relative form outside @supports, reading as guarded and guarding nothing.
+        "relative colour in a custom property outside @supports",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/tokens/showroom.css",
+        lambda t: t.replace(
+            "  --ring-focus: 0 0 0 3px rgba(38, 109, 240, 0.35);",
+            "  --ring-focus: 0 0 0 3px rgba(38, 109, 240, 0.35);\n"
+            "  --ring-focus: 0 0 0 3px rgb(from var(--accent) r g b / 0.35);", 1),
+        "is not a fallback",
+    ),
+    (
         # The row's own scenario: a tenth hue added to the layer and nowhere else.
         "a category hue the token layer ships and the pack never names",
         f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/tokens/pigeonhole.css",
@@ -2952,6 +2963,60 @@ def validate_excluded_sets_are_declared():
 
 
 
+# ------------------------------------- a fallback that is not one
+#
+# `--x: rgba(…)` followed by `--x: rgb(from var(--y) …)` READS as a guarded
+# migration and is not one. A custom property accepts almost any token sequence,
+# so the relative form PARSES everywhere: it wins the cascade, and the invalidity
+# surfaces only where the property is substituted, as invalid-at-computed-value-
+# time. By then the literal declaration is gone and every `var(--x)` resolves to
+# `unset` — not to the line above it.
+#
+# Measured 2026-08-20: 23 custom properties across `ledger` and `showroom` shipped
+# that pattern, and `showroom`'s was `--ring-focus`. Its own comment named the
+# stake — *"an invisible focus indicator, which is the one degradation this
+# library may not ship"* — and then relied on the mechanism that cannot deliver
+# it. Both are inside `@supports (color: rgb(from red r g b))` now, which is where
+# a literal fallback actually survives.
+RELATIVE_CUSTOM_PROP = re.compile(r"^\s*(--[a-z0-9-]+)\s*:.*\brgb\(\s*from\s")
+
+
+def validate_relative_colour_is_guarded():
+    tokens = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles" / "tokens"
+    if not tokens.is_dir():
+        return
+    looked = 0
+    for css in sorted(tokens.glob("*.css")):
+        text = read(css) or ""
+        if "rgb(from" not in text:
+            continue
+        looked += 1
+        lines = text.split("\n")
+        depth_supports = 0
+        open_braces_at_supports: list[int] = []
+        depth = 0
+        for i, line in enumerate(lines):
+            if re.match(r"\s*@supports\s*\(color:\s*rgb\(\s*from\s", line):
+                open_braces_at_supports.append(depth)
+            depth += line.count("{") - line.count("}")
+            while open_braces_at_supports and depth <= open_braces_at_supports[-1]:
+                open_braces_at_supports.pop()
+            m = RELATIVE_CUSTOM_PROP.match(line)
+            if not m:
+                continue
+            check(
+                bool(open_braces_at_supports),
+                f"styles/tokens/{css.name}:{i + 1}: `{m.group(1)}` is declared with "
+                f"relative colour outside `@supports (color: rgb(from red r g b))`. "
+                f"A custom property parses that value everywhere and fails only at "
+                f"substitution, so a literal declared above it is not a fallback — "
+                f"every `var({m.group(1)})` resolves to `unset` instead",
+            )
+    if not looked:
+        _skips.append("no token layer uses relative colour — the guard was not checked")
+
+
+
 def validate_release_register():
     _release_register(
         read(ROOT / "CHANGELOG.md") or "",
@@ -3445,6 +3510,7 @@ def main():
     validate_worked_radius_sums_compute()
     validate_component_classes_are_answered()
     validate_excluded_sets_are_declared()
+    validate_relative_colour_is_guarded()
     validate_status_vocabulary()
     validate_elevation_tokens_named()
     validate_radius_single_valued()
