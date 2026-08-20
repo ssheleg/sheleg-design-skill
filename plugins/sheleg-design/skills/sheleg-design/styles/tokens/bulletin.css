@@ -207,7 +207,18 @@
   --dur-press: 0.12s;
   --dur-hover: 0.15s;
   --dur-base: 0.3s;
-  --dur-panel: 0.4s; /* the nav dropdown */
+  /* The nav panel is banded as a SHEET, not as a dropdown, and the distinction
+     decides whether this value is legal: MOTION_DOCTRINE.md §3 gives dropdowns
+     and selects 150-250 ms and modals, drawers and sheets 200-500. This comment
+     said "the nav dropdown" until 2026-08-20 while the pack's own Motion prose
+     called the same token "the nav sheet" — one word made 0.4s a violation and
+     the other made it correct, which is not a state a shipped pack should be in.
+     It is a sheet: full-width, `--dropdown-min-h` 420, a `--surface` plane with
+     a bottom `--line` (see `## Components`). It is opened from the nav, which is
+     what invited the other word. 0.4s is a pack choice, not a measurement — the
+     reference's whole budget is an entrance fade, a 0.12s press and a 0.3s
+     hover — and it sits inside the sheet band with 100 ms to spare. */
+  --dur-panel: 0.4s; /* the nav sheet — banded as a sheet, see above */
   --dur-reveal: 0.5s; /* entrance only, and it never gates content */
   /* The press is a conserved quantity: the control moves exactly as far as its
      shadow shrinks, so the ink displaced stays constant. */

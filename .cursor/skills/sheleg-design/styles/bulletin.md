@@ -232,7 +232,10 @@ viewport and neither is the primary.
 
 One curve, `ease`, measured off the reference's own press transition, plus the
 doctrine's `--ease-out` for an entrance. Durations: `--dur-press` 0.12s,
-`--dur-hover` 0.15s, `--dur-base` 0.3s, `--dur-panel` 0.4s for the nav sheet,
+`--dur-hover` 0.15s, `--dur-base` 0.3s, `--dur-panel` 0.4s for the nav sheet
+(banded as a **sheet**, 200–500 ms, not as a dropdown at 150–250 — it is opened
+from the nav but it is a full-width `--surface` plane, and the token layer says
+so at the declaration),
 `--dur-reveal` 0.5s for an entrance that never gates content.
 
 **The press is a conserved quantity.** The control translates by

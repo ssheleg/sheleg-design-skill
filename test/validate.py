@@ -1369,6 +1369,16 @@ def check_floor(script: str, count: int) -> None:
 # reduced-motion plants below name the message they must provoke.
 PLANTS = (
     (
+        # B-049's instance, planted back: the value that made the naming matter.
+        # Derived from the token rather than the comment, so it keeps landing
+        # however the explanation is reworded.
+        "a token whose comment names a dropdown at 150ms past the dropdown band",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/tokens/bulletin.css",
+        lambda t: t.replace("--dur-panel: 0.4s; /* the nav sheet",
+                            "--dur-panel: 0.4s; /* the nav dropdown", 1),
+        "bands at 150–250 ms",
+    ),
+    (
         # scoreboard's ring table in the form it shipped: one header base for both
         # rows, and the sand-only ring reported at its --bg ratio. Derived from the
         # `Measured on` column rather than pinned to the numbers.
@@ -3147,6 +3157,93 @@ def validate_excluded_sets_are_declared():
 RELATIVE_CUSTOM_PROP = re.compile(r"^\s*(--[a-z0-9-]+)\s*:.*\brgb\(\s*from\s")
 
 
+# ------------------------------------- the bands reach the token layer's own comments
+#
+# `validate_motion_bands` reads a pack's `## Components`, `## Micro-interactions`
+# and `## Motion flavor` prose, because that is where a pack prescribes an
+# interaction. It never read the token layer, and board B-049 named the hole with
+# its instance: `bulletin`'s `--dur-panel: 0.4s; /* the nav dropdown */`, 150 ms
+# past the doctrine's dropdown band, invisible to every check in the repository.
+#
+# What the sweep reads is a DECLARATION whose token name or trailing comment names
+# an element §3 bands. All 30 durations mentioned *inside* comment prose were also
+# extracted and deliberately left alone: every one of them describes the reference
+# ("the reference declares --t-normal: 250ms"), quotes the doctrine's own band, or
+# explains a reduced-motion collapse. A check reading those is a check that flags
+# a pack for correctly reporting what it measured.
+#
+# Adjudicating the nine live subjects turned up something the row had not: the same
+# token was called a *dropdown* in the CSS and a *nav sheet* in the pack's prose,
+# and §3 bands the two differently — one word made 0.4s a violation and the other
+# made it correct. The value did not move; the naming did, with the reason at the
+# declaration. A pack whose two files disagree about what a token drives cannot be
+# checked by any band gate, which is why this one reports the pairing it used.
+# Plurals are matched, and the reason is measured: `awning`'s
+# `--dur-control: 200ms /* DERIVED — dropdowns and selects */` escaped the first
+# version of this table entirely, because `\bdropdown\b` does not match
+# "dropdowns". That value is legal, so nothing was hidden — but the sweep silently
+# judged eight subjects where nine exist, and the ninth would have been the one to
+# hide an illegal value written in the plural.
+BANDED_ELEMENTS = (
+    ("button press", 100, 160, r"\bpress(?:es)?\b|\bactive states?\b"),
+    ("tooltip or popover", 125, 200, r"\btooltips?\b|\bpopovers?\b"),
+    ("dropdown or select", 150, 250,
+     r"\bdropdowns?\b|\bselects?\b|\bcomboboxe?s?\b"),
+    ("modal, drawer or sheet", 200, 500,
+     r"\bmodals?\b|\bdrawers?\b|\bsheets?\b|\bdialogs?\b|\bpanels?\b"
+     r"|\boverlays?\b"),
+)
+BANDED_DECL = re.compile(
+    r"^[ \t]*(--[a-z0-9-]+)\s*:\s*([0-9.]+)(ms|s)\s*;([^\n]*)$", re.M)
+
+
+def validate_token_comments_respect_the_bands():
+    styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
+    tokens = styles / "tokens"
+    doctrine = read(styles.parent / "MOTION_DOCTRINE.md")
+    if not tokens.is_dir() or doctrine is None:
+        return
+    # The bands must still be in the doctrine. Without this the sweep keeps
+    # printing a count after §3 is rewritten, measuring nothing against nothing.
+    for label, lo, hi, _ in BANDED_ELEMENTS:
+        if not check(f"{lo}–{hi} ms" in doctrine or f"{lo}-{hi} ms" in doctrine,
+                     f"MOTION_DOCTRINE.md no longer states a {lo}–{hi} ms band, and this "
+                     f"sweep measures the {label} against it"):
+            return
+    judged = 0
+    for f in sorted(tokens.glob("*.css")):
+        css = read(f)
+        if css is None:
+            continue
+        for m in BANDED_DECL.finditer(css):
+            tok, num, unit, trailing = m.group(1), float(m.group(2)), m.group(3), m.group(4)
+            ms = num * 1000 if unit == "s" else num
+            if ms == 0:
+                continue          # a reduced-motion collapse is not a band subject
+            # The comment wins over the name: it says what the token drives. Where
+            # both match, the first band in doctrine order is used, and the pairing
+            # is reported so a wrong pairing is arguable rather than invisible.
+            for label, lo, hi, pat in BANDED_ELEMENTS:
+                if not (re.search(pat, trailing, re.I) or re.search(pat, tok, re.I)):
+                    continue
+                judged += 1
+                line = css[:m.start()].count("\n") + 1
+                check(
+                    lo <= ms <= hi,
+                    f"styles/tokens/{f.name}:{line}: `{tok}` is {ms:g} ms and its own "
+                    f"comment or name calls it a {label}, which MOTION_DOCTRINE.md §3 "
+                    f"bands at {lo}–{hi} ms. Either the value is wrong or the element "
+                    f"is named wrong — and the second is the one that ships silently",
+                )
+                break
+    if judged < 2:
+        _skips.append("fewer than two token declarations name a banded element — the "
+                      "token-layer band sweep did not run")
+        return
+    print(f"  token-layer bands: {judged} declaration(s) name a banded element, "
+          f"all inside their band")
+
+
 # ------------------------------------- a ratio measured against a surface it never meets
 #
 # A palette table declares its base in the header — "On `--bg`" — and every row is
@@ -4151,6 +4248,7 @@ def main():
     validate_worked_radius_sums_compute()
     validate_component_classes_are_answered()
     validate_excluded_sets_are_declared()
+    validate_token_comments_respect_the_bands()
     validate_confined_tokens_measured_where_used()
     validate_gate_has_no_shadowed_names()
     validate_every_duration_answers_reduce()

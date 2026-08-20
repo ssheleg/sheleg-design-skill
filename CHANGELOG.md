@@ -6,6 +6,37 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### The doctrine's duration bands reach the token layer (B-049)
+
+`validate_motion_bands` reads a pack's `## Components`, `## Micro-interactions` and
+`## Motion flavor`, because prose is where a pack prescribes an interaction. It never read
+the token layer, and the board named the hole with its instance: `bulletin`'s
+`--dur-panel: 0.4s; /* the nav dropdown */`, 150 ms past §3's dropdown band and invisible to
+every check here.
+
+`validate_token_comments_respect_the_bands` reads a **declaration** whose token name or
+trailing comment names a banded element. **9 subjects across 8 packs, all inside their band.**
+
+The 30 durations mentioned inside comment *prose* were extracted and deliberately left out.
+Every one of them describes the reference (*"the reference declares `--t-normal: 250ms`"*),
+quotes the doctrine's own band, or explains a reduced-motion collapse. A check reading those
+flags a pack for correctly reporting what it measured, which is how a gate teaches an agent to
+route around it.
+
+**Adjudicating the nine found what the row had not.** The same token was called *the nav
+dropdown* in the CSS and *the nav sheet* in the pack's own Motion prose, and §3 bands dropdowns
+at 150–250 ms and sheets at 200–500 — one word made 0.4s a violation and the other made it
+correct. It is a sheet: full-width, `--dropdown-min-h` 420, a `--surface` plane with a bottom
+`--line`. **The naming moved and the value did not.** 0.4s is a pack choice rather than a
+measurement — the reference's whole budget is an entrance fade, a 0.12s press and a 0.3s hover
+— and changing shipped motion on the strength of a word in a comment is the wrong repair. What
+a pack's two files disagreeing costs any band gate is filed as B-122.
+
+The first version of the band table silently judged **eight** subjects where nine exist:
+`\bdropdown\b` does not match *"dropdowns"*, so `awning`'s `--dur-control: 200ms /* DERIVED —
+dropdowns and selects */` escaped it. That value is legal, so nothing was hidden — the ninth
+subject would have been the one to hide an illegal value written in the plural.
+
 ### Two scoreboard ratios described pairings that never render (B-047)
 
 All 30 ratio claims in `scoreboard` were recomputed. **28 agree** to within the repository's
