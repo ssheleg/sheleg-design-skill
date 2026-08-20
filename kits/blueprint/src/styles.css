@@ -239,11 +239,20 @@
   .bp-grid { background-size: calc(var(--grid-step) / 2) calc(var(--grid-step) / 2); }
 }
 
-/* TODO-CONTAINER B-032 — the tick and the column rule are descendants of the panel
-   and the column, so both have a real container answer: container-type on those two
-   roots and @container here. Held out of 1.23.0 because each needs its breakpoint
-   derived from the component's own geometry the way the scoreboard ledger's was, and
-   a number carried over from the viewport would be the same mistake in a new syntax. */
+/* PAGE — and the arithmetic is why. B-032 assumed both had a container answer;
+   derived from the components' own geometry, neither does.
+
+   The tick is `--tick-len: 8px` at `--tick-gap: 6px` off each corner. The two top
+   arms consume 16px of the element's width, and at the field's own `--grid-step`
+   of 32px the marks stop reading as corners only below ~48px. The column rule is
+   `--rule-w: 1px` at each edge of `.bp-column`, whose inner padding is
+   `--space-8` = 32px; with no measure stated anywhere in this pack, the only
+   derivable floor is the 64px of padding itself.
+
+   48px and 64px are far below anything a container reaches, and that is the tell:
+   the 768px breakpoint was never about fitting. Both are ORNAMENT — a registration
+   mark and an edge rule are drawing, not structure — and how much ornament a page
+   carries is a page decision. Kept on the viewport, deliberately. */
 @media (max-width: 768px) {
   .bp-reg__tick { display: none; }
   .bp-column__rule { display: none; }

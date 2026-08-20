@@ -1300,6 +1300,27 @@ def validate_kit_breakpoints():
                 f"TODO-CONTAINER with the reason",
             )
 
+    # TODO-CONTAINER is a legitimate escape and it may only shrink. It stood at 2
+    # on 2026-08-20 — `blueprint`'s tick and column rule, `datasheet`'s instrument
+    # grid — and both were resolved by doing the arithmetic the marker deferred:
+    # the grid already collapsed by `auto-fit`, so the query was deleted, and the
+    # other two turned out to be ornament rather than fitting, so they are PAGE.
+    # An escape with no ceiling becomes the habit it was meant to interrupt.
+    todos = sum((read(f) or "").count("TODO-CONTAINER") for f in files)
+    try:
+        ceiling = json.loads(FLOORS.read_text(encoding="utf-8")).get("kit_todo_container_at_most")
+    except (OSError, ValueError):
+        ceiling = None
+    if check(ceiling is not None,
+             "test/floors.json has no `kit_todo_container_at_most` — a deferral with "
+             "no ceiling is a deferral that multiplies"):
+        check(
+            todos <= ceiling,
+            f"{todos} TODO-CONTAINER marker(s) across the kits, above the pinned "
+            f"{ceiling}. Each one defers arithmetic; deferring more of it needs the "
+            f"pin moved in the same commit, with the reason",
+        )
+
 
 # ------------------------------------------------------------ the ratchet
 #
@@ -1605,6 +1626,14 @@ PLANTS = (
             1,
         ),
         "'Shared state' re-asserts",
+    ),
+    (
+        # The deferral put back, now that the ceiling is zero.
+        "a TODO-CONTAINER marker added back to a kit",
+        "kits/blueprint/src/styles.css",
+        lambda t: t.replace("/* PAGE — and the arithmetic is why.",
+                            "/* TODO-CONTAINER B-999 — deferred again.\n   PAGE — and the arithmetic is why.", 1),
+        "above the pinned 0",
     ),
     (
         "an @font-face in a token layer",

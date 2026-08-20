@@ -676,6 +676,35 @@ transitions rather than guessed.
 
 Floor 3865 → 3981.
 
+### Two deferred breakpoints, and neither had the container answer the board assumed (B-032)
+
+Both blocks carried `TODO-CONTAINER B-032` and both were held out of 1.23.0 on the right
+principle: **the breakpoint has to come from the component's own geometry**, and carrying 768
+or 640 into `@container` would be the same mistake in newer syntax. Doing that arithmetic is
+what closed the row — and it did not produce container queries.
+
+**`datasheet`'s instrument grid needed no query at all.** It is already
+`repeat(auto-fit, minmax(180px, 1fr))`: two columns need 180 + 180 + 1px of border = **361px**
+of grid width, and below that `auto-fit` drops to one on its own. The
+`@media (max-width: 640px)` was not helping it — it was **overriding** it, forcing a single
+column on a 640px phone whose instrument may hold two comfortably. Resolved by deleting the
+block.
+
+**`blueprint`'s two derive to numbers that give the game away.** The registration tick is
+`--tick-len: 8px` sitting `--tick-gap: 6px` off each corner, so its two top arms consume 16px
+of the element's width, and at the field's own `--grid-step` of 32px the marks stop reading as
+corners only below **~48px**. The column rule is `--rule-w: 1px` at each edge of a column whose
+inner padding is `--space-8` = 32px — and **this pack states no measure anywhere**, so the only
+derivable floor is the **64px** of padding itself.
+
+48px and 64px are far below anything a container reaches. That is the tell: the 768px
+breakpoint was never about fitting. A registration mark and an edge rule are **ornament**, and
+how much ornament a page carries is a page decision — so both are marked PAGE, with the
+arithmetic written at the block so the next reader does not redo it.
+
+**TODO-CONTAINER is at zero and pinned there.** An escape with no ceiling becomes the habit it
+was meant to interrupt; the ratchet is planted with a marker added back. Floor 3981 → 3983.
+
 ### Gate
 
 - **Coverage is pinned, in both directions.** `check_ratio_coverage()` reads

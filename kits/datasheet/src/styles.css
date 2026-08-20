@@ -581,11 +581,11 @@
   }
 }
 
-/* TODO-CONTAINER B-032 — the instrument's cell grid is a descendant of .ds-instrument,
-   and the pack's own Responsive section now says it must collapse when its own box is
-   narrow rather than when the phone is: the instrument is the component a reader
-   embeds. Held for the same reason as blueprint's: the breakpoint has to come from the
-   cell grid's minimum comfortable column, not from 640. */
-@media (max-width: 640px) {
-  .ds-instrument__grid { grid-template-columns: 1fr; }
-}
+/* B-032, resolved by deleting the block rather than translating it. The grid is
+   already `repeat(auto-fit, minmax(180px, 1fr))`, which collapses by the
+   component's OWN geometry: two columns need 180 + 180 + 1px of border = 361px of
+   grid width, and below that `auto-fit` drops to one column with no query at all.
+   The `@media (max-width: 640px)` that used to sit here did not help — it
+   OVERRODE that, forcing one column on a 640px phone whose instrument may still
+   hold two comfortably. The container answer the board asked for turned out to be
+   no query, which is the better answer. */
