@@ -43,13 +43,13 @@ read as a stack of unrelated slabs.
 Ready-made token layer: [`tokens/atrium.css`](./tokens/atrium.css) — copy it
 verbatim instead of transcribing this table.
 
-| Token | Value | Role |
+| Token | Value | Role — every ratio in this column is on `--bg` |
 |---|---|---|
 | `--bg` | `#FEF9EF` | the daylight field — this system's "white" |
 | `--surface` | `#F5EEE1` | the one step up: cards, wells, footer, CTA band |
 | `--surface-ink` | `#2A2B2F` | the ONE inverted surface (media wells, banner) |
 | `--line` / `-strong` / `-ink` | `#D1C9BF` / `#737373` / `#2A2B2F` | hairline / input border / ghost-control border |
-| `--ink` / `-2` / `-3` | `#2A2B2F` / `#515151` / `#737373` | headings · 13.5:1 / body · 7.6:1 / metadata · 4.5:1 |
+| `--ink` / `--ink-2` / `--ink-3` | `#2A2B2F` / `#515151` / `#737373` | headings · 13.5:1 / body · 7.6:1 / metadata · 4.5:1 |
 | `--accent` | `#B05A36` | THE signal — terracotta, one per page |
 | `--accent-tint` / `--accent-ink` | `#F7EEEB` / `#FEF9EF` | 10% wash / text **on** the accent |
 | `--good` (`-tint`) | `#79BD8B` (`#F1F3E5`) | fills and icons only — 2.1:1, never a word |

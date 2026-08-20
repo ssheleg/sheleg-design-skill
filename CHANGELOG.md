@@ -4,6 +4,67 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
 follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### The library's contrast coverage was 15 claims smaller than it said (B-013)
+
+`stated ratios: … 336 guarded` counted a claim as covered before computing a single
+pair. Fifteen of those 336 had never been through the arithmetic — a claim whose only
+named partner is itself (`--ink` in a table declaring `--ink` as its base), or whose
+subject is a composite the gate cannot resolve to a solid (`ledger.css:33`'s `--muted`).
+**The word `guarded` is gone from the line.** What prints now is what happened:
+`513 claims — 348 computed, 15 named a partner this pack cannot pair, 150 unguarded`,
+and each of the 15 is listed by `file:line` on every run, because a number nobody can
+act on is a number nobody acts on.
+
+**The unguarded set is classified instead of lumped.** 177 said nothing about which of
+them a person could close. The split says it: `0 in a table declaring no base, 10
+placing the ratio at a gradient stop, 140 prose`. The 27 that sat in five tables closed
+by declaring the base each table's own numbers already resolve against — `atrium`,
+`router` and `orchard` on `--bg`, `cyclorama` on `--ink` with four cells naming
+`--field-2`, `prism`'s components row on `--accent`. No ratio was changed and no base
+was chosen: each was found by computing which token produces the numbers already
+written. `atrium`'s row also had to spell `--ink-2` and `--ink-3` instead of `-2` / `-3`,
+because a shorthand is not a token reference.
+
+**A third guard was written and thrown away, and that is the useful half.** A wrapped
+comment leaves the partner alone with the number (`4.40:1 on --bg-deep.`), so reading
+the subject off the line above looked like free coverage — a probe said it resolved 7 of
+the 15. It did not: the probe accepted a match under *either* comparison mode, so any
+ratio above the claim counted as agreement. Inside the gate it produced two false
+failures at `ledger.css:33`, where the real subject is a composite and the line above
+offers a different token. Substituting a subject is the same act as guessing a partner,
+which is what killed attempts one and two. The reason is recorded where the code would
+have gone.
+
+### Gate
+
+- **Coverage is pinned, in both directions.** `check_ratio_coverage()` reads
+  `validate_palette.py:ratios` from `test/floors.json`: `computed` may only rise,
+  `unresolved` and `unguarded` may only fall. A check-count floor cannot see this —
+  deleting one `on \u0060--bg\u0060` from a table header moved 27 claims out of the
+  arithmetic while every other check stayed put. Watched failing at 348 → 342.
+- **Five plants, one per bucket**, so the *classification* is watched discriminating and
+  not only the arithmetic: a table declaring a base its numbers contradict, the same
+  claim with the base removed, prose naming no partner, a ratio placed at a gradient
+  stop, and a named partner whose subject cannot be paired.
+- `PARTNER_PHRASE` now reads past a determiner — *"text on the `--accent` fill"* named a
+  partner the gate could not see. The regex moved rather than the sentence.
+- `ARGUED` lists only terms that can reach it. `RATIO_SKIP` already drops a floor, a
+  bound and a rejected candidate one step earlier, so repeating those would have been
+  alternatives that never match — which reads as coverage and is not.
+- Floor `validate_palette.py` 1924 → 1951, all 27 from the newly-checked table claims.
+
+### Fixed
+
+- **1.45.0's release notes were stranded under `[Unreleased]`.** The release commit wrote
+  a summary above the accumulated section and left it in place, so the shipped version's
+  detail was labelled unreleased and the next entry would have landed on top of it. The
+  detail is folded into 1.45.0 below, where it belongs. `validate_release_register()`
+  now refuses an `[Unreleased]` heading that is not the first section, and refuses a
+  second one — the same class as the duplicate `## [1.35.0]` found on 2026-08-20, one
+  heading over, and nothing had been looking at it.
+
 ## [1.45.0] - 2026-08-20
 
 **Four packs contradicted their own token layers, and the layer is what an implementer
@@ -63,7 +124,7 @@ that failed.
 Checks: `validate.py` 3398 to **3543**, `validate_palette.py` 1912 to **1924**, `sloplint.py`
 635. Ten new plants, all caught; 49 planted defects across the three self-tests, 0 missed.
 
-## [Unreleased]
+
 
 ### Four packs contradicted themselves, and six sweeps now say so
 

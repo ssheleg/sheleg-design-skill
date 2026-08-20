@@ -51,7 +51,7 @@ photographs in it.
 Ready-made token layer: [`tokens/router.css`](tokens/router.css) — copy it
 verbatim instead of transcribing this table.
 
-| Token | Value | Role |
+| Token | Value | Role — every ratio in this column is on `--bg` |
 |---|---|---|
 | `--bg` | `#f9fbfe` | page field — near-white with a trace of 258° in it |
 | `--panel` | `#ffffff` | the card, which is white **on** the tint |
@@ -62,7 +62,7 @@ verbatim instead of transcribing this table.
 | `--border-strong` | `#ced1d5` | the divider that must be seen |
 | `--edge` | `#8e9197` | the visual boundary of a **control** — 3.05:1 |
 | `--accent` | `#035ade` | THE single functional accent — 5.75:1 |
-| `--accent-ink` | `#ffffff` | text on the accent fill — 5.96:1 |
+| `--accent-ink` | `#ffffff` | text on the `--accent` fill — 5.96:1 |
 | `--ok` `--warn` `--danger` | `#007544` `#8a6100` `#bf0024` | status **words** |
 | `--ok-mark` `--warn-mark` `--danger-mark` | `#00bf6f` `#e5a000` `#ff2d55` | status **marks** |
 | `--series-1…4` | `#2d88e2` `#025397` `#019d7e` `#00614d` | chart series |

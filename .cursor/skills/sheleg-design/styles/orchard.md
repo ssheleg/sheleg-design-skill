@@ -70,7 +70,7 @@ your money belongs there.
 Ready-made token layer: [`tokens/orchard.css`](./tokens/orchard.css) — copy it
 verbatim instead of transcribing this table.
 
-| Token | Value | Role |
+| Token | Value | Role — every bare ratio in this column is on `--bg` |
 |---|---|---|
 | `--bg` | `#FFFEF4` | the field the slabs sit on |
 | `--surface` / `-2` | `#F6ECDC` / `#FBF7EA` | oat slab & card / the lighter floating pill |

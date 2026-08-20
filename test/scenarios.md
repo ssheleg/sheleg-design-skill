@@ -677,6 +677,36 @@ One real defect did come out of it: `RATIO_CLAIM` matched `--space-4: 1rem` as a
 `4:1` claim. It had never fired because the partnerless branch skipped it — the
 same blind spot, one layer down. The pattern now refuses a unit.
 
+**What happened to those numbers — 2026-08-20, the B-013 close.** The figures above
+are the T10 run's and stay as it recorded them; the tree has moved four times over
+since. Recounted with the gate's own regexes: **513 stated ratios**, and the split
+that replaced the single number is
+`348 computed, 15 named a partner this pack cannot pair, 150 unguarded`.
+
+Three things came out of the recount, and the first is the one worth carrying:
+
+- **15 claims counted as coverage the arithmetic had never run on.** `_tally` was
+  incremented before the pairs were computed, so a claim whose only partner was
+  itself, or whose subject is a composite, was reported as guarded. `guarded` is
+  gone as a figure; `computed` replaces it and is only reached after a pair exists.
+  Each of the 15 is printed by `file:line` on every run.
+- **27 of the unguarded sat in five tables that declared no base**, and each table's
+  own numbers resolve against one token — `atrium`, `router` and `orchard` on
+  `--bg`, `cyclorama` on `--ink` with four cells naming `--field-2`. Declaring what
+  was already true moved all 27 into the arithmetic. No number was invented: every
+  base was found by computing which token produces the ratios already written.
+- **A third guard attempt was written and thrown away**, for the reason that killed
+  the first two. A wrapped comment leaves the partner alone with the number, so
+  reading the subject off the line above looked free — a probe said it resolved 7 of
+  the 15. The probe accepted a match under *either* comparison mode, so any ratio
+  above the claim counted as agreement; inside the gate it produced two false
+  failures where the real subject is a composite. Substituting a subject is the same
+  act as guessing a partner.
+
+What remains is **140 prose claims and 10 written as a position in a gradient**, and
+the three figures are now pinned in `test/floors.json` so coverage cannot leave
+quietly — `computed` may only rise, the other two may only fall.
+
 ## T5 / T6 — run 2026-08-12, and what they found
 
 Two of B-011's eight unrun scenarios, executed in fresh contexts against tree

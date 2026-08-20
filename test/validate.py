@@ -1635,6 +1635,20 @@ def self_test() -> int:
              ["1.28.0"]),
             "the tag exists",
         ),
+        (
+            # What 1.45.0 actually shipped: the release summary written above the
+            # accumulated section, which was then left in place.
+            "an [Unreleased] section sitting below a released version",
+            ("## [1.28.0] - 2026-08-14\nsummary\n\n## [Unreleased]\ndetail\n",
+             "## Run stamps\n| x | y | 1.28.0 | z |\n## Log\n", ["1.28.0"]),
+            "sits BELOW a released version",
+        ),
+        (
+            "two [Unreleased] sections, so one set of notes publishes twice or never",
+            ("## [Unreleased]\na\n\n## [Unreleased]\nb\n\n## [1.28.0] - 2026-08-14\nc\n",
+             "## Run stamps\n| x | y | 1.28.0 | z |\n## Log\n", ["1.28.0"]),
+            "sections -- one of them is",
+        ),
     ):
         del failures[:]
         _release_register(*args, complete=True)
@@ -1999,6 +2013,27 @@ def _release_register(changelog: str, retro: str, tags: list[str],
         f"heading is notes that will never be published or notes that will be "
         f"published in place of the right ones",
     )
+
+    # `[Unreleased]` MUST be the first section, and there may be one. The 1.45.0
+    # release wrote its summary above the accumulated section and left it in
+    # place, so the shipped version's own detail sat under `[Unreleased]` and the
+    # next entry would have been written on top of already-published notes. The
+    # duplicate-version check above cannot see it: `Unreleased` is not a version.
+    unrel = [m.start() for m in re.finditer(r"(?m)^## \[Unreleased\]", changelog)]
+    check(
+        len(unrel) <= 1,
+        f"CHANGELOG.md: {len(unrel)} '## [Unreleased]' sections -- one of them is "
+        f"notes that will be published twice or not at all",
+    )
+    if unrel and found:
+        first_release = re.search(r"(?m)^## \[\d+\.\d+\.\d+\]", changelog)
+        check(
+            first_release is None or unrel[0] < first_release.start(),
+            "CHANGELOG.md: '## [Unreleased]' sits BELOW a released version, so "
+            "notes that have already shipped are labelled unreleased and the next "
+            "entry lands on top of them. Fold them into the version that shipped "
+            "them and open a fresh section at the top",
+        )
 
     key = lambda s: tuple(map(int, s.split(".")))
     releases = [v for v in versions if key(v) >= STAMPS_FROM]

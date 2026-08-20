@@ -84,7 +84,7 @@ it verbatim instead of transcribing this table.
 through six stops. Every ratio below is therefore stated against the **worst**
 stop, `--field-2`, not against a representative one.
 
-| Token | Value | Role | Worst-stop ratio |
+| Token | Value | Role | Worst-stop ratio, on `--ink` |
 |---|---|---|---|
 | `--field-1` | `#F9DEF3` | `0%`/`100%` — the rest stop, pale pink | ink 13.90:1 |
 | `--field-2` | `#F3D9B8` | `16.67%` — apricot, **the contrast floor** | ink **12.79:1** |
@@ -95,15 +95,15 @@ stop, `--field-2`, not against a representative one.
 | `--bg` | `var(--field-1)` | the static render; what a screenshot shows | — |
 | `--surface` | `#FFFFFF` | the card — **the only opaque surface** | — |
 | `--panel` / `--panel-tab` | `#C8BFCC` / `#B9AFBD` | the mist panel · its selected tab | ink 9.76:1 / 8.23:1 |
-| `--ink` | `#1A1A1A` | body and display | **12.79:1** |
-| `--ink-soft` | `#3A3A3A` | eyebrows, captions, secondary copy | **8.36:1 — a real body colour** |
+| `--ink` | `#1A1A1A` | body and display | **12.79:1** on `--field-2` |
+| `--ink-soft` | `#3A3A3A` | eyebrows, captions, secondary copy | **8.36:1** on `--field-2` — a real body colour |
 | `--on-ink` | `#EBE1F0` | the label on an ink fill — the **field** colour, not white | 13.73:1 |
 | `--line` | `rgba(26,26,26,.22)` | THE hairline: window frames, outline CTA | a rule, not text |
-| `--accent` | `#FF8C00` | **fill, dot, chart series — never text on the field** | 1.71:1 as text ✗ |
+| `--accent` | `#FF8C00` | **fill, dot, chart series — never text on the field** | 1.71:1 as text on `--field-2` ✗ |
 | `--on-accent` | `#1A1A1A` | the label on an accent fill | **7.46:1** |
 | `--good` / `--warning` | `#2C5A44` / `#9A6A00` | success · warning | — |
 | `--danger` / `--info` | `#7A3A1C` / `#1B6EC2` | destructive · informational | — |
-| `--signal` | `#00C22D` | the live indicator — **a fill**; ink on it is 7.26:1 | 1.76:1 as text ✗ |
+| `--signal` | `#00C22D` | the live indicator — **a fill**; ink on it is 7.26:1 | 1.76:1 as text on `--field-2` ✗ |
 
 Three rules carry this palette.
 

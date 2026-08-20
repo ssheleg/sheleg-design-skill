@@ -632,6 +632,91 @@ def _reset():
     failures, notes, checks = [], [], 0
 
 
+def _ratio_plants() -> list[str]:
+    """The classification itself, watched discriminating.
+
+    The arithmetic already had a negative control. What did not was the TALLY:
+    before this, a claim naming a partner the pack cannot pair was added to
+    `guarded` before any pair was computed, so fifteen claims counted as coverage
+    the gate never held. A number that cannot be watched being wrong is the thing
+    this file exists to refuse, so each bucket gets a plant.
+    """
+    import tempfile
+    global TOKENS, PACKS
+    problems = []
+    css = (":root {\n  --bg: #ffffff;\n  --ink: #1a1a1a;\n  --line: #dddddd;\n"
+           "  --surface-2: #eeeeee;\n  --accent: #8a2b1f;\n"
+           "  --muted: rgba(26,26,26,.55);\n}\n")
+    plants = [
+        # 1. a table declaring a base its own arithmetic contradicts. `blueprint`
+        #    shipped exactly this: the header said `--bg` and the numbers were
+        #    computed against pure white.
+        ("a table header declaring a base the numbers contradict",
+         "| Token | Value | Role on `--bg` |\n|---|---|---|\n"
+         "| `--accent` | `#8a2b1f` | 9.99:1 |\n",
+         lambda: [f for f in failures if "against --bg" in f],
+         None),
+        # 2. the same claim with the base removed: no longer checked, and it must
+        #    land in a named bucket rather than nowhere.
+        ("the same claim with no declared base, counted as a table row",
+         "| Token | Value | Role |\n|---|---|---|\n"
+         "| `--accent` | `#8a2b1f` | 9.99:1 |\n",
+         lambda: [] if _tally["un_table"] == 1 else None,
+         "un_table"),
+        # 3. prose with no partner: the residue the board carries.
+        ("prose stating a ratio and naming no partner",
+         "The `--accent` sits at 9.99:1 here.\n",
+         lambda: [] if _tally["un_prose"] == 1 else None,
+         "un_prose"),
+        # 4. prose arguing a floor rather than asserting a pair.
+        # A floor or a rejected candidate never reaches the classifier at all --
+        # RATIO_SKIP drops it one step earlier. What reaches it is a position in
+        # a gradient, which is the form `cyclorama` and `awning` actually write.
+        ("prose placing a ratio at a gradient stop rather than asserting a pair",
+         "The `--accent` reaches 3.10:1 by the 85% stop.\n",
+         lambda: [] if _tally["un_argued"] == 1 else None,
+         "un_argued"),
+        # 5. THE DEFECT THIS CHANGE CLOSED: a partner is named, the subject is a
+        #    composite, nothing computes -- and it must not read as coverage.
+        ("a named partner whose subject this pack cannot pair",
+         "`--muted` composites to 4.13:1 on `--bg` here.\n",
+         lambda: [] if _tally["unresolved"] == 1 and _tally["computed"] == 0 else None,
+         "unresolved"),
+    ]
+    with tempfile.TemporaryDirectory() as d:
+        tmp = Path(d)
+        (tmp / "tokens").mkdir()
+        old_tokens, old_packs = TOKENS, PACKS
+        TOKENS, PACKS = tmp / "tokens", tmp
+        try:
+            for label, md, verdict, bucket in plants:
+                _reset()
+                _tally.update({k: 0 for k in
+                               ("computed", "unresolved", "unguarded",
+                                "un_table", "un_argued", "un_prose")})
+                _unresolved.clear()
+                (TOKENS / "_planted_.css").write_text(css, encoding="utf-8")
+                (PACKS / "_planted_.md").write_text(md, encoding="utf-8")
+                validate_stated_ratios(TOKENS / "_planted_.css")
+                got = verdict()
+                ok = got is not None and (got or bucket)
+                print(f"  {'caught ' if ok else 'MISSED '} {label}")
+                if not ok:
+                    problems.append(
+                        f"{label} — tally was "
+                        + ", ".join(f"{k}={_tally[k]}" for k in
+                                    ("computed", "unresolved", "un_table",
+                                     "un_argued", "un_prose")))
+        finally:
+            TOKENS, PACKS = old_tokens, old_packs
+            _reset()
+            _tally.update({k: 0 for k in
+                           ("computed", "unresolved", "unguarded",
+                            "un_table", "un_argued", "un_prose")})
+            _unresolved.clear()
+    return problems
+
+
 def self_test() -> int:
     """Plant a defect of each class and require the matching check to fire.
 
@@ -782,6 +867,7 @@ def self_test() -> int:
     if failures:
         problems.append("false positive on a clean palette: " + "; ".join(failures))
     _reset()
+    problems += _ratio_plants()
     if problems:
         print("\nself-test FAILED: " + "; ".join(problems))
         return 1
@@ -819,7 +905,8 @@ TOKEN_ON_LINE = re.compile(r"--[a-z][a-z0-9-]*")
 TABLE_BASE = re.compile(r"[Oo]n\s+`(--[a-z0-9-]+)`")
 # The library's uniform way of naming the other side, in a CSS comment or in a
 # table cell: "17.74:1 on --bg", "6.1:1 over `--accent-deep`".
-PARTNER_PHRASE = re.compile(r"\b(?:on|over|against)\s+`?(--[a-z0-9-]+)`?")
+PARTNER_PHRASE = re.compile(
+    r"\b(?:on|over|against)\s+(?:the|a|an|its)?\s*`?(--[a-z0-9-]+)`?")
 # "16.5–17.8:1" spans a set of tokens and has no single right answer. Only a
 # dash BETWEEN TWO NUMBERS counts: an earlier version skipped any line
 # containing an em dash, which is most prose in this repo, and silently dropped
@@ -1062,23 +1149,114 @@ def _line_surface_collision(stem: str, text: str) -> None:
 
 # Counted, not restated. Every figure the comment inside this function used to
 # assert is derived here and printed once per run.
-_tally: dict = {"guarded": 0, "unguarded": 0,
+_tally: dict = {"computed": 0, "unresolved": 0, "unguarded": 0,
+                "un_table": 0, "un_argued": 0, "un_prose": 0,
                 "packs_guarded": set(), "packs_unguarded": set()}
+# Every claim that named a partner and still produced no arithmetic, kept with
+# its reason. `guarded` used to be incremented BEFORE the pairs were computed,
+# so fifteen claims counted as coverage the gate never held -- the same shape
+# this whole check exists to refuse, one layer inside its own tally.
+_unresolved: list[str] = []
+
+# Why an unguarded claim is unguarded. The single lumped number said 177 and
+# said nothing about which of them a person could close: 27 sit in a table whose
+# header declares no base, and declaring it makes the existing arithmetic cover
+# every row at once. The three markers below are the classes the two thrown-away
+# guard attempts kept tripping over -- a floor, a bound, a gradient stop and a
+# rejected candidate are arguments ABOUT a measurement, not claims about a pair
+# of shipped tokens, and eight of attempt 2's nine findings were exactly these.
+# Only the terms that can actually REACH this point. `RATIO_SKIP` above already
+# drops a floor, a bound, a rejected candidate and anything mentioning WCAG --
+# so listing those here again would be alternatives that never match, which
+# reads as coverage and is not. What survives RATIO_SKIP and is still an
+# argument rather than an assertion is a position in a gradient, a comparison
+# written as a symbol, and a colour dismissed by adjective.
+ARGUED = re.compile(
+    r"≥|>=|≤|<=|\b\d{1,3}\s*%|\bstop\b|gradient"
+    r"|ruled out|refused|discard|rather than|too (?:low|dark|light)"
+)
+
+
+def _pairs(maps, subjects, partners) -> list[float]:
+    """Every ratio this pack computes between a subject and a named partner."""
+    got: list[float] = []
+    for _label, solids, _field in maps:
+        got += [
+            contrast(solids[s], solids[n])
+            for s in subjects if s in solids
+            for n in partners if n in solids and n != s
+        ]
+    return got
+
+
+# A THIRD ATTEMPT AT A GUARD, WRITTEN AND THROWN AWAY -- recorded because the
+# reason is the same one that killed the first two, and it took a measurement to
+# see it. A wrapped comment leaves the partner alone with the number
+# (``4.40:1 on --bg-deep.``), so reading the subject off the line above looked
+# like free coverage: a probe said it resolved 7 of the 15. It did not. The probe
+# accepted a match under EITHER comparison mode -- exact or at-least -- so any
+# ratio above the claim counted as agreement, and running it inside the gate
+# produced two false failures at `ledger.css:33`, where the real subject
+# (`--muted`) is a composite and the line above offers `--ink-2` instead.
+# Substituting a subject is the same act as guessing a partner. The 15 are
+# reported by file:line instead, and a reader who wants them checked names the
+# subject on the line.
 # The one measurement anybody ever hand-checked, and its date. Kept as data so the
 # printed line can say plainly which part of the total was verified and which was
 # not -- and so it cannot be mistaken for a statement about the tree today.
 HAND_VERIFIED = (71, 121, 16, "2026-08-12")
 
 
+def check_ratio_coverage(floors: dict) -> list[str]:
+    """Coverage is a ratchet, in both directions.
+
+    A check-count floor cannot see this: deleting a `on \u0060--bg\u0060` from one
+    table header moves 27 claims out of the arithmetic and the count of *other*
+    checks does not move with it. So the three figures are pinned. `computed`
+    may only rise, `unresolved` and `unguarded` may only fall, and a commit that
+    wants otherwise says so here with the reason -- the same contract the
+    check-count floors already carry.
+    """
+    want = floors.get("validate_palette.py:ratios")
+    if not want:
+        return ["floors.json has no `validate_palette.py:ratios` block — "
+                "coverage that is not pinned is coverage that can leave quietly"]
+    bad = []
+    if _tally["computed"] < want["computed_at_least"]:
+        bad.append(
+            f"{_tally['computed']} ratio claims computed, below the pinned "
+            f"{want['computed_at_least']}. Arithmetic does not stop running on "
+            f"its own: a declared base was removed, or a claim was reworded out "
+            f"of reach. Lower the pin in the same commit, with the reason")
+    for key, label in (("unresolved", "named a partner this pack cannot pair"),
+                       ("unguarded", "reach no check at all")):
+        if _tally[key] > want[f"{key}_at_most"]:
+            bad.append(
+                f"{_tally[key]} claims {label}, above the pinned "
+                f"{want[f'{key}_at_most']}. A new claim must name a partner the "
+                f"token layer can pair, or the pin moves with a reason")
+    return bad
+
+
 def stated_ratio_report() -> str:
-    total = _tally["guarded"] + _tally["unguarded"]
+    """The split, never a single number.
+
+    `guarded` is gone as a figure: it counted claims whose arithmetic had not
+    run. What is printed is what happened -- computed, named-but-unpairable, and
+    the three reasons a claim reached no check at all.
+    """
+    c, u = _tally["computed"], _tally["unresolved"]
     un, pk = _tally["unguarded"], len(_tally["packs_unguarded"])
+    total = c + u + un
     share = f"{un / total * 100:.0f}%" if total else "n/a"
     v_un, v_total, v_packs, when = HAND_VERIFIED
     return (
-        f"stated ratios: {total} claims, {_tally['guarded']} guarded, "
-        f"{un} unguarded ({share}) at {pk} packs. Hand-verified: {v_un} of "
-        f"{v_total} at {v_packs} packs on {when}, and nothing since"
+        f"stated ratios: {total} claims — {c} computed, {u} named a partner this "
+        f"pack cannot pair, {un} unguarded ({share}) at {pk} packs "
+        f"[{_tally['un_table']} in a table declaring no base, "
+        f"{_tally['un_argued']} placing it at a gradient stop, "
+        f"{_tally['un_prose']} prose]. Hand-verified: {v_un} of {v_total} at "
+        f"{v_packs} packs on {when}, and nothing since"
     )
 
 
@@ -1182,6 +1360,15 @@ def validate_stated_ratios(css: Path) -> None:
                 # than a regex. Filed rather than faked.
                 _tally["unguarded"] += len(claims)
                 _tally["packs_unguarded"].add(stem)
+                # WHICH KIND, so the closable class is visible. A table row is
+                # closable by one edit to the header; an argued claim is out of
+                # scope by construction; prose is the residue the board carries.
+                if line.startswith("|"):
+                    _tally["un_table"] += len(claims)
+                elif ARGUED.search(line):
+                    _tally["un_argued"] += len(claims)
+                else:
+                    _tally["un_prose"] += len(claims)
                 continue
                 literal = [
                     parsed[0] for parsed in
@@ -1217,20 +1404,25 @@ def validate_stated_ratios(css: Path) -> None:
             # satisfying the claim is enough; the check is "this pack can produce
             # that number for a token on this row", not "for the first one".
             subjects = names if not subject.startswith("--on-") else [subject]
-            _tally["guarded"] += len(claims)
-            _tally["packs_guarded"].add(stem)
 
             for claim in claims:
                 want = float(claim)
-                got: list[float] = []
-                for _label, solids, _field in maps:
-                    got += [
-                        contrast(solids[s], solids[n])
-                        for s in subjects if s in solids
-                        for n in partner_names if n in solids and n != s
-                    ]
+                got = _pairs(maps, subjects, partner_names)
                 if not got:
-                    continue  # the subject is not a solid colour in any theme
+                    # NOT COVERAGE. The claim names a partner, and this pack
+                    # pairs nothing with it: the subject is a composite or an
+                    # alpha, or it is nowhere on this line or the one above.
+                    # Counted apart and printed, because the alternative is the
+                    # defect this change exists to close.
+                    _tally["unresolved"] += 1
+                    _unresolved.append(
+                        f"{rel}:{lineno}: {claim}:1 against "
+                        f"{'/'.join(partner_names)} — no pair in this pack "
+                        f"computes it; the subject is not on this line"
+                    )
+                    continue
+                _tally["computed"] += 1
+                _tally["packs_guarded"].add(stem)
                 ok = any(c >= want - RATIO_TOL for c in got) if atleast else \
                     any(abs(c - want) <= RATIO_TOL for c in got)
                 check(
@@ -1290,6 +1482,10 @@ def main() -> int:
     for line in notes:
         print(line)
     print(f"  {stated_ratio_report()}")
+    # A number nobody can act on is a number nobody acts on. Each of these is a
+    # claim whose partner is written down and whose arithmetic still cannot run.
+    for line in _unresolved:
+        print(f"    unpairable  {line}")
     if failures:
         for f in failures:
             print(f"FAIL: {f}")
@@ -1298,6 +1494,15 @@ def main() -> int:
     rc = check_floor("validate_palette.py", checks)
     if rc:
         return rc
+    # The coverage ratchet runs AFTER the failures, because a red run's tally is
+    # about a tree nobody has fixed yet; it runs BEFORE the OK line, because a
+    # coverage regression is not an OK.
+    import json as _j
+    slipped = check_ratio_coverage(_j.loads(FLOORS.read_text(encoding="utf-8")))
+    if slipped:
+        for s in slipped:
+            print(f"FAIL: {s}", file=sys.stderr)
+        return 1
     print(f"OK ({checks} checks)")
     return 0
 
