@@ -63,7 +63,7 @@ The pack is the primary reference type; the other three feed it rather than bypa
   stripped. Everything a kit ships beyond them is that pack's signature —
   `Specimen` in `showroom`, `RegistrationMarks` in `blueprint`, `ModelBlock` in
   `maquette` — and belongs to it alone. Until 1.11.0 this paragraph asserted the
-  count and named none of the six, which left a reader with a number and no way
+  count and named none of the six bridges, which left a reader with a number and no way
   to check a delivered kit against it.
 
 ## 3. Figma — one border at a time

@@ -197,7 +197,7 @@ travels alone here.
 
 - **The seven-layer shadow is the pack.** A 1px inner ring plus six offsets, from
   `0 1px 2px` to `0 32px 64px -8px`, at 2–6% alpha. It ships as **one token**,
-  `--shadow-specimen`, on purpose: split it and somebody uses three of the seven,
+  `--shadow-specimen`, on purpose: split it and somebody uses three of the seven shadow layers,
   and the specimen stops sitting in the page. Do not add an eighth layer and do
   not tint it — the alphas are the entire effect.
 - **Inside the specimen there are no shadows at all.** The product surface uses

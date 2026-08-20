@@ -899,6 +899,26 @@ def _packs() -> list[str]:
     return sorted(p.stem for p in d.glob("*.md") if p.name != "STYLE_PACK_TEMPLATE.md")
 
 
+def _counted_sources() -> list[str]:
+    """The one corpus both count checks read.
+
+    It was inline in `validate_counted_claims` until a second check needed the
+    same list; two copies of a source list is two lists that drift, and this one
+    already grew once (the three manifests, 1.19.0).
+    """
+    return [
+        "README.md", "CONTRIBUTING.md", "bin/cli.js", "docs/DOCMAP.md",
+        "cursor/rules/sheleg-design.mdc",
+        ".claude-plugin/marketplace.json",
+        f"{PLUGIN_DIR}/.claude-plugin/plugin.json",
+        "package.json",
+        f"{PLUGIN_DIR}/commands/{PLUGIN}.md",
+    ] + [
+        str(p.relative_to(ROOT))
+        for p in sorted((ROOT / PLUGIN_DIR / "skills" / PLUGIN).rglob("*.md"))
+    ]
+
+
 def validate_counted_claims():
     """Every 'N packs' / 'N kits' / 'N scenarios' / 'N headings' is true."""
     packs = _packs()
@@ -917,18 +937,7 @@ def validate_counted_claims():
     # these files were already checked (validate_pack_enumerations); the NUMBER
     # beside the names was not, because the source list was all-markdown plus two
     # scripts. A count is checkable wherever it is written, including in JSON.
-    sources = [
-        "README.md", "CONTRIBUTING.md", "bin/cli.js", "docs/DOCMAP.md",
-        "cursor/rules/sheleg-design.mdc",
-        ".claude-plugin/marketplace.json",
-        f"{PLUGIN_DIR}/.claude-plugin/plugin.json",
-        "package.json",
-        f"{PLUGIN_DIR}/commands/{PLUGIN}.md",
-    ] + [
-        str(p.relative_to(ROOT))
-        for p in sorted((ROOT / PLUGIN_DIR / "skills" / PLUGIN).rglob("*.md"))
-    ]
-    for rel in sources:
+    for rel in _counted_sources():
         text = read(ROOT / rel)
         if text is None:
             continue
@@ -1580,6 +1589,14 @@ PLANTS = (
             1,
         ),
         "'Shared state' re-asserts",
+    ),
+    (
+        # Exactly the sentence that sat wrong in `tenor` at twenty-nine packs:
+        # a definite article, a numeral, and no noun for a gate to check.
+        "a count written as `the <numeral>` with no noun",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/SURFACE_COMPOSITION.md",
+        lambda t: t.replace("across\nthe twenty-nine packs:", "across\nthe twenty-nine:", 1),
+        "names no noun, so nothing can check it",
     ),
     (
         "a pack with no `Themes:` declaration",
@@ -2404,6 +2421,54 @@ def validate_pack_declares_its_silences():
 
 
 
+# ------------------------------------- a count whose noun is only implied
+#
+# `validate_counted_claims` reads "N packs". It cannot read "the accent role
+# resolves to `--accent` in twenty-seven," where the noun is implied by context —
+# which is how that sentence sat wrong at ten, then thirteen, then fourteen, each
+# corrected by hand and each unguarded again the moment it was.
+#
+# THREE PATTERNS WERE TRIED AND TWO THROWN AWAY, measured on this tree:
+#
+#   1. every numeral with no counted noun after it -> 2553 spans. Ordinary prose
+#      ("three cards", "one motion methodology"). Useless.
+#   2. a numeral CLOSING its clause -> 62 spans, and nearly all correct ellipsis:
+#      "one gate of four", "wrong two times out of three". Still useless.
+#   3. the same, restricted to sentences naming a library noun -> 69 spans, most
+#      of them the word "one" in prose. Worse than 2.
+#
+# What IS precise is the definite article: `the <numeral>` closing a clause, which
+# in English asserts a known set. SEVEN spans in the whole corpus, three of them
+# library counts, and one of the three was WRONG — `tenor` said token names are
+# "not uniform across the twenty" at twenty-nine packs.
+#
+# So the class is closed by making the form checkable rather than by guessing at
+# it: name the noun, and `validate_counted_claims` covers it forever. This refuses
+# the bare form. It is deliberately narrow -- a numeral without `the` is prose.
+COUNT_WITHOUT_ITS_NOUN = re.compile(
+    r"\bthe\s+(two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|"
+    r"fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|twenty-one|twenty-two|"
+    r"twenty-three|twenty-four|twenty-five|twenty-six|twenty-seven|twenty-eight|"
+    r"twenty-nine|thirty)\b(?=\s*[,.;:)\]])", re.I)
+
+
+def validate_a_count_names_its_noun():
+    for rel in _counted_sources():
+        text = read(ROOT / rel)
+        if text is None:
+            continue
+        flat = " ".join(text.split())
+        for m in COUNT_WITHOUT_ITS_NOUN.finditer(flat):
+            check(
+                False,
+                f"{rel}: \"the {m.group(1)}\" names no noun, so nothing can check it. "
+                f"`the twenty` sat in `tenor` at twenty-nine packs and no gate could see "
+                f"it — write what is being counted. A SUBSET is written `N of the M "
+                f"packs`, because a bare `N packs` is read as a claim about the total",
+            )
+
+
+
 def validate_release_register():
     _release_register(
         read(ROOT / "CHANGELOG.md") or "",
@@ -2890,6 +2955,7 @@ def main():
     validate_board_columns()
     validate_hero_states_its_obligations()
     validate_pack_declares_its_silences()
+    validate_a_count_names_its_noun()
     validate_status_vocabulary()
     validate_elevation_tokens_named()
     validate_radius_single_valued()

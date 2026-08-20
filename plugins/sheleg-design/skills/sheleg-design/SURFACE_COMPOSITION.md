@@ -59,8 +59,8 @@ the runnable palette validation; a pack is the *parameter set* it consumes.
 
 **Read the chosen pack's own token names before you write a single `var()`.**
 This table is by *role*, not by token, because the names are not uniform across
-the twenty-nine: only `--bg` and `--ink` resolve in every pack. The accent is
-`--accent` in twenty-seven, `--brand` in `field-notes` and `--cta` in `orchard` (each
+the twenty-nine packs: only `--bg` and `--ink` resolve in every pack. The accent is
+`--accent` in twenty-seven of the twenty-nine packs, `--brand` in `field-notes` and `--cta` in `orchard` (each
 declares `@role accent:` in its token layer). **A second marker joins it in 1.26.0:**
 a semantic colour that sits below WCAG AA on its own field declares
 `@role non-text:` with the reason and the ratio, because sixteen of the token layers

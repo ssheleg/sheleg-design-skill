@@ -359,6 +359,41 @@ named in the CHANGELOG and in two specs.
 source* — so *current* means current on this machine. A clone still builds its own, and this
 close does not change that.
 
+### A count whose noun is only implied, and the one form that can be caught (B-016)
+
+`validate_counted_claims` reads *"N packs"*. It cannot read *"the accent role resolves to
+`--accent` in twenty-seven,"* where the noun is implied by context — which is how that one
+sentence sat wrong at ten, then thirteen, then fourteen, corrected by hand each time and
+unguarded again the moment it was.
+
+**Three patterns were measured and two thrown away**, which is the useful half:
+
+| Pattern | Spans | Verdict |
+|---|---|---|
+| every numeral with no counted noun after it | **2553** | ordinary prose — *three cards*, *one motion methodology* |
+| a numeral **closing its clause** | 62 | nearly all correct ellipsis — *one gate of four*, *wrong two times out of three* |
+| the same, in sentences naming a library noun | 69 | worse: mostly the word *one* |
+| **`the <numeral>` closing a clause** | **7** | precise — a definite article asserts a known set |
+
+Of those seven, three are library counts, and **one of the three was wrong**: `tenor.md:328`
+said token names are *"not uniform across the twenty"* while twenty-nine packs ship. A live
+wrong number, invisible to every gate, found by narrowing rather than by widening.
+
+All seven now name their noun — which hands them to the existing check forever — and
+`validate_a_count_names_its_noun()` refuses the bare form. Both count checks read one shared
+corpus now; it was inline in one of them, and two copies of a source list are two lists that
+drift.
+
+**Naming the noun immediately exposed two more defects, which is the point of the exercise.**
+`the nine` became `the nine headings` and the gate refused it at once: the contract is
+thirteen. It reads `nine of the thirteen headings` now. And a *true subset* — the accent role
+resolving in 27 of 29 — is refused when written `twenty-seven packs`, because the check reads
+any `N packs` as a claim about the total. A subset is written **`N of the M packs`**, and that
+rule is now in the pack skeleton with the rest.
+
+The skeleton carries this as its **sixth** rule — and writing it corrected the section's own
+heading, which promised four rules over five. Floor 3783 → 3789.
+
 ### Gate
 
 - **Coverage is pinned, in both directions.** `check_ratio_coverage()` reads

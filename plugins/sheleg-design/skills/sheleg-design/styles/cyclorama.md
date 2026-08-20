@@ -391,7 +391,7 @@ the palette rather than around it.
 
 - **The section eyebrows fail WCAG, and they are everywhere.** `--accent`
   `#FF8C00` as text measures **1.71:1** on the apricot stop and no better than
-  **1.97:1** on any of the six. The fix costs no design: `--ink-soft` at 8.36:1.
+  **1.97:1** on any of the six field stops. The fix costs no design: `--ink-soft` at 8.36:1.
 - **There is no text-safe orange in this palette, and this is the trap.** The
   obvious repair — darken the accent until it passes, the way `field-notes`
   derives `--brand-on-dark` — does not work here, because the warm-dark region is

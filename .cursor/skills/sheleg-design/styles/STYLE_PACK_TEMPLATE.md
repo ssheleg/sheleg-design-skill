@@ -36,7 +36,7 @@ were chosen because their answers are **derived from the token layer**, so the
 gate re-derives both and refuses a declaration that has drifted from the thing
 it describes. Add a third only when it can be answered the same way.
 
-## Before you fill anything — four rules that decide whether this pack is real
+## Before you fill anything — six rules that decide whether this pack is real
 
 Until 1.11.0 these were spread across three places a reader of the installed
 bundle cannot reach — the repository's `CONTRIBUTING.md` (rules 1 and 4), a
@@ -45,7 +45,7 @@ that had solved it once (rule 3). Being scattered is why they are restated here
 rather than moved: the agent most likely to author a pack holds this directory
 and no clone.
 
-1. **Do not ship on the nine.** The consistency gate enforces the nine original
+1. **Do not ship on nine of the thirteen headings.** The consistency gate enforces the nine original
    headings always and the four widened ones all-or-nothing, so a pack cannot be
    *half* widened — but a pack that omits all four still passes. It passes and
    the agent that reads it invents the rest. Ship `widened`, or ship `core` and
@@ -99,6 +99,17 @@ and no clone.
    accessibility-critical property — a focus ring above all — ship the literal
    first and the derived value second, so the old browser keeps the literal. For
    an ordinary decorative tint the derived value alone is fine.
+6. **A count names what it counts, and a subset says so.** `validate_counted_claims`
+   reads *"N packs"*, *"N kits"*, *"N scenarios"*, *"N headings"* and checks each
+   against the tree. It cannot read *"uniform across the twenty"* — and `tenor`
+   carried exactly that at twenty-nine packs until 2026-08-20, wrong and invisible
+   to every gate. So write the noun. Two traps come with it, both found the hour the
+   rule was written: a claim about **part** of the library must be
+   `N of the M packs`, because a bare `N packs` is read as a claim about the total
+   and a true 27 is refused; and naming the noun can expose a number that was
+   already wrong — spelling out what `the nine` counted made it a claim about
+   headings, and the gate refused it in the same run, because the contract is
+   thirteen headings.
 
 ## Register
 
