@@ -1369,6 +1369,33 @@ def check_floor(script: str, count: int) -> None:
 # reduced-motion plants below name the message they must provoke.
 PLANTS = (
     (
+        # The fifth subject, carved on 2026-08-20, with its carve taken back out.
+        # Derived rather than pinned: every line matching the carve pattern is
+        # dropped, so the plant keeps landing however the wording is rewritten --
+        # and it must drop ALL of them, because this pack states the exception
+        # twice (the doctrine quote and the token) and removing one leaves the
+        # check green over a pack that no longer carves anything. A plant that
+        # left a third occurrence standing is a defect this repo has already had.
+        "a pack that mandates a scrub and takes its `ease: none` exception back out",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/instrument-console.md",
+        lambda t: "\n".join(
+            l for l in t.splitlines() if not SCRUB_CARVED.search(l)),
+        # Required, and the reason is measured: with the pin lifted to 5 this plant
+        # was STILL reported caught, because an edit to a pack trips the `.cursor`
+        # mirror check too. Without this string the plant proved the mirror check
+        # works and said nothing about the one it was written for.
+        "carve no `ease: none` exception",
+    ),
+    (
+        # The rule the check measures packs against, deleted. Without this case the
+        # check would keep printing a count after the doctrine stopped saying
+        # anything -- five packs measured against nothing, reported green.
+        "the scrub easing rule removed from the doctrine the packs are measured against",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/MOTION_DOCTRINE.md",
+        lambda t: t.replace("easing must be `none`", "easing should stay gentle", 1),
+        "the rule this check enforces has to live somewhere first",
+    ),
+    (
         # A widened pack that stops answering the container bullet. Derived from
         # whatever the pack currently says rather than pinned to a phrase, so it
         # keeps mutating something as the answers get rewritten.
@@ -3049,6 +3076,77 @@ def validate_excluded_sets_are_declared():
 RELATIVE_CUSTOM_PROP = re.compile(r"^\s*(--[a-z0-9-]+)\s*:.*\brgb\(\s*from\s")
 
 
+# ------------------------------------- one curve and a scrub cannot both be total
+#
+# A pack that says "the one site-wide curve" and then mandates scrubbed motion has
+# written two rules that contradict each other, and `MOTION_DOCTRINE.md` §6 settles
+# it: under `scrub`, easing must be `none` — the scrollbar is already the clock.
+# Easing a scrubbed timeline eases against the scroll position twice, which the
+# doctrine names as the family's most common motion bug.
+#
+# Found on `instrument-console` (board B-042), which named one pack. Measuring the
+# shape across the library found FIVE, so this ships as a ratchet: each pack's
+# exception has to be carved in its own words, against its own motion section, and
+# a pin that only falls is the honest way to say four are still open.
+ONE_CURVE = re.compile(r"the one site-wide curve|one curve|single (?:ease|curve)", re.I)
+MANDATES_SCRUB = re.compile(r"scrubbed\b", re.I)
+# The carve, written any of the three ways the packs write it.
+SCRUB_CARVED = re.compile(
+    r"ease[^.\n]{0,40}`?none`?|`none`[^.\n]{0,60}scrub|scrub[^.\n]{0,80}`none`", re.I)
+# A pack that BANS scrubbing has no contradiction to carve.
+BANS_SCRUB = re.compile(
+    r"bans? [^.\n]{0,60}scrub|no scrubbing|forbids? [^.\n]{0,40}scrub", re.I)
+
+
+def validate_scrub_carves_its_exception():
+    styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
+    doctrine = read(ROOT / PLUGIN_DIR / "skills" / PLUGIN / "MOTION_DOCTRINE.md")
+    if not styles.is_dir() or doctrine is None:
+        return
+    # The doctrine must actually carry the rule this check enforces. Without this
+    # the check would keep passing after the rule was deleted -- measuring packs
+    # against a doctrine that no longer says anything.
+    if not check("easing must be `none`" in doctrine,
+                 "MOTION_DOCTRINE.md no longer states that easing must be `none` under "
+                 "`scrub` — the rule this check enforces has to live somewhere first"):
+        return
+
+    subjects, uncarved = 0, []
+    for md in sorted(styles.glob("*.md")):
+        if md.name == "STYLE_PACK_TEMPLATE.md":
+            continue
+        txt = read(md) or ""
+        if BANS_SCRUB.search(txt):
+            continue
+        if not (ONE_CURVE.search(txt) and MANDATES_SCRUB.search(txt)):
+            continue
+        subjects += 1
+        if not SCRUB_CARVED.search(txt):
+            uncarved.append(md.stem)
+    if subjects < 2:
+        _skips.append("fewer than two packs both declare one curve and mandate a "
+                      "scrub — the scrub exception was not checked")
+        return
+    try:
+        ceiling = json.loads(FLOORS.read_text(encoding="utf-8")).get(
+            "scrub_uncarved_at_most")
+    except (OSError, ValueError):
+        ceiling = None
+    if not check(ceiling is not None,
+                 "test/floors.json has no `scrub_uncarved_at_most` — a contradiction "
+                 "that is not pinned is one that can spread to the next pack quietly"):
+        return
+    check(
+        len(uncarved) <= ceiling,
+        f"{len(uncarved)} pack(s) declare one site-wide curve, mandate scrubbed motion "
+        f"and carve no `ease: none` exception, above the pinned {ceiling}: "
+        f"{', '.join(sorted(uncarved))}. An implementer who reads the curve as total "
+        f"eases against the scroll position twice. Lower the pin in the same commit "
+        f"as the carve",
+    )
+    print(f"  scrub exception: {len(uncarved)} of {subjects} pack(s) uncarved "
+          f"(pinned at most {ceiling})")
+
 def validate_relative_colour_is_guarded():
     tokens = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles" / "tokens"
     if not tokens.is_dir():
@@ -3626,6 +3724,7 @@ def main():
     validate_worked_radius_sums_compute()
     validate_component_classes_are_answered()
     validate_excluded_sets_are_declared()
+    validate_scrub_carves_its_exception()
     validate_relative_colour_is_guarded()
     validate_font_loading_stays_out()
     validate_status_vocabulary()

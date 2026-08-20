@@ -6,6 +6,32 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### One site-wide curve and a mandated scrub cannot both be total (B-042)
+
+`instrument-console` declared *"the one site-wide curve"* and then mandated scrubbed SVG
+instruments. `MOTION_DOCTRINE.md` §6 settles it — *under `scrub`, easing must be `none`;
+the scrollbar is already the clock* — and easing a scrubbed timeline eases against the
+scroll position twice, which the doctrine itself calls the family's most common motion
+bug. The pack never carved the exception, so an implementer reading it alone landed on
+exactly that bug. **The carve is now written into its Motion tokens**, and
+`validate_scrub_carves_its_exception` refuses a pack that declares one curve, mandates a
+scrub and stays silent. Measuring the shape across the library found **five** such packs;
+the other four are pinned at `scrub_uncarved_at_most: 4` and filed as B-118, because each
+carve has to be written against that pack's own motion section rather than swept.
+
+Two more things the row was right about. The pack's `Contract: core` line said the hero,
+its line ceiling and per-component states were *"yours to decide"* while the pack states
+all three — **the declination is narrowed to what it actually leaves open**, because a
+reader who believed the old wording would have decided them twice. And its fastest step,
+`0.18s`, sits outside the doctrine's 100–160 ms button-press band with no deviation clause
+to appeal to; `--dur-press: 0.16s` is the band's own ceiling, derived from the doctrine
+rather than picked, since ADR 0003 forbids widening this pack by invention.
+
+The first plant for the new check was reported *caught* with the ratchet lifted past the
+defect — an edit to a pack trips the `.cursor` mirror check too, so the plant had been
+proving the mirror check worked and saying nothing about the check it was written for. It
+carries the required `expect` string now: with the pin at 5 it reports `MISSED`.
+
 ### The library's contrast coverage was 15 claims smaller than it said (B-013)
 
 `stated ratios: … 336 guarded` counted a claim as covered before computing a single

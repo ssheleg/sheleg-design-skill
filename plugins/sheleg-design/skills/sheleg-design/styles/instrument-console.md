@@ -7,10 +7,12 @@ every instrument read as one precision device responding to the hand.
 This `Origin:` names a product rather than an address, so a reader cannot check the pack against its source. That is a recorded exception, not an oversight: this pack predates the library's *no reference, no pack* rule, it stays on the `core` contract, and it is **never widened by invention** — the four sections it declines would have to come from taste wearing the authority of a measurement. An addressable reference is what would change that, in one change, with this line rewritten to the address.
 
 Contract: core — this pack does **not** specify `## Components`, `## Hero`,
-`## Responsive` or `## Signature element`. Per-component states (hover,
-active, disabled), the opening viewport and its line ceiling, the collapse
-rules, and the single element the page is remembered by are **yours to
-decide** here, and you must say so out loud when you do. Everything the pack
+`## Responsive` or `## Signature element` **as sections**. What it leaves to you,
+narrowed 2026-08-20 because the boilerplate above claimed more than was true: the
+collapse rules, and the single element the page is remembered by. It **does**
+state a hero line ceiling (`hero ~5.25rem`, in Type), a button press and a
+focus-visible treatment (in Micro-interactions) — three things the old wording
+said were yours, and a reader who believed it would have decided them twice. Everything the pack
 *does* state is measured; the precision of that half is not evidence about
 this half. The backfill is held rather than written from the token layer,
 because filling these sections from tokens would be inventing values with a
@@ -120,6 +122,19 @@ The particle field, progress rail, and all instruments are tinted with
 
 - Ease `cubic-bezier(0.16, 1, 0.3, 1)` — the one site-wide curve
   (the SHELEG default token set: 0.18 / 0.32 / 0.55 / 0.8s, stagger 0.07).
+- **The scrub carves the only exception, and it is not optional.** This pack
+  mandates scrubbed SVG instruments, and `MOTION_DOCTRINE.md` §6 is explicit:
+  *"Under `scrub`, easing must be `none`. The scrollbar is already the clock."*
+  Applying the curve above to a scrubbed timeline eases against the scroll
+  position twice, which the doctrine names as the most common bug in the family.
+  So: **`ease: 'none'` on every scrubbed instrument; the site-wide curve governs
+  everything that plays on its own.**
+- **A button press takes `--dur-press`, not `--dur-fast`.** The doctrine's band
+  for press feedback is **100–160 ms** and this pack's fastest step is 180 ms, so
+  the token set could not express a compliant press and the craft bar forbids
+  reaching for a literal. `--dur-press: 0.16s` is the band's own ceiling, chosen
+  because it is the value inside the band nearest this pack's existing step —
+  derived from the doctrine rather than picked.
 - Section rhythm `clamp(9rem, 24vh, 20rem)` vertical padding.
 
 ## Signature motifs
