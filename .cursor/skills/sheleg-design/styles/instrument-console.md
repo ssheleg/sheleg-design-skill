@@ -16,6 +16,9 @@ this half. The backfill is held rather than written from the token layer,
 because filling these sections from tokens would be inventing values with a
 citation attached — which is the one thing this pack layer exists to prevent.
 
+Themes: light only — no second block of any kind ships here.
+Rank: unordered — 4 status role(s) and no severity ramp; a rank scale is yours.
+
 ## Register
 
 Choose this pack for technical, systems, infra, or "operating system"

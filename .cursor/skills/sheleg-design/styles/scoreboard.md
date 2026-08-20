@@ -16,6 +16,9 @@ so the eye cannot lose the row.
 
 Contract: widened — all thirteen headings.
 
+Themes: light only — the second block (`[data-surface="panel"]`) is a SURFACE variant, not a theme twin.
+Rank: unordered — 4 status role(s) and no severity ramp; a rank scale is yours.
+
 ## Register
 
 Choose this pack for a product whose argument is **an accumulating number**:

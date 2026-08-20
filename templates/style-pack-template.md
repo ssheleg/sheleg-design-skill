@@ -15,6 +15,27 @@ omits Components / Hero / Responsive / Signature element — in which case
 say, here, what the reader must decide themselves. A pack that is silent
 about its own silence is read as complete.>
 
+Themes: <derived from your token layer, and one of three answers: `light +
+dark — a full theme twin.`, `light only — no second block of any kind ships
+here.`, or `light only — the second block (\`[data-surface="…"]\`) is a
+SURFACE variant, not a theme twin.` Counted 2026-08-20 across the library:
+11 of them, then 13, then 5. "Does this pack have a dark mode?" had three
+different answers depending on how a reader looked, which is why the pack
+now says.>
+
+Rank: <`unordered — N status role(s) and no severity ramp; a rank scale is
+yours.` or `ordered — \`--a\` → \`--b\` → \`--c\`.` Exactly one of them
+ships an ordered ramp. An agent building an incident list from an unordered
+set infers a scale from role descriptions and discovers the gap by hitting
+it — which is what happened, and is why this line exists.>
+
+**These two are not a free "also not specified" list, and that was deliberate.**
+A free list is unbounded and uncheckable: every pack would write a
+different one and nothing could compare them. These two questions
+were chosen because their answers are **derived from the token layer**, so the
+gate re-derives both and refuses a declaration that has drifted from the thing
+it describes. Add a third only when it can be answered the same way.
+
 ## Before you fill anything — four rules that decide whether this pack is real
 
 Until 1.11.0 these were spread across three places a reader of the installed

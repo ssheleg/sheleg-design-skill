@@ -18,6 +18,9 @@ so a sentence arrives as a stack rather than a line.
 
 Contract: widened
 
+Themes: light only — the second block (`[data-surface="dark"]`) is a SURFACE variant, not a theme twin.
+Rank: ordered — `--sev-ask` → `--sev-limit` → `--sev-never`.
+
 ## Register
 
 Choose this pack for products that argue a **management thesis**: that some new

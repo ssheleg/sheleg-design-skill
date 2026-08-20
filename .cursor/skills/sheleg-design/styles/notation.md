@@ -12,6 +12,9 @@ on the primary, which is the one non-rectangular shape in the pack.
 
 Contract: widened — all thirteen headings.
 
+Themes: light + dark — a full theme twin.
+Rank: unordered — 4 status role(s) and no severity ramp; a rank scale is yours.
+
 ## Register
 
 Choose Notation for **developer and technical products sold on restraint**: open

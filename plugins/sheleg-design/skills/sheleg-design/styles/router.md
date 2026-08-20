@@ -13,6 +13,9 @@ would reach for a shadow.
 
 Contract: widened — all thirteen headings.
 
+Themes: light + dark — a full theme twin.
+Rank: unordered — 4 status role(s) and no severity ramp; a rank scale is yours.
+
 ## Before you read the rest — what this pack was measured from
 
 **The first pack in this library read from a running product rather than from

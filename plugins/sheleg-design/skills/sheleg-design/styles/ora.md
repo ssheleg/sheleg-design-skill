@@ -18,6 +18,9 @@ always rendered with its letter beside it.
 
 Contract: widened
 
+Themes: light only — the second block (`:root[data-theme="light"]`) is a SURFACE variant, not a theme twin.
+Rank: unordered — 4 status role(s) and no severity ramp; a rank scale is yours.
+
 ## Register
 
 Choose this pack for products whose output is **a machine's verdict about the

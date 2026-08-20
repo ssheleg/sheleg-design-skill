@@ -12,6 +12,9 @@ have to be, and the one thing that floats is the thing the page is about.
 
 Contract: widened — all thirteen headings.
 
+Themes: light + dark — a full theme twin.
+Rank: unordered — 4 status role(s) and no severity ramp; a rank scale is yours.
+
 ## Register
 
 Choose Daylight for **client-facing portals and the pages that sell them**:

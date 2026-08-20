@@ -17,6 +17,9 @@ does not paint something a product console needs (a focus ring, a disabled
 control, a warning state, an empty state), the value is this pack's decision and
 says so **at the point it is declared**, in the token layer as well as here.
 
+Themes: light + dark — a full theme twin.
+Rank: unordered — 4 status role(s) and no severity ramp; a rank scale is yours.
+
 ## Register
 
 Choose this pack for **the console of a product that answers questions about

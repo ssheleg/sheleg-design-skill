@@ -301,6 +301,38 @@ Two plants, both against `maquette`, chosen by measurement rather than by eye: i
 exactly one phrase of each kind, so removing one leaves the other standing and each plant
 proves its own half. Floor 3619 → 3667.
 
+### Every pack now declares its two real silences, and the gate derives them (B-008)
+
+`Contract: core` named four sections and nothing else, so a pack's **other** silences stayed
+undeclared. The case on the board: `workbench` ships four status roles and no severity ramp,
+and a fresh-context agent building an incident list inferred a rank scale from role
+descriptions and discovered the gap by hitting it.
+
+The row offered two answers and **both were refused, on evidence**. A free *"also not
+specified here"* list is unbounded and uncheckable — every pack would write a different one
+and nothing could compare them. And four is not the boundary, because two silences are real
+and were counted before anything was chosen:
+
+- **Themes: 11 ship a dark twin, 13 ship one block, 5 ship a second block that is a
+  *surface* rather than a theme** — `[data-surface="dark"]`, `[data-surface="panel"]`,
+  `[data-state="alarm"]`. So *"does this pack have a dark mode?"* had three different answers
+  depending on how a reader looked, and `tenor` in particular ships something dark that is
+  not a dark theme.
+- **Rank: exactly one pack of twenty-nine ships an ordered ramp** — `tenor`, with
+  `--sev-ask` → `--sev-limit` → `--sev-never`. The other twenty-eight were silent.
+
+So each pack carries a `Themes:` line and a `Rank:` line, **derived from its own token
+layer**, and `validate_pack_declares_its_silences()` re-derives both on every run and refuses
+a declaration that has drifted from the thing it describes. That is the property a prose list
+could never have: the answer is checkable against the tokens, not merely present.
+
+Four plants — each line removed, and each claiming what its own tokens contradict. The
+skeleton carries both questions with the counts and the reason, and says plainly that a third
+question is only added when it can be answered the same way. Floor 3667 → 3783.
+
+The library's own counted-claims guard refused the first draft of that skeleton text, which
+said *"11 packs"* where the checkable phrase means the pack total. Reworded, not exempted.
+
 ### Gate
 
 - **Coverage is pinned, in both directions.** `check_ratio_coverage()` reads

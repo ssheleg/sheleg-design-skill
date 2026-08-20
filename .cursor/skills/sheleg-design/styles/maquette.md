@@ -14,6 +14,9 @@ their eyes before they evaluate what it costs.
 
 Contract: widened — all thirteen headings.
 
+Themes: light only — no second block of any kind ships here.
+Rank: unordered — 4 status role(s) and no severity ramp; a rank scale is yours.
+
 ## Register
 
 Choose this pack for **enterprise data infrastructure sold to an architecture

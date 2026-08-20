@@ -23,6 +23,9 @@ single element the page is remembered by are **yours to decide** here — and yo
 say so out loud when you do, because a decision nobody recorded reads as a value
 the pack forgot. Everything the pack does state is binding.
 
+Themes: light only — no second block of any kind ships here.
+Rank: unordered — 3 status role(s) and no severity ramp; a rank scale is yours.
+
 ## Register
 
 Choose this pack for a **commerce or platform front door** — the surface that

@@ -28,6 +28,9 @@ Contract: widened — all thirteen headings.
 > sixteen of its `<h2>`s spent on small eyebrows — which that pack records as a defect and
 > refuses to teach. If you are deciding where a heading lives, read both.
 
+Themes: light + dark — a full theme twin.
+Rank: unordered — 4 status role(s) and no severity ramp; a rank scale is yours.
+
 ## Register
 
 Choose this pack for **a developer product whose buyer reads code for a living**:

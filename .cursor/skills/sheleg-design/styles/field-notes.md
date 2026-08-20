@@ -14,6 +14,9 @@ and trim marks showing where it was cut.
 
 Contract: widened — all thirteen headings.
 
+Themes: light + dark — a full theme twin.
+Rank: unordered — 1 status role(s) and no severity ramp; a rank scale is yours.
+
 ## Register
 
 Choose this pack for **an open-source or developer product sold on

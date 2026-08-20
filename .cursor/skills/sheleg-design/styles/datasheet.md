@@ -18,6 +18,9 @@ turns dark the moment it catches you in incognito.
 
 Contract: widened — all thirteen headings.
 
+Themes: light only — the second block (`[data-state="alarm"]`) is a SURFACE variant, not a theme twin.
+Rank: unordered — 4 status role(s) and no severity ramp; a rank scale is yours.
+
 ## Register
 
 Choose this pack for **B2B SaaS whose product is a verdict about the visitor, the

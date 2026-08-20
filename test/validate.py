@@ -1582,6 +1582,35 @@ PLANTS = (
         "'Shared state' re-asserts",
     ),
     (
+        "a pack with no `Themes:` declaration",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/atrium.md",
+        lambda t: t.replace("\nThemes: ", "\nThemes-was: ", 1),
+        "no `Themes:` line",
+    ),
+    (
+        # atrium ships one block and nothing else, so claiming a twin is a claim
+        # its own token layer contradicts.
+        "a `Themes:` claiming a dark twin the token layer does not ship",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/atrium.md",
+        lambda t: t.replace("Themes: light only — no second block of any kind ships here.",
+                            "Themes: light + dark — a full theme twin.", 1),
+        "and the token layer says the opposite",
+    ),
+    (
+        "a pack with no `Rank:` declaration",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/workbench.md",
+        lambda t: t.replace("\nRank: ", "\nRank-was: ", 1),
+        "no `Rank:` line",
+    ),
+    (
+        # workbench is the row's own case: four unordered statuses, no ramp.
+        "a `Rank: ordered` where the token layer ships no ramp",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/workbench.md",
+        lambda t: t.replace("Rank: unordered — 4 status role(s)",
+                            "Rank: ordered — `--sev-1` → `--sev-2`. 4 status role(s)", 1),
+        "ships 0 ordered token(s)",
+    ),
+    (
         # Exactly what `atrium` shipped the day before this check existed: a hero
         # full of measurements and no statement of how many lines the headline may
         # take. `maquette` is the fixture because its hero carries exactly ONE
@@ -2290,6 +2319,91 @@ def validate_hero_states_its_obligations():
 
 
 
+# ------------------------------------- the silences a pack owes an answer to
+#
+# `Contract: core` names four sections and nothing else, so a pack's OTHER
+# silences stayed undeclared. B-008's case: `workbench` ships four status roles
+# and no severity ramp, and a fresh-context agent building an incident list
+# inferred a rank scale from role descriptions and only found the gap by hitting
+# it.
+#
+# The row offered two answers -- a free "also not specified here" list, or four
+# is the boundary. Both were refused, and the measurement is why. A free list is
+# unbounded and uncheckable: 29 packs would write 29 different ones and nothing
+# could compare them. And four is NOT the boundary, because two silences are
+# real and common. Counted 2026-08-20:
+#
+#   * THEMES -- 11 packs ship a dark twin, 13 ship one block, and 5 ship a second
+#     block that is a SURFACE variant rather than a theme (`[data-surface="dark"]`,
+#     `[data-state="alarm"]`). "Does this pack have a dark mode?" got three
+#     different answers depending on how you looked.
+#   * RANK -- exactly ONE pack of 29 ships an ordered ramp (`tenor`:
+#     `--sev-ask` -> `--sev-limit` -> `--sev-never`). The other 28 were silent.
+#
+# So the answer is a fixed pair of questions whose answers are DERIVED from the
+# token layer, which makes them comparable across packs and checkable against the
+# thing they describe. This re-derives both and refuses a declaration that does
+# not match its own tokens.
+RANK_TOKEN = re.compile(r"--((?:sev|severity|rank|level|priority|tier)[a-z0-9-]*)\s*:", re.I)
+DARK_BLOCK = re.compile(r'theme="dark"|\.dark\b|prefers-color-scheme', re.I)
+
+
+def validate_pack_declares_its_silences():
+    styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
+    tokens = styles / "tokens"
+    if not tokens.is_dir():
+        return
+    looked = 0
+    for css in sorted(tokens.glob("*.css")):
+        md = styles / f"{css.stem}.md"
+        if not md.is_file():
+            continue
+        looked += 1
+        text = read(md) or ""
+        rel = f"styles/{md.name}"
+        body = read(css) or ""
+
+        themes = re.search(r"(?m)^Themes:\s*(.+)$", text)
+        if not check(themes is not None,
+                     f"{rel}: no `Themes:` line. 11 packs ship a dark twin, 13 ship one "
+                     f"block and 5 ship a surface variant that is not a theme — a reader "
+                     f"asking 'is there a dark mode' has to read the token layer to find out"):
+            continue
+        said = themes.group(1)
+        # the token layer's own answer
+        blocks = [m.group(1) for m in re.finditer(r"(?m)^([^{}\n]+)\{", body)]
+        extra = [b.strip() for b in blocks
+                 if b.strip() not in (":root",) and not b.strip().startswith("@")
+                 and "--" not in b and len(b.strip()) < 60]
+        has_dark = any(DARK_BLOCK.search(b) for b in extra)
+        claims_twin = "theme twin" in said and "not a theme twin" not in said
+        check(
+            claims_twin == has_dark,
+            f"{rel}: `Themes:` says {'a full theme twin' if claims_twin else 'no theme twin'} "
+            f"and the token layer says the opposite. The declaration is derived from the "
+            f"blocks the layer ships, so a mismatch means one of the two moved alone",
+        )
+
+        rank = re.search(r"(?m)^Rank:\s*(.+)$", text)
+        if not check(rank is not None,
+                     f"{rel}: no `Rank:` line. Exactly one pack in the library ships an "
+                     f"ordered severity ramp; the other 28 are silent, and an agent building "
+                     f"an incident list infers a scale from role descriptions and finds the "
+                     f"gap by hitting it"):
+            continue
+        ramp = sorted(set(RANK_TOKEN.findall(body)))
+        claims_ordered = rank.group(1).strip().lower().startswith("ordered")
+        check(
+            claims_ordered == bool(ramp),
+            f"{rel}: `Rank:` says {'ordered' if claims_ordered else 'unordered'} and the "
+            f"token layer ships {len(ramp)} ordered token(s). One of the two moved alone",
+        )
+    if looked < 2:
+        _skips.append("fewer than two packs have a token layer — the silence "
+                      "declarations were not checked")
+
+
+
 def validate_release_register():
     _release_register(
         read(ROOT / "CHANGELOG.md") or "",
@@ -2775,6 +2889,7 @@ def main():
     validate_release_register()
     validate_board_columns()
     validate_hero_states_its_obligations()
+    validate_pack_declares_its_silences()
     validate_status_vocabulary()
     validate_elevation_tokens_named()
     validate_radius_single_valued()

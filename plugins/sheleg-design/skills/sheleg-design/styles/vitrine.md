@@ -12,6 +12,9 @@ specimen of the thing the product manages.
 
 Contract: widened — all thirteen headings.
 
+Themes: light + dark — a full theme twin.
+Rank: unordered — 4 status role(s) and no severity ramp; a rank scale is yours.
+
 ## Register
 
 Choose Vitrine for **the page a serious product ships as its front door**: B2B

@@ -15,6 +15,9 @@ one continuous loop, under type and rules that never shift with it.
 
 Contract: widened — all thirteen headings.
 
+Themes: light only — no second block of any kind ships here.
+Rank: unordered — 4 status role(s) and no severity ramp; a rank scale is yours.
+
 ## Register
 
 Choose this pack for **a company selling transformation to an executive buyer**:

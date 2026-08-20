@@ -17,6 +17,9 @@ media queries counted, and `## Signature element` names what Signature motifs
 already measured. Read on 2026-08-20 from `/_astro/utilities.*.css` and
 `/_astro/PageSections.*.css`; every value carries where it came from.
 
+Themes: light only — no second block of any kind ships here.
+Rank: unordered — 3 status role(s) and no severity ramp; a rank scale is yours.
+
 ## Register
 
 Choose this pack for **consumer health and premium care**: longevity and
