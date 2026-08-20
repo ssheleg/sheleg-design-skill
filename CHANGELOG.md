@@ -517,6 +517,40 @@ plant instead. It then caught **this run's own cautionary quote in the skeleton*
 broken sum had been reproduced verbatim: a reader copies what they see, so the warning is now
 written as prose rather than as a copyable equation. Floor 3830 → 3833.
 
+### The Components list is a contract, and the library had already decided (B-025)
+
+The board asked whether the skeleton's six component classes are a contract that ten widened
+packs owe entries for, or a menu an author picks from. **The library's own behaviour settles
+it.** Counted over the twenty-three packs carrying the heading: **buttons in all 23, cards in
+22, inputs and navigation in 21, loaders and empty states in 19.** Calling the list a menu
+would license the gaps rather than close them.
+
+So the skeleton says **contract** — and says the thing that makes it liveable: **"none, and
+here is why" is a full answer.** What is not an answer is silence, because a reader cannot tell
+a pack that has no loader from a pack whose author ran out of afternoon.
+
+**`atrium`'s four gaps are closed by measurement**, read again off `functionhealth.com`:
+
+- **Inputs** at the button's own 48px control height, a pill border in `--line-strong`, a white
+  fill rather than `--bg`, an `--ink-3` placeholder — and the honest note that label position
+  and error placement are **not on the reference's page**, so they are the implementer's.
+- **Navigation**'s mobile shape in full: the panel's fill goes `--accent` closed → `--ink`
+  open, with an `::after` strip carrying the same fill so the two cannot disagree mid-transition.
+- **Empty states** as `--ink-2` at 16px/300, centred, no illustration and no button.
+- **Loaders: none** — and that is measured, not omitted. Zero skeleton, shimmer or spinner
+  rules across both stylesheets.
+
+`validate_component_classes_are_answered()` pins the remaining **nine** (class, pack) pairs as
+a ratchet that may only fall. It is a ratchet rather than a sweep because each fall needs its
+own reference read, and inventing an answer is precisely what the pack layer exists to prevent
+(B-115).
+
+**Its plant needed two rewrites, and both failures are instructive.** Removing the Loaders
+bullet's *label* left the words *skeleton*, *shimmer* and *spinner* standing in its body, so the
+class still read as answered and the plant proved nothing. And the regex that then removed the
+whole bullet was anchored on *"have had"* where the pack says *"never had"* — a fixture that
+changed nothing, caught by the runner's own "the fixture changed nothing" branch.
+
 ### Gate
 
 - **Coverage is pinned, in both directions.** `check_ratio_coverage()` reads

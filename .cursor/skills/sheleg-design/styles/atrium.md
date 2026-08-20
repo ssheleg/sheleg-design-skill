@@ -193,6 +193,32 @@ per-component invention.
 not on the cream card. The reference never places one there; this pack now says
 so.
 
+- **Inputs / forms** — `.form-hero__input` on the reference:
+  `width: 100%`, `min-height: 3rem` (48px, the same control height as the
+  button), padding `8px 16px`, a **1px `--line-strong` border**,
+  `border-radius: 999px` — the pill again, so an input and a button read as one
+  family — a white fill rather than `--bg`, `--ink` text at 16px, and a
+  placeholder in `--ink-3`. A textarea keeps the border and drops the pill:
+  `min-height: 6rem`, `--radius-md`, `resize: vertical`. **Label position and
+  error placement are not on the reference's page**, so they are yours to decide
+  and to say so — the pack states what it measured.
+- **Navigation** — resting: the header sits on `--bg` with no border until
+  scrolled. The **mobile shape** is the one the reference specifies in full: the
+  panel's fill is `--accent` closed and **`--ink` open**, an `::after` strip
+  under it carries the same fill so the panel and the strip never disagree
+  mid-transition, and the open state is `transform: translateY(0)` from a
+  translated-out rest. Nothing fades; the panel moves.
+- **Loaders** — **none, and that is measured, not omitted.** A search of the
+  reference's two stylesheets for a skeleton, a shimmer or a spinner returns
+  **zero rules**. A page in this pack that needs a loading state should render
+  the final layout with `--surface` blocks at rest rather than invent an idiom
+  the pack has never had.
+- **Empty states** — measured: `--ink-2` text at 16px, weight 300,
+  `line-height: 1.5`, centred inside the container it replaces
+  (`.testimonials-listing__empty`); the same treatment uncentred where the
+  container is already narrow (`.faq-page_empty`). No illustration, no icon, no
+  button — the sentence is the empty state.
+
 ## Hero
 
 One viewport, and the media is the argument. `height: calc(100svh - <banner>)`

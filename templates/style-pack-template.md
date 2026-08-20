@@ -170,6 +170,18 @@ The per-component spec. Values measured off the reference, never inferred.
 Each entry states resting state, hover, active and disabled — a component
 described only at rest is half a component.
 
+**The six classes below are a contract, not a menu, and the library already
+behaves as though they are.** Counted 2026-08-20 over the packs carrying this
+heading: buttons in all of them, cards in all but one, inputs and navigation in
+all but two, loaders and empty states in all but four. Calling the list a menu
+would license those gaps instead of closing them.
+
+**"None, and here is why" is a full answer.** `atrium`'s reference ships no
+loading idiom at all — zero skeleton, shimmer or spinner rules across both its
+stylesheets — so the pack says that, and says what to do instead. What is not an
+answer is silence: a reader cannot tell a pack that has no loader from a pack
+whose author ran out of afternoon.
+
 - **Buttons** — fill/outline hierarchy, radius, padding, press feedback.
 - **Cards / containers** — fill, border, shadow, internal padding, when a card
   is used at all versus a divider or plain negative space.

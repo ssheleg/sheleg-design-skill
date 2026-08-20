@@ -1591,6 +1591,19 @@ PLANTS = (
         "'Shared state' re-asserts",
     ),
     (
+        # atrium's four gaps, put back — the state it shipped in for eleven
+        # iterations of the loop that widened it.
+        "a Components section that drops a class it used to answer",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/atrium.md",
+        # The WHOLE bullet, not its label: the body names skeleton, shimmer and
+        # spinner in the course of saying the reference has none, so removing the
+        # heading alone leaves the class answered and the plant proves nothing.
+        lambda t: re.sub(
+            r"- \*\*Loaders\*\* — \*\*none, and that is measured.*?never had\.\n",
+            "- **Texture** — flat colour, nothing further.\n", t, count=1, flags=re.S),
+        "component class(es) unanswered",
+    ),
+    (
         # The sum `field-notes` shipped, put back into a live passage.
         "a worked radius sum that does not compute",
         f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/ora.md",
@@ -2770,6 +2783,79 @@ def validate_worked_radius_sums_compute():
 
 
 
+# ------------------------------------- the Components contract, as a ratchet
+#
+# The skeleton lists six component classes and requires each entry to state rest,
+# hover, active and disabled. Whether that list is a CONTRACT or a menu was open
+# until 2026-08-20, and the library's own behaviour settled it: counted over the
+# packs carrying the heading, buttons appear in all of them, cards in all but one,
+# inputs and navigation in all but two, loaders and empty states in all but four.
+# It is a contract that four packs do not meet — so calling it a menu would
+# license the gaps rather than close them.
+#
+# It ships as a RATCHET rather than a hard failure, because each remaining gap
+# needs its own reference read and inventing an answer is the one thing the pack
+# layer forbids. `atrium`'s four were closed by reading `functionhealth.com`
+# again, including a loader entry that says NONE with the measurement behind it —
+# zero skeleton, shimmer or spinner rules in either stylesheet.
+COMPONENT_CLASSES = {
+    "buttons": r"\bbutton|\bcta\b",
+    "cards": r"\bcard\b|\bcontainer\b|\bpanel\b|\btile\b",
+    "inputs": r"\binput\b|\bform\b|\bfield\b|\bselect\b",
+    "navigation": r"\bnav\b|navigation|\bheader\b|\bsidebar\b",
+    "loaders": r"\bloader|\bloading|\bskeleton\b|\bspinner\b|shimmer",
+    "empty states": r"empty state|\bempty\b",
+}
+
+
+def validate_component_classes_are_answered():
+    styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
+    if not styles.is_dir():
+        return
+    gaps: list[str] = []
+    packs = 0
+    for md in sorted(styles.glob("*.md")):
+        if md.name == "STYLE_PACK_TEMPLATE.md":
+            continue
+        lines = (read(md) or "").split("\n")
+        # the HEADING, never the string — a core pack names `## Components` in its
+        # own contract line to decline it, and a substring search counted all six
+        # such packs as carrying the section.
+        at = [i for i, l in enumerate(lines) if l.rstrip() == "## Components"]
+        if not at:
+            continue
+        packs += 1
+        i = at[0]
+        j = next((k for k in range(i + 1, len(lines)) if lines[k].startswith("## ")), len(lines))
+        sec = "\n".join(lines[i:j])
+        for name, pat in COMPONENT_CLASSES.items():
+            if not re.search(pat, sec, re.I):
+                gaps.append(f"{md.stem}/{name}")
+    if packs < 2:
+        _skips.append("fewer than two packs carry a '## Components' heading — the "
+                      "component classes were not checked")
+        return
+    try:
+        ceiling = json.loads(FLOORS.read_text(encoding="utf-8")).get(
+            "components_unanswered_at_most")
+    except (OSError, ValueError):
+        ceiling = None
+    if not check(ceiling is not None,
+                 "test/floors.json has no `components_unanswered_at_most` — an "
+                 "unanswered class that is not pinned is one that can multiply quietly"):
+        return
+    check(
+        len(gaps) <= ceiling,
+        f"{len(gaps)} component class(es) unanswered across {packs} packs, above the "
+        f"pinned {ceiling}: {', '.join(sorted(gaps))}. Each is a pack that names "
+        f"neither the component nor the reason it has none — and 'none, and why' is "
+        f"a full answer. Lower the pin in the same commit as the fix",
+    )
+    print(f"  component classes: {len(gaps)} unanswered across {packs} packs "
+          f"(pinned at most {ceiling})")
+
+
+
 def validate_release_register():
     _release_register(
         read(ROOT / "CHANGELOG.md") or "",
@@ -3261,6 +3347,7 @@ def main():
     validate_table_marks_match_the_contract()
     validate_motion_ceiling_has_one_home()
     validate_worked_radius_sums_compute()
+    validate_component_classes_are_answered()
     validate_status_vocabulary()
     validate_elevation_tokens_named()
     validate_radius_single_valued()
