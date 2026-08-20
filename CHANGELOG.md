@@ -615,6 +615,31 @@ declared relationship, so a token that moves fails in CI instead of drifting sil
 Floors 3839 → 3863 and 2220 → 2346; the palette count moved because the `@supports` blocks add
 a theme map the palette gate now reads.
 
+### The kit migration was finished, and a guard was complete by accident (B-029)
+
+The board said *15 remain*. Fifteen kits carry no container query — and **eleven of those carry
+no width query at all**, so there is nothing in them to migrate. The actionable set was four
+kits, six blocks, and every one of them is already resolved:
+
+- **`datasheet`** — two blocks, marked *"SELF for the guides, PAGE for the heading"* with the
+  reason for each half.
+- **`field-notes`** — two blocks, marked PAGE and SELF.
+- **`maquette`** — one, SELF, with the reason that wrapping every model block to let it query
+  itself is worse than the query.
+- **`pigeonhole`** — one, and it is a `:root` token switch, which the guard exempts **by
+  design**: `:root` is inside nobody's container, so it cannot be replaced by one.
+
+**Zero unmarked, unexempt viewport queries remain across 29 kits.**
+
+What *was* worth fixing is the guard's reach. It read `*/src/styles.css` and nothing else.
+Measured today: zero width queries live outside `styles.css`, and zero CSS files fall outside
+that glob — so its coverage was complete **by accident**. A `@media (max-width: …)` inside a
+`.tsx` template literal, or a second stylesheet beside the first, would have been invisible.
+
+It now reads every `.css`, `.tsx`, `.ts`, `.jsx` and `.js` a kit ships, refuses a corpus of
+fewer than two files rather than passing on an empty one, and is planted with a width query in
+a `.tsx` template literal. Floor 3863 → 3865.
+
 ### Gate
 
 - **Coverage is pinned, in both directions.** `check_ratio_coverage()` reads

@@ -1252,7 +1252,23 @@ def validate_kit_breakpoints():
     kits_dir = ROOT / "kits"
     if not kits_dir.is_dir():
         return
-    for css in sorted(kits_dir.glob("*/src/styles.css")):
+    # EVERY file a kit can carry a width query in, not just `styles.css`.
+    # Measured 2026-08-20: zero width queries live outside `styles.css` today and
+    # zero CSS files fall outside the old `*/src/styles.css` glob — so the guard's
+    # coverage was complete and complete BY ACCIDENT. A `.tsx` with a
+    # `@media (max-width: …)` in a template literal, or a second stylesheet beside
+    # the first, would have been invisible.
+    files = sorted(
+        f for f in kits_dir.rglob("*")
+        if f.is_file()
+        and f.suffix in (".css", ".tsx", ".ts", ".jsx", ".js")
+        and "node_modules" not in f.parts
+    )
+    if not check(len(files) >= 2,
+                 "kits/ holds fewer than two source files — the breakpoint guard "
+                 "was not exercised, and a check that could not look is not a pass"):
+        return
+    for css in files:
         text = read(css) or ""
         rel = css.relative_to(ROOT)
         for m in KIT_MEDIA.finditer(text):
@@ -1589,6 +1605,15 @@ PLANTS = (
             1,
         ),
         "'Shared state' re-asserts",
+    ),
+    (
+        # A width query in a .tsx, which the guard could not see until 2026-08-20.
+        "a kit width query outside styles.css",
+        "kits/datasheet/src/Button.tsx",
+        lambda t: t + (
+            "\n/* a styled block with no marker */\n"
+            "const responsive = `@media (max-width: 600px) { .x { display: none } }`;\n"),
+        "sizes a component by the screen",
     ),
     (
         # showroom's focus ring, put back the way it shipped: a literal, then the
