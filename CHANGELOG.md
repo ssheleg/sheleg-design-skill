@@ -333,6 +333,32 @@ question is only added when it can be answered the same way. Floor 3667 → 3783
 The library's own counted-claims guard refused the first draft of that skeleton text, which
 said *"11 packs"* where the checkable phrase means the pack total. Reworded, not exempted.
 
+### The code graph is current again, and the refresh needed no key (B-009)
+
+The row had been re-filed as *staleness alone — a re-run, not a credential question*, at 13
+commits behind. By the time this loop reached it, the same loop had pushed it to **31**.
+
+`graphify update .` — the path whose own help says *no LLM needed* — moved `built_at_commit`
+from `de09f9e` to **`856f12c`, which is HEAD**. And it did not do the thing the row's history
+feared, where a code-only pass had once written fewer nodes than the curated graph held:
+**every class grew.** Documents **1797 → 2173**, code **1646 → 2105**, concept 243 → 340,
+rationale 126 → 155. In total **3812 → 4773 nodes** and 4185 → 4473 edges across 920
+communities. The shrink guard never fired because there was nothing to guard against — and
+the curated graph was copied to `graphify-out/2026-08-20/` before the run regardless, because
+that is the order the row itself insists on.
+
+**No placeholder labels survived.** 116 communities changed membership and were renamed by
+their hub; a scan of all 4773 nodes finds **zero** carrying a bare `Community N`.
+
+**Stage 9's own check passes.** All ten god-nodes resolve to documented seams — the two gates
+and their `check`/`read`/`main`, the pack skeleton, two style packs, the CHANGELOG, and the
+third-largest, `Component Spine`, which is a rationale node from `kits/atrium/src/Button.md`
+named in the CHANGELOG and in two specs.
+
+**Scope, stated rather than implied:** `graphify-out/` is gitignored — *machine state, not
+source* — so *current* means current on this machine. A clone still builds its own, and this
+close does not change that.
+
 ### Gate
 
 - **Coverage is pinned, in both directions.** `check_ratio_coverage()` reads
