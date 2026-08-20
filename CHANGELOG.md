@@ -241,6 +241,35 @@ reference never puts one there; now the pack says so.
 Contract split **7 core / 22 widened → 6 / 23**. `orchard` (gutgutgoose.com) and
 `editorial-luxury` (prowl.chat) remain, one measurement pass each.
 
+### `orchard` was measured and deliberately not widened (B-004, B-110)
+
+The second of the three packs held at `Contract: core`. Its reference is addressable, so the
+same measurement pass was run against `gutgutgoose.com` — and it stopped, on purpose, at
+`## Components`.
+
+**What the pass established.** All **13** of `orchard`'s token values are present in the
+served document — 10 as hex and 3 as `rgb()` triples, which a hex-only search had first
+reported as missing, so the first answer was wrong and looking harder was the fix rather than
+concluding. Its responsive model is the **opposite of `atrium`'s**: three fixed frames
+(desktop ≥1200, tablet 810–1199.98, phone ≤809.98) with a **390px phone frame** carrying a
+342px column, and the tablet/phone tier changing 61 rules dominated by `width` (32), `order`
+(22), `height` (16) and `padding` (14). **No `clamp()`, no container query, no `vw` at all** —
+variants are swapped, not scaled. The slab radii are 12px (23 uses), 20px (10), 24px (9) and
+40px (4).
+
+**Why it was not widened.** `## Components` is per-component states, and a Framer document
+serves none. The contract is all-or-nothing by design — *touch one of the four and you owe
+all four* — so writing three from measurement and the fourth from the token layer would be
+precisely the failure `core` exists to prevent.
+
+**And the pass found a contradiction worth more than the widening.** The pack calls its candy
+pill *"the only orange object on the page"* and `--cta` *"the ONE action colour, a fill"*.
+On the served page `#FA7241` occurs **only inside SVG `fill=` attributes** and **never as a
+`background-color`**; what paints controls there is `--surface`, `--bg`, **`--primary`
+`#78934a` (14 declarations)**, its 10% wash, and `--surface-ink`. Three readings fit the
+evidence and it does not choose between them, so the pack was **not** rewritten — filed as
+B-110, to be settled in the same rendered pass that `## Components` needs.
+
 ### Gate
 
 - **Coverage is pinned, in both directions.** `check_ratio_coverage()` reads
