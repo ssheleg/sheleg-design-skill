@@ -401,10 +401,15 @@ packs. Here the page is a board, and a board holds still.
   against a WCAG floor of 3:1 for a non-text indicator. Both were decoration
   wearing an affordance's name. The ring is solid from 1.13.1:
 
-  | Ring | Value | Role | On `--bg` |
-  |---|---|---|---|
-  | `--ring-focus` | `#FF4801` | solid 2px, every surface but one | 3.23:1 |
-  | `--ring-focus-sand` | `#221D16` | `--surface-sand` only, where the accent misses the floor at 2.97:1 | 15.88:1 |
+  Each ring is measured **on the surface it is actually used on**, which is not the
+  same column for both: the second exists precisely because the first misses the
+  floor on `--surface-sand`, so reporting it against `--bg` describes a pairing
+  that never renders.
+
+  | Ring | Value | Role | Measured on | Ratio |
+  |---|---|---|---|---|
+  | `--ring-focus` | `#FF4801` | solid 2px, every surface but one | `--bg` `#FAF9F5` | 3.23:1 |
+  | `--ring-focus-sand` | `#221D16` | `--surface-sand` only, where the accent misses the floor at 2.97:1 | `--surface-sand` `#F5EFE2` | 14.60:1 |
 
 - **[CORRECTION — 1.13.1] No orange in this pack can carry a link.** 1.13.0
   called `--accent-hover` "the one orange that may carry a link" at 4.12:1 on `--bg` —
@@ -419,7 +424,15 @@ packs. Here the page is a board, and a board holds still.
   point is that they passed the repository's own gate only because its tolerance
   is 0.1, which is exactly how a wrong number survives a green check.
 
-- **The reference sets a positive delta in `#00D492` on white — 1.84:1.** It is
+- **The reference sets a positive delta in `#00D492` on its near-white card, and
+  it is unreadable on paper.** The figure was attached to the wrong field until
+  2026-08-20, which is worth stating because a reader who checked it against
+  white got a different number and a document that looked wrong about the very
+  thing it was warning them about:
+  - `--good-on-dark` measures **1.84:1** on `--bg` — this pack's paper `#FAF9F5`.
+  - `--good-on-dark` measures **1.94:1** on `--on-ink` — the pack's only true `#FFFFFF`.
+
+  It is
   used at 11px, on the metric cards inside the product screenshots, and it is
   unreadable. This pack keeps the colour, because the reference genuinely uses it,
   and confines it to `--good-on-dark` where it measures 10.21:1. On paper a

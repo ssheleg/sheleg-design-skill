@@ -1369,6 +1369,26 @@ def check_floor(script: str, count: int) -> None:
 # reduced-motion plants below name the message they must provoke.
 PLANTS = (
     (
+        # scoreboard's ring table in the form it shipped: one header base for both
+        # rows, and the sand-only ring reported at its --bg ratio. Derived from the
+        # `Measured on` column rather than pinned to the numbers.
+        "a table row confined to one surface and measured against another",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/scoreboard.md",
+        # The header goes back with it. A 4-cell row under a 5-column header is
+        # caught by the table-shape guard first, so a plant that changes only the
+        # row proves that guard works and says nothing about this one -- the
+        # defect as it actually shipped was internally consistent.
+        lambda t: t.replace(
+            "  | Ring | Value | Role | Measured on | Ratio |\n  |---|---|---|---|---|\n"
+            "  | `--ring-focus` | `#FF4801` | solid 2px, every surface but one | `--bg` `#FAF9F5` | 3.23:1 |\n"
+            "  | `--ring-focus-sand` | `#221D16` | `--surface-sand` only, where the accent misses the floor at 2.97:1 | `--surface-sand` `#F5EFE2` | 14.60:1 |",
+            "  | Ring | Value | Role | On `--bg` |\n  |---|---|---|---|\n"
+            "  | `--ring-focus` | `#FF4801` | solid 2px, every surface but one | 3.23:1 |\n"
+            "  | `--ring-focus-sand` | `#221D16` | `--surface-sand` only, where the accent misses the floor at 2.97:1 | 15.88:1 |",
+            1),
+        "describes a pairing that never",
+    ),
+    (
         # prism's oversight, planted back: a duration declared and the branch
         # silent about it. Derived — the collapse line is dropped whatever its
         # value — and `expect` is mandatory, because a token-layer edit also
@@ -3127,6 +3147,66 @@ def validate_excluded_sets_are_declared():
 RELATIVE_CUSTOM_PROP = re.compile(r"^\s*(--[a-z0-9-]+)\s*:.*\brgb\(\s*from\s")
 
 
+# ------------------------------------- a ratio measured against a surface it never meets
+#
+# A palette table declares its base in the header — "On `--bg`" — and every row is
+# read against it. `scoreboard`'s ring table carried a row whose own text confined
+# the token to `--surface-sand`, and reported it at 15.88:1, which is its ratio
+# against `--bg`. The number was right and described a pairing that never renders;
+# on sand the same token measures 14.60. The second ring exists *because* the first
+# misses the floor on sand, so `--bg` was the one surface it could not be about.
+#
+# The broad form of this check was measured and rejected: 58 rows across 24 packs
+# name a surface token other than their header's base, and nearly all of them are
+# the ordinary case — the row's SUBJECT is a surface token, correctly measured on
+# the declared base. Only a row that CONFINES its token to another surface is
+# making the mistake, and after the scoreboard fix there are **zero** of those.
+# It ships anyway, as a regression guard with a plant: the shape cost a wrong
+# number in a shipped pack once, and a table gains rows every release.
+TABLE_BASE = re.compile(
+    r"^\s*\|[^|\n]*\|.*?[Oo]n\s+`(--[a-z0-9-]+)`[^|\n]*\|\s*$", re.M)
+CONFINED_TO = re.compile(
+    r"`(--[a-z0-9-]+)`\s+only|only\s+on\s+`(--[a-z0-9-]+)`|on\s+`(--[a-z0-9-]+)`\s+only",
+    re.I)
+
+
+def validate_confined_tokens_measured_where_used():
+    styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
+    if not styles.is_dir():
+        return
+    tables = 0
+    for md in sorted(styles.glob("*.md")):
+        if md.name == "STYLE_PACK_TEMPLATE.md":
+            continue
+        lines = (read(md) or "").split("\n")
+        for i, line in enumerate(lines):
+            m = TABLE_BASE.match(line)
+            if not m:
+                continue
+            tables += 1
+            base = m.group(1)
+            for j in range(i + 2, len(lines)):
+                row = lines[j]
+                if not row.strip().startswith("|"):
+                    break
+                for cm in CONFINED_TO.finditer(row):
+                    tok = next(g for g in cm.groups() if g)
+                    check(
+                        tok == base,
+                        f"styles/{md.stem}.md:{j + 1}: the table's header measures every "
+                        f"row against `{base}` and this row confines its token to "
+                        f"`{tok}`. The ratio in it describes a pairing that never "
+                        f"renders — give the row its own `Measured on` cell, as "
+                        f"`scoreboard`'s ring table now does",
+                    )
+    if tables < 2:
+        _skips.append("fewer than two base-declaring palette tables found — the "
+                      "confinement check did not run")
+        return
+    print(f"  confined tokens: {tables} base-declaring table(s), 0 row measured "
+          f"against a surface it is confined away from")
+
+
 # ------------------------------------- two constants, one name, and no error
 #
 # Python raises nothing when a module-level name is assigned twice: the later
@@ -4071,6 +4151,7 @@ def main():
     validate_worked_radius_sums_compute()
     validate_component_classes_are_answered()
     validate_excluded_sets_are_declared()
+    validate_confined_tokens_measured_where_used()
     validate_gate_has_no_shadowed_names()
     validate_every_duration_answers_reduce()
     validate_prescribed_tokens_resolve()

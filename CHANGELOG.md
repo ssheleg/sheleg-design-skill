@@ -6,6 +6,43 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Two scoreboard ratios described pairings that never render (B-047)
+
+All 30 ratio claims in `scoreboard` were recomputed. **28 agree** to within the repository's
+0.1 tolerance — including the composited focus halo, which measures 1.28 against a stated 1.29.
+The row predicted five disagreements; there were two.
+
+A Gotcha warned that the reference's positive delta is unreadable and put the number on the
+wrong field: `#00D492` **on white — 1.84:1**. 1.84 is its ratio against this pack's paper
+`--bg` `#FAF9F5`; on true white it is **1.94**. A reader who checked the figure against white
+got a different number and a document that looked wrong about the very thing it was warning
+them about.
+
+The ring table's header measured every row against `--bg`, and the `--ring-focus-sand` row
+confines its token to `--surface-sand` — the second ring exists *because* the first misses the
+floor there, so `--bg` is the one surface it cannot be about. Its stated **15.88** was correct
+arithmetic about a pairing that never renders; on sand the token measures **14.60**. The table
+has a `Measured on` column now.
+
+Both were fixed the way the row asked for rather than by editing a digit: each figure names a
+partner the token layer can pair, so the palette gate **computes** them on every run.
+`computed_at_least` moves 454 → 456. An unguarded correct number is one edit from an unguarded
+wrong one.
+
+**The broad check was tried and rejected.** 58 rows across 24 packs name a surface other than
+their header's base, and in nearly all of them the row's *subject* is a surface token, measured
+correctly on the declared base. A gate that flags those is a gate an agent learns to route
+around. Only a row that **confines** its token elsewhere is making the mistake, and after the
+fix there are zero of those — so `validate_confined_tokens_measured_where_used` ships as a
+regression guard with a plant, and says `0` out loud rather than implying a measurement. The
+undecidable half is filed as B-121.
+
+Two footnotes on the row itself. Its own coverage figure — *150 unguarded at 22 packs* — had
+gone stale during the same day and reads **57 unguarded (11%) at 17 packs** now. And the plant
+for the new check needed correcting: changing only the table row left a 4-cell row under a
+5-column header, which the table-shape guard catches first, so the plant was proving that guard
+worked. The defect as it shipped was internally consistent, and the plant is now too.
+
 ### Every duration answers the reduced-motion query, and a promise is checked in the kit (B-045)
 
 `validate_reduced_motion` was a floor: a token layer had to *have* a branch and the branch
