@@ -190,7 +190,7 @@ Measured off the reference unless a row says **pack decision**.
 | Component | Resting | Hover | Active / selected | Disabled |
 |---|---|---|---|---|
 | **Primary button** | `--action` fill, `--on-action` label, `--radius-sm`, `10px 20px`, 14px/500 | fill → `--action-hover` over `--dur-fast` | `translateY(1px)` | `--ink-faint` label on `--surface-2`, `cursor: not-allowed` |
-| **Secondary button** | `--surface-2` fill at 4% ink, `--ink` at 50%, `--radius-sm`, `6px 12px`, 10–12px/600 | fill one step warmer | as above | as above |
+| **Secondary button** | `--surface-2` fill, `--ink-soft` label at 4.55:1 on `--surface-2`, `--radius-sm`, `6px 12px`, 10–12px/600 | fill one step warmer | as above | as above |
 | **Section tick + heading** | a 3×18px `--accent` bar, `--radius-pill`, then 10px gap, then the heading | none — it is a label | — | — |
 | **Card** | `--surface`, 1px `--line-weak`, `--radius-sm`, `26px 24px` | border → `--line`; no lift | — | — |
 | **Report surface** | `--surface`, `--radius-md`, `--shadow-card`, a 3-dot title bar in `#FF5F57` / `#FEBC2E` / `#28C840` | none | — | — |
@@ -226,15 +226,17 @@ zoom-on-focus on iOS, and this pack's body size is 15px.
 ## Responsive
 
 - **Type steps at breakpoints; it does not slide.** The headline runs
-  42 → 55 (768) → **44** (1024) → 72px (1280). The drop at 1024 is real and it is
+  `--t-display-sm` 42 → `--t-h1` 55 (768) → **`--t-display-md` 44** (1024) →
+  `--t-display` 72px (1280). The drop at 1024 is real and it is
   correct: that is where the ledger moves beside the headline and takes width from
   it. A `clamp()` here would slide straight through the one breakpoint that
   changes the layout.
 - **Breakpoints** 400 / 768 / 1024 / 1280 / 1920px. The last one is the
   reference's own fourth tier for ultra-wide displays, where the shell reaches
-  `--page-max` and the ledger gains its 95px label column.
-- **The ledger never reflows to two lines.** The label column drops to 75px and the
-  numeral column to 70px; the dotted leader absorbs the difference. A wrapped ledger row is
+  `--page-max` and the ledger gains its `--label-col` 95px label column.
+- **The ledger never reflows to two lines.** The label column drops to
+  `--label-col-narrow` 75px and the numeral column to `--numeral-col-narrow`
+  70px; the dotted leader absorbs the difference. A wrapped ledger row is
   not a row. **The switch is the ledger's own width, not the viewport's** — the reference
   did it below 768px of screen, and since 1.23.0 the kit does it below **231px of the
   ledger**, derived from the row's own geometry (label 95 + gap 12 + numeral 80 + gap 12 =

@@ -771,6 +771,66 @@ def _declared_set_plants() -> list[str]:
     return problems
 
 
+def _composite_plants() -> list[str]:
+    """The composited fill, watched discriminating.
+
+    Case four is the false positive this check shipped with for one run: a
+    Components row is resting | hover | active | disabled, and reading the whole
+    row made `cyclorama`'s hover fill the resting chip's text colour -- 1.26:1
+    reported against a row that renders at 12.4:1.
+    """
+    import tempfile
+    global TOKENS, PACKS
+    problems = []
+    css = (":root {\n  --bg: #ffffff;\n  --ink: #1a1a1a;\n  --line: #dddddd;\n"
+           "  --surface-2: #f4f4f4;\n}\n")
+    cases = [
+        ("a label composited onto a composited fill, below AA",
+         "| **Button** | `--surface-2` fill at 4% ink, `--ink` at 30%, "
+         "`4px 8px`, 10-12px/600 | none | none | none |\n",
+         "below 4.5"),
+        ("the same row with the label at full strength",
+         "| **Button** | `--surface-2` fill at 4% ink, `--ink` at 100%, "
+         "`4px 8px`, 10-12px/600 | none | none | none |\n",
+         None),
+        ("a composite with no type size on the row -- a wash, not text",
+         "| **Wash** | ink at 6%, `--radius-sm` | none | none | none |\n",
+         None),
+        # Both fills are light and both pass on their own. Read as ONE cell, the
+        # hover's 12% becomes the resting chip's text colour and the row reports
+        # 1.26:1 -- which is exactly what `cyclorama` got on this check's first
+        # run, against a chip that renders at 12.4:1.
+        ("a hover cell's composite must not become the resting text",
+         "| **Chip** | ink at 6%, `4px 8px`, Mono 14px | fill -> ink at 12% "
+         "| none | none |\n",
+         None),
+    ]
+    with tempfile.TemporaryDirectory() as d:
+        tmp = Path(d)
+        (tmp / "tokens").mkdir()
+        old_tokens, old_packs = TOKENS, PACKS
+        TOKENS, PACKS = tmp / "tokens", tmp
+        try:
+            for label, md, expect in cases:
+                _reset()
+                _tally["composite_unsized"] = 0
+                (TOKENS / "_planted_.css").write_text(css, encoding="utf-8")
+                (PACKS / "_planted_.md").write_text(md, encoding="utf-8")
+                validate_composited_fill_contrast(TOKENS / "_planted_.css")
+                if expect:
+                    ok = any(expect in f for f in failures)
+                else:
+                    ok = not failures
+                print(f"  {'caught ' if ok else 'MISSED '} {label}")
+                if not ok:
+                    problems.append(f"{label} — failures: {failures or 'none'}")
+        finally:
+            TOKENS, PACKS = old_tokens, old_packs
+            _reset()
+            _tally["composite_unsized"] = 0
+    return problems
+
+
 def self_test() -> int:
     """Plant a defect of each class and require the matching check to fire.
 
@@ -923,6 +983,7 @@ def self_test() -> int:
     _reset()
     problems += _ratio_plants()
     problems += _declared_set_plants()
+    problems += _composite_plants()
     if problems:
         print("\nself-test FAILED: " + "; ".join(problems))
         return 1
@@ -1205,7 +1266,7 @@ def _line_surface_collision(stem: str, text: str) -> None:
 # Counted, not restated. Every figure the comment inside this function used to
 # assert is derived here and printed once per run.
 _tally: dict = {"computed": 0, "unresolved": 0, "unguarded": 0,
-                "delta_unbound": 0,
+                "delta_unbound": 0, "composite_unsized": 0,
                 "un_table": 0, "un_argued": 0, "un_prose": 0,
                 "packs_guarded": set(), "packs_unguarded": set()}
 # Every claim that named a partner and still produced no arithmetic, kept with
@@ -1830,6 +1891,142 @@ def validate_declared_semantic_sets(css: Path) -> None:
                         _check_stated_delta(stem, ta, tb, maps, pack_text, text)
 
 
+# ------------------------------------- a fill the pack asks you to COMPOSITE
+#
+# `validate_stated_ratios` reads a ratio the document states. A Components row
+# often states no ratio at all: it states an INSTRUCTION -- "`--surface-2` fill at
+# 4% ink, `--ink` at 50%" -- and nothing computed the result. `scoreboard`'s
+# secondary button shipped a 10-12px/600 label at **3.2:1** that way, below AA,
+# and every gate was green over it because there was no number to check.
+#
+# Measured before it was built: 44 lines in the library put a token beside a
+# percentage, and almost all of them are washes, hairlines, borders and gradient
+# stops rather than text on a composited fill. TWO rows state a composite fill
+# AND a text size -- `scoreboard`'s secondary button, which fails, and
+# `cyclorama`'s chip at 12.4:1, which passes. One subject of each verdict is what
+# makes this a check rather than an assertion; a parser for the other 42 would
+# have to guess what carries text, which is the mistake this file records twice.
+#
+# Compositing is done in sRGB gamma space, because that is where the browser does
+# it. The first draft composited the linear values this module carries and got
+# 1.88:1 where the browser renders 3.2:1 -- a wrong number in the direction that
+# would have failed a correct pack.
+COMPOSITE_SPEC = re.compile(
+    r"(?:`(--[a-z0-9-]+)`\s+)?(?:fill\s+)?(?:at\s+)?(\d{1,3})\s*%\s*(ink)?"
+    r"|`(--[a-z0-9-]+)`\s+at\s+(\d{1,3})\s*%")
+# A type size, never a padding. `6px 12px` is padding and `10-12px/600` is type:
+# the library always writes a size with its weight or after a face. Reading every
+# px on the line made the padding the type size.
+TYPE_SIZE = re.compile(r"(\d{1,3})(?:\s*[-–]\s*(\d{1,3}))?\s*px\s*/\s*\d{3}"
+                       r"|(?:[Mm]ono|[Ss]ans|[Ss]erif|face)\s+(\d{1,3})\s*px")
+LARGE_TEXT_PX = 24.0
+
+
+def linear_to_srgb(c: float) -> float:
+    return c * 12.92 if c <= 0.0031308 else 1.055 * (c ** (1 / 2.4)) - 0.055
+
+
+def composite(fg, bg, alpha: float):
+    """`fg` at `alpha` over `bg`, in the space the browser composites in."""
+    f = [linear_to_srgb(x) for x in fg]
+    b = [linear_to_srgb(x) for x in bg]
+    return tuple(srgb_to_linear(f[i] * alpha + b[i] * (1 - alpha)) for i in range(3))
+
+
+def _composites(cell: str) -> list[tuple[str | None, float]]:
+    """Every `(token, alpha)` the cell asks for, in the order it asks."""
+    out = []
+    for m in COMPOSITE_SPEC.finditer(cell):
+        if m.group(2):
+            token, pct = m.group(1), m.group(2)
+        else:
+            token, pct = m.group(4), m.group(5)
+        if pct is None:
+            continue
+        out.append((token, int(pct) / 100.0))
+    return out
+
+
+def _type_floor(line: str) -> tuple[float, str]:
+    sizes = []
+    for m in TYPE_SIZE.finditer(line):
+        sizes += [float(g) for g in m.groups() if g]
+    if not sizes:
+        return 4.5, "no size stated, so the body floor applies"
+    smallest = min(sizes)
+    if smallest >= LARGE_TEXT_PX:
+        return 3.0, f"{smallest:.0f}px is large text"
+    return 4.5, f"{smallest:.0f}px"
+
+
+def validate_composited_fill_contrast(css: Path) -> None:
+    stem = css.stem
+    pack_md = PACKS / f"{stem}.md"
+    if not pack_md.is_file():
+        return
+    maps = _theme_maps(css.read_text(encoding="utf-8"))
+    if not maps:
+        return
+    for lineno, line in enumerate(pack_md.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.startswith("|"):
+            continue
+        # PER CELL, not per row. A Components row is resting | hover | active |
+        # disabled, and reading the whole row made `cyclorama`'s hover fill
+        # ("fill → ink at 12%") the text colour of its resting chip: 1.26:1
+        # reported against a row that renders at 12.4:1. The type size is stated
+        # once for the row, so that half is read from the row.
+        cells = [c for c in line.strip().strip("|").split("|")]
+        floor, why = _type_floor(line)
+        if "body floor" in why:
+            # No type size on the row: it is a wash, a border or a hairline, not
+            # text on a fill. Counted so the gap is visible, never guessed at.
+            if any(_composites(c) for c in cells):
+                _tally["composite_unsized"] += 1
+            continue
+        for cell in cells:
+            specs = _composites(cell)
+            if not specs:
+                continue
+            _one_composited_cell(stem, lineno, maps, specs, floor, why)
+
+
+def _one_composited_cell(stem, lineno, maps, specs, floor, why) -> None:
+        for label, solids, _field in maps:
+            base_name = pick(solids, FIELD_TOKENS)
+            if not base_name:
+                continue
+            ink_name = pick(solids, INK_TOKENS)
+            if not ink_name:
+                continue
+            fill_token, fill_alpha = specs[0]
+            base = solids.get(fill_token or base_name)
+            if base is None:
+                continue
+            fill = composite(solids[ink_name], base, fill_alpha)
+            if len(specs) > 1:
+                text_token, text_alpha = specs[1]
+                src = solids.get(text_token or ink_name)
+                if src is None:
+                    continue
+                text = composite(src, fill, text_alpha)
+                described = (f"{text_token or ink_name} at {text_alpha:.0%} on "
+                             f"{fill_token or base_name} at {fill_alpha:.0%} ink")
+            else:
+                text = solids[ink_name]
+                described = (f"{ink_name} on {fill_token or base_name} at "
+                             f"{fill_alpha:.0%} ink")
+            got = contrast(text, fill)
+            check(
+                got >= floor,
+                f"styles/{stem}.md:{lineno} [{label}]: {described} composites to "
+                f"{got:.2f}:1, below {floor} for {why}. The row states an "
+                f"instruction rather than a ratio, so nothing computed the "
+                f"result — composite it or name a token that passes",
+            )
+            notes.append(f"  {stem} [{label}]: {described} = {got:.2f}:1 (floor {floor})")
+
+
+
 def check_floor(script: str, count: int) -> int:
     """The ratchet. See test/floors.json for why a falling count is a defect."""
     import json as _json
@@ -1871,6 +2068,7 @@ def main() -> int:
         validate_status_on_field(css)
         validate_line_surface_collision(css)
         validate_declared_semantic_sets(css)
+        validate_composited_fill_contrast(css)
         validate_stated_ratios(css)
     for line in notes:
         print(line)

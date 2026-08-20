@@ -81,6 +81,31 @@ paragraph-wide bind gave every figure in `cyclorama`'s status bullet to every pa
 failures against six correct sentences. And two separate regexes cut *"6.4 apart under
 deuteranopia"* in half, comparing a deuteranopia figure with a full-colour distance.
 
+### A row that states an instruction instead of a ratio was checked by nothing (B-048)
+
+`validate_stated_ratios` reads a number the document states. A Components row often states
+none — it states an **instruction**: *"`--surface-2` fill at 4% ink, `--ink` at 50%"* — and
+nothing composited it. `scoreboard`'s secondary button shipped a **10–12px/600 label at
+3.16:1** that way, below AA, with every gate green over it because there was no number to
+check.
+
+**One sub-claim of the board row was itself wrong**, and the measurement says so: the row
+held that 4% ink over the paper *"resolves lighter than the declared `--surface-2`"*. It
+resolves **darker** — luminance 0.873 against 0.941 — which is precisely why it pushes the
+label below AA rather than above it.
+
+The fix replaces two ad-hoc composites with tokens the pack already ships (`--surface-2`
+fill, `--ink-soft` label) **and states the ratio it renders**, 4.55:1. The first version of
+the fix did not: correcting the spec moved the pair out of every check, which is the same
+trap as B-017, where a false distinctness claim was the only thing making a pair
+observable. A correction that removes the claim removes the coverage with it.
+
+**Three behaviours with no token now have one.** `--t-display-sm` 42px and `--t-display-md`
+44px carry the headline's two unnamed breakpoint steps; `--label-col` 95px,
+`--label-col-narrow` 75px and `--numeral-col-narrow` 70px carry the ledger's geometry, which
+the kit had as three `width:` literals and the pack as prose numbers. Every value is the
+measured one that was already written down — a token names it, it does not choose it.
+
 ### Gate
 
 - **Coverage is pinned, in both directions.** `check_ratio_coverage()` reads
@@ -106,6 +131,18 @@ deuteranopia"* in half, comparing a deuteranopia figure with a full-colour dista
   disclosure figures no check could bind prints on every run (7 today, B-055/B-056).
 - The `field-notes` kit's token block was re-copied from the pack's layer, which the
   copy-never-transcribe check caught on the first run after the comment changed.
+- **`validate_composited_fill_contrast` composites in sRGB gamma space**, because that is
+  where the browser does it. A first draft composited this module's linear values and
+  reported 1.88:1 where the page renders 3.16 — wrong in the direction that fails a
+  correct pack.
+- **Composites are read per CELL.** A Components row is resting | hover | active |
+  disabled, and reading the whole row made `cyclorama`'s hover fill the resting chip's
+  text colour: 1.26:1 reported against a chip that renders at 12.38:1. There is a plant
+  for it.
+- Two live subjects, one of each verdict — which is what makes it a check. Measured
+  first: 44 lines in the library pair a token with a percentage and only two state a
+  composite fill AND a type size. The other 42 are filed (B-058), not guessed at.
+- Floors `validate_palette.py` 2087 → 2092, `computed_at_least` 348 → 349.
 
 ### Fixed
 

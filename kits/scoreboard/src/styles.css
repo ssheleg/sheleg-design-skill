@@ -169,7 +169,13 @@
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-pixel: "Press Start 2P", ui-monospace, monospace;
 
-  --t-display: 4.5rem; /* 72px */
+  --t-display: 4.5rem; /* 72px — from 1280px up */
+  /* The headline steps at breakpoints and does not slide: 42 -> 55 (768) -> 44
+     (1024) -> 72 (1280). The drop at 1024 is where the ledger moves beside the
+     headline and takes width from it. All four are MEASURED; the two below were
+     prose literals until 1.46.0, against this pack's own craft bar. */
+  --t-display-sm: 2.625rem; /* 42px — below 768px */
+  --t-display-md: 2.75rem; /* 44px — 1024px to 1279px, the deliberate drop */
   --lh-display: 1.08;
   --track-display: -0.03em;
   --weight-display: 700;
@@ -206,6 +212,13 @@
      column is a glyph budget: 80px / 15px = FIVE glyphs, and 70px = four.
      "$9,840" is six and overflows. See the pack's Responsive section. */
   --numeral-col: 80px;
+  --numeral-col-narrow: 70px;
+  /* The label column, the other half of the ledger's fixed geometry. Both
+     values were `width:` literals in the kit and prose numbers in the pack:
+     label 95 + gap 12 + numeral 80 + gap 12 = 199px of fixed content, which is
+     where the 231px switch in the Responsive section comes from. */
+  --label-col: 95px;
+  --label-col-narrow: 75px;
 
   /* ---- Motion ----------------------------------------------------------- */
   /* MEASURED curve and base duration; the durations are this pack's, capped by
@@ -345,7 +358,7 @@
 .sb-ledger__live { flex: 0 0 auto; width: 3px; height: 3px; background-color: var(--live-on-dark); }
 
 .sb-row { display: flex; align-items: flex-end; gap: var(--space-3); }
-.sb-row__label { flex: 0 0 auto; width: 95px; padding-bottom: 2px; font-size: var(--t-base);
+.sb-row__label { flex: 0 0 auto; width: var(--label-col); padding-bottom: 2px; font-size: var(--t-base);
   font-weight: var(--weight-body-strong); line-height: 1.25; color: var(--ink); }
 .sb-row__leader { flex: 1 1 auto; margin-bottom: 6px; border-bottom: 1px dotted var(--panel-leader); }
 .sb-row__value { flex: 0 0 auto; width: var(--numeral-col); text-align: right;
@@ -384,6 +397,6 @@
    budget rather than a width: 70px holds four glyphs of Press Start 2P at
    --t-numeral where 80px holds five. */
 @container (max-width: 231px) {
-  .sb-row__label { width: 75px; }
-  .sb-row__value { width: 70px; }
+  .sb-row__label { width: var(--label-col-narrow); }
+  .sb-row__value { width: var(--numeral-col-narrow); }
 }
