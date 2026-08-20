@@ -28,6 +28,8 @@ differentiator is warmth, or a product with nothing concrete to show. Vitrine's
 whole method is showing the thing in a frame; with nothing to put in the frame
 it is a very quiet page about nothing.
 
+**Motion ceiling:** no pack ceiling is pinned here, so `MOTION_INTENSITY` is cut by §1's frequency table alone — the dial turns up what is left after that table, and nothing in this pack narrows it further.
+
 ## Palette
 
 Ready-made token layer: [`tokens/vitrine.css`](tokens/vitrine.css) — copy it

@@ -102,6 +102,8 @@ opinion about spacing, and the only naming that pack does itself is the six indu
 A pack that can specify its labels is this one; a pack that must host labels it did not
 design is that one.
 
+**Motion ceiling:** it is cinematic at the family's floor: it bans the scroll clock, scrubbing, parallax and a sticky nav, so `MOTION_INTENSITY` above **4** has nothing legal to buy.
+
 ## Palette
 
 Ratios recomputed from `styles/tokens/pigeonhole.css` by the palette gate.

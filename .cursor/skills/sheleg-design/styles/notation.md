@@ -28,6 +28,8 @@ that has to convert on first impression rather than on reading. At weight 300
 with 2px radii and no fills, this pack whispers; asked to shout it just looks
 underdesigned.
 
+**Motion ceiling:** no pack ceiling is pinned here, so `MOTION_INTENSITY` is cut by §1's frequency table alone — the dial turns up what is left after that table, and nothing in this pack narrows it further.
+
 ## Palette
 
 Ready-made token layer: [`tokens/notation.css`](tokens/notation.css) — copy it

@@ -35,6 +35,8 @@ The defining constraint is the canvas: a fixed **1280×720 (16:9) frame with
 if content cannot fit the frame, the answer is a second slide, never a smaller
 type ramp.
 
+**Motion ceiling:** it is not cinematic, so `MOTION_INTENSITY` above **3** is a misread of the pack rather than a bold choice.
+
 ## Palette
 
 Ready-made token layer: [`tokens/briefing-room.css`](./tokens/briefing-room.css)

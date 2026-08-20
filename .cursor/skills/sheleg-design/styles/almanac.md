@@ -29,6 +29,8 @@ need room; at 14px in a sidebar this pack has nothing to offer. It is also the
 wrong pack for a product sold on precision — oatmeal and 24px radii read as
 warmth, not as accuracy.
 
+**Motion ceiling:** no pack ceiling is pinned here, so `MOTION_INTENSITY` is cut by §1's frequency table alone — the dial turns up what is left after that table, and nothing in this pack narrows it further.
+
 ## Palette
 
 Ready-made token layer: [`tokens/almanac.css`](tokens/almanac.css) — copy it

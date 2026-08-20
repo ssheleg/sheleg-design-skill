@@ -94,6 +94,8 @@ The second tell is the dark surface. This pack refuses a console on purpose. Tha
 one ships a dark instrument, but only as an alarm state — darkness there is a
 verdict, never a theme.
 
+**Motion ceiling:** it is standalone **by default** and may opt into the cinematic layer — its `## Motion flavor` section says how — so it is the one standalone pack with **no hard ceiling**. Read that section before turning the dial up.
+
 ## Palette
 
 Ready-made token layer: [`tokens/field-notes.css`](./tokens/field-notes.css) —

@@ -83,6 +83,8 @@ and none of them is the product's to design: the six industry pills are the only
 the page does, and every mark under them arrives with its own colours, its own weight and
 its own opinion about spacing.
 
+**Motion ceiling:** entrance, hover and two slow floats are its whole budget, and it bans scrubbing, parallax and `animation-timeline`, so `MOTION_INTENSITY` above **4** has nothing legal to buy — it keeps a sticky nav, which is the only difference from `pigeonhole`.
+
 ## Palette
 
 Ratios recomputed from `tokens/roster.css`, which sits beside this file.

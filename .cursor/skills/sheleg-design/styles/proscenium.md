@@ -44,6 +44,7 @@ showroom when the product is the whole argument and the page can be quiet around
 it; choose this one when the page has six or more acts to get through and the
 reader needs a beat to hold on to.
 
+
 ## Palette
 
 Ready-made token layer: [`tokens/proscenium.css`](tokens/proscenium.css) — copy

@@ -462,6 +462,35 @@ the motion ceiling has **two homes**, the doctrine names ten packs, four state o
 Register, the overlap is two, and six packs marked `(standalone)` have a ceiling in neither
 place.
 
+### The motion ceiling had two homes; now it has one (B-114)
+
+Measured before anything moved: `MOTION_DOCTRINE.md`'s standalone passage named ceilings for
+**ten** packs, **four** packs stated one in their own `## Register`, the overlap was **two**,
+`awning` stated a 4 the doctrine never mentioned, and **six** packs marked `(standalone)` in
+`SKILL.md` had a ceiling in neither place. A reader who chose off the table and stopped took a
+ceiling that might not exist.
+
+**The Register is the home**, because it is what a reader of one pack actually has. Eleven
+Registers gained a statement — each relocated from the doctrine with the doctrine's own reason
+(`workbench` and `briefing-room` at 3 as not cinematic; `ledger` at 3 with its three state
+loops stopped under reduced motion; `pigeonhole` at 4 at the family's floor; `roster` at 4,
+keeping only its sticky nav; `field-notes` with **no hard ceiling**, the one standalone
+exception) — or, for the six the doctrine never named, from the default it does state: the dial
+is cut by §1's frequency table alone. All **fifteen** standalone packs now state a ceiling or
+state they have none.
+
+`validate_motion_ceiling_has_one_home()` asks three things: every `(standalone)` pack states
+one, no Register states two, and where the doctrine names a number the Register agrees.
+
+**Two defects in the check were found by its own plants**, which is why they exist. Reading the
+number *before* the "no ceiling is pinned" phrase made a Register that says both report the
+number and pass — hiding the exact case the next block was written to catch. And the doctrine
+writes a ceiling two ways, *"`pigeonhole` … above **4**"* and *"`ora` at **4**, `tenor` at
+**4**"*, so reading only the first left four of the packs it names uncompared.
+
+Corrected, it failed immediately on `proscenium` — where **this run's own default sentence sat
+on top of a Register that already named 4**. Removed. Floor 3795 → 3830.
+
 ### Gate
 
 - **Coverage is pinned, in both directions.** `check_ratio_coverage()` reads

@@ -29,6 +29,8 @@ to read as serious rather than as friendly. At 16px body on 16px radii with a
 90px shadow, this pack is warm and roomy; asked to hold a table of forty rows it
 reads as a toy.
 
+**Motion ceiling:** no pack ceiling is pinned here, so `MOTION_INTENSITY` is cut by §1's frequency table alone — the dial turns up what is left after that table, and nothing in this pack narrows it further.
+
 ## Palette
 
 Ready-made token layer: [`tokens/daylight.css`](tokens/daylight.css) — copy it

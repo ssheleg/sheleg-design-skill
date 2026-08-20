@@ -1591,6 +1591,32 @@ PLANTS = (
         "'Shared state' re-asserts",
     ),
     (
+        # The state six packs were in before 2026-08-20: marked standalone in the
+        # table, silent about the ceiling in their own file.
+        "a standalone pack whose Register states no ceiling",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/router.md",
+        lambda t: t.replace("**Motion ceiling:** no pack ceiling is pinned here",
+                            "**Texture note:** nothing further is pinned here", 1),
+        "states no motion ceiling and does not say it has none",
+    ),
+    (
+        "a Register that says no ceiling is pinned and names one anyway",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/router.md",
+        lambda t: t.replace("the dial turns up what is left after that table",
+                            "the dial turns up what is left after that table, though "
+                            "`MOTION_INTENSITY` above **6** buys nothing", 1),
+        "cannot both be true",
+    ),
+    (
+        # The disagreement the row was filed for, in the direction that matters:
+        # the doctrine's summary drifting from the pack that owns the number.
+        "a doctrine ceiling that disagrees with the pack's Register",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/tenor.md",
+        lambda t: t.replace("so `MOTION_INTENSITY` above **4** has nothing legal to buy",
+                            "so `MOTION_INTENSITY` above **7** has nothing legal to buy", 1),
+        "The Register is the home",
+    ),
+    (
         # Exactly what `atrium` shipped for eight iterations: widened in its own
         # file, still marked core in the table nobody read against it.
         "a table mark left behind after a pack was widened",
@@ -2592,6 +2618,101 @@ def validate_table_marks_match_the_contract():
 
 
 
+# ------------------------------------- the motion ceiling has ONE home
+#
+# It had two, and they disagreed. Measured 2026-08-20 before the fix:
+# `MOTION_DOCTRINE.md`'s standalone passage named ceilings for ten packs, four
+# packs stated one in their own `## Register`, the overlap was two, `awning`
+# stated a 4 the doctrine never mentioned, and six packs marked `(standalone)` in
+# `SKILL.md` had a ceiling in neither place. A reader who chose off the table and
+# stopped took a ceiling that might not exist.
+#
+# The Register is the home, because that is what a reader of one pack has. The
+# doctrine's prose is a summary of it and is held to it here. Whitespace is
+# flattened first: two of this run's own hand measurements misread a ceiling
+# because `above\n**4**` wraps.
+CEILING_IN_REGISTER = re.compile(r"above\s+\*{0,2}(\d)\*{0,2}")
+CEILING_IS_NONE = re.compile(r"no hard ceiling|no pack ceiling is pinned", re.I)
+
+
+def _register_of(md: Path) -> str:
+    body = read(md) or ""
+    if "## Register" not in body:
+        return ""
+    return " ".join(body.split("## Register", 1)[1].split("\n## ", 1)[0].split())
+
+
+def validate_motion_ceiling_has_one_home():
+    skill_dir = ROOT / PLUGIN_DIR / "skills" / PLUGIN
+    styles = skill_dir / "styles"
+    skill = read(skill_dir / "SKILL.md")
+    doctrine = read(skill_dir / "MOTION_DOCTRINE.md")
+    if skill is None or doctrine is None or not styles.is_dir():
+        return
+
+    # 1. every pack SKILL.md marks `(standalone)` states a ceiling, or states it has none
+    standalone = set(re.findall(r"^\| \[`([a-z0-9-]+)`\][^\n]*\(standalone\)", skill, re.M))
+    if not check(len(standalone) >= 2,
+                 "SKILL.md marks fewer than two packs `(standalone)` — the ceiling home "
+                 "was not checked, and a check that could not look is not a pass"):
+        return
+    stated: dict[str, str] = {}
+    for stem in sorted(standalone):
+        md = styles / f"{stem}.md"
+        if not md.is_file():
+            continue
+        reg = _register_of(md)
+        # ORDER MATTERS. Reading the number first made a Register that says "no
+        # ceiling is pinned" AND names one report the number and pass — the
+        # contradiction the next block exists to catch, hidden by the block above
+        # it. Watched: the plant for it went red for an unrelated reason.
+        m = CEILING_IN_REGISTER.search(reg)
+        if CEILING_IS_NONE.search(reg):
+            stated[stem] = "none"
+        elif m:
+            stated[stem] = m.group(1)
+        check(
+            stem in stated,
+            f"styles/{stem}.md: `SKILL.md` marks it `(standalone)` and its `## Register` "
+            f"states no motion ceiling and does not say it has none. A reader who chooses "
+            f"off the table and stops takes a ceiling that may not exist",
+        )
+
+    # 2. a pack does not state two different ceilings in one Register
+    for stem, val in stated.items():
+        reg = _register_of(styles / f"{stem}.md")
+        found = set(CEILING_IN_REGISTER.findall(reg))
+        if val != "none":
+            check(len(found) <= 1,
+                  f"styles/{stem}.md: its `## Register` states more than one ceiling "
+                  f"({', '.join(sorted(found))}) — one home means one number")
+        else:
+            check(not found,
+                  f"styles/{stem}.md: its `## Register` says no ceiling is pinned AND "
+                  f"names {', '.join(sorted(found))} — the two cannot both be true")
+
+    # 3. where the doctrine names a number for a pack, the Register agrees
+    flat = " ".join(doctrine.split())
+    if "A standalone pack pins its own ceiling" in flat:
+        passage = flat.split("A standalone pack pins its own ceiling", 1)[1]
+        passage = passage.split("Moved out of", 1)[0]
+        # The doctrine writes a ceiling two ways -- "`pigeonhole` … above **4**" and
+        # "`ora` at **4**, `tenor` at **4**" -- and reading only the first meant
+        # four of the packs it names were never compared with their own Register.
+        for m in re.finditer(
+                r"`([a-z0-9-]+)`[^`]{0,180}?(?:above|at)\s+\*{0,2}(\d)\*{0,2}", passage):
+            stem, num = m.group(1), m.group(2)
+            if stem not in stated:
+                continue
+            check(
+                stated[stem] == num,
+                f"MOTION_DOCTRINE.md names {num} for `{stem}` and styles/{stem}.md's "
+                f"`## Register` states {stated[stem]}. The Register is the home; the "
+                f"doctrine's prose is a summary of it and has to agree",
+            )
+
+
+
 def validate_release_register():
     _release_register(
         read(ROOT / "CHANGELOG.md") or "",
@@ -3081,6 +3202,7 @@ def main():
     validate_a_count_names_its_noun()
     validate_theme_split_is_derived()
     validate_table_marks_match_the_contract()
+    validate_motion_ceiling_has_one_home()
     validate_status_vocabulary()
     validate_elevation_tokens_named()
     validate_radius_single_valued()

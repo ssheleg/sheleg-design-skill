@@ -49,6 +49,8 @@ whose whole idea is texture. At 14px body on a hairline grid this pack reads
 as software. Asked to be a lifestyle page it reads as an admin panel with
 photographs in it.
 
+**Motion ceiling:** no pack ceiling is pinned here, so `MOTION_INTENSITY` is cut by §1's frequency table alone — the dial turns up what is left after that table, and nothing in this pack narrows it further.
+
 ## Palette
 
 Ready-made token layer: [`tokens/router.css`](tokens/router.css) — copy it

@@ -73,6 +73,8 @@ per-card seal stating how each number was obtained. A product whose numbers a
 model produced needs that seal; a product whose numbers the system already knows
 does not, and paying for it is how a tool starts apologising for itself.
 
+**Motion ceiling:** it is not cinematic, so `MOTION_INTENSITY` above **3** is a misread of the pack rather than a bold choice.
+
 ## Palette
 
 Ready-made token layer: [`tokens/workbench.css`](./tokens/workbench.css)
