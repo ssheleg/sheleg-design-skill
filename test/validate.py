@@ -1369,6 +1369,24 @@ def check_floor(script: str, count: int) -> None:
 # reduced-motion plants below name the message they must provoke.
 PLANTS = (
     (
+        # The preamble's count, restated wrongly -- which is the state it shipped in
+        # until 2026-08-20, saying twenty-six against a table of thirty-four.
+        # Derived: whatever word opens the sentence is replaced.
+        "a run-stamp count the preamble restates instead of recomputing",
+        "docs/evidence/retro.md",
+        lambda t: re.sub(r"\*\*([A-Za-z-]+|\d+)(\s+rows below are marked)",
+                         r"**Twenty-six\2", t, count=1),
+        "and the table holds",
+    ),
+    (
+        # A plant with no `expect`, planted into the plant table itself. Derived:
+        # the fourth element of the FIRST entry is dropped, whatever it says.
+        "a plant that does not name the check it exercises",
+        "test/validate.py",
+        lambda t: re.sub(r'(\n        "does not say which components size",)', "", t, count=1),
+        "carry no `expect` string",
+    ),
+    (
         # B-049's instance, planted back: the value that made the naming matter.
         # Derived from the token rather than the comment, so it keeps landing
         # however the explanation is reworded.
@@ -1477,12 +1495,27 @@ PLANTS = (
         "the rule this check enforces has to live somewhere first",
     ),
     (
-        # A widened pack that stops answering the container bullet. Derived from
-        # whatever the pack currently says rather than pinned to a phrase, so it
-        # keeps mutating something as the answers get rewritten.
+        # A widened pack that stops answering the container bullet.
+        #
+        # This plant was BROKEN from the day it was written and reported `caught`
+        # on every run until 2026-08-20. It replaced the bullet's LABEL --
+        # "**Container queries**" -> "**Breakpoints**" -- and `scoreboard`'s
+        # Responsive section answers twice: the label, and `container-type:
+        # inline-size` on the line below it. `CONTAINER_ANSWER` still matched, the
+        # check stayed correctly green, and the only failure was the `.cursor`
+        # mirror drift. So the plant proved the mirror check worked for a week and
+        # never once exercised the check it was written for. Found by running the
+        # thirteen expect-less plants and reading what each actually made fail.
+        #
+        # Derived, and it removes EVERY answer in the section rather than one:
+        # a label-only removal is exactly the defect above.
         "a widened pack whose Responsive section stops answering the container question",
         f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/scoreboard.md",
-        lambda t: t.replace("**Container queries** for the report surface", "**Breakpoints** for the report surface", 1),
+        lambda t: t.replace(
+            _section(t, "## Responsive"),
+            CONTAINER_ANSWER.sub("(removed by the plant)", _section(t, "## Responsive")),
+            1),
+        "does not say which components size",
     ),
     (
         # A kit component sized by the screen instead of by its box: the defect
@@ -1490,6 +1523,7 @@ PLANTS = (
         "a kit breakpoint that goes back to the viewport with no reason given",
         "kits/scoreboard/src/styles.css",
         lambda t: t.replace("@container (max-width: 231px)", "@media (max-width: 767px)", 1),
+        "sizes a component by the screen instead of by its box",
     ),
     (
         # The literal count word travels with every release, so pinning it here
@@ -1502,11 +1536,13 @@ PLANTS = (
         lambda t: re.sub(
             r"\*\*[a-z-]+ locked style\npacks\*\*", "**six locked style\npacks**", t, count=1
         ),
+        "a count is checkable, so it is checked",
     ),
     (
         "a manifest naming three packs of twelve",
         f"{PLUGIN_DIR}/.claude-plugin/plugin.json",
         lambda t: t.replace("briefing-room (dark 16:9 deck), ", ""),
+        "the plugin description an agent host reads names",
     ),
     (
         # The remainder that has now been stale in two consecutive pack releases:
@@ -1522,6 +1558,7 @@ PLANTS = (
         # being exercised. A fixture that cannot find its own target is a hole in the
         # gate, and it opens on exactly the release this plant exists to catch.
         lambda t: re.sub(r"The other [\w-]+ answer all four", "The other five answer all four", t, count=1),
+        "answer all four widened sections",
     ),
     (
         # The same class as the first plant, in a file the source list did not
@@ -1531,26 +1568,31 @@ PLANTS = (
         "a count that is true of an older release, in a manifest",
         ".claude-plugin/marketplace.json",
         lambda t: re.sub(r"[a-z-]+ (pluggable style packs)", r"six \1", t, count=1),
+        "a count is checkable, so it is checked",
     ),
     (
         "the contract called by a stale number",
         "CONTRIBUTING.md",
         lambda t: t.replace("The contract is **thirteen**", "The contract is **nine-heading**"),
+        "One name, one number",
     ),
     (
         "a pack that does not declare what it leaves undecided",
         f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/workbench.md",
         lambda t: re.sub(r"^Contract: .*\n", "", t, count=1, flags=re.M),
+        "a reader cannot tell what this pack leaves them to decide",
     ),
     (
         "a version out of five-way sync",
         "package.json",
         lambda t: t.replace('"version": "', '"version": "9.', 1),
+        "version mismatch",
     ),
     (
         "the bundle's own version removed, leaving §7's rule with nothing to read",
         f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md",
         lambda t: re.sub(r"^metadata:\n  version: .*\n", "", t, count=1, flags=re.M),
+        "must carry a nested 'metadata.version'",
     ),
     (
         "a repo-only path offered to a reader who has no repo",
@@ -1560,16 +1602,19 @@ PLANTS = (
             "## 7. Round-trip discipline\n\nSee `docs/evidence/backlog.md` for the open rows.",
             1,
         ),
+        "which is a repository path",
     ),
     (
         "a counted claim whose members stopped travelling with the count",
         f"{PLUGIN_DIR}/skills/{PLUGIN}/DESIGN_SYNC_BRIDGE.md",
         lambda t: t.replace("The six are `Button`, `Card`, `Chip`,", "The six are `Card`, `Chip`,", 1),
+        "a counted claim",
     ),
     (
         "a style pack the SKILL.md table does not route to",
         f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md",
         lambda t: t.replace("styles/maquette.md", "styles/nowhere.md"),
+        "is not linked from the pack table",
     ),
     (
         # B-040, planted back in. `instrument-console` shipped with no branch at
@@ -3304,6 +3349,160 @@ def validate_confined_tokens_measured_where_used():
           f"against a surface it is confined away from")
 
 
+# ------------------------------------- a stamp count nobody recounts
+#
+# The Run stamps preamble reports how many rows carry no `Diverged?` answer, and
+# the number matters: the third retirement trigger reads a stamp COUNT, so a table
+# of reconstructed rows retires instructions on absences of evidence. The paragraph
+# said "twenty-six" while the table held thirty-four, which is the same class of
+# defect as every restated number this gate refuses elsewhere — in the one document
+# whose subject is what a run may conclude.
+#
+# Both checks below are named in `retro.md` itself, which is why they exist: this
+# family refuses a document that cites a command it does not have.
+# `[ \t]*$`, never `\s*$`. With `\s*$` under re.M the trailing whitespace class eats
+# the newline, each match consumes into the next line, and `finditer` returns every
+# OTHER row: 29 of 57 here, with the check printing a confident number over half a
+# table. Matched per line for the same reason.
+STAMP_ROW = re.compile(r"^\|\s*(\d{4}-\d{2}-\d{2})\s*\|.*\|[ \t]*(.+?)[ \t]*\|[ \t]*$")
+WRITTEN_NUMBERS = {
+    "five": 5, "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10,
+    "twenty-six": 26, "thirty": 30, "thirty-one": 31, "thirty-two": 32,
+    "thirty-three": 33, "thirty-four": 34, "thirty-five": 35, "thirty-six": 36,
+    "forty": 40,
+}
+RETIREMENT_WINDOW = 5
+
+
+def _stamp_rows():
+    retro = read(ROOT / "docs" / "evidence" / "retro.md")
+    if retro is None or "## Run stamps" not in retro:
+        return None, None
+    section = retro.split("## Run stamps", 1)[1]
+    rows = []
+    for line in section.split("\n"):
+        m = STAMP_ROW.match(line)
+        if m:
+            rows.append((m.group(1), m.group(2)))
+    return retro, rows
+
+
+def validate_reconstructed_stamp_count():
+    retro, rows = _stamp_rows()
+    if rows is None:
+        _skips.append("docs/evidence/retro.md has no '## Run stamps' section — the "
+                      "stamp count was not checked")
+        return
+    if not check(len(rows) >= 10,
+                 f"docs/evidence/retro.md: only {len(rows)} run stamp row(s) parsed — "
+                 f"the count check could not look, and that is not a pass"):
+        return
+    unrecorded = sum(1 for _, verdict in rows if "unrecorded" in verdict)
+    preamble = retro.split("## Run stamps", 1)[1].split("| Date |", 1)[0]
+    # Anchored on the reporting sentence, not on a loose substring. `"five rows"`
+    # matched the preamble's OWN aside -- "a list that is short by five rows
+    # retires whatever it likes" -- so the check read 5 against a table of 34 and
+    # failed for the wrong reason.
+    stated = None
+    m = re.search(r"\*\*([A-Za-z-]+|\d+)\s+rows below are marked", preamble)
+    if m:
+        token = m.group(1)
+        stated = int(token) if token.isdigit() else WRITTEN_NUMBERS.get(token.lower())
+    if not check(stated is not None,
+                 "docs/evidence/retro.md: the Run stamps preamble no longer opens with "
+                 "'**N rows below are marked**', so the count it reports cannot be "
+                 "compared with the table. Restore the sentence or this check is blind"):
+        return
+    check(
+        stated == unrecorded,
+        f"docs/evidence/retro.md: the Run stamps preamble reports {stated} rows with no "
+        f"`Diverged?` answer and the table holds {unrecorded}. The third retirement "
+        f"trigger reads a stamp count, so this number decides what may be retired on "
+        f"absences of evidence — it is recomputed here rather than carried",
+    )
+    print(f"  run stamps: {len(rows)} rows, {unrecorded} unrecorded (preamble says "
+          f"{stated})")
+
+
+def validate_retirement_window():
+    _, rows = _stamp_rows()
+    if not rows:
+        return
+    if len(rows) < RETIREMENT_WINDOW:
+        _skips.append(f"fewer than {RETIREMENT_WINDOW} run stamps — the retirement "
+                      f"window was not evaluated")
+        return
+    window = rows[-RETIREMENT_WINDOW:]
+    blind = [d for d, verdict in window if "unrecorded" in verdict]
+    # NOT a failure. A closed window is a legitimate state -- it was closed for
+    # eighteen releases -- and failing the gate on it would make the honest answer
+    # (`unrecorded`) more expensive than a guess. What must never happen is an
+    # instruction retired while it is closed, and that is a decision a run makes,
+    # so this reports the state the run has to read.
+    state = "OPEN" if not blind else f"CLOSED ({len(blind)} of {RETIREMENT_WINDOW} unrecorded)"
+    print(f"  retirement window: {state} — the 'has not fired in five run stamps' "
+          f"trigger is {'available' if not blind else 'UNAVAILABLE'}")
+    if blind:
+        print(f"    blind stamps: {', '.join(blind)}")
+
+
+# ------------------------------------- a plant must name the check it exercises
+#
+# The self-test's fourth tuple element is the string the output must contain, and
+# it is the only thing separating "the gate went red" from "the check I wrote went
+# red". Without it a plant is caught by whatever fires first — and in this
+# repository that is usually the `.cursor` mirror-drift check or the kit-drift
+# check, because both trip on any edit to a pack.
+#
+# Made mandatory on 2026-08-20, after the thirteen plants that had no `expect`
+# were run one at a time and their real failures read. **One of the thirteen was
+# proving nothing at all**: the container plant replaced a bullet's LABEL while
+# `scoreboard` answers the container question twice in the same section, so the
+# check stayed correctly green and the mirror check supplied the red. It had
+# reported `caught` on every run since it was written. Four more of the thirteen
+# produced a mirror failure ahead of their own, which is the same defect one
+# reordering away.
+def validate_every_plant_names_its_check():
+    import ast as _ast
+    src = ROOT / "test" / "validate.py"
+    text = read(src)
+    if text is None:
+        _skips.append("test/validate.py is unreadable here — the plant-shape check "
+                      "did not run")
+        return
+    try:
+        tree = _ast.parse(text)
+    except SyntaxError as exc:
+        check(False, f"test/validate.py could not be parsed ({exc})")
+        return
+    plants = None
+    for node in tree.body:
+        if isinstance(node, _ast.Assign) and any(
+                getattr(t, "id", "") == "PLANTS" for t in node.targets):
+            plants = node.value
+    if not check(isinstance(plants, _ast.Tuple) and len(plants.elts) >= 2,
+                 "test/validate.py: PLANTS is not a tuple of at least two entries — "
+                 "the plant-shape check could not look, and that is not a pass"):
+        return
+    bare = []
+    for el in plants.elts:
+        if not isinstance(el, _ast.Tuple):
+            continue
+        label = el.elts[0].value if isinstance(el.elts[0], _ast.Constant) else "?"
+        if len(el.elts) < 4:
+            bare.append(str(label))
+    check(
+        not bare,
+        f"{len(bare)} plant(s) carry no `expect` string: {'; '.join(bare)}. A plant "
+        f"without one is reported `caught` by whichever check fires first — in this "
+        f"tree usually the mirror-drift or kit-drift check, both of which trip on any "
+        f"edit to a pack — so it proves that check works and says nothing about the "
+        f"one it was written for",
+    )
+    print(f"  plant shape: {len(plants.elts)} plant(s), every one names the check "
+          f"it exercises")
+
+
 # ------------------------------------- two constants, one name, and no error
 #
 # Python raises nothing when a module-level name is assigned twice: the later
@@ -4250,6 +4449,9 @@ def main():
     validate_excluded_sets_are_declared()
     validate_token_comments_respect_the_bands()
     validate_confined_tokens_measured_where_used()
+    validate_reconstructed_stamp_count()
+    validate_retirement_window()
+    validate_every_plant_names_its_check()
     validate_gate_has_no_shadowed_names()
     validate_every_duration_answers_reduce()
     validate_prescribed_tokens_resolve()

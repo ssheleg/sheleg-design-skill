@@ -10,6 +10,15 @@ Each one binds every run in this project until it is retired. Retire when it
 became a mechanical check, when the paths it names are gone, or when it has not
 fired in five run stamps.
 
+**The third trigger is unavailable over reconstructed rows, and that is a rule
+rather than a caution.** A stamp whose `Diverged?` reads *unrecorded* carries no
+record of which instructions fired, so five such rows are five absences of evidence
+rather than five observations of silence — and retiring on them retires whatever
+happens to be oldest. **An instruction may only be retired on the third trigger when
+all five of the newest stamps answer `Diverged?`.** `validate_retirement_window()`
+reports whether the window is currently open, so the answer is read rather than
+assumed (B-051).
+
 1. **Never assume this checkout is yours alone.** Before stage 0 records shared
    state, run `git reflog -8`, `git branch -vv`, and look at working-tree
    mtimes. A HEAD move you did not make, a `feat/*` branch you did not create,
@@ -491,11 +500,14 @@ Cap 10, current 10, none retired.
 
 ## Run stamps
 
-**Five rows below are marked *unrecorded* in the `Diverged?` column, and they were
-backfilled on 2026-08-12 by the `datasheet` run rather than written by the runs
-they describe, and everything from `v1.27.0` to `v1.44.0` was reconstructed the
-same way on 2026-08-20 — twenty-six rows, eighteen releases, after the table sat
-at `v1.26.0` for eighteen versions.** Between `v1.14.1` and `v1.18.0` this table went five releases
+**Thirty-four rows below are marked *unrecorded* in the `Diverged?` column** — five
+backfilled on 2026-08-12 by the `datasheet` run, twenty-six covering `v1.27.0` to
+`v1.44.0` reconstructed the same way on 2026-08-20 after the table sat at `v1.26.0`
+for eighteen versions, and three written on 2026-08-20 by runs that could have
+answered and did not. **That count is computed on every run, not restated here**:
+`validate_reconstructed_stamp_count()` recomputes it and fails when this paragraph
+disagrees with the table, because the number this paragraph exists to report is the
+one a reader will trust and nobody was recounting. Between `v1.14.1` and `v1.18.0` this table went five releases
 without a stamp, so the retirement trigger in the standing instructions above —
 *has not fired in five run stamps* — was not computable: a list that is short by
 five rows retires whatever it likes. Date, commit and task were derived from
@@ -570,6 +582,11 @@ evidence until runs start writing their own again.
 
 | 2026-08-20 | `94c1774` | four packs contradicted their own token layers; six sweeps added, which found 24 more defects on their first run (v1.45.0) | *unrecorded* |
 | 2026-08-20 | `0f8fa82` | B-001/B-002: three packs stay core by decision, and `core` must name what it declines | *unrecorded* |
+| 2026-08-20 | `e24ee5b` | B-042: a mandated scrub carves its own easing exception; five packs share the shape | **yes** |
+| 2026-08-20 | `84ba82c` | B-043: a pack prescribed a token its layer never defined, and the library's last raw `vh` | **yes** |
+| 2026-08-20 | `f88c14b` | B-045: every duration answers reduce, and a promised component-layer stop is verified in the kit | **yes** |
+| 2026-08-20 | `3d0429a` | B-047: two `scoreboard` ratios described pairings that never render | **yes** |
+| 2026-08-20 | `f36961a` | B-049: the doctrine's duration bands reach the token layer's own comments | **yes** |
 ## Log
 
 ### 2026-08-13 — the remedy for one concurrent run became a defect in the gate that measures it

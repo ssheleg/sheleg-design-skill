@@ -6,6 +6,44 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Every plant names the check it exercises, and one of them never had (B-051)
+
+The self-test's fourth tuple element is the string the output must contain — the only thing
+separating *the gate went red* from *the check I wrote went red*. **13 of 60 plants carried
+none.** Running those thirteen one at a time and reading what each actually made fail turned up
+the defect the mechanism exists for: the container plant replaced a bullet's **label**
+(*"Container queries"* → *"Breakpoints"*) while `scoreboard` answers the container question
+twice in the same section, so `CONTAINER_ANSWER` still matched, the check stayed correctly
+green, and the `.cursor` mirror-drift check supplied the red. **It had reported `caught` on
+every run since it was written.** Four more of the thirteen produced a mirror failure ahead of
+their own, which is the same defect one reordering away.
+
+All thirteen carry their own check's string now, the container plant removes *every* answer in
+the section rather than one, and `validate_every_plant_names_its_check` makes `expect`
+mandatory — with a plant that strips one, planted into the plant table itself.
+
+### The run-stamp count is recomputed, and the retirement window is readable (B-051)
+
+The Run stamps preamble said **twenty-six** rows carry no `Diverged?` answer; the table held
+**thirty-four**. In the one document whose subject is what a run may conclude, that is the same
+restated-number defect this gate refuses everywhere else — and it matters because the third
+retirement trigger reads a stamp *count*, so the number decides what may be retired on absences
+of evidence. `validate_reconstructed_stamp_count` recomputes it and fails when the paragraph
+disagrees.
+
+A derivation was tried before any of this and failed honestly: `Diverged?` cannot be recovered
+from the Log, because **0 of the 34** rows have their commit named there. So the row's own
+prescription was executed instead — this session's five runs wrote their own stamps. The newest
+five now answer, which **opens the third trigger for the first time in eighteen releases**.
+`validate_retirement_window` prints OPEN or CLOSED, and the trigger's wording now states that an
+instruction may only be retired when all five newest stamps answer.
+
+Two bugs in the new checks, both caught by their own output. `\s*$` under `re.M` eats the
+newline, so `finditer` returned **every other row** — 29 of 57 — while the check printed a
+confident number over half a table. And `"five rows"` matched the preamble's own aside (*"a list
+that is short by five rows"*), so the count check read 5 against 34 and failed for the wrong
+reason.
+
 ### The doctrine's duration bands reach the token layer (B-049)
 
 `validate_motion_bands` reads a pack's `## Components`, `## Micro-interactions` and
