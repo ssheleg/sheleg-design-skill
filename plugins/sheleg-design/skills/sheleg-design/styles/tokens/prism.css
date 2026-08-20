@@ -143,6 +143,7 @@
    is a change this pack did not authorise, and it stops here too. */
 @media (prefers-reduced-motion: reduce) {
   :root {
+    --dur-press: 0s;
     --dur-fast: 0s;
     --dur-base: 0s;
   }

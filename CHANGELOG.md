@@ -6,6 +6,48 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Every duration answers the reduced-motion query, and a promise is checked in the kit (B-045)
+
+`validate_reduced_motion` was a floor: a token layer had to *have* a branch and the branch
+had to collapse *something*. A layer collapsing one duration of nine passed it.
+`validate_every_duration_answers_reduce` asks the whole question — every duration declared
+outside the branch appears inside it, collapsed to an instant or re-declared at its own value
+**with a reason** — and it verifies the part the board row asked for by name: where the reason
+promises a stop in the component layer, the kit is checked for that stop.
+
+Now **29 layers, 0 silent durations, 6 kept with a reason, 2 promising a component-layer stop
+and both keeping it.** `0.01ms` counts as a collapse rather than an exception: it is the
+standard idiom for *instant but still fires `animationend`*, and 8 of the library's 11
+re-declarations are exactly that.
+
+**Two layers were fixed.** `prism` had added `--dur-press: 0.14s` and never updated its branch.
+`atrium`'s four `--flute-dur-*` are kept on purpose — under reduce the refraction canvas is
+*removed* and the still underneath becomes the hero, so a collapsed duration would state the
+opposite of what happens — and that reason now lives in the CSS beside the values instead of
+only in prose a gate cannot read. The row's own measurement was half stale: the uncollapsed
+pair was `atrium` and `prism`, not `roster`, which already used the re-declare-with-reason form
+this check now requires.
+
+**The first version of the check reproduced the defect the row exists for.** It returned early
+on any duration that collapsed, so `pigeonhole`'s `--dur-marquee` — which goes to `0.01ms`
+precisely *because* the kit pauses it, since 0.01ms strobes an infinite animation at the reader
+the query protects — never reached the kit verification. Its plant stayed green. The promise is
+a property of the layer, not of one token's verdict, and is checked once per layer now.
+
+### A gate constant was shadowed, and Python said nothing (B-120)
+
+The check above shipped broken and passing. A new `DUR_DECL` near line 3120 of
+`test/validate.py` was overwritten by an existing module-level constant of the same name at
+3716, whose capture groups mean something else — so the new check parsed every duration with
+the wrong regex and printed **`0 kept`** against a tree where six were measured by hand. It
+reported a number instead of failing, which is the exact shape this repository keeps finding.
+
+`validate_gate_has_no_shadowed_names` walks the three gate modules with `ast` and refuses any
+top-level name bound twice. It found one pre-existing duplicate — `CSS_COMMENT`, defined twice
+identically, harmless and now deduped. Its own plant needed two fixes to prove anything: the
+check first read `Path(__file__).parent`, which is the one directory a plant can never reach
+because the self-test runs the real module against a copied tree.
+
 ### A pack cannot prescribe a token its own layer never defines (B-043)
 
 `instrument-console`'s prose named `--dur-press` and its token layer never declared it.

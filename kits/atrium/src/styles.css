@@ -194,6 +194,18 @@ strong, b { font-weight: var(--weight-semibold); }
     --dur-soft: 0s;
     --dur-slow: 0s;
     --marquee-cycle: 0s;
+
+    /* The four flute durations are re-declared at their own values ON PURPOSE, and
+       this is the statement that they are — the prose said so and the CSS did not,
+       which is a reason no gate can read. Under reduce the refraction canvas is
+       REMOVED and the still underneath becomes the hero (MOTION_DOCTRINE.md §9:
+       a WebGL or canvas scene degrades to its CSS or SVG still). A duration
+       nothing spends cannot be a defect, and collapsing them would say the
+       opposite of what happens: a slow refraction is still refraction. */
+    --flute-dur-fluted: 750ms;   /* KEPT — the canvas is removed, not slowed */
+    --flute-dur-reveal: 2700ms;  /* KEPT — as above */
+    --flute-dur-clear: 2250ms;   /* KEPT — as above */
+    --flute-dur-cross: 1500ms;   /* KEPT — as above */
   }
 }
 

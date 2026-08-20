@@ -1369,6 +1369,46 @@ def check_floor(script: str, count: int) -> None:
 # reduced-motion plants below name the message they must provoke.
 PLANTS = (
     (
+        # prism's oversight, planted back: a duration declared and the branch
+        # silent about it. Derived — the collapse line is dropped whatever its
+        # value — and `expect` is mandatory, because a token-layer edit also
+        # trips the kit-drift and mirror checks.
+        "a duration the reduced-motion branch says nothing about",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/tokens/prism.css",
+        lambda t: re.sub(r"^\s*--dur-press\s*:\s*0s;\s*\n", "", t, count=1, flags=re.M),
+        "says nothing about it",
+    ),
+    (
+        # A kept duration whose reason is deleted. atrium keeps four flute
+        # durations under reduce because the canvas is REMOVED; strip the markers
+        # and the file no longer says whether that is a decision or a bug.
+        "a duration kept above an instant with its reason removed",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/tokens/atrium.css",
+        lambda t: t.replace("KEPT — the canvas is removed, not slowed", "")
+                   .replace("KEPT — as above", "")
+                   .replace("ON PURPOSE", "by choice"),
+        "names no reason",
+    ),
+    (
+        # The promise, unkept. pigeonhole keeps --dur-marquee at 0.01ms on the
+        # ground that the KIT pauses the animation, because no custom property
+        # can. Remove the kit's rule and the exception is a sentence.
+        "a component-layer stop promised by a token layer and missing from the kit",
+        "kits/pigeonhole/src/styles.css",
+        lambda t: t.replace(".pg-marquee { animation-play-state: paused; }",
+                            ".pg-marquee { opacity: 1; }", 1),
+        "has no such rule inside a reduced-motion branch",
+    ),
+    (
+        # The defect this session made: a second module-level constant with a
+        # name already taken. The later binding wins with no error.
+        "a gate constant whose name is already bound at module level",
+        "test/validate.py",
+        lambda t: t.replace("\nPRESS_WORD = re.compile(",
+                            "\nREDUCE_DUR_DECL = re.compile(r\"never\")\nPRESS_WORD = re.compile(", 1),
+        "assigned more than once",
+    ),
+    (
         # The defect the commit closing B-042 introduced: the prose prescribes
         # `--dur-press` and the layer stops defining it. Derived -- the declaration
         # line is dropped whatever its value becomes -- and the `expect` string is
@@ -3087,6 +3127,194 @@ def validate_excluded_sets_are_declared():
 RELATIVE_CUSTOM_PROP = re.compile(r"^\s*(--[a-z0-9-]+)\s*:.*\brgb\(\s*from\s")
 
 
+# ------------------------------------- two constants, one name, and no error
+#
+# Python raises nothing when a module-level name is assigned twice: the later
+# binding wins and every function written against the earlier one silently uses
+# the wrong value. In a 3990-line gate that is not hypothetical — it happened
+# while B-045 was being closed. A new `DUR_DECL` was added near line 3120 and an
+# existing one at 3716 overwrote it, so the new check parsed durations with a
+# regex whose groups mean something else and reported `0 kept` against a tree
+# where six were measured by hand. It printed a number and passed.
+#
+# The check walks the gate's own files with `ast`, which is why it cannot be
+# fooled by a name inside a function or a conditional re-binding: only top-level
+# assignments and definitions count, and those are exactly the ones that shadow.
+def validate_gate_has_no_shadowed_names():
+    import ast as _ast
+    from collections import Counter as _Counter
+    # ROOT, not `Path(__file__).parent`: the self-test runs this module from its
+    # real location against a COPIED tree, so reading its own directory reads the
+    # one place a plant cannot land. The plant for this check stayed green until
+    # the path came from the tree under test.
+    here = ROOT / "test"
+    files = sorted(here.glob("*.py")) if here.is_dir() else []
+    if not check(len(files) >= 2,
+                 "fewer than two gate modules found — the shadowed-name check could "
+                 "not look, and a check that could not look is not a pass"):
+        return
+    for f in files:
+        try:
+            tree = _ast.parse(f.read_text(encoding="utf-8"))
+        except (OSError, SyntaxError) as exc:
+            check(False, f"test/{f.name}: could not be parsed ({exc})")
+            continue
+        seen: _Counter = _Counter()
+        for node in tree.body:
+            if isinstance(node, _ast.Assign):
+                for t in node.targets:
+                    if isinstance(t, _ast.Name):
+                        seen[t.id] += 1
+            elif isinstance(node, (_ast.FunctionDef, _ast.AsyncFunctionDef,
+                                   _ast.ClassDef)):
+                seen[node.name] += 1
+        dupes = sorted(n for n, c in seen.items() if c > 1)
+        check(
+            not dupes,
+            f"test/{f.name}: {len(dupes)} top-level name(s) assigned more than once "
+            f"({', '.join(dupes)}). The later binding wins with no error, so every "
+            f"check written against the earlier one runs on a value it did not mean "
+            f"— and reports a number rather than failing",
+        )
+    print(f"  gate hygiene: {len(files)} module(s), no shadowed top-level name")
+
+
+# ------------------------------------- the strict half of the reduced-motion gate
+#
+# `validate_reduced_motion` above is a floor: a layer must HAVE a branch and the
+# branch must collapse SOMETHING. A layer collapsing one of nine durations passes
+# it, which is board B-045. The strict form asks the question that matters —
+# **every** declared duration is accounted for under reduce — and it has to allow
+# the exceptions, because two of them are real and reasoned:
+#
+#   * `roster` keeps `--dur-float-a/b` at 5.5s/6.5s: they drive INFINITE
+#     animations, a duration cannot stop one, and 0.01ms strobes at exactly the
+#     reader the query protects. The kit pauses them with `animation-play-state`,
+#     which no custom property can express.
+#   * `atrium` keeps its four `--flute-dur-*`: under reduce the canvas is REMOVED
+#     and the still underneath is the hero. A duration nothing spends is not a
+#     defect, and collapsing it would state the opposite of what happens.
+#
+# So the rule is: a duration declared outside the branch must APPEAR inside it.
+# Collapsed to an instant, or re-declared at its own value with a reason — the
+# form `roster` and now `atrium` use. Silence is what is refused, because silence
+# and a decision look identical to every reader and every gate.
+#
+# 0.01ms is a collapse, not an exception: it is the standard idiom for "instant
+# but still fires `animationend`", and eight of the eleven re-declarations in the
+# library are exactly that.
+#
+# The third part is the one the row asked for by name. Where the reason promises a
+# stop in the COMPONENT layer, that stop is checked in the kit. `pigeonhole`'s
+# `--dur-marquee` says the marquee is paused with `animation-play-state` and points
+# at `.pg-marquee`; the rule is really there (kits/pigeonhole/src/styles.css:859)
+# and the check now proves it rather than trusting the sentence.
+REDUCE_DUR_DECL = re.compile(
+    r"^[ \t]*(--[a-z0-9-]*(?:dur|duration|speed|time)[a-z0-9-]*)\s*:\s*([^;]+);(.*)$",
+    re.M | re.I)
+TIME_VALUE = re.compile(r"^([\d.]+)\s*(ms|s)$", re.I)
+# A reason marker on the declaration itself or in the comment block above it.
+KEPT_MARKER = re.compile(r"KEPT|ON PURPOSE|insufficient on its own|deliberate", re.I)
+# A promise the token layer cannot keep by itself.
+COMPONENT_STOP = re.compile(r"animation-play-state", re.I)
+
+
+def _seconds(value: str):
+    m = TIME_VALUE.match(value.strip())
+    if not m:
+        return None
+    n = float(m.group(1))
+    return n / 1000.0 if m.group(2).lower() == "ms" else n
+
+
+def validate_every_duration_answers_reduce():
+    styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
+    tokens = styles / "tokens"
+    if not tokens.is_dir():
+        return
+    layers = silent = kept = promised = 0
+    for name in _packs():
+        css = read(tokens / f"{name}.css")
+        if css is None:
+            continue
+        bodies = _reduce_blocks(css)
+        if not bodies:
+            continue          # the floor above owns the no-branch case
+        layers += 1
+        inside = "\n".join(bodies)
+        # Classify by POSITION, and keep the root declarations in a list. Building a
+        # dict over the whole file instead let the branch's own re-declaration
+        # overwrite the root one, so every kept token vanished from its own check:
+        # the first run of this function printed `0 kept` against a tree where six
+        # were measured by hand. A checker that reports zero is indistinguishable
+        # from one that passes.
+        spans = [(css.index(b), css.index(b) + len(b)) for b in bodies]
+        in_span = lambda q: any(a <= q < z for a, z in spans)
+        declared = [(m.group(1), m.group(2).strip())
+                    for m in REDUCE_DUR_DECL.finditer(css) if not in_span(m.start())]
+        in_branch = {m.group(1): (m.group(2).strip(), m.group(3), m.start())
+                     for m in REDUCE_DUR_DECL.finditer(inside)}
+        for tok, val in sorted(declared):
+            if tok not in in_branch:
+                silent += 1
+                check(False,
+                      f"styles/tokens/{name}.css: `{tok}: {val}` is declared and the "
+                      f"reduced-motion branch says nothing about it. Collapse it, or "
+                      f"re-declare it there with the reason — a duration a branch never "
+                      f"names reads the same whether the omission was a decision or an "
+                      f"oversight, and this repository has shipped both")
+                continue
+            rval, trailing, rpos = in_branch[tok]
+            secs = _seconds(rval)
+            if secs is not None and secs <= INSTANT_SECONDS:
+                # Collapsed, including the 0.01ms idiom -- and NOT the end of the
+                # question. B-045's sharpest case is a duration that collapses and
+                # still needs a component-layer stop: `pigeonhole`'s `--dur-marquee`
+                # goes to 0.01ms, which strobes an infinite animation at exactly the
+                # reader this query protects, so the kit pauses it instead. The first
+                # version of this function returned here, and its plant stayed green
+                # -- reproducing the defect the board row exists for, one layer up.
+                continue
+            kept += 1
+            # The reason may sit on the line or in the comment block above it.
+            above = inside[max(0, rpos - 700):rpos]
+            if not check(
+                    bool(KEPT_MARKER.search(trailing) or KEPT_MARKER.search(above)),
+                    f"styles/tokens/{name}.css: the reduced-motion branch re-declares "
+                    f"`{tok}` at `{rval}` — above an instant — and names no reason. A "
+                    f"value that does not collapse is either a decision or a bug, and "
+                    f"only the file can say which"):
+                continue
+        # The promise is a property of the LAYER, not of one token's verdict: it is
+        # made in the branch's prose and it is kept in the kit. Checked once per
+        # layer, after the token walk, so a collapsed duration that still needs the
+        # stop is covered -- which is the case the row was written about.
+        if COMPONENT_STOP.search(inside):
+            promised += 1
+            kit_css = read(ROOT / "kits" / name / "src" / "styles.css")
+            # Comments stripped first. The token layer's own explanation of this
+            # promise is copied verbatim into the kit and contains the word
+            # `animation-play-state`, so searching the raw text found the sentence
+            # describing the rule instead of the rule. The plant stayed green until
+            # the strip was added.
+            kit_code = CSS_COMMENT.sub(" ", kit_css or "")
+            check(
+                kit_css is not None and bool(COMPONENT_STOP.search(
+                    "\n".join(_reduce_blocks(kit_code)))),
+                f"styles/tokens/{name}.css: its reduced-motion branch promises that the "
+                f"component layer stops an animation with `animation-play-state`, and "
+                f"kits/{name}/src/styles.css has no such rule inside a reduced-motion "
+                f"branch. The promise is the whole exception; unkept, the animation runs "
+                f"at full speed at exactly the reader the query protects",
+            )
+    if layers < 2:
+        _skips.append("fewer than two layers ship a reduced-motion branch — the strict "
+                      "duration check did not run")
+        return
+    print(f"  reduce coverage: {layers} layers, {silent} silent duration(s), "
+          f"{kept} kept with a reason, {promised} promise a component-layer stop")
+
+
 # ------------------------------------- a prescribed token that resolves to nothing
 #
 # A pack's prose tells an implementer which token to spend. Where the layer never
@@ -3463,7 +3691,6 @@ def validate_status_vocabulary():
 ELEVATION_TOKEN = re.compile(r"^\s*(--(?:shadow|elev)[a-z0-9-]*|--[a-z0-9-]*glow):", re.M)
 
 
-CSS_COMMENT = re.compile(r"/\*.*?\*/", re.S)
 
 
 def _root_block(css: str) -> str:
@@ -3844,6 +4071,8 @@ def main():
     validate_worked_radius_sums_compute()
     validate_component_classes_are_answered()
     validate_excluded_sets_are_declared()
+    validate_gate_has_no_shadowed_names()
+    validate_every_duration_answers_reduce()
     validate_prescribed_tokens_resolve()
     validate_scrub_carves_its_exception()
     validate_relative_colour_is_guarded()
