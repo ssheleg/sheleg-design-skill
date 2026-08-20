@@ -309,7 +309,7 @@ snippet.
   implementation.
 - **No mono webfont.** The system stack is the identity. Substituting one costs a
   request and looks less native.
-- **No coral word under 24px.** 3.61:1 on cream. Use `--accent-ink`.
+- **No coral word under 24px.** `--accent` on `--bg` is 3.61:1. Use `--accent-ink`.
 - **No white label on a coral fill.** 4.16:1. See Gotchas.
 - **No pill radii.** Nothing rounder than 16px, and the chip stays at 2px.
 - **No accordion on the FAQ.** Collapsing the answers is the single most
@@ -328,9 +328,9 @@ replacement is a colour the reference already ships — nothing was invented.
 **1. The white button label fails AA.** The hero's `Start for Free` is white on
 coral: **4.16:1**, below 4.5:1 at the 16px semibold it ships. Both the hero and the
 closing CTA carry it. The correction keeps the coral fill — the coral button *is*
-the identity — and darkens the label to `--on-action: #131010`, which clears at
-**4.55:1**. Where a white label is non-negotiable, `--action-strong` is the
-reference's own burgundy and carries white at **13.34:1**.
+the identity — and darkens the label: `--on-action` on `--action` clears at **4.55:1**.
+Where a white label is non-negotiable, `--action-strong` is the reference's own
+burgundy and carries white at **13.34:1**.
 
 **2. The coral chip label fails AA, and it is the signature element.** The section
 chip paints 12px coral text on a coral/8 wash: **3.24:1** — worse than coral on

@@ -663,11 +663,16 @@ def _ratio_plants() -> list[str]:
          "| `--accent` | `#8a2b1f` | 9.99:1 |\n",
          lambda: [] if _tally["un_table"] == 1 else None,
          "un_table"),
-        # 3. prose with no partner: the residue the board carries.
-        ("prose stating a ratio and naming no partner",
-         "The `--accent` sits at 9.99:1 here.\n",
-         lambda: [] if _tally["un_prose"] == 1 else None,
-         "un_prose"),
+        # 3. prose with no partner. Until 2026-08-20 this asserted only that the
+        #    claim landed in the `un_prose` bucket, because the broad pairing pass
+        #    below was unreachable. It runs now, narrowed to the token named on the
+        #    line, so the assertion is the stronger one: a WRONG number in prose is
+        #    refused rather than counted. The old form of this fixture kept passing
+        #    while the pass it should have been exercising did not exist.
+        ("prose stating a ratio that no pair in the pack produces",
+         "Body text sits on the panel at 9.99:1 with `--accent`.\n",
+         lambda: [f for f in failures if "nothing in this pack pairs" in f],
+         None),
         # 4. prose arguing a floor rather than asserting a pair.
         # A floor or a rejected candidate never reaches the classifier at all --
         # RATIO_SKIP drops it one step earlier. What reaches it is a position in
@@ -1336,7 +1341,7 @@ def _line_surface_collision(stem: str, text: str) -> None:
 _tally: dict = {"computed": 0, "unresolved": 0, "unguarded": 0,
                 "delta_unbound": 0, "composite_unsized": 0,
                 "pair_half_stated": 0, "pair_unresolved": 0,
-                "un_table": 0, "un_argued": 0, "un_prose": 0,
+                "un_table": 0, "un_argued": 0, "un_prose": 0, "broad": 0,
                 "packs_guarded": set(), "packs_unguarded": set()}
 # Every claim that named a partner and still produced no arithmetic, kept with
 # its reason. `guarded` used to be incremented BEFORE the pairs were computed,
@@ -1360,6 +1365,22 @@ _unresolved: list[str] = []
 ARGUED = re.compile(
     r"≥|>=|≤|<=|\b\d{1,3}\s*%|\bstop\b|gradient"
     r"|ruled out|refused|discard|rather than|too (?:low|dark|light)"
+    # Added 2026-08-20 so the broad pairing check below could be turned ON for
+    # prose. Each of these is a shape that is CORRECT writing and cannot be a
+    # claim about two shipped tokens, adjudicated one line at a time:
+    #   * a comparison against a colour this pack does not ship
+    #     (`blueprint.md:115` — "7.53:1 on pure white")
+    #   * a bound over a SET of surfaces rather than one pair
+    #     (`editorial-luxury.md:145` — "11.8:1 on every tint";
+    #      `cyclorama.md:394` — "1.97:1 on any of the six field stops")
+    #   * a candidate the pack measures in order to REJECT it
+    #     (`cyclorama.css:66` — a list of rejected oranges)
+    # The two remaining shapes were NOT excused: they were wrong writing and are
+    # fixed in the packs, because in both the figure and its subject had drifted
+    # onto different lines or the named token was the REMEDY rather than the
+    # subject — and a reader cannot tell those from a claim either.
+    r"|pure white|on white\b|every tint|any of the|all six|on any\b"
+    r"|large (?:text )?only|under protanopia|candidate|considered"
 )
 
 
@@ -1433,7 +1454,12 @@ def stated_ratio_report() -> str:
     """
     c, u = _tally["computed"], _tally["unresolved"]
     un, pk = _tally["unguarded"], len(_tally["packs_unguarded"])
-    total = c + u + un
+    b = _tally["broad"]
+    # `broad` belongs in the total or the total shrinks by exactly the number of
+    # claims the new pass verified: adding the bucket without adding it here
+    # printed 495 claims where 526 exist, which is a report getting quieter as
+    # coverage improves.
+    total = c + u + un + b
     share = f"{un / total * 100:.0f}%" if total else "n/a"
     v_un, v_total, v_packs, when = HAND_VERIFIED
     return (
@@ -1441,7 +1467,9 @@ def stated_ratio_report() -> str:
         f"pack cannot pair, {un} unguarded ({share}) at {pk} packs "
         f"[{_tally['un_table']} in a table declaring no base, "
         f"{_tally['un_argued']} placing it at a gradient stop, "
-        f"{_tally['un_prose']} prose]. Hand-verified: {v_un} of {v_total} at "
+        f"{_tally['un_prose']} prose the broad pass cannot pair], "
+        f"{_tally['broad']} verified by the broad pass. "
+        f"Hand-verified: {v_un} of {v_total} at "
         f"{v_packs} packs on {when}, and nothing since"
     )
 
@@ -1558,18 +1586,43 @@ def validate_stated_ratios(css: Path) -> None:
                 # So the guard needs to tell a measurement from an argument
                 # about a measurement, and that is a real piece of work rather
                 # than a regex. Filed rather than faked.
-                _tally["unguarded"] += len(claims)
-                _tally["packs_unguarded"].add(stem)
+                # NOT counted as unguarded yet. Since 2026-08-20 a prose line goes
+                # on to the broad pairing pass below, and a claim that pass verifies
+                # is not unguarded — it is checked against every pair the pack can
+                # make, subject-narrowed. Counting it here made the printed line say
+                # `37 prose` unguarded about 37 claims the run had just verified,
+                # which is the same class of untruth as the number it replaced.
+                # `unguarded` is incremented at the two places a claim actually
+                # escapes: a table row, an argued line, or a prose line the pass
+                # cannot pair.
+                def _unguarded(n=len(claims)):
+                    _tally["unguarded"] += n
+                    _tally["packs_unguarded"].add(stem)
                 # WHICH KIND, so the closable class is visible. A table row is
                 # closable by one edit to the header; an argued claim is out of
                 # scope by construction; prose is the residue the board carries.
-                if line.startswith("|"):
+                # `lstrip()`, not the raw line. Two `cyclorama` rows sit inside an
+                # indented table and `line.startswith("|")` read them as prose, so
+                # the closable-by-one-header-edit class under-reported and the prose
+                # residue over-reported by the same two. Found 2026-08-20 by
+                # adjudicating the nine lines the broad check fails on.
+                if line.lstrip().startswith("|"):
                     _tally["un_table"] += len(claims)
+                    _unguarded()
                 elif ARGUED.search(line):
                     _tally["un_argued"] += len(claims)
-                else:
-                    _tally["un_prose"] += len(claims)
-                continue
+                    _unguarded()
+                # The broad pairing check below was UNREACHABLE from the day the
+                # `continue` was written until 2026-08-20: 29 lines that read as a
+                # live check and had never run. The comment above explains why it
+                # was bypassed — nine lines fail it and eight of those are correct
+                # writing — but a bypass written as dead code is a check a reader
+                # believes in. Those nine were adjudicated one at a time: three are
+                # out of scope by construction and are now named in `ARGUED`, two
+                # were an indented table misread as prose, and four were wrong
+                # writing, fixed in the packs. The check runs on prose now.
+                if line.lstrip().startswith("|") or ARGUED.search(line):
+                    continue
                 literal = [
                     parsed[0] for parsed in
                     (parse_color(h) for h in HEX_ON_LINE.findall(line))
@@ -1588,7 +1641,12 @@ def validate_stated_ratios(css: Path) -> None:
                                 for n in solids if n != s
                             ]
                     if not got:
+                        # The pass could not pair it: this is the residue, and it
+                        # is the only prose that is genuinely unguarded.
+                        _tally["un_prose"] += 1
+                        _unguarded(1)
                         continue
+                    _tally["broad"] += 1
                     ok = any(c >= want - RATIO_TOL for c in got) if atleast else \
                         any(abs(c - want) <= RATIO_TOL for c in got)
                     check(

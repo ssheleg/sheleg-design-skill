@@ -6,6 +6,37 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### The pairing check the prose ratios needed had been unreachable since it was written (B-053)
+
+Forty-six stated ratios sat in prose that named no partner, and the board carried them as a
+residue to be closed one sentence at a time. **The check they needed already existed.** Twenty-nine
+lines inside `validate_stated_ratios` — a full pairing pass that narrows to the token named on the
+line and refuses a number no pair produces — sat behind a `continue`, unreachable from the day it
+was written, reading to any reader as a live check.
+
+The comment above it was honest about the bypass: nine lines fail the pass and eight of those are
+correct writing. So the nine were adjudicated one at a time.
+
+* **Three are out of scope by construction** — a comparison against a colour the pack does not
+  ship (*"7.53:1 on pure white"*), a bound over a set of surfaces (*"11.8:1 on every tint"*,
+  *"1.97:1 on any of the six field stops"*), and a candidate measured in order to be rejected.
+  Named in `ARGUED` now, each with its line.
+* **Two were an indented table row misread as prose.** `line.startswith("|")` does not see a
+  leading space, so the closable-by-one-header-edit class under-reported and the prose residue
+  over-reported by exactly those two.
+* **Four were wrong writing.** The figure and its subject had drifted onto different lines, or the
+  token on the line was the *remedy* rather than the subject — and a reader cannot tell either from
+  a claim. All four were right about the arithmetic (recomputed) and are reflowed in `manpage` and
+  `roster` so the subject travels with the figure.
+
+**457 computed + 31 verified by the broad pass, 23 unguarded (4%), 6 prose the pass cannot pair.**
+The printed line reports the broad pass as its own class: counting a claim the run just verified as
+*unguarded* is the same untruth as the number it replaced, in the other direction. Two further
+corrections fell out of that — the total is a sum of buckets, so adding one without adding it to the
+total printed **495 claims where 526 exist**, a report getting quieter as coverage improved. And a
+palette plant had been asserting only that a partnerless prose claim *landed in a bucket*; it now
+asserts that a wrong number is **refused**, which is what the revived pass makes possible.
+
 ### A carrier phrase was dropped twice, and the second time shipped in seven releases (B-052)
 
 `T1` gives an agent five skill descriptions and fourteen tasks and passes only at 0 misses,

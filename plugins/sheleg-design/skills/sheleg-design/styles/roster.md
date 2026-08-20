@@ -403,9 +403,9 @@ recomputed by the palette gate at write time.
    **3.18:1** — legal for the 68px phrase as large text and illegal for anything smaller.
    The reference's *other* orange, `#f25533`, is the one on the nav fill (item 1); between
    them the page has two oranges and neither can carry a word.
-3. **The dominant secondary ink fails on its own band.** `#6a7282` measures 4.84:1 on white
-   and **4.35:1** on the `#f0f3f8` band it is painted on. `--ink-soft` is the darkened form
-   and clears both.
+3. **The dominant secondary ink fails on its own band.** `#6a7282` measures 4.84:1 on
+   white, and `#6a7282` on the `#f0f3f8` band it is actually painted on is **4.35:1**.
+   `--ink-soft` is the darkened form and clears both.
 4. **Reduced motion covers six animations out of roughly twenty.** The branch names classes
    one by one — `.pricing-card-enter`, `.pricing-price-swap`, `.promo-rotate-in`,
    `.ebook-float-primary`, `.ebook-float-secondary`, `.promo-animated-gradient` — while
