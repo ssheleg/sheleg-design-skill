@@ -117,6 +117,27 @@ copy it verbatim instead of transcribing this table.
 | `--danger` | `#C0442E` | destructive — one hue family with `--witness` (2.8 apart), told apart by form | 4.8:1 |
 | `--deep` / `-2` / `-3` | `#072820` / `#0B332A` / `#041D17` | one dark family, every member **bounded**: the dawn's darkest step · terminal header · terminal body — see Gotchas | — |
 
+**The dark twin, documented — because it ships and this section did not say so.**
+`tokens/field-notes.css:251-291` declares `[data-theme="dark"], .dark` with
+thirty overrides. What it changes:
+
+| Token | Dark value | Note |
+|---|---|---|
+| `--bg` / `--surface` | `#14110E` / `#1C1815` | the warm-brown family — **see the Gotchas below, this contradicts the pack's own stated decision** |
+| `--surface-2` / `--surface-3` | `#262019` / `#262019` | **the same value**: the deepest step this table names in light does not exist in dark |
+| `--ink` / `--ink-2` | `#F7F3EC` / `#F7F3EC` | also collapsed — light distinguishes them |
+| `--ink-soft` | `#A89E8F` | 7.1:1 on `--bg` in this theme |
+| `--brand` / `--brand-ink` | `#CF7A52` / `#CF7A52` | the light theme's `--brand-on-dark`, now the brand itself |
+| `--verify` | `#2BC0A8` | 8.3:1 on `--bg` — **safe as text here**, which it is not in light |
+| `--witness` | `#E06A4F` | 5.7:1 on `--bg` |
+| `--line` / `--line-strong` | `rgba(255,255,255,.10)` / `.14` | alpha, not a solid |
+
+**The dawn does not follow.** No `--dawn-*` stop is re-declared in the dark block,
+so `--hero-dawn` still ends `--dawn-7` `#E9ECDF` at 98% and `--bg` at 100% — in
+dark that is near-white meeting `#14110E` across two percent of the gradient,
+which is the hard edge this pack's own Bans forbid. Fixing it is a value decision
+this pack has not made; until it does, **do not ship the hero in dark**.
+
 Three rules carry this palette:
 
 - **`--ink-soft` is a real body colour here, and that is unusual.** At 5.2:1 on `--bg` it
@@ -441,6 +462,15 @@ first thing to correct when porting this look:
   theme, so UA form controls and scrollbars follow the OS while the page follows
   the class. This token layer sets it **per theme** — the same trap that bit
   `workbench`; never `light dark`.
+- **This pack's stated dark decision and its shipped dark theme disagree, and the
+  decision has not been re-made.** The paragraph below says the forest family is
+  kept; `tokens/field-notes.css:255` ships `--bg: #14110e`, which is the
+  warm-brown it says was set aside. Measured 2026-08-20, and the reference cannot
+  settle it: `graphify.com` serves **no dark theme at all today** — no
+  `[data-theme="dark"]`, no `.dark`, no `prefers-color-scheme`, and none of the
+  thirty dark values appears anywhere in the 488 KB it returns. So the two
+  readings are that the reference dropped its dark mode after 2026-08-04, or that
+  the block was never read off it. **Neither is guessed at here**; see the board.
 - **The reference runs three unrelated dark palettes**: a warm-brown `.dark`
   theme (`#14110E`), forest bands on the page (`#072820`), and a navy terminal
   (`#0B101D`). This pack keeps the forest family, because it is the hero's own

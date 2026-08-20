@@ -19,7 +19,7 @@ Themes: <derived from your token layer, and one of three answers: `light +
 dark — a full theme twin.`, `light only — no second block of any kind ships
 here.`, or `light only — the second block (\`[data-surface="…"]\`) is a
 SURFACE variant, not a theme twin.` Counted 2026-08-20 across the library:
-11 of them, then 13, then 5. "Does this pack have a dark mode?" had three
+10 of them, then 13, then 6. "Does this pack have a dark mode?" had three
 different answers depending on how a reader looked, which is why the pack
 now says.>
 

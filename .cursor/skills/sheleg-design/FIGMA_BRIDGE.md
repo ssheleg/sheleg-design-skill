@@ -47,7 +47,10 @@ gets botched:
 
 - `workbench` ships a light `:root` and a `data-theme="dark"` twin — that is one
   collection with **two modes**, `light` and `dark`, the same variable holding
-  both values. Never two collections.
+  both values. Never two collections. **It is an example, not the list:** ten
+  of the twenty-nine packs ship a twin, and each says so on its own `Themes:` line. Read that line
+  before publishing variables, because a pack with a twin and a one-mode
+  collection publishes half of itself and nothing says so.
 - `editorial-luxury`'s espresso palette is **not** a dark mode. Cream and
   espresso are two *surfaces* that coexist on one page, so they are separate
   variables (`paper`, `espresso`, `ink`, `cream`) in a single mode. Modelling

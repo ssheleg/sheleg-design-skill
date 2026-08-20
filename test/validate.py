@@ -1591,6 +1591,13 @@ PLANTS = (
         "'Shared state' re-asserts",
     ),
     (
+        # The exact number that shipped over this tree for four hours.
+        "a theme split restated wrong in the skeleton",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/STYLE_PACK_TEMPLATE.md",
+        lambda t: t.replace("10 of them, then 13, then 6.", "11 of them, then 13, then 5.", 1),
+        "and the packs' own `Themes:` lines derive",
+    ),
+    (
         # Exactly the sentence that sat wrong in `tenor` at twenty-nine packs:
         # a definite article, a numeral, and no noun for a gate to check.
         "a count written as `the <numeral>` with no noun",
@@ -2469,6 +2476,61 @@ def validate_a_count_names_its_noun():
 
 
 
+# ------------------------------------- the theme split, derived not restated
+#
+# The split was published on 2026-08-20 as 11 twin / 13 single / 5 surface-variant
+# and the tree said 10 / 13 / 6. TWO derivations of one number existed in the run
+# that wrote it — a loose regex over the raw CSS, which counts a pack that merely
+# mentions `dark` anywhere, and the strict one that generated the `Themes:`
+# declarations — and the prose quoted the loose one. Both were mine and only one
+# shipped into the pack skeleton.
+#
+# So the split is derived here from the declarations and compared with whatever a
+# document says. One derivation, in one place, and the prose is held to it.
+THEME_SPLIT_CLAIM = re.compile(
+    r"(\d{1,2})\s+of them,\s+then\s+(\d{1,2}),\s+then\s+(\d{1,2})")
+
+
+def validate_theme_split_is_derived():
+    styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
+    twin = single = surface = 0
+    for md in sorted(styles.glob("*.md")):
+        if md.name == "STYLE_PACK_TEMPLATE.md":
+            continue
+        m = re.search(r"(?m)^Themes:\s*(.+)$", read(md) or "")
+        if not m:
+            continue
+        said = m.group(1)
+        if "not a theme twin" in said:
+            surface += 1
+        elif "theme twin" in said:
+            twin += 1
+        else:
+            single += 1
+    truth = (twin, single, surface)
+    looked = 0
+    for rel in ("plugins/sheleg-design/skills/sheleg-design/styles/STYLE_PACK_TEMPLATE.md",
+                "templates/style-pack-template.md"):
+        text = read(ROOT / rel)
+        if text is None:
+            continue
+        m = THEME_SPLIT_CLAIM.search(" ".join(text.split()))
+        if not m:
+            continue
+        looked += 1
+        said = tuple(int(g) for g in m.groups())
+        check(
+            said == truth,
+            f"{rel}: states the theme split as {said[0]}/{said[1]}/{said[2]} and the "
+            f"packs' own `Themes:` lines derive {truth[0]}/{truth[1]}/{truth[2]}. "
+            f"A split restated in prose is a second derivation of one number, which "
+            f"is how 11/13/5 shipped over a tree that says 10/13/6",
+        )
+    if not looked:
+        _skips.append("no document states the theme split — nothing to hold to the tree")
+
+
+
 def validate_release_register():
     _release_register(
         read(ROOT / "CHANGELOG.md") or "",
@@ -2956,6 +3018,7 @@ def main():
     validate_hero_states_its_obligations()
     validate_pack_declares_its_silences()
     validate_a_count_names_its_noun()
+    validate_theme_split_is_derived()
     validate_status_vocabulary()
     validate_elevation_tokens_named()
     validate_radius_single_valued()

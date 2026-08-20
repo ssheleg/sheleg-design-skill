@@ -313,7 +313,7 @@ specified here"* list is unbounded and uncheckable — every pack would write a 
 and nothing could compare them. And four is not the boundary, because two silences are real
 and were counted before anything was chosen:
 
-- **Themes: 11 ship a dark twin, 13 ship one block, 5 ship a second block that is a
+- **Themes: 10 ship a dark twin, 13 ship one block, 6 ship a second block that is a
   *surface* rather than a theme** — `[data-surface="dark"]`, `[data-surface="panel"]`,
   `[data-state="alarm"]`. So *"does this pack have a dark mode?"* had three different answers
   depending on how a reader looked, and `tenor` in particular ships something dark that is
@@ -393,6 +393,41 @@ rule is now in the pack skeleton with the rest.
 
 The skeleton carries this as its **sixth** rule — and writing it corrected the section's own
 heading, which promised four rules over five. Floor 3783 → 3789.
+
+### `field-notes` ships thirty dark overrides that no prose carried (B-018)
+
+The pack declares `Themes: light + dark — a full theme twin` and its Palette documented only
+the light values. `tokens/field-notes.css:251-291` is now written out as a table, and writing
+it confirmed all three consequences the T24b run reported — plus one it missed:
+
+- **`--surface-2` and `--surface-3` are the same value** in dark, `#262019`, so the deepest
+  step the light table names does not exist there. **`--ink` and `--ink-2` collapse the same
+  way**, which the row did not catch.
+- **No `--dawn-*` stop is re-declared**, so `--hero-dawn` still ends `--dawn-7` `#E9ECDF` at
+  98% into `--bg` at 100%. In dark that is near-white meeting `#14110E` across two percent of
+  the gradient — the hard edge this pack's own Bans forbid. The Palette now says plainly:
+  **do not ship the hero in dark** until that decision is made.
+- **The pack's stated decision and its shipped theme disagree.** Gotchas says the forest
+  family was kept over the reference's warm-brown `.dark`; the layer ships `--bg: #14110e`,
+  which is that warm-brown. **The reference cannot settle it**: `graphify.com` serves no dark
+  theme at all today — no `[data-theme="dark"]`, no `.dark`, no `prefers-color-scheme`, and
+  none of the thirty dark values anywhere in the 488 KB it returns. Recorded where a reader
+  hits it and filed as B-112, not guessed at.
+
+The row's fourth claim was imprecise and is corrected rather than repeated: `SKILL.md` carries
+no list of packs with a mode collection. `FIGMA_BRIDGE.md` uses `workbench` as an *example*,
+and now says so, pointing at the `Themes:` line each pack carries.
+
+### A number this run published four hours ago was wrong
+
+The theme split shipped into the pack skeleton as **11 / 13 / 5**. The tree says **10 / 13 /
+6**. Two derivations of one number existed in the run that wrote it — a loose regex over the
+raw CSS, which counts any pack merely mentioning `dark`, and the strict one that generated the
+`Themes:` declarations — and the prose quoted the loose one.
+
+Corrected in all six places it had reached, and `validate_theme_split_is_derived()` now
+computes the split from the declarations and refuses a document that states another. Planted
+with the exact wrong number that shipped.
 
 ### Gate
 
