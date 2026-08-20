@@ -1110,6 +1110,43 @@ def validate_contract_split():
         )
 
 
+# B-006. A pack can only be chosen by a request that reaches this skill, and the
+# description's trigger list is what the runtime matches on. `briefing-room` ships for
+# "investor & board decks, briefings, talks as a page" and the word `deck` appeared nowhere
+# in the description (measured 2026-08-20, 955 of 1024 chars with 69 spare) — so a request
+# for a presentation deck reached nothing, and the pack was undiscoverable by the only
+# phrasing anybody would use for it.
+#
+# The list is enumerated rather than derived from the pack table, deliberately: that table's
+# "used for" column is prose about an INDUSTRY (consumer biotech, enterprise data
+# infrastructure) far more often than about a surface, and a check demanding every noun in it
+# would fail on words no user ever types. What must be reachable is the SURFACE class — what
+# the thing being designed IS — and there are few enough of those to name.
+SURFACE_CLASSES = {
+    "deck": "briefing-room — investor & board decks, 16:9, a deck rather than a page",
+    "dashboard": "workbench, scoreboard, instrument-console — product UI",
+    "landing": "the cinematic scroll-driven pages this skill opens with",
+    "admin": "the internal-tool surfaces the packs are chosen for",
+    "mobile": "the phone-sized screens several packs specify",
+    "token": "the token layer every pack ships",
+    "theme": "light/dark twins",
+}
+
+
+def validate_every_surface_class_is_discoverable():
+    """Every surface this library designs for is reachable from the description."""
+    text = read(ROOT / PLUGIN_DIR / "skills" / PLUGIN / "SKILL.md") or ""
+    m = re.search(r"^description:\s*(.*?)(?=^[a-z-]+:|^---)", text, re.S | re.M)
+    if not check(m is not None, "SKILL.md: no description to check for discoverability"):
+        return
+    desc = m.group(1).lower()
+    for word, why in sorted(SURFACE_CLASSES.items()):
+        check(
+            word in desc,
+            f"SKILL.md description never says '{word}' — {why}. A surface the description "
+            "cannot be asked for is a pack nobody reaches, whatever the pack table says",
+        )
+
 def validate_contract_declaration():
     styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
     skill = read(styles.parent / "SKILL.md") or ""
@@ -2550,6 +2587,7 @@ def main():
     validate_contract_terminology()
     validate_contract_split()
     validate_contract_declaration()
+    validate_every_surface_class_is_discoverable()
     validate_core_vocabulary()
     validate_reduced_motion()
     validate_pack_container_answer()
