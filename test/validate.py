@@ -1369,6 +1369,14 @@ def check_floor(script: str, count: int) -> None:
 # reduced-motion plants below name the message they must provoke.
 PLANTS = (
     (
+        # The v1.37.5 regression, planted back: the carrier removed while the edit
+        # reads as additive. Derived from the phrase rather than its surroundings.
+        "a description edit that drops the phrase a T1 task depends on",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md",
+        lambda t: t.replace(", scrubbed sections", "", 1),
+        "the phrase T1's",
+    ),
+    (
         # The preamble's count, restated wrongly -- which is the state it shipped in
         # until 2026-08-20, saying twenty-six against a table of thirty-four.
         # Derived: whatever word opens the sentence is replaced.
@@ -3349,6 +3357,80 @@ def validate_confined_tokens_measured_where_used():
           f"against a surface it is confined away from")
 
 
+# ------------------------------------- a description edit must not drop a carrier
+#
+# `T1` in `test/scenarios.md` gives an agent five skill descriptions and fourteen
+# tasks, and passes only at 0 misses and 0 false loads. Its own record says what
+# this check is for: the 1.12.0 run scored 13/14 because *"scrubbed sections"* had
+# been dropped to make room for a mobile trigger, and that phrase was the only
+# thing in the description carrying **section by section**. It was restored, the
+# set re-ran green, and the harness header gained the rule that a description edit
+# obliges the full trigger set.
+#
+# **It happened again, by the same mechanism, and nothing noticed for seven
+# releases.** `v1.37.5` (`de09f9e`, "an unqualified landing page reaches both
+# crafts") removed `scrubbed sections` while the description GREW 1009 -> 1021, so
+# the edit read as additive. T1 has not been re-run since 2026-08-11, so the
+# regression sat in every release from v1.37.5 to v1.45.0. Found 2026-08-20 by
+# walking the phrase across every tag rather than by reading the diff.
+#
+# What this check can and cannot do. It proves a phrase a T1 task depends on is
+# still IN the description — which is the failure mode that has now occurred twice.
+# It cannot prove the runtime routes that phrasing here rather than to `super-ux`
+# or `copywriting`; that is a fresh-context measurement and no string test
+# substitutes for it (board B-052).
+#
+# Each pair is (the T1 task, the phrase that carries it). A pair is added when a
+# task is added to T1, and the list is enumerated rather than derived because the
+# mapping from a task to its carrier is a judgement the run makes, not a pattern.
+T1_CARRIERS = (
+    ("particle-hero landing", "particle"),
+    ("WebGL hero upgrade", "WebGL"),
+    ("scroll-narrative storyboard", "scrubbed"),
+    ("landing janky / layers out of sync", "drift"),
+    ("Russian cinematic particle landing", "лендинг"),
+    ("quiet-light dashboard styling", "dashboard"),
+    ("admin design tokens light/dark", "admin"),
+    ("admin design tokens light/dark", "light/dark"),
+    ("Russian calm light UI for an internal tool", "internal tool"),
+    ("iOS onboarding screens", "mobile screen"),
+    ("Russian mobile payment screen", "мобильный экран"),
+    ("investor deck (added by B-006)", "deck"),
+)
+
+
+def validate_t1_carriers_survive():
+    skill = read(ROOT / PLUGIN_DIR / "skills" / PLUGIN / "SKILL.md")
+    scenarios = read(ROOT / "test" / "scenarios.md")
+    if skill is None:
+        return
+    m = re.search(r"^description:\s*(.*?)^[a-z_]+:", skill, re.M | re.S)
+    if not check(m is not None,
+                 "SKILL.md front matter has no readable `description:` — the T1 carrier "
+                 "check could not look, and that is not a pass"):
+        return
+    description = " ".join(m.group(1).split())
+    # The scenario file must still hold T1. Without this the carriers are measured
+    # against a set that no longer exists.
+    if scenarios is not None:
+        check("## T1 " in scenarios or "## T1 —" in scenarios,
+              "test/scenarios.md no longer holds a `## T1` section, and this check "
+              "exists to protect its tasks")
+    missing = [(task, phrase) for task, phrase in T1_CARRIERS
+               if phrase.lower() not in description.lower()]
+    check(
+        not missing,
+        "the description no longer carries "
+        + "; ".join(f"`{p}` (the phrase T1's \"{t}\" task depends on)"
+                    for t, p in missing)
+        + ". A description edit that reads as additive can still remove the only "
+          "phrase carrying a task — that is how `scrubbed sections` was lost twice, "
+          "and the second time it shipped in seven releases",
+    )
+    print(f"  T1 carriers: {len(T1_CARRIERS)} phrase(s) present, description "
+          f"{len(description)}/1024 chars")
+
+
 # ------------------------------------- a stamp count nobody recounts
 #
 # The Run stamps preamble reports how many rows carry no `Diverged?` answer, and
@@ -4449,6 +4531,7 @@ def main():
     validate_excluded_sets_are_declared()
     validate_token_comments_respect_the_bands()
     validate_confined_tokens_measured_where_used()
+    validate_t1_carriers_survive()
     validate_reconstructed_stamp_count()
     validate_retirement_window()
     validate_every_plant_names_its_check()

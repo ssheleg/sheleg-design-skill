@@ -62,6 +62,24 @@ tasks loading and all four distractors still routing away.
 This is why the harness header says a description edit obliges the full trigger
 set. The edit looked purely additive; it removed a carrier.
 
+**It happened again, and the harness header did not prevent it.** `v1.37.5`
+(`de09f9e`, *"an unqualified landing page reaches both crafts"*) removed
+`scrubbed sections` while the description GREW from 1009 to 1021 chars — additive
+by every appearance, and the phrase carrying **section by section** was gone with
+it. T1 was not re-run, so the regression shipped in **every release from v1.37.5
+to v1.45.0**, seven of them. Found 2026-08-20 by walking the phrase across every
+tag rather than by reading a diff; restored, description at 1007/1024.
+
+**Status, 2026-08-20: the carrier half is now mechanical and the measurement half
+is still owed.** `validate_t1_carriers_survive` pins each of the twelve phrases a
+T1 task depends on to the description and fails when one is dropped, watched
+failing against the v1.37.5 edit itself. What it does **not** do is prove a
+phrasing routes here rather than to `super-ux` or `copywriting` — that needs the
+set run in fresh contexts against the current 1007-char description, and no string
+test substitutes for it. **The last fresh-context result is 2026-08-11 (`v1.12.0`),
+and the description has changed six times since.** Do not read the green below as
+current.
+
 ## T2 — Application (motion architecture)
 
 "Design the motion architecture for a cinematic scroll landing (particles,

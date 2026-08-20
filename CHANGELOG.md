@@ -6,6 +6,30 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### A carrier phrase was dropped twice, and the second time shipped in seven releases (B-052)
+
+`T1` gives an agent five skill descriptions and fourteen tasks and passes only at 0 misses,
+0 false loads. Its own record already carried the lesson: the 1.12.0 run scored 13/14 because
+*"scrubbed sections"* had been dropped to make room for a mobile trigger, and that phrase was
+the only thing in the description carrying **section by section**. It was restored, the set
+re-ran green, and the harness gained the rule that a description edit obliges the full trigger
+set.
+
+**The rule did not hold.** `v1.37.5` (`de09f9e`, *"an unqualified landing page reaches both
+crafts"*) removed `scrubbed sections` while the description **grew** from 1009 to 1021 chars —
+additive by every appearance. T1 was not re-run, so the regression shipped in **v1.37.5 through
+v1.45.0**, seven releases. It was found by walking the phrase across every tag, not by reading
+a diff, which is the only reason it was found at all.
+
+Restored (1007/1024), and the class is mechanical now: `validate_t1_carriers_survive` pins the
+twelve phrases T1's tasks depend on to the description and fails when one goes, watched failing
+against the v1.37.5 edit itself.
+
+**What this does not do is stated where it matters.** A string test cannot prove a phrasing
+routes here rather than to `super-ux` or `copywriting`. The last fresh-context T1 result is
+2026-08-11 and the description has changed six times since, so T1's record now says *do not read
+the green below as current* directly above it. That measurement is what B-052 stays open for.
+
 ### Every plant names the check it exercises, and one of them never had (B-051)
 
 The self-test's fourth tuple element is the string the output must contain — the only thing
