@@ -177,6 +177,25 @@ Measured across the whole family in the same pass: **13 such rows in five reposi
 including rows whose columns were simply missing or doubled. All are fixed and the count is
 zero.
 
+### A tag can no longer publish a release no clone can reach (B-014)
+
+A tag pushed without its branch is a release that exists on npm and on GitHub and nowhere a
+`git clone` can find it. Nothing fails loudly, because the release workflow fires on the
+**tag**: the release is created, the package publishes, and `origin/main` still reads the
+previous era. This repository hit it twice — the `v1.4.0` ghost on 2026-08-04, and `v1.18.0`
+on 2026-08-12 with `main` two commits ahead of `origin/main` while the tag was public.
+
+The release job now refuses it: `git merge-base --is-ancestor HEAD "origin/$DEFAULT"`,
+against the repository's **actual** default branch read from the API rather than a hardcoded
+`main`, so a fork that renamed its branch is not told its correct tag is unreachable. The tag
+checkout gains `fetch-depth: 0`, because ancestry on a shallow clone is not an answer — it is
+whatever the depth happened to give.
+
+Watched refusing against a reproduction of the defect: a commit that was never pushed,
+tagged, and the ancestry test says so. Watched passing on this repository's real HEAD. **All
+eight members carry it**, and the umbrella requires both halves in each, watched failing when
+either was removed.
+
 ### Gate
 
 - **Coverage is pinned, in both directions.** `check_ratio_coverage()` reads
