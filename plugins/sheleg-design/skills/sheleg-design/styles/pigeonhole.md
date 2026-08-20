@@ -144,6 +144,25 @@ Nine categories, measured. Each is an ink plus a four-step tint ramp of its own
 hue; the reference's stylesheet declares eleven such ramps, two of which it never
 spends on a category.
 
+**These nine are deliberately outside the palette gate's semantic peer check, and
+this is the declaration that says so.** Nine hues cannot be simultaneously
+AA-compliant against their own tints and mutually distinguishable: measured
+2026-08-20 with the gate's own OKLab metric, the closest pair is **4.92 ΔE** at
+full colour (`--cat-notification-ink` / `--cat-team-ink`) and **1.24 ΔE** under
+deuteranopia (`--cat-marketing-ink` / `--cat-notification-ink`), against a hard
+floor of 10 and a dichromacy floor of 8. No arrangement of nine hues clears
+those, so the exclusion is a property of the problem rather than a concession.
+
+**What carries the category is the word, and it is required.** Every chip states
+its category as a label — see Components, where *"the label word is **required**"*
+— and every ink clears **AA against its own tint** (the table below states each
+ratio, and the gate computes all nine). The hue is recognition, never
+identification. A chip rendered as a bare swatch is a defect in this pack.
+
+**Adding a tenth category is a change to this list, not only to the token layer.**
+The gate holds the enumeration below equal to the `--cat-*-ink` tokens that ship,
+so a hue added without a row here fails, and a row without a token fails.
+
 | Category | Ink | Clears |
 |---|---|---|
 | To Reply | `--cat-reply-ink` `#0940f3` | 4.51:1 on `--cat-reply-200` |

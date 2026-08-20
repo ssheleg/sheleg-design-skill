@@ -551,6 +551,36 @@ class still read as answered and the plant proved nothing. And the regex that th
 whole bullet was anchored on *"have had"* where the pack says *"never had"* — a fixture that
 changed nothing, caught by the runner's own "the fixture changed nothing" branch.
 
+### An exclusion that held by accident now holds by declaration (B-026)
+
+`pigeonhole`'s nine `--cat-*-ink` tokens sit outside the palette gate's semantic peer set, and
+**the exclusion is correct**. Re-measured with the gate's own OKLab metric: the closest pair is
+**4.92 ΔE** at full colour (`--cat-notification-ink` / `--cat-team-ink`) and **1.24 ΔE** under
+deuteranopia (`--cat-marketing-ink` / `--cat-notification-ink`), against a hard floor of 10 and
+a dichromacy floor of 8. No arrangement of nine hues clears those. The board's 4.42 was slightly
+off; its 1.24 was exact.
+
+What was wrong is *how* the exclusion held: `STATUS_TOKENS` matches by **name**, so an author
+renaming a category token `--danger-ink` got a red gate for the right reason **by luck**, and one
+adding a tenth hue got nothing at all.
+
+The pack now declares it where the categories are enumerated — with those numbers, and with the
+carrier named: the chip's **label word**, already required in Components, plus every ink clearing
+AA against its own tint. The hue is recognition, never identification, and a chip rendered as a
+bare swatch is a defect in this pack.
+
+`validate_excluded_sets_are_declared()` holds the enumeration equal to the shipped tokens **in
+both directions** — a tenth hue with no row fails, a row with no token fails — and requires the
+carrier to be stated **in the section that enumerates the set**.
+
+**That last scoping is the fix its own plant forced.** Searching the whole file let a chip rule
+three sections away satisfy a declaration about the hues: the plant broke two of the phrase's
+three occurrences and the third kept the check quiet. A declaration belongs where the reader of
+that set is standing.
+
+B-017's widening, which this row asked to wait for, shipped earlier the same day. Floor 3835 →
+3839.
+
 ### Gate
 
 - **Coverage is pinned, in both directions.** `check_ratio_coverage()` reads

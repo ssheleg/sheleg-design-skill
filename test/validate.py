@@ -1591,6 +1591,25 @@ PLANTS = (
         "'Shared state' re-asserts",
     ),
     (
+        # The row's own scenario: a tenth hue added to the layer and nowhere else.
+        "a category hue the token layer ships and the pack never names",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/tokens/pigeonhole.css",
+        lambda t: t.replace("  --cat-reply-ink:",
+                            "  --cat-invoice-ink: #7a2e00; /* 4.5:1 */\n  --cat-reply-ink:", 1),
+        "and the pack never names",
+    ),
+    (
+        "an excluded set with no stated carrier",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/pigeonhole.md",
+        # BOTH phrasings, because the check accepts either — breaking one leaves
+        # the other standing and the plant proves nothing.
+        lambda t: t.replace("The label word is\n**required**.",
+                            "The label word is\noptional.", 1)
+                   .replace("**What carries the category is the word, and it is required.**",
+                            "**The hue carries the category.**", 1),
+        "never states what carries the category instead",
+    ),
+    (
         # atrium's four gaps, put back — the state it shipped in for eleven
         # iterations of the loop that widened it.
         "a Components section that drops a class it used to answer",
@@ -2856,6 +2875,83 @@ def validate_component_classes_are_answered():
 
 
 
+# ------------------------------------- a set excluded from the peer check
+#
+# `pigeonhole` carries nine `--cat-*-ink` tokens that are deliberately outside
+# `validate_palette.py`'s semantic peer set. The exclusion is correct — measured
+# with the gate's own metric, the closest pair is 4.92 ΔE at full colour and
+# **1.24 under deuteranopia** against floors of 10 and 8, and no arrangement of
+# nine hues clears those. What was wrong is that the exclusion held by ACCIDENT:
+# `STATUS_TOKENS` matches by NAME, so an author who renamed a category token
+# `--danger-ink` got a red gate for the right reason by luck, and one who added a
+# tenth hue got nothing at all.
+#
+# So the set is declared, and the declaration is checked two ways: the prose
+# enumeration equals the tokens that ship, and the pack states what carries the
+# category instead of the hue. The second half is the load-bearing one — an
+# exclusion with no stated carrier is just a gap with a paragraph in front of it.
+CATEGORY_INK = re.compile(r"--cat-[a-z0-9-]+-ink")
+
+
+def validate_excluded_sets_are_declared():
+    styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
+    tokens = styles / "tokens"
+    if not tokens.is_dir():
+        return
+    looked = 0
+    for css in sorted(tokens.glob("*.css")):
+        body = read(css) or ""
+        in_layer = {m.group(0) for m in CATEGORY_INK.finditer(body)
+                    if re.search(rf"^\s*{re.escape(m.group(0))}\s*:", body, re.M)}
+        if not in_layer:
+            continue
+        looked += 1
+        md = styles / f"{css.stem}.md"
+        prose = read(md) or ""
+        in_prose = {m.group(0) for m in CATEGORY_INK.finditer(prose)}
+        rel = f"styles/{md.name}"
+        missing = sorted(in_layer - in_prose)
+        extra = sorted(in_prose - in_layer)
+        check(
+            not missing,
+            f"{rel}: the token layer ships {', '.join(missing)} and the pack never "
+            f"names them. A hue added without a row is a category no reader knows "
+            f"about and no gate can see — the peer check excludes this set by "
+            f"declaration, so the declaration is the only place it is counted",
+        )
+        check(
+            not extra,
+            f"{rel}: it names {', '.join(extra)} and the token layer ships no such "
+            f"token, so the enumeration describes a pack that does not exist",
+        )
+        # THE CARRIER, and it has to be stated in the SECTION that enumerates the
+        # set. Searching the whole file let an unrelated chip rule three sections
+        # away satisfy a declaration about the category hues — the plant for this
+        # broke two of the phrase's three occurrences and the third kept the check
+        # quiet. A declaration is where the reader of that set is standing.
+        lines = prose.split("\n")
+        first = next((i for i, l in enumerate(lines) if CATEGORY_INK.search(l)), None)
+        section = ""
+        if first is not None:
+            start = max((i for i in range(first, -1, -1) if lines[i].startswith("## ")),
+                        default=0)
+            end = next((i for i in range(first + 1, len(lines))
+                        if lines[i].startswith("## ")), len(lines))
+            section = "\n".join(lines[start:end])
+        check(
+            re.search(r"carries the category is the word|the word, and it is required",
+                      section, re.I) is not None,
+            f"{rel}: it excludes {len(in_layer)} category hues from the semantic peer "
+            f"check and the section that enumerates them never states what carries "
+            f"the category instead. An exclusion with no stated carrier is a gap "
+            f"with a paragraph in front of it",
+        )
+    if not looked:
+        _skips.append("no pack ships a category-ink set — the exclusion declarations "
+                      "were not checked")
+
+
+
 def validate_release_register():
     _release_register(
         read(ROOT / "CHANGELOG.md") or "",
@@ -3348,6 +3444,7 @@ def main():
     validate_motion_ceiling_has_one_home()
     validate_worked_radius_sums_compute()
     validate_component_classes_are_answered()
+    validate_excluded_sets_are_declared()
     validate_status_vocabulary()
     validate_elevation_tokens_named()
     validate_radius_single_valued()
