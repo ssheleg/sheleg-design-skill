@@ -6,6 +6,49 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### `babylove` — the thirty-first pack, and the other end of the same question
+
+Measured 2026-08-21 off <https://www.babylovegrowth.ai/en> and its
+`/dashboard/overview` in a logged-in session.
+
+**The pair is the argument.** `outrank` and `babylove` are the same product category in the
+same year — SEO and AI-visibility SaaS with a landing and a dashboard. `outrank` answers *how
+much system do you need* with **536 custom properties across two borrowed design systems**.
+This one answers it with **seven**: `--brand` and six steps of it, every grey taken from
+Tailwind v4's defaults, and nothing else declared at all. Neither is wrong, and the library now
+carries both ends priced.
+
+Three findings the arithmetic produced:
+
+* **The brand orange cannot carry a word in either direction** — `#FA5C12` is 3.18:1 on the
+  page and white on it is 3.18:1. The reference knows: its hero CTA is **near-black at
+  19.66:1**. The one place it breaks its own rule is the nav button, white on `#F25533` at
+  **3.43:1**, in the same viewport as the one it got right.
+* **The rail's section labels are 2.60:1** — Tailwind's gray-400 at 11px, and 2.49:1 on the
+  inner card. Corrected to gray-500 `#6A7282`, which is the framework's own next step rather
+  than a value from me.
+* **`--brand-dark` is 4.49:1** — one hundredth under AA. Kept because the reference declares
+  it, and named as not-the-token-for-text.
+
+Its signature is the **disconnected state as a first-class surface**: a card whose source is
+not connected renders at full size with an illustration, a sentence naming what connecting
+buys, and a button — so the dashboard's shape does not change when a source is added, and a new
+account reads as unfinished rather than as broken.
+
+### Two gate defects the thirty-first pack exposed
+
+**`NUMBER_WORDS` stopped at thirty, and a second copy of it stopped there too.**
+`COUNT_WITHOUT_ITS_NOUN` spelled the same vocabulary out a second time. At thirty-one the first
+turned every count check red — loudly, correctly — and the second **went quiet on exactly the
+sentence it exists for**. The silent one is the dangerous half, and it surfaced only because
+its own plant then reported the validator going red for an unrelated reason. The pattern is
+built from the dictionary now, longest-alternative-first so `twenty` cannot shadow
+`twenty-one`.
+
+**Four plants are anchored on counts that every new pack moves.** Adding `outrank` broke two;
+adding `babylove` broke all four. Each pinned the literal a count edit rewrites. All four
+derive their anchor now. The residue — 57 plants not read for the same shape — is B-131.
+
 ### `outrank` — the thirtieth pack, and the first that is two surfaces
 
 Measured 2026-08-21 off <https://www.outrank.so> and its `/dashboard` in a logged-in
@@ -732,7 +775,7 @@ unguarded again the moment it was.
 | **`the <numeral>` closing a clause** | **7** | precise — a definite article asserts a known set |
 
 Of those seven, three are library counts, and **one of the three was wrong**: `tenor.md:328`
-said token names are *"not uniform across the twenty"* while thirty packs ship. A live
+said token names are *"not uniform across the twenty"* while thirty-one packs ship. A live
 wrong number, invisible to every gate, found by narrowing rather than by widening.
 
 All seven now name their noun — which hands them to the existing check forever — and
@@ -1157,7 +1200,7 @@ Registers that had stopped:
   at sixteen packs and asserted all 71 had been hand-verified. Measured today: **513 claims,
   336 guarded, 177 unguarded at 22 packs** — and the run prints that pair every time, with
   the hand-verification dated for what it was. Two more restated counts went the same way.
-- **`package.json` said thirty packs and named 27** — `awning` and `bulletin` missing
+- **`package.json` said thirty-one packs and named 27** — `awning` and `bulletin` missing
   from the surface an npm reader chooses from. It is an enumeration site now.
 - **Two `## [1.35.0]` sections** under one version, and four releases in the CHANGELOG with
   no tag. The duplicate is resolved; the untagged four are **reported, not created** — a tag
@@ -1285,7 +1328,7 @@ measured, and never gates content.
   the comment says plainly which of them was ever verified.
 - `test/validate.py` said "the six packs shipped before the widening" (seven) and
   "seven of the ten widened packs" (twenty-two widened). The split is printed now.
-- `package.json` said "thirty locked style packs" over a list of **27** —
+- `package.json` said "thirty-one locked style packs" over a list of **27** —
   `awning` and `bulletin` were missing. `ENUMERATION_SITES` gained `package.json`,
   which is the description npmjs.com renders: its count was already policed and
   the names beside it were not.
@@ -1409,7 +1452,7 @@ with their numbers.
   Rendered and confirmed at 1440×1000, including the press: the primary's offset goes
   3px → 1px as the control travels 2px, while the secondary beside it keeps its 3px.
 - **Three stale counts in `SURFACE_COMPOSITION.md` that no gate could see.** It said the
-  token names were not uniform "across the twenty-one" when thirty packs ship, and
+  token names were not uniform "across the twenty-one" when thirty-one packs ship, and
   that the accent is `--accent` "in eighteen" when it is twenty-seven — `--brand` in
   `field-notes` and `--cta` in `orchard` are still the only two exceptions, counted. The
   third was a count of packs carrying an `@role non-text:` colour, which is now stated as

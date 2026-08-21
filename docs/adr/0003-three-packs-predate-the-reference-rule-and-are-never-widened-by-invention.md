@@ -57,6 +57,6 @@ A consumer picking `instrument-console` for a product surface gets less than one
 `datasheet`: they decide the component states themselves. `SKILL.md`'s pack table says so at
 the point of choice, which is the only place the cost can be paid honestly.
 
-And it costs the library its symmetry. Seven of thirty packs are `core` and twenty-two
+And it costs the library its symmetry. 6 of 31 packs are `core` and twenty-four
 are `widened`, and that split is now a stated fact with a reason rather than an accident of
 which pack somebody had time for.

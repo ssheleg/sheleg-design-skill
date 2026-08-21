@@ -831,6 +831,16 @@ NUMBER_WORDS = {
     21: "twenty-one", 22: "twenty-two", 23: "twenty-three", 24: "twenty-four",
     25: "twenty-five", 26: "twenty-six", 27: "twenty-seven",
     28: "twenty-eight", 29: "twenty-nine", 30: "thirty",
+    # Extended past thirty on 2026-08-21, when the thirty-first pack landed and
+    # every check reading this table went red at once. The failure is the right
+    # one -- a vocabulary that stops silently would let `thirty-one` read as
+    # unparseable and the count go unchecked -- but the cheap wrong fix is to
+    # write the numeral in the prose instead, which degrades the sentence to
+    # satisfy the parser. Carried to forty so the next few releases do not
+    # rediscover this.
+    31: "thirty-one", 32: "thirty-two", 33: "thirty-three", 34: "thirty-four",
+    35: "thirty-five", 36: "thirty-six", 37: "thirty-seven", 38: "thirty-eight",
+    39: "thirty-nine", 40: "forty",
 }
 WORD_NUMBERS = {w: n for n, w in NUMBER_WORDS.items()}
 # Longest first, so "twenty-one" wins over "one"; and a lookbehind that refuses
@@ -1669,8 +1679,8 @@ PLANTS = (
         # green over the same file. The plant is the defect restored verbatim.
         "a stale count hyphenated onto its noun",
         "docs/DOCMAP.md",
-        lambda t: t.replace("thirty-kit", "fourteen-kit", 1),
-        "says 'fourteen-kit' but there are 30 kits",
+        lambda t: re.sub(r"[a-z]+(?:-[a-z]+)?-kit", "fourteen-kit", t, count=1),
+        "says 'fourteen-kit' but there are",
     ),
     (
         # The same hole in digits. Worth its own plant because the number and the
@@ -1679,8 +1689,8 @@ PLANTS = (
         # above while leaving `14-kit` invisible.
         "a stale count hyphenated onto its noun, in digits",
         "docs/DOCMAP.md",
-        lambda t: t.replace("thirty-kit", "14-kit", 1),
-        "says '14-kit' but there are 30 kits",
+        lambda t: re.sub(r"[a-z]+(?:-[a-z]+)?-kit", "14-kit", t, count=1),
+        "says '14-kit' but there are",
     ),
     (
         # The status map's live instance: `workbench` had grown a quartet while the
@@ -1928,7 +1938,7 @@ PLANTS = (
         # The exact number that shipped over this tree for four hours.
         "a theme split restated wrong in the skeleton",
         f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/STYLE_PACK_TEMPLATE.md",
-        lambda t: t.replace("11 of them, then 13, then 6.", "10 of them, then 13, then 5.", 1),
+        lambda t: re.sub(r"\d+ of them, then \d+, then \d+\.", "10 of them, then 13, then 5.", t, count=1),
         "and the packs' own `Themes:` lines derive",
     ),
     (
@@ -1936,7 +1946,7 @@ PLANTS = (
         # a definite article, a numeral, and no noun for a gate to check.
         "a count written as `the <numeral>` with no noun",
         f"{PLUGIN_DIR}/skills/{PLUGIN}/SURFACE_COMPOSITION.md",
-        lambda t: t.replace('across\nthe thirty packs:', 'across\nthe thirty:', 1),
+        lambda t: re.sub(r"across\n(the [a-z-]+) packs:", r"across\n\1:", t, count=1),
         "names no noun, so nothing can check it",
     ),
     (
@@ -2786,11 +2796,17 @@ def validate_pack_declares_its_silences():
 # So the class is closed by making the form checkable rather than by guessing at
 # it: name the noun, and `validate_counted_claims` covers it forever. This refuses
 # the bare form. It is deliberately narrow -- a numeral without `the` is prose.
+# BUILT FROM `NUMBER_WORDS` rather than spelled out a second time. The
+# hand-written alternation stopped at `thirty`, so on the day the library reached
+# its thirty-first pack this guard went quiet on exactly the sentence it exists
+# for — and its own plant reported the validator going red for another reason,
+# which is how the silence surfaced. Two lists of one vocabulary is one list that
+# drifts, and the longest alternative has to come first or `twenty` shadows
+# `twenty-one`.
 COUNT_WITHOUT_ITS_NOUN = re.compile(
-    r"\bthe\s+(two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|"
-    r"fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|twenty-one|twenty-two|"
-    r"twenty-three|twenty-four|twenty-five|twenty-six|twenty-seven|twenty-eight|"
-    r"twenty-nine|thirty)\b(?=\s*[,.;:)\]])", re.I)
+    r"\bthe\s+("
+    + "|".join(NUMBER_WORDS[n] for n in sorted(NUMBER_WORDS, reverse=True) if n >= 2)
+    + r")\b(?=\s*[,.;:)\]])", re.I)
 
 
 def validate_a_count_names_its_noun():

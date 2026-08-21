@@ -19,7 +19,7 @@ Themes: <derived from your token layer, and one of three answers: `light +
 dark — a full theme twin.`, `light only — no second block of any kind ships
 here.`, or `light only — the second block (\`[data-surface="…"]\`) is a
 SURFACE variant, not a theme twin.` Counted 2026-08-20 across the library:
-11 of them, then 13, then 6. "Does this pack have a dark mode?" had three
+11 of them, then 14, then 6. "Does this pack have a dark mode?" had three
 different answers depending on how a reader looked, which is why the pack
 now says.>
 
@@ -102,7 +102,7 @@ and no clone.
 6. **A count names what it counts, and a subset says so.** `validate_counted_claims`
    reads *"N packs"*, *"N kits"*, *"N scenarios"*, *"N headings"* and checks each
    against the tree. It cannot read *"uniform across the twenty"* — and `tenor`
-   carried exactly that at thirty packs until 2026-08-20, wrong and invisible
+   carried exactly that at thirty-one packs until 2026-08-20, wrong and invisible
    to every gate. So write the noun. Two traps come with it, both found the hour the
    rule was written: a claim about **part** of the library must be
    `N of the M packs`, because a bare `N packs` is read as a claim about the total

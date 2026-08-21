@@ -1,0 +1,114 @@
+/* SHELEG Design — Babylove token layer.
+   Copy verbatim; consume only var(--…) in components. */
+:root {
+  /* ---- Field and ink ------------------------------------------------------
+     MEASURED 2026-08-21 off https://www.babylovegrowth.ai/en and its
+     /dashboard/overview. The whole system is **Tailwind v4's default palette
+     plus seven brand tokens** — the site declares exactly seven custom
+     properties, all `--brand-*`, and takes every grey from the framework. Read
+     that against `outrank`, which is the same category answered with 536
+     properties across two borrowed design systems: this is the other end of the
+     same question, and both ship. */
+  --bg: #ffffff; /* MEASURED — one field, no dark twin anywhere */
+  --surface: #fcfcfc; /* MEASURED — the OUTER card, one step off the page */
+  --surface-2: #f9fafb; /* MEASURED — Tailwind gray-50, the INNER card */
+  --surface-3: #f3f4f6; /* MEASURED — gray-100, a muted control */
+  --hairline: #e5e7eb; /* 1.24:1 on --bg — gray-200, the only separator */
+  --hairline-soft: #ebebeb; /* MEASURED — the outer card's border */
+
+  --ink: #171717; /* 17.93:1 on --bg — MEASURED, the headline */
+  --ink-data: #101828; /* 17.75:1 on --bg — MEASURED, gray-900, every number */
+  --ink-soft: #4a5565; /* 7.56:1 on --bg — MEASURED, gray-600, card titles */
+  /* [CORRECTION] The reference sets its rail's section labels — ACTIONS,
+     ANALYTICS, OTHER — in gray-400 #99a1af at 11px, which is 2.60:1 on --bg and
+     2.49:1 on the inner card. #6a7282 is gray-500, the NEXT STEP DOWN THEIR OWN
+     RAMP, and the nearest one that clears 4.5:1 on both fields (4.84 and 4.63).
+     Nothing is invented; the framework already shipped the value. */
+  --ink-faint: #6a7282; /* 4.84:1 on --bg, 4.63:1 on --surface-2 — CORRECTED */
+
+  /* ---- The brand: one hue, seven steps, and it may not carry a word -------
+     The reference declares all seven and this pack keeps them. What it adds is
+     the rule the reference breaks once: at 3.18:1 and 3.43:1 the orange clears
+     the 3:1 floor for a graphical object and clears nothing for text — in
+     EITHER direction, so white on it fails as surely as it does on the page.
+     @role non-text: --brand, --brand-light, --brand-pale — fills, bars, rings
+     and the one accent word set at display size, never a label at control size. */
+  /* @role accent: --brand — this pack names its accent `--brand`, which is the
+     reference's own word for it and the prefix of all seven of its tokens.
+     Renaming it `--accent` here would leave the pack's prose and the site's
+     vocabulary disagreeing on the one hue the whole system is made of. */
+  --brand: #fa5c12; /* 3.18:1 on --bg — MEASURED, the declared token */
+  --brand-light: #ff7a37; /* MEASURED */
+  --brand-pale: #ffb48a; /* MEASURED */
+  --brand-dark: #d8410a; /* 4.49:1 on --bg — MEASURED, and 0.01 short of AA */
+  --brand-darker: #b73f06; /* 5.63:1 on --bg — MEASURED */
+  --brand-deepest: #983000; /* 7.61:1 on --bg — MEASURED */
+  /* The text-safe brand, and it is one of THEIR seven rather than a new value. */
+  --brand-ink: #b73f06; /* 5.63:1 on --bg, and white on it is 5.63:1 too */
+
+  /* ---- The action is black, and that is the reference's own answer --------
+     The hero CTA is near-black at 19.66:1 in both directions while the brand
+     orange manages 3.43. The site already made this decision; the pack states
+     the reason so nobody "fixes" the button to the brand colour. */
+  --action: #0f0a0a; /* 19.66:1 on --bg — MEASURED */
+  --on-action: #ffffff; /* 19.66:1 on --action */
+
+  /* ---- Status ------------------------------------------------------------- */
+  --good: #027a48; /* 5.41:1 on --bg — the Published chip's ink */
+  --warn: #b54708; /* 5.43:1 on --bg — the Queued chip's ink */
+  /* @role non-text: --live — 2.62:1 on --bg, which clears nothing. It is the
+     dot in the `● Live` pill and the pill's WORD is what carries the state;
+     the hue is the second signal. A status a reader cannot separate from the
+     field is a status stated by the label or not at all. */
+  --live: #12b76a; /* 2.62:1 on --bg — non-text only */
+
+  /* ---- Radii: two card levels, and they are different on purpose ---------- */
+  --r-outer: 16px; /* MEASURED — the section card */
+  --r-inner: 8px; /* MEASURED — the card inside the card */
+  --r-control: 12px; /* MEASURED — every button */
+  --r-pill: 9999px; /* MEASURED — chips and the property switcher */
+
+  /* ---- Type: two families, split by how long a thing is read -------------- */
+  --font-display: "Raleway", ui-sans-serif, system-ui, sans-serif;
+  --font-ui: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  /* MEASURED — 76px with 76px leading. The leading EQUALS the size, on a
+     headline and not only on a metric, which is this pack's typographic
+     signature and the thing that makes the hero read as a block. */
+  --t-hero: 76px;
+  --t-hero-lh: 1;
+  --t-lede: 20px; /* MEASURED — 28px leading at weight 300 */
+  --t-lede-weight: 300;
+  --t-page: 24px; /* MEASURED — 32px leading, weight 600 */
+  --t-metric: 30px; /* MEASURED — 30px leading, weight 700 */
+  --t-card-title: 14px; /* MEASURED — 20px leading, weight 500 */
+  --t-rail-label: 11px; /* MEASURED — weight 700, 0.55px tracking */
+  --t-rail-label-ls: 0.55px;
+  --t-body: 16px;
+
+  /* ---- Structure ---------------------------------------------------------- */
+  --rail-w: 272px; /* MEASURED — and it has NO right border; see Texture */
+  --pad-outer: 16px; /* MEASURED — the section card */
+  --pad-inner: 12px; /* MEASURED — the card inside it */
+
+  /* ---- Motion ------------------------------------------------------------- */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1); /* MEASURED — Tailwind's default */
+  --dur-press: 0.15s; /* MEASURED — inside MOTION_DOCTRINE.md §3's band */
+  --dur-fast: 0.15s; /* MEASURED */
+  --dur-base: 0.2s; /* MEASURED */
+
+  background-color: var(--bg);
+  color: var(--ink);
+  color-scheme: light;
+}
+
+/* Degrade to calm — MOTION_DOCTRINE.md §9. Every duration this layer declares is
+   answered here. The reference ships no reduced-motion branch, which this pack
+   does not inherit: its budget is a 0.15s colour transition, so collapsing it
+   costs the design nothing. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-press: 0s;
+    --dur-fast: 0s;
+    --dur-base: 0s;
+  }
+}

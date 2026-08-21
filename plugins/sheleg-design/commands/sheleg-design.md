@@ -13,7 +13,7 @@ Invoke the `sheleg-design` skill and apply it to the current request.
 - Task: $ARGUMENTS — if empty, ask what page or section to build/upgrade.
 - **If the arguments name a style pack, use that pack without re-asking.** The
   twenty-nine are `instrument-console`, `editorial-luxury`, `workbench`,
-  `briefing-room`, `atrium`, `outrank`, `orchard`, `field-notes`, `cyclorama`, `showroom`,
+  `briefing-room`, `atrium`, `babylove`, `outrank`, `orchard`, `field-notes`, `cyclorama`, `showroom`,
   `blueprint`, `prism`, `maquette`, `scoreboard`, `datasheet`, `manpage`, `pigeonhole`, `roster`, `ora`, `tenor`, `paperclip`, `ledger`, `awning`, `router`, `daylight`, `notation`, `almanac`, `vitrine`, `proscenium`, `bulletin`. Otherwise pick per the `SKILL.md` table,
   and say which pack you picked and why before you build.
 - **Set the three dials out loud before any layout exists** — `DESIGN_VARIANCE`,
