@@ -98,7 +98,7 @@ CI (`.github/workflows/validate.yml`) runs all four gates, all three self-tests,
 a negative test that corrupts a version and requires a failure, a check that each
 gate refuses an unknown argument, both installers with a `diff -r` against the
 source, `claude plugin validate --strict`, and one build job per kit — a
-twenty-nine-kit matrix today. The number is never typed into the workflow:
+thirty-kit matrix today. The number is never typed into the workflow:
 `discover-kits` derives it from `ls -1 kits`
 ([`validate.yml:123`](../.github/workflows/validate.yml)), because a
 hand-maintained matrix said six while a seventh kit was built, green and

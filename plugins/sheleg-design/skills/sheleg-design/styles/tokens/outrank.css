@@ -1,0 +1,158 @@
+/* SHELEG Design — Outrank token layer.
+   Copy verbatim; consume only var(--…) in components. */
+:root {
+  /* ---- Field and ink ------------------------------------------------------
+     MEASURED 2026-08-21 off https://www.outrank.so and its /dashboard. Two
+     surfaces, one product: the marketing site runs Tailwind + daisyUI (its
+     `--rounded-box`, `--btn-text-case` and `--p`/`--pc` triplets are daisyUI's
+     own names) and the product runs Semrush's Intergalactic — 384
+     `--intergalactic-*` tokens on the dashboard. This pack is the seam between
+     them, which is the reason it is worth having: the two halves agree on the
+     brand and disagree on the ink, and a team shipping both needs the agreement
+     written down. */
+  --bg: #ffffff; /* MEASURED — the marketing field */
+  --surface: #f4f5f9; /* MEASURED — Intergalactic --gray-50, the app field */
+  --surface-2: #e0e1e9; /* MEASURED — --gray-100, a sunken row */
+  --hairline: rgba(13, 13, 18, 0.1); /* MEASURED — the rail's right border */
+  --panel-line: rgba(228, 229, 236, 0.8); /* MEASURED — the card border */
+
+  --ink: #0d0d12; /* 19.38:1 on --bg — MEASURED, the marketing ink */
+  --ink-soft: #363d4f; /* 10.84:1 on --bg — MEASURED, the hero subhead */
+  /* [CORRECTION] The product half inks with slate and the marketing half does
+     not, so the two disagree by 4 points of luminance on the same brand. Both
+     are kept because both were measured, and `--ink-data` is the one to spend
+     on a number: the reference sets every metric in it. */
+  --ink-data: #020617; /* 20.17:1 on --bg — MEASURED, the dashboard metric */
+  /* [CORRECTION] The reference's eyebrow #64748b is refused: 4.76:1 on --bg and
+     4.37:1 on --surface — BELOW AA for the 13px it is set at, on the field it
+     appears on most. #5b6779 is the nearest value to the measurement that clears
+     4.5:1 on both (5.74 and 5.27), so the deviation is the smallest one the rule
+     permits rather than a preference. */
+  --ink-eyebrow: #5b6779; /* 5.74:1 on --bg, 5.27:1 on --surface — CORRECTED */
+
+  /* ---- The brand, and it is one hue -------------------------------------
+     #882aff is the marketing violet, and it carries text rather than being ruled
+     out for it — 5.49:1 on --bg, and
+     white on it is 5.49:1 too, so the filled button clears AA in both
+     directions. That is unusual for a violet this saturated and it is why the
+     pack keeps the value rather than darkening it. */
+  --accent: #882aff; /* 5.49:1 on --bg — MEASURED */
+  --on-accent: #ffffff; /* 5.49:1 on --accent — MEASURED */
+  --accent-ring: #d7b8ff; /* MEASURED — the 5px light ring, not a shadow; see Texture */
+  --accent-hover: #7318e8; /* 6.94:1 on --bg — one step down the reference's own violet ramp */
+  --line-control: #d0d5dd; /* 1.47:1 on --bg — the ghost button's border, decoration */
+  --accent-wash: #f9f2ff; /* MEASURED — --violet-50, the suggestion-card tint */
+  /* The dark twin, taken from the reference's OWN scale rather than invented:
+     --violet-400. #882aff on the dark card is 2.88:1 and fails; this is 4.76:1. */
+  --accent-dark: #ab6cfe; /* 4.76:1 on --surface in the dark block below, where
+     the light theme's violet is ruled out at 2.88 — MEASURED (--violet-400) */
+
+  /* ---- Status: Intergalactic's four, and three of them are NOT text ------
+     MEASURED off the product's semantic layer. Their ratios on --bg are 3.34,
+     3.35, 3.32 and 2.95 — the first three clear the 3:1 non-text floor and none
+     clears 4.5:1, so they are fills, dots and icons, never a word. */
+  /* @role non-text: --info, --success, --danger, --warning — every one of the
+     four measures between 3.32:1 and 3.62:1 on --bg, which clears the 3:1 floor
+     for a graphical object and clears nothing for a word. They are the dot, the
+     bar and the fill. `--info-ink` and `--success-ink` below carry the text, and
+     the pack's Bans say so twice because it is the rule this vocabulary breaks
+     first. */
+  --info: #008ff8; /* 3.34:1 on --bg — non-text only */
+  --success: #009f81; /* 3.35:1 on --bg — non-text only */
+  /* Named `--danger` and not `--critical`: the value is the reference's
+     --intergalactic-bg-primary-critical, and the NAME is this library's role
+     vocabulary. Adopting Semrush's word here would fragment the one map a
+     cross-pack document reads, which is what this pack's Gotchas forbid. */
+  --danger: #ff4953; /* 3.32:1 on --bg — non-text only */
+  /* [CORRECTION] TWO defects in one token, and the second is the sharper.
+     The reference's warning #ff642d is discarded at 2.95:1 on --bg, under even the
+     non-text floor. And darkening it alone is not enough: at #e5511b it sits
+     7.2 OKLab from --danger against this library's hard floor of 10.0, so red
+     and orange read as one state to a person who cannot separate them.
+     #c2740a is an amber, 15.2 OKLab from --danger, and it clears the non-text
+     floor on both fields — the two ratios are stated on the declarations
+     themselves, because a figure inside this comment binds to the token ABOVE
+     it and would be read as --danger's. Amber is also the conventional warning
+     encoding, so the separation and the convention agree. */
+  --warning: #c2740a; /* 3.62:1 on --bg, 15.2 OKLab from --danger — CORRECTED */
+  /* The text-safe pair, for the same four roles when they carry a word. */
+  --info-ink: #006dca; /* 5.20:1 on --bg — MEASURED (--blue-500) */
+  --success-ink: #007c65; /* 5.16:1 on --bg — MEASURED (--green-500) */
+
+  /* ---- Radii: three, and the pill is a fourth ---------------------------- */
+  --r-card: 24px; /* MEASURED — the dashboard card */
+  --r-box: 16px; /* MEASURED — daisyUI --rounded-box 1rem, the banner */
+  --r-chip: 8px; /* MEASURED — an action chip */
+  --r-pill: 9999px; /* MEASURED — every CTA and every status badge */
+
+  /* ---- Type: two families, and the split is the point --------------------
+     Plus Jakarta Sans sets the marketing headline; Inter sets everything a
+     person reads to work. The reference never mixes them on one surface. */
+  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-ui: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --t-hero: 68px; /* MEASURED — 81.6px leading, -1.2px tracking, weight 700 */
+  --t-hero-lh: 1.2;
+  --t-hero-ls: -1.2px;
+  --t-lede: 18px; /* MEASURED — 28px leading, weight 400 */
+  --t-body: 16px; /* MEASURED */
+  --t-metric: 32px; /* MEASURED — 32px leading (1.0), -1.28px tracking, weight 600 */
+  --t-metric-ls: -1.28px;
+  --t-eyebrow: 13px; /* MEASURED — weight 600, 1.82px tracking (0.14em) */
+  --t-eyebrow-ls: 1.82px;
+  --t-control: 14px; /* MEASURED — every button label, weight 600 */
+
+  /* ---- Structure --------------------------------------------------------- */
+  --rail-w: 321px; /* MEASURED — the dashboard's left rail */
+  --card-pad: 24px; /* MEASURED */
+  --banner-pad: 32px; /* MEASURED */
+  --section-pad: 80px; /* MEASURED — the landing's top padding; 120px at the foot */
+  --section-pad-foot: 120px; /* MEASURED */
+
+  /* ---- Motion ------------------------------------------------------------
+     MEASURED: the whole site transitions on 0.15s with Tailwind's default
+     curve. There is no scroll clock, no parallax and no scrub anywhere in it. */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1); /* MEASURED */
+  --dur-press: 0.15s; /* MEASURED — inside MOTION_DOCTRINE.md's 100-160 ms band */
+  --dur-fast: 0.15s; /* MEASURED */
+  --dur-base: 0.2s; /* MEASURED — daisyUI --animation-input */
+
+  --font-ui-stack: var(--font-ui);
+  background-color: var(--bg);
+  color: var(--ink);
+  color-scheme: light;
+}
+
+/* Degrade to calm — MOTION_DOCTRINE.md §9. Every duration this layer declares
+   is answered here: the three collapse, and nothing else in this pack moves.
+   The reference ships NO reduced-motion branch at all, which is a defect this
+   pack does not inherit — its whole motion budget is a 0.15s colour transition,
+   so collapsing it costs the design nothing and costs the reader the flicker. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-press: 0s;
+    --dur-fast: 0s;
+    --dur-base: 0s;
+  }
+}
+
+/* The dark twin. MEASURED by toggling the product's own `data-theme` — daisyUI's
+   mechanism, and the reference persists the choice. */
+[data-theme="dark"] {
+  --bg: #191b23; /* MEASURED — Intergalactic --gray-800 */
+  --surface: #1d232a; /* MEASURED — the dark card */
+  --surface-2: #2b3440; /* MEASURED — the action chip's field */
+  --hairline: rgba(255, 255, 255, 0.12);
+  --panel-line: rgba(255, 255, 255, 0.1);
+
+  --ink: #ffffff; /* 15.84:1 on --surface — MEASURED */
+  --ink-soft: #a6adba; /* 7.02:1 on --surface — MEASURED, the dark body ink */
+  --ink-data: #ffffff; /* 15.84:1 on --surface */
+  --ink-eyebrow: #a6adba; /* 7.02:1 on --surface */
+
+  --accent: #ab6cfe; /* 4.76:1 on --surface — the light theme's violet is 2.88 */
+  --on-accent: #220358; /* 5.16:1 on --accent — MEASURED (--violet-800) */
+  --accent-ring: rgba(171, 108, 254, 0.35);
+  --accent-wash: #220358; /* MEASURED — --violet-800 */
+
+  color-scheme: dark;
+}

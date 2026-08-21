@@ -11,7 +11,7 @@ problem — invented colors, six accent hues, dark mode retrofitted later.
 
 This skill is the taste layer. It gives a coding agent **one motion
 methodology** for cinematic, scroll-driven pages, **a motion doctrine** that
-decides whether to animate before it decides how, and **twenty-nine locked style
+decides whether to animate before it decides how, and **thirty locked style
 packs** with ready-made design tokens, so what it builds reads as one system
 instead of a pile of effects.
 
@@ -50,6 +50,7 @@ into the cinematic layer, and says so in its own *Motion flavor* section.
 | `workbench` | neutral grays, borders as elevation, one blue accent, mono data, light + dark twins | dashboards, admin, internal & dev tools |
 | `briefing-room` | dark 16:9 deck: one blue hue top to bottom (OKLCH), mono slide furniture, 1-bit dithered art, claims as titles | investor & board decks, technical briefings, talks published as a page |
 | `atrium` | warm cream daylight field with no dark bands, one terracotta accent, light serif with italic asides, fluted-glass hero over photography | consumer health, longevity & diagnostics, wellness, premium care, high-trust DTC |
+| `outrank` | white field with one violet that carries text in both directions, a 5px light ring standing in for a button shadow, and two type families split by how long a thing is read | SEO and growth SaaS, agent-run back-office — the pack for a product that ships a landing and a dashboard at once |
 | `orchard` | warm oat field of rounded slabs, sage brand + one candy-orange action, rounded geometric display, soft-3D pills built from inset light | friendly consumer biotech, DTC wellness, testing kits & supplements |
 | `field-notes` | warm green-cast paper ruled by hairlines, one rust accent, a hero that dissolves into the page instead of ending, numbered mono eyebrows, crop marks, colour that encodes how a claim is known | open-source & developer tools sold on auditability — code intelligence, provenance, evals, agent memory |
 | `showroom` | white gallery, near-black ink, one blue that works as link and as fill, Inter Display + Inter + JetBrains Mono, a seven-layer shadow framing one real product surface | product-led companies whose best argument is the application on screen |
@@ -149,7 +150,7 @@ skills.
 | `DESIGN_SYNC_BRIDGE.md` | The Claude Design contract: what a pack sends to claude.ai/design and in what shape, the rule for each of the four reference types, and the border motion does not cross |
 | `FIGMA_BRIDGE.md` | The design↔code contract: how a pack's tokens map onto Figma variable collections and modes, how to implement a design without importing raw values, and what cannot cross the border |
 | `AI_PRODUCT_PATTERNS.md` | The surfaces a model drives: the five states of a call, streaming instead of spinners, latency, provenance and uncertainty, agent confirmations, and the bans that keep it honest |
-| `styles/*.md` | The twenty-nine style packs — palette, type, texture, motion tokens, motifs, bans, and the traps each one carries |
+| `styles/*.md` | The thirty style packs — palette, type, texture, motion tokens, motifs, bans, and the traps each one carries |
 | `styles/tokens/*.css` | The ready-made token layer per pack, copied verbatim instead of transcribed (`workbench` and `field-notes` each ship a light `:root` plus a `data-theme="dark"` twin) |
 | `styles/STYLE_PACK_TEMPLATE.md` | The pack contract as a skeleton, so a new style is authored against the same headings rather than improvised |
 
@@ -220,7 +221,7 @@ cd ./ds-workbench && npm install && npm run build
 then `/design-sync` in that directory, from Claude Code. Three layers cross: the
 pack's **bans** as the design system's own README, `styles.css` built from
 `tokens/<pack>.css` verbatim, and the components — a six-name spine that is
-identical in all twenty-nine kits, so switching packs swaps identity rather than API,
+identical in all thirty kits, so switching packs swaps identity rather than API,
 plus each pack's signature parts. **Motion does not cross**, exactly as it does
 not cross into Figma: a kit is the static half of a pack, and saying so is what
 stops an agent inventing motion to fill the silence.
@@ -266,7 +267,7 @@ a pack's four widened sections used to make two gates *quieter* and still green.
 One honest limit: the npx installer is checked by asserting its runtime bundle
 walker exists, not by reading a file list — it has none by design. What proves
 it ships the right files is CI, which installs the bundle through **both**
-installers and `diff -r`s the result against the source, then builds all twenty-nine
+installers and `diff -r`s the result against the source, then builds all thirty
 kits.
 
 `test/scenarios.md` (T1–T30) is the behavioral harness: fresh subagents given a

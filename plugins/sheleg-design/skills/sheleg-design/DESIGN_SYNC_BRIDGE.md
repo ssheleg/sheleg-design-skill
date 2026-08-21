@@ -59,7 +59,7 @@ The pack is the primary reference type; the other three feed it rather than bypa
   every pack — exists so switching packs swaps identity, not API. This is the
   component-level form of a lesson the token layer already learned the hard way.
   The six are `Button`, `Card`, `Chip`, `Stat`, `Heading` and `Rule`, and their
-  `*Props` bodies are byte-identical across all twenty-nine kits once comments are
+  `*Props` bodies are byte-identical across all thirty kits once comments are
   stripped. Everything a kit ships beyond them is that pack's signature —
   `Specimen` in `showroom`, `RegistrationMarks` in `blueprint`, `ModelBlock` in
   `maquette` — and belongs to it alone. Until 1.11.0 this paragraph asserted the

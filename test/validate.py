@@ -1669,8 +1669,8 @@ PLANTS = (
         # green over the same file. The plant is the defect restored verbatim.
         "a stale count hyphenated onto its noun",
         "docs/DOCMAP.md",
-        lambda t: t.replace("twenty-nine-kit", "fourteen-kit", 1),
-        "says 'fourteen-kit' but there are 29 kits",
+        lambda t: t.replace("thirty-kit", "fourteen-kit", 1),
+        "says 'fourteen-kit' but there are 30 kits",
     ),
     (
         # The same hole in digits. Worth its own plant because the number and the
@@ -1679,8 +1679,8 @@ PLANTS = (
         # above while leaving `14-kit` invisible.
         "a stale count hyphenated onto its noun, in digits",
         "docs/DOCMAP.md",
-        lambda t: t.replace("twenty-nine-kit", "14-kit", 1),
-        "says '14-kit' but there are 29 kits",
+        lambda t: t.replace("thirty-kit", "14-kit", 1),
+        "says '14-kit' but there are 30 kits",
     ),
     (
         # The status map's live instance: `workbench` had grown a quartet while the
@@ -1928,7 +1928,7 @@ PLANTS = (
         # The exact number that shipped over this tree for four hours.
         "a theme split restated wrong in the skeleton",
         f"{PLUGIN_DIR}/skills/{PLUGIN}/styles/STYLE_PACK_TEMPLATE.md",
-        lambda t: t.replace("10 of them, then 13, then 6.", "11 of them, then 13, then 5.", 1),
+        lambda t: t.replace("11 of them, then 13, then 6.", "10 of them, then 13, then 5.", 1),
         "and the packs' own `Themes:` lines derive",
     ),
     (
@@ -1936,7 +1936,7 @@ PLANTS = (
         # a definite article, a numeral, and no noun for a gate to check.
         "a count written as `the <numeral>` with no noun",
         f"{PLUGIN_DIR}/skills/{PLUGIN}/SURFACE_COMPOSITION.md",
-        lambda t: t.replace("across\nthe twenty-nine packs:", "across\nthe twenty-nine:", 1),
+        lambda t: t.replace('across\nthe thirty packs:', 'across\nthe thirty:', 1),
         "names no noun, so nothing can check it",
     ),
     (

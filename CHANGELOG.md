@@ -6,6 +6,54 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### `outrank` — the thirtieth pack, and the first that is two surfaces
+
+Measured 2026-08-21 off <https://www.outrank.so> and its `/dashboard` in a logged-in
+session, with `getComputedStyle` in both themes.
+
+**Said before anything else: none of this is Outrank's invention.** The marketing site runs
+**Tailwind + daisyUI** — `--rounded-box`, `--btn-text-case` and the `--p`/`--pc` HSL triplets
+are daisyUI's own names — and the product runs **Semrush's Intergalactic**, 384
+`--intergalactic-*` properties on the dashboard. A pack presenting this as a bespoke language
+would be claiming authorship of two published systems.
+
+That is the reason to have it. **Every other pack in this library is one surface.** This one is
+the seam between a landing that must convert and a tool that must be worked in for hours, and
+the two halves *disagree* — on the ink, the radius and the type family — while agreeing
+completely on the brand. A team shipping both needs that agreement written down.
+
+What the measurement produced, and it is not decoration: **the pack corrects the reference
+three times, and each correction is the smallest the rule permits.**
+
+* The eyebrow `#64748B` is **4.37:1 on `--surface`** at the 13px it is set at — below AA on
+  the field it appears on most. `#5B6779` is the nearest value clearing 4.5 on both fields.
+* The warning `#FF642D` is **2.95:1**, under even the 3:1 non-text floor. Darkening alone was
+  not enough: at `#E5511B` it sits **7.2 OKLab from `--danger`** against a hard floor of 10.0,
+  so red and orange are one state to a reader who cannot separate them. `#C2740A` is an amber
+  15.2 away — and amber is the conventional warning encoding, so separation and convention
+  agree.
+* The brand violet **does not survive the dark theme** at 2.88:1 on the dark card. The twin
+  uses the reference's own `--violet-400` `#AB6CFE` at 4.76:1 — taken from its scale, not
+  invented.
+
+And one the reference gets right that most packs get wrong: `--accent` `#882AFF` carries text
+**in both directions** — 5.49:1 as a word on the page and 5.49:1 under white on the filled
+button. Most brand violets at that saturation clear neither, which is why the value is kept.
+
+The kit ships eight components on the `or-` prefix, including a `DataTable` whose header row is
+the eyebrow carrying its own count, and an `EmptyState` that keeps its border — on the
+reference's content calendar an empty day still renders its cell, because the month's shape is
+the information.
+
+**Disabled is a token pair here, not an opacity.** WCAG 1.4.3 exempts an inactive control, which
+is why most packs reach for `opacity: 0.38` — the palette gate computes that composite and
+refuses it. `--ink-eyebrow` on `--surface-2` is 4.40:1, so a disabled control still reads as the
+control it is.
+
+Registering the thirtieth pack moved 23 files' counted claims from twenty-nine to thirty and
+broke two plants whose anchors were those very numbers — caught by the self-test and
+re-anchored, which is the failure mode this repository already had on record.
+
 ### Five defects the gate could not see, found by three blind readings (B-125…B-130)
 
 `task-pipeline` v1.74.0 closes a node with three independent readings at escalating visibility
@@ -684,7 +732,7 @@ unguarded again the moment it was.
 | **`the <numeral>` closing a clause** | **7** | precise — a definite article asserts a known set |
 
 Of those seven, three are library counts, and **one of the three was wrong**: `tenor.md:328`
-said token names are *"not uniform across the twenty"* while twenty-nine packs ship. A live
+said token names are *"not uniform across the twenty"* while thirty packs ship. A live
 wrong number, invisible to every gate, found by narrowing rather than by widening.
 
 All seven now name their noun — which hands them to the existing check forever — and
@@ -1109,7 +1157,7 @@ Registers that had stopped:
   at sixteen packs and asserted all 71 had been hand-verified. Measured today: **513 claims,
   336 guarded, 177 unguarded at 22 packs** — and the run prints that pair every time, with
   the hand-verification dated for what it was. Two more restated counts went the same way.
-- **`package.json` said twenty-nine packs and named 27** — `awning` and `bulletin` missing
+- **`package.json` said thirty packs and named 27** — `awning` and `bulletin` missing
   from the surface an npm reader chooses from. It is an enumeration site now.
 - **Two `## [1.35.0]` sections** under one version, and four releases in the CHANGELOG with
   no tag. The duplicate is resolved; the untagged four are **reported, not created** — a tag
@@ -1237,7 +1285,7 @@ measured, and never gates content.
   the comment says plainly which of them was ever verified.
 - `test/validate.py` said "the six packs shipped before the widening" (seven) and
   "seven of the ten widened packs" (twenty-two widened). The split is printed now.
-- `package.json` said "twenty-nine locked style packs" over a list of **27** —
+- `package.json` said "thirty locked style packs" over a list of **27** —
   `awning` and `bulletin` were missing. `ENUMERATION_SITES` gained `package.json`,
   which is the description npmjs.com renders: its count was already policed and
   the names beside it were not.
@@ -1361,7 +1409,7 @@ with their numbers.
   Rendered and confirmed at 1440×1000, including the press: the primary's offset goes
   3px → 1px as the control travels 2px, while the secondary beside it keeps its 3px.
 - **Three stale counts in `SURFACE_COMPOSITION.md` that no gate could see.** It said the
-  token names were not uniform "across the twenty-one" when twenty-nine packs ship, and
+  token names were not uniform "across the twenty-one" when thirty packs ship, and
   that the accent is `--accent` "in eighteen" when it is twenty-seven — `--brand` in
   `field-notes` and `--cta` in `orchard` are still the only two exceptions, counted. The
   third was a count of packs carrying an `@role non-text:` colour, which is now stated as
