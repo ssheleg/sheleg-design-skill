@@ -66,6 +66,38 @@
   here is asking "is this figure right and where did it come from", which is a
   ledger question. The address is in the pack's `Origin:`.
 
+- **Applied a twelfth time:** 2026-08-22. The thirty-second pack was extracted
+  from `nautilustrader.io` and is named **`patchbay`** for the register it
+  encodes — named ports, drawn cords, and live signal moving between them — not
+  `nautilus`. The sixth run whose opening request was an address and a brief to
+  "разобрать дизайн" and put it in the library. Three alternatives were weighed
+  and rejected on this ADR's own criteria: **`schematic`**, the most legible of
+  the three, rejected because it names a drawing class and `blueprint` already
+  occupies that family — two packs named for kinds of technical drawing would
+  route by wallpaper rather than by intent; **`switchboard`**, accurate about the
+  register and rejected for colliding with `scoreboard` on the suffix, the same
+  family-collision criterion that rejected `lobby` against `atrium`; and
+  **`engine-room`**, a good metaphor for the reference's own subject and bad for
+  every other product the register serves, besides colliding with
+  `briefing-room`. *Selection by intent* decided it: a reader arriving here is
+  asking "how do I draw my system and show traffic moving through it", which is a
+  patchbay question and not a trading one. The address is in the pack's
+  `Origin:`.
+
+- **Two packs shipped against this rule and are not recorded above.**
+  `outrank` (from `outrank.so`) and `babylove` (from `babylovegrowth.ai`) both
+  landed on 2026-08-21 carrying their source brand as the pack name, and neither
+  run added an entry here. Recorded now rather than left to be rediscovered,
+  because a register that shows an unbroken chain of eleven applications is
+  making a claim about the library that the library does not support. **They are
+  not being renamed:** the Consequences section above is explicit that a pack
+  name is a public API across four distribution channels and that renaming after
+  a release is a breaking change for every installed copy — which is the same
+  reasoning that makes this an ADR. The rule is unchanged and binding on the next
+  pack. `roster` is the pack extracted from `babylovegrowth.ai` **under** the
+  rule, which is why the same site appears twice in this file under two very
+  different names.
+
 - **Corrected:** 2026-08-10. The Decision section named the seventh pack
   `lecture-hall`. That was the name on the branch this ADR was written on, and
   that branch never merged; the pack that shipped from graphify.com is

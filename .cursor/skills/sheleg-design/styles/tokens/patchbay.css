@@ -1,0 +1,137 @@
+/* SHELEG Design — Patchbay token layer.
+   Copy verbatim; consume only var(--…) in components. */
+:root {
+  /* ---- Field and ink ------------------------------------------------------
+     MEASURED 2026-08-22 off https://nautilustrader.io/ with getComputedStyle on
+     the running page. The reference declares NO custom properties at all — zero
+     on `:root` — because it is Material UI with Emotion, so every value here was
+     read off painted elements rather than lifted from a stylesheet. Two
+     consequences the next author should know: there is no author-side token
+     vocabulary to inherit, and the MUI theme's own defaults leak through in
+     places the design plainly did not intend (see `## Gotchas`).
+
+     One field, two steps down, and no light twin anywhere. */
+  --bg: #1b1b1d; /* MEASURED — the body field */
+  --surface: #171718; /* MEASURED — one step below the page */
+  --surface-deep: #121214; /* MEASURED — the deepest band */
+
+  /* The card is not a fill, it is a LIGHT. Both stops measured off the feature
+     card: a teal-black at the top edge falling to near-black at the bottom, so
+     the card reads as lit from above rather than raised. See `## Texture`. */
+  --card-lit: #0f2026; /* MEASURED — the radial's centre, at 50% 0 */
+  --card-base: #16181a; /* MEASURED — the radial's outer stop */
+
+  --ink: #eeeeee; /* 14.82:1 on --bg — MEASURED, every heading */
+  --ink-strong: #ffffff; /* 17.20:1 on --bg — MEASURED, body copy in cards */
+  --ink-soft: #848895; /* 4.86:1 on --bg — MEASURED, the muted tier */
+  /* [CORRECTION] The reference paints a SECOND muted grey, #686B75, in 13 text
+     nodes — 3.23:1 on the field, under the 4.5 text floor and under 3 as well,
+     so it is a text colour that fails as text. It is not corrected to a new
+     value because there is no room for one: --ink-soft already sits at 4.86 and
+     any legible "fainter" step lands on top of it. The two greys are ONE tier
+     and this pack ships one. Where the reference set a word in #686B75, use
+     --ink-soft; where it set a mark, use --hairline-strong. */
+
+  /* ---- The hairline ladder, which is the whole elevation model -------------
+     No shadow appears on any card in the reference. Separation is a 1px line and
+     nothing else, so the ladder IS the elevation system rather than a detail.
+     @role non-text: --hairline, --hairline-strong, --grid-line, --wash — four
+     rules and a fill, never a text colour. They separate by position, and the
+     thing they separate carries the contrast. */
+  --hairline: rgba(255, 255, 255, 0.08); /* 1.25:1 on --bg — MEASURED, THE line */
+  --hairline-strong: rgba(255, 255, 255, 0.1); /* MEASURED — 10% white, the emphatic rule */
+  --grid-line: rgba(255, 255, 255, 0.02); /* MEASURED — 2% white on a 40px cell */
+  --wash: rgba(255, 255, 255, 0.02); /* 1.06:1 on --bg — MEASURED, the quiet fill */
+
+  /* ---- The accent is ONE teal, and it is text-safe ------------------------
+     #00CFBE is the exact value carried by the diagram's endpoint circles
+     (`fill="#00CFBE"` in the SVG) and by 32 painted text nodes. It may carry a
+     word on this field — which is what separates this pack from a brand hue that
+     may only mark. What it may NOT do is take white on top; a FILLED accent
+     control takes --on-accent, and the pack's Palette states what white costs. */
+  --accent: #00cfbe; /* 8.74:1 on --bg — MEASURED */
+  --on-accent: #05100f; /* 9.81:1 on --accent — text ON a filled accent */
+
+  /* The second hue exists in exactly one place: the primary button's gradient
+     runs teal to this blue. It is not a second accent and nothing else uses it. */
+  --accent-far: #2fadd7; /* 6.62:1 on --bg — MEASURED, the CTA gradient's far stop */
+
+  /* The accent's alpha ladder. Every one of these is a WASH or a LINE — the
+     accent at full strength is the only form that carries a word.
+     @role non-text: --accent-wash, --accent-edge, --accent-edge-strong,
+     --accent-rim. --accent-rim is the primary button's 1.5px border and is the
+     only one of the four that has a floor to clear; the others are fills. */
+  --accent-wash: rgba(0, 207, 190, 0.06); /* MEASURED — the accent at 6%, the chip fill */
+  --accent-edge: rgba(0, 207, 190, 0.14); /* MEASURED — the accent at 14%, the card border */
+  --accent-edge-strong: rgba(0, 207, 190, 0.25); /* MEASURED — the accent at 25%, the chip border */
+  --accent-rim: rgba(0, 207, 190, 0.5); /* 3.10:1 on --bg — MEASURED, the button border */
+
+  /* ---- Status is a PACK DECISION, not a measurement -----------------------
+     The reference is a marketing page for an open-source engine and paints no
+     success, warning or error state anywhere — there was nothing to measure.
+     These three are derived, against a constraint this pack has that most do
+     not: the accent is a MINT-CYAN, so the ordinary dark-UI green collides with
+     it under dichromacy. The set shipped by `instrument-console` was tried first
+     and rejected here for exactly that — the numbers are in the pack's Palette.
+     Every candidate that clears the separation floor against this accent is
+     LIGHT, which is why --ok sits above --warn and --danger in luminance rather
+     than beside them. */
+  --ok: #86f687; /* 12.73:1 on --bg — DERIVED */
+  --warn: #eba002; /* 7.83:1 on --bg — DERIVED */
+  --danger: #e36364; /* 5.11:1 on --bg — DERIVED */
+  --info: var(--accent); /* the accent IS the informational hue; a fourth would break the one-accent rule */
+
+  /* ---- Radii: a 2px ladder, not a doubling one ----------------------------
+     Counted over the painted page: 10px on 50 elements, 14px on 37, 12px on 19.
+     The tightness is the point — a diagram node, a button and a card are three
+     different objects two pixels apart, so nothing reads as a different
+     material. The pill is the only jump. */
+  --r-node: 10px; /* MEASURED — diagram nodes */
+  --r-control: 12px; /* MEASURED — buttons */
+  --r-card: 14px; /* MEASURED — cards and the dashed group */
+  --r-pill: 999px; /* MEASURED as 20px on a 31px-tall chip, i.e. fully round */
+
+  /* ---- Motion -------------------------------------------------------------
+     Two clocks, and they never meet. The AMBIENT clock is 8.5–11s ease-in-out on
+     four drifting light layers; the SIGNAL clock is 2–3.5s linear on the
+     particles travelling the diagram's cords. Nothing in this pack animates on a
+     duration between 3.5s and 8.5s, and the gap is deliberate: a viewer reads
+     the fast band as data and the slow band as light. */
+  --dur-signal-fast: 2s; /* MEASURED — the shortest cord */
+  --dur-signal: 2.5s; /* MEASURED — 23 of the 32 particles */
+  --dur-signal-slow: 3.5s; /* MEASURED — the longest cord */
+  --dur-ambient: 11s; /* MEASURED — the hero light layer */
+  --dur-control: 0.3s; /* MEASURED — buttons and cards */
+  --dur-chip: 0.2s; /* MEASURED — chips */
+  --ease-ambient: ease-in-out; /* MEASURED */
+  --ease-signal: linear; /* MEASURED — animateMotion carries no easing attribute */
+  --ease-control: ease; /* MEASURED */
+  --stagger-cord: 0.1s; /* MEASURED — consecutive cords start 0.1s apart */
+}
+
+/* ---- Reduced motion -------------------------------------------------------
+   MOTION_DOCTRINE.md §9. Both clocks collapse: the ambient light layers stop
+   drifting and the control transitions stop easing. Nothing here is "kept for
+   feel" — a perpetual loop has no information in it that a still frame lacks.
+
+   THE ONE THING THIS BLOCK CANNOT DO, stated here because it is a trap and not
+   a nicety: the signal particles are SVG `<animateMotion>`, and SMIL does not
+   read CSS `animation-duration`. Collapsing --dur-signal* below stops nothing on
+   its own. The component layer MUST also call `svg.pauseAnimations()` behind the
+   same query — kits/patchbay/src/Diagram.tsx is the worked example. This is the
+   defect the reference ships: its single blanket reduced-motion rule cannot
+   reach its own diagram, and the dots keep moving. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-signal-fast: 0.01ms;
+    --dur-signal: 0.01ms;
+    --dur-signal-slow: 0.01ms;
+    --dur-ambient: 0.01ms;
+    --dur-control: 0.01ms;
+    --dur-chip: 0.01ms;
+    --ease-ambient: linear;
+    --ease-signal: linear;
+    --ease-control: linear;
+    --stagger-cord: 0s;
+  }
+}

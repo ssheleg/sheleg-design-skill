@@ -3,7 +3,7 @@ name: sheleg-design
 description: Use when deciding how something LOOKS or MOVES. Cinematic scroll-driven landing pages and heroes — particle/WebGL backgrounds, scroll-linked animation, parallax, scrubbed sections — or when one feels busy or its motion drifts. Product UI through its style packs — dashboards, admin panels, internal tools, mobile screens, chat and agent interfaces. Design tokens, light/dark themes, palettes and colours, typography and fonts. Triggers - "design a landing" / "дизайн лендинга", "build a landing page" / "сделай лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы, фигма в код", "mobile screen" / "мобильный экран", "palette" / "палитра", "colors" / "цвета", "typography" / "типографика", "font" / "шрифт", "how it looks" / "выглядит", "make it prettier" / "красиво, красивее", "visual reference" / "визуальные референсы", "investor deck" / "презентация".
 license: MIT
 metadata:
-  version: 1.46.0
+  version: 1.47.0
 ---
 
 # SHELEG Design
@@ -72,6 +72,7 @@ this table is for choosing, not for reading instead of the pack:
 | [`briefing-room`](./styles/briefing-room.md) | dark 16:9 deck | investor & board decks, briefings, talks as a page (standalone) · **core contract** |
 | [`atrium`](./styles/atrium.md) | cream daylight | consumer health, longevity, wellness, high-trust DTC |
 | [`babylove`](./styles/babylove.md) | white + one orange | the same job answered with **seven tokens** — SEO/AI-visibility SaaS on Tailwind defaults, long time-to-value, first-class disconnected states · **widened** |
+| [`patchbay`](./styles/patchbay.md) | near-black + one mint-cyan | a **live schematic** — 8% hairlines and no shadow, and an architecture diagram whose cords carry SMIL particles on a 2–3.5s clock under light layers on an 8.5–11s one; for engines, buses, pipelines and open-source front doors · **widened** |
 | [`outrank`](./styles/outrank.md) | white + one violet | a **marketing page and a working tool in one brand** — SEO/growth SaaS, agent-run back-office, anything shipping a landing and a dashboard together · **widened** |
 | [`orchard`](./styles/orchard.md) | warm oat slabs | friendly consumer biotech, DTC wellness, kits & supplements · **core contract** |
 | [`field-notes`](./styles/field-notes.md) | green-cast paper ruled by hairlines | open-source & developer tools sold on auditability (standalone) |
@@ -108,12 +109,12 @@ difference between kit and pack as a defect in one of them rather than a choice.
 For a widened pack the kit and the pack's `## Components` must agree; for a core
 pack the kit is the only answer either of them gives.
 
-**Six of the thirty-one are on the core contract, and it changes what you get.**
+**Six of the thirty-two are on the core contract, and it changes what you get.**
 A pack marked **core contract** does not specify `## Components`, `## Hero`,
 `## Responsive` or `## Signature element` — so per-component states, the
 opening viewport and its line ceiling, the collapse rules, and the single
 element the page is remembered by are **yours to decide**, and you say so out
-loud when you do. The other twenty-five answer all four. This asymmetry is the one
+loud when you do. The other twenty-six answer all four. This asymmetry is the one
 thing about the library most likely to make you invent a value and believe you
 read it: what a core pack *does* state is measured to two decimals, and that
 precision is not evidence about the half it leaves silent. Each pack declares

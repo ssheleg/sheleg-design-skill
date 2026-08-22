@@ -234,10 +234,11 @@ ${c("bold", "What it installs")}
   DESIGN_SYNC_BRIDGE.md   the Claude Design contract (what a pack sends, and
                        what does not cross)
   AI_PRODUCT_PATTERNS.md  chat / agent / streaming surfaces (honest state)
-  styles/              thirty-one style packs — instrument-console (dark console),
+  styles/              thirty-two style packs — instrument-console (dark console),
                        editorial-luxury (warm editorial), workbench (light/dark
                        product UI), briefing-room (dark 16:9 presentation deck),
-                       atrium (warm cream consumer health), babylove (white +
+                       atrium (warm cream consumer health), patchbay (dark live
+                       schematic), babylove (white +
                           one orange, seven tokens over Tailwind defaults),
                           outrank (white +
                           one violet, a landing and a dashboard in one brand),

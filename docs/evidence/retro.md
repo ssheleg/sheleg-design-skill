@@ -588,7 +588,55 @@ evidence until runs start writing their own again.
 | 2026-08-20 | `3d0429a` | B-047: two `scoreboard` ratios described pairings that never render | **yes** |
 | 2026-08-20 | `f36961a` | B-049: the doctrine's duration bands reach the token layer's own comments | **yes** |
 | 2026-08-22 | `469503d` | two production references measured and packed — `outrank` (536 tokens over two borrowed systems) and `babylove` (seven over Tailwind defaults); **`v1.46.0` shipped** | **yes** |
+| 2026-08-22 | `pending` | `patchbay`, the thirty-second pack — a dark live schematic measured off nautilustrader.io with `getComputedStyle` because the reference declares no tokens at all; §9 gained the three layers a blanket reduced-motion rule cannot reach; **`v1.47.0` shipped** | **yes** |
 ## Log
+
+### 2026-08-22 — the reference that could not be read from its stylesheet, and the gate that priced every alpha
+
+**Symptom.** Two of them, and neither was visible from reading anything. First,
+`nautilustrader.io` declares **zero CSS custom properties** — it is MUI with Emotion — so the
+usual method for authoring a pack (open the stylesheet, lift the token layer, verify a sample
+against the running page) had nothing to open. Second, once the layer was written from
+`getComputedStyle` alone, the palette gate refused it four times in a row, and every refusal was
+correct.
+
+**Surfaced at** the first `validate_palette.py` run. **Owned by** the authoring method, which
+had never been exercised against a tokenless reference.
+
+**Root cause, and it is a property of the gate worth writing down.** Three of the four refusals
+were one shape: *a ratio binds to the token named on its own line, and a line naming two tokens
+binds to the wrong one.* `--wash` stated 1.06:1 in a sentence that also mentioned `--ink` at
+14.02, and the gate computed 14.82 and said so. The fix is not a phrasing trick — it is that a
+declaration should state **one pair per line**, which is better writing independent of any gate.
+
+The fourth was real and unrelated: the derived status green separated from this pack's mint-cyan
+accent by **13.4 at full colour against a floor of 15**, and the set shipped by
+`instrument-console` — the obvious thing to copy — was worse, at **3.51 under simulated CVD**.
+The accent's hue is the constraint, and it is a constraint most packs never meet because most
+accents are not within 40° of green.
+
+**What was nearly written down wrong.** The unpairable-claim ratchet stood at 22 and the first
+draft of the layer took it to 30. The reflex is to move the pin by 8 and write a reason. What
+the pin actually asked was *which of these eight numbers is load-bearing* — and the answer was
+three: two that say why nothing may be written on a tint, and one that is a button's only
+visible edge at 3.10:1 against a 3:1 floor. For the other five the **alpha is the
+specification** and the ratio was a derived restatement of it. Deleting them took the
+contribution from 8 to 3 and made the layer say more, not less.
+
+**The general lesson, and it left this repository.** `MOTION_DOCTRINE.md` §9 said an animation
+without a reduced-motion path is a bug and stopped there. This reference demonstrates three
+layers the one-rule remedy cannot reach — SMIL, which does not read `animation-duration`;
+JavaScript writing inline styles per scroll frame, where zeroing durations only makes the hidden
+state arrive faster; and any loop whose last keyframe differs from its first, which the remedy
+teleports. All three are on one page, and the third is why that page's blanket rule happens to
+be safe: its four ambient loops are written `0%` == `100%`. **The query is a signal, not a
+mechanism.**
+
+**Three numbers beside the change were already stale**, none of them this run's: a count that
+named no noun (`the twenty-nine are`, over thirty-one), `sixteen` token layers declaring
+`@role non-text:` against a tree of nineteen, and `ten` theme twins against a derived eleven.
+The first is exactly the failure the skeleton's rule 6 describes, sitting unfixed in the file
+that ships the rule's own fast path.
 
 ### 2026-08-13 — the remedy for one concurrent run became a defect in the gate that measures it
 

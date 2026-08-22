@@ -6,6 +6,92 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.47.0] - 2026-08-22
+
+### `patchbay` — the thirty-second pack, and the first read off a page with no tokens at all
+
+Measured 2026-08-22 off <https://nautilustrader.io/> with `getComputedStyle` on the running
+page. Named for its register under ADR-0001 — named ports, drawn cords, live signal — not for
+the source brand.
+
+**The reference declares zero custom properties.** It is Material UI with Emotion, so there was
+no author-side vocabulary to lift and every value in the token layer was read off a painted
+element. Two of the pack's findings come straight out of that: the MUI theme's own defaults
+leak through where a variant was not overridden, so the page's **59.2px hero is tracked
++0.555px** — positive tracking on a display line, two selectors away from designed styles that
+track −0.3px — and **fourteen text nodes render in Roboto**, which is not one of the three fonts
+the page loads.
+
+**The signature element is a live architecture diagram, and it is measured rather than
+admired.** 21 cords carrying 32 particles, distributed 12 / 7 / 2 at one, two and three
+particles each. Every multi-particle cord divides its own period evenly: the seven pairs are
+offset by exactly half their duration — 1.25s on a 2.5s cord, all seven — and both triples by a
+third, at 0.4 / 1.2333 / 2.0667 and 0.5 / 1.3333 / 2.1667. Consecutive cords start 0.1s apart,
+so the board has no visible beginning. Each cord is an inline `<svg>` with a path, an endpoint
+dot, an arrowhead marker and one `<circle>` per particle driven by `<animateMotion>` — no
+JavaScript, no library, one element per dot.
+
+Three corrections the arithmetic produced:
+
+* **The reference paints two muted greys and only one of them is legible.** `#848895` is
+  4.86:1; `#686B75`, in 13 text nodes, is **3.23:1**. There is no room for a corrected third
+  step below 4.86, so the pack ships **one** muted tier and says which token replaces the other
+  in each of its two uses.
+* **The diagram's group labels are 2.70:1** — 9px mono uppercase at 30% white, the least
+  legible text on the page. Corrected to 50%, which is 5.19:1 and which the reference already
+  uses for its own diagram legend further down. The ladder already had the step.
+* **The status set is derived and its constraint is unusual.** The accent is a mint-cyan, so
+  the ordinary dark-UI green collides with it under dichromacy: `instrument-console`'s `#46D39A`
+  separates from this accent by **3.51** under simulated CVD against a floor of 8. Every
+  candidate that clears the floor is light, which is why `--ok` sits above `--warn` and
+  `--danger` in luminance rather than beside them.
+
+### The reduced-motion doctrine gained the three holes this page measures
+
+`MOTION_DOCTRINE.md` §9 has always said an animation without a reduced-motion path is a bug.
+What it did not say is that the usual one-rule remedy — zero every duration — **cannot reach
+three layers**, all three of them live on this one reference:
+
+* **It cannot stop SMIL.** `<animateMotion>` is not a CSS animation and does not read
+  `animation-duration`. All 32 particles keep moving with the preference on. `pauseAnimations()`
+  is the fix and it has to be wired by hand; `kits/patchbay/src/Diagram.tsx` wires it.
+* **It cannot stop JavaScript.** The reference's reveal writes `opacity` and `transform` inline
+  per scroll frame across 48 wrappers, so with the preference on the content is **still hidden
+  until scrolled**.
+* **It teleports a loop that does not end where it began.** Collapsing to `.01ms` jumps to the
+  final keyframe. That is safe here only because all four ambient light loops are written with
+  `0%` and `100%` identical — so write perpetual loops that way and the cheap remedy stops being
+  a gamble.
+
+### What the reference gets wrong, kept because a pack that only admires is not evidence
+
+* **`0+` renders on a live page, in two separate sections.** The count-up animates from zero and
+  has no state for *the fetch did not return*, so the failure renders as a precise, confident,
+  wrong number under `GITHUB STARS`, `DOWNLOADS`, `DISCORD MEMBERS` and `TESTING`. `Stat` in the
+  kit refuses: an empty value renders the skeleton and announces itself, never a zero.
+* **The reveal freezes on a programmatic jump.** Measured at eight scroll positions from 700px
+  to 1700px reached with `scrollTo`: the target stayed `opacity: 0` at every one and the section
+  never appeared. Reached by wheel, it reveals normally — which is what makes it a deep-link,
+  anchor and print-stylesheet defect rather than a broken page.
+
+### Three numbers that were already stale beside this change
+
+Found while registering the pack, none of them this run's regression: the slash command said
+**"the twenty-nine are"** over a list of thirty-one — invisible to the count gate because the
+numeral named no noun, which is the exact failure the skeleton's rule 6 warns about, so it now
+names one; `SURFACE_COMPOSITION.md` said **sixteen** token layers declare `@role non-text:` and
+the tree says nineteen; and `FIGMA_BRIDGE.md` said **ten** packs ship a theme twin against a
+derived eleven. The widened remainder in `SKILL.md` went stale for the **third consecutive
+release** and the gate caught it, which is what that check was written for.
+
+### ADR-0001 now records that it was broken twice
+
+`outrank` and `babylove` both shipped on 2026-08-21 carrying their source brand as the pack
+name, and neither run added an entry. Recorded rather than left to be rediscovered — a register
+showing an unbroken chain of eleven applications was making a claim the library does not
+support. **Neither is renamed:** the ADR's own Consequences make a pack name a public API across
+four channels, which is what makes renaming after release a breaking change.
+
 ## [1.46.0] - 2026-08-22
 
 ### `babylove` — the thirty-first pack, and the other end of the same question

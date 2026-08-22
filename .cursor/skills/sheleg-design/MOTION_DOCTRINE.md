@@ -258,6 +258,37 @@ Not a feature. A contract.
 **Shipping an animation without a reduced-motion path is a bug, not a polish
 item.** It fails review the same way a crash does.
 
+### Three things the blanket rule cannot reach
+
+The common remedy is one rule — `*, ::before, ::after { animation-duration:
+.01ms !important; transition-duration: .01ms !important;
+animation-iteration-count: 1 !important }` — and it is better than nothing.
+What it is not is complete, and all three holes were measured on one page
+(`nautilustrader.io`, 2026-08-22, the `patchbay` reference).
+
+- **It cannot stop SMIL.** `<animate>`, `<animateMotion>` and
+  `<animateTransform>` are not CSS animations and do not read
+  `animation-duration`. That page's architecture diagram carries 32 particles on
+  `<animateMotion>` and every one keeps moving with the preference on. The fix is
+  `svg.pauseAnimations()` behind the same query — one call, and it must be wired
+  by hand.
+- **It cannot stop JavaScript.** A reveal that writes `opacity` and `transform`
+  inline per scroll frame is not a transition; zeroing durations only makes the
+  hidden state arrive instantly. On that page 48 wrappers do this, so with the
+  preference on the content is **still hidden until scrolled**. Anything that can
+  hide content must read the query itself and render revealed.
+- **It teleports a loop that does not end where it began.** Collapsing the
+  duration to `.01ms` jumps the element to its final keyframe. That is harmless
+  only when `0%` and `100%` are identical — which is exactly how that page's four
+  ambient light loops are written, and why the blunt remedy happens to be safe
+  there. **Write perpetual loops so their first and last frames match**, and the
+  cheap remedy stops being a gamble.
+
+The rule behind all three: **the query is a signal, not a mechanism.** Every
+layer that can move — CSS, SMIL, script, canvas, WebGL — has to be told
+separately, and the pre-flight item below is worded "actually turning it on"
+because turning it on is the only thing that finds the layer you forgot.
+
 ---
 
 ## 10. Pre-flight
