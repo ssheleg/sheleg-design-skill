@@ -587,6 +587,7 @@ evidence until runs start writing their own again.
 | 2026-08-20 | `f88c14b` | B-045: every duration answers reduce, and a promised component-layer stop is verified in the kit | **yes** |
 | 2026-08-20 | `3d0429a` | B-047: two `scoreboard` ratios described pairings that never render | **yes** |
 | 2026-08-20 | `f36961a` | B-049: the doctrine's duration bands reach the token layer's own comments | **yes** |
+| 2026-08-22 | `469503d` | two production references measured and packed — `outrank` (536 tokens over two borrowed systems) and `babylove` (seven over Tailwind defaults); **`v1.46.0` shipped** | **yes** |
 ## Log
 
 ### 2026-08-13 — the remedy for one concurrent run became a defect in the gate that measures it

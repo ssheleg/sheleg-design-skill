@@ -3,7 +3,7 @@ name: sheleg-design
 description: Use when deciding how something LOOKS or MOVES. Cinematic scroll-driven landing pages and heroes — particle/WebGL backgrounds, scroll-linked animation, parallax, scrubbed sections — or when one feels busy or its motion drifts. Product UI through its style packs — dashboards, admin panels, internal tools, mobile screens, chat and agent interfaces. Design tokens, light/dark themes, palettes and colours, typography and fonts. Triggers - "design a landing" / "дизайн лендинга", "build a landing page" / "сделай лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы, фигма в код", "mobile screen" / "мобильный экран", "palette" / "палитра", "colors" / "цвета", "typography" / "типографика", "font" / "шрифт", "how it looks" / "выглядит", "make it prettier" / "красиво, красивее", "visual reference" / "визуальные референсы", "investor deck" / "презентация".
 license: MIT
 metadata:
-  version: 1.45.0
+  version: 1.46.0
 ---
 
 # SHELEG Design

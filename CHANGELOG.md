@@ -6,6 +6,8 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.46.0] - 2026-08-22
+
 ### `babylove` — the thirty-first pack, and the other end of the same question
 
 Measured 2026-08-21 off <https://www.babylovegrowth.ai/en> and its
