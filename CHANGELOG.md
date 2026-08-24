@@ -6,6 +6,17 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.49.1] - 2026-08-25
+
+### Fixed
+
+The README told a reader to run commands the published package cannot run: it ships no
+`test/` directory, so `python3 test/validate.py` resolves in a clone and nowhere else. Measured against the
+published tarball on 2026-08-25. Shipping the suite does not fix it — the plants live in
+`.github/workflows/`, which no packaging npm can express puts in a tarball — so the document
+now names where the command runs instead of claiming it, beside a marker the umbrella's
+validator reads. Naming a dead command is this family's own rule; claiming one is the defect.
+
 ## [1.49.0] - 2026-08-24
 
 ### Rimlight, the thirty-fourth pack — elevation made of light
