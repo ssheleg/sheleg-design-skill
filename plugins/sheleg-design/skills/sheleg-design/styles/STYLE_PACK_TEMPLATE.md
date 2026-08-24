@@ -112,6 +112,55 @@ and no clone.
    headings, and the gate refused it in the same run, because the contract is
    thirteen headings.
 
+7. **Read the render, not the stylesheet — and separate the authored layer from
+   the vendor one.** A declared token is a claim; a computed value is what a
+   reader sees, and the two disagree often enough that measuring the wrong one is
+   the commonest way a pack ships a colour nobody paints. Three traps, each met
+   in a shipped run:
+
+   - **A dead token reads as the brand.** `nameplate`'s reference declares
+     `--primary` three times as a green nothing paints, while its real action is a
+     coral. Only the render says which.
+   - **A gradient hides from a colour census.** An element filled by
+     `background-image` has a *transparent* `background-color`, so a sweep of
+     `background-color` alone skips every gradient on the page — and on that
+     reference it returned a third-party cookie banner as the primary action.
+     Read `background-image` too.
+   - **Vendor CSS outnumbers authored CSS.** That same site loads Bootstrap, two
+     purchased themes and three Font Awesome versions against eleven files it
+     wrote itself; a frequency count over all of it yields Bootstrap's palette as
+     the brand's. Decide which files the site authors, count only those, and say
+     in `Origin:` which you counted.
+
+   State the method in `Origin:` alongside the address — viewports, element
+   counts, which stylesheets — so the next author can repeat the measurement
+   rather than trust it.
+
+8. **Write a ratio so the gate can compute it: subject and partner on the same
+   line.** `validate_stated_ratios` resolves the partner from an `on`/`over`/
+   `against` phrase and the subject from a token or a hex **on that line**. Split
+   either across a line break and the claim becomes unverifiable prose that still
+   reads as measured. Three shapes fail, all three met in one run:
+
+   - a line break between the number and its partner — *"1.34:1 composited over
+     white and 1.33:1 over"* / *"`--field`"* is two half-claims;
+   - a token whose own name contains another token's — `--on-action` resolves as
+     `--action`, which is a gradient and pairs with nothing, so state that one
+     against literals: `#ffffff on #d93b3b is 4.53:1`;
+   - a table row stating a bare ratio — name the partner in the cell, or declare
+     the base in the table's header, which covers every row at once.
+
+   - a line whose **only** token is the partner: the resolver prefers a token to a
+     hex for the subject, so `` `#d94558` was 3.96:1 on `--field` `` leaves
+     `--field` filling both slots and pairs with itself. Name the field by literal
+     too — `` on the slab `#f5f7fa` `` — and the pair computes.
+
+   Evidence for a **refusal** — the reference's own failing value — is worth
+   keeping, and it is cheaper to state it in the computable form than to file it
+   as unpairable: put the rejected hex on the line with its ratio and its field,
+   and where that field is one of your own tokens, write the field's literal
+   beside the ratio rather than the token.
+
 ## Register
 
 Choose this pack for <product kinds / registers>. State whether it rides

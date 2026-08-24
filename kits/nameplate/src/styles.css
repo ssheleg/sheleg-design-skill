@@ -257,6 +257,50 @@
   --lift-sm: 1px;
   --reveal-y: 10px;
 
+  /* ---- Marks: decorative variety across a grid, NOT a taxonomy -------- */
+  /* MEASURED off the report showcase the home page embeds: a 50x50 icon tile at
+     16px radius, a 5px solid ring in --mark-tile-ring, a 1px outer ring at 8%
+     ink, its background one tint at 9-12% alpha and its glyph the matching
+     solid. The reference ships six of these pairs and this pack ships five plus
+     a neutral, for two measured reasons.
+
+     FIRST, the sixth is the action. The reference's red mark #d94558 sits 2.92
+     OKLab units from --action-to and 1.12 under the worst dichromacy: the same
+     colour to everyone, not only to a colourblind reader. A mark in the action's
+     colour reads as a control, so the coral belongs to --action alone and the
+     sixth slot takes --mark-neutral.
+
+     SECOND, and this is why the tokens are numbered rather than named: the set
+     does NOT separate from itself. Seven of the fifteen pairs are tight, and the
+     reference's own indigo #5b4bd4 and violet #6c5ce7 are 5.58 apart at full
+     colour, which is one colour wearing two names. So the hue here is variety,
+     never meaning -- it does not encode WHICH feature this is, and nothing may
+     depend on telling two marks apart. The icon and the label carry that, and a
+     numbered token cannot be mistaken for a semantic one. */
+  --mark-tile-r: 16px; /* MEASURED */
+  --mark-tile: 50px; /* MEASURED */
+  --mark-tile-ring: #f7f8fc; /* MEASURED — a 5px solid ring, not a hairline */
+  --mark-tile-ring-w: 5px; /* MEASURED */
+  --mark-tile-edge: rgba(34, 36, 76, 0.08); /* MEASURED — 0 0 0 1px, outside the ring */
+
+  /* Each solid clears the 3:1 non-text floor on its own composited tile, which is
+     the only floor it owes: it is a glyph. None of them may carry a word — see
+     the pack's Bans, where three of the five miss AA on --field as text. */
+  --mark-1: #187c59; /* 4.53:1 on #ecf1f2, its own tile */
+  --mark-1-wash: rgba(31, 157, 107, 0.1); /* MEASURED */
+  --mark-2: #247cb0; /* 4.01:1 on #ecf0f7, its own tile */
+  --mark-2-wash: rgba(49, 144, 199, 0.1); /* MEASURED */
+  --mark-3: #5b4bd4; /* 5.36:1 on #eeeefa, its own tile */
+  --mark-3-wash: rgba(108, 92, 231, 0.1); /* MEASURED */
+  --mark-4: #b36b18; /* 3.69:1 on #f5f0ef, its own tile */
+  --mark-4-wash: rgba(227, 165, 60, 0.12); /* MEASURED — the one tint at 12% */
+  --mark-5: #6c5ce7; /* 4.26:1 on #efeffa, its own tile */
+  --mark-5-wash: rgba(108, 92, 231, 0.09); /* MEASURED — 9%, the lightest */
+  /* DERIVED, and it replaces the reference's red for the reason above. It is
+     --ink-mid, so a grid whose sixth block has no hue left still has a mark. */
+  --mark-neutral: #374151; /* 8.84:1 on #ecedf2, its own tile */
+  --mark-neutral-wash: rgba(55, 65, 81, 0.1);
+
   /* ---- Status: the action is red, so danger goes dark ----------------- */
   /* SELECTED, all four — a marketing site paints no error state — and each is a
      step of a hue the reference itself carries: its #187c59 green, its #b36b18
@@ -281,10 +325,13 @@
   font-weight: var(--weight-body);
 }
 
-/* No dark theme block, and that is a measurement rather than an omission: the
-   page has no dark band anywhere. Its declared layer carries a #181b31 navy and
-   a set of on-dark link colours, and nothing paints them — the footer computes
-   white. A pack that shipped a dark variant here would be inventing one. */
+/* No dark theme block, and that is a measurement rather than an omission. No dark
+   band PAINTS on any served page: every full-bleed block was walked at 1440 and the
+   footer computes white. The authored stylesheets do declare eight dark fills, and
+   both kinds were checked -- .bg-header-blue (#231b66) is dead CSS no served page
+   uses, and the one that renders (#1f2937) sits inside a mock of another product's
+   interface in the hero image. The #181b31 navy and the on-dark link colours beside
+   it paint nothing. A pack that shipped a dark variant here would be inventing one. */
 
 /* The reference ships a real reduced-motion contract — 23 blocks across 7 of
    its 11 authored stylesheets — and, unusually, gets the important part right:
@@ -325,6 +372,7 @@
 .np-chip,
 .np-frame,
 .np-band,
+.np-mark,
 .np-shell {
   box-sizing: border-box;
 }
@@ -760,3 +808,25 @@ a.np-plate:active {
   font-size: var(--t-sm);
   letter-spacing: var(--track-caps-control);
 }
+
+/* ---- The mark tile: variety across a grid, never a control ------------- */
+
+.np-mark {
+  display: grid;
+  place-items: center;
+  inline-size: var(--mark-tile);
+  block-size: var(--mark-tile);
+  border: var(--mark-tile-ring-w) solid var(--mark-tile-ring);
+  border-radius: var(--mark-tile-r);
+  box-shadow: 0 0 0 var(--line-w) var(--mark-tile-edge);
+  transition:
+    color var(--dur-base) var(--ease-out),
+    background-color var(--dur-base) var(--ease-out);
+}
+
+.np-mark--1 { background: var(--mark-1-wash); color: var(--mark-1); }
+.np-mark--2 { background: var(--mark-2-wash); color: var(--mark-2); }
+.np-mark--3 { background: var(--mark-3-wash); color: var(--mark-3); }
+.np-mark--4 { background: var(--mark-4-wash); color: var(--mark-4); }
+.np-mark--5 { background: var(--mark-5-wash); color: var(--mark-5); }
+.np-mark--neutral { background: var(--mark-neutral-wash); color: var(--mark-neutral); }

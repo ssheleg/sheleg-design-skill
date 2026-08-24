@@ -6,6 +6,84 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.48.1] - 2026-08-24
+
+### The assembly rule is written down, and the render step earned its place within the hour
+
+The procedure for adding a pack lived in three homes — `CONTRIBUTING.md`'s authoring
+steps, `docs/DOCMAP.md`'s propagation row, and the release section — and three things
+the `nameplate` run actually did were in none of them. They are now in the home that
+already owns each, rather than in a fourth document, which `DOCMAP`'s single-homes
+discipline forbids.
+
+**`STYLE_PACK_TEMPLATE.md` gains rules 7 and 8**, and both ship inside the bundle so an
+author holding only the installed skill sees them. Rule 7 is *read the render, not the
+stylesheet*: a dead token reads as the brand, a gradient hides from a
+`background-color` census because its element's is transparent, and vendor CSS
+outnumbers authored CSS — three traps met in one run, each with the shipped pack that
+met it. Rule 8 is *write a ratio so the gate can compute it*, with all four shapes that
+fail: a line break between the number and its partner, a token whose name contains
+another's (`--on-action` resolves as `--action`, a gradient that pairs with nothing), a
+table row stating a bare ratio, and a line whose **only** token is the partner, so it
+fills both slots and pairs with itself.
+
+**`CONTRIBUTING.md` gains step 8: render the kit and check its computed values against
+what the pack claims.** Not a screenshot for the eye — mount it on real content at
+1440, 768 and an emulated 390, then read `getComputedStyle` back. The step existed
+only as a sentence in `bulletin`'s CHANGELOG entry, so whether it happened depended on
+the next author reading that paragraph. **It caught a defect within the hour of being
+written:** the `Mark` tile added in this same release rendered 60×60 against a declared
+50, because `.np-mark` was not in the kit's `border-box` list — the same defect as the
+plate one release earlier, in the component added to close a different gap.
+
+### The mark set, and what measuring it changed
+
+`nameplate`'s reference repeats one object per feature on the report surface it embeds:
+a 50×50 tile at 16px radius wearing a **5px solid ring**, a wash at 9–12% alpha and a
+glyph in the matching solid. Six hue pairs drive it and the pack carried none of them,
+so an agent building the reference's own feature row would have invented six colours.
+
+**Measuring them changed the answer from "carry six hues" to "carry a mechanism and a
+ban".** The set does not separate from itself: seven of its fifteen pairs are tight,
+and the reference's own indigo `#5b4bd4` and violet `#6c5ce7` are 5.58 OKLab units
+apart at full colour — one colour wearing two names. So the hue is variety, never
+meaning; it does not encode which feature this is; and the tokens are **numbered**
+rather than named so nothing can misread them as semantic. That is the measured
+difference from `pigeonhole`, whose hues *are* a taxonomy and whose label word is
+therefore mandatory, and the fork is now written from both ends.
+
+The sixth hue was dropped for a second measured reason: the reference's red `#d94558`
+sits **2.92** units from `--action-to` and 1.12 under the worst dichromacy — the same
+colour to every reader, not only to a colourblind one. A mark in the action's colour
+reads as a control, so the coral stays with `--action` and the sixth slot takes
+`--mark-neutral`. All six clear the 3:1 non-text floor on their own composited tile,
+and none may carry a word: `--mark-4` is 3.89:1 on the slab, `--mark-2` is 4.27:1, and
+the dropped red was 3.96:1.
+
+Ships `Mark` as the kit's twelfth component, with `tone` as a number precisely because
+it means nothing.
+
+### A claim that was wider than its evidence
+
+The pack said *the reference has no dark band anywhere*, and what had been checked was
+the home page at 1440. The authored stylesheets declare **eight** dark fills, and both
+kinds were then checked: `.bg-header-blue` (`#231b66`) is dead CSS no served page uses,
+and the one that renders (`#1f2937`) sits inside a **mock of another product's
+interface** in the hero image. The claim holds in substance and now states the width it
+was measured at, in the Bans and in the token layer's own comment. A claim wider than
+its evidence is this repository's own defect class, and it does not get an exemption
+for being ours.
+
+### Still open, and named rather than quietly dropped
+
+`T31` is unrun — it needs fresh contexts reading blind. And 29% of the reference's
+authored CSS is still unmeasured into the pack: the checkout (`order-form-cro.css`,
+66,546 B) and the report surface (71,302 B) of 500,051 B total. The pack describes a
+front door and says nothing about the payment step. That is an extension to a second
+surface, not a loose end.
+
+Gates: 4617 → **4626**, 2659 → **2681**, 692 unchanged. Both palette ceilings held.
+
 ## [1.48.0] - 2026-08-24
 
 ### Nameplate, the thirty-third pack — the proof is a borrowed name

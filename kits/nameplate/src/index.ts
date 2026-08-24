@@ -23,3 +23,5 @@ export { Frame } from './Frame.js';
 export type { FrameProps } from './Frame.js';
 export { Eyebrow } from './Eyebrow.js';
 export type { EyebrowProps } from './Eyebrow.js';
+export { Mark } from './Mark.js';
+export type { MarkProps } from './Mark.js';

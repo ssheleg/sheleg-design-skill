@@ -49,6 +49,7 @@ marketing page a user lands on before the product they log into, which is
 way — one thing written here reaching twelve places out there — which is
 [`bulletin`](./bulletin.md): the pastel there is a full-bleed band dividing an
 act, where the pastel here is a chip naming a category.
+A page whose coloured marks are **variety rather than a scheme** is [`nameplate`](./nameplate.md), and the difference is measurable rather than stylistic: this pack's hues separate from each other because each one names a category, so its label word is mandatory; that pack's five marks do not — seven of their fifteen pairs are tight — so its hue is forbidden from meaning anything and its tokens are numbered instead of named. If deleting the colour would destroy the filing scheme, stay here; if it would only make a grid quieter, go there.
 
 ### The fork against [`cyclorama`](./cyclorama.md), which is the one people get wrong
 

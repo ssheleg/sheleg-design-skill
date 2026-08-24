@@ -314,6 +314,28 @@ reference's own declared ladder confirmed against computed
   hairline.
 - **Two uppercase registers**, 0.06em on controls and 0.175em on micro-links.
 
+### The mark tile, and why its colours are numbered
+
+The report surface the home page embeds repeats one object per feature: a 50×50 tile
+at `--mark-tile-r` (16px) wearing a **5px solid ring** in `--mark-tile-ring` — not a
+hairline — with a 1px `--mark-tile-edge` outside it, a tint background at 9–12% alpha
+and a glyph in the matching solid. Five of them ship here plus `--mark-neutral`, and
+both departures from the reference are measurements rather than taste.
+
+**The sixth was the action.** The reference's red mark `#d94558` sits 2.92 OKLab
+units from `--action-to` and 1.12 under the worst dichromacy — one colour, not two, to
+every reader. A mark in the action's colour reads as a control, so the coral is
+`--action`'s alone and the sixth slot takes the neutral.
+
+**The hue is variety, not meaning, and that is why the tokens are numbered.** The set
+does not separate from itself: seven of its fifteen pairs are tight, and the
+reference's own indigo `#5b4bd4` and violet `#6c5ce7` are 5.58 apart at full colour —
+one colour wearing two names. So a mark's hue never encodes *which* feature this is;
+the icon and the label do. Nothing in a grid may require the reader to tell two marks
+apart, and a numbered token cannot be misread as a semantic one — which is the whole
+difference from [`pigeonhole`](./pigeonhole.md), whose hues **are** a taxonomy and
+whose label word is therefore mandatory.
+
 ## Signature element
 
 **The plate band.** A wrapping row of white bordered pills, each carrying one
@@ -359,8 +381,20 @@ page — a second plate band is how the argument turns into wallpaper.
   loses the argument the moment it becomes art.
 - **No rounding for friendliness.** Every radius you add spends the plate's meaning.
 - **No `--shadow-frame` on a card or a control.** One object per screen.
-- **No dark variant.** The reference has no dark band anywhere; shipping one here is
-  inventing, not extending.
+- **A mark colour never fills a control and never carries a word.** It is a glyph on
+  its own tile and clears only the 3:1 non-text floor there. As text on the slab three
+  of them miss AA and each misses it on its own line:
+  `--mark-4` is 3.89:1 on `--field`;
+  `--mark-2` is 4.27:1 on `--field`;
+  and the red this pack dropped, `#d94558`, was 3.96:1 on the slab `#f5f7fa`.
+  A word in a mark colour is a word below the floor, and a mark on a button is a
+  button that looks like five other things.
+- **No dark variant.** No dark band *paints* on any served page — checked by walking
+  every full-bleed block at 1440, where the footer computes white. The authored
+  stylesheets do declare eight dark fills: `.bg-header-blue` (`#231b66`) is dead CSS
+  used by no served page, and the one that renders (`#1f2937`) is inside a **mock of
+  another product's interface** in the hero image. So there is nothing here to extend,
+  and a dark theme would be invented.
 - **No horizontally scrolling plate band.** The count is the argument.
 - **No `ease-in`.**
 

@@ -76,6 +76,26 @@ drift.
    `docs/evidence/specs/2026-08-04-design-sync-bridge-design.md`.
 7. Add or update a scenario in `test/scenarios.md` if the pack changes routing
    behavior.
+8. **Render the kit in a browser and compare the computed values against what the
+   pack claims.** Not a screenshot for the eye — mount the kit on a page with real
+   content at 1440, 768 and an emulated 390, then read `getComputedStyle` back and
+   check it against the pack's own numbers: control heights, body weight, radii,
+   gutters, the tap-target floor, no horizontal overflow.
+
+   This step exists because the three gates cannot do it. **A gate reads
+   structure, not layout**, and two releases in a row shipped defects that every
+   gate passed: `bulletin` (1.43.0) collapsed a platform rail to a column because
+   `container-type` was set on a shrink-to-fit box, and `nameplate` (1.48.0)
+   rendered its signature plate 78px against a stated 50 — the kit declared no
+   `box-sizing`, and Chrome gives a `button` `border-box` while giving an anchor
+   `content-box`, so the button beside it kept its promise and the plate silently
+   grew by its own padding. The same render caught body copy at weight 400 against
+   the pack's central claim of 500, because `--weight-body` existed and no
+   component consumed it — a token that was decorative rather than binding.
+
+   Until 1.48.1 this was not a step. It lived as a sentence in the `bulletin`
+   CHANGELOG entry, so whether it happened depended on the next author reading
+   that paragraph — which is not a procedure, it is luck.
 
 Token naming is an interface across packs: `--accent-weak` is a tint,
 `--accent-dim`/`-deep` is a darker accent. Reusing a name for the opposite
