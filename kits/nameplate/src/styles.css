@@ -1,0 +1,762 @@
+/* SHELEG Design — Nameplate token layer (a cool near-white field, a square page,
+   and one white hairline-bordered pill carrying a borrowed name).
+   Copy verbatim; consume only var(--…) in components.
+
+   Extracted from https://www.brandpush.co on 2026-08-24 by enumerating its
+   sitemap (20 URLs, 12 distinct pages), fetching every page robots.txt permits
+   — /r/* is Disallowed there and was not fetched, so the report surface below
+   was read from the showcase the home page embeds and from the two stylesheets
+   that draw it — and reading the 11 stylesheets the site itself authors under
+   /assets/css/ (500,051 bytes, 20,240 lines, 136 custom properties). Vendor
+   layers were EXCLUDED from every count: the site also loads Bootstrap 4.6.2, a
+   purchased "ave" theme, a "frest" admin theme and Font Awesome, and counting
+   those would read Bootstrap's defaults as this brand's decisions.
+
+   Then read off COMPUTED styles on the live page through CDP at 1440x900
+   (1,251 visible of 5,694 elements), 768x1168 and a device-emulated 390x844.
+   Frequencies quoted below are computed-style counts at 1440 unless stated.
+   Ratios were computed by importing this repository's own palette gate,
+   test/validate_palette.py.
+
+   Computed rather than declared, and the difference is not academic here. The
+   site declares --primary: #84B761 three times, a green nothing paints; its
+   real action is a coral gradient whose element carries a TRANSPARENT
+   background-color, so a colour census of background-color alone finds the
+   blue cookie banner and calls it the brand. Every value below survived the
+   render.
+
+   Three families of value appear below and they are not the same kind of claim:
+
+   MEASURED — the literal was computed on the live page.
+   SELECTED — the reference ships no such role, and the value is a step of a ramp
+   the reference already carries, taken deep enough to clear AA on this field.
+   DERIVED — computed from a token in this file, because the reference's own
+   value fails a floor. Only lightness moves; the measured hue is held in OKLab.
+
+   The corrections are in the pack's Gotchas, and there are five. */
+
+:root {
+  color-scheme: light;
+
+  /* ---- The field: white page, cool grey slab ---------------------------- */
+  /* MEASURED. White is the PAGE (108 computed fills). The cool near-white is a
+     full-bleed slab — the hero stands on it, and later acts return to it — so it
+     is --field, not a card tint. A card on the slab is --surface, which is
+     white: this pack separates by returning to white, never by going darker. */
+  --bg: #ffffff;
+  --field: #f5f7fa; /* MEASURED — 11 fills, the hero slab and the repeat band */
+  --surface: #ffffff; /* the card, and it stands on --field */
+  --surface-2: #eceff3; /* MEASURED — 7 fills, the inset well */
+  --surface-3: #f3f4f8; /* MEASURED — 4 fills */
+
+  /* ---- Ink -------------------------------------------------------------- */
+  /* The dominant text colour is NOT the near-black: the mid grey carries 121
+     computed text nodes against the near-black's 37. The page is mostly grey
+     type, which is why the corrections below matter more than they would on a
+     page that set body copy in ink. */
+  --ink: #1d1d1d; /* MEASURED — 16.86:1 on --bg, 15.71:1 on --field */
+  --ink-mid: #374151; /* MEASURED — 25 nodes; 10.31:1 on --bg, 9.60:1 on --field */
+  /* DERIVED. The reference's body grey is #737373 on 121 nodes: 4.74:1 on white,
+     which passes, and 4.42:1 on --field, which does not — and --field is the
+     hero. A value that clears AA on the page but fails on the slab the hero
+     stands on is the subtlest of the five corrections and the one a
+     white-background-only check would never surface. */
+  --ink-body: #707070; /* 4.95:1 on --bg, 4.61:1 on --field */
+  /* DERIVED, both. The reference sets live text in #9ca3af on 21 nodes and in
+     #8fa6d0 on 25, and against the white page those are 2.54:1 and 2.46:1 — words
+     rendered below every text floor there is. Each keeps its measured hue and moves
+     only lightness, far enough to clear AA on BOTH fields rather than only on the
+     page. */
+  --ink-soft: #6b717d; /* 4.90:1 on --bg, 4.57:1 on --field */
+  --ink-quiet: #5c7199; /* 4.91:1 on --bg, 4.57:1 on --field */
+  /* @role non-text: --ink-faint — 2.54:1 on --bg. MEASURED, and the reference
+     sets 21 live text nodes in it. Here it is an icon fill, a disabled label
+     and a placeholder only. */
+  --ink-faint: #9ca3af;
+  --on-ink: #ffffff; /* 16.86:1 on --ink */
+
+  /* ---- The action: a two-stop coral ramp, and it is the whole accent ---- */
+  /* DERIVED, and this is the pack's largest departure from its reference. The
+     primary action is a gradient, not a flat fill: `to right, #fc6a2a ->
+     #fe506c` on 23 computed elements and its mirror on 22, against 4 for the
+     blue ramp the declared tokens make look primary. White on the measured
+     stops is 2.90:1 and 3.19:1, and 3.04:1 at the midpoint — under AA and under
+     the 3:1 large-text floor as well, so no type size rescues it, and the
+     uppercase 12px label the reference puts there is the worst case of all.
+     The remedy holds both hues in OKLab and moves only lightness until white
+     clears AA at every point along the ramp. */
+  --action-from: #d44500; /* #ffffff on #d44500 is 4.52:1 */
+  --action-to: #de2e53; /* #ffffff on #de2e53 is 4.54:1 */
+  --action: linear-gradient(to right, var(--action-from), var(--action-to));
+  /* #ffffff on #d93b3b — the ramp's own midpoint — is 4.53:1 */
+  --on-action: #ffffff;
+  /* MEASURED direction, DERIVED values: the reference's own hover on this
+     control is a glow rather than a fill change, so the fill darkens one step
+     only for the pressed state and the hover spends --shadow-action-hover. */
+  --action-from-deep: #b83b00; /* #ffffff on #b83b00 is 5.68:1 */
+  --action-to-deep: #c22448; /* #ffffff on #c22448 is 5.71:1 */
+  --action-pressed: linear-gradient(to right, var(--action-from-deep), var(--action-to-deep));
+  /* The mirrored ramp. MEASURED as a distinct declaration (22 elements) and
+     kept, because reversing it is how the reference marks the second of two
+     adjacent actions without introducing a colour. */
+  --action-mirror: linear-gradient(to right, var(--action-to), var(--action-from));
+
+  /* ---- The blue: a link and a ring, never the primary fill ------------- */
+  /* The declared layer makes this look like the brand colour and the render
+     disagrees: #0587ed paints 4 text nodes, 1 fill, and the third-party cookie
+     banner. It is a link and a focus ring here, and it may not fill a CTA. */
+  /* DERIVED — the measured #0587ed fails this role, below AA on both fields. */
+  --link: #0070d4; /* 4.92:1 on --bg, 4.58:1 on --field */
+  --link-hover: #005cb0; /* DERIVED — 6.65:1 on --bg, 6.20:1 on --field */
+  /* @role non-text: --accent — 3.69:1 on --bg, 3.44:1 on --field. MEASURED, and
+     it clears the 3:1 non-text floor on both fields as long as it stays
+     opaque, which is exactly what the reference does not do. */
+  --accent: #0587ed;
+  --accent-wash: #eaf4fe; /* SELECTED — the same hue as a hovered cell */
+
+  /* ---- Lines: the border IS the pill --------------------------------- */
+  /* MEASURED. Two seams, and they are not interchangeable: the lighter one is
+     the page's dominant rule (37 computed borders) and the slightly cooler one
+     is what draws the name pill (13). The pill's identity is its border; give
+     it a fill and it stops being a nameplate. */
+  --line: #e5e7eb; /* the name pill's border */
+  --line-soft: #ededed; /* the page's rule, and the secondary control's border */
+  --line-w: 1px; /* MEASURED — every border on the page is 1px */
+
+  /* ---- Elevation: a hairline lift, and one big soft shadow ------------ */
+  /* MEASURED. The pill's resting shadow is almost nothing — 4% at 2px blur, 13
+     elements — and its hover is the same shadow grown eightfold. Against that,
+     exactly one kind of object gets the big one: the framed media (14
+     elements, 25px offset at 70px blur, 7%). Spending the big shadow on a card
+     or a control is what makes this pack look like a template. */
+  --shadow-pill: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+  --shadow-pill-hover: 0 8px 20px 0 rgba(15, 23, 42, 0.12);
+  --shadow-frame: 0 25px 70px 0 rgba(0, 0, 0, 0.07);
+  --shadow-action-hover: 0 4px 18px 0 rgba(255, 106, 92, 0.45); /* MEASURED */
+
+  /* MEASURED hue, DERIVED opacity, and the opacity is the correction. The
+     reference draws its focus ring as `2px solid rgba(5,135,237,0.35)` with a
+     2px offset. Composited, that is #d3dff9, which fails at 1.34:1 on --bg;
+     over the slab it is #cbd8f6, which fails at 1.33:1 on --field. The floor
+     for a non-text mark is 3:1, and all three of the reference's alpha variants
+     (0.35, 0.40, 0.45) miss it on both fields. The hue was never the problem:
+     opaque, the same blue clears. So the ring keeps the measured
+     colour and drops the alpha. */
+  --focus-color: var(--accent);
+  --focus-w: 2px;
+  --focus-offset: 2px;
+
+  /* ---- Radii: the page is SQUARE, and the pill is the exception -------- */
+  /* MEASURED, and this is the pack's discipline in one number: 1,091 of the
+     1,251 visible elements at 1440 compute to 0px — 87% of the page. The pill
+     is 52 of them. Rounding things here does not make the page friendlier; it
+     spends the one shape that means something. */
+  --r-none: 0;
+  --r-xs: 4px; /* MEASURED — 26; the inline tag and the small mark */
+  --r-sm: 8px; /* MEASURED — 15; the inner well and the small media */
+  --r-md: 16px; /* MEASURED — 23; the card and the framed media */
+  --r-pill: 9999px; /* MEASURED — 52; the name, the review mark, both CTAs */
+
+  /* ---- Spacing: a 4px grid, and a wide vertical rhythm ---------------- */
+  /* MEASURED off the reference's own scale, which is a 4px grid stated in rem.
+     The vertical rhythm is separate and much larger — see the section pads. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-18: 72px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* ---- The page ------------------------------------------------------- */
+  --content-max: 1170px; /* MEASURED — 20 containers, and it is not a Bootstrap default */
+  --gutter: 24px; /* MEASURED at 390 and at 500 — 17 containers */
+  --nav-h: 89px; /* MEASURED, and it is position:absolute over the hero, not sticky */
+  --hero-pad-top: 130px; /* MEASURED */
+  --hero-pad-bottom: 64px; /* MEASURED */
+  --section-pad-top: 80px; /* MEASURED — the most repeated opening pad */
+  --section-pad-bottom: 96px; /* MEASURED — the most repeated closing pad */
+  --control-h: 48px; /* MEASURED — the primary CTA */
+  --pill-h: 50px; /* MEASURED — the name pill */
+  /* CORRECTION, not a measurement. At an emulated 390x844, 87 of the
+     reference's 137 visible interactive elements are under 44px tall. Every
+     control in this pack takes this as a floor. */
+  --tap-min: 44px;
+
+  /* ---- The wave: the act separator, and it is drawn not ruled ---------- */
+  /* MEASURED. Eleven acts on the home page end in an SVG wave rather than a
+     rule: 150px tall, overspilling to 150% width so its curve reads as an arc
+     rather than a bulge, filled in the colour of the act BELOW, and hidden
+     under 768px, where the acts butt directly. */
+  --wave-h: 150px;
+  --wave-w: calc(150% + 1.3px);
+  --wave-hidden-below: 768px;
+
+  /* ---- Type: one family, and the body is MEDIUM ----------------------- */
+  /* MEASURED — 262 of 264 computed text nodes are Poppins. The other two are a
+     Hanken Grotesk that survives in one declaration and paints almost nothing;
+     treating it as a second family is reading the stylesheet instead of the
+     page. */
+  --font-sans: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-sans);
+
+  --t-hero: 2.8125rem; /* 45px — MEASURED, the home h1 at 1440 */
+  --lh-hero: 1.15;
+  --t-section: 2.52rem; /* 40.32px — MEASURED, every h2 */
+  --lh-section: 1.1;
+  --t-lede: 1.25rem; /* 20px — MEASURED, the sub-headline at weight 500 */
+  --lh-lede: 1.35;
+  --t-body: 1.0625rem; /* 17px — MEASURED, and it is the page's most frequent size (78 nodes at 1440, 352 at 768) */
+  --lh-body: 1.6; /* MEASURED — 27.2px on 17px */
+  --t-pill: 0.9375rem; /* 15px — MEASURED, the name */
+  --lh-pill: 1.2; /* MEASURED — 18px on 15px */
+  --t-sm: 0.875rem; /* 14px — the control label */
+  --t-xs: 0.75rem; /* 12px — the micro-link and the eyebrow */
+
+  /* Tracking is a pair here, and the pair is the signature. The display face
+     pulls in; the two uppercase registers push out, by very different amounts,
+     and the reference's own --tracking-caps token (0.06em) describes only the
+     first of them. */
+  --track-display: -0.02em; /* MEASURED — -0.9px on 45px, -0.8064px on 40.32px, -0.6px on 30px */
+  --track-caps-control: 0.06em; /* MEASURED — 0.84px on the 14px button label */
+  --track-caps-micro: 0.175em; /* MEASURED — 2.1px on the 12px micro-link */
+  --track-body: 0; /* MEASURED — body copy is untracked */
+
+  --weight-body: 500; /* MEASURED — the dominant weight on the page: 172 nodes at 1440, 459 at 768, 182 at 390 */
+  --weight-display: 700; /* MEASURED — 51 nodes; the h1, every h2, and both control labels */
+  --weight-regular: 400; /* MEASURED — 30 nodes; the long-form paragraph */
+  --weight-medium: 600; /* MEASURED — 10 nodes */
+
+  /* ---- Motion: the reference declares its own ladder, so it is read --- */
+  /* MEASURED, all of it, off the reference's own custom properties and
+     confirmed against computed transition-duration. 1,057 of 1,251 visible
+     elements compute to 0s: almost nothing on this page moves, and the budget
+     that exists is entrance, hover-lift and press. There is no scroll clock
+     (animation-timeline: 0 occurrences), no parallax and no scrub, which is why
+     the pack pins MOTION_INTENSITY at 4. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1); /* MEASURED — the reference's own --ease-out, and the doctrine's shape */
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1); /* MEASURED — the panel */
+  --dur-press: 140ms;
+  --dur-fast: 160ms; /* the colour change */
+  --dur-base: 200ms; /* MEASURED — the transform and the shadow */
+  --dur-slow: 280ms;
+  --dur-modal: 320ms;
+  --dur-reveal: 400ms;
+  --dur-entrance: 450ms; /* MEASURED — the reference's --animate-duration */
+  --stagger: 50ms; /* MEASURED — its --animate-delay */
+  /* The lift, and it is the pack's one physical gesture: the pill rises and its
+     shadow grows in the same 200ms. MEASURED — translateY(-2px) on 5
+     declarations, -1px on 3. */
+  --lift: 2px;
+  --lift-sm: 1px;
+  --reveal-y: 10px;
+
+  /* ---- Status: the action is red, so danger goes dark ----------------- */
+  /* SELECTED, all four — a marketing site paints no error state — and each is a
+     step of a hue the reference itself carries: its #187c59 green, its #b36b18
+     amber, its #d94558 red and its #09a5be cyan. The set was searched rather
+     than chosen, against two constraints the palette itself imposes. With a
+     coral action in play, a conventional red danger sits 2.93 OKLab units from
+     it and is indistinguishable under all three dichromacies, so danger is held
+     at the reference's red hue and taken deep instead. And --info may not be
+     the reference's blue, because that blue is already --accent: the two came
+     out 7.5 units apart, which the gate refuses outright — one colour cannot be
+     both a link and a state. Info is therefore the cyan. All fifteen pairs
+     across the four states, the accent and the action clear the floors: 15
+     units at full colour, 8 under protanopia, deuteranopia and tritanopia. */
+  --good: #004e2f; /* 9.86:1 on --bg, 9.18:1 on --field */
+  --warn: #935900; /* 5.72:1 on --bg, 5.33:1 on --field */
+  --danger: #900004; /* 9.60:1 on --bg, 8.94:1 on --field */
+  --info: #00738b; /* 5.49:1 on --bg, 5.12:1 on --field */
+
+  background-color: var(--bg);
+  color: var(--ink-body);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-body);
+}
+
+/* No dark theme block, and that is a measurement rather than an omission: the
+   page has no dark band anywhere. Its declared layer carries a #181b31 navy and
+   a set of on-dark link colours, and nothing paints them — the footer computes
+   white. A pack that shipped a dark variant here would be inventing one. */
+
+/* The reference ships a real reduced-motion contract — 23 blocks across 7 of
+   its 11 authored stylesheets — and, unusually, gets the important part right:
+   its reveal layer restores `visibility: visible; opacity: 1`, so content is
+   never locked behind an animation that did not run. That behaviour is required
+   here, and the lift stops travelling so a control still changes colour and
+   still shows its focus ring while nothing moves. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-press: 0s;
+    --dur-fast: 0s;
+    --dur-base: 0s;
+    --dur-slow: 0s;
+    --dur-modal: 0s;
+    --dur-reveal: 0s;
+    --dur-entrance: 0s;
+    --stagger: 0s;
+    --lift: 0px;
+    --lift-sm: 0px;
+    --reveal-y: 0px;
+  }
+}
+
+/* ── components ── */
+/* Authored CSS for the states the pack declares and a token layer cannot: hover,
+   focus-visible, disabled, selected, pending. Nothing below names a colour — every
+   value resolves through a token above, which is what the gate checks. */
+
+/* Every measured height in this pack is a TOTAL height, so every box that carries
+   one is border-box. This is not boilerplate: Chrome's UA stylesheet gives
+   `button` border-box and gives an anchor content-box, so without this line the
+   plate — an anchor with 12.8px of padding and a 1px border against a 50px
+   minimum — renders 78px while the button beside it renders the 48px it claims.
+   Three green gates read structure, not layout; this was caught by rendering it. */
+.np-plate,
+.np-btn,
+.np-card,
+.np-chip,
+.np-frame,
+.np-band,
+.np-shell {
+  box-sizing: border-box;
+}
+
+.np-plate *,
+.np-btn *,
+.np-card *,
+.np-chip * {
+  box-sizing: border-box;
+}
+
+/* ---- Acts and fields ---------------------------------------------------- */
+
+.np-act,
+.np-act--page {
+  position: relative;
+  background: var(--bg);
+  padding-block: var(--section-pad-top) var(--section-pad-bottom);
+}
+
+.np-act--slab {
+  position: relative;
+  background: var(--field);
+  padding-block: var(--section-pad-top) var(--section-pad-bottom);
+}
+
+.np-act--hero {
+  position: relative;
+  background: var(--field);
+  padding-block: var(--hero-pad-top) var(--hero-pad-bottom);
+}
+
+.np-shell {
+  max-inline-size: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ---- The wave: drawn, overspilling, and gone on a phone ---------------- */
+
+.np-wave {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  overflow: hidden;
+  line-height: 0;
+  pointer-events: none;
+}
+
+.np-wave svg {
+  position: relative;
+  display: block;
+  inline-size: var(--wave-w);
+  block-size: var(--wave-h);
+}
+
+.np-wave--page svg path {
+  fill: var(--bg);
+}
+
+.np-wave--slab svg path {
+  fill: var(--field);
+}
+
+/* PAGE — the wave closes a full-bleed ACT, not a component. It spans the viewport
+   by definition, so the viewport is the right thing to query: it has no container to
+   be measured against, and it is also the element that would establish one. */
+@media (max-width: 767px) {
+  .np-wave {
+    display: none;
+  }
+}
+
+/* ---- The plate: the border IS the plate -------------------------------- */
+
+.np-plate {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: var(--pill-h);
+  padding: 12.8px 19.2px;
+  border: var(--line-w) solid var(--line);
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  box-shadow: var(--shadow-pill);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--t-pill);
+  font-weight: var(--weight-body);
+  line-height: var(--lh-pill);
+  letter-spacing: var(--track-body);
+  text-align: center;
+  text-decoration: none;
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+a.np-plate:hover {
+  transform: translateY(calc(-1 * var(--lift)));
+  box-shadow: var(--shadow-pill-hover);
+  border-color: var(--ink-faint);
+}
+
+a.np-plate:focus-visible {
+  outline: var(--focus-w) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
+}
+
+a.np-plate:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-pill);
+  transition-duration: var(--dur-press);
+}
+
+.np-plate--pending {
+  border-style: dashed;
+  box-shadow: none;
+  color: var(--ink-faint);
+}
+
+/* ---- The plate band: it wraps, it never scrolls ----------------------- */
+
+.np-band {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: center;
+  container-type: inline-size;
+}
+
+.np-band--slab {
+  background: var(--field);
+}
+
+.np-band--page {
+  background: var(--bg);
+}
+
+@container (max-width: 420px) {
+  .np-band .np-plate {
+    padding-inline: var(--space-3);
+  }
+}
+
+/* ---- Buttons ---------------------------------------------------------- */
+
+.np-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-block-size: var(--tap-min);
+  border: var(--line-w) solid transparent;
+  border-radius: var(--r-pill);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-display);
+  text-transform: uppercase;
+  letter-spacing: var(--track-caps-control);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.np-btn--sm {
+  block-size: var(--tap-min);
+  padding-inline: var(--space-4);
+  font-size: var(--t-xs);
+}
+
+.np-btn--md {
+  block-size: var(--control-h);
+  padding-inline: var(--space-6);
+  font-size: var(--t-sm);
+}
+
+.np-btn--lg {
+  block-size: 56px;
+  padding-inline: var(--space-8);
+  font-size: var(--t-sm);
+}
+
+.np-btn--primary {
+  background-image: var(--action);
+  color: var(--on-action);
+}
+
+/* The fill does NOT change on hover — the reference spends a glow here, and
+   darkening a coral on hover reads as a disabled state. */
+.np-btn--primary:hover:not(:disabled) {
+  box-shadow: var(--shadow-action-hover);
+  transform: translateY(calc(-1 * var(--lift)));
+}
+
+.np-btn--primary:active:not(:disabled) {
+  background-image: var(--action-pressed);
+  transform: translateY(0);
+  transition-duration: var(--dur-press);
+}
+
+.np-btn--secondary {
+  background: var(--surface);
+  border-color: var(--line-soft);
+  color: var(--ink);
+}
+
+.np-btn--secondary:hover:not(:disabled) {
+  border-color: var(--ink-faint);
+  transform: translateY(calc(-1 * var(--lift-sm)));
+  box-shadow: var(--shadow-pill-hover);
+}
+
+.np-btn--ghost {
+  background: transparent;
+  color: var(--ink);
+}
+
+.np-btn--ghost:hover:not(:disabled) {
+  background: var(--surface-2);
+}
+
+.np-btn:focus-visible {
+  outline: var(--focus-w) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
+}
+
+.np-btn:disabled {
+  background-image: none;
+  background-color: var(--surface-2);
+  border-color: var(--line-soft);
+  color: var(--ink-faint);
+  box-shadow: none;
+  transform: none;
+  cursor: not-allowed;
+}
+
+/* ---- Card: drawn one way on the slab, another on the page ------------- */
+
+.np-card {
+  border-radius: var(--r-md);
+  background: var(--surface);
+  padding: var(--space-6);
+  container-type: inline-size;
+}
+
+.np-act--page .np-card {
+  border: var(--line-w) solid var(--line-soft);
+}
+
+.np-act--slab .np-card,
+.np-act--hero .np-card {
+  border: 0;
+}
+
+.np-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-block-end: var(--space-4);
+}
+
+@container (max-width: 320px) {
+  .np-card__head {
+    display: block;
+  }
+}
+
+.np-card__title {
+  margin: 0;
+  color: var(--ink);
+  font-size: var(--t-lede);
+  font-weight: var(--weight-display);
+  letter-spacing: var(--track-display);
+}
+
+.np-card__meta {
+  color: var(--ink-soft);
+  font-size: var(--t-xs);
+}
+
+.np-card__body {
+  color: var(--ink-body);
+  font-size: var(--t-body);
+  /* The pack's central type claim is that the body is MEDIUM — 500 is the
+     dominant weight at every measured width. Left unstated it inherits 400 from
+     the UA and the page reads as a different product, which is exactly what the
+     render showed before this line existed. */
+  font-weight: var(--weight-body);
+  line-height: var(--lh-body);
+}
+
+/* ---- Frame: the one big shadow, once per screen ----------------------- */
+
+.np-frame {
+  margin: 0;
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-frame);
+  overflow: hidden;
+}
+
+.np-frame > img,
+.np-frame > video {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+}
+
+/* ---- Chip: square, and deliberately not a plate ----------------------- */
+
+.np-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  border: var(--line-w) solid var(--line);
+  border-radius: var(--r-xs);
+  padding: var(--space-1) var(--space-2);
+  background: var(--surface);
+  color: var(--ink-body);
+  font-size: var(--t-xs);
+  font-weight: var(--weight-body);
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.np-chip--accent {
+  background: var(--accent-wash);
+  border-color: var(--accent-wash);
+  color: var(--link);
+}
+
+.np-chip--selected {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+/* ---- Stat ------------------------------------------------------------- */
+
+.np-stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.np-stat__label {
+  color: var(--ink-body);
+  font-size: var(--t-xs);
+  font-weight: var(--weight-body);
+  text-transform: uppercase;
+  letter-spacing: var(--track-caps-micro);
+}
+
+.np-stat__value {
+  color: var(--ink);
+  font-size: var(--t-section);
+  font-weight: var(--weight-display);
+  line-height: var(--lh-section);
+  letter-spacing: var(--track-display);
+}
+
+.np-stat__source {
+  color: var(--ink-soft);
+  font-size: var(--t-xs);
+}
+
+/* ---- Headings and rules ---------------------------------------------- */
+
+.np-heading {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: var(--weight-display);
+  letter-spacing: var(--track-display);
+}
+
+.np-heading--1 {
+  font-size: var(--t-hero);
+  line-height: var(--lh-hero);
+}
+
+.np-heading--2 {
+  font-size: var(--t-section);
+  line-height: var(--lh-section);
+}
+
+.np-heading--3 {
+  font-size: var(--t-lede);
+  line-height: var(--lh-lede);
+}
+
+/* PAGE — the hero display answers to the viewport rather than to its column, and
+   that is measured: the reference steps 45px to 30px at 768 while the section head
+   holds at 40.32px in the same column. A container query here would shrink the
+   headline of a hero placed in a narrow slot, which is a different page. */
+@media (max-width: 768px) {
+  .np-heading--1 {
+    font-size: 1.875rem;
+  }
+}
+
+.np-rule {
+  border: 0;
+  border-block-start: var(--line-w) solid var(--line-soft);
+  margin-block: var(--space-6);
+}
+
+.np-rule--strong {
+  border-block-start-color: var(--line);
+}
+
+/* ---- Eyebrow: two registers, and they are not interchangeable -------- */
+
+.np-eyebrow {
+  display: inline-block;
+  color: var(--ink-body);
+  font-weight: var(--weight-display);
+  text-transform: uppercase;
+}
+
+.np-eyebrow--micro {
+  font-size: var(--t-xs);
+  letter-spacing: var(--track-caps-micro);
+}
+
+.np-eyebrow--control {
+  font-size: var(--t-sm);
+  letter-spacing: var(--track-caps-control);
+}

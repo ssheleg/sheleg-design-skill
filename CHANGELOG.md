@@ -6,6 +6,97 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.48.0] - 2026-08-24
+
+### Nameplate, the thirty-third pack — the proof is a borrowed name
+
+Extracted from `brandpush.co` by enumerating its sitemap (20 URLs, 12 distinct pages),
+fetching every page `robots.txt` permits, reading the **11 stylesheets the site itself
+authors** — 500,051 bytes, 20,240 lines, 136 custom properties — and then reading
+**computed styles on the live page** through CDP at 1440×900 (1,251 visible of 5,694
+elements), 768×1168 and a device-emulated 390×844. Vendor layers were excluded from every
+count: the site also loads Bootstrap 4.6.2, a purchased *ave* theme, a *frest* admin theme
+and three Font Awesome versions, and counting those reads Bootstrap's defaults as the
+brand's decisions.
+
+What the pack takes is a **rationed round shape**. 1,091 of the 1,251 rendered elements sit
+at zero radius — 87% of the page — and the pill is 52 of them, spent on one thing: a white
+1px-bordered plate carrying somebody else's publication name as 15px/500 type rather than
+as a logo. Thirty names set as type read as a list a visitor can check; thirty logotypes
+read as thirty typefaces. Around it, one family at four weights with the **body at weight
+500** (172 nodes at 1440, 459 at 768, 182 at 390 — the dominant weight at every width), a
+display face tracked −0.02em, and two uppercase registers tracked 0.06em and 0.175em.
+
+**The declared token layer disagreed with the render, and this is the sharpest case in the
+library.** The site declares `--primary: #84B761` three times — a green nothing paints — and
+its real primary action is a gradient, whose element carries a *transparent*
+`background-color`. A colour census reading `background-color` alone finds the blue cookie
+banner and reports it as the brand. Both facts were caught by rendering rather than by
+reading, which is why the pack's Origin records the method and not just the address.
+
+**Five corrections travel with the pack, each with its number at the declaration.** The
+primary action is white on a coral ramp at 2.90:1 and 3.19:1, 3.04:1 at the midpoint — under
+AA and under the 3:1 large-text floor, with a 12px uppercase label on it; `--action` holds
+both hues in OKLab and moves lightness until white clears 4.5:1 along the whole ramp. The
+body grey is 4.74:1 on white and **4.42:1 on the cool slab the hero stands on** — the
+correction a white-background-only check never finds. The focus ring is
+`rgba(5,135,237,0.35)`, which composites to `#d3dff9` at 1.34:1, and all three of its alpha
+variants miss the 3:1 non-text floor on both fields; the hue was never the problem, so the
+ring keeps the measured colour and drops the alpha. Two greys carry live text at 2.46:1 and
+2.54:1 across 46 nodes. And 87 of 137 visible interactive elements at 390 are under 44px
+tall, so `--tap-min` is a floor.
+
+**The status set was searched, not chosen, and the palette gate is why.** With a coral action
+in play a conventional red `--danger` lands 2.93 OKLab units from it and is
+indistinguishable under all three dichromacies, so danger is held at the reference's red hue
+and taken deep to `#900004`. And `--info` may not be the reference's blue, because that blue
+is already `--accent`: the two came out 7.5 units apart, which the gate refuses outright —
+one colour cannot be both a link and a state. Info is the reference's cyan instead. All
+fifteen pairs across the four states, the accent and the action clear 15 units at full
+colour and 8 under protanopia, deuteranopia and tritanopia.
+
+**The first pack in four not to move a ratio pin.** `outrank`, `babylove` and `patchbay` each
+raised `unresolved_at_most` or `unguarded_at_most`, because a pack that documents what it
+*refused* carries ratios whose subject it deliberately does not ship. This pack carries the
+same kind of evidence and states each claim with its subject and its partner on one line, so
+all 34 of its ratios are **computed** and both ceilings held; `computed_at_least` rises
+536 → 570 to lock that in. Three claims did land unpairable on the first run and every one
+was a line break — `--on-action`'s own name resolves as `--action`, which is a gradient and
+pairs with nothing — and a fourth was a table row stating a ratio with no partner named. All
+four were rewritten rather than pinned.
+
+A fifth standalone pack pins its own motion ceiling: **nameplate at 4**, the same as `roster`
+and for the same reason. 1,057 of the 1,251 visible elements compute
+`transition-duration: 0s`, `animation-timeline` appears zero times in 20,240 lines, and the
+whole budget is an entrance reveal, a 2px hover lift whose shadow grows in the same 200ms,
+and a 140ms press. The reference also ships a real reduced-motion contract — 23 blocks across
+7 of its 11 authored stylesheets, with the reveal layer restoring `visibility` and `opacity`
+so content is never locked behind an animation that did not run. That shape is kept without
+correction; it is the one thing here worth copying as measured.
+
+**Rendering the kit found two defects three green gates could not**, which is the second
+consecutive release where the browser beat the ratchet. The plate came out **78px against a
+stated 50** — the kit declared no `box-sizing`, and Chrome's UA stylesheet gives `button`
+`border-box` while giving an anchor `content-box`, so the button beside it kept its promise
+and the plate silently grew by its own padding. And body copy rendered at **weight 400
+against the pack's central claim of 500**, because `--weight-body` existed and no component
+consumed it — a token that is decorative rather than binding. Both fixed and re-measured at
+50px and 500. A gate reads structure, not layout.
+
+**The fork against `roster` is recorded in both directions**, because the two share one
+sentence — the proof is a name — and nothing else. `roster` proves by *who already uses us*
+and makes the pill its most frequent shape (102 elements) with a body at weight 300 on a
+grid-textured white field; nameplate proves by *who will carry you*, is square on 87% of its
+elements, and sets its body at 500 on an untextured slab. `ADR-0001` gains a further
+application: the pack is named for the register, with `masthead`, `newsstand`, `clipping` and
+`hallmark` weighed and rejected on its own criteria — the last of those for trademark
+surface, which is the clause `datasheet` was chosen under.
+
+Ships `styles/nameplate.md` on the widened thirteen-heading contract with `Themes:` and
+`Rank:` declared, `styles/tokens/nameplate.css`, the `kits/nameplate` reference kit (the
+six-name spine plus `Plate`, `PlateBand`, `Wave`, `Frame` and `Eyebrow`), routing in every
+enumeration surface, and the `.cursor` mirror.
+
 ## [1.47.0] - 2026-08-22
 
 ### `patchbay` — the thirty-second pack, and the first read off a page with no tokens at all

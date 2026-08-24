@@ -1341,3 +1341,44 @@ three gates green; this scenario is the behavioural half and `validate.py` does 
 this file, so nothing above has been observed. The row in `docs/DOCMAP.md` says this
 proof is a person running it and the result is stamped with a commit — until that line
 exists, T30 is an obligation on the record, not a result.
+
+## T31 — Borrowed proof, and the fork the register cannot settle
+
+Added with the `nameplate` pack. Two branches, two fresh contexts, run **blind against the
+bundle directory only** — `test/`, `docs/`, `kits/`, the README and the CHANGELOG are
+forbidden, because this file carries the answer beside the prompt.
+
+`nameplate` collides with exactly one pack and collides with it hard. Both argue from other
+people's names, and `roster`'s own identity sentence — *the proof is a name, not a number* —
+is true of `nameplate` too. A router reading the register alone cannot separate them, which
+is the point of this scenario: the separation is **mechanical**, and both packs now state it
+in each other's words. The two one-line tests the branches should arrive at are *is the
+proof a name the product already has, or one it will get you?* and *is the pill the page's
+most frequent shape, or its rarest?*
+
+**T31a — should select `nameplate`.** "The marketing site for a service that gets your
+company written up on named news outlets and then gives you the badge to put on your own
+site. The hero has to be followed immediately by thirty publication names. Buyers are
+founders who want to look established. Keep it plain — nothing decorative." Pass: routes to
+`styles/nameplate.md`, quotes the clause that decided it, and names `roster` as the closest
+rejected pack with the clause that ruled it out. Fail: routing to `roster` because the brief
+says *thirty names* and a logo wall is the obvious reading of that; or to `vitrine` because
+the product is sold on trust; or to `scoreboard` because "look established" sounds like a
+figure.
+
+**T31b — should still select `roster`.** "The marketing site for an AI-search visibility
+platform. The argument is the client list — logotypes sorted into labelled industry columns
+— plus the engines that already recommend us, one of whose wordmarks sits inside the
+headline." Pass: stays on `styles/roster.md` and can say what would have moved it — proof
+the product *issues* rather than proof it *has*. Fail: routing to `nameplate` because the
+newest pack is also a wall of other people's names on a near-white field, which is the
+failure a positive-only branch cannot detect, per standing instruction 4.
+
+Both branches are also asked, after choosing, to read their chosen pack in full and report
+defects with file and quoted text.
+
+**Result: NOT YET RUN.** The pack, its token layer and its kit shipped in 1.45.0 with all
+three gates green; this scenario is the behavioural half and `validate.py` does not read
+this file, so nothing above has been observed. The row in `docs/DOCMAP.md` says this proof
+is a person running it and the result is stamped with a commit — until that line exists, T31
+is an obligation on the record, not a result.

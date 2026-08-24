@@ -325,7 +325,7 @@ mounting the pack on a populated twenty-route dashboard rather than reasoned abo
   against `--line`, so it separates from the rule) and `--ink-faint` on the band.
   The emphasised mark stays `--accent-ink`-on-`--ink` or whatever the chart's own
   emphasis rule says; only the resting one changes. Charts in any pack go through
-  `dataviz` first — token names are not uniform across the thirty-two packs, and an aliased
+  `dataviz` first — token names are not uniform across the thirty-three packs, and an aliased
   one fails exactly this quietly.
 
 **The type ramp is where this section was wrong, and the correction matters more

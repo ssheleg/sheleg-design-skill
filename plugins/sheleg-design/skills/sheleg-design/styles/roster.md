@@ -48,6 +48,15 @@ argues **how the work is organised** rather than who is already on the list —
 [`tenor`](./tenor.md); it puts the orange on hover only, refuses radius entirely, and
 proves itself with video instead of other people's marks.
 And not a warm consumer field: this one is cold white over a framework's greys.
+A page whose proof is also a borrowed name, but a name the product **will get you**
+rather than one it already has — press placement, trust marks, certification — is
+[`nameplate`](./nameplate.md). It is the closest neighbour in the library and the
+easiest to confuse from the register alone, so the axis that separates them is
+measured rather than argued: `nameplate` is a **square** page (87% of its elements at
+zero radius) where the pill is rare and therefore means something, and its body sits
+at weight 500 against this pack's 300. Here the pill is the most frequent shape on
+the page. If the brief is a grid of client logos, stay; if it is a wall of
+publication names set as type, go.
 
 ### The fork against [`scoreboard`](./scoreboard.md), which is the one a router will get wrong
 

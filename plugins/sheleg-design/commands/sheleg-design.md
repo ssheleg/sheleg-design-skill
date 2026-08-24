@@ -12,8 +12,8 @@ Invoke the `sheleg-design` skill and apply it to the current request.
   how a keyboard path ends up animated.
 - Task: $ARGUMENTS — if empty, ask what page or section to build/upgrade.
 - **If the arguments name a style pack, use that pack without re-asking.** The
-  thirty-two packs are `instrument-console`, `editorial-luxury`, `workbench`,
-  `briefing-room`, `atrium`, `babylove`, `patchbay`, `outrank`, `orchard`, `field-notes`, `cyclorama`, `showroom`,
+  thirty-three packs are `instrument-console`, `editorial-luxury`, `workbench`,
+  `briefing-room`, `atrium`, `babylove`, `patchbay`, `nameplate`, `outrank`, `orchard`, `field-notes`, `cyclorama`, `showroom`,
   `blueprint`, `prism`, `maquette`, `scoreboard`, `datasheet`, `manpage`, `pigeonhole`, `roster`, `ora`, `tenor`, `paperclip`, `ledger`, `awning`, `router`, `daylight`, `notation`, `almanac`, `vitrine`, `proscenium`, `bulletin`. Otherwise pick per the `SKILL.md` table,
   and say which pack you picked and why before you build.
 - **Set the three dials out loud before any layout exists** — `DESIGN_VARIANCE`,
