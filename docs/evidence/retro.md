@@ -589,6 +589,7 @@ evidence until runs start writing their own again.
 | 2026-08-20 | `f36961a` | B-049: the doctrine's duration bands reach the token layer's own comments | **yes** |
 | 2026-08-22 | `469503d` | two production references measured and packed — `outrank` (536 tokens over two borrowed systems) and `babylove` (seven over Tailwind defaults); **`v1.46.0` shipped** | **yes** |
 | 2026-08-22 | `e129f67` | `patchbay`, the thirty-second pack — a dark live schematic measured off nautilustrader.io with `getComputedStyle` because the reference declares no tokens at all; §9 gained the three layers a blanket reduced-motion rule cannot reach; **`v1.47.0` shipped** | **yes** |
+| 2026-08-24 | `514ff16` | `nameplate`, the thirty-third pack from brandpush.co — a square page whose one round shape is a plate carrying somebody else's publication name; five measured corrections, and the first pack in four to move no ratio pin; rendering the kit caught a plate 28px taller than its own spec and a body weight the token layer declared and no component consumed; **`v1.48.0` shipped** | **yes** |
 ## Log
 
 ### 2026-08-22 — the reference that could not be read from its stylesheet, and the gate that priced every alpha
