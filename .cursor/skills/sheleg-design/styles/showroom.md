@@ -37,6 +37,7 @@ to exhibit because the interface *is* the call — [`manpage`](./manpage.md). A 
 argument is not how the app looks but what it *calls each thing* — a filing scheme shown as
 labelled chips — is [`pigeonhole`](./pigeonhole.md). And **not** the
 dashboard itself: this is the page that displays such a dashboard.
+A page that also spends one dramatic multi-layer elevation on a single object, but spends it on **a control rather than on the application**, is [`rimlight`](./rimlight.md) — and the difference is what the elevation is made of. This pack's shadow is neutral and dropped from above so a screenshot sits on the page; that one's is coloured — mint, cyan and teal — and thrown from below-left, and its hero carries no product at all. If the first viewport must show the application at real size, stay here; if it must show craft with no screenshot in it, go there.
 
 **The fork against [`ledger`](./ledger.md).** Both put a real product surface on
 screen, and that is where the likeness stops: this pack frames a screenshot as a

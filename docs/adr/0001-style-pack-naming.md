@@ -98,6 +98,21 @@
   rule, which is why the same site appears twice in this file under two very
   different names.
 
+- **Applied again:** 2026-08-24. The thirty-fourth pack was extracted from
+  `peppermint.global/services/web-design` and is named **`rimlight`** for the register
+  it encodes — a light placed behind the subject to separate it from the field — not
+  `peppermint`. The opening request was an address and the words *"very cool design,
+  make it a reference too"*, which is the shape this ADR exists to answer, and it was
+  answered by pointing here before a file was written. Three alternatives were weighed
+  and rejected on this ADR's own criteria. **`halation`** is the most precise word for
+  the effect — the bloom around a bright edge on film — and was rejected because it
+  names the *artefact* and says nothing about the register, so a router reading it
+  learns nothing about when to choose it. **`limelight`** reads as attention and fame,
+  which is `roster`'s and `nameplate`'s ground, and *selection by intent* is the
+  criterion that decides. **`luminaire`** names the fixture rather than what the fixture
+  does. `rimlight` names the technique and, through it, the register: a studio that
+  lights its own work. The address is in the pack's `Origin:`.
+
 - **Corrected:** 2026-08-10. The Decision section named the seventh pack
   `lecture-hall`. That was the name on the branch this ADR was written on, and
   that branch never merged; the pack that shipped from graphify.com is

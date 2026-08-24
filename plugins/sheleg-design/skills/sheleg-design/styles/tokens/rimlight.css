@@ -1,0 +1,306 @@
+/* SHELEG Design — Rimlight token layer (a white field, a dark act, and coloured
+   light as the only elevation there is).
+   Copy verbatim; consume only var(--…) in components.
+
+   Extracted from https://peppermint.global/services/web-design on 2026-08-24.
+   The site is Webflow: one shared stylesheet of 230,354 bytes declaring 82 custom
+   properties, and a runtime that ships an interaction engine driving exactly ONE
+   element on the page. Values were read off COMPUTED styles on the live page
+   through CDP at 1440x900 (487 visible of 562 elements) and at a device-emulated
+   390x844. Ratios were computed by importing this repository's own palette gate.
+
+   Reading the render mattered twice here, in opposite directions. The uppercase
+   micro-labels LOOK generously tracked and are not: letter-spacing computes to
+   `normal` on every one, and the width is the monospace's own. And the button's
+   elevation looks like a soft shadow and is a sixteen-layer light rig -- six
+   layers lit, ten pre-declared at alpha 0, which no stylesheet reading would
+   have separated from decoration.
+
+   Three families of value appear below and they are not the same kind of claim:
+
+   MEASURED — the literal was computed on the live page.
+   SELECTED — the reference ships no such role, and the value is a step of a ramp
+   the reference already carries, taken deep enough to clear AA on that field.
+   DERIVED — computed from a token in this file, because the reference's own
+   value fails a floor on the field it is used on. Only lightness moves.
+
+   The corrections are in the pack's Gotchas, and there are four. */
+
+:root {
+  color-scheme: light;
+
+  /* ---- Three fields, and the third one is an ACT ---------------------- */
+  /* MEASURED. White carries the page (23 fills), a cool grey separates acts
+     (18), and one act is near-black (5) and 2,390px tall on a 12,410px page.
+     The dark act is a surface variant, not a theme twin: there is no toggle and
+     no second palette for the whole page -- see [data-surface="dark"] below. */
+  --bg: #ffffff;
+  --bg-2: #fdfdfd; /* MEASURED — the barely-off white */
+  --field: #f1f2f3; /* MEASURED — the act separator */
+  --field-2: #e6e8e9; /* MEASURED — the inset well */
+  --surface: #ffffff;
+  --act-dark: #1b1b1b; /* MEASURED — the dark act's field */
+
+  /* ---- Ink ------------------------------------------------------------ */
+  --ink: #1b1b1b; /* MEASURED — 87 text nodes; 17.22:1 on --bg, 15.37:1 on --field */
+  --ink-2: #242424; /* MEASURED — 15.52:1 on --bg */
+  /* DERIVED. The reference sets secondary copy in #9d9fa3 on 20 nodes, and on
+     the white page that is 2.65:1 -- a word below every text floor. The hue is
+     held and only lightness moves, far enough to clear AA on BOTH light fields
+     rather than only on the whiter one. */
+  --ink-soft: #6c6e72; /* 5.11:1 on --bg, 4.56:1 on --field */
+  /* DERIVED for the same reason at a smaller distance: the measured #767676 is
+     4.54:1 on --bg and 4.05:1 on --field, so it passes the page and fails the
+     act separator it is most often used on. */
+  --ink-quiet: #6d6d6d; /* 5.17:1 on --bg, 4.62:1 on --field */
+  /* @role non-text: --ink-faint — 2.65:1 on --bg. MEASURED, and it is the value
+     the corrections above replace. Here it is a hairline, an icon and a disabled
+     label, never live text on a light field. */
+  --ink-faint: #9d9fa3;
+  --on-ink: #fdfdfd; /* 16.93:1 on --ink — the reference's own off-white, not pure */
+
+  /* ---- The accent: a display phrase, and a separate one for a word ---- */
+  /* MEASURED. The reference sets the first phrase of its 86px headline in this
+     blue, and at that size it is legal: 3.03:1 clears the 3:1 large-text floor.
+     It clears nothing else. Below 24px at weight 400 this colour is not a word,
+     which is why --accent-ink exists. */
+  /* @role non-text: --accent — 3.03:1 on --bg, which is below the 4.5:1 body
+     floor and above the 3:1 large-text one. So it is NOT body text: it is legal
+     on a word only at WCAG large text, which at this pack's weight 400 means
+     >= 24px, and the reference spends it at 86px. Anything smaller takes
+     --accent-ink. It also fills and marks. */
+  --accent: #5b91ff;
+  /* DERIVED from --accent: the same hue taken deep enough to carry a word. */
+  --accent-ink: #3668d2; /* 5.16:1 on --bg, 4.61:1 on --field */
+  --accent-wash: #eef3ff; /* SELECTED — the hovered cell, the tinted chip */
+
+  /* ---- The light rig: elevation is a light, not a shadow -------------- */
+  /* MEASURED, and this is the pack's whole signature. The primary control wears
+     a SIXTEEN-layer box-shadow: six layers lit and ten pre-declared at alpha 0,
+     every offset already in place so a direction can be lit by moving alpha
+     alone and nothing relayouts. The light sits below and to the left -- every
+     lit offset is negative in x and positive in y.
+
+     The rig is stated as its parts so a component can compose it rather than
+     copy a 900-character literal. Lit layers, in order: a white rim, a teal
+     spill, a cyan throw, two inset layers that keep the control from reading as
+     a sticker, and the mint bloom that does the work. */
+  --rim-white: rgba(255, 255, 255, 0.44);
+  --rim-black: rgba(0, 0, 0, 0.44); /* MEASURED — the light variant's rim */
+  --glow-teal: rgba(29, 154, 134, 0.3);
+  --glow-cyan: rgba(0, 203, 207, 0.6);
+  --glow-mint: rgba(31, 242, 229, 0.77); /* the bloom, 44px at -14.78px x */
+  --glow-inset-dark: rgba(0, 0, 0, 0.675);
+  --glow-inset-teal: rgba(4, 171, 181, 0.875);
+  /* The reference's rig carries ten more layers at alpha 0 — every offset already
+     in place so a direction can be lit by moving alpha alone. --glow-rig below
+     composes only the SIX that render, because ten transparent layers cost bytes
+     and paint nothing; --glow-off is here for anyone relighting one of them. */
+  --glow-off: rgba(255, 255, 255, 0);
+
+  /* The rig itself, composed. A control that wants the signature takes this and
+     nothing else; a control that does not take --shadow-tile. */
+  --glow-rig:
+    -0.46px 0.89px 2px 0 var(--rim-white),
+    -0.92px 1.77px 6px 0 var(--glow-teal),
+    -5.54px 7.10px 22px -4px var(--glow-cyan),
+    inset -0.46px 0.89px 8px 0 var(--glow-inset-dark),
+    inset -0.92px 1.77px 12px 0 var(--glow-inset-teal),
+    -14.78px 7.10px 44px 0 var(--glow-mint);
+
+  /* The light variant: the same rig against a white control, where the rim goes
+     black and the inset goes white. MEASURED off the reference's second button. */
+  --glow-rig-light:
+    -0.48px 0.88px 2px 0 var(--rim-black),
+    -0.96px 1.75px 6px 0 rgba(93, 213, 238, 0.3),
+    -5.78px 7.01px 22px -4px rgba(5, 136, 148, 0.6),
+    inset -0.48px 0.88px 8px 0 rgba(255, 255, 255, 0.6),
+    inset -0.96px 1.75px 12px 0 rgba(4, 171, 180, 0.6),
+    -15.40px 7.01px 44px 0 rgba(34, 145, 166, 0.74);
+
+  /* The only two ordinary shadows on the page, and both belong to a tile. */
+  /* The light rig's control is white BY DEFINITION and must not follow the field:
+     inside the dark act --surface remaps to #242424, so a light variant built on
+     --surface renders dark and the rig lights nothing. Caught by rendering. */
+  --lit-light-fill: #ffffff;
+  --lit-light-ink: #1b1b1b; /* 17.22:1 on --lit-light-fill */
+  --lit-light-hover: #f5f6f7; /* the light control's one hover step */
+
+  --shadow-tile: 0 3px 15px 0 rgba(0, 0, 0, 0.15); /* MEASURED — the 80px icon tile */
+  --shadow-tile-inner: 0 13px 13px 0 rgba(126, 131, 134, 0.13); /* MEASURED */
+
+  --focus-w: 2px;
+  --focus-offset: 2px;
+  --focus-color: var(--accent-ink); /* 5.16:1 on --bg, well over the 3:1 mark floor */
+
+  /* ---- Radii: square, with two pills and a tile ----------------------- */
+  /* MEASURED, and it is the same discipline as the type: 410 of the 487 visible
+     elements compute to 0px -- 84% of the page. What is round is round on
+     purpose: a control, and a tile that holds a glyph. */
+  --r-none: 0;
+  --r-sm: 12px; /* MEASURED — 6 */
+  --r-tile-inner: 14px; /* MEASURED — the image inside the tile */
+  --r-tile: 20px; /* MEASURED — 36; the icon tile */
+  --r-glow: 100px; /* MEASURED — 20; the control that wears the rig */
+  --r-pill: 160px; /* MEASURED — 14; the reference's --radius-button, 10rem */
+
+  /* ---- Spacing and the page ------------------------------------------- */
+  /* MEASURED off the reference's own ramp, which is a full px scale declared as
+     --base-size--Npx. These are the steps its layout actually spends. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-15: 60px;
+  --space-20: 80px;
+  --space-25: 100px;
+
+  --page-max: 1440px; /* MEASURED — the reference's --base-size--page-width, 90rem */
+  --gutter: 12px; /* MEASURED at 390 */
+  --nav-h: 88px; /* MEASURED — the hero starts at 88 */
+  --control-h: 48px; /* MEASURED — the nav control */
+  --control-h-lg: 60px; /* MEASURED — the hero control, and what wears the rig */
+  --tile: 80px; /* MEASURED — the icon tile */
+  /* CORRECTION, not a measurement: at an emulated 390x844, 26 of the reference's
+     37 visible interactive elements are under 44px tall. */
+  --tap-min: 44px;
+
+  /* ---- Type: a grotesque and a monospace, and the mono is the CHROME --- */
+  /* MEASURED — Archivo on 102 text nodes, Source Code Pro on 43, and the split is
+     not decorative: the monospace carries every label, every nav item and every
+     button, and the grotesque carries everything a reader reads in sentences. */
+  --font-sans: Archivo, Arial, sans-serif;
+  --font-mono: "Source Code Pro", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --t-hero: 5.375rem; /* 86px — MEASURED at 1440 */
+  --lh-hero: 1.1;
+  --t-hero-narrow: 2.5rem; /* 40px — MEASURED at 390 */
+  --t-display: 4.5rem; /* 72px */
+  --t-section: 3.75rem; /* 60px */
+  --t-title: 2.5rem; /* 40px */
+  --t-card: 2rem; /* 32px */
+  --t-lede: 1.5rem; /* 24px */
+  --t-body: 1.25rem; /* 20px — MEASURED, the reading size */
+  --t-sm: 1.125rem; /* 18px */
+  --t-label: 1rem; /* 16px — the mono label, and the most frequent size */
+  --t-xs: 0.875rem; /* 14px */
+  --lh-body: 1.35; /* MEASURED — 27px on 20px */
+  --lh-label: 1.35; /* MEASURED — 21.6px on 16px */
+
+  /* Tracking is negative at every size and it TIGHTENS as the display grows in
+     proportion: -0.02em at 86px, -0.04em at the 40px narrow headline. Nothing on
+     this page is tracked open -- including the uppercase mono labels, whose
+     letter-spacing computes to `normal` on every one. */
+  --track-display: -0.02em;
+  --track-display-narrow: -0.04em;
+  --track-body: -0.02em;
+  --track-label: normal; /* MEASURED, and it is the trap: the mono only LOOKS tracked */
+
+  --weight-body: 400; /* MEASURED — 106 nodes, the dominant weight */
+  --weight-light: 300; /* MEASURED — 29 */
+  --weight-label: 500; /* MEASURED — 10; the mono label and the button */
+
+  /* ---- Motion: there is almost none, and that is measured ------------- */
+  /* 432 of the 487 visible elements compute transition-duration: 0s. The whole
+     budget is a 0.3s transition on 41 elements and a 0.2s on 14. There is no
+     scroll clock (animation-timeline: 0 occurrences), one sticky element, and
+     the Webflow interaction engine is loaded and drives exactly ONE element on
+     the page -- which is why the pack pins MOTION_INTENSITY at 2. */
+  --ease: ease; /* MEASURED — what 465 of the transitions name */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1); /* the doctrine's, for an entrance */
+  /* DERIVED, and the one motion value here that is not measured: the reference
+     presses at 0.2s, which sits outside the doctrine's 100-160ms press band, so
+     the pack takes the band's ceiling instead of the nearest measured value. */
+  --dur-press: 0.16s;
+  --dur-fast: 0.2s;
+  --dur-base: 0.3s;
+  --dur-reveal: 0.4s; /* entrance only, and it never gates content */
+
+  /* ---- Status: derived per FIELD, because the reference's hues are not - */
+  /* SELECTED, all four, each a step of a hue the reference itself carries --
+     its #01b39a green, its #ffbd6d yellow, its #ff5b68 error red and its #5b91ff
+     blue. They had to be derived rather than adopted because the reference's own
+     secondary set is a palette and not a scheme: eight of its twenty-one pairs
+     are tight, and none of the five clears AA on the white page (1.65-2.65:1).
+     These four clear AA on --bg and separate from each other and from
+     --accent-ink under normal vision and all three dichromacies. */
+  --good: #006954; /* 6.67:1 on --bg */
+  --warn: #a36700; /* 4.67:1 on --bg */
+  --danger: #b3002c; /* 7.11:1 on --bg */
+  --info: #09379e; /* 10.23:1 on --bg */
+
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-body);
+}
+
+/* The dark act. MEASURED off `.section.is--dark`, which is one 2,390px band on a
+   12,410px page -- a SURFACE variant, not a theme twin: there is no toggle, the
+   page does not invert, and the light fields above stay exactly as they are.
+   Apply it to a section, never to the document.
+
+   The whole point of the act is that this is where the reference's colours
+   finally work: every one of its five secondaries is 6.5-10.5:1 here against
+   1.65-2.65:1 on white. The hues did not fail — they were designed for the
+   dark, and the light field is where they must be held back. */
+[data-surface="dark"] {
+  --bg: #1b1b1b;
+  --bg-2: #1b1b1b;
+  --field: #242424; /* MEASURED — the card inside the dark act */
+  --field-2: #242424;
+  --surface: #242424;
+  --ink: #fdfdfd; /* 16.93:1 on --bg */
+  --ink-2: #fdfdfd;
+  --ink-soft: #bcc0c4; /* MEASURED — 9.41:1 on --bg */
+  --ink-quiet: #a8adb3; /* MEASURED — 7.62:1 on --bg */
+  --ink-faint: #767676; /* @role non-text: 3.79:1 on --bg */
+  --on-ink: #1b1b1b;
+
+  /* The accent needs no correction here — it is 5.69:1 on the act, so on dark
+     the measured blue may carry a word and --accent-ink is the same value. */
+  --accent: #5b91ff; /* 5.69:1 on --bg */
+  --accent-ink: #5b91ff;
+  --accent-wash: #242424;
+  --focus-color: #5b91ff;
+
+  /* SELECTED, and remapped rather than inherited. A theme block that leaves the
+     four statuses pointing at the light field's values paints 1.1-1.5:1 on the
+     act while the readable value sits three lines away — the defect board B-034
+     recorded against `scoreboard`. Each of these is a step of the same hue the
+     light set uses, taken light enough for the dark field. */
+  --good: #32c6ad; /* 8.05:1 on --bg (the light value is 1.35 here) */
+  --warn: #ffbd6d; /* 10.46:1 on --bg — MEASURED, the reference's own yellow */
+  --danger: #ef7173; /* 5.97:1 on --bg (the light value is 1.19) */
+  --info: #b5b6ff; /* 9.10:1 on --bg (the light value is 1.11) */
+
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+/* The reference ships no reduced-motion branch: zero occurrences of the query in
+   230,354 bytes. This pack requires one. The rig is a static light and does not
+   move, so what collapses here is every duration -- a control still changes
+   colour and still shows its focus ring, and nothing animates. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-press: 0s;
+    --dur-fast: 0s;
+    --dur-base: 0s;
+    --dur-reveal: 0s;
+  }
+}
+
+/* The pack bans bold, and a ban the UA overrides is not a ban: `strong` and `b` are
+   700 by default in every browser. 500 is the heaviest weight this pack has, and it
+   belongs to the monospace label, so emphasis here is the mono rather than the
+   weight. */
+strong,
+b {
+  font-weight: var(--weight-label);
+}

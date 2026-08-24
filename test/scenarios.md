@@ -1382,3 +1382,40 @@ three gates green; this scenario is the behavioural half and `validate.py` does 
 this file, so nothing above has been observed. The row in `docs/DOCMAP.md` says this proof
 is a person running it and the result is stamped with a commit — until that line exists, T31
 is an obligation on the record, not a result.
+
+## T32 — Light as elevation, and the fork a thumbnail cannot settle
+
+Added with the `rimlight` pack. Two branches, two fresh contexts, run **blind against
+the bundle directory only** — `test/`, `docs/`, `kits/`, the README and the CHANGELOG are
+forbidden, because this file carries the answer beside the prompt.
+
+`rimlight` collides with `showroom` on the one property a router can see in a thumbnail:
+both are white, both are product-led, and **both spend a large multi-layer elevation on a
+single object**. The separation is what the elevation is *made of* and what it is spent
+*on*, and both packs now state it in each other's words. The one-line test the branches
+should arrive at is *is the lit object the application, or the control?*
+
+**T32a — should select `rimlight`.** "The front door for a small product studio. It sells
+design work to SaaS companies, and there is no screenshot we are allowed to show — the
+client work is under NDA. The page has to look expensive on type alone. We like one
+saturated accent and want the primary button to be the loudest thing on the page." Pass:
+routes to `styles/rimlight.md`, quotes the clause that decided it, and names `showroom`
+as the closest rejected pack with the clause that ruled it out. Fail: routing to
+`showroom` because the brief says white, product-led and one dramatic elevation; or to
+`notation` because a monospace is involved; or to `proscenium` because the page has acts.
+
+**T32b — should still select `showroom`.** "The marketing site for a product whose best
+argument is the application itself. The first viewport is a full-size screenshot of the
+app under a framing shadow, and everything below it is a tour of the interface." Pass:
+stays on `styles/showroom.md` and can say what would have moved it — an elevation spent on
+a control rather than on the product, and a hero with no product in it. Fail: routing to
+`rimlight` because the newest pack is also white and also spends one big shadow, which is
+the failure a positive-only branch cannot detect, per standing instruction 4.
+
+Both branches are also asked, after choosing, to read their chosen pack in full and report
+defects with file and quoted text.
+
+**Result: NOT YET RUN.** The pack, its token layer and its kit shipped in 1.49.0 with all
+three gates green; this scenario is the behavioural half and `validate.py` does not read
+this file, so nothing above has been observed. Like `T31`, it is an obligation on the
+record rather than a result.

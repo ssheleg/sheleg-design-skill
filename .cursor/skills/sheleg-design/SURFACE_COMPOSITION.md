@@ -59,8 +59,8 @@ the runnable palette validation; a pack is the *parameter set* it consumes.
 
 **Read the chosen pack's own token names before you write a single `var()`.**
 This table is by *role*, not by token, because the names are not uniform across
-the thirty-three packs: only `--bg` and `--ink` resolve in every pack. The accent is
-`--accent` in twenty-eight of the thirty-three packs, `--brand` in `field-notes` and `--cta` in `orchard` (each
+the thirty-four packs: only `--bg` and `--ink` resolve in every pack. The accent is
+`--accent` in twenty-eight of the thirty-four packs, `--brand` in `field-notes` and `--cta` in `orchard` (each
 declares `@role accent:` in its token layer). **A second marker joins it in 1.26.0:**
 a semantic colour that sits below WCAG AA on its own field declares
 `@role non-text:` with the reason and the ratio, because nineteen of the token layers
@@ -78,7 +78,7 @@ pack, because a sentence enumerating packs is not something a gate can read.
 |---|---|
 | `--danger` / `--info` / `--ok` / `--warn` | almanac, daylight, instrument-console, ledger, notation, patchbay, proscenium, router, vitrine, workbench |
 | `--danger` / `--good` / `--info` / `--warning` | blueprint, cyclorama, maquette, prism, showroom |
-| `--danger` / `--good` / `--info` / `--warn` | bulletin, nameplate, ora, paperclip, pigeonhole, scoreboard |
+| `--danger` / `--good` / `--info` / `--warn` | bulletin, nameplate, ora, paperclip, pigeonhole, rimlight, scoreboard |
 | `--danger` / `--info` / `--success` / `--warning` | datasheet, manpage |
 | `--danger` / `--good` / `--warn` | awning, tenor |
 | `--danger` / `--info` / `--success` / `--warning` | outrank |

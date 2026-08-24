@@ -6,6 +6,82 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.49.0] - 2026-08-24
+
+### Rimlight, the thirty-fourth pack — elevation made of light
+
+Extracted from `peppermint.global/services/web-design`, a design studio's service page.
+The site is Webflow: one shared stylesheet of 230,354 bytes declaring 82 custom
+properties, and an interaction engine that ships on the page and drives exactly **one**
+element. Every value was read off **computed styles on the live page** through CDP at
+1440×900 — 487 visible of 562 elements on a 12,410px page — and at a device-emulated
+390×844.
+
+**The signature is a light, not a shadow.** The primary control wears a **sixteen-layer**
+`box-shadow`: six layers lit — a white rim, a teal spill, a cyan throw, two insets that
+keep it from reading as a sticker, and a mint bloom at 44px of blur offset −14.78px in x
+— and **ten pre-declared at alpha 0**, every offset already in place so a direction can
+be lit by moving alpha alone with no relayout. The light sits below and to the left. On a
+page otherwise made of ink, one blue and two greys, that bloom is the only chromatic
+event, so the most saturated thing on the screen is also the thing you are meant to click.
+No pack in the library had elevation made of coloured light.
+
+**Reading the render mattered twice, in opposite directions**, which is exactly what the
+template's new rule 7 was written for a release earlier. The uppercase micro-labels *look*
+generously tracked and are not — `letter-spacing` computes to `normal` on every one, and
+the openness is Source Code Pro's own advance width, so a pack matched from a screenshot
+ships a tracking value that does not exist. And the button's elevation *looks* like one
+soft shadow; sixteen layers only resolve under `getComputedStyle`.
+
+**The palette is split by field, and that is the pack's central law.** Every one of the
+reference's five secondary hues measures 6.5–10.5:1 on the dark act and **1.65–2.65:1 on
+the white page**. They did not fail — they were designed for the dark, and the light field
+is where they must be held back. So the hues live in `[data-surface="dark"]`, which is a
+**surface variant and not a theme twin**: one section is dark, the document never inverts,
+and the four statuses are remapped rather than inherited because the light set measures
+1.1–1.5:1 there.
+
+**The blue is two tokens because it does two jobs.** `--accent` is 3.03:1 on `--bg` —
+below the 4.5:1 body floor and above the 3:1 large-text one — so it is declared
+`@role non-text` with its exemption stated: legal on a word only at ≥ 24px, which is where
+the reference spends it, at 86px in the headline's first phrase. Anything smaller takes
+`--accent-ink` at 5.16:1.
+
+**Four corrections travel with the pack.** Secondary copy is `#9d9fa3` at 2.65:1 on the
+page. The tertiary grey `#767676` passes the page at 4.54:1 and fails the act separator at
+4.05:1. The reference's secondary set is a palette and not a scheme — eight of its
+twenty-one pairs are too close to separate under dichromacy — so the four status roles were
+derived from its own hues rather than adopted from its names. And 26 of 37 visible
+interactive elements at 390 are under 44px.
+
+**Two doctrine corrections the gates caught, both worth recording.** The pack prescribed
+its press at the reference's own 200ms, which sits outside the doctrine's 100–160ms band,
+so `--dur-press` takes the band's ceiling instead of the nearest measured value — the one
+motion value here that is not measured, and it says so. And the pack bans bold while the
+token layer shipped no base rule for it: the UA supplies `strong { font-weight: 700 }`
+whether a pack does or not, so a ban with no rule is invisible. The layer now sets
+`strong, b { font-weight: var(--weight-label) }` — 500, the heaviest weight this pack has.
+
+**Rendering the kit caught a defect the gates could not**, for the third release running.
+The light control variant rendered *dark* inside the dark act: it was built on
+`--surface`, which `[data-surface="dark"]` remaps to `#242424`, so a control that is white
+by definition followed the field and the rig lit nothing. `--lit-light-fill` does not
+follow the field. A gate reads structure, not layout.
+
+`MOTION_INTENSITY` is pinned at **2** — the lowest ceiling in the library beside
+`bulletin`. 432 of 487 elements compute `transition-duration: 0s`, `animation-timeline`
+appears zero times, and the rig is a **static** light: animating it is the pack's first
+ban and the fastest way to turn it into a toy.
+
+The fork against `showroom` is written from both ends: both are white and both spend a big
+layered elevation on one object, and the distinction is that `showroom` lights the
+application in a neutral shadow dropped from above while this lights a control in coloured
+light thrown from the side — and this hero carries no product at all. `ADR-0001` gains a
+further application, with `halation`, `limelight` and `luminaire` weighed and rejected.
+
+Gates: 4626 → **4754**, 2681 → **2784**, 692 → **706**. Both palette ceilings held for the
+second consecutive release; `computed_at_least` rises 572 → 600.
+
 ## [1.48.1] - 2026-08-24
 
 ### The assembly rule is written down, and the render step earned its place within the hour
