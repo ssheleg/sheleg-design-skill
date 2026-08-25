@@ -7,6 +7,10 @@
 
 **[Docs, and every skill →](https://skills.sshlg.me/)** · [this skill's page](https://skills.sshlg.me/skills/sheleg-design/) · [follow @sshlg93 on X](https://x.com/intent/follow?screen_name=sshlg93)
 
+Loads in **DeepSeek Harness** (`dsh`) with **no plugin to write**: it reads the
+Agent Skills standard directly, scanning `~/.agents/skills` — where `npx skills
+add` puts this pack — at rank 500.
+
 **[Browse every style pack →](https://ssheleg.github.io/sheleg-design-skill/)** — every card rendered in its own token layer, plus the collection audit. The site each pack was measured from stays in the pack; the published pages name none of them.
 
 An agent can generate a landing page in under a minute, and it will look like
