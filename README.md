@@ -7,7 +7,7 @@
 
 **[Docs, and all 8 skills →](https://ssheleg.github.io/sshlg-skills/)** · [this skill's page](https://ssheleg.github.io/sshlg-skills/skills/sheleg-design/) · [follow @sshlg93 on X](https://x.com/intent/follow?screen_name=sshlg93)
 
-**[Browse all 34 packs →](https://ssheleg.github.io/sheleg-design-skill/)** — every card rendered in its own token layer, plus the collection audit. The site each pack was measured from stays in the pack; the published pages name none of them.
+**[Browse every style pack →](https://ssheleg.github.io/sheleg-design-skill/)** — every card rendered in its own token layer, plus the collection audit. The site each pack was measured from stays in the pack; the published pages name none of them.
 
 An agent can generate a landing page in under a minute, and it will look like
 every other generated landing page: three cards, a gradient, a hero that does
