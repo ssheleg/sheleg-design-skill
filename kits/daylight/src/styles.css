@@ -398,7 +398,7 @@
 }
 
 .dy-status--ok .dy-status__dot {
-  background: var(--ok-mark);
+  background: var(--ok);
 }
 
 .dy-status--warn {
@@ -407,7 +407,7 @@
 }
 
 .dy-status--warn .dy-status__dot {
-  background: var(--warn-mark);
+  background: var(--warn);
 }
 
 .dy-status--danger {
@@ -416,7 +416,7 @@
 }
 
 .dy-status--danger .dy-status__dot {
-  background: var(--danger-mark);
+  background: var(--danger);
 }
 
 .dy-status--neutral {

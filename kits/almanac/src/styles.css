@@ -404,7 +404,7 @@
 }
 
 .al-status--ok .al-status__dot {
-  background: var(--ok-mark);
+  background: var(--ok);
 }
 
 .al-status--warn {
@@ -413,7 +413,7 @@
 }
 
 .al-status--warn .al-status__dot {
-  background: var(--warn-mark);
+  background: var(--warn);
 }
 
 .al-status--danger {
@@ -422,7 +422,7 @@
 }
 
 .al-status--danger .al-status__dot {
-  background: var(--danger-mark);
+  background: var(--danger);
 }
 
 .al-status--neutral {

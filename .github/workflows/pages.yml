@@ -1,0 +1,83 @@
+name: pages
+
+# The site is built from the repository on every push to main, never committed. A
+# generated page in git drifts from the tokens it claims to show; a page built in CI
+# cannot. `tools/site.py` refuses to emit a page that names any source address, so the
+# guard runs here too rather than only on a laptop.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'plugins/sheleg-design/skills/sheleg-design/styles/**'
+      - 'kits/**'
+      - 'tools/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # tools/*.py date each pack from its first commit
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Gates must be green before anything is published
+        run: |
+          python3 test/validate.py
+          python3 test/validate_palette.py
+          python3 test/sloplint.py
+          python3 tools/check_kit_vars.py
+      - name: Build the site
+        run: python3 tools/site.py --out _site
+      - name: No source address may reach the published site
+        run: |
+          # site.py already refuses, and it exits non-zero when it does. This is the
+          # second reading: grep the built output for every host the packs cite, from
+          # the packs themselves rather than from a list somebody has to maintain.
+          python3 - <<'PY'
+          import pathlib, re, sys
+          styles = pathlib.Path("plugins/sheleg-design/skills/sheleg-design/styles")
+          hosts = set()
+          for md in styles.glob("*.md"):
+              for m in re.finditer(r"https?://([A-Za-z0-9.-]+)", md.read_text()):
+                  h = m.group(1).lower().lstrip(".")
+                  if "." in h and not h.endswith(("github.com", "w3.org", "wikipedia.org")):
+                      hosts.add(h)
+                      hosts.add(h.removeprefix("www."))
+          names = {p.stem.lower() for p in styles.glob("*.md")}
+          site = "\n".join(p.read_text() for p in pathlib.Path("_site").glob("*.html")).lower()
+          leaked = sorted(h for h in hosts if h in site and h.split(".")[0] not in names)
+          if leaked:
+              print("FAIL: the built site names " + ", ".join(leaked), file=sys.stderr)
+              sys.exit(1)
+          print(f"OK — none of {len(hosts)} cited hosts appears in the built site")
+          PY
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

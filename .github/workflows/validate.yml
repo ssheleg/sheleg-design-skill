@@ -78,6 +78,11 @@ jobs:
         run: python3 test/validate_palette.py
       - name: Slop lint (the skill is held to its own bans)
         run: python3 test/sloplint.py
+      - name: Every var() a kit consumes is declared, or carries a fallback
+        # An undefined custom property does not error — it drops to the initial value,
+        # so four kits shipped a status dot painted with a token nothing declared and
+        # every other gate stayed green. Measured 2026-08-25.
+        run: python3 tools/check_kit_vars.py
       - name: Gate self-tests (every gate watched failing on a planted defect)
         run: |
           python3 test/validate.py --self-test

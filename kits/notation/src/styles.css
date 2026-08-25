@@ -396,7 +396,7 @@ strong, b { font-weight: var(--w-bold); }
 }
 
 .nt-status--ok .nt-status__dot {
-  background: var(--ok-mark);
+  background: var(--ok);
 }
 
 .nt-status--warn {
@@ -405,7 +405,7 @@ strong, b { font-weight: var(--w-bold); }
 }
 
 .nt-status--warn .nt-status__dot {
-  background: var(--warn-mark);
+  background: var(--warn);
 }
 
 .nt-status--danger {
@@ -414,7 +414,7 @@ strong, b { font-weight: var(--w-bold); }
 }
 
 .nt-status--danger .nt-status__dot {
-  background: var(--danger-mark);
+  background: var(--danger);
 }
 
 .nt-status--neutral {

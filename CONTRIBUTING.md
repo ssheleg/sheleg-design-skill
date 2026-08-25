@@ -97,6 +97,23 @@ drift.
    CHANGELOG entry, so whether it happened depended on the next author reading
    that paragraph — which is not a procedure, it is luck.
 
+**Auditing the collection.** `python3 tools/audit_packs.py` reports what the gates
+cannot see — how each pack was measured, whether its source is still reachable, whether
+its kit was ever rendered. `--check-live` adds the network probe. It is a report and
+always exits 0: several gaps are recorded exceptions in the packs themselves, and two
+rules postdate most of the library. The standing result lives in `docs/audit/`.
+
+**Every var() a kit consumes must be declared.** `python3 tools/check_kit_vars.py` gates
+it, and CI runs it. An undefined custom property drops to the initial value instead of
+erroring, so four of the 34 kits shipped a status dot that painted nothing while every other
+gate stayed green.
+
+**Publishing the catalogue.** `python3 tools/site.py --out _site` builds the public site
+— index, gallery, audit — and **refuses to emit a page that names any source address**,
+computing the forbidden set from the packs rather than from a list somebody maintains.
+The `pages` workflow builds it on every push to `main`; nothing generated is committed,
+because a generated page in git drifts from the tokens it claims to show.
+
 **Looking at the library.** `python3 tools/gallery.py` renders every pack as one
 browsable page from the packs' **own token layers** — swatches, radius, accent and type
 stack read out of `styles/tokens/<pack>.css` rather than described, so a card that looks

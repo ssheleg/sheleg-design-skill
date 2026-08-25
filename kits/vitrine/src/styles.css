@@ -385,7 +385,7 @@
 }
 
 .vt-status--ok .vt-status__dot {
-  background: var(--ok-mark);
+  background: var(--ok);
 }
 
 .vt-status--warn {
@@ -394,7 +394,7 @@
 }
 
 .vt-status--warn .vt-status__dot {
-  background: var(--warn-mark);
+  background: var(--warn);
 }
 
 .vt-status--danger {
@@ -403,7 +403,7 @@
 }
 
 .vt-status--danger .vt-status__dot {
-  background: var(--danger-mark);
+  background: var(--danger);
 }
 
 .vt-status--neutral {

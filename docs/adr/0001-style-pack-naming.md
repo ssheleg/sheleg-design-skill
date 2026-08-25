@@ -84,10 +84,18 @@
   patchbay question and not a trading one. The address is in the pack's
   `Origin:`.
 
-- **Two packs shipped against this rule and are not recorded above.**
+- **Three packs shipped against this rule and are not recorded above.**
   `outrank` (from `outrank.so`) and `babylove` (from `babylovegrowth.ai`) both
   landed on 2026-08-21 carrying their source brand as the pack name, and neither
-  run added an entry here. Recorded now rather than left to be rediscovered,
+  run added an entry here. **`paperclip` (from `paperclip.ing`) is the third**,
+  landed 2026-08-14 and found on 2026-08-25 by a leak guard written for an
+  unrelated purpose — the public site refuses to publish any source name, and two
+  of the names it caught were pack names. The pack states the collision itself
+  without naming it as one: *"the product is named after office supply"*. Until
+  that check existed this paragraph said **two**, which is the failure the
+  paragraph was written to prevent — a register claiming an unbroken chain makes a
+  claim about the library the library does not support, and a register
+  under-counting its own exceptions does the same thing one step further in. Recorded now rather than left to be rediscovered,
   because a register that shows an unbroken chain of eleven applications is
   making a claim about the library that the library does not support. **They are
   not being renamed:** the Consequences section above is explicit that a pack
