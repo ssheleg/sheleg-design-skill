@@ -4,6 +4,8 @@
 [![CI](https://github.com/ssheleg/sheleg-design-skill/actions/workflows/validate.yml/badge.svg)](https://github.com/ssheleg/sheleg-design-skill/actions/workflows/validate.yml)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 
+**[Browse all 34 packs →](https://ssheleg.github.io/sheleg-design-skill/)** — every card rendered in its own token layer, plus the collection audit. The site each pack was measured from stays in the pack; the published pages name none of them.
+
 An agent can generate a landing page in under a minute, and it will look like
 every other generated landing page: three cards, a gradient, a hero that does
 nothing. Ask it for a dashboard and you get a different flavor of the same
