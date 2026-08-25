@@ -220,12 +220,17 @@ def index_page(packs: list[dict], rows: list[dict], stamp: str) -> str:
       <h3>Collection audit</h3>
       <p>How each pack was measured, and what the automated gates cannot see. {core} sit on
       the core contract by design; the rest answer all thirteen headings.</p></a>
-    <a class="tile" href="https://github.com/ssheleg/sheleg-design-skill">
-      <span class="n-big">{dark}</span>
-      <h3>Repository</h3>
-      <p>{dark} of {n} packs stand on a dark field. Install with
-      <code>npx sheleg-design-skill</code>, or read the source.</p></a>
+    <a class="tile" href="https://ssheleg.github.io/sshlg-skills/skills/sheleg-design/">
+      <span class="n-big">&harr;</span>
+      <h3>The rest of the family</h3>
+      <p>This is the visual layer of a set of skills that split the work around the
+      code &mdash; what the interface must do, how it sounds, how a change reaches the
+      repository. No count here: this repository cannot derive one, and a number it
+      cannot check is a number that goes stale.</p></a>
   </div>
+  <p class="sub" style="margin-top:6px">Source, and installing just this one:
+  <a href="https://github.com/ssheleg/sheleg-design-skill">the repository</a> ·
+  <code>npx sheleg-design-skill</code> · {dark} of {n} packs stand on a dark field.</p>
 </header>
 <main>
   <h2>What a pack contains</h2>
