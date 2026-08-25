@@ -97,6 +97,12 @@ drift.
    CHANGELOG entry, so whether it happened depended on the next author reading
    that paragraph — which is not a procedure, it is luck.
 
+**Looking at the library.** `python3 tools/gallery.py` renders every pack as one
+browsable page from the packs' **own token layers** — swatches, radius, accent and type
+stack read out of `styles/tokens/<pack>.css` rather than described, so a card that looks
+wrong is a pack that is wrong. It writes `gallery.html` (gitignored) and needs no network.
+Two `var()`-inside-`calc()`-and-font-stack cases were invisible until it existed.
+
 Token naming is an interface across packs: `--accent-weak` is a tint,
 `--accent-dim`/`-deep` is a darker accent. Reusing a name for the opposite
 meaning silently inverts anyone who switches packs.
