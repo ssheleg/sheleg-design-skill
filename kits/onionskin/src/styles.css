@@ -1,0 +1,532 @@
+/* SHELEG Design — Onionskin token layer (a white technical sheet where two bases do
+   all the work and everything quiet is one of them at an alpha).
+   Copy verbatim; consume only var(--…) in components.
+
+   Extracted from https://supermemory.ai on 2026-08-25. The site is Astro: two
+   stylesheets totalling 154,143 bytes declaring 151 custom properties. Values were
+   read off COMPUTED styles on the live page through CDP at 1440x900 — 1,469 visible
+   of 1,653 elements on a 14,437px page — and at a device-emulated 390x844 (1,451
+   visible, 19,963px). Ratios were computed by importing this repository's own
+   palette gate.
+
+   Its robots.txt carries `Content-Signal: ai-train=no, search=yes, ai-input=yes`.
+   Recorded here because it is the owner speaking: nothing from that page trains a
+   model, and what this file holds is measurements of a public surface — sizes,
+   ratios and counts — not its content. The published catalogue names no source at
+   all. If the owner wants the address out of this file too, that is one edit, and
+   `briefing-room` is the precedent for it.
+
+   THE PRINCIPLE, and it is measurable: 199 of the 631 colour-carrying values on the
+   page carry an alpha, and they are drawn from exactly TWO bases — 97 from a navy
+   that is never text, and 83 from the ink that is only ever text. Text dims through
+   the ink; structure dims through the navy. Nothing dims by picking a lighter grey,
+   which is what every solid-grey system does and what makes this one different.
+
+   Compositing note, because getting it wrong changes every number below: an alpha is
+   composited in sRGB, not in linear light. Mixed in linear space, `--ink` at 0.6
+   computes 2.32:1 and looks like a failure; composited the way a browser does it is
+   4.98:1 and passes. The first pass of this pack made that mistake.
+
+   Three families of value appear below:
+
+   MEASURED — the literal was computed on the live page.
+   SELECTED — the reference ships no such role; the value is a step of a ramp it
+   already carries, taken deep enough to clear AA on this field.
+   DERIVED — computed from a token here, because the reference's own value fails a
+   floor. Only lightness moves.
+
+   The corrections are in the pack's Gotchas, and there are four. */
+
+:root {
+  color-scheme: light;
+
+  /* ---- The sheet ------------------------------------------------------- */
+  /* MEASURED. White carries the page (54 fills); the off-white is a panel (16); the
+     blue tint is a called-out block (8); and one near-black band closes the page (4). */
+  --bg: #ffffff;
+  --bg-2: #fafafa; /* MEASURED — the panel */
+  --tint: #edf3ff; /* MEASURED — the called-out block, and the accent's own wash */
+  --surface: #ffffff;
+  --band-dark: #0b1015; /* MEASURED — one dark band, the same value as the ink */
+
+  /* ---- Base one: the ink, and its alphas are the only greys ------------ */
+  /* MEASURED. 123 text nodes take it solid. The tiers below are that same ink at an
+     alpha, composited in sRGB — which is what the page does and why this pack has no
+     grey ramp at all. --ink-soft is 56 nodes on the live page, --ink-mid is 11. */
+  --ink: #0b1015; /* 19.11:1 on --bg */
+  --ink-a-soft: 0.6; /* the alpha, kept as a number so a component can compose it */
+  --ink-a-mid: 0.62;
+  --ink-soft: color-mix(in srgb, var(--ink) 60%, var(--bg)); /* 4.98:1 on --bg */
+  --ink-mid: color-mix(in srgb, var(--ink) 62%, var(--bg)); /* 5.36:1 on --bg */
+  /* DERIVED. The reference sets 48 text nodes in #888e94 — 3.31:1 on white, 3.17:1 on
+     the panel and 2.97:1 on the tint, so it fails on every field it is used on. The
+     hue is held and only lightness moves, far enough to clear AA on all three. */
+  --ink-quiet: #696f75; /* 5.08:1 on --bg, 4.87:1 on --bg-2, 4.57:1 on --tint */
+  /* @role non-text: --ink-faint — the ink at 0.45. MEASURED on 6 nodes of live text,
+     and here it is a disabled label, a placeholder and an icon only.
+     Composited it is #919396, which is 3.08:1 on #ffffff. */
+  --ink-faint: color-mix(in srgb, var(--ink) 45%, var(--bg));
+  --on-ink: #ffffff; /* 19.11:1 on --ink */
+
+  /* ---- Base two: the navy, and it is NEVER text ----------------------- */
+  /* MEASURED, and this is the half a solid-grey system does not have. Every rule and
+     every panel edge on the page is this navy at an alpha: 64 elements at 0.1 and 25
+     at 0.055. Composited they are 1.21:1 and 1.10:1 on white — far below the 3:1
+     mark floor, and that is correct for what they are. A rule at 1.21:1 SEPARATES;
+     it cannot be the only thing that does, so see the pack's Bans. */
+  --rule-base: #0f2e5c;
+  --rule: color-mix(in srgb, var(--rule-base) 10%, var(--bg)); /* 1.21:1 on --bg */
+  --rule-faint: color-mix(in srgb, var(--rule-base) 5.5%, var(--bg)); /* 1.10:1 on --bg */
+  --rule-w: 1px; /* MEASURED — every border on the page is 1px */
+  /* MEASURED — 10 elements draw the same hairline dashed. It marks a boundary that is
+     provisional: a drop target, a planned step, an empty slot. */
+  --rule-dashed: 1px dashed var(--rule);
+
+  /* ---- The accent: it writes and it fills, and it needed no correction - */
+  /* MEASURED — 41 fills and 41 text nodes, and 5.25:1 in BOTH directions, which is
+     rare enough in this library to say out loud: white on it and it on white are the
+     same number, so one token covers both jobs with no derived twin. */
+  --accent: #0562ef;
+  --on-accent: #ffffff; /* 5.25:1 on --accent */
+  --accent-wash: var(--tint); /* MEASURED — the tint IS the accent's wash */
+  --accent-rule: color-mix(in srgb, var(--accent) 28%, var(--bg)); /* the lit edge, see --edge-lit */
+
+  /* ---- The dot grid: the page's only texture -------------------------- */
+  /* MEASURED. A radial-gradient dot, 0.8px of accent on a transparent field, repeated.
+     It is a field, never a border, and it belongs under a section rather than inside
+     a card. */
+  --grid-dot: 0.8px;
+  --grid-step: 24px;
+  --grid-color: var(--accent);
+  --grid: radial-gradient(circle, var(--grid-color) var(--grid-dot), transparent var(--grid-dot));
+
+  /* ---- Elevation: an edge, not a shadow ------------------------------- */
+  /* MEASURED. The page carries almost no drop shadow. What it has instead is an inset
+     side-rule in the accent at 28% — 8 elements — which lights the left and right edge
+     of a panel without lifting it, and a focus ring built from two accent alphas. */
+  --edge-lit: inset 1px 0 0 0 var(--accent-rule), inset -1px 0 0 0 var(--accent-rule);
+  --shadow-hair: 0 1px 0 0 color-mix(in srgb, var(--ink) 6%, transparent); /* MEASURED */
+  --shadow-lift: 0 32px 64px -24px color-mix(in srgb, var(--ink) 28%, transparent); /* MEASURED — once */
+
+  --focus-ring: 0 0 0 4px color-mix(in srgb, var(--accent) 10%, transparent),
+                0 4px 10px -3px color-mix(in srgb, var(--accent) 45%, transparent); /* MEASURED */
+  --focus-w: 2px;
+  --focus-offset: 2px;
+  --focus-color: var(--accent); /* 5.25:1 on --bg, over the 3:1 mark floor */
+
+  /* ---- Radii: the squarest page in the library ------------------------ */
+  /* MEASURED: 1,418 of the 1,469 visible elements compute 0px — 96.5%. What little
+     radius exists is hairline: 1px on 14 elements, then 2, 4 and 5. There is no card
+     radius here because there is no rounded card. */
+  --r-none: 0;
+  --r-hair: 1px; /* MEASURED — 14 */
+  --r-xs: 2px; /* MEASURED — 4 */
+  --r-sm: 4px; /* MEASURED — 4 */
+  --r-md: 5px; /* MEASURED — 6; the largest radius the page spends at scale */
+  --r-round: 50%; /* MEASURED — 12; a dot or an avatar, never a control */
+
+  /* ---- Spacing and the page ------------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  --content-max: 1200px;
+  --gutter: 20px;
+  --control-h: 36px; /* MEASURED — the page's controls are small */
+  /* CORRECTION, not a measurement: 88 of the 123 visible interactive elements at 1440
+     are under 44px tall, and 73 of 106 at 390. A page set at 11px still owes a
+     44px target. */
+  --tap-min: 44px;
+
+  /* ---- Type: three families, and the body is SMALL -------------------- */
+  /* MEASURED — DM Sans on 185 text nodes, Space Grotesk on 110, DM Mono on 96. Three
+     faces is unusual in this library and it is the pack's second structural claim:
+     the grotesque is display only, the sans carries every sentence, and the mono
+     carries every number, key and identifier. */
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* The most frequent size on the page is 11px, on 65 nodes at 1440 and 67 at 390.
+     That is not a caption size here — it is the working size of a technical sheet. */
+  --t-micro: 0.6875rem; /* 11px — the label, the key, the annotation */
+  --t-xs: 0.8125rem; /* 13px — 50 nodes */
+  --t-sm: 0.875rem; /* 14px */
+  --t-body: 0.9375rem; /* 15px — the reading size */
+  --t-base: 1rem; /* 16px */
+  --t-lede: 1.375rem; /* 22px */
+  --t-h3: 1.75rem;
+  --t-h2: 2.5rem;
+  --t-display: 3.5rem;
+
+  --lh-micro: 1.27; /* MEASURED — 14px on 11px */
+  --lh-body: 1.5; /* MEASURED — 22.5px on 15px */
+  --lh-tight: 1.1;
+
+  /* Tracking is two-sided and the two sides are far apart: the uppercase micro-label
+     is pushed open to +0.18em (1.98px on 11px, 17 nodes) and the display is pulled in
+     to -0.05em (-1.76px on 35px). Collapsing them to one value loses the page. */
+  --track-micro: 0.18em; /* MEASURED */
+  --track-caps: 0.14em; /* MEASURED — 1.54px on 11px, the second caps register */
+  --track-display: -0.05em; /* MEASURED */
+  --track-body: -0.01em; /* MEASURED — -0.15px on 15px */
+
+  --weight-body: 400; /* MEASURED — 175 nodes */
+  --weight-medium: 500; /* MEASURED — 205 nodes, the dominant weight */
+  --weight-strong: 600; /* MEASURED — 7 nodes, and that is the whole budget */
+
+  /* ---- Motion: almost none, and it is measured ------------------------ */
+  /* 1,290 of the 1,469 visible elements compute transition-duration: 0s. What moves
+     does so between 0.12s and 0.3s. There is no scroll clock — animation-timeline
+     appears zero times — and 9 elements are sticky. MOTION_INTENSITY above 2 has
+     nothing legal to buy. */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --dur-press: 0.12s; /* MEASURED, and inside the doctrine's 100-160ms press band */
+  --dur-fast: 0.15s;
+  --dur-base: 0.2s; /* MEASURED — the most frequent non-zero duration */
+  --dur-slow: 0.3s;
+
+  /* ---- Status: derived, because the reference paints no state --------- */
+  /* SELECTED, all four, each a step of a hue the reference itself carries — its
+     #00c2d8 cyan, its #f59e0b amber, its #e11d48 rose and the violet in its own
+     gradient. Searched rather than chosen: all ten pairs across the four states and
+     --accent clear 15 OKLab units at full colour and 8 under protanopia,
+     deuteranopia and tritanopia, on the tint as well as on white. */
+  --good: #007c51; /* 5.25:1 on --bg, 4.71:1 on --tint */
+  --warn: #843500; /* 8.43:1 on --bg, 7.58:1 on --tint */
+  --danger: #d80741; /* 5.22:1 on --bg, 4.69:1 on --tint */
+  --info: #6714d2; /* 8.05:1 on --bg, 7.24:1 on --tint */
+
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-body);
+}
+
+/* The one dark band, MEASURED off the page's closing section. It is a SURFACE
+   variant and not a theme twin: there is no toggle, the document never inverts, and
+   the sheet above it is untouched. The navy rule cannot survive here — at 10% over
+   near-black it is invisible — so structure dims through white instead, which is the
+   same principle with the base swapped. */
+[data-surface="dark"] {
+  --bg: #0b1015;
+  --bg-2: #11171d;
+  --tint: #11171d;
+  --surface: #11171d;
+  --ink: #ffffff; /* 19.11:1 on --bg */
+  --ink-soft: color-mix(in srgb, var(--ink) 72%, var(--bg)); /* 10.05:1 on --bg */
+  --ink-mid: color-mix(in srgb, var(--ink) 78%, var(--bg)); /* 11.69:1 on --bg */
+  --ink-quiet: #9aa2ab; /* SELECTED — 7.40:1 on --bg */
+  --ink-faint: color-mix(in srgb, var(--ink) 40%, var(--bg));
+  --on-ink: #0b1015;
+
+  --rule-base: #ffffff;
+  --rule: color-mix(in srgb, var(--rule-base) 14%, var(--bg)); /* MEASURED — the page's own on-dark rule */
+  --rule-faint: color-mix(in srgb, var(--rule-base) 8%, var(--bg));
+
+  /* The accent lightens here or it cannot carry a word: #0562ef is 2.16:1 on this
+     band. SELECTED from the reference's own lighter blue. */
+  --accent: #89bdff; /* 9.81:1 on --bg */
+  --on-accent: #0b1015; /* 9.81:1 on --accent */
+  --accent-wash: #11171d;
+  --grid-color: #2a4a75; /* SELECTED — the accent stepped down for a dot on the band */
+
+  /* Remapped rather than inherited: the light set measures 1.4-2.6:1 on this band. */
+  --good: #7dffd1; /* 15.55:1 on --bg */
+  --warn: #ffe459; /* 15.01:1 on --bg */
+  --danger: #ff9bad; /* 9.59:1 on --bg */
+  --info: #9579e6; /* 5.60:1 on --bg */
+
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+/* The reference ships no reduced-motion branch: zero occurrences of the query in
+   154,143 bytes. This pack requires one. Nothing here travels in space, so what
+   collapses is every duration — a control still changes colour and still shows its
+   focus ring, and nothing animates. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-press: 0s;
+    --dur-fast: 0s;
+    --dur-base: 0s;
+    --dur-slow: 0s;
+  }
+}
+
+/* The pack bans bold, and a ban the UA overrides is not a ban: `strong` and `b` are 700
+   by default in every browser. 500 is the heaviest weight this page spends at scale, so
+   emphasis here is the medium weight — or, better, the mono. */
+strong,
+b {
+  font-weight: var(--weight-medium);
+}
+
+/* ── components ── */
+/* Authored CSS for the states the pack declares and a token layer cannot. Nothing
+   below names a colour — every value resolves through a token above. */
+
+/* Every measured height here is a TOTAL height. Chrome gives a `button` border-box and
+   an anchor content-box, so without this a control and a link of the same declared
+   height render differently — the defect two releases caught by rendering. */
+.ok-panel,
+.ok-btn,
+.ok-card,
+.ok-chip,
+.ok-grid,
+.ok-shell {
+  box-sizing: border-box;
+}
+
+.ok-shell {
+  max-inline-size: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ---- The dot field: under a section, never inside a panel -------------- */
+
+.ok-grid {
+  background-image: var(--grid);
+  background-size: var(--grid-step) var(--grid-step);
+}
+
+/* ---- The panel: the signature -------------------------------------- */
+
+.ok-panel {
+  border: var(--rule-w) solid var(--rule);
+  border-radius: var(--r-none);
+  background: var(--surface);
+  padding: var(--space-4);
+  container-type: inline-size;
+  transition: border-color var(--dur-fast) var(--ease);
+}
+
+.ok-panel--provisional {
+  border-style: dashed;
+  background: var(--bg-2);
+}
+
+.ok-panel--subject {
+  box-shadow: var(--edge-lit);
+}
+
+.ok-panel:hover {
+  border-color: var(--accent-rule);
+}
+
+.ok-panel__label {
+  display: block;
+  margin-block-end: var(--space-3);
+  color: var(--ink-quiet);
+  font-size: var(--t-micro);
+  font-weight: var(--weight-medium);
+  line-height: var(--lh-micro);
+  letter-spacing: var(--track-micro);
+  text-transform: uppercase;
+}
+
+.ok-panel__body {
+  color: var(--ink-soft);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--track-body);
+}
+
+.ok-panel__body > * + * {
+  border-block-start: var(--rule-w) solid var(--rule-faint);
+  padding-block-start: var(--space-3);
+  margin-block-start: var(--space-3);
+}
+
+/* ---- Micro: 11px uppercase, tracked open --------------------------- */
+
+.ok-micro {
+  display: inline-block;
+  color: var(--ink-quiet);
+  font-size: var(--t-micro);
+  font-weight: var(--weight-medium);
+  line-height: var(--lh-micro);
+  text-transform: uppercase;
+}
+
+.ok-micro--caps { letter-spacing: var(--track-micro); }
+.ok-micro--tight { letter-spacing: var(--track-caps); }
+
+/* ---- Data: the mono owns every number ------------------------------ */
+
+.ok-data {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+}
+
+.ok-data__value { color: var(--ink); }
+.ok-data__unit { color: var(--ink-soft); font-size: var(--t-micro); }
+
+/* ---- Controls ------------------------------------------------------- */
+
+.ok-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-block-size: var(--tap-min);
+  padding-inline: var(--space-4);
+  border: var(--rule-w) solid transparent;
+  border-radius: var(--r-sm);
+  font-family: var(--font-sans);
+  font-size: var(--t-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--track-body);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+
+.ok-btn--sm { block-size: var(--tap-min); font-size: var(--t-micro); }
+.ok-btn--md { block-size: var(--tap-min); }
+.ok-btn--lg { block-size: 48px; font-size: var(--t-body); }
+
+.ok-btn--primary {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.ok-btn--primary:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent) 88%, var(--ink));
+}
+
+.ok-btn--primary:active:not(:disabled) {
+  transition-duration: var(--dur-press);
+  background: color-mix(in srgb, var(--accent) 78%, var(--ink));
+}
+
+.ok-btn--secondary {
+  background: var(--surface);
+  border-color: var(--rule);
+  color: var(--ink);
+}
+
+.ok-btn--secondary:hover:not(:disabled) { border-color: var(--accent-rule); }
+
+.ok-btn--ghost { background: transparent; color: var(--ink); }
+.ok-btn--ghost:hover:not(:disabled) { background: var(--tint); }
+
+.ok-btn:focus-visible {
+  outline: var(--focus-w) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
+  box-shadow: var(--focus-ring);
+}
+
+.ok-btn:disabled {
+  background: var(--bg-2);
+  border-color: var(--rule);
+  color: var(--ink-faint);
+  cursor: not-allowed;
+}
+
+/* ---- Card: parity only — reach for Panel --------------------------- */
+
+.ok-card {
+  border: var(--rule-w) solid var(--rule);
+  border-radius: var(--r-none);
+  background: var(--surface);
+  padding: var(--space-4);
+  container-type: inline-size;
+}
+
+.ok-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-block-end: var(--space-3);
+}
+
+@container (max-width: 300px) { .ok-card__head { display: block; } }
+
+.ok-card__title {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: var(--t-lede);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--track-display);
+}
+
+.ok-card__meta {
+  color: var(--ink-quiet);
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+}
+
+.ok-card__body {
+  color: var(--ink-soft);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+}
+
+/* ---- Chip, stat, heading, rule ------------------------------------- */
+
+.ok-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  border: var(--rule-w) solid var(--rule);
+  border-radius: var(--r-xs);
+  padding: 2px var(--space-2);
+  background: var(--surface);
+  color: var(--ink-soft);
+  font-size: var(--t-micro);
+  transition: background-color var(--dur-fast) var(--ease);
+}
+
+.ok-chip--accent { background: var(--accent-wash); color: var(--accent); border-color: var(--accent-rule); }
+.ok-chip--selected { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+
+.ok-stat { display: flex; flex-direction: column; gap: var(--space-1); }
+.ok-stat__label {
+  color: var(--ink-quiet); font-size: var(--t-micro); font-weight: var(--weight-medium);
+  letter-spacing: var(--track-micro); text-transform: uppercase;
+}
+.ok-stat__value {
+  color: var(--ink); font-family: var(--font-mono); font-size: var(--t-h3);
+  line-height: var(--lh-tight);
+}
+.ok-stat__source { color: var(--ink-quiet); font-size: var(--t-micro); }
+
+.ok-heading {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--track-display);
+  line-height: var(--lh-tight);
+}
+
+.ok-heading--1 { font-size: var(--t-display); }
+.ok-heading--2 { font-size: var(--t-h2); }
+.ok-heading--3 { font-size: var(--t-h3); }
+
+/* PAGE — the display answers to the viewport rather than to its column. The WORKING
+   size deliberately does not move: 11px is the most frequent size at 1440 and at 390,
+   and scaling it up on a phone is the one change that would break this pack. */
+@media (max-width: 767px) {
+  .ok-heading--1 { font-size: 2.125rem; }
+}
+
+.ok-rule { border: 0; border-block-start: var(--rule-w) solid var(--rule-faint); margin-block: var(--space-4); }
+.ok-rule--strong { border-block-start-color: var(--rule); }

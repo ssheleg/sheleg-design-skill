@@ -6,6 +6,73 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.50.0] - 2026-08-25
+
+### Onionskin, the thirty-fifth pack — two bases, and everything quiet is an alpha
+
+Extracted from `supermemory.ai`, the front page of a memory and context engine for AI
+applications. The site is Astro: two stylesheets totalling 154,143 bytes declaring 151
+custom properties. Every value was read off **computed styles on the live page** through
+CDP at 1440×900 — 1,469 visible of 1,653 elements on a 14,437px page — and at a
+device-emulated 390×844.
+
+**The principle is measurable and it is the pack.** 199 of the 631 colour-carrying
+values on the page carry an alpha, drawn from exactly **two** bases: 97 from a navy used
+for every rule and panel edge and never for a word, and 83 from the ink, used only for
+words. Text dims through the ink; structure dims through the navy. **There is no grey
+ramp in this pack**, because the reference has none — which is what separates it from
+every other near-white technical sheet in the library.
+
+At **96.5% zero radius** — 1,418 of 1,469 rendered elements — it is the squarest page
+here by a margin. Three faces with one job each (a grotesque displays, a sans carries
+sentences, a mono carries every number and key), a dot grid at 0.8px, dashed hairlines
+for a provisional boundary, and a **working size of 11px**, which is the most frequent
+size on the page at every width.
+
+**An alpha composites in sRGB, not in linear light, and the first pass of this pack got
+that wrong.** Mixed in linear space, the ink at 60% computes 2.32:1 and reads as a
+failure that would have forced every tier to be redrawn; composited the way a browser
+does it, the same value is **4.98:1** and passes. The correction is recorded at the top
+of the token layer, because a pack whose central mechanism is alpha cannot afford the
+next reader to repeat it.
+
+**Four corrections travel with the pack.** A grey that fails on every field it is used
+on — `#888e94` on 48 text nodes, 3.31:1 on white, 3.17:1 on the panel, 2.97:1 on the
+tint. The lowest ink tier, which composites to 3.08:1 and carries six live text nodes,
+demoted to non-text. The rules, at 1.21:1 and 1.10:1, declared as rules rather than
+marks — with a ban requiring a second separator rather than a darker hairline. And 88 of
+123 interactive elements at 1440 under 44px, 73 of 106 at 390.
+
+**The accent needed none, which is rare here:** `#0562ef` is 5.25:1 on white *and*
+5.25:1 under white, so one token carries the fill and the word with no derived twin.
+
+**The fork against `blueprint` is the closest call in the library** and is written from
+both ends. Both are near-white technical sheets, both spend one blue that writes and
+fills, both are zero-radius, and `blueprint`'s Register describes this reference too.
+The separation is mechanical: `blueprint` builds its quiet layer from solid greys and
+rules with a solid line; this one has no greys at all. Body 16px against 11px, two
+families against three, a ruled field with ticks against a dot field.
+
+**The gate caught five of my own numbers.** Every stated ratio in the dark block was
+computed by hand and five were wrong; the gate supplied the right ones and they are what
+shipped. It also refused a `color-mix` with `transparent` inside it as uncomputable, and
+refused three tight status pairs in a dark set I had picked rather than searched — the
+searched set clears all ten pairs.
+
+**Rendering the kit found nothing**, for the first time in four releases. Worth saying
+because the step is not decoration: both classes it caught before — a control following
+its field into the dark act, and a box that grew by its own padding — were pre-empted
+here, `box-sizing` from the first line and a dark block with no light twin to invert.
+
+`MOTION_INTENSITY` is pinned at **2**: 1,290 of 1,469 elements compute
+`transition-duration: 0s` and `animation-timeline` appears zero times in 154,143 bytes.
+
+`ADR-0001` gains a further application, with `quadrille`, `tracing` and `vellum` weighed
+and rejected on its own criteria.
+
+Gates: 4754 → **4882**, 2784 → **2875**, 706 → **720**. Both palette ceilings held for
+the third consecutive release; `computed_at_least` rises 600 → 628.
+
 ## [1.49.1] - 2026-08-25
 
 ### Fixed

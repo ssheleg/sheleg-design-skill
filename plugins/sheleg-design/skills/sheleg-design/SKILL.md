@@ -3,7 +3,7 @@ name: sheleg-design
 description: Use when deciding how something LOOKS or MOVES. Cinematic scroll-driven landing pages and heroes — particle/WebGL backgrounds, scroll-linked animation, parallax, scrubbed sections — or when one feels busy or its motion drifts. Product UI through its style packs — dashboards, admin panels, internal tools, mobile screens, chat and agent interfaces. Design tokens, light/dark themes, palettes and colours, typography and fonts. Triggers - "design a landing" / "дизайн лендинга", "build a landing page" / "сделай лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы, фигма в код", "mobile screen" / "мобильный экран", "palette" / "палитра", "colors" / "цвета", "typography" / "типографика", "font" / "шрифт", "how it looks" / "выглядит", "make it prettier" / "красиво, красивее", "visual reference" / "визуальные референсы", "investor deck" / "презентация".
 license: MIT
 metadata:
-  version: 1.49.1
+  version: 1.50.0
 ---
 
 # SHELEG Design
@@ -75,6 +75,7 @@ this table is for choosing, not for reading instead of the pack:
 | [`patchbay`](./styles/patchbay.md) | near-black + one mint-cyan | a **live schematic** — 8% hairlines and no shadow, and an architecture diagram whose cords carry SMIL particles on a 2–3.5s clock under light layers on an 8.5–11s one; for engines, buses, pipelines and open-source front doors · **widened** |
 | [`nameplate`](./styles/nameplate.md) | cool near-white slab + one coral ramp | **square on 87% of its elements** — 1,091 of 1,251 measured — with the one round shape reserved for a white 1px-bordered pill carrying somebody else's publication name as type; one family with the body at weight 500, two uppercase registers tracked 0.06em and 0.175em; for pages whose argument is that named third parties will vouch for you — press placement, trust marks, certification, review aggregation (standalone) · **widened** |
 | [`rimlight`](./styles/rimlight.md) | white + one blue + coloured light | **elevation made of light rather than shadow** — a sixteen-layer rig, six lit and ten held at alpha 0, on one control per viewport; a monospace carrying every label and button against a grotesque carrying every sentence, no bold anywhere, and one near-black act; for a studio's front door and its service and case-study pages (standalone) · **widened** |
+| [`onionskin`](./styles/onionskin.md) | white sheet + one blue, **96.5% square** | **two bases and everything quiet is an alpha of one** — text dims through the ink, structure through a navy that is never a word, so the pack has no grey ramp at all; a dot grid, dashed hairlines, three faces and an 11px working size; for developer and AI infrastructure whose front page is a working document (standalone) · **widened** |
 | [`outrank`](./styles/outrank.md) | white + one violet | a **marketing page and a working tool in one brand** — SEO/growth SaaS, agent-run back-office, anything shipping a landing and a dashboard together · **widened** |
 | [`orchard`](./styles/orchard.md) | warm oat slabs | friendly consumer biotech, DTC wellness, kits & supplements · **core contract** |
 | [`field-notes`](./styles/field-notes.md) | green-cast paper ruled by hairlines | open-source & developer tools sold on auditability (standalone) |
@@ -111,12 +112,12 @@ difference between kit and pack as a defect in one of them rather than a choice.
 For a widened pack the kit and the pack's `## Components` must agree; for a core
 pack the kit is the only answer either of them gives.
 
-**Six of the thirty-four are on the core contract, and it changes what you get.**
+**Six of the thirty-five are on the core contract, and it changes what you get.**
 A pack marked **core contract** does not specify `## Components`, `## Hero`,
 `## Responsive` or `## Signature element` — so per-component states, the
 opening viewport and its line ceiling, the collapse rules, and the single
 element the page is remembered by are **yours to decide**, and you say so out
-loud when you do. The other twenty-eight answer all four. This asymmetry is the one
+loud when you do. The other twenty-nine answer all four. This asymmetry is the one
 thing about the library most likely to make you invent a value and believe you
 read it: what a core pack *does* state is measured to two decimals, and that
 precision is not evidence about the half it leaves silent. Each pack declares

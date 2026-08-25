@@ -37,6 +37,7 @@ organisation rather than a drawing and whose proof is the product on video —
 over a visible grid and that one has neither.
 And not for **anything that needs a rounded corner**: this pack has no radius
 token to give you, and adding one damages it more than changing its blue would.
+A page that is also a near-white technical sheet with one blue that writes and fills, and is also sold to an infrastructure buyer, is [`onionskin`](./onionskin.md) — the closest call in the library, and the separation is measurable rather than stylistic. **This pack builds its quiet layer out of solid greys** (`--ink-soft`, `--ink-faint`) and rules it with a solid `--line`; that one has no grey ramp at all, because its secondary text is the ink itself at 60% and its rules are a navy at 10% that is never a word. Its body runs at 11px against this pack's 16px, it carries three faces to this pack's two, and its field is a dot grid rather than a ruled one with ticks. If the page argues precision and wants drafting vocabulary, stay; if it argues density and expects the reader to work through it, go there.
 
 ### The fork against [`field-notes`](./field-notes.md)
 

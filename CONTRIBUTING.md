@@ -105,7 +105,7 @@ rules postdate most of the library. The standing result lives in `docs/audit/`.
 
 **Every var() a kit consumes must be declared.** `python3 tools/check_kit_vars.py` gates
 it, and CI runs it. An undefined custom property drops to the initial value instead of
-erroring, so four of the 34 kits shipped a status dot that painted nothing while every other
+erroring, so four of the 35 kits shipped a status dot that painted nothing while every other
 gate stayed green.
 
 **Publishing the catalogue.** `python3 tools/site.py --out _site` builds the public site

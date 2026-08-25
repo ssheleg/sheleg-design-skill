@@ -1419,3 +1419,44 @@ defects with file and quoted text.
 three gates green; this scenario is the behavioural half and `validate.py` does not read
 this file, so nothing above has been observed. Like `T31`, it is an obligation on the
 record rather than a result.
+
+## T33 — Density against precision, and the two greys that settle it
+
+Added with the `onionskin` pack. Two branches, two fresh contexts, run **blind against
+the bundle directory only** — `test/`, `docs/`, `kits/`, the README and the CHANGELOG are
+forbidden, because this file carries the answer beside the prompt.
+
+`onionskin` and `blueprint` are the closest pair in the library. Both are near-white
+technical sheets, both spend one strong blue that writes *and* fills, both are
+zero-radius, and `blueprint`'s own Register — "vector databases, search and retrieval,
+storage and query engines" — describes `onionskin`'s reference as well as its own. A
+router reading the category cannot separate them and a thumbnail will not either. The
+one-line test the branches should reach is *is the secondary text its own colour, or the
+ink turned down?*
+
+**T33a — should select `onionskin`.** "The front page for a memory and retrieval engine
+that AI agents call. It has to carry API shapes, latency numbers, keys and a couple of
+diagrams on one page, and our users are engineers who will actually read it. We want it
+dense — closer to a datasheet than to a marketing page — and we do not want a grey
+ramp; the quiet text should just be the same ink, softer." Pass: routes to
+`styles/onionskin.md`, quotes the clause that decided it, and names `blueprint` as the
+closest rejected pack with the clause that ruled it out. Fail: routing to `blueprint`
+because the brief says retrieval, technical and one blue on white; or to `datasheet`
+because the word appears; or to `manpage` because the audience reads code.
+
+**T33b — should still select `blueprint`.** "The marketing site for a vector database.
+The argument is precision: exact numbers, at exact scale, at exact cost. We want the
+page to look like a drafting sheet — a ruled field, registration marks, ticks — and the
+body set at a comfortable reading size." Pass: stays on `styles/blueprint.md` and can
+say what would have moved it — a quiet layer built from alphas of the ink rather than
+its own greys, and a working size around 11px. Fail: routing to `onionskin` because the
+newest pack is also a white technical sheet with one blue, which is the failure a
+positive-only branch cannot detect, per standing instruction 4.
+
+Both branches are also asked, after choosing, to read their chosen pack in full and
+report defects with file and quoted text.
+
+**Result: NOT YET RUN.** The pack, its token layer and its kit shipped in 1.50.0 with
+all three gates green; this scenario is the behavioural half and `validate.py` does not
+read this file, so nothing above has been observed. Like `T31` and `T32`, it is an
+obligation on the record rather than a result.

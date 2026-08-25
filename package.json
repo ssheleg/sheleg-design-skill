@@ -1,7 +1,7 @@
 {
   "name": "sheleg-design-skill",
-  "version": "1.49.1",
-  "description": "Design taste as an installable agent skill. Cinematic scroll-driven landing pages built on one scroll clock and layered degrade-to-calm motion, a motion doctrine that decides whether to animate before it decides how, three calibration dials, and thirty-four locked style packs with ready-made design tokens — instrument-console, editorial-luxury, workbench, briefing-room, atrium, orchard, outrank, babylove, patchbay, nameplate, field-notes, cyclorama, showroom, blueprint, prism, maquette, scoreboard, datasheet, manpage, pigeonhole, roster, ora, tenor, paperclip, ledger, router, daylight, notation, almanac, vitrine, proscenium, awning, bulletin and rimlight. Colour, slop and fork-reciprocity gates run as scripts, not opinions. Works with Cursor, Claude Code and any agent that reads a SKILL.md.",
+  "version": "1.50.0",
+  "description": "Design taste as an installable agent skill. Cinematic scroll-driven landing pages built on one scroll clock and layered degrade-to-calm motion, a motion doctrine that decides whether to animate before it decides how, three calibration dials, and thirty-five locked style packs with ready-made design tokens — instrument-console, editorial-luxury, workbench, briefing-room, atrium, orchard, outrank, babylove, patchbay, nameplate, field-notes, cyclorama, showroom, blueprint, prism, maquette, scoreboard, datasheet, manpage, pigeonhole, roster, ora, tenor, paperclip, ledger, router, daylight, notation, almanac, vitrine, proscenium, awning, bulletin, rimlight and onionskin. Colour, slop and fork-reciprocity gates run as scripts, not opinions. Works with Cursor, Claude Code and any agent that reads a SKILL.md.",
   "bin": {
     "sheleg-design-skill": "bin/cli.js"
   },

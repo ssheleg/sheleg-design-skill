@@ -121,6 +121,22 @@
   does. `rimlight` names the technique and, through it, the register: a studio that
   lights its own work. The address is in the pack's `Origin:`.
 
+- **Applied again:** 2026-08-25. The thirty-fifth pack was extracted from
+  `supermemory.ai` and is named **`onionskin`** for the register it encodes — a thin
+  sheet you read *through*, where everything quiet is the same ink at a lower density —
+  not `supermemory`. Another run opening on an address and nothing else, answered by
+  pointing here first. Three alternatives were weighed and rejected on this ADR's own
+  criteria. **`quadrille`** names the fine square-ruled paper, which is the page's
+  *texture* rather than its register — the exact ground `pegboard` was rejected on for
+  `roster`. **`tracing`** is accurate about the medium and reads as a verb, and in this
+  audience it collides head-on with tracing as observability, which would mis-route
+  every agent-instrumentation brief into a style pack. **`vellum`** is an opaque,
+  expensive material and sits next to `editorial-luxury`, which is the opposite
+  register. `onionskin` names the mechanism and, through it, the register: a technical
+  sheet read at working density. It also sits legibly beside `blueprint` — both are
+  drafting media, which is what makes the fork between them easy to hold. The address
+  is in the pack's `Origin:`.
+
 - **Corrected:** 2026-08-10. The Decision section named the seventh pack
   `lecture-hall`. That was the name on the branch this ADR was written on, and
   that branch never merged; the pack that shipped from graphify.com is
