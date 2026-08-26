@@ -125,9 +125,9 @@ thirty overrides. What it changes:
 
 | Token | Dark value | Note |
 |---|---|---|
-| `--bg` / `--surface` | `#14110E` / `#1C1815` | the warm-brown family — **see the Gotchas below, this contradicts the pack's own stated decision** |
-| `--surface-2` / `--surface-3` | `#262019` / `#262019` | **the same value**: the deepest step this table names in light does not exist in dark |
-| `--ink` / `--ink-2` | `#F7F3EC` / `#F7F3EC` | also collapsed — light distinguishes them |
+| `--bg` / `--surface` | `#14110E` / `#1C1815` | the warm-brown family, **measured**: the reference's own `.dark` declares `--background #14110e` and `--card #1c1815` |
+| `--surface-2` / `--surface-3` | `#262019` / `#262019` | **the same value, and faithfully so**: the reference's dark has two steps above the field — `#1c1815` and `#262019` — and no third |
+| `--ink` / `--ink-2` | `#F7F3EC` / `#F7F3EC` | also one value, and also faithful: the reference's dark carries `--foreground` and `--muted-foreground` and nothing between them |
 | `--ink-soft` | `#A89E8F` | 7.1:1 on `--bg` in this theme |
 | `--brand` / `--brand-ink` | `#CF7A52` / `#CF7A52` | the light theme's `--brand-on-dark`, now the brand itself |
 | `--verify` | `#2BC0A8` | 8.3:1 on `--bg` — **safe as text here**, which it is not in light |
@@ -137,8 +137,11 @@ thirty overrides. What it changes:
 **The dawn does not follow.** No `--dawn-*` stop is re-declared in the dark block,
 so `--hero-dawn` still ends `--dawn-7` `#E9ECDF` at 98% and `--bg` at 100% — in
 dark that is near-white meeting `#14110E` across two percent of the gradient,
-which is the hard edge this pack's own Bans forbid. Fixing it is a value decision
-this pack has not made; until it does, **do not ship the hero in dark**.
+which is the hard edge this pack's own Bans forbid. **Settled 2026-08-26**: the
+reference's `.dark` declares no dawn stop of any kind, so the gradient has no dark
+counterpart there either — and the layer now redeclares `--hero-dawn: var(--bg)` in
+dark. **In dark the hero is the flat field**, which is a rule with a measurement
+behind it rather than a hold.
 
 Three rules carry this palette:
 
@@ -469,20 +472,22 @@ first thing to correct when porting this look:
   theme, so UA form controls and scrollbars follow the OS while the page follows
   the class. This token layer sets it **per theme** — the same trap that bit
   `workbench`; never `light dark`.
-- **This pack's stated dark decision and its shipped dark theme disagree, and the
-  decision has not been re-made.** The paragraph below says the forest family is
-  kept; `tokens/field-notes.css:255` ships `--bg: #14110e`, which is the
-  warm-brown it says was set aside. Measured 2026-08-20, and the reference cannot
-  settle it: `graphify.com` serves **no dark theme at all today** — no
-  `[data-theme="dark"]`, no `.dark`, no `prefers-color-scheme`, and none of the
-  thirty dark values appears anywhere in the 488 KB it returns. So the two
-  readings are that the reference dropped its dark mode after 2026-08-04, or that
-  the block was never read off it. **Neither is guessed at here**; see the board.
+- **The dark theme was read off the reference after all, and the prose was what was
+  wrong.** An earlier pass concluded the reference serves no dark mode — measured
+  against the served HTML, where nothing carries the class. Re-read 2026-08-26 against
+  the two stylesheets it loads: `.dark { … }` declares **43 tokens**, and the layer
+  here matches them value for value — `--background #14110e` = `--bg`, `--card
+  #1c1815` = `--surface`, `--secondary/--muted/--accent #262019` = `--surface-2`,
+  `--foreground #f7f3ec` = `--ink`, `--muted-foreground #a89e8f` = `--ink-soft` at
+  7.12:1. So the warm brown is MEASURED, not a slip, and the sentence claiming the
+  forest family was kept in dark is the thing that was false. It is corrected below.
 - **The reference runs three unrelated dark palettes**: a warm-brown `.dark`
   theme (`#14110E`), forest bands on the page (`#072820`), and a navy terminal
-  (`#0B101D`). This pack keeps the forest family, because it is the hero's own
-  gradient and the only one the page argues for; the terminal takes a darker
-  step of the same family. If you port the reference verbatim you inherit three
+  (`#0B101D`). **The forest is the hero's own gradient and belongs to the light
+  theme**; the dark theme takes the reference's `.dark` block, which is the warm
+  brown, and the terminal takes a darker step of the forest family in light. Reading
+  "keeps the forest family" as a claim about the dark theme is what made this pack
+  look self-contradicting for six days. If you port the reference verbatim you inherit three
   systems and no rule for choosing between them.
 - **Its app layer drifts from its page layer.** The reference's `--sidebar-*`
   neutrals are browner than the page's green-cast ones and its sidebar ring is a

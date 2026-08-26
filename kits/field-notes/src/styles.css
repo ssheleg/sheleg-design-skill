@@ -250,6 +250,15 @@
    17.0:1 for body ink, 8.3:1 for verify, 5.9:1 for the brand. */
 [data-theme="dark"],
 .dark {
+  /* The dawn hero is a LIGHT-THEME object, and this is measured rather than decided.
+     The reference's own `.dark` block declares 43 tokens and not one of them is a
+     dawn stop — so the gradient has no dark counterpart there either. Left
+     un-redeclared, `--hero-dawn` kept its light ramp and ended on #e9ecdf at 98%
+     meeting the dark field at 100%: a near-white hard edge across two percent of the
+     gradient, which this pack's own Bans forbid. In dark the hero is the flat field.
+     Re-read 2026-08-26 (B-112). */
+  --hero-dawn: var(--bg);
+
   color-scheme: dark;
 
   --bg: #14110e;
