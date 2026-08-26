@@ -269,6 +269,35 @@ shadow. The chevron rotates 180°.
 `--surface` fill, a `--radius-control` accent CTA at the right, and a 1px `--rule` bottom
 edge that appears on scroll.
 
+**Input — two shapes, and the second lives on a dark panel.** Measured 2026-08-26 by
+rendering the reference and reading its four visible fields.
+
+The *light* one is the hero's URL field: **44px tall, zero radius, 16px**, a transparent
+background and **no border of its own** — it sits inside a bordered wrapper ruled by
+the pack's own `--rule`, which the render resolved to the same `#e5e7eb` the token layer
+carries. `#e5e7eb` measures 1.24:1 on `#ffffff`: a rule rather than a mark.
+Its text is `--ink`, which is 17.93:1 on `--bg`.
+Its placeholder is `--ink-faint`, which WCAG exempts as a placeholder and which this
+pack forbids as live text.
+
+The *dark* one is the closing form's email and URL fields: **52px tall, 12px radius,
+14px, `0 16px` padding**, filled with **white at 8%** and bordered with **white at 15%**
+on the dark panel. The two shapes are not interchangeable — the zero-radius one belongs
+to a field standing on the white sheet, the 12px one to a control on ink.
+
+**Loaders — none, and that is the answer.** The reference runs exactly three perpetual
+animations and none of them is a loader: `ebook-float-primary`, `-secondary` and
+`-tertiary`, at 5.5s, 6.5s and 7.5s, which drift the ebook mockups. There is no async
+surface on the page to wait for. If you build one, the pack's Motion tokens have no
+loader duration to spend, and inventing a shimmer here would be the only perpetual motion
+on a page whose whole budget is entrance, hover and two slow floats.
+
+**Empty states — none, and for the same reason.** Three forms and no data surface: there
+is nothing on this page that can be empty. A product built on this pack that *does* have
+one should take the `--surface-2` band, a `--rule` hairline, body copy at `--ink-soft`
+and no illustration — the page's own vocabulary for a quiet region — but that is an
+extension of the pack rather than a reading of it, and it is marked as one here.
+
 ## Hero
 
 The first viewport at 1440×900 holds, in this order: the sticky nav; the display headline
