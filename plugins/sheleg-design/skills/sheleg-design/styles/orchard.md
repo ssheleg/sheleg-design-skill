@@ -259,6 +259,26 @@ button.
 
 ## Gotchas
 
+**The sage control's hover INVERTS, and a white label does not survive it.** Measured
+2026-08-26 by hovering the reference's own control in a browser — which is the only way
+to see it; a fetch shows nothing. At rest the primary is `--primary` sage `#78934a` at a
+50px radius, 42px tall, `8px 18px`; on hover the fill becomes `--primary-hover`, the warm
+cream `#f9eedc`. **The label must therefore be `--surface-ink` `#3a1b13`, which is 4.51:1
+on the sage and 13.59:1 on the cream — it survives both.** White is 3.46:1 on the sage
+and **1.15:1 on the cream**: a white label on this control is legible at rest, fails AA
+at rest, and *disappears entirely* the moment a pointer touches it.
+
+**The reference ships no focus style and no disabled state.** Both controls compute
+`outline: 1px auto rgb(0, 95, 204)` — the user agent's own ring — and the page carries
+zero `[disabled]` or `[aria-disabled]` elements at any of the three widths. Neither is
+copied here: a pack that inherited a UA focus ring would ship a different ring in every
+browser.
+
+**The secondary control has no hover at all.** Measured: cream `#fffef4` at rest, cream
+on hover, nothing else changes. If you give it one, you are extending the reference
+rather than reading it.
+
+
 **The orange is the pack's decision, not the served page's behaviour, and the
 difference is measured.** Re-read on 2026-08-26 by rendering the reference at 1440×900
 and walking all 1,115 visible elements of 1,223: `#fa7241` appears as a

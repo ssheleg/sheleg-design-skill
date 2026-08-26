@@ -24,7 +24,14 @@
   --primary: #78934a; /* sage — 3.4:1 on --bg: a FILL and large-text colour */
   --primary-deep: #61783b; /* the text-safe green: 4.9:1 on --bg under --on-primary */
   --primary-light: #aaca73; /* the mark / illustration green */
-  --primary-tint: rgba(120, 147, 74, 0.1); /* quiet rows, hover wash */
+  --primary-tint: rgba(120, 147, 74, 0.1); /* quiet rows and a quiet row's hover */
+  /* MEASURED 2026-08-26 by hovering the reference's own sage control in a browser:
+     the fill does not darken or tint, it INVERTS to a warm cream. A fetch cannot see
+     this and the earlier passes did not. A fill, never text. */
+  --primary-hover: #f9eedc; /* 1.13:1 on --bg */
+  /* MEASURED the same pass — the hero slab's fill, one element, 892px tall against a
+     900px viewport. A fill, never text. */
+  --surface-warm: #f7ecdc; /* 1.15:1 on --bg */
 
   /* ---- The one action colour ------------------------------------------- */
   --cta: #fa7241; /* candy orange — 2.8:1 on --bg: a fill only, never text */
