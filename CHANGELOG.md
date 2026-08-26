@@ -6,6 +6,14 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.50.2] - 2026-08-26
+
+### Router carriers and shared guard provenance
+
+The compact description again carries `hero`, `style pack` and `красивее`,
+the phrases the umbrella router actually matches. The eval and social-preview
+validators now identify their umbrella-owned shared mechanisms.
+
 ## [1.50.1] - 2026-08-26
 
 ### A catalogue that loads when it is needed
