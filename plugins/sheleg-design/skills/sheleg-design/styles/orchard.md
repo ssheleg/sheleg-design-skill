@@ -1,10 +1,11 @@
 # Style pack — Orchard
 
 Origin: **gutgutgoose.com** (2026), a production consumer-biotech site built in
-Framer. Every value below was read off its live computed styles. A warm oat
-field carrying a stack of **rounded slabs**, a sage-green brand, one candy
-orange reserved entirely for the action, a rounded geometric display face, and
-buttons made of light rather than of shadow. It reads the way good packaging
+Framer. Every value below was read off its live computed styles, **with one role
+that the page as served today does not confirm** — the orange, and the Gotchas carry
+the measurement. A warm oat field carrying a stack of **rounded slabs**, a sage-green
+brand, one candy orange the pack reserves for the action, a rounded geometric display
+face, and buttons made of light rather than of shadow. It reads the way good packaging
 does: friendly enough to pick up, precise enough to trust.
 
 Contract: core — this pack does **not** specify `## Components`, `## Hero`,
@@ -179,8 +180,9 @@ to read as a fact.
   sheen, wearing `--shadow-cta` (both inset white hairlines plus the orange
   ambient glow) at pill radius, `16px 24px 14px` padding — the extra top pad is
   what makes the label sit optically centred. Exactly one of these per view.
-  It is the only orange object on the page, which is what makes it unmissable
-  without being loud.
+  Exactly one per view is the pack's rule, and it is a **pack decision rather than
+  a reading of the reference** — see the Gotchas: on the page as served today the
+  orange fills no control at all.
 - **Slabs as sections.** Each section is a rounded rectangle with its own fill:
   oat for explanation, sage for invitation, cacao for emphasis. Adjacent slabs
   never repeat a fill; the field between them is the separator.
@@ -256,6 +258,30 @@ button.
   would have written the reader's objection.
 
 ## Gotchas
+
+**The orange is the pack's decision, not the served page's behaviour, and the
+difference is measured.** Re-read on 2026-08-26 by rendering the reference at 1440×900
+and walking all 1,115 visible elements of 1,223: `#fa7241` appears as a
+`background-color` **0 times**, as `color` **0 times** and as a border colour **0
+times**. It survives on **2 SVG `<path>` fills** — illustration — and inside 18
+gradients. What fills a control there is the sage `#78934a`: the primary action on the
+served page is `background-color: rgb(120, 147, 74)` at a 50px radius, 42px tall.
+
+**Three readings were possible and the render eliminates one of them.** The pill is
+*not* hydrated late — 1,115 elements render and the controls among them carry their
+fills statically. Of the two that remain, neither can be settled: the pack may have
+read a page this site no longer serves (`/pricing`, `/shop` and `/product` all answer
+**404** as of 2026-08-26), or the role may have been assigned to a colour sampled from
+artwork. **The pack is not rewritten on that ambiguity** — `--cta` stays the action
+colour here, because a pack is a design decision and this one is coherent. What
+changes is that it no longer claims to be a measurement of the current page, and the
+claim that the pill *"is the only orange object on the page"* is gone, because on that
+page there are eighteen gradients and two illustration paths carrying the same hue and
+no control carrying it at all.
+
+**If you are matching the reference rather than using the pack**, the action fill you
+will see is `--primary`, and `--cta` will look like an invention. Both readings are
+legitimate; the pack tells you which one it is.
 
 The reference is strong on composition and weak on contrast. All three failures
 below are real, measured, and fixable from inside the palette — treat them as
