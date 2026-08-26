@@ -6,6 +6,13 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.50.3] - 2026-08-26
+
+### The shared seam is explicit
+
+Both shared validators now state `diverges: none`, completing the umbrella
+mechanism contract.
+
 ## [1.50.2] - 2026-08-26
 
 ### Router carriers and shared guard provenance
