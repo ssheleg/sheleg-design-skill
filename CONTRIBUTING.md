@@ -111,7 +111,7 @@ gate stayed green.
 **Publishing the catalogue.** `python3 tools/site.py --out _site` builds the public site
 — index, gallery, audit — and **refuses to emit a page that names any source address**,
 computing the forbidden set from the packs rather than from a list somebody maintains.
-The `pages` workflow builds it on every push to `main`; nothing generated is committed,
+It emits the machine layer with the pages — `robots.txt`, `sitemap.xml`, `llms.txt` and a 1200×630 `og.png` drawn from the packs' own palettes by `tools/ogcard.py`, which is a stdlib PNG encoder and no rasterizer. The leak guard reads the text artefacts too, not only the pages: `llms.txt` describes every pack and would carry a source name just as easily. The `pages` workflow builds it on every push to `main`; nothing generated is committed,
 because a generated page in git drifts from the tokens it claims to show.
 
 **Looking at the library.** `python3 tools/gallery.py` renders every pack as one

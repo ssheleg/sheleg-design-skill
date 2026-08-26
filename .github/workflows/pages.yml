@@ -58,7 +58,10 @@ jobs:
                       hosts.add(h)
                       hosts.add(h.removeprefix("www."))
           names = {p.stem.lower() for p in styles.glob("*.md")}
-          site = "\n".join(p.read_text() for p in pathlib.Path("_site").glob("*.html")).lower()
+          # every text artefact, not only the pages: llms.txt describes the packs and
+          # would carry a source name just as easily as a card would.
+          site = "\n".join(p.read_text() for p in pathlib.Path("_site").iterdir()
+                           if p.suffix in (".html", ".txt", ".xml")).lower()
           leaked = sorted(h for h in hosts if h in site and h.split(".")[0] not in names)
           if leaked:
               print("FAIL: the built site names " + ", ".join(leaked), file=sys.stderr)

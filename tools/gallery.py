@@ -239,13 +239,17 @@ q.oninput=apply; apply();
 """
 
 
-def render(packs: list[dict], public: bool = False) -> str:
+def render(packs: list[dict], public: bool = False, meta: str = "") -> str:
+    """`meta` is the machine layer — canonical, og:*, twitter:* — passed in by
+    `tools/site.py`, which owns the published base. Running this script alone
+    writes a local file that needs none of it."""
     dark = sum(1 for p in packs if p["dark"])
     flagged = sum(1 for p in packs if p["flag"])
     core = sum(1 for p in packs if p["contract"].startswith("core"))
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SHELEG style packs &mdash; {len(packs)} measured designs</title>
+{meta}
 <style>{CSS}</style></head><body>
 <header class="top">
   <h1>SHELEG style packs &mdash; {len(packs)} measured designs</h1>

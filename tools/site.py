@@ -25,6 +25,10 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
+# The published base. `ssheleg.github.io/sshlg-skills` 301s to the family's own
+# domain, so the back-link below names the destination rather than the redirect.
+SITE = "https://ssheleg.github.io/sheleg-design-skill"
+FAMILY = "https://skills.sshlg.me/skills/sheleg-design/"
 
 
 def load(name: str):
@@ -40,6 +44,24 @@ def esc(s) -> str:
 
 def git(*a: str) -> str:
     return subprocess.run(["git", *a], cwd=ROOT, capture_output=True, text=True).stdout.strip()
+
+
+
+def page_meta(title: str, desc: str, canon: str) -> str:
+    """The machine half of a page: what a crawler and a link preview read."""
+    return (f'<meta name="description" content="{esc(desc)}">\n'
+            f'<link rel="canonical" href="{esc(canon)}">\n'
+            f'<meta property="og:type" content="website">\n'
+            f'<meta property="og:title" content="{esc(title)}">\n'
+            f'<meta property="og:description" content="{esc(desc)}">\n'
+            f'<meta property="og:url" content="{esc(canon)}">\n'
+            f'<meta property="og:image" content="{SITE}/og.png">\n'
+            f'<meta property="og:image:width" content="1200">\n'
+            f'<meta property="og:image:height" content="630">\n'
+            f'<meta name="twitter:card" content="summary_large_image">\n'
+            f'<meta name="twitter:title" content="{esc(title)}">\n'
+            f'<meta name="twitter:description" content="{esc(desc)}">\n'
+            f'<meta name="twitter:image" content="{SITE}/og.png">')
 
 
 # ---------------------------------------------------------------- the leak guard
@@ -107,7 +129,7 @@ def audit_page(rows: list[dict], stamp: str) -> str:
     n = len(rows)
     reach = sum(1 for r in rows if str(r.get("live", "")).startswith(("200", "30")))
     addr = sum(r["addressable"] for r in rows)
-    return f"""{HEAD.format(title="Collection audit &mdash; SHELEG style packs")}
+    return f"""{HEAD.format(title="Collection audit &mdash; SHELEG style packs", site=SITE, canon=f"{SITE}/audit.html", desc="How each of the style packs was measured, and what the automated gates cannot see: whether values were read off a rendered page, whether a narrow width was measured, whether the kit was ever rendered.")}
 <header class="top">
   <p class="crumb"><a href="./">&larr; index</a></p>
   <h1>Collection audit</h1>
@@ -156,6 +178,19 @@ def audit_page(rows: list[dict], stamp: str) -> str:
 HEAD = """<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title>
+<meta name="description" content="{desc}">
+<link rel="canonical" href="{canon}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{desc}">
+<meta property="og:url" content="{canon}">
+<meta property="og:image" content="{site}/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{title}">
+<meta name="twitter:description" content="{desc}">
+<meta name="twitter:image" content="{site}/og.png">
 <style>
 *{{box-sizing:border-box}}
 body{{margin:0;background:#0e0f11;color:#e8e9ec;
@@ -197,12 +232,73 @@ def foot(stamp: str) -> str:
             f'deliberately not published here.</footer>\n</body></html>')
 
 
+
+def robots_txt() -> str:
+    return (f"User-agent: *\nAllow: /\n\n"
+            f"Sitemap: {SITE}/sitemap.xml\n"
+            f"LLMs-Txt: {SITE}/llms.txt\n")
+
+
+def sitemap_xml(stamp_date: str) -> str:
+    urls = "".join(
+        f"  <url><loc>{SITE}/{p}</loc><lastmod>{stamp_date}</lastmod></url>\n"
+        for p in ("", "packs.html", "audit.html"))
+    return ('<?xml version="1.0" encoding="UTF-8"?>\n'
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+            f"{urls}</urlset>\n")
+
+
+def llms_txt(packs: list[dict], rows: list[dict]) -> str:
+    """What a machine reading this site should be able to answer without running JS.
+
+    It names no source address — the same guard that checks the pages checks this."""
+    n = len(packs)
+    dark = sum(1 for p in packs if p["dark"])
+    core = sum(1 for r in rows if r["contract"] == "core")
+    by_name = {r["name"]: r for r in rows}
+    lines = [
+        "# SHELEG style packs",
+        "",
+        f"> {n} style packs for coding agents. Each is a design system extracted from a real",
+        "> production interface: colours, type, spacing, radii and motion tokens read off the",
+        "> running page, with every contrast ratio recomputed by a gate rather than asserted.",
+        "> A pack is a token layer, the rules for spending it, and a list of what it bans.",
+        f"> {dark} stand on a dark field; {core} sit on the core contract and deliberately leave",
+        "> components, hero, responsive and their signature element undecided.",
+        "",
+        "The interface each pack was measured from is recorded inside the pack and is",
+        "deliberately not published here.",
+        "",
+        "Install: `npx sheleg-design-skill`",
+        "Repository: https://github.com/ssheleg/sheleg-design-skill",
+        f"Catalogue: {SITE}/",
+        f"Audit: {SITE}/audit.html",
+        "Family: https://skills.sshlg.me/",
+        "",
+        "## Packs",
+        "",
+    ]
+    for p in packs:
+        r = by_name.get(p["name"], {})
+        field = "dark field" if p["dark"] else "light field"
+        ceiling = f", motion ceiling {r['ceiling']}" if r.get("ceiling") else ""
+        contract = r.get("contract", "")
+        lines.append(f"- **{p['name']}** ({field}{ceiling}, {contract} contract): "
+                     f"{p['for'].rstrip('.')}.")
+    lines += ["", "## Pages", "",
+              f"- [Catalogue]({SITE}/): every pack rendered in its own token layer.",
+              f"- [Packs]({SITE}/packs.html): the same, filterable by field, motion ceiling and text.",
+              f"- [Collection audit]({SITE}/audit.html): how each pack was measured, and what the "
+              f"automated gates cannot see.", ""]
+    return "\n".join(lines)
+
+
 def index_page(packs: list[dict], rows: list[dict], stamp: str) -> str:
     n = len(packs)
     dark = sum(1 for p in packs if p["dark"])
     core = sum(1 for r in rows if r["contract"] == "core")
     render = sum(1 for r in rows if r["read_render"])
-    return f"""{HEAD.format(title="SHELEG style packs")}
+    return f"""{HEAD.format(title="SHELEG style packs", site=SITE, canon=f"{SITE}/", desc="Style packs for coding agents, each extracted from a real production interface and every contrast ratio recomputed by a gate rather than asserted. Browse them rendered in their own tokens.")}
 <header class="top">
   <h1>SHELEG style packs</h1>
   <p class="sub">{n} style packs for coding agents. Each one was extracted from a real
@@ -220,7 +316,7 @@ def index_page(packs: list[dict], rows: list[dict], stamp: str) -> str:
       <h3>Collection audit</h3>
       <p>How each pack was measured, and what the automated gates cannot see. {core} sit on
       the core contract by design; the rest answer all thirteen headings.</p></a>
-    <a class="tile" href="https://ssheleg.github.io/sshlg-skills/skills/sheleg-design/">
+    <a class="tile" href="{FAMILY}">
       <span class="n-big">&harr;</span>
       <h3>The rest of the family</h3>
       <p>This is the visual layer of a set of skills that split the work around the
@@ -267,11 +363,19 @@ def main() -> int:
     stamp = git("rev-parse", "--short", "HEAD") or "working tree"
     out = pathlib.Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
+    stamp_date = git("log", "-1", "--format=%ad", "--date=short") or "1970-01-01"
     pages = {
         "index.html": index_page(packs, rows, stamp),
-        "packs.html": gallery.render(packs, public=True),
+        "packs.html": gallery.render(packs, public=True, meta=page_meta(
+            "SHELEG style packs — every pack in its own tokens",
+            "All the style packs, each card rendered in its own token layer: swatches, radius, "
+            "accent and type stack read out of the pack rather than described.",
+            f"{SITE}/packs.html")),
         "audit.html": audit_page(rows, stamp),
         ".nojekyll": "",
+        "robots.txt": robots_txt(),
+        "sitemap.xml": sitemap_xml(stamp_date),
+        "llms.txt": llms_txt(packs, rows),
     }
     terms = source_terms(packs, rows)
     # A pack name is public by necessity. Where it equals its own source's brand — see
@@ -284,7 +388,7 @@ def main() -> int:
     failed = False
     for name, text in pages.items():
         (out / name).write_text(text)
-        if not name.endswith(".html"):
+        if not name.endswith((".html", ".txt", ".xml")):
             continue
         bad = leaks(text, terms, allow)
         if bad:
@@ -293,8 +397,11 @@ def main() -> int:
     if failed:
         print("the published site must name no source — build refused", file=sys.stderr)
         return 1
-    print(f"{out} — {len(pages) - 1} pages, {len(packs)} packs, "
-          f"0 of {len(terms)} source terms present")
+    card = load("ogcard").card(packs)
+    (out / "og.png").write_bytes(card)
+    html_pages = sum(1 for n in pages if n.endswith(".html"))
+    print(f"{out} — {html_pages} pages + robots/sitemap/llms + a {len(card):,}-byte card, "
+          f"{len(packs)} packs, 0 of {len(terms)} source terms present")
     return 0
 
 
