@@ -6,6 +6,19 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.50.1] - 2026-08-26
+
+### A catalogue that loads when it is needed
+
+The 35-pack chooser moved from the always-loaded skill body into
+`STYLE_PACK_INDEX.md`. The index remains exhaustive, contract-checked, mirrored
+to Cursor and shipped by both installers; the base skill drops to about 3.9k
+tokens and keeps every routing carrier. The repository also gains a root skill
+card, portable evals, a pinned house-audit CI job, a generated social preview and
+an install-first README viewport. The five catalogue self-test plants now mutate
+the new index rather than silently targeting the old location. No model
+evaluation result is claimed.
+
 ## [1.50.0] - 2026-08-25
 
 ### Onionskin, the thirty-fifth pack — two bases, and everything quiet is an alpha

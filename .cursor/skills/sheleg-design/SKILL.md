@@ -1,9 +1,9 @@
 ---
 name: sheleg-design
-description: Use when deciding how something LOOKS or MOVES. Cinematic scroll-driven landing pages and heroes — particle/WebGL backgrounds, scroll-linked animation, parallax, scrubbed sections — or when one feels busy or its motion drifts. Product UI through its style packs — dashboards, admin panels, internal tools, mobile screens, chat and agent interfaces. Design tokens, light/dark themes, palettes and colours, typography and fonts. Triggers - "design a landing" / "дизайн лендинга", "build a landing page" / "сделай лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы, фигма в код", "mobile screen" / "мобильный экран", "palette" / "палитра", "colors" / "цвета", "typography" / "типографика", "font" / "шрифт", "how it looks" / "выглядит", "make it prettier" / "красиво, красивее", "visual reference" / "визуальные референсы", "investor deck" / "презентация".
+description: Use when deciding how something LOOKS or MOVES — cinematic landing pages, particle/WebGL backgrounds, scroll-linked or scrubbed motion, layers that drift, dashboards, admin or internal tools, mobile screens, chat or agent interfaces, tokens, themes, palettes, typography and the Figma border. Triggers include "design a landing" / "дизайн лендинга", "build a landing page" / "сделай лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы, фигма в код", "mobile screen" / "мобильный экран", "palette, colors" / "палитра, цвета", "typography, font" / "типографика, шрифт", "how it looks, make it prettier" / "выглядит, красиво", "visual reference" / "визуальные референсы", "investor deck" / "презентация". Not for structure, copy or backend behavior.
 license: MIT
 metadata:
-  version: 1.50.0
+  version: 1.50.1
 ---
 
 # SHELEG Design
@@ -60,80 +60,22 @@ the style-pack half and nothing else.
 
 ## Style packs
 
-The motion methodology is style-agnostic; the visual identity comes from a style
-pack in [`styles/`](./styles/). Each pack file opens with its own full description —
-this table is for choosing, not for reading instead of the pack:
+The visual identity comes from a style pack. Before choosing one, read
+[the style-pack index](./STYLE_PACK_INDEX.md); then read the chosen pack in full
+and copy its token layer from `styles/tokens/<pack>.css`. Do not transcribe token
+tables or infer values from screenshots.
 
-| Pack | Look | Choose for |
-|---|---|---|
-| [`instrument-console`](./styles/instrument-console.md) | near-black aerospace console | technical / systems / infra · **core contract** |
-| [`editorial-luxury`](./styles/editorial-luxury.md) | cream and espresso ink | editorial / research / premium B2B · **core contract** |
-| [`workbench`](./styles/workbench.md) | quiet light/dark product UI | dashboards / admin / internal & dev tools (standalone) · **core contract** |
-| [`briefing-room`](./styles/briefing-room.md) | dark 16:9 deck | investor & board decks, briefings, talks as a page (standalone) · **core contract** |
-| [`atrium`](./styles/atrium.md) | cream daylight | consumer health, longevity, wellness, high-trust DTC |
-| [`babylove`](./styles/babylove.md) | white + one orange | the same job answered with **seven tokens** — SEO/AI-visibility SaaS on Tailwind defaults, long time-to-value, first-class disconnected states · **widened** |
-| [`patchbay`](./styles/patchbay.md) | near-black + one mint-cyan | a **live schematic** — 8% hairlines and no shadow, and an architecture diagram whose cords carry SMIL particles on a 2–3.5s clock under light layers on an 8.5–11s one; for engines, buses, pipelines and open-source front doors · **widened** |
-| [`nameplate`](./styles/nameplate.md) | cool near-white slab + one coral ramp | **square on 87% of its elements** — 1,091 of 1,251 measured — with the one round shape reserved for a white 1px-bordered pill carrying somebody else's publication name as type; one family with the body at weight 500, two uppercase registers tracked 0.06em and 0.175em; for pages whose argument is that named third parties will vouch for you — press placement, trust marks, certification, review aggregation (standalone) · **widened** |
-| [`rimlight`](./styles/rimlight.md) | white + one blue + coloured light | **elevation made of light rather than shadow** — a sixteen-layer rig, six lit and ten held at alpha 0, on one control per viewport; a monospace carrying every label and button against a grotesque carrying every sentence, no bold anywhere, and one near-black act; for a studio's front door and its service and case-study pages (standalone) · **widened** |
-| [`onionskin`](./styles/onionskin.md) | white sheet + one blue, **96.5% square** | **two bases and everything quiet is an alpha of one** — text dims through the ink, structure through a navy that is never a word, so the pack has no grey ramp at all; a dot grid, dashed hairlines, three faces and an 11px working size; for developer and AI infrastructure whose front page is a working document (standalone) · **widened** |
-| [`outrank`](./styles/outrank.md) | white + one violet | a **marketing page and a working tool in one brand** — SEO/growth SaaS, agent-run back-office, anything shipping a landing and a dashboard together · **widened** |
-| [`orchard`](./styles/orchard.md) | warm oat slabs | friendly consumer biotech, DTC wellness, kits & supplements · **core contract** |
-| [`field-notes`](./styles/field-notes.md) | green-cast paper ruled by hairlines | open-source & developer tools sold on auditability (standalone) |
-| [`showroom`](./styles/showroom.md) | white gallery | product-led companies whose best argument is the app on screen |
-| [`blueprint`](./styles/blueprint.md) | white stock | infrastructure sold on precision — vector search, storage, query engines |
-| [`prism`](./styles/prism.md) | iridescent wash with a hard edge | an OSS infrastructure project's front door, where step one is a command |
-| [`maquette`](./styles/maquette.md) | near-black table | enterprise data infrastructure sold to an architecture buyer |
-| [`cyclorama`](./styles/cyclorama.md) | pastel field on a 32s loop | enterprise AI transformation and applied-AI consultancies |
-| [`scoreboard`](./styles/scoreboard.md) | warm paper | products whose argument is an accumulating number — growth, ads, SEO |
-| [`datasheet`](./styles/datasheet.md) | off-white spec sheet | B2B SaaS whose product is a verdict about the visitor, request or device — fraud, bot and device intelligence, identity, API products |
-| [`manpage`](./styles/manpage.md) | cream paper | developer products whose buyer reads code — APIs, SDKs, CLIs, MCP servers, developer infrastructure |
-| [`pigeonhole`](./styles/pigeonhole.md) | white field | products that file the reader's incoming mess into named categories — email triage, ticket routing, digests, organisers, CRM inboxes |
-| [`roster`](./styles/roster.md) | white field in a faint square grid | products whose argument is **who already carries them** — AI-search visibility, SEO and content platforms, agencies, marketplaces |
-| [`ora`](./styles/ora.md) | warm coal field | products whose output is **a machine's verdict about the reader** — agent-readiness and crawlability scores, SEO/AEO audits, agent-run traces, MCP and protocol surfaces · **dark by default** (standalone) |
-| [`tenor`](./styles/tenor.md) | warm paper | products arguing a **management thesis** — AI-workforce and agent-operations platforms, autonomous back-office, revenue and sales operations, sold to the director who will have to manage it (standalone) |
-| [`ledger`](./styles/ledger.md) | warm cream paper ruled by a hairline at 12% ink — no shadow on any card — radius 15 nested concentrically | the console of a product that answers questions **about data** — AI analysts, BI surfaces, query workspaces, agents that read a warehouse and write back a figure (standalone) |
-| [`paperclip`](./styles/paperclip.md) | neutral coal with **no functional colour at all** — every control monochrome | products that ask a person to **run something that runs itself** — agent teams and orchestrators, autonomous back-office, schedulers, job runners, budget-governed compute (standalone) |
-| [`awning`](./styles/awning.md) | white forecourt where **the accent is black** and no hue reaches the chrome at all; a pill whose radius is a declared component token | commerce and platform front doors — the surface that sells a system other businesses will run their storefront, payroll, billing or logistics on (standalone) · **core contract** |
-| [`router`](./styles/router.md) | near-white field with a trace of blue, white cards standing on it, **hairline seams instead of shadows anywhere** — body at 14px and weight 450 | **product consoles and the pages that have to look like them** — dashboards, admin and developer platforms, billing and usage surfaces, and a landing page whose argument is an inventory rather than a promise (standalone) |
-| [`daylight`](./styles/daylight.md) | cool near-white portal field with generous radii and **one very large soft shadow spent on a single object per screen** | **client-facing portals and the pages that sell them** — onboarding, workspaces a customer logs into, service dashboards, scheduling and billing (standalone) |
-| [`notation`](./styles/notation.md) | near-white page drawn **entirely in hairlines**, radii of 2 and 4px, a slab serif at weight 300 against a monospace, **no bold anywhere** | **developer and technical products sold on restraint** — open source front pages, workspaces for people who dislike being sold to, documentation homes (standalone) |
-| [`almanac`](./styles/almanac.md) | **oatmeal paper rather than white**, seams at 2px with **no 1px anywhere**, a display set below a line-height of one, mono tags notched through drawn boxes | **pages that assert a category** — a manifesto, a company saying what this kind of thing is, a product whose argument is editorial rather than functional (standalone) |
-| [`vitrine`](./styles/vitrine.md) | white field drawn **entirely in hairlines**, a serif display over a sans body, an ink primary, and one framed record with a 1px inset highlight | **the front door of a product sold on trust** — B2B software under evaluation, security and compliance surfaces, specification and comparison pages (standalone) |
-| [`proscenium`](./styles/proscenium.md) | white field carrying two cool acts and **one deep indigo act at the middle**, an electric violet filling a control that stays nearly square at 4px against cards at 16, one family at nine weights, and a framed product panel the fold cuts off | **product-led marketing front doors whose argument is a demonstration** — SaaS home pages, launch and tour pages, any page with six or more acts that needs a repeated beat (standalone) |
-| [`bulletin`](./styles/bulletin.md) | warm cream paper cut by flat pastel bands, every card and control a 1px ink outline standing on a **hard zero-blur ink offset it travels into when pressed**, a display face at 800 inside controls and 700 in the headline, and **no tracking at any size** | **front doors whose argument is breadth** — a tool doing many things across many channels for many clients, sold cheerfully to a small team or an agency: social and content platforms, scheduling and inbox products, all-in-one SMB SaaS (standalone) |
+A materialized kit supplies component states:
 
-**A materialized kit answers part of what a core pack leaves out.** `npx
-sheleg-design-skill --kit <pack>` produces `src/styles.css`, whose component half is
-authored CSS for the states a core pack declines to specify — `:hover`,
-`:focus-visible`, `:disabled`, selected. It does not ship with this skill, so an agent
-reading only this bundle will invent them. **A kit exists for every pack, not only
-the core ones** — fetch it whenever you are building components, and treat any
-difference between kit and pack as a defect in one of them rather than a choice.
-For a widened pack the kit and the pack's `## Components` must agree; for a core
-pack the kit is the only answer either of them gives.
+```bash
+npx sheleg-design-skill --kit <pack>
+```
 
-**Six of the thirty-five are on the core contract, and it changes what you get.**
-A pack marked **core contract** does not specify `## Components`, `## Hero`,
-`## Responsive` or `## Signature element` — so per-component states, the
-opening viewport and its line ceiling, the collapse rules, and the single
-element the page is remembered by are **yours to decide**, and you say so out
-loud when you do. The other twenty-nine answer all four. This asymmetry is the one
-thing about the library most likely to make you invent a value and believe you
-read it: what a core pack *does* state is measured to two decimals, and that
-precision is not evidence about the half it leaves silent. Each pack declares
-its own level on a `Contract:` line above its Register.
-
-Read the chosen pack in full before styling anything — it supplies the
-palette, type, texture, motion-token values, signature motifs, and bans.
-Each pack ships a ready-made token layer in `styles/tokens/<pack>.css` —
-copy that file verbatim instead of transcribing tables. For a new style,
-copy [`styles/STYLE_PACK_TEMPLATE.md`](./styles/STYLE_PACK_TEMPLATE.md) and
-keep every heading — Register / Palette / Type / Texture & surface /
-Components / Hero / Responsive / Motion tokens / Signature motifs / Signature
-element / Motion flavor (cinematic packs only) / Micro-interactions / Bans /
-Gotchas — then author its `tokens/<pack>.css` in the same change; never invent
-token values ad hoc.
-
+The generated `src/styles.css` is authoritative for states a core pack leaves
+open. A widened pack's kit and `## Components` section must agree. To author a
+pack, start from
+[`styles/STYLE_PACK_TEMPLATE.md`](./styles/STYLE_PACK_TEMPLATE.md) and ship its
+token file in the same change.
 ## Calibration — three dials
 
 A pack answers *which register*. It does not answer *how far*. Two landing

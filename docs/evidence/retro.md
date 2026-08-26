@@ -529,6 +529,7 @@ evidence until runs start writing their own again.
 
 | Date | Commit | Task | Diverged? |
 |---|---|---|---|
+| 2026-08-26 | working tree | the 35-pack chooser moved to `STYLE_PACK_INDEX.md`, keeping the exhaustive routing table while returning the skill body below the house budget; public contract, eval fixtures, CI house audit, and a 1200×630 social card prepared for **`v1.50.1`** | **yes** |
 | 2026-08-04 | `491d422` | `field-notes` style pack from graphify.com (v1.5.0, built; release held) | **yes** |
 | 2026-08-05 | `564ecec` | audit harvest — motion doctrine, dials, widened contract, two computed gates (v1.6.0) | **yes** |
 | 2026-08-04 | `623d2fb` | release close-out — CI wired to all three gates; **`v1.6.0` shipped**: GitHub release + npm, first published version since `v1.3.4` | **yes** |

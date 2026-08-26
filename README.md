@@ -5,6 +5,16 @@
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 [![site](https://img.shields.io/badge/docs-skills.sshlg.me-8ab0ff)](https://skills.sshlg.me/skills/sheleg-design/)
 
+**Give coding agents a deliberate visual system: style packs, tokens, motion doctrine and a clean Figma seam.**
+
+```bash
+npx skills add ssheleg/sheleg-design-skill
+```
+
+Ask: `Design a calm dark dashboard and map its tokens into the component layer.`
+
+**[Detailed docs →](https://skills.sshlg.me/skills/sheleg-design/)**
+
 **[Docs, and every skill →](https://skills.sshlg.me/)** · [this skill's page](https://skills.sshlg.me/skills/sheleg-design/) · [follow @sshlg93 on X](https://x.com/intent/follow?screen_name=sshlg93)
 
 Loads in **DeepSeek Harness** (`dsh`) with **no plugin to write**: it reads the

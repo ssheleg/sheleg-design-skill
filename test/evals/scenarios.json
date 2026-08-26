@@ -1,0 +1,51 @@
+{
+  "note": "Score each expected_behavior line independently. These are authored evaluations, not executed results.",
+  "scenarios": [
+    {
+      "id": "s01",
+      "title": "Product UI pack",
+      "skills": [
+        "sheleg-design"
+      ],
+      "query": "Choose and apply a visual system to a dense internal dashboard with no existing identity.",
+      "files": [],
+      "expected_behavior": [
+        "Defaults to workbench unless the brief gives a stronger register",
+        "States calibration values and why the product-UI row wins",
+        "Uses the pack token file rather than hand-copying values",
+        "Keeps cinematic motion out of high-repetition product UI"
+      ]
+    },
+    {
+      "id": "s02",
+      "title": "Cinematic landing",
+      "skills": [
+        "sheleg-design"
+      ],
+      "query": "Design a scroll-driven infrastructure landing page with particles, reduced motion and a static fallback.",
+      "files": [],
+      "expected_behavior": [
+        "Loads the cinematic and motion doctrine references",
+        "Uses one measured scroll clock for all layers",
+        "Defines a calm fully legible fallback in the same change",
+        "Verifies mid-hold, mid-morph and narrow-viewport states"
+      ]
+    },
+    {
+      "id": "s03",
+      "title": "Figma crossing",
+      "skills": [
+        "sheleg-design"
+      ],
+      "query": "Publish the chosen pack into Figma variables and map it back into code.",
+      "files": [],
+      "expected_behavior": [
+        "Loads the Figma bridge before operating on the file",
+        "Treats drawing in a shared frame as publishing",
+        "Maps variables and code tokens without hand-copied values",
+        "Names the destination instead of guessing where to create a file"
+      ]
+    }
+  ]
+}
+

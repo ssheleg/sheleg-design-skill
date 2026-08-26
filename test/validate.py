@@ -388,6 +388,7 @@ def validate_skills():
         "AI_PRODUCT_PATTERNS.md",
         "MOTION_DOCTRINE.md",
         "DESIGN_SYNC_BRIDGE.md",
+        "STYLE_PACK_INDEX.md",
     ):
         if check(
             (skills_dir / PLUGIN / companion).is_file(),
@@ -421,7 +422,9 @@ def validate_skills():
             read(ROOT / "templates/style-pack-template.md") == ttext,
             f"{trel}: drifted from templates/style-pack-template.md",
         )
-    skill_text = read(skills_dir / PLUGIN / "SKILL.md") or ""
+    skill_text = (read(skills_dir / PLUGIN / "SKILL.md") or "") + "\n" + (
+        read(skills_dir / PLUGIN / "STYLE_PACK_INDEX.md") or ""
+    )
     cli_text = read(ROOT / "bin/cli.js") or ""
     # The agent-facing surfaces are covered above; these two are read by humans
     # deciding whether to install, and they drift silently because nothing
@@ -996,7 +999,7 @@ ENUMERATION_SITES = (
     ("bin/cli.js", "the installer's help and banner"),
     ("README.md", "the pack table"),
     ("cursor/rules/sheleg-design.mdc", "the standalone Cursor rule"),
-    (f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md", "the routing table"),
+    (f"{PLUGIN_DIR}/skills/{PLUGIN}/STYLE_PACK_INDEX.md", "the routed pack index"),
 )
 
 
@@ -1100,7 +1103,7 @@ def validate_contract_split():
     validate_counted_claims() cannot see these: "Six of the fourteen" has no
     counted noun after the number, and "the other eight" has none either.
     """
-    skill_path = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "SKILL.md"
+    skill_path = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "STYLE_PACK_INDEX.md"
     skill = read(skill_path) or ""
     rows = re.findall(r"^\| \[`[a-z0-9-]+`\].*$", skill, re.M)
     total = len(rows)
@@ -1168,7 +1171,7 @@ def validate_every_surface_class_is_discoverable():
 
 def validate_contract_declaration():
     styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
-    skill = read(styles.parent / "SKILL.md") or ""
+    skill = read(styles.parent / "STYLE_PACK_INDEX.md") or ""
     core: list[str] = []
     for name in _packs():
         text = read(styles / f"{name}.md") or ""
@@ -1396,7 +1399,7 @@ PLANTS = (
         # reads as additive. Derived from the phrase rather than its surroundings.
         "a description edit that drops the phrase a T1 task depends on",
         f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md",
-        lambda t: t.replace(", scrubbed sections", "", 1),
+        lambda t: t.replace("scroll-linked or scrubbed motion", "scroll-linked motion", 1),
         "the phrase T1's",
     ),
     (
@@ -1582,7 +1585,7 @@ PLANTS = (
         # currently says, so it cannot pin itself to a number the next release
         # edits -- the failure mode of the plant this one sits beside.
         "the core-contract remainder left behind by a count edit",
-        f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/STYLE_PACK_INDEX.md",
         # `[\w-]+`, not `\w+`: at the twenty-eighth pack the remainder crossed twenty
         # and became "twenty-one", which a bare `\w+` cannot match -- so the plant
         # changed nothing and the self-test reported a check that had quietly stopped
@@ -1642,9 +1645,9 @@ PLANTS = (
         "a counted claim",
     ),
     (
-        "a style pack the SKILL.md table does not route to",
-        f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md",
-        lambda t: t.replace("styles/maquette.md", "styles/nowhere.md"),
+        "a style pack the style-pack index does not route to",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/STYLE_PACK_INDEX.md",
+        lambda t: t.replace("./styles/maquette.md", "./styles/nowhere.md"),
         "is not linked from the pack table",
     ),
     (
@@ -1922,16 +1925,16 @@ PLANTS = (
         # Exactly what `atrium` shipped for eight iterations: widened in its own
         # file, still marked core in the table nobody read against it.
         "a table mark left behind after a pack was widened",
-        f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md",
-        lambda t: t.replace("wellness, high-trust DTC |",
-                            "wellness, high-trust DTC · **core contract** |", 1),
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/STYLE_PACK_INDEX.md",
+        lambda t: t.replace("consumer health and high-trust DTC |",
+                            "consumer health and high-trust DTC · **core contract** |", 1),
         "declares `Contract: widened`",
     ),
     (
         "a core pack the table does not mark",
-        f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md",
-        lambda t: t.replace("internal & dev tools (standalone) · **core contract** |",
-                            "internal & dev tools (standalone) |", 1),
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/STYLE_PACK_INDEX.md",
+        lambda t: t.replace("dashboards, admin, internal tools · (standalone) · **core contract** |",
+                            "dashboards, admin, internal tools · (standalone) |", 1),
         "the table does not mark it",
     ),
     (
@@ -2894,7 +2897,7 @@ def validate_theme_split_is_derived():
 # directions, because one alone is the hole this closes.
 def validate_table_marks_match_the_contract():
     styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
-    skill = read(ROOT / PLUGIN_DIR / "skills" / PLUGIN / "SKILL.md")
+    skill = read(ROOT / PLUGIN_DIR / "skills" / PLUGIN / "STYLE_PACK_INDEX.md")
     if skill is None or not styles.is_dir():
         return
     marked = set()
@@ -2953,7 +2956,7 @@ def _register_of(md: Path) -> str:
 def validate_motion_ceiling_has_one_home():
     skill_dir = ROOT / PLUGIN_DIR / "skills" / PLUGIN
     styles = skill_dir / "styles"
-    skill = read(skill_dir / "SKILL.md")
+    skill = read(skill_dir / "STYLE_PACK_INDEX.md")
     doctrine = read(skill_dir / "MOTION_DOCTRINE.md")
     if skill is None or doctrine is None or not styles.is_dir():
         return

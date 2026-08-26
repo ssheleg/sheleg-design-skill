@@ -1,0 +1,109 @@
+{
+  "skill": "sheleg-design",
+  "note": "Behavioral trigger cases. Run each in a fresh session; the committed data contains no model results.",
+  "split": {
+    "train": [
+      "q01",
+      "q02",
+      "q03",
+      "q07",
+      "q08",
+      "q09"
+    ],
+    "validation": [
+      "q04",
+      "q05",
+      "q06",
+      "q10",
+      "q11",
+      "q12"
+    ]
+  },
+  "queries": [
+    {
+      "id": "q01",
+      "lang": "en",
+      "query": "Design a dark dashboard style and a complete token layer for our admin product",
+      "should_trigger": true,
+      "why": "product UI visual system"
+    },
+    {
+      "id": "q02",
+      "lang": "ru",
+      "query": "сделай кинематографичный лендинг со скролл-анимацией",
+      "should_trigger": true,
+      "why": "Russian cinematic landing"
+    },
+    {
+      "id": "q03",
+      "lang": "en",
+      "query": "Create light and dark themes and map the tokens into shadcn components",
+      "should_trigger": true,
+      "why": "tokens and component seam"
+    },
+    {
+      "id": "q04",
+      "lang": "ru",
+      "query": "перенеси дизайн-токены в переменные Figma",
+      "should_trigger": true,
+      "why": "Figma bridge"
+    },
+    {
+      "id": "q05",
+      "lang": "en",
+      "query": "Make this mobile agent screen visually coherent and calmer",
+      "should_trigger": true,
+      "why": "mobile and AI product surface"
+    },
+    {
+      "id": "q06",
+      "lang": "ru",
+      "query": "оформи презентацию для инвесторов как 16:9 веб-дек",
+      "should_trigger": true,
+      "why": "presentation pack"
+    },
+    {
+      "id": "q07",
+      "lang": "en",
+      "query": "Decide which screens our onboarding flow needs",
+      "should_trigger": false,
+      "why": "screen structure belongs to UX"
+    },
+    {
+      "id": "q08",
+      "lang": "ru",
+      "query": "перепиши текст ошибки и CTA",
+      "should_trigger": false,
+      "why": "copy belongs to copywriting"
+    },
+    {
+      "id": "q09",
+      "lang": "en",
+      "query": "Implement the API endpoint behind this dashboard",
+      "should_trigger": false,
+      "why": "backend behavior"
+    },
+    {
+      "id": "q10",
+      "lang": "en",
+      "query": "Fix the CSS selector that stopped applying our existing tokens",
+      "should_trigger": false,
+      "why": "mechanical bug, no visual decision required"
+    },
+    {
+      "id": "q11",
+      "lang": "ru",
+      "query": "определи тарифы и что входит в каждый план",
+      "should_trigger": false,
+      "why": "business and product behavior decision"
+    },
+    {
+      "id": "q12",
+      "lang": "en",
+      "query": "Run an accessibility audit of the checkout flow",
+      "should_trigger": false,
+      "why": "verification of behavior, not deciding visual language"
+    }
+  ]
+}
+
