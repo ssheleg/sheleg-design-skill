@@ -395,6 +395,48 @@ mono, `--success` for `GET`, `--info` for `POST`, each on its `-weak` tint at
 Focus: `--focus-color` ring, border `--accent-ink`. Error: border `--danger`, with
 the message in `--danger` **and** an icon.
 
+**Loader — the reference paints none, and this pack's answer is a swap rather
+than a spinner.** Measured 2026-08-26 by rendering the origin at 1440 and at 900:
+the whole page runs **two** perpetual animations and both are 8px round dots at 2s
+`cubic-bezier(0.4, 0, 0.6, 1)` — one green beside *579,406 posts this week*, one
+violet beside *22,271 accounts connected this week*, each sitting above a 200×40
+sparkline tinted to its own dot. Those are the opposite of a loader: a loader says
+the number has not arrived, a liveness dot says the number is still moving. There
+is no spinner, no skeleton and no shimmer anywhere in the render, and the page
+carries zero `aria-live`, zero `role="status"` and zero `aria-busy`. So the rules
+below are this pack's decisions, stated rather than left to the reader — a
+documentation register acquires async surfaces a marketing page never has: a
+playground call, a key being minted, a log tail.
+
+- **A pending control keeps its width.** Everything here is mono, so a pending
+  label is padded to the settled label's cell count and the button never resizes.
+  This is the one register where that is exact rather than approximate.
+- **A waiting region is a skeleton, and the skeleton holds still.** `--surface-2`
+  blocks at the row's own height inside the same `--rule` card at `--r-control`,
+  and no shimmer: the page's entire perpetual budget is two 8px dots, and a
+  shimmer would be the third and by far the largest.
+- **A long-running region reuses the reference's own dot** — 8px, `--success` or
+  `--info`, with its word beside it, and it takes the `aria-live="polite"` the
+  reference omits.
+- **Never a spinner.** Motion flavor here is entry only and Bans calls this the
+  calmest pack in the family; a rotating glyph is perpetual motion carrying a
+  status with no word beside it.
+
+**Empty state — the reference has a surface that could be empty and paints no
+empty variant of it.** Same pass: the only data surfaces are the two sparklines
+and their counters, every list on the page is editorial — a numbered list of
+setup steps — and zero elements name themselves empty, no-results or placeholder.
+So this is a decision too, and it is prose rather than a picture: the same
+`--r-card` card on `--surface` with its `--rule` hairline, one 14px line in
+`--ink` naming what is not there, one in `--ink-soft` saying how to fill it, and
+the **secondary** button where there is an action — never the primary, which
+belongs to the page's one argument. No illustration: the code frame is the only
+image this pack allows itself, and a drawing in a documentation register reads as
+a different product. An emptiness that is a failure rather than a state is not
+this component at all — it carries `--danger`, its word and an icon, exactly as
+the input's error does.
+
+
 ## Hero
 
 The opening viewport, in order:

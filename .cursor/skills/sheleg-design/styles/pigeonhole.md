@@ -325,6 +325,55 @@ height, `--ink-faint` treatment. It is the one continuous animation in the pack,
 under reduced motion it is **paused** rather than shortened — see Motion flavor,
 because collapsing its duration would strobe it.
 
+**Loader — the reference paints none, and the budget for one is already spent.**
+Measured 2026-08-26 by rendering the origin at 1440: the page runs **four**
+`marquee` tracks and nothing else perpetual — one row, 112px tall, 36 logos, each
+track 1484px wide at 100s linear, which is `--dur-marquee` and the logo wall
+above. No spinner, no skeleton, no shimmer. The one `aria-live` region on the page
+is an empty invisible `<section>`, the framework's route announcer rather than a
+loader, and it should not be read as one. So:
+
+- **A skeleton is a tint, never a shimmer.** `--surface-2` inside the panel it
+  stands in, at `--radius-panel`, and it holds still. A shimmer would be the
+  page's second continuous animation, and under reduced motion — where the logo
+  wall is **paused** rather than shortened — it would be the only thing still
+  moving, which inverts the rule it stands next to.
+- **A chip's skeleton keeps both layers.** Outer `--radius-chip`, inner
+  `--radius-chip-inner`, and the inner takes the outer's own `--cat-step-150` to
+  `--cat-step-200` pair rather than the light `--cat-step-50` to `--cat-step-100`
+  one, so the shape reads as solid rather than as a chip with a blank label. The
+  1px between the two radii is the inner layer's padding, and a single-layer
+  placeholder therefore resizes the chip when the word lands. A skeleton never
+  borrows a category ramp: a hue that names a category before the category is
+  known is the hue-only chip this pack bans.
+- **A pending primary button keeps its gradient, its `--shadow-cta` and its word,
+  and does not translate.** The −1px belongs to `:hover`, and a control already
+  pressed must not look liftable. The `:disabled` pair is wrong here —
+  `--surface-2` with `--ink-faint` says *cannot be used*, and a pending control is
+  one that is working.
+
+**Empty state — the reference's only depiction of one is a photograph.** Same
+pass: the page ships eleven images wider than 200px, three of them full-width
+product screenshots, and the largest at 1152×703 is captioned *an organized
+inbox*. The product is named for an empty state and the page paints that state as
+a raster screenshot, so there is nothing in markup to read values off — every
+`<ul>` on the page is a pricing feature list and zero elements name themselves
+empty or no-results. This pack's decision, then:
+
+- **An empty state is a panel, not a page.** `--surface`, `--radius-panel`, the
+  `--rule` hairline and `--shadow-card` — the same card as everything else,
+  because the surface is not broken.
+- **One `--size-body-lg` `--weight-emphasis` line naming what is not there, one
+  `--size-body` `--ink-soft` line saying how to fill it, and the primary button.**
+  Never `--ink-faint`, which the token layer confines to a disabled control's
+  label; this prose is live text.
+- **No pastel, with one exception.** A feature card may swap its fill for a
+  category's 50→100 gradient; an empty state may not, because the pastel names a
+  category and an empty surface has none yet. The exception is a surface that IS a
+  category — an empty view of one takes that category's pair and carries the
+  ordinary chip with its word, which is the rule the chip already obeys.
+
+
 ## Hero
 
 The first viewport, at 1440×900, holds exactly this and in this order: the nav,
