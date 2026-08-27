@@ -529,7 +529,7 @@ evidence until runs start writing their own again.
 
 | Date | Commit | Task | Diverged? |
 |---|---|---|---|
-| 2026-08-27 | working tree | `test-drive`, the thirty-seventh pack from datafa.st — the live product embedded in drawn browser chrome as the set piece, a founder's hand annotating from the margin, one coral split into two tokens because the reference's own CTA is 3.42:1 under white, and a declared teal accent the render proved dead; the render step caught a 66px nav against a stated 65, a 428px link row on a 390px page, and a missing touch floor; **`v1.53.0` prepared** | **yes** |
+| 2026-08-27 | working tree | `test-drive`, the thirty-seventh pack from datafa.st — the live product embedded in drawn browser chrome as the set piece, a founder's hand annotating from the margin, one coral split into two tokens because the reference's own CTA is 3.42:1 under white, and a declared teal accent the render proved dead; the render step caught a 66px nav against a stated 65, a 428px link row on a 390px page, and a missing touch floor; T35 ran blind both ways and its defect-read out-hit the author's own ladder; **`v1.53.0` shipped** | **yes** |
 | 2026-08-27 | working tree | the public site opens on the designs behind three tabbed screens with a full machine layer (ItemList of every pack, one publisher node, 404, three-URL sitemap) — and the pass found `method.html` emitting two canonicals and an `oklch()` field the gallery could not parse, so the published dark count was five where six ship; `deskmate` corrected by its own blind audit, the white-on-white card being the one no gate can see; `validate_token_population_counts` added after SURFACE_COMPOSITION.md claimed twenty-nine at a true thirty-three; **`v1.52.0` prepared** | **yes** |
 | 2026-08-27 | working tree | `deskmate`, the thirty-sixth pack from viktor.com — one light source above the top edge and one four-stop ramp doing three jobs, with a framed transcript whose quoted client keeps its own face and colours under a `--quoted-*` namespace; the status set lifted out of that transcript because the brand layer paints no state; the render caught a nav slab 515px wide on a 390px page, a dusk secondary painting white on white, a chip label at 3.36:1 and an underlined pill; **`v1.51.1` shipped** — `v1.51.0` was pushed before its branch, the workflow's reachability guard refused it, and a `v*` tag cannot be moved here | **yes** |
 | 2026-08-26 | working tree | both shared validator headers explicitly state `diverges: none`, completing the umbrella mechanism contract; **`v1.50.3` prepared** | **yes** |
@@ -601,6 +601,44 @@ evidence until runs start writing their own again.
 | 2026-08-24 | `2745c09` | the assembly rule written down where each part already lives — template rules 7 and 8, CONTRIBUTING step 8 — plus `nameplate`'s mark set carried as a mechanism rather than a taxonomy, and one claim narrowed to the width it was measured at; the new render step caught a 60px tile against a declared 50 within the hour; **`v1.48.1` shipped** | **yes** |
 | 2026-08-25 | `28d9303` | README names where its test commands run — the published package ships no `test/`, so `python3 test/validate.py` resolved in a clone and nowhere else (**`v1.49.1`** shipped) | *unrecorded* |
 ## Log
+
+### 2026-08-27 — the blind reader out-hit the author, and the rule that split across two files
+
+**Symptom.** T35a — the routing scenario for the pack this run had just written, run
+blind in a fresh context — returned four defects that three green gates, a render pass
+at three widths and the author's own re-reads had not: the body-coral ban stated
+unqualified in the pack prose while the token layer's dark block mandated the opposite
+swap; a 0.9s clock attributed to spinners that measure 2s/1.5s; a dark hover token
+byte-identical to its resting pair under prose promising a brightening glow; and a
+tint whose stated derivation computes a different hex than the one shipped.
+
+**Surfaced at** stage 6, by the scenario's defect-read half. **Owned by** the
+authoring method: the pack file and the token layer were written hours apart, and
+nothing — gate or author — compares their *prose* for agreement about a rule.
+
+**Root cause.** The sharpest of the four is a class one level above B-122 (nothing
+checks that a pack's two files agree about what a token drives): here the files agreed
+about the tokens and disagreed about the RULE. The dark swap was decided at the
+declaration, correctly, and the prose ban was written from the light theme's
+arithmetic and never re-read against the dark block. A ban that says "always" is a
+claim about every theme the pack ships, and the gate that recomputes ratios cannot see
+a quantifier.
+
+**Fix by grade.** All four reproduced against the artifacts before any edit
+(instruction 8), then fixed in the same change: the ban qualified with the dark
+arithmetic on the line, the spinner noun corrected, the identical dark pair kept and
+DECLARED as the measurement with the border named as the dark hover's carrier, the
+tint recomputed to its own derivation. The nine datasheet findings from the negative
+branch went to the board (B-134) rather than into this run, per the shipped-pack
+precedent of 2026-08-08.
+
+**The check that catches it next time** is not a new gate — it is the scenario
+harness's defect-read half, which T34 exercised first and this run confirms: a blind
+reader with the two files and no memory of writing them finds quantifier splits that
+the author structurally cannot. The standing practice is already in the scenarios'
+own template ("both branches read their chosen pack in full and report defects");
+what this entry adds is the priority: run it BEFORE the tag, because all four fixes
+were free on the branch and would each have been a release on main.
 
 ### 2026-08-22 — the reference that could not be read from its stylesheet, and the gate that priced every alpha
 
