@@ -3147,6 +3147,88 @@ def validate_component_classes_are_answered():
 
 
 
+# ------------------------------------- counts the token layers can settle
+#
+# `validate_counted_claims` reads *"N packs"* and holds N against the tree. It cannot
+# read *"the accent is `--accent` in twenty-nine of the thirty-six packs"*, because the
+# noun being counted is not packs-in-the-library but packs-that-declare-a-token — a
+# property only the token layers can answer, and one that moves with every pack added.
+#
+# Measured 2026-08-27, and both halves were wrong: the sentence said twenty-nine at a
+# true thirty-three, and its list of the packs that name the accent something else gave
+# two of the three, omitting `babylove` entirely. The count is the smaller half. The
+# larger half is that an agent following that sentence would look for `--accent` in
+# `babylove`, find nothing, and have no way to learn that the pack calls it `--brand` —
+# which is the exact failure the `@role accent:` marker exists to prevent.
+#
+# So both figures are derived here rather than typed there. The prose keeps the number;
+# this refuses it when the tree disagrees.
+ACCENT_POPULATION = re.compile(
+    r"`--accent` in ([a-z-]+) of the ([a-z-]+) packs", re.I)
+NONTEXT_POPULATION = re.compile(
+    r"because ([a-z-]+) of the token layers\s+carry such a colour", re.I)
+ALT_ACCENT = re.compile(r"@role\s+accent\s*:\s*(--[a-z0-9-]+)")
+
+
+def validate_token_population_counts():
+    styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
+    tokens = styles / "tokens"
+    doc = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "SURFACE_COMPOSITION.md"
+    text = read(doc)
+    if text is None or not tokens.is_dir():
+        return
+    layers = sorted(tokens.glob("*.css"))
+    if not check(len(layers) >= 2,
+                 "styles/tokens/ holds fewer than two layers — the population counts "
+                 "were not checked, and a check that could not look is not a pass"):
+        return
+    declares = re.compile(r"^\s*--accent\s*:", re.M)
+    with_accent = [f.stem for f in layers if declares.search(read(f) or "")]
+    without = [f.stem for f in layers if f.stem not in set(with_accent)]
+    nontext = [f.stem for f in layers if ROLE_NON_TEXT_MARK.search(read(f) or "")]
+
+    flat = " ".join(text.split())
+    m = ACCENT_POPULATION.search(flat)
+    if check(m is not None,
+             "SURFACE_COMPOSITION.md: no '`--accent` in N of the M packs' sentence — "
+             "the population claim this check settles has been reworded, so either "
+             "restore the shape or retire the check with the reason"):
+        said = WORD_NUMBERS.get(m.group(1).lower())
+        check(
+            said == len(with_accent),
+            f"SURFACE_COMPOSITION.md says `--accent` is declared in {m.group(1)} of the "
+            f"packs and {len(with_accent)} token layers declare it. The count moves with "
+            f"every pack; derive it or do not state it",
+        )
+    # every pack that does NOT declare --accent must be named in that same paragraph,
+    # because a reader who cannot find the token has nothing else to go on.
+    for stem in without:
+        check(
+            f"`{stem}`" in flat,
+            f"SURFACE_COMPOSITION.md: `{stem}` declares no `--accent` and the accent "
+            f"paragraph does not name it — a reader following that sentence looks for a "
+            f"token the pack does not have and learns nothing about what it calls it",
+        )
+        check(
+            bool(ALT_ACCENT.search(read(tokens / f"{stem}.css") or "")),
+            f"styles/tokens/{stem}.css: declares no `--accent` and carries no "
+            f"'@role accent:' marker — the marker is the only thing that says which "
+            f"token holds the role",
+        )
+    m = NONTEXT_POPULATION.search(flat)
+    if check(m is not None,
+             "SURFACE_COMPOSITION.md: no 'N of the token layers carry such a colour' "
+             "sentence — the non-text population claim has been reworded"):
+        said = WORD_NUMBERS.get(m.group(1).lower())
+        check(
+            said == len(nontext),
+            f"SURFACE_COMPOSITION.md says {m.group(1)} token layers carry an "
+            f"'@role non-text:' colour and {len(nontext)} do",
+        )
+    print(f"  token population: --accent in {len(with_accent)} of {len(layers)} layers "
+          f"({', '.join(without) or 'none'} name it otherwise), "
+          f"{len(nontext)} carry an @role non-text colour")
+
 # ------------------------------------- a set excluded from the peer check
 #
 # `pigeonhole` carries nine `--cat-*-ink` tokens that are deliberately outside
@@ -3162,6 +3244,7 @@ def validate_component_classes_are_answered():
 # enumeration equals the tokens that ship, and the pack states what carries the
 # category instead of the hue. The second half is the load-bearing one — an
 # exclusion with no stated carrier is just a gap with a paragraph in front of it.
+ROLE_NON_TEXT_MARK = re.compile(r"@role\s+non-text\s*:", re.I)
 CATEGORY_INK = re.compile(r"--cat-[a-z0-9-]+-ink")
 
 
@@ -4587,6 +4670,7 @@ def main():
     validate_worked_radius_sums_compute()
     validate_component_classes_are_answered()
     validate_excluded_sets_are_declared()
+    validate_token_population_counts()
     validate_token_comments_respect_the_bands()
     validate_confined_tokens_measured_where_used()
     validate_t1_carriers_survive()

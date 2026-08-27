@@ -52,8 +52,9 @@ appears zero times in 364,905 bytes and exactly one element is fixed — so
 `MOTION_INTENSITY` above **4** has nothing legal to buy here.
 
 **Not for:** dense operator chrome. The elevation model is a field step and a 1.25px
-hairline, the smallest radius that ships is 8.4px, and every control is 56px tall — a
-fourth nested panel has nothing to sit on and a toolbar of pills is a novelty item. That
+hairline, the smallest radius in the ramp is 8.4px, and a control is 56px tall or 44px
+at the small size — a fourth nested panel has nothing to sit on and a toolbar of pills
+is a novelty item. That
 is `workbench`'s half, and `router`'s. Not for regulated, clinical or public-sector
 pages, where a peach-to-violet bleed under the fold reads as a consumer app. Not for
 anything sold on austerity: this page spends 38 gradient fills, and a pack that spends
@@ -94,8 +95,10 @@ ramp that hangs is this one.
 
 ## Palette
 
-Copy [`tokens/deskmate.css`](./tokens/deskmate.css) verbatim. Every value there carries
-its provenance — MEASURED, SELECTED or DERIVED — and its ratio.
+Copy [`tokens/deskmate.css`](./tokens/deskmate.css) verbatim. Every **colour** there
+carries its provenance — MEASURED, SELECTED or DERIVED — and its ratio. The geometry
+ramps (spacing, radii, type sizes) carry a provenance note per band rather than per
+value, because a band was measured as a band.
 
 | Role | Token | Value | On `--bg` |
 |---|---|---|---|
@@ -109,6 +112,16 @@ its provenance — MEASURED, SELECTED or DERIVED — and its ratio.
 | Eyebrow | `--accent-deep` | `#4e32b5` | 7.93:1 |
 | Warm stop | `--peach` | `#ffbb98` | 1.51:1 — declared non-text, a stop and a star |
 | Last stop | `--dusk` | `#150079` | 14.83:1 — and the dusk surface's own field |
+| On a card | `--on-surface` | `#1a182b` | 17.36:1 on `--surface`, and it does NOT invert |
+| On a card, quiet | `--on-surface-soft` | `#716f7e` | 4.91:1 on `--surface` |
+
+**`--ink` is for words on `--bg`; `--on-surface` is for words on a card.** On the light
+field the two are the same value and the distinction reads as decoration. On the dusk
+surface it is the whole difference: `--surface` stays white there — measured on
+`/business`, where a card inside an inverted section keeps its white fill — so a card
+that paints its heading in `--ink` paints **white on white**. Every component that sits
+on a card takes the `--on-surface` pair, and the four that sit on the field
+(the display, the lede, a stat's figure, a section's own heading) take `--ink`.
 
 **One accent, and it needed no correction.** It writes and it fills: `#6e47ff` is
 4.84:1 on the field `#faf5f1`, and `#ffffff` on `#6e47ff` is 5.24:1. A single token
@@ -174,8 +187,8 @@ is quoting a different library.
 
 **A measure in `ch`, and the reference has none.** It holds its lede in a grid column
 rather than in a measure — `max-width: none` on both the headline and the paragraph — so
-this pack states the measure the reference implies: **62ch** for a lede, **68ch** for
-body copy, measured against Gellix at 16px. Where the two faces are substituted the
+this pack states the measure the reference implies and ships it as
+`--measure-lede` (62ch) and `--measure-body` (68ch), against Gellix at 16px. Where the two faces are substituted the
 column holds and the character count moves, which is the point of stating it in `ch`.
 
 **Both brand faces are licensed and the substitutes are a pack decision.** Ulm Grotesk
@@ -191,8 +204,11 @@ library's own rule.
 **Elevation is a field step.** 68 white fills sit on a beige field with 51 hairlines
 between them, and the entire 10,211px page carries **two** shadows, which is why the
 pack ships exactly two shadow tokens and no ramp: `--shadow-panel` is the 5% whisper
-under the signature frame (`0 3.863px 17.769px`) and `--glow-bloom` is the one purple
-bloom on the page (`0 0 16px 8px` of purple-900 at 8%). A card is white on beige; a
+under the signature frame (`0 3.863px 17.769px`), and `--glow-bloom` is the single purple
+bloom (`0 0 16px 8px` of purple-900 at 8%) that the reference spends **once on the whole
+page**. The pack does not prescribe where — the census records one instance and not which
+element carried it — so the rule is the count: one bloom per page, on the object the page
+is about, and if you cannot name that object do not spend it. A card is white on beige; a
 panel inside a card is beige on white; the third step is a hairline and there is no
 fourth.
 
@@ -253,9 +269,10 @@ grid:
 - The **message half** takes `--gradient-dusk`, white text, a byline row (a name, a small
   `APP` badge, a time), and under it an illustration of the artefact produced — a file
   tile, a set of connected tool marks, a checklist. Radius `--r-card` on the top corners.
-- The **explanation half** is `--surface`, a 24px heading in `--ink` and a 16px paragraph
-  in `--ink-soft`, with 24px/32px/32px of padding. Radius `--r-card` on the bottom
-  corners.
+- The **explanation half** is `--surface`, a 24px heading in `--on-surface` and a 16px
+  paragraph in `--on-surface-soft`, with 24px/32px/32px of padding. Radius `--r-card` on
+  the bottom corners. Those two tokens rather than `--ink`: a card keeps its white fill
+  inside a dusk section, so the ink that sits on it cannot invert with the field.
 - No border and no shadow on either half; the two fills are the separation.
 - The small tile — a chip, a logo, a status row — is `--surface` at `--r-chip` with a
   `--rule-w` hairline at the ink's 5% and 10px of padding.
@@ -299,8 +316,8 @@ would be the liveliest thing on it.
 **Empty states.** The reference's is a measured refusal, not an absence: a search on
 `/integrations` matching nothing collapses the grid to 1280×0 at 1440 and says nothing at
 all — no message, no count, no reset. The pack's answer is a `--surface` card at
-`--r-card` holding a 16px/500 line in `--ink`, one sentence in `--ink-soft`, and a
-secondary pill that clears the filter. An empty result is a state, and a state that
+`--r-card` holding a 16px/500 line in `--on-surface`, one sentence in
+`--on-surface-soft`, and a secondary pill that clears the filter. An empty result is a state, and a state that
 paints nothing is indistinguishable from a broken query.
 
 Every interactive element takes `--tap-min` (44px) as a height floor. This is a
@@ -312,8 +329,10 @@ the navigation toggle at 48×32 and the transcript's reaction pills at 42×24.
 A marketing opening: full width, not full height, and it ends in the set piece rather
 than beginning with it.
 
-- The page holds `--page-max` (90rem) with `--gutter` stepping 20 → 40 → 56 → 80px, and
-  the hero's own top padding is 176px at 1440 because the navigation slab hangs into it.
+- The page holds `--page-max` (90rem) and its gutter steps through four tokens —
+  `--gutter` 20px, `--gutter-2` 40px, `--gutter-3` 56px, `--gutter-wide` 80px — because a
+  step a consumer cannot reach through a variable is a step the pack did not ship. The
+  hero's own top padding is 176px at 1440, because the navigation slab hangs into it.
 - Field `--bg` with `--gradient-dawn` blooming from above the headline, and the slab's
   bottom corners rounded at `--r-section` where the field bleeds into `--gradient-fold`.
 - A two-column grid at `1.15fr / 1fr` with a 56px gap: **the argument on the left, the
@@ -346,8 +365,10 @@ Three widths, measured: 1440, 768 and the sub-640 branch read at 500.
   collides its own ascenders at the awkward widths between the steps.
 - **The hero grid collapses to one column** and its gap goes 56px → 32px. The control pair
   goes full width at `--control-h`, which is how a 56px pill stays a 56px pill.
-- **Gutters step 80 → 56 → 40 → 20px** and the navigation slab's inset goes 40px → 12px,
-  its height 65px → 57px. Section rhythm halves: 112px → 56px.
+- **Gutters step 80 → 56 → 40 → 20px** through the four `--gutter*` tokens. The
+  navigation slab's own inset goes 40px → 12px and its height 65px → 57px — that inset is
+  the slab's and not the page's gutter, which is 80px at the same width. Section rhythm
+  halves: 112px → 56px.
 - **The frame's radius does not scale.** 47.319px at 1440 and at 500, with the same 15px
   inset — the concentric relationship is the object's identity and rescaling it makes the
   frame read as a different component.
@@ -437,7 +458,9 @@ cards made of the same material.
   a flicker.
 - **Focus-visible:** the control's own border takes `--focus-color` **and** the ring
   appears outside it. Both, always: the ring alone composites to `#b6a3ff` on white
-  `#ffffff`, which is 2.17:1, and that is why the border moves in the same state.
+  `#ffffff`, which is 2.17:1, and that is why the border moves in the same state. The
+  ring ships as a **literal first** and derives from the accent inside an `@supports`
+  block — see Gotchas, because getting that order wrong removes the ring entirely.
 - **Disclosure row:** 62px tall at `--r-root`, transparent until focus, opening over
   `--dur-slow`. The row's chevron rotates; the row does not.
 - **Section reveal:** opacity and `--enter-y` on `--ease-out` over `--dur-enter`, with
@@ -519,3 +542,23 @@ nodes, `#1264a3` on `#e8f5fa` for a mention at 5.59:1, `#007c58` for an approval
 for a decline rule. They ship under `--quoted-*` so a status dot cannot reach them by
 accident. A page that lifts them into its own palette has adopted somebody else's design
 system one token at a time.
+
+**A card does not invert with the field, and painting its text in `--ink` is the trap.**
+`--surface` is white on both blocks — measured, because a chat-client card inside an
+inverted section is still a white card — while `--ink` inverts to `#ffffff` on the dusk
+surface. A card whose heading takes `--ink` therefore renders white on white inside a
+dusk section — `#ffffff` on `#ffffff` is 1.00:1 — and no gate can see it: both tokens are
+legal, both clear their own field, and the pairing only exists at render time. That is what `--on-surface` and
+`--on-surface-soft` are for, and it is why they do not invert. Found by reading this
+pack's own kit on a dusk section, which is the second defect that render caught after the
+secondary control painting white on white — the same mechanism, one component along.
+
+**The focus ring is declared literal-first, and the order is the guard.** A custom
+property accepts almost any token sequence, so `--focus-ring: color-mix(…)` parses even
+where `color-mix()` is unsupported, wins the cascade, and fails only at substitution — by
+which point the literal is gone and `var(--focus-ring)` resolves to `unset`. An invisible
+focus ring is the one degradation this pack may not ship, so the literal sits in `:root`
+and the derived form sits in an `@supports (color: color-mix(in srgb, red, red))` block at
+the end of the layer. `showroom` is the pack that learned this first; this one copies its
+mechanism rather than its syntax, because the derived form here is a mix rather than a
+relative colour.

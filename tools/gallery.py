@@ -16,6 +16,7 @@ import argparse
 import html
 import json
 import pathlib
+import math
 import re
 import subprocess
 import sys
@@ -51,7 +52,31 @@ def first_token(css: str, *names: str) -> str | None:
 
 
 def luminance(colour: str | None) -> float | None:
-    m = re.fullmatch(r"#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})", (colour or "").strip())
+    """Relative luminance, or None when the value cannot be read.
+
+    It reads `oklch()` as well as hex, and that is not decoration: `briefing-room`
+    declares its field as `oklch(0.045 0.008 254)` — a near-black — and until 1.52.0
+    this function returned None for it, so the pack fell through to "light field" and
+    the published site, its `llms.txt` and its gallery all counted five dark packs
+    where six ship. A parser that silently fails is a wrong number nobody can see.
+    """
+    raw = (colour or "").strip()
+    m = re.fullmatch(r"oklch\(\s*([0-9.]+%?)\s+([0-9.]+)\s+([0-9.]+)\s*\)", raw, re.I)
+    if m:
+        L = float(m.group(1).rstrip("%"))
+        if m.group(1).endswith("%"):
+            L /= 100
+        C, H = float(m.group(2)), float(m.group(3))
+        a_, b_ = C * math.cos(math.radians(H)), C * math.sin(math.radians(H))
+        l_ = (L + 0.3963377774 * a_ + 0.2158037573 * b_) ** 3
+        m_ = (L - 0.1055613458 * a_ - 0.0638541728 * b_) ** 3
+        s_ = (L - 0.0894841775 * a_ - 1.2914855480 * b_) ** 3
+        r = 4.0767416621 * l_ - 3.3077115913 * m_ + 0.2309699292 * s_
+        g_ = -1.2684380046 * l_ + 2.6097574011 * m_ - 0.3413193965 * s_
+        bl = -0.0041960863 * l_ - 0.7034186147 * m_ + 1.7076147010 * s_
+        clamp = lambda v: min(1.0, max(0.0, v))
+        return 0.2126 * clamp(r) + 0.7152 * clamp(g_) + 0.0722 * clamp(bl)
+    m = re.fullmatch(r"#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})", raw)
     if not m:
         return None
     h = m.group(1)
@@ -143,7 +168,7 @@ def card(p: dict, public: bool = False) -> str:
     dot = (f'<div class="sp-dot" style="{accent_prop}:{esc(p["accent"])}"></div>') if p["accent"] else ""
     hay = " ".join([p["name"], p["look"], p["for"]] +
                    ([] if public else [p["host"]])).lower()
-    return f'''<article class="card{' flag' if p["flag"] else ''}" data-name="{esc(p["name"])}"
+    return f'''<article class="card{' flag' if p["flag"] else ''}" id="pack-{esc(p["name"])}" data-name="{esc(p["name"])}"
    data-dark="{str(p["dark"]).lower()}" data-ceiling="{esc(p["ceiling"])}"
    data-flag="{str(p["flag"]).lower()}" data-hay="{esc(hay)}">
   <header class="chead">
@@ -239,25 +264,34 @@ q.oninput=apply; apply();
 """
 
 
-def render(packs: list[dict], public: bool = False, meta: str = "") -> str:
+def render(packs: list[dict], public: bool = False, meta: str = "",
+           nav: str = "", title: str = "", intro: str = "") -> str:
     """`meta` is the machine layer — canonical, og:*, twitter:* — passed in by
     `tools/site.py`, which owns the published base. Running this script alone
-    writes a local file that needs none of it."""
+    writes a local file that needs none of it.
+
+    `nav`, `title` and `intro` are the published site's front door: since 1.52.0 this
+    page IS the site's index, so the tab strip and a shorter opening paragraph are
+    passed in rather than duplicated here. Empty strings keep the standalone file
+    exactly as it was."""
     dark = sum(1 for p in packs if p["dark"])
     flagged = sum(1 for p in packs if p["flag"])
     core = sum(1 for p in packs if p["contract"].startswith("core"))
-    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SHELEG style packs &mdash; {len(packs)} measured designs</title>
-{meta}
-<style>{CSS}</style></head><body>
-<header class="top">
-  <h1>SHELEG style packs &mdash; {len(packs)} measured designs</h1>
-  <p class="sub">Every card renders in <b>its own token layer</b>, read out of
+    head_title = title or f"SHELEG style packs &mdash; {len(packs)} measured designs"
+    opening = intro or f"""  <p class="sub">Every card renders in <b>its own token layer</b>, read out of
   <code>styles/tokens/&lt;pack&gt;.css</code>: the swatches, the radius, the accent and the type
   stack are the pack's real values rather than a description of them, so a card that looks wrong
   is a pack that <i>is</i> wrong. Each pack was extracted from a named production site and every
-  colour carries a measured contrast ratio.</p>
+  colour carries a measured contrast ratio.</p>"""
+    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{head_title}</title>
+{meta}
+<style>{CSS}</style></head><body>
+{nav}
+<header class="top">
+  <h1>{head_title}</h1>
+{opening}
   <p class="sub" style="margin-top:10px">{dark} of {len(packs)} stand on a dark field.
   {core} are on the <b>core contract</b> &mdash; they deliberately leave components, hero,
   responsive and their signature element to you. {flagged} are the newest.
