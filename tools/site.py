@@ -51,6 +51,7 @@ def page_meta(title: str, desc: str, canon: str) -> str:
     """The machine half of a page: what a crawler and a link preview read."""
     return (f'<meta name="description" content="{esc(desc)}">\n'
             f'<link rel="canonical" href="{esc(canon)}">\n'
+            '<meta name="robots" content="index,follow,max-image-preview:large">\n<meta name="color-scheme" content="dark">\n<meta name="theme-color" content="#0e0f11">\n<meta property="og:site_name" content="SHELEG style packs">\n<meta property="og:locale" content="en_US">\n'
             f'<meta property="og:type" content="website">\n'
             f'<meta property="og:title" content="{esc(title)}">\n'
             f'<meta property="og:description" content="{esc(desc)}">\n'
@@ -63,6 +64,99 @@ def page_meta(title: str, desc: str, canon: str) -> str:
             f'<meta name="twitter:description" content="{esc(desc)}">\n'
             f'<meta name="twitter:image" content="{SITE}/og.png">')
 
+
+
+# ---------------------------------------------------------------- the tab strip
+#
+# Since 1.52.0 the front door IS the designs. Before it, `/` was three tiles and a
+# reader had to click once before seeing a single pack — a menu in front of the
+# thing the site is for.
+#
+# The tabs are LINKS to three real pages, not panels toggled in one document, and
+# that is a deliberate SEO decision: one URL per screen, every screen fully in the
+# HTML, nothing behind a click a crawler has to execute. `rel="prefetch"` makes the
+# switch feel like a tab without costing the indexability that a client-side tab
+# panel costs. `aria-current="page"` is what marks the selected one for a reader on
+# a screen reader; `.on` is what marks it for everyone else.
+TABS = (("", "Designs", "Every pack rendered in its own token layer"),
+        ("audit.html", "Audit", "How each pack was measured"),
+        ("method.html", "Method", "What a pack is, and why the ratios are computed"))
+
+
+def tabstrip(current: str) -> str:
+    out = ['<nav class="tabs" aria-label="Sections">', '<div class="tabs-inner">']
+    for href, label, hint in TABS:
+        sel = href == current
+        cls = ' class="tab on"' if sel else ' class="tab"'
+        cur = ' aria-current="page"' if sel else ''
+        target = href or "./"
+        out.append(f'<a{cls}{cur} href="{target}" title="{esc(hint)}">{esc(label)}</a>')
+    out.append('</div></nav>')
+    return "\n".join(out)
+
+
+def prefetch(current: str) -> str:
+    return "\n".join(f'<link rel="prefetch" href="{h or "./"}">'
+                      for h, _, _ in TABS if h != current)
+
+
+TABS_CSS = """<style>
+.tabs{position:sticky;top:0;z-index:9;background:#0b0c0eee;border-bottom:1px solid #1e2024;
+ backdrop-filter:saturate(140%) blur(6px)}
+.tabs-inner{max-width:1600px;margin:0 auto;padding:0 32px;display:flex;gap:4px}
+.tab{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;
+ color:#9a9ca4;text-decoration:none;font-size:14px;font-weight:500;
+ border-bottom:2px solid transparent}
+.tab:hover{color:#e8e9ec;background:#ffffff08}
+.tab.on{color:#e8e9ec;border-bottom-color:#4a7dff}
+.tab:focus-visible{outline:2px solid #4a7dff;outline-offset:-2px}
+@media (max-width:600px){.tabs-inner{padding:0 12px}.tab{padding:0 12px}}
+/* The gallery's own filter bar is sticky at 0 too. Two sticky strips at the same
+   offset overlap; the filter bar belongs under the tabs, so it starts where they end
+   (44px of tab plus its 1px rule). The selector carries `body` because the gallery's
+   stylesheet is emitted after this one. */
+body .controls{top:45px}
+</style>"""
+
+
+# ---------------------------------------------------------------- structured data
+#
+# One publisher node, referenced by `@id` from every page's primary entity. The
+# family site shipped the opposite of this for two releases — a `Person` sitting in
+# the graph that nothing pointed at — so the entity was published and anonymous at
+# the same time. Each page names its own type: the front door is a CollectionPage
+# carrying an ItemList of the packs (an answer engine can lift the list without
+# running the filter JS), the audit is a Dataset-shaped WebPage, the method page is
+# the software itself.
+PUBLISHER = f'{SITE}/#publisher'
+WEBSITE = f'{SITE}/#website'
+
+
+def ld(*nodes: dict) -> str:
+    import json as _json
+    graph = {"@context": "https://schema.org", "@graph": list(nodes)}
+    return ('<script type="application/ld+json">'
+            + _json.dumps(graph, ensure_ascii=False, separators=(",", ":"))
+            + "</script>")
+
+
+def base_nodes() -> list[dict]:
+    return [
+        {"@type": "Organization", "@id": PUBLISHER, "name": "ssheleg",
+         "url": "https://skills.sshlg.me/",
+         "sameAs": ["https://github.com/ssheleg", "https://www.npmjs.com/package/sheleg-design-skill"]},
+        {"@type": "WebSite", "@id": WEBSITE, "url": f"{SITE}/",
+         "name": "SHELEG style packs",
+         "inLanguage": "en",
+         "publisher": {"@id": PUBLISHER},
+         "license": "https://github.com/ssheleg/sheleg-design-skill/blob/main/LICENSE"},
+    ]
+
+
+def crumbs(*trail: tuple[str, str]) -> dict:
+    return {"@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": i + 1, "name": name, "item": url}
+        for i, (name, url) in enumerate(trail)]}
 
 # ---------------------------------------------------------------- the leak guard
 STOP = {"a", "the", "and", "of", "one", "its", "com", "www", "site", "page", "production"}
@@ -129,9 +223,21 @@ def audit_page(rows: list[dict], stamp: str) -> str:
     n = len(rows)
     reach = sum(1 for r in rows if str(r.get("live", "")).startswith(("200", "30")))
     addr = sum(r["addressable"] for r in rows)
-    return f"""{HEAD.format(title="Collection audit &mdash; SHELEG style packs", site=SITE, canon=f"{SITE}/audit.html", desc="How each of the style packs was measured, and what the automated gates cannot see: whether values were read off a rendered page, whether a narrow width was measured, whether the kit was ever rendered.")}
+    canon = f"{SITE}/audit.html"
+    desc = ("How each style pack was measured, and what the automated gates cannot see: "
+            "the render, a narrow width, and whether the kit was ever put in a browser.")
+    machine = "\n".join([
+        prefetch("audit.html"), TABS_CSS,
+        ld(*base_nodes(),
+           {"@type": "WebPage", "@id": f"{canon}#page", "url": canon,
+            "name": "Collection audit", "description": desc,
+            "isPartOf": {"@id": WEBSITE}, "publisher": {"@id": PUBLISHER},
+            "inLanguage": "en"},
+           crumbs(("Designs", f"{SITE}/"), ("Audit", canon)))])
+    return f"""{HEAD.format(title="Collection audit &mdash; SHELEG style packs", site=SITE, canon=canon, desc=desc)}
+{machine}
+{tabstrip("audit.html")}
 <header class="top">
-  <p class="crumb"><a href="./">&larr; index</a></p>
   <h1>Collection audit</h1>
   <p class="sub">What the automated gates cannot see: <b>how</b> each pack was measured.
   The three gates check that a pack is structurally whole, correctly routed and that every
@@ -180,6 +286,11 @@ HEAD = """<!doctype html><html lang="en"><head><meta charset="utf-8">
 <title>{title}</title>
 <meta name="description" content="{desc}">
 <link rel="canonical" href="{canon}">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0e0f11">
+<meta property="og:site_name" content="SHELEG style packs">
+<meta property="og:locale" content="en_US">
 <meta property="og:type" content="website">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
@@ -240,9 +351,12 @@ def robots_txt() -> str:
 
 
 def sitemap_xml(stamp_date: str) -> str:
+    # Only the three indexable screens. `packs.html` is a canonical alias and `404.html`
+    # is noindex, so listing either would ask a crawler to index a page that tells it not
+    # to — the commonest way a small sitemap starts disagreeing with its own pages.
     urls = "".join(
         f"  <url><loc>{SITE}/{p}</loc><lastmod>{stamp_date}</lastmod></url>\n"
-        for p in ("", "packs.html", "audit.html"))
+        for p in ("", "audit.html", "method.html"))
     return ('<?xml version="1.0" encoding="UTF-8"?>\n'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
             f"{urls}</urlset>\n")
@@ -286,65 +400,157 @@ def llms_txt(packs: list[dict], rows: list[dict]) -> str:
         lines.append(f"- **{p['name']}** ({field}{ceiling}, {contract} contract): "
                      f"{p['for'].rstrip('.')}.")
     lines += ["", "## Pages", "",
-              f"- [Catalogue]({SITE}/): every pack rendered in its own token layer.",
-              f"- [Packs]({SITE}/packs.html): the same, filterable by field, motion ceiling and text.",
-              f"- [Collection audit]({SITE}/audit.html): how each pack was measured, and what the "
-              f"automated gates cannot see.", ""]
+              f"- [Designs]({SITE}/): the front door — every pack rendered in its own token "
+              f"layer, filterable by field, motion ceiling and text. Each pack has an anchor: "
+              f"{SITE}/#pack-<name>.",
+              f"- [Audit]({SITE}/audit.html): how each pack was measured, and what the "
+              f"automated gates cannot see.",
+              f"- [Method]({SITE}/method.html): what a pack contains, why the ratios are "
+              f"recomputed, and how to install it.", ""]
     return "\n".join(lines)
 
 
+def index_intro(packs: list[dict], rows: list[dict]) -> str:
+    """The opening two paragraphs. It states no count the gallery's own header states one
+    paragraph later — the first draft said the dark and core figures twice, three lines
+    apart, which is how a page starts disagreeing with itself the moment one moves."""
+    return """  <p class="sub">Every card below renders in <b>its own token layer</b>, read out of the
+  pack itself: the swatches, the radius, the accent and the type stack are the pack's real
+  values rather than a description of them, so a card that looks wrong is a pack that
+  <i>is</i> wrong. Each one was extracted from a real production interface, and every
+  contrast ratio was recomputed by a gate rather than asserted.</p>
+  <p class="sub"><b>The interface each pack was measured from is not published here.</b>
+  Sources are recorded inside the packs; this page is about the systems. Install the set
+  with <code>npx sheleg-design-skill</code>, read
+  <a href="method.html">how a pack is measured</a>, or open
+  <a href="audit.html">the collection audit</a>.</p>"""
+
+
 def index_page(packs: list[dict], rows: list[dict], stamp: str) -> str:
+    """The front door, and it IS the gallery: the designs are the first thing on it."""
     n = len(packs)
-    dark = sum(1 for p in packs if p["dark"])
+    desc = (f"{n} style packs for coding agents, each extracted from a real production "
+            f"interface and rendered here in its own tokens.")
+    items = {"@type": "ItemList", "name": "SHELEG style packs",
+             "numberOfItems": n, "itemListOrder": "https://schema.org/ItemListUnordered",
+             "itemListElement": [
+                 {"@type": "ListItem", "position": i + 1, "name": p["name"],
+                  "url": f"{SITE}/#pack-{p['name']}",
+                  "description": p["for"].rstrip(".")}
+                 for i, p in enumerate(packs)]}
+    page = {"@type": "CollectionPage", "@id": f"{SITE}/#page", "url": f"{SITE}/",
+            "name": "SHELEG style packs", "description": desc,
+            "isPartOf": {"@id": WEBSITE}, "publisher": {"@id": PUBLISHER},
+            "inLanguage": "en", "mainEntity": items}
+    meta = "\n".join([
+        page_meta(f"SHELEG style packs — {n} designs, in their own tokens", desc, f"{SITE}/"),
+        prefetch(""), TABS_CSS, ld(*base_nodes(), page)])
+    return gallery_mod.render(
+        packs, public=True, meta=meta, nav=tabstrip(""),
+        title=f"{n} style packs, rendered in their own tokens",
+        intro=index_intro(packs, rows))
+
+
+def method_page(packs: list[dict], rows: list[dict], stamp: str) -> str:
+    """What a pack is. This is the prose the index carried until 1.52.0, moved off the
+    front door so the designs could have it."""
+    n = len(packs)
     core = sum(1 for r in rows if r["contract"] == "core")
     render = sum(1 for r in rows if r["read_render"])
-    return f"""{HEAD.format(title="SHELEG style packs", site=SITE, canon=f"{SITE}/", desc="Style packs for coding agents, each extracted from a real production interface and every contrast ratio recomputed by a gate rather than asserted. Browse them rendered in their own tokens.")}
+    desc = ("What a SHELEG style pack contains, how it is measured off a live interface, "
+            "and why every contrast ratio is recomputed rather than asserted.")
+    canon = f"{SITE}/method.html"
+    app = {"@type": "SoftwareApplication", "@id": f"{canon}#app",
+           "name": "sheleg-design-skill", "applicationCategory": "DeveloperApplication",
+           "operatingSystem": "Any", "url": canon,
+           "downloadUrl": "https://www.npmjs.com/package/sheleg-design-skill",
+           "codeRepository": "https://github.com/ssheleg/sheleg-design-skill",
+           "license": "https://spdx.org/licenses/MIT.html",
+           "description": desc, "publisher": {"@id": PUBLISHER},
+           "isPartOf": {"@id": WEBSITE},
+           "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}
+    # No `page_meta` here: `HEAD` below already emits the description, the canonical and
+    # the og/twitter pair for this page. Adding both shipped two canonicals and two
+    # descriptions on one page, which is a crawler being asked to pick.
+    meta = "\n".join([
+        prefetch("method.html"), TABS_CSS,
+        ld(*base_nodes(), app, crumbs(("Designs", f"{SITE}/"), ("Method", canon)))])
+    return f"""{HEAD.format(title="Method — how a SHELEG style pack is measured", site=SITE, canon=canon, desc=desc)}
+{meta}
+{tabstrip("method.html")}
 <header class="top">
-  <h1>SHELEG style packs</h1>
-  <p class="sub">{n} style packs for coding agents. Each one was extracted from a real
-  production interface: colours, type, spacing, radii and motion tokens read off the running
-  page, with every contrast ratio recomputed by a gate rather than asserted. A pack is a
-  token layer plus the rules for spending it &mdash; and a list of what it bans.</p>
-  <p class="sub"><b>The site each pack was measured from is not published here.</b> Sources
-  are recorded inside the packs; this page is about the systems, not about whose they were.</p>
-  <div class="cards">
-    <a class="tile" href="packs.html"><span class="n-big">{n}</span>
-      <h3>Browse the packs</h3>
-      <p>Every card rendered in its own token layer &mdash; swatches, radius, accent and type
-      stack read out of the pack, not described. Filter by field, by motion ceiling, by text.</p></a>
-    <a class="tile" href="audit.html"><span class="n-big">{render}/{n}</span>
-      <h3>Collection audit</h3>
-      <p>How each pack was measured, and what the automated gates cannot see. {core} sit on
-      the core contract by design; the rest answer all thirteen headings.</p></a>
-    <a class="tile" href="{FAMILY}">
-      <span class="n-big">&harr;</span>
-      <h3>The rest of the family</h3>
-      <p>This is the visual layer of a set of skills that split the work around the
-      code &mdash; what the interface must do, how it sounds, how a change reaches the
-      repository. No count here: this repository cannot derive one, and a number it
-      cannot check is a number that goes stale.</p></a>
-  </div>
-  <p class="sub" style="margin-top:6px">Source, and installing just this one:
-  <a href="https://github.com/ssheleg/sheleg-design-skill">the repository</a> ·
-  <code>npx sheleg-design-skill</code> · {dark} of {n} packs stand on a dark field.</p>
+  <h1>How a pack is measured</h1>
+  <p class="sub">A pack is a token layer, the rules for spending it, and a list of what it
+  bans. It is extracted from a real production interface rather than composed: colours,
+  type, spacing, radii and motion tokens are read off the running page, and every ratio is
+  recomputed by a gate before the pack ships.</p>
 </header>
 <main>
-  <h2>What a pack contains</h2>
-  <p class="sub">Thirteen headings, and the same thirteen every time: register, palette,
-  type, texture and surface, components, hero, responsive, motion tokens, signature motifs,
-  the signature element, micro-interactions, bans, and the traps the reference carries.
-  Alongside it ships a token CSS file to copy verbatim and a React reference kit that
-  renders the states a token layer cannot describe &mdash; hover, focus-visible, disabled,
-  selected.</p>
+  <h2>Thirteen headings, and the same thirteen every time</h2>
+  <p class="sub">Register, palette, type, texture and surface, components, hero, responsive,
+  motion tokens, signature motifs, the signature element, micro-interactions, bans, and the
+  traps the reference carries. Alongside it ships a token CSS file to copy verbatim and a
+  React reference kit that renders the states a token layer cannot describe — hover,
+  focus-visible, disabled, selected. {core} of the {n} packs sit on the <b>core
+  contract</b>: they deliberately leave components, hero, responsive rules and their
+  signature element to you, and say so in their own contract line.</p>
   <h2>Why the ratios are computed</h2>
   <p class="sub">A production site is a real source and an imperfect one. Across this
   library, references were found putting white text on a fill at 2.9:1, secondary copy at
   2.5:1, and a focus ring composited to 1.3:1 against a 3:1 floor. Each pack keeps the
-  measured hue and moves only lightness until the pairing clears, and states the correction
-  with its number at the declaration &mdash; so a derived value can never later be read as a
+  measured hue and moves only lightness until the pairing clears, then states the correction
+  with its number at the declaration — so a derived value can never later be read as a
   measured one.</p>
+  <h2>What the gates cannot see</h2>
+  <p class="sub">Structure is checkable and layout is not. {render} of the {n} packs were
+  read off the render rather than off the stylesheet, and each kit is mounted in a browser at
+  three widths and read back through <code>getComputedStyle</code> before its pack ships —
+  which is how a control that promised 50px and drew 78px, and a card that painted white on
+  white inside an inverted section, were both caught. The <a href="audit.html">collection
+  audit</a> is the standing record of that.</p>
+  <h2>Installing it</h2>
+  <p class="sub"><code>npx sheleg-design-skill</code> installs the skill for Claude Code,
+  Cursor and any agent that reads a <code>SKILL.md</code>; <code>npx sheleg-design-skill
+  --kit &lt;pack&gt;</code> materialises one pack's React kit.
+  <a href="https://github.com/ssheleg/sheleg-design-skill">The repository</a> holds the
+  gates. This is the visual layer of <a href="{FAMILY}">a family of skills</a> that split
+  the work around the code — what the interface must do, how it sounds, how a change reaches
+  the repository.</p>
 </main>
 {foot(stamp)}"""
+
+
+def packs_alias() -> str:
+    """`packs.html` was the gallery until 1.52.0, when the gallery became the front door.
+    The URL is kept because it is in the wild — and kept as a REDIRECT rather than a
+    second copy, because two URLs serving one gallery is duplicate content that splits
+    whatever authority the page has."""
+    canon = f"{SITE}/"
+    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>SHELEG style packs</title>
+<link rel="canonical" href="{canon}">
+<meta name="robots" content="noindex,follow">
+<meta http-equiv="refresh" content="0;url=./">
+</head><body style="background:#0e0f11;color:#e8e9ec;font:400 15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:40px">
+<p>The pack gallery is now the front page. <a href="./" style="color:#8ab0ff">Continue to the packs</a>.</p>
+</body></html>"""
+
+
+def not_found() -> str:
+    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Not found — SHELEG style packs</title>
+<meta name="robots" content="noindex,follow">
+{TABS_CSS}
+</head><body style="background:#0e0f11;color:#e8e9ec;font:400 15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;margin:0">
+{tabstrip("")}
+<div style="max-width:1100px;margin:0 auto;padding:44px 32px">
+<h1 style="font-size:32px;font-weight:600;letter-spacing:-.02em;margin:0 0 12px">Not found</h1>
+<p style="color:#9a9ca4">That address is not part of this site. The three that are:
+<a href="./" style="color:#8ab0ff">the packs</a>,
+<a href="audit.html" style="color:#8ab0ff">the audit</a> and
+<a href="method.html" style="color:#8ab0ff">the method</a>.</p>
+</div></body></html>"""
 
 
 def main() -> int:
@@ -352,7 +558,9 @@ def main() -> int:
     ap.add_argument("--out", default=str(ROOT / "_site"))
     args = ap.parse_args()
 
+    global gallery_mod
     gallery, auditor = load("gallery"), load("audit_packs")
+    gallery_mod = gallery
     packs = gallery.collect()
     stray = [p["name"] for p in packs if p["unresolved"]]
     if stray:
@@ -366,12 +574,10 @@ def main() -> int:
     stamp_date = git("log", "-1", "--format=%ad", "--date=short") or "1970-01-01"
     pages = {
         "index.html": index_page(packs, rows, stamp),
-        "packs.html": gallery.render(packs, public=True, meta=page_meta(
-            "SHELEG style packs — every pack in its own tokens",
-            "All the style packs, each card rendered in its own token layer: swatches, radius, "
-            "accent and type stack read out of the pack rather than described.",
-            f"{SITE}/packs.html")),
+        "method.html": method_page(packs, rows, stamp),
         "audit.html": audit_page(rows, stamp),
+        "packs.html": packs_alias(),
+        "404.html": not_found(),
         ".nojekyll": "",
         "robots.txt": robots_txt(),
         "sitemap.xml": sitemap_xml(stamp_date),

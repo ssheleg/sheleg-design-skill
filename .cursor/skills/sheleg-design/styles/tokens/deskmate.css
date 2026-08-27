@@ -58,6 +58,13 @@
      rules and it bars, and an icon that must be READ takes --ink-soft instead. */
   --ink-faint: #9693a3;
   --on-ink: #ffffff; /* 17.36:1 on --ink */
+  /* THE RULE THIS PACK CANNOT BE READ WITHOUT: --ink is for words on --bg, and
+     --on-surface is for words on --surface. On the light field the two are the same
+     value and the distinction looks decorative. On the dusk surface it is the whole
+     difference: --surface stays white there, measured, so a card that paints its text
+     in --ink paints white on white. Every component that sits on a card takes these. */
+  --on-surface: #1a182b; /* 17.36:1 on --surface */
+  --on-surface-soft: #716f7e; /* 4.91:1 on --surface */
 
   /* ---- The accent: it writes, it fills, and it needed no correction ---- */
   /* MEASURED. #6e47ff is the reference's purple-500 and its only functional accent:
@@ -121,9 +128,18 @@
   /* MEASURED — `ring-3` is 3px, and the ring's alpha IS its specification: 50% behind
      a control, 40% behind a field. Composited over white #ffffff the ring is
      #b6a3ff at 2.17:1, which is why the control's own border moves colour in the
-     same state. */
-  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--accent) 50%, transparent);
-  --focus-ring-field: 0 0 0 3px color-mix(in srgb, var(--accent) 40%, transparent);
+     same state.
+
+     THE LITERAL IS HERE AND THE DERIVED FORM IS IN THE `@supports` BLOCK AT THE END OF
+     THIS FILE, and the order is not a style preference. A custom property accepts
+     almost any token sequence, so `--focus-ring: color-mix(…)` parses even where
+     `color-mix()` is unsupported and wins the cascade; the invalidity surfaces only
+     where it is substituted, as invalid-at-computed-value-time, and by then the literal
+     is gone and `var(--focus-ring)` resolves to `unset` — an INVISIBLE FOCUS RING, on
+     the one degradation this pack says it may not ship. `showroom` is the worked
+     example this copies. */
+  --focus-ring: 0 0 0 3px rgba(110, 71, 255, 0.5);
+  --focus-ring-field: 0 0 0 3px rgba(110, 71, 255, 0.4);
 
   /* ---- Radii: a pill for the hand, a slab for the eye ----------------- */
   /* MEASURED at 1440: 977 of 1,191 visible elements compute 0px, 52 take the 32px
@@ -160,14 +176,20 @@
   --space-28: 112px; /* MEASURED — the section's own vertical rhythm */
 
   --page-max: 90rem; /* 1440px — MEASURED */
-  --gutter: 20px; /* MEASURED — and it steps 40, 56, 80 outward */
-  --gutter-wide: 80px; /* MEASURED at 1440 */
+  /* MEASURED, and the ramp ships as four tokens rather than as a sentence: the page's
+     gutter steps 20 → 40 → 56 → 80 across the reference's own breakpoints, and a step a
+     consumer cannot reach through a variable is a step the pack did not ship. */
+  --gutter: 20px;
+  --gutter-2: 40px; /* from 40rem */
+  --gutter-3: 56px; /* from 48rem */
+  --gutter-wide: 80px; /* from 64rem, and the value at 1440 */
   --control-h: 56px; /* MEASURED — the button and the field are the same height */
   --control-h-sm: 40px; /* MEASURED — the navigation's own pair, and see --tap-min */
   --control-px: 40px; /* MEASURED — 24px on the small size */
   /* The navigation slab is not a control and does not take a control's height:
-     MEASURED at 65px with a 30px bottom radius at 1440, and 57px at the narrow
-     width, inset 80px from each side of the page and 12px below 40rem. */
+     MEASURED at 65px with a 30px bottom radius at 1440 and 57px at the narrow width,
+     inset 40px from each side of the viewport and 12px below 40rem. That inset is the
+     SLAB's, and it is not the page's gutter — the gutter is 80px at the same width. */
   --slab-h: 65px;
   --slab-h-sm: 57px;
   --r-slab: 30px;
@@ -204,6 +226,13 @@
   --t-display-mid: 4.5rem; /* 72px from 40rem */
   --t-display-sm: 4rem; /* 64px below 40rem */
 
+  /* The reference holds its lede in a grid column and sets `max-width: none` on both
+     the headline and the paragraph, so these two are a PACK DECISION rather than a
+     measurement: the measure the reference implies, stated in `ch` so it survives the
+     face substitution below. */
+  --measure-lede: 62ch;
+  --measure-body: 68ch;
+
   --lh-display: 1.1; /* MEASURED — 88px on 80px */
   --lh-body: 1.4; /* MEASURED — 22.4px on 16px */
   --lh-ui: 1.5;
@@ -230,7 +259,12 @@
   --dur-fast: 0.15s; /* a colour, a border or an opacity */
   --dur-base: 0.2s; /* MEASURED — 23 elements */
   --dur-slow: 0.3s; /* MEASURED — 9 elements, a disclosure opening */
-  --dur-enter: 0.64s; /* MEASURED — the reference's own enter-duration token */
+  /* MEASURED, and the two halves of the measurement disagree by 60ms: the reference
+     DECLARES `--enter-duration` as .6s, .64s and .68s across three sections, while the
+     transition on the 19 entering elements COMPUTES 0.7s. The pack ships the declared
+     middle value, because that is the number the reference's own author chose and the
+     0.7s is one section's instance of it. */
+  --dur-enter: 0.64s;
   --stagger: 60ms; /* MEASURED — its enter-delay steps 0, 40, 60, 80, 120ms */
   --enter-y: 16px; /* MEASURED — the entrance travels 8px or 16px, never further */
 
@@ -294,6 +328,10 @@
      a muted icon here anyway, because its role is set by the light block. */
   --ink-faint: #9693a3;
   --on-ink: #150079;
+  /* A card on this surface stays WHITE — that is the measurement — so these two do NOT
+     invert with the field. They are the light block's values, and that is the point. */
+  --on-surface: #1a182b; /* 17.36:1 on --surface */
+  --on-surface-soft: #716f7e; /* 4.91:1 on --surface */
 
   --accent: #d2c6ff; /* 10.14:1 on --bg — SELECTED, the reference's own on-dusk eyebrow */
   --on-accent: #150079; /* 10.14:1 on --accent */
@@ -307,8 +345,12 @@
   --hairline-quiet: color-mix(in srgb, #ffffff 15%, var(--bg));
 
   --focus-color: #bcaaff; /* 7.90:1 on --bg, over the 3:1 mark floor */
-  --focus-ring: 0 0 0 3px color-mix(in srgb, #8b6cff 50%, transparent);
-  --focus-ring-field: 0 0 0 3px color-mix(in srgb, #8b6cff 40%, transparent);
+  /* MEASURED — the reference's on-dusk focus outline is its purple-400, and it is a
+     token here so the ring below derives from something rather than from a loose hex.
+     Literal first, derived in the `@supports` block, for the reason stated above. */
+  --focus-ring-base: #8b6cff;
+  --focus-ring: 0 0 0 3px rgba(139, 108, 255, 0.5);
+  --focus-ring-field: 0 0 0 3px rgba(139, 108, 255, 0.4);
   --gradient-word-fallback: #d2c6ff; /* 10.14:1 on --bg */
 
   /* DERIVED, and remapped rather than inherited: the light set measures 2.6-4.1:1 on
@@ -340,6 +382,22 @@
     --dur-enter: 0s;
     --stagger: 0ms;
     --enter-y: 0px;
+  }
+}
+
+/* THE LITERALS ABOVE ARE THE FALLBACK, AND THEY ONLY WORK FROM IN HERE. The derived
+   form tracks the accent — change `--accent` and the ring follows — which is what a
+   literal cannot do; the literal exists so that a browser without `color-mix()` still
+   paints a ring at all. Both fields get one. */
+@supports (color: color-mix(in srgb, red, red)) {
+  :root {
+    --focus-ring: 0 0 0 3px color-mix(in srgb, var(--accent) 50%, transparent);
+    --focus-ring-field: 0 0 0 3px color-mix(in srgb, var(--accent) 40%, transparent);
+  }
+
+  [data-surface="dusk"] {
+    --focus-ring: 0 0 0 3px color-mix(in srgb, var(--focus-ring-base) 50%, transparent);
+    --focus-ring-field: 0 0 0 3px color-mix(in srgb, var(--focus-ring-base) 40%, transparent);
   }
 }
 

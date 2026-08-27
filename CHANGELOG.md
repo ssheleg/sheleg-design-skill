@@ -6,6 +6,75 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.52.0] - 2026-08-27
+
+### The front door is the designs
+
+Opening the published catalogue used to mean reading three tiles and clicking one before
+seeing a single pack. It now opens **on the packs**, behind a tab strip of three real
+screens: **Designs** (the front door, and it is the gallery), **Audit** and **Method** —
+the prose that used to occupy the index. `packs.html` stays as a canonical alias for the
+URL the gallery lived at, because two URLs serving one gallery is duplicate content.
+
+The tabs are links to pages rather than panels toggled in one document, and that is the
+SEO decision, not a shortcut: one URL per screen, every screen fully in the HTML, nothing
+behind a click a crawler has to execute. `rel="prefetch"` buys the tab feel back.
+
+### What the SEO pass changed
+
+- **Structured data, with one publisher everybody points at.** A `CollectionPage` whose
+  `mainEntity` is an `ItemList` of all thirty-six packs, each with its own anchor
+  (`/#pack-<name>`), so an answer engine can lift the list without running the filter JS;
+  a `SoftwareApplication` on Method; `BreadcrumbList` on both sub-pages; and an
+  `Organization` node referenced by `@id` from every page. The family site shipped the
+  opposite of that for two releases — a publisher node nothing pointed at.
+- **A `404.html`**, a three-URL sitemap that lists only indexable screens, `llms.txt`
+  rewritten for the new shape, and `max-image-preview:large`, `color-scheme`,
+  `theme-color`, `og:site_name` and `og:locale` on every page.
+- **Two defects the pass found in the old pages:** `method.html` was emitting its
+  canonical and description **twice** (the shared `HEAD` and `page_meta` both fired), and
+  the published dark-field count was **wrong** — `gallery.py` could not parse
+  `oklch()`, so `briefing-room`'s near-black field read as light and the site, its
+  `llms.txt` and its gallery all said five dark packs where six ship.
+
+### `deskmate`, corrected by its own audit
+
+A blind read of the pack (T34a, which also routed correctly and rejected `tenor` on the
+quoted clause) found nine defects. The important one is a colour pairing no gate can see:
+`--surface` stays white on the dusk surface while `--ink` inverts to white, so **a card
+that painted its heading in `--ink` painted white on white** inside an inverted section.
+The pack now ships `--on-surface` and `--on-surface-soft` — words on a card take those,
+words on the field take `--ink` — and the kit consumes them.
+
+Also fixed: the focus ring shipped derived-only, so a browser without `color-mix()` got
+**no ring at all** (literal first now, derived inside `@supports`, the mechanism
+`showroom` established); the slab's inset was 40px in the pack and 80px in the token
+layer; the gutter ramp stated four steps and shipped two tokens; the measure stated in
+prose (62ch/68ch) had no token; the entrance duration's two measurements (0.64s declared,
+0.7s computed) were never reconciled; "the smallest radius that ships" and "every control
+is 56px" were both contradicted by the pack's own body; and the provenance promise was
+broader than the layer delivers.
+
+One finding was rejected: `deskmate` is absent from `MOTION_DOCTRINE.md`'s ceiling
+passage, and that passage is a named selection whose home the gate declares to be the
+pack's own Register.
+
+### A count nothing could check, and now can
+
+`SURFACE_COMPOSITION.md` claimed `--accent` in **twenty-nine** of the packs at a true
+**thirty-three**, and named two of the three packs that call the accent something else —
+omitting `babylove` entirely, so a reader following that sentence would look for a token
+that pack does not have. `validate_counted_claims` cannot read a count whose noun is
+"packs that declare a token", so `validate_token_population_counts` now derives both that
+figure and the `@role non-text:` population from the token layers, and refuses a pack
+that declares neither an `--accent` nor an `@role accent:` marker. The same sweep found
+`SKILL.md` still saying "the twenty-nine".
+
+### Ratchets
+
+`validate.py` 5047 → 5060, `validate_palette.py` 3013 → 3023, `computed_at_least`
+686 → 691. Thirteen of the first delta are the new gate.
+
 ## [1.51.1] - 2026-08-27
 
 ### `deskmate`, the thirty-sixth pack — a colleague, quoted
