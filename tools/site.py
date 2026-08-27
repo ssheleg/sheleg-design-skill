@@ -116,6 +116,10 @@ TABS_CSS = """<style>
    (44px of tab plus its 1px rule). The selector carries `body` because the gallery's
    stylesheet is emitted after this one. */
 body .controls{top:45px}
+/* Same rule, same reason: the audit table's sticky header would slide under the tab
+   strip. Both offsets are the strip's own height plus its rule, and there are exactly
+   two sticky things on this site besides the strip. */
+body table th{top:45px}
 </style>"""
 
 
