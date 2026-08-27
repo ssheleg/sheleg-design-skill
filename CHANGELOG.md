@@ -6,6 +6,56 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.51.0] - 2026-08-27
+
+### `deskmate`, the thirty-sixth pack — a colleague, quoted
+
+Extracted from a front page for an AI employee that works inside a chat client, read
+off computed styles at 1440×900 (1,191 visible of 1,888 elements on a 10,211px page)
+plus four more pages for the components the front page does not paint: the form field,
+the search shell, the dusk surface, and the reference's own published brand page.
+
+**What the pack contributes.** One light source, and it is above the top edge: every
+gradient origin in the reference's own library sits at or above `y=0`, and every one of
+them runs the same four stops — peach, lilac, violet, deep navy. One ramp does three
+jobs (a field bleed, a panel fill, and one word of a heading through
+`background-clip: text`), everything a hand touches is a 56px pill against 32px slabs,
+and elevation is a field step: 68 white fills on a beige field, 51 hairlines, and two
+shadows on the whole page.
+
+**The signature element is a framed transcript**, and the mechanism worth having is its
+quarantine: the quoted chat client keeps its own face, its own ink and its own two
+status colours under a `--quoted-*` namespace, so a status dot cannot reach a third
+party's palette by accident. The frame's radius is concentric and the reference computes
+it at runtime — 47.319px outside, a 15px inset, 32.254px inside — which the pack ships
+as `--r-frame: 48px` and `calc(48px - 15px)`.
+
+**Four corrections travel with it.** The `aria-invalid` border misses the 3:1 boundary
+floor by 0.03 (`#b5856c` is 2.97:1 on the field `#faf5f1`); the icon grey is 2.77:1 on
+that field and is declared non-text; 47 interactive elements render under 44px at the
+narrow width; and the light status set measures 2.6–4.1:1 on the dusk field, so that
+surface carries its own four. The status set is lifted out of the quoted transcript
+rather than invented — the brand layer paints no state at all — and `--info` is an alias
+of `--accent` on purpose.
+
+### The render caught four things no gate could
+
+The `deskmate` kit was mounted and rendered at 1440, 768 and 390, then read back
+through `getComputedStyle`, per CONTRIBUTING step 8. It found: a navigation slab that kept its link row to 390px and
+pushed its trailing control to **515px against a 390px page**; a secondary control on
+the dusk surface painting **white on white**, because a card there stays white by
+measurement and the control had inherited the card's fill; an accent chip label at
+**3.36:1** on the composited dusk wash, where the brighter step is 6.18:1; and every
+anchor-shaped control carrying the UA's underline. All four are fixed, and the slab's
+collapse is now stated in the pack.
+
+### Ratchets
+
+`validate.py` 4882 → 5047, `validate_palette.py` 2875 → 3013, `sloplint.py` 720 → 734,
+and `computed_at_least` 628 → 686. Both ratio ceilings held for the fourth consecutive
+release; two claims that landed unpairable on the first run were rewritten rather than
+pinned.
+
 ## [1.50.3] - 2026-08-26
 
 ### The shared seam is explicit

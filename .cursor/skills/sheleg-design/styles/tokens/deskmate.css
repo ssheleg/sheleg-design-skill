@@ -1,0 +1,353 @@
+/* SHELEG Design — Deskmate token layer (a warm working day lit from above the top
+   edge, where the product's own messages are the page's illustrations).
+   Copy verbatim; consume only var(--…) in components.
+
+   Extracted from https://viktor.com on 2026-08-27 — the front page of an AI employee
+   that lives in a chat client. The site is Next.js: three authored stylesheets
+   totalling 364,905 bytes, and there is no vendor layer to separate out. Values were
+   read off COMPUTED styles on the live page through CDP at 1440x900 — 1,191 visible of
+   1,888 elements on a 10,211px page — plus /contact-sales for the form field,
+   /integrations for the search shell and the empty result, /business for the dusk
+   surface, and /brand, which publishes the palette and the two faces by name. Narrow
+   behaviour was read at 500x844, which is Chrome's minimum window width on macOS; no
+   breakpoint sits between 390 and 500, so that is the same sub-640 branch a phone
+   takes. Ratios were computed by importing this repository's own palette gate.
+
+   THE PRINCIPLE, and it is measurable: there is ONE light source and it sits above the
+   top edge of whatever it lights. Every gradient in the reference's own token library
+   originates at or above y=0 — `at 50% 0%`, `at 52.06% -4.35%`, `at 39.65% 0%`,
+   `at 31.42% -99.18%` — and every one of them runs the same four stops: peach, lilac,
+   violet, navy. One ramp, three jobs: it washes the field under the fold, it fills a
+   panel, and with `background-clip: text` it fills one word of a heading.
+
+   Elevation is a field step, not a shadow. 68 white fills sit on a beige field with 51
+   hairlines between them, and the whole 10,211px page carries TWO shadows: a 5%
+   whisper under the signature panel and one purple bloom.
+
+   Three families of value appear below:
+
+   MEASURED — the literal was computed on the live page.
+   SELECTED — the reference ships no such role; the value is a step of a ramp it
+   already carries, taken deep enough to clear AA on this field.
+   DERIVED — computed from a token here, because the reference's own value fails a
+   floor. Only lightness moves.
+
+   The corrections are in the pack's Gotchas, and there are four. */
+
+:root {
+  color-scheme: light;
+
+  /* ---- The working day ------------------------------------------------- */
+  /* MEASURED. The beige carries the page (11 wide fills), white carries every card
+     and the navigation slab (68 fills), and the purple wash carries the eyebrow and
+     the badge (5). The reference's own names for the first three are
+     main-beige / main-white / purple-50. */
+  --bg: #faf5f1;
+  --surface: #ffffff; /* MEASURED — 68 fills, and the only elevation this pack has */
+  --surface-2: #fcfaf9; /* MEASURED — the reference's beige-light, a panel on the field */
+  --wash: #f1edff; /* MEASURED — the badge and eyebrow tint, and the accent's own wash */
+
+  /* ---- Ink: one near-black and two greys, and one of them is not text -- */
+  /* MEASURED. The ink is on 5 fills and every dark word on the page; the soft grey is
+     the reference's text-secondary; the faint grey is its icon-primary and its
+     placeholder bar, and it does not clear the mark floor. */
+  --ink: #1a182b; /* 16.04:1 on --bg, 17.36:1 on --surface */
+  --ink-soft: #716f7e; /* 4.53:1 on --bg, 4.91:1 on --surface */
+  /* @role non-text: --ink-faint — MEASURED on 12 placeholder bars and every muted
+     icon. #9693a3 is 2.77:1 on the field #faf5f1 and 3.00:1 on white #ffffff, so it
+     rules and it bars, and an icon that must be READ takes --ink-soft instead. */
+  --ink-faint: #9693a3;
+  --on-ink: #ffffff; /* 17.36:1 on --ink */
+
+  /* ---- The accent: it writes, it fills, and it needed no correction ---- */
+  /* MEASURED. #6e47ff is the reference's purple-500 and its only functional accent:
+     4.84:1 on the field #faf5f1 and 5.24:1 under white, so one token carries the word
+     and the fill. --accent-deep is the eyebrow's own text colour; --accent-lift is the
+     gradient's lilac stop and the accent's on-dusk twin. */
+  --accent: #6e47ff;
+  --on-accent: #ffffff; /* 5.24:1 on --accent */
+  --accent-deep: #4e32b5; /* 7.93:1 on --bg — MEASURED, the eyebrow's text */
+  --accent-lift: #9e84ff; /* MEASURED — the ramp's lilac stop */
+  --accent-wash: var(--wash); /* MEASURED — the wash IS the accent's tint */
+  /* @role non-text: --peach — MEASURED as the reference's second brand colour and its
+     ramp's warm stop. #ffbb98 is 1.51:1 on the field #faf5f1: it is a gradient stop, a
+     star and a rule, and it is never a word on this field. */
+  --peach: #ffbb98;
+  --dusk: #150079; /* MEASURED — the ramp's last stop, and the dusk surface's field */
+
+  /* ---- The one ramp, and its origin is above the top edge -------------- */
+  /* MEASURED off the reference's own gradient library. --gradient-dawn is the hero
+     bloom on the light field (its `at 52% 9rem` is the only origin inside the box, and
+     it is 9rem down a 919px section, so it still reads as light from above);
+     --gradient-dusk is the four-stop ramp that fills a panel and one heading word;
+     --gradient-fold is the field bleed under the first screen. */
+  --gradient-dawn: radial-gradient(70% 44% at 52% 9rem,
+    color-mix(in srgb, var(--peach) 72%, transparent) 0%,
+    color-mix(in srgb, var(--accent-lift) 18%, transparent) 51%,
+    color-mix(in srgb, var(--bg) 0%, transparent) 92%);
+  --gradient-dusk: radial-gradient(283% 201% at 31% -99%,
+    var(--peach) 0%, var(--accent-lift) 51%, var(--accent) 80%, var(--dusk) 100%);
+  --gradient-fold: radial-gradient(120% 140% at 55% 0%,
+    var(--peach) 0%, var(--accent-lift) 50%, var(--dusk) 100%);
+  /* The gradient word takes this fill with `background-clip: text` — and it takes
+     --gradient-word-fallback as its `color` FIRST, because a browser that cannot clip
+     a background to text paints transparent letters otherwise. The reference declares
+     exactly this fallback and it is the reason its headline never disappears. */
+  --gradient-word: var(--gradient-dusk);
+  --gradient-word-fallback: #6748fd; /* MEASURED — 4.95:1 on --bg */
+
+  /* ---- Hairlines: 1.25px, and they are alphas of the ink --------------- */
+  /* MEASURED. Every border on the page is 1.25px — the reference declares it as
+     border-main — and its colour is the ink at 8%, 10% or 12%. Composited they are
+     1.17:1, 1.22:1 and 1.28:1 on white, far below the 3:1 mark floor, which is correct
+     for a hairline and is why the pack's Bans require a second separator. */
+  --rule-w: 1.25px;
+  /* @role drawn-on: --surface, --bg — a hairline is for the card and the field, and
+     it is never asked to separate two ramp stops. */
+  --hairline: color-mix(in srgb, var(--ink) 8%, var(--surface));
+  --hairline-strong: color-mix(in srgb, var(--ink) 12%, var(--surface));
+  --hairline-quiet: color-mix(in srgb, var(--ink) 5%, var(--surface));
+
+  /* ---- Elevation: two shadows on a 10,211px page ----------------------- */
+  /* MEASURED, and the count is the point. --shadow-panel is the whisper under the
+     signature frame; --glow-bloom is the one purple bloom on the page. A third shadow
+     is a defect in this pack, not a tier. */
+  --shadow-panel: 0 3.863px 17.769px 0 color-mix(in srgb, #000000 5%, transparent);
+  --glow-bloom: 0 0 16px 8px color-mix(in srgb, #2e1e6b 8%, transparent);
+
+  --focus-w: 1.25px; /* MEASURED — focus moves the control's own border colour */
+  --focus-offset: 2px; /* MEASURED — the ghost control's ring offset */
+  --focus-color: var(--accent); /* 4.84:1 on --bg, over the 3:1 mark floor */
+  /* MEASURED — `ring-3` is 3px, and the ring's alpha IS its specification: 50% behind
+     a control, 40% behind a field. Composited over white #ffffff the ring is
+     #b6a3ff at 2.17:1, which is why the control's own border moves colour in the
+     same state. */
+  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--accent) 50%, transparent);
+  --focus-ring-field: 0 0 0 3px color-mix(in srgb, var(--accent) 40%, transparent);
+
+  /* ---- Radii: a pill for the hand, a slab for the eye ----------------- */
+  /* MEASURED at 1440: 977 of 1,191 visible elements compute 0px, 52 take the 32px
+     card, 48 take the 14px row, 43 are fully round and 26 take the 36.4px section.
+     The ramp is proportional from a 14px root — the reference's own radius, times
+     0.6, 1.4, 1.8 and 2.6 — and the card's 32px is a literal beside it, on 33
+     elements. Both are in this layer because both ship. */
+  --r-root: 0.875rem; /* 14px — MEASURED, the disclosure row and the small tile */
+  --r-sm: calc(var(--r-root) * 0.6); /* 8.4px */
+  --r-chip: calc(var(--r-root) * 1.4); /* 19.6px — MEASURED on 4 chips */
+  --r-shell: calc(var(--r-root) * 1.8); /* 25.2px — MEASURED, the search shell */
+  --r-section: calc(var(--r-root) * 2.6); /* 36.4px — MEASURED on 26 section slabs */
+  --r-card: 32px; /* MEASURED — the literal the reference writes 33 times */
+  --r-frame: 48px; /* MEASURED as 47.319px at 1440, computed inline by script */
+  --r-pill: 999rem; /* MEASURED — every control the hand touches */
+  /* The frame's inner window is CONCENTRIC, not a second radius token: with a known
+     15px inset, inner = outer - inset = 48px - 15px = 33px. The reference computes
+     47.319 and 32.254 at runtime, which is the same subtraction one pixel down. */
+  --frame-inset: 15px;
+  --r-frame-inner: calc(var(--r-frame) - var(--frame-inset)); /* 33px */
+  --frame-ring-w: 4px; /* MEASURED — the white ring around the frame */
+
+  /* ---- Spacing, the page and the hand --------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-14: 56px;
+  --space-20: 80px;
+  --space-28: 112px; /* MEASURED — the section's own vertical rhythm */
+
+  --page-max: 90rem; /* 1440px — MEASURED */
+  --gutter: 20px; /* MEASURED — and it steps 40, 56, 80 outward */
+  --gutter-wide: 80px; /* MEASURED at 1440 */
+  --control-h: 56px; /* MEASURED — the button and the field are the same height */
+  --control-h-sm: 40px; /* MEASURED — the navigation's own pair, and see --tap-min */
+  --control-px: 40px; /* MEASURED — 24px on the small size */
+  /* The navigation slab is not a control and does not take a control's height:
+     MEASURED at 65px with a 30px bottom radius at 1440, and 57px at the narrow
+     width, inset 80px from each side of the page and 12px below 40rem. */
+  --slab-h: 65px;
+  --slab-h-sm: 57px;
+  --r-slab: 30px;
+  /* CORRECTION, not a measurement: 47 interactive elements render under 44px tall at
+     the narrow width, including the navigation toggle at 48x32. */
+  --tap-min: 44px;
+
+  /* ---- Type: two brand faces, and a third that belongs to the client -- */
+  /* MEASURED — Gellix on 198 text nodes, Ulm Grotesk on 31, Lato on 36. The third one
+     is not the brand's: it is the chat client's face, used only inside the quoted
+     transcript so the mock reads as the real product. Keeping it out of the page is
+     what keeps the quote a quote.
+
+     Ulm Grotesk and Gellix are licensed faces. The open substitutes named second are a
+     PACK DECISION, not a measurement: Outfit is the closest geometric grotesque with
+     the reference's single-storey `a`, and Figtree holds a 16px/1.4 paragraph at
+     weight 500 without widening it. Whoever licenses the originals should use them. */
+  --font-display: "Ulm Grotesk", "Outfit", "Poppins", ui-sans-serif, sans-serif;
+  --font-body: "Gellix", "Figtree", ui-sans-serif, system-ui, sans-serif;
+  --font-quoted: "Lato", "Helvetica Neue", Arial, sans-serif;
+
+  /* The most frequent size on the page is 14px (88 nodes); the reading size is 16px
+     (57). Display steps rather than flows: 64px, then 72px at 40rem, then 80px at
+     80rem — the reference ships four clamp() calls and not one of them is a type
+     size. */
+  --t-micro: 0.75rem; /* 12px — 29 nodes, the caps label */
+  --t-sm: 0.875rem; /* 14px — 88 nodes, the most frequent size */
+  --t-body: 1rem; /* 16px — the reading size */
+  --t-lede: 1.25rem; /* 20px */
+  --t-row: 1.125rem; /* 18px — 30 nodes, the disclosure row */
+  --t-h3: 1.5rem;
+  --t-h2: 3rem; /* 48px — MEASURED */
+  --t-display: 5rem; /* 80px at 80rem and above — MEASURED */
+  --t-display-mid: 4.5rem; /* 72px from 40rem */
+  --t-display-sm: 4rem; /* 64px below 40rem */
+
+  --lh-display: 1.1; /* MEASURED — 88px on 80px */
+  --lh-body: 1.4; /* MEASURED — 22.4px on 16px */
+  --lh-ui: 1.5;
+
+  /* Tracking is one-sided here and it is the display's: -0.06em, which is -4.8px on
+     80px. The controls are pulled in a tenth as far and the caps label is the only
+     thing pushed open. */
+  --track-display: -0.06em; /* MEASURED */
+  --track-control: -0.01em; /* MEASURED — -0.16px on 16px */
+  --track-caps: 0.01em; /* MEASURED — 0.12px on 12px, on 21 nodes */
+
+  --weight-body: 500; /* MEASURED — 146 nodes, and 400 is what an unset weight gives */
+  --weight-regular: 400; /* MEASURED — 77 nodes, and the display's own weight */
+  --weight-strong: 700; /* MEASURED — 36 nodes: section headings and micro labels */
+
+  /* ---- Motion: two clocks, and no scroll clock ------------------------ */
+  /* MEASURED. 1,010 of 1,191 visible elements compute transition-duration: 0s. Of the
+     181 that move, 115 run 0.15s on the state ease and 19 run 0.7s on the entrance
+     ease. `animation-timeline` appears zero times in 364,905 bytes and exactly one
+     element is fixed. */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1); /* MEASURED — the state clock, 115 elements */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1); /* MEASURED — the entrance, 19 elements */
+  --dur-press: 0.15s; /* MEASURED, and inside the doctrine's 100-160ms press band */
+  --dur-fast: 0.15s; /* a colour, a border or an opacity */
+  --dur-base: 0.2s; /* MEASURED — 23 elements */
+  --dur-slow: 0.3s; /* MEASURED — 9 elements, a disclosure opening */
+  --dur-enter: 0.64s; /* MEASURED — the reference's own enter-duration token */
+  --stagger: 60ms; /* MEASURED — its enter-delay steps 0, 40, 60, 80, 120ms */
+  --enter-y: 16px; /* MEASURED — the entrance travels 8px or 16px, never further */
+
+  /* ---- Status: lifted out of the quoted transcript ------------------- */
+  /* The brand layer paints no state at all. The ONE place the reference paints one is
+     inside the chat mock, in the client's palette — an approve green #007c58, a
+     mention blue #1264a3, a reject border #cecece — and those belong to the quote.
+     So --good is that green, which clears AA unchanged; --warn and --danger are
+     SELECTED from ramps the reference itself declares (its yellow and its orange); and
+     --info is deliberately the accent, because informational IS the brand violet here
+     and inventing a fifth hue would be inventing a value.
+
+     Searched rather than chosen: every pair across the four roles and the accent
+     clears the 10-unit hard floor at full colour, and all but one clears 15 at full
+     colour and 8 under protanopia, deuteranopia and tritanopia. The exception is
+     --warn against --danger, 6.4 under protanopia and 5.2 under deuteranopia, which
+     is what a yellow and a red do to red-blind vision at any lightness — and it is why
+     this pack states that status is never carried by colour alone. */
+  --good: #007c58; /* 4.82:1 on --bg, 5.22:1 on --surface, 4.55:1 on --wash */
+  --warn: #8a5b00; /* 5.42:1 on --bg, 5.87:1 on --surface, 5.12:1 on --wash */
+  --danger: #d0202f; /* 4.94:1 on --bg, 5.34:1 on --surface, 4.66:1 on --wash */
+  --info: var(--accent); /* an alias on purpose — 4.84:1 on --bg */
+  --on-status: #ffffff; /* 5.22:1 on --good, 5.87:1 on --warn, 5.34:1 on --danger */
+
+  /* ---- The quoted transcript's own palette, quarantined --------------- */
+  /* MEASURED off the mock, and every one of these is the CHAT CLIENT's colour rather
+     than the brand's. They are namespaced so they cannot leak into the page: a status
+     dot that reaches for --quoted-mention is painting a third party's UI. */
+  --quoted-bg: #ffffff;
+  --quoted-ink: #0d061e; /* 19.78:1 on --quoted-bg */
+  --quoted-mention: #1264a3; /* 5.59:1 on --quoted-mention-bg */
+  --quoted-mention-bg: #e8f5fa;
+  --quoted-approve: #007c58; /* 5.22:1 on --quoted-bg */
+  --quoted-reject-line: #cecece;
+  --quoted-avatar-bg: #d2c6ff;
+  --quoted-bar: var(--ink-faint); /* the placeholder row, 4px radius, 17px tall */
+
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: var(--weight-body);
+  line-height: var(--lh-body);
+}
+
+/* The dusk surface. MEASURED off /business, where the reference puts its `dark` class
+   on an article, on a section and on a 371x56 button group — which is what makes this
+   a SURFACE variant and not a theme twin: there is no toggle, `prefers-color-scheme`
+   appears zero times in 364,905 bytes, and the page above the section is untouched.
+   The ink inverts to white, the primary control inverts to a white fill with an ink
+   label, and the accent LIGHTENS or it cannot carry a word: #6e47ff is 3.06:1 on this
+   field and #d2c6ff is 10.14:1. */
+[data-surface="dusk"] {
+  --bg: #150079;
+  --surface: #ffffff; /* MEASURED — a card on the dusk field stays white */
+  --surface-2: color-mix(in srgb, #ffffff 10%, #150079); /* MEASURED — the reference's own */
+  --wash: color-mix(in srgb, #ffffff 20%, #150079);
+
+  --ink: #ffffff; /* 16.06:1 on --bg */
+  --ink-soft: #d3cfe5; /* 10.57:1 on --bg — MEASURED, the reference's grey-lighter */
+  /* #9693a3 clears AA on the dusk field — 5.35:1 on #150079 — and it stays a bar and
+     a muted icon here anyway, because its role is set by the light block. */
+  --ink-faint: #9693a3;
+  --on-ink: #150079;
+
+  --accent: #d2c6ff; /* 10.14:1 on --bg — SELECTED, the reference's own on-dusk eyebrow */
+  --on-accent: #150079; /* 10.14:1 on --accent */
+  --accent-deep: #9e84ff; /* 5.50:1 on --bg */
+  --accent-lift: #bcaaff; /* 7.90:1 on --bg */
+  --accent-wash: color-mix(in srgb, #ffffff 20%, #150079);
+  --dusk: #150079;
+
+  --hairline: color-mix(in srgb, #ffffff 20%, var(--bg)); /* MEASURED — white at 20% */
+  --hairline-strong: color-mix(in srgb, #ffffff 30%, var(--bg));
+  --hairline-quiet: color-mix(in srgb, #ffffff 15%, var(--bg));
+
+  --focus-color: #bcaaff; /* 7.90:1 on --bg, over the 3:1 mark floor */
+  --focus-ring: 0 0 0 3px color-mix(in srgb, #8b6cff 50%, transparent);
+  --focus-ring-field: 0 0 0 3px color-mix(in srgb, #8b6cff 40%, transparent);
+  --gradient-word-fallback: #d2c6ff; /* 10.14:1 on --bg */
+
+  /* DERIVED, and remapped rather than inherited: the light set measures 2.6-4.1:1 on
+     this field. Each hue is held and only lightness moves, then the set was searched
+     the way the light one was — here every pair clears 15 units at full colour and
+     10.4 under protanopia, deuteranopia and tritanopia, with no tight pair at all. */
+  --good: #8affd6; /* 13.27:1 on --bg */
+  --warn: #ffdf7a; /* 12.30:1 on --bg */
+  --danger: #ff7f7f; /* 6.57:1 on --bg */
+  --info: #d2c6ff; /* 10.14:1 on --bg */
+  --on-status: #150079; /* 13.27:1 on --good, 12.30:1 on --warn, 6.57:1 on --danger */
+
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+/* The reference ships eleven reduced-motion branches and they are the right shape:
+   a marquee stops at a static offset rather than snapping to zero, a gradient word
+   keeps its fill by restoring `-webkit-text-fill-color`, and an entrance resolves to
+   `opacity: 1; transform: none`. This block finishes the job by collapsing every
+   duration, so a control still changes colour and still shows its focus ring while
+   nothing travels. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-press: 0s;
+    --dur-fast: 0s;
+    --dur-base: 0s;
+    --dur-slow: 0s;
+    --dur-enter: 0s;
+    --stagger: 0ms;
+    --enter-y: 0px;
+  }
+}
+
+/* Body copy here is weight 500 on 146 nodes, and an unset `font-weight` gives 400 —
+   one step light across the whole page. The UA's own 700 for `strong` and `b` is a
+   step the other way and lands on the display's heading weight, so emphasis is pinned
+   to the token rather than left to the browser. */
+strong,
+b {
+  font-weight: var(--weight-strong);
+}

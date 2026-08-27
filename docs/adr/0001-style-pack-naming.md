@@ -137,6 +137,27 @@
   drafting media, which is what makes the fork between them easy to hold. The address
   is in the pack's `Origin:`.
 
+- **Applied again:** 2026-08-27. The thirty-sixth pack was extracted from
+  `viktor.com` and is named **`deskmate`** for the register it encodes — a product sold
+  as a colleague rather than a tool, proven by the conversation it works in — not
+  `viktor`. Another run opening on an address and the words *"разбери сайт и создай
+  новый пак дизайна"*, answered by pointing here before a file was written. Four
+  alternatives were weighed and rejected on this ADR's own criteria. **`dayshift`** was
+  the closest and names both halves — a work shift and the colour shift that is the
+  pack's signature — and it collides with `daylight` on the prefix and inside the
+  times-of-day family, which is the ground `lobby` was rejected on against `atrium` and
+  `switchboard` against `scoreboard`. **`shoptalk`** is the most precise word for the
+  mechanism, and "Shoptalk" is a live retail-conference brand, which the *no trademark
+  surface* clause covers, besides reading as commerce next to `awning`. **`bullpen`**
+  names the room the staff sit in and collides with `briefing-room` in the
+  room-name family, the criterion that rejected `engine-room`. **`clerestory`** is the
+  best word for the pack's measured light rule — every gradient origin sits at or above
+  the top edge — and it names a *texture*, the ground `pegboard` and `quadrille` were
+  rejected on, and it sits in `atrium`'s daylight-architecture family besides. The
+  `-light` suffix was closed to it by `daylight` and `rimlight` already holding it.
+  `deskmate` names the register and, through it, when to choose it: the page's subject
+  is a colleague. The address is in the pack's `Origin:`.
+
 - **Corrected:** 2026-08-10. The Decision section named the seventh pack
   `lecture-hall`. That was the name on the branch this ADR was written on, and
   that branch never merged; the pack that shipped from graphify.com is
