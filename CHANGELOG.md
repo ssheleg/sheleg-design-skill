@@ -59,6 +59,15 @@ One finding was rejected: `deskmate` is absent from `MOTION_DOCTRINE.md`'s ceili
 passage, and that passage is a named selection whose home the gate declares to be the
 pack's own Register.
 
+### `onionskin` gets the same focus-ring guard
+
+The audit that read `deskmate` measured the whole library for the same shape: three
+packs derive a focus ring, and only `showroom` guarded it. `onionskin`'s ring was
+`color-mix()`-only, so a browser without `color-mix()` painted **no ring at all** — the
+one degradation both packs say they may not ship. The literal now sits in `:root` and the
+derived form in an `@supports` block; no computed value changed, and its kit's token
+block was resynced with it.
+
 ### A count nothing could check, and now can
 
 `SURFACE_COMPOSITION.md` claimed `--accent` in **twenty-nine** of the packs at a true

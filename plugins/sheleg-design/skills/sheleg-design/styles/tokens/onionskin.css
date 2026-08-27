@@ -108,8 +108,15 @@
   --shadow-hair: 0 1px 0 0 color-mix(in srgb, var(--ink) 6%, transparent); /* MEASURED */
   --shadow-lift: 0 32px 64px -24px color-mix(in srgb, var(--ink) 28%, transparent); /* MEASURED — once */
 
-  --focus-ring: 0 0 0 4px color-mix(in srgb, var(--accent) 10%, transparent),
-                0 4px 10px -3px color-mix(in srgb, var(--accent) 45%, transparent); /* MEASURED */
+  /* MEASURED, and declared LITERAL FIRST with the derived form in the `@supports` block
+     at the end of this file. The order is the guard, not a style: a custom property
+     accepts almost any token sequence, so a `color-mix()` value parses even where
+     `color-mix()` is unsupported and wins the cascade; it fails only at substitution, by
+     which point the literal is gone and `var(--focus-ring)` resolves to `unset` — an
+     invisible focus ring. Added 1.52.0; `showroom` is the pack that established the
+     mechanism and `deskmate` carries the same guard. */
+  --focus-ring: 0 0 0 4px rgba(5, 98, 239, 0.1),
+                0 4px 10px -3px rgba(5, 98, 239, 0.45);
   --focus-w: 2px;
   --focus-offset: 2px;
   --focus-color: var(--accent); /* 5.25:1 on --bg, over the 3:1 mark floor */
@@ -259,6 +266,16 @@
     --dur-fast: 0s;
     --dur-base: 0s;
     --dur-slow: 0s;
+  }
+}
+
+/* THE LITERALS ABOVE ARE THE FALLBACK, AND THEY ONLY WORK FROM IN HERE. The derived form
+   tracks `--accent`; the literal exists so a browser without `color-mix()` still paints a
+   ring at all. The dark band inherits this ring, and its lighter accent with it. */
+@supports (color: color-mix(in srgb, red, red)) {
+  :root {
+    --focus-ring: 0 0 0 4px color-mix(in srgb, var(--accent) 10%, transparent),
+                  0 4px 10px -3px color-mix(in srgb, var(--accent) 45%, transparent);
   }
 }
 
