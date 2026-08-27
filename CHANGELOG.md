@@ -70,6 +70,19 @@ figure and the `@role non-text:` population from the token layers, and refuses a
 that declares neither an `--accent` nor an `@role accent:` marker. The same sweep found
 `SKILL.md` still saying "the twenty-nine".
 
+### The scenario that produced all of this, and the half of it that did not run
+
+`T34` is the behavioural scenario shipped with `deskmate`, and 1.52.0 is the first
+release where one of these branches was actually run rather than filed. **`T34a`
+passed**: it routed to the pack, quoted the deciding clause, rejected `tenor` on the
+clause that rules it out, and stayed inside the bundle directory. It then did the half
+these scenarios have always asked for and never exercised — read the chosen pack in full
+and report defects with quotes — and returned nine, eight of which are fixed above.
+
+**`T34b`, the negative branch, terminated on an account spend limit before reporting a
+verdict, and is not counted as a result.** A positive-only pass cannot detect the failure
+that branch exists to detect. `test/scenarios.md` records both outcomes.
+
 ### Ratchets
 
 `validate.py` 5047 → 5060, `validate_palette.py` 3013 → 3023, `computed_at_least`

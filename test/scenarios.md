@@ -1497,8 +1497,25 @@ standing instruction 4.
 Both branches are also asked, after choosing, to read their chosen pack in full and
 report defects with file and quoted text.
 
-**Result: NOT YET RUN.** The pack, its token layer and its kit shipped in 1.51.0 with
-all three gates green and the kit rendered at three widths; this scenario is the
-behavioural half and `validate.py` does not read this file, so nothing above has been
-observed. Like `T31`, `T32` and `T33`, it is an obligation on the record rather than a
-result.
+**Result: T34a PASSED on 2026-08-27. T34b did not run to completion.**
+
+`T34a` routed to `styles/deskmate.md`, quoted the `## Register` clause that decided it
+(*"products sold as a colleague rather than a tool … a page whose proof is a
+conversation"*), named `tenor` as the closest rejected pack with the clause that ruled it
+out, and additionally rejected `pigeonhole` and `cyclorama` on their own Register clauses.
+Blindness held: its reported file list sits inside the bundle directory and names no
+`test/`, `docs/`, `kits/`, README or CHANGELOG read.
+
+It also did what the second half of every one of these scenarios asks and no previous run
+had produced: it read the chosen pack in full and returned **nine defects with quotes**.
+Eight were confirmed and fixed in 1.52.0 — the white-on-white card on the dusk surface
+being the one no gate can see — and one was rejected on this repository's own rule
+(`deskmate`'s absence from `MOTION_DOCTRINE.md`'s ceiling passage, which is a named
+selection whose home the gate declares to be the pack's `Register`). That is recorded
+here because it is the finding: **the defect-reading half of these scenarios is worth more
+than the routing half**, and until this run nothing had exercised it.
+
+`T34b`, the negative branch, terminated on an account spend limit after choosing its route
+and before reporting a verdict, so **it is not a result and is not counted as one**. The
+branch stands and needs re-running: a positive-only pass cannot detect the failure it
+exists to detect, per standing instruction 4.
