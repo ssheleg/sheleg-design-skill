@@ -37,7 +37,12 @@ is a scoreboard reading zero. A surface where the numbers are the user's own
 working data rather than a claim about outcomes: that is the dashboard, and it
 belongs to [`workbench`](./workbench.md). A page whose subject is a screenshot
 rather than a total — `showroom`. A developer page whose argument is the API call
-rather than the outcome it produced — [`manpage`](./manpage.md). Anything editorial or premium-consumer: the
+rather than the outcome it produced — [`manpage`](./manpage.md). A page on the
+same warm paper with the same orange-red family whose subject is **the machine the
+numbers live in, handed over live** — metric tiles as vital signs around an
+embedded product rather than one total growing in public — is
+[`test-drive`](./test-drive.md); there the accent both fills the one CTA and
+lights it, where this pack's accent may never carry a word. Anything editorial or premium-consumer: the
 pixel numerals read as arcade furniture the moment there is no metric under them.
 
 ### The fork against [`field-notes`](./field-notes.md)

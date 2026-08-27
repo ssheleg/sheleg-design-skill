@@ -36,7 +36,11 @@ nobody trusts.
 
 **Not for:** a product with nothing live to show — if the argument is a whole
 application surface at real size, that is [`showroom`](./showroom.md); if it is a
-change of state rather than a reading, `cyclorama`. A page whose subject is an
+change of state rather than a reading, `cyclorama`. A live instrument whose
+specimen is **the product's own workspace handed over to drive** — warm paper, a
+handwritten margin, a founder's voice around the machine — rather than a verdict
+about the visitor, is [`test-drive`](./test-drive.md): that pack's instrument
+reads sample data and invites operation, this one's reads *you* and reports it. A page whose subject is an
 accumulating total rather than a single live record —
 [`scoreboard`](./scoreboard.md). A control plane narrating telemetry that changes
 while you watch, on a field that is dark throughout —

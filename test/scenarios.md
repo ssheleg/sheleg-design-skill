@@ -1519,3 +1519,65 @@ than the routing half**, and until this run nothing had exercised it.
 and before reporting a verdict, so **it is not a result and is not counted as one**. The
 branch stands and needs re-running: a positive-only pass cannot detect the failure it
 exists to detect, per standing instruction 4.
+
+## T35 — Two live instruments, and whose data settles the fork
+
+Added with the `test-drive` pack. Two branches, two fresh contexts, run **blind against
+the bundle directory only** — `test/`, `docs/`, `kits/`, the README and the CHANGELOG are
+forbidden, because this file carries the answer beside the prompt.
+
+`test-drive` and `datasheet` both put a working instrument in the first screen, and a
+router that reads "the page proves the product live" cannot separate them; `showroom` is
+one further step away, sharing the framed-product centerpiece. The one-line test the
+branches should reach is *whose data the instrument reads — the visitor's own, or the
+product's workspace handed over?*
+
+**T35a — should select `test-drive`.** "Landing page for a web-analytics tool sold
+self-serve by a solo founder. The pitch is: stop reading, try it — we embed the actual
+live dashboard on the page with sample data anyone can click through, in a little
+browser window, and I want to scribble notes next to it like 'this is the demo' with a
+highlighter over the best tweets about us. One warm accent, friendly, and a dark mode."
+Pass: routes to `styles/test-drive.md`, quotes the clause that decided it, and names
+`datasheet` or `showroom` as the closest rejected pack with the clause that ruled it
+out. Fail: routing to `datasheet` because the brief says live instrument; to `showroom`
+because the centerpiece is a framed product; or to `scoreboard` because the page is warm
+paper with an orange accent and counted figures.
+
+**T35b — should still select `datasheet`.** "Marketing site for a device-intelligence
+API. The whole argument is the payload: the hero runs the product against the visitor
+and prints their own visitor id, city and network back at them, and flips dark if it
+catches them in incognito. Cold, technical, spec-sheet tone — mono for every reading,
+square corners, no personality flourishes." Pass: stays on `styles/datasheet.md` and can
+say what would have moved it — the instrument reading the product's own sample workspace
+instead of the visitor, and a founder's hand annotating the page. Fail: routing to
+`test-drive` because the newest pack also proves the product live in the first screen,
+which is the failure a positive-only branch cannot detect, per standing instruction 4.
+
+Both branches are also asked, after choosing, to read their chosen pack in full and
+report defects with file and quoted text.
+
+**Result: both branches PASSED on 2026-08-27, fresh contexts, blind against the bundle
+directory (both reported file lists; neither names `test/`, `docs/`, `kits/`, README or
+CHANGELOG).**
+
+`T35a` routed to `styles/test-drive.md`, quoted the Register clause that decided it
+(*"products that are their own best salesman once someone is inside … stop reading and
+try it"*), and named `showroom` as the closest rejected pack, quoting the reciprocal
+fork clause (*"this pack lights a still exhibit, that one hands over a running
+machine"*); it additionally rejected `proscenium` on its own Register. It then read the
+pack in full and returned **four defects, all four reproduced by the shipping run and
+fixed pre-tag**: the body-coral ban stated unqualified while the dark twin swaps the
+jobs (`#c04a28` on `#1f1f1f` is 3.34:1); "both spinners" attributed the masked ring's
+2s/1.5s clocks to the 0.9s token; the dark `--lit-quiet-hover` byte-identical to
+`--lit-quiet` while the md promised a brightening glow (resolved: the identity is the
+measurement — dark hover is carried by the border, now stated in both files); and
+`--accent-wash` claiming an 8%-over-white derivation that computes `#fdf3f0`, not the
+shipped `#fdf1ec` (value corrected to the derivation).
+
+`T35b` stayed on `styles/datasheet.md`, quoting the verdict-about-the-visitor clause,
+and was not moved by the newest pack — the failure this branch exists to detect. It
+named `manpage` as the closest rejected pack with both packs' reciprocal clauses (a
+legitimate nearest-neighbour for this cold mono brief; the `test-drive` fork sits in
+`datasheet`'s own Register and did not need to fire). Its defect-read returned **nine
+findings on `datasheet`**, three reproduced by the filing run — filed as board B-134
+for the pack's author rather than edited here, per the shipped-pack precedent.**

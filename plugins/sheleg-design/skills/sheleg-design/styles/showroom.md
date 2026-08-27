@@ -30,7 +30,11 @@ It rides the SHELEG cinematic layer, but sparingly: the specimen is the subject
 and motion exists to deliver it, not to compete with it.
 
 **Not for:** a product with no screenshot worth showing — where what is sold is a
-change of state rather than a surface, use `cyclorama`. An open-source project
+change of state rather than a surface, use `cyclorama`. A centerpiece that must
+**run rather than sit** — an embedded live instance or a self-narrating demo loop
+in browser chrome, annotated by a founder's hand on warm paper — is
+[`test-drive`](./test-drive.md): this pack lights a still exhibit, that one hands
+over a running machine, and the give-away is motion inside the frame. An open-source project
 whose front door is a command rather than a UI — `prism`. A page that must read
 as a technical drawing rather than a gallery — `blueprint`. A product with no UI
 to exhibit because the interface *is* the call — [`manpage`](./manpage.md). A product whose
