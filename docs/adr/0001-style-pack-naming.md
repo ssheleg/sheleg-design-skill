@@ -158,6 +158,26 @@
   `deskmate` names the register and, through it, when to choose it: the page's subject
   is a colleague. The address is in the pack's `Origin:`.
 
+- **Applied again:** 2026-08-27. The thirty-seventh pack was extracted from
+  `datafa.st` and is named **`test-drive`** for the register it encodes — a page that
+  sells by handing the visitor the running product, the way a dealership hands over the
+  keys — not `datafast`. Another run opening on an address and the words *"проработай
+  дизайн и добавь его как пример в мой бандл"*, answered by pointing here before a file
+  was written. Four alternatives were weighed and rejected on this ADR's own criteria.
+  **`showfloor`** names the room rather than the proof and collides with `showroom` in
+  the same retail-space family — the ground `lobby` was rejected on against `atrium`.
+  **`sandbox`** is accurate about the mechanism and, in this audience, collides head-on
+  with sandboxing as isolation infrastructure, which would mis-route every
+  agent-runtime brief into a style pack — the ground `tracing` was rejected on for
+  `onionskin`. **`marginalia`** names the pack's most visible texture — the handwritten
+  annotations and the highlighter — and a texture name routes by wallpaper, the ground
+  `pegboard`, `quadrille` and `clerestory` were all rejected on. **`demo-day`** is the
+  most literal and is a live accelerator-event brand, which the *no trademark surface*
+  clause covers, besides naming an event rather than a register. `test-drive` names the
+  act of persuasion itself: the reader arriving here is asking "how do I let a visitor
+  operate the real product before they sign up", which is a test-drive question. The
+  address is in the pack's `Origin:`.
+
 - **Corrected:** 2026-08-10. The Decision section named the seventh pack
   `lecture-hall`. That was the name on the branch this ADR was written on, and
   that branch never merged; the pack that shipped from graphify.com is

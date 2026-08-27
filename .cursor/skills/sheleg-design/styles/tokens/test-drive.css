@@ -1,0 +1,389 @@
+/* SHELEG Design — Test-drive token layer (a warm paper lot where the visitor is
+   handed the running product, and a founder's hand annotates the tour).
+   Copy verbatim; consume only var(--…) in components.
+
+   Extracted from https://datafa.st on 2026-08-27 — the front page of a
+   revenue-analytics product. The site is Next.js with Tailwind and DaisyUI, so the
+   authored layer is the DaisyUI oklch theme block inside one 382,404-byte stylesheet
+   (plus four Next-font CSS files carrying the two faces), and the vendor layer is the
+   Tailwind utility corpus around it. Every value below was VERIFIED AGAINST THE
+   RENDER at 1440x900 through CDP — a census of background-color AND background-image
+   over every element, weighted by area, on a 14,329px page — with the dark twin read
+   under [data-theme=dark], narrow behaviour at an emulated 390x844x2, and the
+   product's own dashboard read separately at /demo, because the landing embeds the
+   live product in an iframe. Ratios were computed by importing this repository's own
+   palette gate.
+
+   READ THE RENDER, NOT THE THEME BLOCK — this reference is the trap the skeleton's
+   rule 7 describes: its theme declares a teal accent (#00d7c0 at full strength) that
+   paints NOTHING anywhere on the page. The colour that actually acts is the coral.
+   The teal ships nowhere in this file, on purpose.
+
+   THE PRINCIPLE, and it is measurable: every control is lit by its own hue. The
+   reference's authored .btn-primary and .btn-simple classes build one four-layer
+   shadow — a contact shadow, a 1px ring, an 8px/16px/-8px glow and a 1px inner
+   bottom bevel — and swap only the hue: coral under the primary, neutral grey under
+   the quiet control, re-mixed darker under [data-theme=dark]. Elevation for
+   everything that is NOT a control is a white card on warm paper with a 1px ring at
+   black 6%; the page's machine surfaces (terminal, CLI, the agent panel) sit in
+   their own small dark ladder that does not flip with the theme.
+
+   Three families of value appear below:
+
+   MEASURED — the literal was computed on the live page or read from the reference's
+   authored classes.
+   SELECTED — the reference ships no such role; the value is a step of a ramp it
+   already carries.
+   DERIVED — computed from a token here, because the reference's own value fails a
+   floor. Only lightness moves.
+
+   The corrections are in the pack's Gotchas, and there are four. */
+
+:root {
+  color-scheme: light;
+
+  /* ---- The lot: warm paper, white cards ------------------------------- */
+  /* MEASURED. The warm off-white carries the page (51.6M px² of the census — the
+     DaisyUI base-300, and the html element takes it, not base-100), white carries
+     every card and the demo frame's interior (40.3M px² across the two whites). */
+  --bg: #fbfaf9;
+  --surface: #ffffff; /* MEASURED — every card, the input, the quiet control */
+  --surface-2: #fcfbfa; /* MEASURED — the base-200 step, a panel on a card */
+
+  /* ---- Ink: one neutral near-black and one warm mute ------------------- */
+  /* MEASURED. The ink is neutral (oklch 26.86% 0 0 — zero chroma); the mute is the
+     reference's one hand-written custom property, --base-secondary, and it is BOTH
+     the secondary text and the ink of every handwritten annotation. */
+  --ink: #262626; /* 14.52:1 on --bg, 15.13:1 on --surface */
+  --ink-mute: #595451; /* 7.16:1 on --bg, 7.47:1 on --surface */
+  --on-action: #ffffff; /* 4.94:1 on --action */
+
+  /* ---- The coral: one brand hue, two jobs, two tokens ------------------ */
+  /* MEASURED: #e16540 is the reference's primary and its only acting accent — the
+     CTA fill, the link colour, the focus outline, the caret, the thinking dot, the
+     money bars. And it is the reference's recorded failure: its 16px/500 CTA label
+     measures #ffffff on #e16540 at 3.42:1, and its links measure #e16540 on #fbfaf9 at 3.28:1, both under AA.
+     @role non-text: --accent — it lights, fills, draws and carries LARGE text only
+     (>= 24px, or 18.66px bold, where that same 3.42:1 clears the large floor).
+     A word at body size takes --action. */
+  --accent: #e16540;
+  /* DERIVED — the same coral held at hue and pulled down in lightness until both
+     jobs clear: #ffffff on #c04a28 is 4.94:1, and #c04a28 on #fbfaf9 is 4.74:1.
+     The text-bearing action fill and the link ink. */
+  --action: #c04a28;
+  /* DERIVED the way the reference computes its own hover at runtime —
+     color-mix(in oklab, fill 90%, #000) — resolved to a literal so the gate can
+     read it: #ffffff on #a73f21 is 6.22:1. */
+  --action-hover: #a73f21;
+  --accent-wash: #fdf3f0; /* DERIVED — the coral composited at 8% over #ffffff;
+     #c04a28 on #fdf3f0 is 4.53:1, so the accent chip's word still clears AA */
+
+  /* ---- The chart duo: traffic is quiet, money is coral ----------------- */
+  /* MEASURED off /demo's own SVG defs: the visitors series draws #8dcdff (the
+     DaisyUI secondary) over a #daefff fill at 58% (the reference writes the alpha
+     into the hex, #daefff95), and the revenue series draws #e78468 over #ffc7b6 at
+     58%. "Revenue-first" is encoded in colour: money is the brand's coral, traffic
+     is a blue that never carries a word.
+     @role non-text: --chart-traffic, --chart-traffic-fill, --chart-money,
+     --chart-money-fill — series marks and area fills.
+     #8dcdff on #ffffff is 1.71:1, and #e78468 on #ffffff is 2.66:1.
+     A chart label takes --ink-mute, which is #595451 on #ffffff at 7.47:1 —
+     what /demo itself does. */
+  --chart-traffic: #8dcdff;
+  --chart-traffic-fill: rgba(218, 239, 255, 0.58);
+  --chart-money: #e78468;
+  --chart-money-fill: rgba(255, 199, 182, 0.58);
+
+  /* ---- The marker: a founder's hand ------------------------------------ */
+  /* MEASURED. Praise inside testimonials is highlighted with a literal yellow
+     marker — rgba(254,249,195,.8), square-edged (0 radius), 6px of side padding —
+     and the ink keeps reading through it: #262626 on the composited stripe #fefacf is 14.26:1.
+     The annotation ink is --ink-mute, and the annotation face is the
+     script face below. */
+  --marker: rgba(254, 249, 195, 0.8);
+
+  /* ---- Hairlines: alphas of the ink, and a card ring at black 6% ------- */
+  /* MEASURED. The nav's rule and the quiet control's border are the ink at 5%, the
+     input's border is the ink at 10%, and the card's edge is a 1px black ring at 6%
+     inside its shadow stack. Composited: the 5% rule is #f0efee on #fbfaf9 at 1.10:1,
+     the 10% border is #e9e9e9 on #ffffff at 1.21:1, and the 6% ring is #f0f0f0 on #ffffff at 1.14:1
+     — far under the mark floor, which is correct for a hairline and
+     is why a state change never rides on one.
+     @role drawn-on: --bg, --surface — a hairline separates paper from card, never
+     two chart fills. */
+  --hairline: rgba(38, 38, 38, 0.05);
+  --hairline-strong: rgba(38, 38, 38, 0.1);
+  --hairline-hover: rgba(38, 38, 38, 0.1); /* MEASURED — the quiet control's hover
+     border, the ink one alpha step up from its resting 5% */
+  --ring-card: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.06);
+
+  /* ---- The lit control: one recipe, hue-swapped ------------------------ */
+  /* MEASURED off the reference's authored classes, byte for byte. Four layers:
+     contact shadow, 1px ring in the control's own hue, a glow dropped 8px and
+     pulled -8px, and a 1px inner bevel along the bottom edge. .btn-primary carries
+     it in coral; .btn-simple carries the SAME recipe in neutral grey. This is the
+     pack's elevation model for the hand: a control is lit, a card is ringed. */
+  --lit-action:
+    0 1px 1px rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(225, 101, 64, 0.157),
+    0 8px 16px -8px rgba(225, 101, 64, 0.64),
+    inset 0 -1px 2px rgba(181, 81, 51, 0.48);
+  --lit-quiet:
+    0 1px 1px rgba(1, 1, 1, 0.06),
+    0 0 0 1px hsla(0, 0%, 86%, 0.157),
+    0 8px 16px -8px hsla(0, 0%, 86%, 0.64),
+    inset 0 -1px 2px hsla(0, 0%, 86%, 0.48);
+  /* MEASURED — hover brightens the glow, it does not move the control. */
+  --lit-quiet-hover:
+    0 1px 1px rgba(1, 1, 1, 0.12),
+    0 0 0 1px hsla(0, 0%, 86%, 0.3),
+    0 8px 16px -8px hsla(0, 0%, 86%, 0.9),
+    inset 0 -1px 2px hsla(0, 0%, 86%, 0.7);
+  /* MEASURED — the demo frame's one big drop, black 10% at 0 20px 25px. */
+  --shadow-frame: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+  /* ---- Focus: the outline moves, nothing glows ------------------------- */
+  /* MEASURED — focus-visible is a 2px solid outline in the brand coral, offset 2px.
+     #e16540 on #fbfaf9 is 3.28:1, and #e16540 on #ffffff is 3.42:1 — over the mark
+     floor on both fields it lands on. */
+  --focus-w: 2px;
+  --focus-offset: 2px;
+  --focus-color: var(--accent);
+
+  /* ---- Radii: an 8px hand, a 16px card, a 20.8px frame ----------------- */
+  /* MEASURED as the reference's own theme tokens: rounded-btn 0.5rem on every
+     control, input and tab; rounded-box 1rem on every card; the demo frame at
+     1.3rem (20.8px measured); rounded-badge 1.9rem for the pill. The ramp is
+     proportional from a 1rem root — times 0.5, 1 and 1.3 — and the pill is a
+     literal beside it because the reference declares it as one. */
+  --r-root: 1rem;
+  --r-control: calc(var(--r-root) * 0.5); /* 8px — buttons, inputs, tabs */
+  --r-card: var(--r-root); /* 16px — cards, panels, the machine panel's raised step */
+  --r-frame: calc(var(--r-root) * 1.3); /* 20.8px — the demo frame and the agent panel */
+  --r-badge: 1.9rem; /* MEASURED — the pill badge */
+  /* The frame's window is CONCENTRIC, not a second radius token: with the frame's
+     5px of chrome inset, inner = outer - inset = 20.8px - 5px = 15.8px, which the
+     reference rounds to the card's own 16px. State the subtraction, ship the card. */
+  --frame-inset: 5px;
+
+  /* ---- Spacing: a 64-96-112 rhythm on a 1280 page ---------------------- */
+  /* MEASURED. Containers step down a Tailwind ladder (1280 → 1248 → 1152 → 1024 →
+     768); section padding is 64, 96 or 112px; the hero's copy column is 659px. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-28: 112px;
+  --page-max: 80rem; /* 1280px — MEASURED, the widest content container */
+  --control-h: 48px; /* MEASURED — the hero CTA and the input are the same height */
+  --control-h-sm: 32px; /* MEASURED — the nav's own pair */
+  --control-px: 16px; /* MEASURED */
+  --nav-h: 65px; /* MEASURED at 1440 and at 390 — the nav does not shrink */
+  --tap-min: 44px; /* CORRECTION, not a measurement: the nav pair is 32px tall */
+
+  /* ---- Type: one working face, one hand ------------------------------- */
+  /* MEASURED — DM Sans (variable, 100-1000) is display, body and data alike; Fuzzy
+     Bubbles 400 is the hand that annotates. Both load through next/font with
+     metric-matched Arial fallbacks (size-adjust 104.53% / 116.87%) — that loading
+     is the consumer's, by this library's own rule; the stacks here name the faces
+     and fall to the system. */
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-hand: "Fuzzy Bubbles", "Comic Sans MS", cursive;
+
+  /* MEASURED. Display steps, it does not flow: 36px below 48rem, 60px from it —
+     one Tailwind step (text-4xl → md:text-6xl) and nothing between. The section
+     head does the same at 30 → 48, the card head at 36. Tracking is -0.025em on
+     every display size (-1.5px on 60, -1.2px on 48, -0.9px on 36) and nothing else
+     is tracked. */
+  --t-display: 3.75rem; /* 60px/60px at 800 */
+  --t-display-sm: 2.25rem; /* 36px/40px below 48rem */
+  --t-h2: 3rem; /* 48px/48px at 800 */
+  --t-h2-sm: 1.875rem; /* 30px/36px below 48rem */
+  --t-h3: 2.25rem; /* 36px/40px at 800 */
+  --t-metric: 1.65rem; /* 26.4px at 700 — the dashboard's own figure size */
+  --t-body: 1rem; /* 16px/24px — the reading size AND the control label */
+  --t-label: 0.875rem; /* 14px — the metric label and the annotation */
+  --track-display: -0.025em; /* MEASURED on all three display sizes */
+  --lh-display: 1; /* MEASURED — 60px on 60px; the face's own leading fills it */
+  --lh-body: 1.5; /* MEASURED — 24px on 16px */
+
+  --weight-display: 800; /* MEASURED — h1, h2, h3 all extrabold */
+  --weight-strong: 700; /* MEASURED — the metric figure and the pricing head */
+  --weight-control: 500; /* MEASURED — every button label */
+  --weight-body: 400; /* MEASURED — body, and the hand face's only weight */
+
+  /* PACK DECISION, not a measurement: the reference holds its lede in a 659px
+     column with no max-width on the paragraph. Stated in ch against DM Sans at
+     16px so the column survives a face substitution. */
+  --measure-body: 72ch;
+
+  /* ---- Motion: instant controls, patient demos ------------------------- */
+  /* MEASURED. Controls transition 0.2s on one ease; the press is a scale to 0.95
+     (the reference's own --btn-focus-scale) — its button-pop runs 0.25s, which is
+     over the doctrine's 100-160ms press band, so the press duration here is
+     DERIVED down to 0.15s and the reference's 0.25s is recorded in Gotchas. The
+     pop-in spring for small objects is 0.65s on an overshoot curve. The demos
+     narrate themselves on 13-18s loops with steps() typewriters and 0.9s carets;
+     the ambient background layer drifts on 8-25s. None of it is scroll-driven:
+     animation-timeline appears zero times in 382,404 bytes. */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1); /* MEASURED — every control transition */
+  --ease-pop: cubic-bezier(0.16, 1, 0.3, 1); /* MEASURED — the pop-in spring */
+  --dur-fast: 0.2s; /* MEASURED — colour, border, opacity on controls */
+  --dur-press: 0.15s; /* DERIVED — the reference's 0.25s is over the press band */
+  --dur-pop: 0.65s; /* MEASURED — df-ai-icon-pop */
+  --press-scale: 0.95; /* MEASURED — the reference's own --btn-focus-scale */
+  --dur-caret: 0.9s; /* MEASURED — the CLI caret and both spinners */
+  --dur-demo: 14s; /* MEASURED — the CLI demo's clock; the chat demo runs 18s */
+  --dur-ambient: 18s; /* MEASURED — the bg-float middle of an 8-25s family */
+
+  /* ---- Status: four roles, and the reference's set could not write ----- */
+  /* The reference ships DaisyUI's status hues and paints text with none of them —
+     measured on white they are 1.66:1 (warning) to 3.08:1 (error). So each hue is
+     DERIVED: held at hue, pulled down in lightness until it clears AA as a word on
+     both light fields. Searched with this repository's own gate: every pair across
+     the four roles and the accent clears the 10-unit hard floor at full colour,
+     and the misses against the 15/8 soft floors are the physics of the hues —
+     named below, because status here is never by colour alone; a state is told
+     apart by the word or the glyph beside it, exactly as the reference's own
+     dashboard writes "83%" next to every arrow.
+     The tight pairs, stated so the numbers are on record: --good and --warn sit
+     5.0 apart under protanopia and 7.6 under deuteranopia; --good and --danger sit
+     3.3 apart under deuteranopia; --good and --info sit 7.4 apart under
+     tritanopia; --warn and --danger sit 5.3 apart under deuteranopia. */
+  --good: #006b3c; /* 6.36:1 on --bg, 6.63:1 on --surface */
+  --warn: #805c00; /* 5.84:1 on --bg, 6.09:1 on --surface */
+  --danger: #ad0e44; /* 6.89:1 on --bg, 7.18:1 on --surface */
+  --info: #006cae; /* 5.36:1 on --bg, 5.59:1 on --surface */
+  --on-status: #ffffff; /* 6.63:1 on --good, 6.09:1 on --warn, 7.18:1 on --danger */
+
+  /* ---- The machine ladder, quarantined --------------------------------- */
+  /* MEASURED. The page's terminal, CLI demo and agent panel sit in a small dark
+     ladder — #101010 chrome, #171717 panel, #202020 raised step — and it does NOT
+     flip with the theme: the machine is dark on the light page and dark on the
+     dark one. Namespaced so a card cannot reach it by accident: a component that
+     paints --machine is quoting the machine, not theming a surface. */
+  --machine-chrome: #101010; /* the frame's title bar, radius --r-frame */
+  --machine: #171717; /* the terminal body */
+  --machine-2: #202020; /* a raised step inside it */
+  --on-machine: #dedddc; /* 13.22:1 on --machine */
+  --on-machine-accent: var(--accent); /* 5.24:1 on --machine — the caret, the dot */
+  /* @role non-text: --frame-dot-red, --frame-dot-amber, --frame-dot-green —
+     MEASURED off the rendered frame's traffic lights (#f87171, #facc15, #4ade80).
+     They are window chrome, 12px wide, and they are NEVER a status: a state that
+     borrowed them would put three near-random hues into the semantics. */
+  --frame-dot-red: #f87171;
+  --frame-dot-amber: #facc15;
+  --frame-dot-green: #4ade80;
+
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-body);
+  line-height: var(--lh-body);
+}
+
+/* The dark twin. MEASURED under [data-theme=dark], which the reference ships as a
+   full re-map (169 dark blocks): the neutral ladder inverts warm — the base-content
+   picks up the same 67.8 hue the light field carries — the coral does not move, and
+   the lit-control recipe re-mixes its own layers darker rather than disappearing.
+   The machine ladder above is deliberately absent here: it is the same machine on
+   both themes. */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #1f1f1f; /* MEASURED — the dark base-300, and the html takes it again */
+  --surface: #262626; /* MEASURED — the dark card */
+  --surface-2: #212121;
+
+  --ink: #dedddc; /* 12.15:1 on --bg, 11.16:1 on --surface */
+  --ink-mute: #aba8a7; /* 6.98:1 on --bg, 6.41:1 on --surface — the reference's own
+                          dark --base-secondary */
+  --on-action: #ffffff; /* 4.94:1 on --action — the action fill does not move */
+
+  /* The coral swaps jobs on the dark theme, and the swap is measured. The brand
+     hue can write here — #e16540 on #1f1f1f is 4.82:1 — while the deep
+     step cannot: #c04a28 on #1f1f1f is 3.34:1.
+     @role non-text: --action — on this theme it is the text-bearing FILL only
+     (its label is --on-action at 4.94:1 on #c04a28); a coral WORD on the dark
+     field takes --accent instead, and on a dark card a link keeps --ink with the
+     accent underline, because #e16540 is 4.42:1 on the card #262626. */
+  --accent: #e16540;
+  --action: #c04a28;
+  --accent-wash: rgba(225, 101, 64, 0.12); /* SELECTED — the tint, re-mixed on dark */
+
+  --chart-traffic-fill: rgba(218, 239, 255, 0.16); /* SELECTED — the same fills at a
+                          dark-legible alpha; the series strokes do not move */
+  --chart-money-fill: rgba(255, 199, 182, 0.16);
+
+  --marker: rgba(254, 249, 195, 0.24); /* SELECTED — the marker dims to a wash;
+                          #dedddc on the composited stripe #5a594c is 5.22:1 */
+
+  --hairline: rgba(255, 255, 255, 0.06); /* MEASURED — the dark card ring */
+  --hairline-strong: rgba(255, 255, 255, 0.12);
+  --ring-card: 0 0 0 1px rgba(255, 255, 255, 0.08);
+
+  /* MEASURED off .btn-primary:is([data-theme=dark] *) — the same four layers,
+     re-mixed: the bevel deepens to a rust, the ring drops to 6%, the glow to 32%. */
+  --lit-action:
+    inset 0 -1px 2px rgba(114, 36, 13, 0.64),
+    0 1px 1px rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(225, 101, 64, 0.06),
+    0 8px 16px -8px rgba(225, 101, 64, 0.318);
+  --lit-quiet:
+    inset 0 -1px 2px rgba(40, 40, 40, 0.8),
+    0 1px 1px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(40, 40, 40, 0.25),
+    0 8px 16px -8px rgba(40, 40, 40, 0.5);
+  /* MEASURED, and deliberately identical to --lit-quiet: on the dark theme the
+     reference's hover shadow equals its resting one, and the hover is carried by
+     the BORDER rising to the ink at 20% (.btn-simple:hover under [data-theme=dark]).
+     The token exists so a component can keep one rule across themes. */
+  --lit-quiet-hover:
+    inset 0 -1px 2px rgba(40, 40, 40, 0.8),
+    0 1px 1px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(40, 40, 40, 0.25),
+    0 8px 16px -8px rgba(40, 40, 40, 0.5);
+  --hairline-hover: rgba(255, 255, 255, 0.2); /* MEASURED — the dark hover border */
+  --shadow-frame: 0 20px 25px -5px rgba(0, 0, 0, 0.35), 0 8px 10px -6px rgba(0, 0, 0, 0.35);
+
+  --focus-color: var(--accent); /* 4.82:1 on --bg — over the mark floor */
+
+  /* DERIVED the way the light set was: each hue held, lightness raised until it
+     writes on both dark fields. The tight pairs move with the physics: --good and
+     --warn sit 7.2 apart under protanopia, --good and --danger 3.8 under
+     deuteranopia, --good and --info 4.0 under tritanopia — and the rule does not
+     change: a state is told apart by the word beside it, not by hue. */
+  --good: #3ddc97; /* 9.33:1 on --bg, 8.56:1 on --surface */
+  --warn: #ffd05c; /* 11.33:1 on --bg, 10.40:1 on --surface */
+  --danger: #ff8095; /* 6.89:1 on --bg, 6.32:1 on --surface */
+  --info: #63c1ff; /* 8.32:1 on --bg, 7.64:1 on --surface */
+  --on-status: #1f1f1f; /* 9.33:1 on --good, 11.33:1 on --warn, 6.89:1 on --danger */
+
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+/* The reference runs 53 keyframes against exactly two reduced-motion rules, which is
+   its recorded failure, not its contract. This block is the pack's, and zeroing the
+   clocks is only half of it: the typewriters and demo steps are written with their
+   last keyframe different from their first, so a zeroed loop TELEPORTS to its hidden
+   state. The other half is therefore behavioural and lives in the pack's Motion
+   tokens section: under reduce, a self-narrating demo shows its FINAL frame — the
+   full command, the finished answer — as a still, and the ambient layer stops at its
+   resting offset. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0s;
+    --dur-press: 0s;
+    --dur-pop: 0s;
+    --dur-caret: 0s;
+    --dur-demo: 0s;
+    --dur-ambient: 0s;
+    --press-scale: 1;
+  }
+}

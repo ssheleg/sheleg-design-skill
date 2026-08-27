@@ -6,6 +6,57 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.53.0] - 2026-08-27
+
+### The thirty-seventh pack — the visitor is handed the keys
+
+**`test-drive`**, extracted from a revenue-analytics product's front page and named per
+ADR-0001 for the register it encodes: a page that sells by handing over the running
+product — the set piece is the live app inside drawn browser chrome, and a founder's
+hand (a script face, a yellow marker, a drawn arrow) annotates the tour.
+
+### Added
+
+- `styles/test-drive.md` — widened, all thirteen headings; `Themes: light + dark — a
+  full theme twin`; three forks written from both sides: against `datasheet` (whose
+  live instrument reads *the visitor*, where this one hands over *the product's own
+  workspace*), against `showroom` (a still exhibit against a running machine), and
+  against `scoreboard` (one public total against a dashboard's vital signs on the
+  same warm paper and orange-red family).
+- `styles/tokens/test-drive.css` — measured off the render, not the stylesheet, and
+  the reference is the trap the skeleton's rule 7 describes: its DaisyUI theme
+  declares a teal accent that paints **nothing** (the area-weighted census found it
+  on zero elements), so the acting coral is the brand and the teal ships nowhere.
+  The coral splits into two tokens because the reference's own CTA fails AA —
+  `#ffffff` on `#e16540` is 3.42:1 — so `--accent` lights, fills and blinks while
+  `--action` `#c04a28` carries every body-size word at 4.94:1 under white. The lit
+  control recipe (contact shadow, hue ring, glow, inner bevel) is read byte-for-byte
+  out of the reference's authored `.btn-primary`/`.btn-simple` classes, in both
+  themes. The machine ladder (`--machine-*`, `#101010`–`#202020`) is quarantined and
+  ignores the theme.
+- `kits/test-drive/` — the six-name spine plus `DemoFrame`, `Annotation`, `Marker`,
+  `Delta`, `Machine`+`Caret`, `ThinkingDots`, `Field`, `NavBar`, `Empty`. Rendered at
+  1440, 768 and an emulated 390 before shipping (CONTRIBUTING step 8): the render
+  caught the nav computing 66px against a stated 65 (a content-box border), the link
+  row overflowing a 390px page at 428px, and the touch floor missing — all three
+  fixed pre-tag. The stat row is a container (`container-type: inline-size`),
+  stepping 2 → 4 → 7 columns by its own width.
+- `test/scenarios.md` T35 — `test-drive` against `datasheet`, the live-instrument
+  fork, with its negative branch per standing instruction 4.
+- ADR-0001 gains its fourteenth application: `test-drive`, with `showfloor`,
+  `sandbox`, `marginalia` and `demo-day` weighed and rejected on the ADR's own
+  criteria.
+
+### Changed
+
+- `datasheet`, `showroom`, `scoreboard` — each gains the reciprocal fork clause
+  naming `test-drive`.
+- Counted claims moved with the tree: thirty-seven packs and kits across `SKILL.md`,
+  the index, `SURFACE_COMPOSITION.md` (the accent is `--accent` in 34 of the 37),
+  `FIGMA_BRIDGE.md` (twelve of the thirty-seven ship a twin), `MOBILE_SURFACES.md`,
+  `DESIGN_SYNC_BRIDGE.md`, the template's theme split (12/16/9), README, DOCMAP,
+  both installers and all three manifests.
+
 ## [1.52.0] - 2026-08-27
 
 ### The front door is the designs
