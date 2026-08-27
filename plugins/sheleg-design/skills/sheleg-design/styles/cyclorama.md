@@ -69,6 +69,13 @@ buyer is an executive spending a company's.
 **Against `briefing-room`.** Both address the boardroom. `briefing-room` is a
 fixed 16:9 canvas that never animates; here motion is the identity.
 
+**Against [`deskmate`](./deskmate.md).** Both spend a colour ramp as the
+signature and both are warm. That one's ramp is **anchored**: a static
+peach-to-navy radial whose origin sits above the top edge of the box it lights,
+painted once per section, with no scroll clock anywhere in its reference. This
+one's ramp is a **loop** — the field is the motion. A ramp that hangs takes
+`deskmate`; a ramp that cycles stays here.
+
 **Against [`prism`](./prism.md).** Both are pale light fields with mono in the
 body, and both will be reached for by an AI-infrastructure brief. The difference
 is whether the field moves. This pack's field **breathes** — six stops on a 32-

@@ -1460,3 +1460,45 @@ report defects with file and quoted text.
 all three gates green; this scenario is the behavioural half and `validate.py` does not
 read this file, so nothing above has been observed. Like `T31` and `T32`, it is an
 obligation on the record rather than a result.
+
+## T34 — A colleague against a management thesis, and the proof that separates them
+
+Added with the `deskmate` pack. Two branches, two fresh contexts, run **blind against
+the bundle directory only** — `test/`, `docs/`, `kits/`, the README and the CHANGELOG are
+forbidden, because this file carries the answer beside the prompt.
+
+`deskmate` and `tenor` are sold to the same buyer about the same kind of thing. `tenor`'s
+own Register names "AI workforce and agent-operations platforms, autonomous back-office,
+anything sold to a director who will be asked to manage the thing being sold" — which
+describes `deskmate`'s reference exactly. Category cannot separate them, and neither can
+warmth: both are warm light fields. The one-line test the branches should reach is *what
+does the page offer as proof — the product working, or a conversation about the work?*
+
+**T34a — should select `deskmate`.** "Landing page for an AI teammate that lives in our
+customers' Slack. The whole pitch is that you ask it in the channel you already use and
+it comes back with the finished thing — a deck, a dashboard, a fixed spreadsheet. We
+want the page built out of real messages it sent, with the file it produced under each
+one, and one strong colour we are not shy about." Pass: routes to `styles/deskmate.md`,
+quotes the clause that decided it, and names `tenor` as the closest rejected pack with
+the clause that ruled it out. Fail: routing to `tenor` because the brief says AI
+workforce and warm paper; or to `cyclorama` because the pack spends a gradient; or to
+`paperclip` because the subject is an agent doing work on its own.
+
+**T34b — should still select `tenor`.** "Site for a platform that runs a company's
+back office with agents. The argument is that this is a new organisational layer and a
+director has to be able to manage it. We want it sober — no radius, no gradient, one hue
+that barely appears — and the proof is silent video of the product working." Pass: stays
+on `styles/tenor.md` and can say what would have moved it — proof delivered as a quoted
+conversation rather than a recording, and a colour ramp asked to carry the identity.
+Fail: routing to `deskmate` because the newest pack is also warm, also light and also
+about autonomous workers, which is the failure a positive-only branch cannot detect, per
+standing instruction 4.
+
+Both branches are also asked, after choosing, to read their chosen pack in full and
+report defects with file and quoted text.
+
+**Result: NOT YET RUN.** The pack, its token layer and its kit shipped in 1.51.0 with
+all three gates green and the kit rendered at three widths; this scenario is the
+behavioural half and `validate.py` does not read this file, so nothing above has been
+observed. Like `T31`, `T32` and `T33`, it is an obligation on the record rather than a
+result.

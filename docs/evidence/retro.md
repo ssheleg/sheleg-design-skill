@@ -529,6 +529,7 @@ evidence until runs start writing their own again.
 
 | Date | Commit | Task | Diverged? |
 |---|---|---|---|
+| 2026-08-27 | working tree | `deskmate`, the thirty-sixth pack from viktor.com — one light source above the top edge and one four-stop ramp doing three jobs, with a framed transcript whose quoted client keeps its own face and colours under a `--quoted-*` namespace; the status set lifted out of that transcript because the brand layer paints no state; the render caught a nav slab 515px wide on a 390px page, a dusk secondary painting white on white, a chip label at 3.36:1 and an underlined pill; **`v1.51.1` shipped** — `v1.51.0` was pushed before its branch, the workflow's reachability guard refused it, and a `v*` tag cannot be moved here | **yes** |
 | 2026-08-26 | working tree | both shared validator headers explicitly state `diverges: none`, completing the umbrella mechanism contract; **`v1.50.3` prepared** | **yes** |
 | 2026-08-26 | working tree | the umbrella drift gate restored three exact router carriers and required the two copied public-contract validators to name their shared mechanism; **`v1.50.2` prepared** | **yes** |
 | 2026-08-26 | working tree | the 35-pack chooser moved to `STYLE_PACK_INDEX.md`, keeping the exhaustive routing table while returning the skill body below the house budget; public contract, eval fixtures, CI house audit, and a 1200×630 social card prepared for **`v1.50.1`** | **yes** |
