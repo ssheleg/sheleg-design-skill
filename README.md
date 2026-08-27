@@ -4,6 +4,7 @@
 [![CI](https://github.com/ssheleg/sheleg-design-skill/actions/workflows/validate.yml/badge.svg)](https://github.com/ssheleg/sheleg-design-skill/actions/workflows/validate.yml)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 [![site](https://img.shields.io/badge/docs-skills.sshlg.me-8ab0ff)](https://skills.sshlg.me/skills/sheleg-design/)
+[![skills.sh](https://skills.sh/b/ssheleg/sheleg-design-skill)](https://skills.sh/ssheleg/sheleg-design-skill)
 
 **Give coding agents a deliberate visual system: style packs, tokens, motion doctrine and a clean Figma seam.**
 
