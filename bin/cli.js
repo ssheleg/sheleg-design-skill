@@ -234,7 +234,7 @@ ${c("bold", "What it installs")}
   DESIGN_SYNC_BRIDGE.md   the Claude Design contract (what a pack sends, and
                        what does not cross)
   AI_PRODUCT_PATTERNS.md  chat / agent / streaming surfaces (honest state)
-  styles/              thirty-five style packs — instrument-console (dark console),
+  styles/              thirty-six style packs — instrument-console (dark console),
                        editorial-luxury (warm editorial), workbench (light/dark
                        product UI), briefing-room (dark 16:9 presentation deck),
                        atrium (warm cream consumer health), patchbay (dark live
@@ -247,7 +247,10 @@ ${c("bold", "What it installs")}
                        shadow), onionskin (a white technical sheet at 96.5%
                        zero radius where every quiet value is the ink or a
                        navy at an alpha, over a dot grid, at an 11px working
-                       size), babylove (white +
+                       size), deskmate (warm beige lit from above the top
+                       edge, one four-stop ramp, 56px pills against 32px
+                       slabs, and a framed transcript as the set piece),
+                       babylove (white +
                           one orange, seven tokens over Tailwind defaults),
                           outrank (white +
                           one violet, a landing and a dashboard in one brand),

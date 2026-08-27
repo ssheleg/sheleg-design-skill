@@ -61,6 +61,12 @@ lattice assembled from per-cell borders rather than drawn over the page.
 from carrying a word — take it when the argument is **who already uses you**, made
 of other people's marks. Take Tenor when the argument is **how the work is
 organised**, made of your own product on video.
+[`deskmate`](./deskmate.md) is the third, and it is the register collision rather
+than a visual one: it is sold to the same buyer, about the same kind of autonomous
+worker. Take it when the proof is **a quoted conversation** — the request, the
+reply and the artefact the reply produced — and the page is allowed to spend a
+colour ramp and a pill on saying so. Take Tenor when the proof is **the product
+working on video** and the page has one hue, no radius and no gradient at all.
 
 ## Palette
 
@@ -325,7 +331,7 @@ mounting the pack on a populated twenty-route dashboard rather than reasoned abo
   against `--line`, so it separates from the rule) and `--ink-faint` on the band.
   The emphasised mark stays `--accent-ink`-on-`--ink` or whatever the chart's own
   emphasis rule says; only the resting one changes. Charts in any pack go through
-  `dataviz` first — token names are not uniform across the thirty-five packs, and an aliased
+  `dataviz` first — token names are not uniform across the thirty-six packs, and an aliased
   one fails exactly this quietly.
 
 **The type ramp is where this section was wrong, and the correction matters more
