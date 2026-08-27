@@ -167,6 +167,28 @@ Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (R
 | S-14 | The published tarball carries the check, the marker and no stale version | the tarball pulled from the registry and read | 2026-08-13 · 1.26.0 in both manifests, `@role non-text` present, **0** stale `1.25.0` references outside the CHANGELOG, 17 packs | **green** |
 | S-15 | Every local channel serves 1.26.0, verified by reading installed files | the resolved install path, the hub copy, the shadow invariant | 2026-08-13 · plugin cache `.../1.26.0/skills/sheleg-design/SKILL.md` and `~/.agents/skills/sheleg-design/SKILL.md` both `version: 1.26.0`; no plain copy in `~/.claude/skills`; 17 packs + template installed | **green** |
 
+### The Test-drive pack / v1.53.0 — 2026-08-27
+
+Extracted from a live reference through the render, with the theme block present and
+partly lying — the declared accent paints nothing. Rows written at close-out; every
+release row was observed, not assumed.
+
+| REQ | What must stay true | How it is checked | Last verified | Status |
+|---|---|---|---|---|
+| TD-01 | Every value read off the render, not the theme block | the CDP census (background-color AND background-image, area-weighted), both themes, 1440/768/390, /demo separately | 2026-08-27 · the census killed the declared teal (zero elements) and surfaced the acting coral; control states read from the authored `.btn-primary`/`.btn-simple` | **green** |
+| TD-02 | Every stated ratio computes from the token layer | `validate_stated_ratios()` | 2026-08-27 · unguarded ratchet held at its 27 pin after four claims were rewritten computable; palette gate OK (3170) | **green** |
+| TD-03 | The status set separates or declares its physics | `validate_declared_semantic_sets()` | 2026-08-27 · every pair over the 10 hard floor; the CVD-tight pairs stated at the declaration with their numbers, both themes | **green** |
+| TD-04 | The reference's failures recorded, never applied | the pack's Gotchas, recomputed | 2026-08-27 · CTA 3.42:1, links 3.28:1, statuses 1.66–3.08:1, press 0.25s over the band, 53 keyframes vs 2 reduce rules | **green** |
+| TD-05 | Kit compiles; spine byte-identical; tokens a byte-for-byte prefix | `tsc`, `validate_kits()` | 2026-08-27 · exit 0 strict; parity green | **green** |
+| TD-06 | Kit rendered and compared to the pack's claims | CDP on `render.html`, three widths, both themes | 2026-08-27 · caught nav 66px vs 65 (box-sizing), a 428px row on a 390px page, a missing touch floor — fixed pre-tag; then 30/30 assertions green | **green** |
+| TD-07 | Routing + mirrors + every counted claim moved | `validate.py` | 2026-08-27 · OK (5219); accent tally recounted 34 of 37, twin tally 12 of 37, template split 12/16/9 | **green** |
+| TD-08 | Reciprocal forks against the confusable neighbours | `validate_fork_reciprocity()` | 2026-08-27 · datasheet, showroom, scoreboard all link back | **green** |
+| TD-09 | The routing scenario and its negative branch have RUN | T35a/T35b, fresh contexts, blind | 2026-08-27 · both PASSED; T35a's four findings reproduced and fixed pre-tag; T35b's nine datasheet findings filed as B-134 | **green** |
+| TD-10 | v1.53.0 tagged, released, published; CI read before the tag | `gh pr checks` (80/80 SUCCESS), release run 33076386979, `npm view` | 2026-08-27 · tag on merge commit `ecc7daf`; GitHub release published 13:22:46Z; npm 1.53.0 = latest | **green** |
+| TD-11 | The published tarball carries the pack | pulled from the registry and read | 2026-08-27 · 39 test-drive files, pack and token layer present | **green** |
+| TD-12 | The public catalogue shows 37 and leaks no source | the live Pages site + leak grep | 2026-08-27 · "37 style packs" on the front door, test-drive in packs and llms.txt, zero source-name hits on all four surfaces | **green** |
+| TD-13 | The family launcher pins 1.53.0 across its three sync points | sshlg-skills PR #21, its validator | see the launcher's own release evidence in this run's acceptance doc | **green** |
+
 ### The Ora pack / v1.28.0 — 2026-08-14
 
 Extracted from a live reference rather than composed. Rows written at authoring time;
