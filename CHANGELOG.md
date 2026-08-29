@@ -6,6 +6,61 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.54.1] - 2026-08-29
+
+### The installer refuses the shadow it documents
+
+Both installers write a plain skill copy on request, and on a machine where
+`sheleg-design` is installed as a Claude Code plugin, a write to that home's
+`~/.claude/skills/sheleg-design` is a copy that shadows the plugin and serves
+this frozen version forever. Neither installer checked the plugin channel at
+all, and CI tested a fresh HOME only, so the plugin-present case had never run
+anywhere. Canon: make-skill v0.25.0, `references/distribution.md` §"The
+installer must refuse the shadow it documents"; family audit SHD-07/UM-03.
+
+### Added
+
+- `bin/cli.js` and `install.sh` now consult the **target home's**
+  `~/.claude/plugins/installed_plugins.json` before any write to that home's
+  `~/.claude/skills/sheleg-design`, and refuse with **exit 3** when the plugin
+  channel owns the skill. The refusal names the real spec read from the JSON
+  (`sheleg-design@<marketplace>` — the marketplace name differs from the
+  plugin name here, and a remedy that guesses it sends the operator to a
+  marketplace that does not exist), prints the plugin-channel remedy
+  (`claude plugin marketplace update` + `claude plugin update <spec>`, plus
+  the family launcher line), and offers `--force` as the deliberate override.
+  The `plugins/marketplaces/` directory is read only as the fallback signal —
+  it under-reports (a `directory`-sourced marketplace has no dir there), which
+  is the fail-open class the canon names. A missing or unparsable JSON reads
+  as "no plugin": fail open, never crash. Only the Claude Code channel is
+  gated — `.cursor/` and every other agent's install are untouched, and a
+  project-level `.claude/` falls open naturally because a project holds no
+  plugin registry.
+- `install.sh` accepts `--force` (the override for the gate above) and refuses
+  unknown flags with exit 2 instead of treating them as a target directory.
+- `test/installer_test.js` — thirteen cases against throwaway HOMEs, wired
+  into `npm test` and CI: plugin-present (exit 3 + remedy + nothing written,
+  all three asserted), the differently-named marketplace spec carried into the
+  remedy, `--force` installing, corrupt JSON installing, a prefix-collider
+  (`sheleg-design-extra@x`) not falsely refused, marketplaces-dir-only still
+  refusing, fresh HOME still installing, the `.cursor` channel untouched by
+  the gate, and the install.sh mirrors of the same. Watched failing first: run
+  against the pre-fix installers, 7 cases red.
+
+### Changed
+
+- Both installers now end a successful install by saying how the next version
+  arrives (`npx sheleg-design-skill@latest --force`, or the family launcher) —
+  an installer that never mentions updates has still chosen an update model:
+  never.
+- `bin/cli.js --help` documents the exit-code contract, including the new
+  exit 3.
+- CONTRIBUTING: release tags must be **annotated** (`git tag -a`) — v1.53.0
+  and v1.54.0 were lightweight, and `git submodule status` describes a pinned
+  commit with `git describe`, which ignores lightweight tags, so the family
+  umbrella misreported the member's version (SHD-07/UM-03). Applies from this
+  release forward; the old tags are not re-cut.
+
 ## [1.54.0] - 2026-08-29
 
 ### The thirty-eighth pack — the terrain is mapped

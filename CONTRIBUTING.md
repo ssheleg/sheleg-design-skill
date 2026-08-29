@@ -10,10 +10,10 @@ have a check that fails when it stops being true**.
 No dependencies. You need Node ≥ 16 (installer) and Python 3 (validator).
 
 ```bash
-npm test        # all four gates — run this one
+npm test        # all five gates — run this one
 ```
 
-Run it before and after every change. It is four gates, not one:
+Run it before and after every change. It is five gates, not one:
 
 | Gate | What it decides |
 |---|---|
@@ -21,6 +21,7 @@ Run it before and after every change. It is four gates, not one:
 | `python3 test/validate_palette.py` | colour: contrast floors and separation between semantics, per theme, including colour-vision deficiency |
 | `python3 test/sloplint.py` | bundle compliance and doctrine completeness |
 | `node --check bin/cli.js` | the installer parses |
+| `node test/installer_test.js` | both installers against throwaway HOMEs — above all that a home whose plugin channel owns the skill is refused (exit 3) instead of shadowed |
 
 `npm run selftest` runs the planted-defect self-tests for the palette gate and
 the slop lint — the proof each check has been watched saying no. CI runs all of
@@ -150,6 +151,16 @@ version from. Tag `vX.Y.Z`; the release workflow (armed by the
 `RELEASE_ENABLED` repo variable) validates, cuts a GitHub release from the
 matching CHANGELOG section and smoke-tests the tag through `npx`. **It also
 publishes to npm**, with provenance, gated on the `PUBLISH_NPMJS` repo variable.
+
+**The tag must be ANNOTATED** — `git tag -a vX.Y.Z -m "vX.Y.Z"`, never the bare
+`git tag vX.Y.Z`. The family umbrella pins this repo as a submodule, and
+`git submodule status` describes the pinned commit with `git describe`, which
+ignores lightweight tags by default — so a lightweight release tag makes the
+umbrella report the member at the last *annotated* tag plus an offset. v1.53.0
+and v1.54.0 shipped lightweight and did exactly that (family audit
+SHD-07/UM-03). The rule applies from v1.54.1 forward; the old tags are already
+public and are **not** re-cut — moving a published tag is a worse defect than
+the one it would fix.
 
 `npm publish` used to be the one human step here, because 2FA blocks a token
 that is not automation-scoped; the workflow's `publish` job replaced it and this

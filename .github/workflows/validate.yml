@@ -97,6 +97,15 @@ jobs:
           done
       - name: CLI syntax check
         run: node --check bin/cli.js
+      - name: Installer refusal suite (plugin-present is the case a fresh HOME never runs)
+        # Both installers must refuse to write a home's ~/.claude/skills/
+        # sheleg-design while that home's plugin channel owns the skill — a
+        # plain copy there shadows the plugin and serves its frozen version
+        # forever. The smoke tests below only ever see a fresh HOME, which is
+        # exactly how the family shipped the hole everywhere (canon: make-skill
+        # references/distribution.md, "The installer must refuse the shadow it
+        # documents").
+        run: node test/installer_test.js
       - name: CLI help smoke test
         run: npm run smoke
       - name: CLI smoke test (npx channel installs the whole bundle)
