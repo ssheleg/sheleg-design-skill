@@ -167,6 +167,27 @@ Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (R
 | S-14 | The published tarball carries the check, the marker and no stale version | the tarball pulled from the registry and read | 2026-08-13 · 1.26.0 in both manifests, `@role non-text` present, **0** stale `1.25.0` references outside the CHANGELOG, 17 packs | **green** |
 | S-15 | Every local channel serves 1.26.0, verified by reading installed files | the resolved install path, the hub copy, the shadow invariant | 2026-08-13 · plugin cache `.../1.26.0/skills/sheleg-design/SKILL.md` and `~/.agents/skills/sheleg-design/SKILL.md` both `version: 1.26.0`; no plain copy in `~/.claude/skills`; 17 packs + template installed | **green** |
 
+### The Surveyor pack / v1.54.0 — 2026-08-29
+
+The authored layer dug out of a WordPress site; the vendor preset palette paints
+nothing. Rows written at close-out; every release row was observed.
+
+| REQ | What must stay true | How it is checked | Last verified | Status |
+|---|---|---|---|---|
+| SV-01 | Every value read off the render, not the vendor block | the CDP area-weighted census, 1440/768/390 | 2026-08-29 · the WP preset :root left behind; the se-uikit ladder read as authored | **green** |
+| SV-02 | Every stated ratio computes | `validate_stated_ratios()` | 2026-08-29 · palette OK (3243); the comment-brace parser break found in-run and the braces removed | **green** |
+| SV-03 | The status trio separates or declares; no warn is a stated decision | `validate_declared_semantic_sets()`, the Rank line | 2026-08-29 · all pairs over the 10 hard floor; teal-family alias declared; deuteranopia tights named | **green** |
+| SV-04 | The reference's failures recorded, never applied | the Gotchas, recomputed | 2026-08-29 · CTA 3.74:1, links 3.54:1, the pink glyph vs the 3:1 large floor, fill-only focus, 0 reduce rules | **green** |
+| SV-05 | Kit compiles; spine parity; tokens byte-identical | `tsc`, `validate_kits()`, `check_kit_vars` | 2026-08-29 · strict build; OK (38 kits) | **green** |
+| SV-06 | Kit rendered and compared to claims, pre-tag | CDP on `render-sv.html`, three widths | 2026-08-29 · caught the contour hatch painting OVER content — the pack's own ban — and two mid-transition false reads; fixed, then all-green | **green** |
+| SV-07 | Routing + mirrors + counts 37→38 | `validate.py` → OK (5370) | 2026-08-29 · accent 35 of 38, twins 12 of 38, split 12/17/9 | **green** |
+| SV-08 | Reciprocal forks | `validate_fork_reciprocity()` | 2026-08-29 · test-drive and showroom link back | **green** |
+| SV-09 | T36 and its negative branch RUN, blind, pre-tag | fresh subagents, file lists reported | 2026-08-29 · both PASSED; six findings on this pack all adjudicated pre-tag; five on test-drive → B-135, one refuted with a live receipt | **green** |
+| SV-10 | v1.54.0 tagged, released, published; CI read before the tag | PR #8 82/82 SUCCESS; the release run; `npm view` | 2026-08-29 · tag on `2cc989b`; GitHub release 17:24:46Z; npm 1.54.0 = latest | **green** |
+| SV-11 | The published tarball carries the pack | pulled and read | 2026-08-29 · 41 surveyor files | **green** |
+| SV-12 | The catalogue publishes 38 and leaks no source | `tools/site.py` leak guard + the live site | 2026-08-29 · **the guard refused its own site first**: `visible` (a host label that is an English word and a CSS pseudo-class fragment) tripped the raw substring scan on every page, while `seranking` was never in the term set at all. Rewritten two-tier (hosts raw over the whole file, stems word-bounded over style/script-stripped text, stems from ALL labels), watched failing on five plants including a host inside a CSS url(), then the build passed: 38 packs, 0 of 90 terms present | **green** |
+| SV-13 | The launcher pins 1.54.0 across three sync points, on an annotated tag | sshlg-skills PR #33, `git cat-file -t v1.8.0` → tag | 2026-08-29 · merged, tagged annotated (the v1.4.2 ghost's lesson), release evidence in the acceptance doc | **green** |
+
 ### The Test-drive pack / v1.53.0 — 2026-08-27
 
 Extracted from a live reference through the render, with the theme block present and
