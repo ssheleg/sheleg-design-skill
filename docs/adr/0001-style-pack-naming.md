@@ -178,6 +178,27 @@
   operate the real product before they sign up", which is a test-drive question. The
   address is in the pack's `Origin:`.
 
+- **Applied again:** 2026-08-29. The thirty-eighth pack was extracted from
+  `visible.seranking.com` and is named **`surveyor`** for the register it encodes — a
+  page that sells a survey of terrain the buyer cannot see directly, drawn in contour
+  lines and counted readings — not `visible` and not `seranking`, both of which are
+  the source's own live brands and squarely inside the *no trademark surface* clause.
+  Another run opening on an address and the words *"разбор дизайна … и упаковка его в
+  спак"*, answered by pointing here before a file was written. Four alternatives were
+  weighed and rejected on this ADR's own criteria. **`contour`** names the pack's most
+  visible texture, and a texture name routes by wallpaper — the ground `pegboard`,
+  `quadrille`, `clerestory` and `marginalia` were all rejected on. **`atlas`** sits in
+  the reference-book family `almanac` already holds — the family-collision criterion
+  that rejected `lobby` against `atrium` — besides being a heavily trademarked word.
+  **`heatmap`** and **`benchmark`** are live developer jargon, and in this audience
+  either would mis-route instrumentation and performance briefs into a style pack —
+  the ground `tracing` was rejected on for `onionskin` and `sandbox` for
+  `test-drive`. **`field-survey`** is accurate and collides with `field-notes` on the
+  prefix, the criterion that rejected `dayshift` against `daylight`. `surveyor` names
+  the act of persuasion: the reader arriving here is asking "how do I sell a
+  monitoring product as a map of where the buyer stands", which is a surveying
+  question. The address is in the pack's `Origin:`.
+
 - **Corrected:** 2026-08-10. The Decision section named the seventh pack
   `lecture-hall`. That was the name on the branch this ADR was written on, and
   that branch never merged; the pack that shipped from graphify.com is

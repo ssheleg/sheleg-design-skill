@@ -34,7 +34,12 @@ change of state rather than a surface, use `cyclorama`. A centerpiece that must
 **run rather than sit** — an embedded live instance or a self-narrating demo loop
 in browser chrome, annotated by a founder's hand on warm paper — is
 [`test-drive`](./test-drive.md): this pack lights a still exhibit, that one hands
-over a running machine, and the give-away is motion inside the frame. An open-source project
+over a running machine, and the give-away is motion inside the frame. And a page
+that also exhibits stills but pins **many small portraits flat into tinted cards
+on warm paper** — no spotlight, no shadow anywhere, the subject being the terrain
+the product measures rather than the application's own surface — is
+[`surveyor`](./surveyor.md): one lit specimen is this pack, a field survey is that
+one. An open-source project
 whose front door is a command rather than a UI — `prism`. A page that must read
 as a technical drawing rather than a gallery — `blueprint`. A product with no UI
 to exhibit because the interface *is* the call — [`manpage`](./manpage.md). A product whose
