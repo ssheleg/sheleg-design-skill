@@ -1,0 +1,285 @@
+/* SHELEG Design — Surveyor token layer (a warm paper field where an unseen
+   terrain is mapped: contour lines for texture, portraits of the instrument for
+   proof, and two voices — teal states, pink answers).
+   Copy verbatim; consume only var(--…) in components.
+
+   Extracted from https://visible.seranking.com on 2026-08-29 — the front page of
+   an AI-visibility tracker. The site is WordPress behind autoptimize; the AUTHORED
+   layer is SE Ranking's own se-uikit stylesheet (the --se-btn-* ladder, the
+   --main-colors-* palette, the --spacing-* tokens, --transition) plus the
+   front-page CSS — ~68KB across four bundles and fifteen inline blocks — and the
+   WordPress preset :root block is vendor noise that paints nothing. Every value
+   below was VERIFIED AGAINST THE RENDER through CDP at 1440x900, 768 and an
+   emulated 390x844x2: an area-weighted census of background-color AND
+   background-image over every element on an 8,176px page. Ratios were computed by
+   importing this repository's own palette gate.
+
+   THE PRINCIPLE, and it is measurable: THE PAGE IS FLAT AND THE PROOF IS A
+   PORTRAIT. Every card and panel renders box-shadow: none — the census found one
+   drop shadow on the whole page, and it belongs to the navigation only after it
+   detaches from the field on scroll. Elevation is a tint: white on peach, mint on
+   peach, pink on peach. The product appears only as webp portraits (the hero's
+   dashboard is a 1089x529 image — no iframe, no canvas, no large SVG), and the
+   one texture is a family of fine contour lines, drawn white on the teal panel
+   and in the brand hues on the field.
+
+   Motion is close to zero and that is the identity, not a gap: exactly ONE
+   @keyframes in the corpus (a pulse ring), zero scroll clocks, and every state
+   change rides one token — --transition: .2s ease.
+
+   Three families of value appear below:
+
+   MEASURED — the literal was computed on the live page or read from the
+   reference's authored se-uikit tokens.
+   SELECTED — a value the reference ships in another role, taken because a floor
+   forces the move; only the role changes.
+   DERIVED — computed from a token here because the reference's own value fails a
+   floor. Only lightness moves.
+
+   The corrections are in the pack's Gotchas, and there are four. */
+
+:root {
+  color-scheme: light;
+
+  /* ---- The field: warm paper, flat tints ------------------------------- */
+  /* MEASURED. The peach paper carries the page (15.7M px² of the census — the
+     reference's own --main-colors-bg), white carries every card (7.6M px²), and
+     two tints carry meaning rather than depth: the mint panel is what the product
+     DOES today, the pink panels are what is COMING — measured on the "Powered by
+     SE Ranking" panel and the four "Coming soon" feature cards. */
+  --bg: #fff7f3;
+  --surface: #ffffff; /* MEASURED — every card; box-shadow: none on all of them */
+  --mint: #ebfbf7; /* MEASURED — the present-tense tint, and the accent's wash */
+  --pink-wash: #ffeff8; /* MEASURED — the future-tense tint, r0 feature panels */
+  --pink-tint: #ffe6f4; /* MEASURED — the reference's pale-pink step */
+  --cool: #f6f8fc; /* MEASURED — the cool grey panel step, --main-colors-grey-3 */
+
+  /* ---- Ink: deep navy, one body step, one grey that is not text -------- */
+  /* MEASURED as --main-colors-black / black-2 / dark-grey / dark-grey-2. */
+  --ink: #101423; /* 17.32:1 on --bg, 18.32:1 on --surface */
+  --ink-body: #252e3d; /* 12.92:1 on --bg — the lede and body step */
+  /* @role non-text: --ink-faint — MEASURED as the reference's dark-grey.
+     #717e95 on #fff7f3 is 3.88:1, under AA for the 14-16px it was set at; it
+     rules, it ticks axes, and a word that must be read takes --ink-body. */
+  --ink-faint: #717e95;
+  /* @role non-text: --ink-ghost — #adb9cd on #ffffff is 1.98:1; bars only. */
+  --ink-ghost: #adb9cd;
+
+  /* ---- The teal: one working hue, and its ladder is the reference's ---- */
+  /* MEASURED. #0d9488 is the se-uikit main button fill, and it is the recorded
+     failure: the CTA label measures #ffffff on #0d9488 at 3.74:1, and a teal
+     word measures #0d9488 on #fff7f3 at 3.54:1 — both under AA at the 16px/500
+     they ship at. The remedy is the reference's OWN ladder: its hover step
+     carries the text-bearing fill here, its active step carries the hover.
+     @role non-text: --accent — it fills large stat figures (40px/600, where
+     3.54:1 clears the 3:1 large floor), marks, ticks and the Q glyph; a
+     body-size word or a text-bearing fill takes --action. */
+  --accent: #0d9488;
+  /* SELECTED — the reference's --main-colors-green-dark, moved one role up:
+     #ffffff on #0a7269 is 5.79:1, and #0a7269 on #fff7f3 is 5.48:1, so one
+     token writes and fills. */
+  --action: #0a7269;
+  /* MEASURED — the reference's green-darker, its active step: #ffffff on
+     #064d47 is 9.72:1. */
+  --action-hover: #064d47;
+  --on-action: #ffffff; /* 5.79:1 on --action */
+
+  /* ---- The pink: the second voice, and it may not speak at body size --- */
+  /* MEASURED. The pink family answers: the FAQ's A glyph, the future-tense
+     tints, the falling delta. And it cannot write: #ff98dd on #fff7f3 is
+     1.84:1, #ff91da on #fff7f3 is 1.92:1, and #ff91da on #ffffff is 2.04:1 — the
+     reference sets its 24px A marker in this family against a 3:1 large floor,
+     which is a recorded failure.
+     @role non-text: --pink — glyph-with-text, series line, tint anchor only. */
+  --pink: #ff91da;
+  /* DERIVED — the pink held at hue and pulled down until it writes:
+     #a83f88 on #fff7f3 is 5.32:1, and #a83f88 on #ffffff is 5.63:1. The pink
+     that may speak — the falling delta's number, a pink word on a card. */
+  --pink-deep: #a83f88;
+
+  /* ---- The blue: the one hue that writes unmodified -------------------- */
+  /* MEASURED — --main-colors-blue. #123af8 on #fff7f3 is 6.65:1.
+     #123af8 on #ffffff is 7.03:1. A chart series and an informational word. */
+  --blue: #123af8;
+
+  /* ---- Status: three roles, and no warn — stated, not forgotten -------- */
+  /* --good is DECLARED AS AN ALIAS of the action ladder — the reference paints
+     its rising delta in the same green family as its button, so inventing a
+     separate success hue would be inventing a value. --danger is the deep pink:
+     the reference paints its falling delta PINK, not red, and the pack keeps
+     that voice. --info is the measured blue. THERE IS NO WARN: the authored
+     palette ships no amber and no orange anywhere, and a warn invented from the
+     vendor's WordPress presets would be the exact trap this file's header names.
+     A surface that needs a fourth severity is quoting a different library.
+     Separations, computed: every pair among action, accent, danger and info
+     clears the 10-unit hard floor at full colour. The tight pairs are stated:
+     --action and --accent sit 10.4 apart at full colour — one hue, two steps,
+     by construction; --action and --danger sit 5.0 apart under deuteranopia;
+     --accent and --danger sit 6.3 apart under deuteranopia. Status here is
+     never by colour alone — every delta ships its arrow and its number, exactly
+     as the reference's own metric cards do. */
+  --good: var(--action); /* an alias on purpose — 5.48:1 on --bg */
+  --danger: var(--pink-deep); /* 5.32:1 on --bg, 5.63:1 on --surface */
+  --info: var(--blue); /* 6.65:1 on --bg */
+  --on-status: #ffffff; /* 5.79:1 on --good, 5.63:1 on --danger, 7.03:1 on --info */
+
+  /* ---- Hairlines: cool greys, and none of them separates meaning ------- */
+  /* MEASURED — the grey ladder: #dce4f1 on #ffffff is 1.28:1 and #ecf1f9 on
+     #ffffff is 1.13:1, far under the mark floor, correct for a hairline.
+     @role drawn-on: --surface, --bg — a rule divides rows, never tints. */
+  --line: #dce4f1;
+  --line-quiet: #ecf1f9;
+
+  /* MEASURED — the se-uikit's own disabled pair, one warm-grey step for both
+     jobs; #9a9795 on #ede8e5 is a disabled label and is not asked to clear AA. */
+  --disabled-fill: #ede8e5;
+  --disabled-ink: #9a9795;
+
+  /* ---- Elevation: a tint, and one shadow the page has to earn ---------- */
+  /* MEASURED. Every card and panel computes box-shadow: none. The single drop
+     on the whole page appears when the sticky navigation detaches from the
+     field and fills white: rgba(0,0,0,.05) 0 4px 6px 1px. It is a scroll
+     EVENT, not a tier — a card that borrows it is a foreign object. */
+  --shadow-nav: 0 4px 6px 1px rgba(0, 0, 0, 0.05);
+
+  /* ---- Focus: the pack's one correction that adds a mechanism ---------- */
+  /* The reference's :focus-visible is a fill step alone — the button darkens
+     to its active token and nothing else appears (11 focus-visible rules, all
+     fill or colour moves). A fill change on an already-filled control is a
+     weak indicator, so the pack adds the ring the reference lacks; DERIVED,
+     with the action as the hue: #0a7269 on #fff7f3 is 5.48:1, over the 3:1
+     mark floor. The fill step stays — both, always. */
+  --focus-w: 2px;
+  --focus-offset: 2px;
+  --focus-color: var(--action);
+
+  /* ---- Radii: a 10px hand, a 24px card, a 32px panel ------------------- */
+  /* MEASURED. The control is the se-uikit's own 10px on every button and
+     field; the card is 24px; the section panel and the teal closer are 32px;
+     the badge is 6px; the pill is the reference's own 99px. The 12 and 20px
+     steps in the corpus are inner instances — a nested box takes outer minus
+     its inset, never a second free value: a 24px card with 4px of breathing
+     room holds a 20px child, 24 - 4 = 20, which is the corpus's own 20. */
+  --r-control: 10px;
+  --r-badge: 6px;
+  --r-card: 24px;
+  --r-panel: 32px;
+  --r-pill: 99px;
+
+  /* ---- Spacing: the reference's own v-ladder, responsive by name ------- */
+  /* MEASURED — se-uikit declares --spacing-v1..v4 and re-declares them upward
+     at its breakpoints (48→80, 24→32, 16→24, 12→12); the pack ships the
+     desktop values and states the narrow ones beside them. The content column
+     is 1312px; sections breathe 56px; the header is the reference's own
+     --header-height. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px; /* MEASURED — v4 at every width */
+  --space-4: 16px;
+  --space-6: 24px; /* MEASURED — v3 desktop, v2 narrow */
+  --space-8: 32px; /* MEASURED — v2 desktop */
+  --space-10: 40px;
+  --space-14: 56px; /* MEASURED — the section's own vertical rhythm */
+  --space-20: 80px; /* MEASURED — v1 desktop; 48px narrow */
+  --page-max: 82rem; /* 1312px — MEASURED, the content column at 1440 */
+  --nav-h: 64px; /* MEASURED — the reference's own --header-height, all widths */
+  --control-h: 48px; /* MEASURED — 12px 24px padding on a 16px/500 label */
+  --control-px: 24px;
+  --tap-min: 44px; /* a floor, and the reference's controls clear it */
+
+  /* ---- Type: one face, and 600 is the loudest it gets ------------------ */
+  /* MEASURED — TT Fors everywhere, with the system stack behind it. TT Fors is
+     a licensed face; the open substitute named second is a PACK DECISION:
+     Onest holds the same wide, low-contrast grotesque voice at 600. Whoever
+     licenses the original should use it. Font loading is the consumer's, by
+     this library's own rule. */
+  --font-sans: "TT Fors", "Onest", -apple-system, system-ui, "Segoe UI", Roboto, sans-serif;
+
+  /* MEASURED. Nothing on the page is bolder than 600 — the display, every
+     section head, the stat figure and the price all sit at semibold, body at
+     400, controls and labels at 500. An 800 here is a foreign voice.
+     The display steps 36 → 44 → 48 across the reference's own breakpoints;
+     line-height is 1.2 on every heading; tracking is -0.02em on headings at
+     768 and up and RELAXES to -0.01em at the narrow width — measured, and the
+     opposite of the packs that tighten as they shrink. */
+  --t-display: 3rem; /* 48px/57.6px at 600 — 44px at 768, 36px narrow */
+  --t-display-mid: 2.75rem; /* 44px from 768 */
+  --t-display-sm: 2.25rem; /* 36px below 768 */
+  --t-h2: 2.25rem; /* 36px/43.2px — 32px at 768, 28px narrow */
+  --t-h2-sm: 1.75rem; /* 28px */
+  --t-h3: 1.5rem; /* 24px/28.8px — the FAQ question and card head */
+  --t-stat: 2.5rem; /* 40px/56px at 600 — the counted slab, in --accent */
+  --t-lede: 1.25rem; /* 20px/28px at 400 */
+  --t-body: 1rem; /* 16px */
+  --t-label: 0.875rem; /* 14px/500 — the tab and persona label */
+  --lh-heading: 1.2; /* MEASURED on every heading size */
+  --lh-body: 1.5;
+  --lh-reading: 1.4; /* MEASURED twice — 28px on the 20px lede, 56px on the 40px slab */
+  --track-heading: -0.02em; /* MEASURED at 768 and up */
+  --track-heading-sm: -0.01em; /* MEASURED at 390 — the tracking RELAXES */
+  --weight-heading: 600; /* MEASURED — the ceiling weight */
+  --weight-control: 500;
+  --weight-body: 400;
+  /* PACK DECISION — the reference holds its lede in a centered column with no
+     max-width; 64ch against TT Fors at 20px is the measure that column implies. */
+  --measure-lede: 64ch;
+
+  /* ---- The contour: one texture, three inks ---------------------------- */
+  /* The reference draws its terrain as PNG assets (fine contour lines, white
+     on the teal closer, brand-hued on the field corners). An asset cannot ship
+     in a token layer, so the pack carries the line inks — MEASURED against
+     their grounds as non-text — and the technique is the pack's: concentric
+     repeating rings in CSS, stated in the pack's Texture section.
+     @role non-text: --contour-teal, --contour-pink, --contour-on-dark — composited
+     on their grounds they run 1.15:1 to 1.42:1 (the pink stripe is #ffe1ee on
+     #fff7f3 at 1.15:1, the teal stripe is #d8e7e2 on #fff7f3 at 1.21:1, the white
+     stripe is #4aafa6 on #0d9488 at 1.42:1) — by design; a contour that reads as
+     a mark has stopped being terrain. */
+  --contour-teal: rgba(13, 148, 136, 0.16);
+  --contour-pink: rgba(255, 145, 218, 0.22);
+  --contour-on-dark: rgba(255, 255, 255, 0.25);
+  /* The fade that keeps a contour box terrain rather than wallpaper — a mask,
+     so only the alpha channel acts; the black is arithmetic, not a colour. */
+  --contour-fade: radial-gradient(closest-side, #000000 25%, transparent 100%);
+
+  /* ---- Motion: one clock, one pulse, nothing else ---------------------- */
+  /* MEASURED — the reference's own --transition token is the page's entire
+     state motion; hover is a fill stepping down the se-uikit ladder, and
+     nothing moves, lifts or casts. The one @keyframes in the corpus is a pulse
+     ring (grow 100→130%, fade) on a live marker; its clock is the pack's, set
+     inside the doctrine's ambient band. Zero scroll clocks: no
+     animation-timeline, no parallax, one sticky element (the nav). */
+  --ease: ease;
+  --dur-fast: 0.2s; /* MEASURED — var(--transition) */
+  --dur-pulse: 2.4s; /* PACK DECISION — the keyframe ships with no duration in
+     the corpus; 2.4s sits in the ambient band and reads as breathing */
+
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-body);
+  /* MEASURED on the reference's own body rule, and load-bearing: every reading,
+     delta and price aligns because the figures are tabular. */
+  font-variant-numeric: lining-nums tabular-nums;
+  line-height: var(--lh-body);
+}
+
+/* The reference ships ZERO prefers-reduced-motion rules — recorded, and cheap to
+   forgive only because the budget is one 0.2s clock and one pulse. This block is
+   the pack's: the clock collapses and the pulse ring holds at rest (its first
+   and last frames differ only in a ring that fades — the resting state is the
+   marker itself, fully legible). */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0s;
+    --dur-pulse: 0s;
+  }
+}
+
+/* Nothing on this page is bolder than 600 — measured, and the UA disagrees:
+   `strong` and `b` get 700 from the browser whether the pack ships a rule or
+   not, so the ceiling is pinned to the token here. */
+strong,
+b {
+  font-weight: var(--weight-heading);
+}

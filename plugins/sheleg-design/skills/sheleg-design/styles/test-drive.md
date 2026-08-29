@@ -47,7 +47,10 @@ buy is spent inside the demos, never on the page around them.
 
 **Not for:** enterprise procurement pages, where a handwritten annotation reads as a
 liability rather than a voice — that register is [`showroom`](./showroom.md) or
-`tenor`. Not for regulated, clinical or public-sector surfaces: a yellow marker over a
+`tenor`. An analytics landing on the same warm paper whose dashboard is a **flat
+portrait rather than a running machine** — a vendor team surveying a terrain, no
+founder's hand, near-zero motion — is [`surveyor`](./surveyor.md): the give-away is
+whether the engine inside the frame is on. Not for regulated, clinical or public-sector surfaces: a yellow marker over a
 compliance claim is a joke the reader did not ask for. Not for dense operator chrome —
 the elevation model is one card ring and one lit control, and a fourth nested panel
 has nothing to sit on; that is `workbench`'s half.

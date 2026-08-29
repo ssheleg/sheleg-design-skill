@@ -59,14 +59,14 @@ the runnable palette validation; a pack is the *parameter set* it consumes.
 
 **Read the chosen pack's own token names before you write a single `var()`.**
 This table is by *role*, not by token, because the names are not uniform across
-the thirty-seven packs: only `--bg` and `--ink` resolve in every pack. The accent is
-`--accent` in thirty-four of the thirty-seven packs; the other three name it themselves —
+the thirty-eight packs: only `--bg` and `--ink` resolve in every pack. The accent is
+`--accent` in thirty-five of the thirty-eight packs; the other three name it themselves —
 `--brand` in `babylove` and `field-notes`, `--cta` in `orchard` — and each declares
 `@role accent:` in its token layer, which is the marker to read rather than the name.
 (`roster` also ships a `--cta`, beside its `--accent`: that one is a component slot, not
 the accent role, and the missing `@role accent:` marker is what says so.) **A second marker joins it in 1.26.0:**
 a semantic colour that sits below WCAG AA on its own field declares
-`@role non-text:` with the reason and the ratio, because twenty-four of the token layers
+`@role non-text:` with the reason and the ratio, because twenty-five of the token layers
 carry such a colour and each said so in a different phrasing — "never text on the field",
 "a FILL and large-text colour", "a fill, not a text colour", "No coral word under 24px",
 "category marks" — which is exactly why nothing could check it.
@@ -86,7 +86,7 @@ pack, because a sentence enumerating packs is not something a gate can read.
 | `--danger` / `--good` / `--warn` | awning, tenor |
 | `--danger` / `--info` / `--success` / `--warning` | outrank |
 | `--good` / `--warn` | babylove |
-| `--danger` / `--good` / `--info` | atrium |
+| `--danger` / `--good` / `--info` | atrium, surveyor |
 | `--danger` / `--good` | roster |
 | `--danger` | field-notes |
 | `--good` | briefing-room |

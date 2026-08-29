@@ -234,7 +234,7 @@ ${c("bold", "What it installs")}
   DESIGN_SYNC_BRIDGE.md   the Claude Design contract (what a pack sends, and
                        what does not cross)
   AI_PRODUCT_PATTERNS.md  chat / agent / streaming surfaces (honest state)
-  styles/              thirty-seven style packs — instrument-console (dark console),
+  styles/              thirty-eight style packs — instrument-console (dark console),
                        editorial-luxury (warm editorial), workbench (light/dark
                        product UI), briefing-room (dark 16:9 presentation deck),
                        atrium (warm cream consumer health), patchbay (dark live
@@ -254,6 +254,10 @@ ${c("bold", "What it installs")}
                        inside drawn browser chrome, controls lit by a
                        four-layer shadow in their own hue, and a
                        handwritten hand annotating the tour),
+                       surveyor (peach paper mapping unseen terrain in
+                       contour lines, flat shadowless cards, a teal that
+                       states and a pink that answers, and the product
+                       shown only as portraits),
                        babylove (white +
                           one orange, seven tokens over Tailwind defaults),
                           outrank (white +

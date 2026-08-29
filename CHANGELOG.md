@@ -6,6 +6,54 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.54.0] - 2026-08-29
+
+### The thirty-eighth pack — the terrain is mapped
+
+**`surveyor`**, extracted from an AI-visibility tracker's front page and named per
+ADR-0001 for the register it encodes: a page that sells a survey of terrain the
+buyer cannot see — contour lines for texture, counted stat slabs for readings, and
+the product appearing only as flat portraits.
+
+### Added
+
+- `styles/surveyor.md` — widened, all thirteen headings; `Themes: light only`;
+  `Rank: unordered — 3 status role(s)`, and the missing warn is a stated decision
+  rather than a gap: the authored palette ships no amber, and one invented from the
+  WordPress vendor presets would be the exact rule-7 trap. Two forks written from
+  both sides: against `test-drive` (a flat portrait against a running machine on
+  the same warm paper) and against `showroom` (a field survey pinned flat against
+  one lit museum specimen).
+- `styles/tokens/surveyor.css` — the authored layer dug out of a WordPress site:
+  SE Ranking's own `se-uikit` tokens verified against the render, with the vendor
+  preset `:root` (a full palette that paints nothing) left behind. The corrections
+  climb the reference's own ladder: its CTA label measures `#ffffff` on `#0d9488`
+  at 3.74:1, so the hover step `#0a7269` becomes the text-bearing `--action` and
+  the brand teal keeps large-only jobs; the pink that answers (`#ff91da`, 1.84:1)
+  gains a speaking step `--pink-deep` `#a83f88` at 5.32:1. The page's elevation
+  model is recorded as measured: box-shadow none everywhere except the nav after
+  it detaches on scroll.
+- `kits/surveyor/` — the six-name spine plus `StatSlab`, `Delta`, `Portrait`,
+  `TintPanel`, `Closer`, `Dialogue`, `Pulse`, `Field`, `NavBar`, `Empty`. The
+  contour terrain ships as a CSS technique (`repeating-radial-gradient` rings)
+  over the three measured line inks, because a PNG asset cannot live in a token
+  layer.
+- `test/scenarios.md` T36 — `surveyor` against `test-drive`, the warm-paper
+  analytics-landing fork, with its negative branch per standing instruction 4.
+- ADR-0001 gains its fifteenth application: `surveyor`, with `contour`, `atlas`,
+  `heatmap`/`benchmark` and `field-survey` weighed and rejected.
+
+### Changed
+
+- `test-drive` and `showroom` each gain the reciprocal fork clause naming
+  `surveyor`.
+- Counted claims moved with the tree: thirty-eight packs and kits across
+  `SKILL.md`, the index (six core / thirty-two widened), `SURFACE_COMPOSITION.md`
+  (the accent is `--accent` in 35 of the 38; twenty-five layers carry a
+  non-text role), `FIGMA_BRIDGE.md` (twelve of the thirty-eight ship a twin),
+  the template's theme split (12/17/9), README, DOCMAP, both installers and all
+  three manifests.
+
 ## [1.53.0] - 2026-08-27
 
 ### The thirty-seventh pack — the visitor is handed the keys

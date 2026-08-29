@@ -1581,3 +1581,75 @@ legitimate nearest-neighbour for this cold mono brief; the `test-drive` fork sit
 `datasheet`'s own Register and did not need to fire). Its defect-read returned **nine
 findings on `datasheet`**, three reproduced by the filing run — filed as board B-134
 for the pack's author rather than edited here, per the shipped-pack precedent.**
+
+## T36 — Two warm-paper analytics landings, and the engine that separates them
+
+Added with the `surveyor` pack. Two branches, two fresh contexts, run **blind against
+the bundle directory only** — `test/`, `docs/`, `kits/`, the README and the CHANGELOG
+are forbidden, because this file carries the answer beside the prompt.
+
+`surveyor` and `test-drive` are the two most recent packs and the closest pair in the
+library: both are warm-paper analytics landings whose first screen is a dashboard.
+The one-line test the branches should reach is *is the engine inside the frame on —
+a live demo handed over, or a flat portrait of the readings?*
+
+**T36a — should select `surveyor`.** "Marketing site for a brand-monitoring platform
+sold to marketing teams and agencies. The pitch is coverage: where your brand shows
+up across AI engines, benchmarked against competitors. We have polished dashboard
+screenshots to show — no live demo, legal won't allow one — and we want it calm and
+enterprise: flat cards, one restrained green, a pink we use for the roadmap, big
+counted numbers like '100M+ answers analyzed', topographic-map linework as the only
+decoration, and essentially no animation." Pass: routes to `styles/surveyor.md`,
+quotes the clause that decided it, and names `test-drive` or `showroom` as the
+closest rejected pack with the clause that ruled it out. Fail: routing to
+`test-drive` because the brief is a warm-paper analytics landing; to `showroom`
+because the proof is screenshots; or to `scoreboard` because a big counted number
+appears.
+
+**T36b — should still select `test-drive`.** "Landing page for my indie analytics
+tool. I want the actual product embedded live on the page so people can click around
+the sample dashboard in a little browser window before signing up, with my
+handwritten notes scribbled next to it and a highlighter over the best tweets.
+Friendly, one warm accent, dark mode too." Pass: stays on `styles/test-drive.md` and
+can say what would have moved it — the demo becoming a flat screenshot and the
+founder's hand giving way to a vendor team's calm. Fail: routing to `surveyor`
+because the newest pack is also a warm-paper analytics landing, which is the failure
+a positive-only branch cannot detect, per standing instruction 4.
+
+Both branches are also asked, after choosing, to read their chosen pack in full and
+report defects with file and quoted text.
+
+**Result: both branches PASSED on 2026-08-29, fresh contexts, blind against the
+bundle directory (both reported file lists; neither names `test/`, `docs/`, `kits/`,
+README or CHANGELOG).**
+
+`T36a` routed to `styles/surveyor.md`, quoted the Register clause that decided it
+(*"products that measure a landscape the buyer cannot see directly"*), and named
+`test-drive` as the closest rejected pack via the fork's own discriminator (*"the
+give-away is whether the engine inside the frame is on"* — the brief's legal ban on a
+live demo settled it); it additionally rejected `scoreboard` on its marketing-figures
+clause and `showroom` on the seven-layer shadow against the brief's flat cards. Its
+defect-read returned **six findings, all six adjudicated and five fixed pre-tag**:
+the pink's field ratio stated as the reference's glyph-step number twice (1.84 → the
+computed 1.92, with the 1.84 re-attributed to `#ff98dd`); an active state specced
+one step past a ladder the AA shift had exhausted (hover and press now share the
+darker step, stated as deliberate); the load-bearing `font-variant-numeric`
+declaration missing from a token layer that says "copy verbatim" (added); two
+published 1.4 line-heights no token could express (`--lh-reading` added, the kit's
+literal replaced); the contour contrast range recycled from other tokens' numbers
+(recomputed and stated per stripe); and the disabled pair described as a kit literal
+after it had moved into tokens (restated). The sixth — nothing: all six were real.
+
+`T36b` stayed on `styles/test-drive.md` — the failure this branch exists to detect,
+a router seduced by the newest warm-paper analytics pack, did not occur — quoting
+the operation clause, and rejected `showroom` with its reciprocal fork. Its
+defect-read returned **five findings on the shipped `test-drive`**: four reproduced
+by the filing run (the kit's 1s thinking-dot literal with no token behind it at
+`kits/test-drive/src/styles.css:713`; the quiet hover naming `--hairline-strong` in
+Components against `--hairline-hover` in Micro-interactions, which diverge on the
+dark theme; dark `--surface-2` shipped with no provenance tag; the dark `--hairline`
+comment claiming the card ring's job at the wrong alpha) and one **refuted with a
+receipt**: the Register's "13–18s loops" lower bound is measured — the reference
+ships `df-demo-answer 13s`, confirmed live on 2026-08-29 — though the pack carries
+no receipt for it. Filed as board B-135 for the pack's author, per the shipped-pack
+precedent.**
