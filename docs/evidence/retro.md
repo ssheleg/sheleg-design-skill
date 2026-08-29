@@ -529,7 +529,7 @@ evidence until runs start writing their own again.
 
 | Date | Commit | Task | Diverged? |
 |---|---|---|---|
-| 2026-08-29 | working tree | `surveyor`, the thirty-eighth pack from visible.seranking.com — the authored `se-uikit` layer dug out of a WordPress site whose vendor preset palette paints nothing; the AA corrections climb the reference's own button ladder (`#0a7269` promoted to the text-bearing fill over a 3.74:1 CTA), the answering pink gains a speaking step, the missing warn is a stated decision, and the page's one shadow is recorded as a scroll event on the nav; **`v1.54.0` prepared** | **yes** |
+| 2026-08-29 | working tree | `surveyor`, the thirty-eighth pack from visible.seranking.com — the authored `se-uikit` layer dug out of a WordPress site whose vendor preset palette paints nothing; the AA corrections climb the reference's own button ladder (`#0a7269` promoted to the text-bearing fill over a 3.74:1 CTA), the answering pink gains a speaking step, the missing warn is a stated decision, and the page's one shadow is recorded as a scroll event on the nav; the catalogue's leak guard refused its own site on the word `visible` and was rewritten two-tier while its miss on `seranking` was closed; **`v1.54.0` shipped** | **yes** |
 | 2026-08-27 | working tree | `test-drive`, the thirty-seventh pack from datafa.st — the live product embedded in drawn browser chrome as the set piece, a founder's hand annotating from the margin, one coral split into two tokens because the reference's own CTA is 3.42:1 under white, and a declared teal accent the render proved dead; the render step caught a 66px nav against a stated 65, a 428px link row on a 390px page, and a missing touch floor; T35 ran blind both ways and its defect-read out-hit the author's own ladder; **`v1.53.0` shipped** | **yes** |
 | 2026-08-27 | working tree | the public site opens on the designs behind three tabbed screens with a full machine layer (ItemList of every pack, one publisher node, 404, three-URL sitemap) — and the pass found `method.html` emitting two canonicals and an `oklch()` field the gallery could not parse, so the published dark count was five where six ship; `deskmate` corrected by its own blind audit, the white-on-white card being the one no gate can see; `validate_token_population_counts` added after SURFACE_COMPOSITION.md claimed twenty-nine at a true thirty-three; **`v1.52.0` prepared** | **yes** |
 | 2026-08-27 | working tree | `deskmate`, the thirty-sixth pack from viktor.com — one light source above the top edge and one four-stop ramp doing three jobs, with a framed transcript whose quoted client keeps its own face and colours under a `--quoted-*` namespace; the status set lifted out of that transcript because the brand layer paints no state; the render caught a nav slab 515px wide on a 390px page, a dusk secondary painting white on white, a chip label at 3.36:1 and an underlined pill; **`v1.51.1` shipped** — `v1.51.0` was pushed before its branch, the workflow's reachability guard refused it, and a `v*` tag cannot be moved here | **yes** |
@@ -602,6 +602,42 @@ evidence until runs start writing their own again.
 | 2026-08-24 | `2745c09` | the assembly rule written down where each part already lives — template rules 7 and 8, CONTRIBUTING step 8 — plus `nameplate`'s mark set carried as a mechanism rather than a taxonomy, and one claim narrowed to the width it was measured at; the new render step caught a 60px tile against a declared 50 within the hour; **`v1.48.1` shipped** | **yes** |
 | 2026-08-25 | `28d9303` | README names where its test commands run — the published package ships no `test/`, so `python3 test/validate.py` resolved in a clone and nowhere else (**`v1.49.1`** shipped) | *unrecorded* |
 ## Log
+
+### 2026-08-29 — the guard that refused its own site, and the brand it never saw
+
+**Symptom.** The Pages build failed on every page after the `surveyor` merge:
+`FAIL index.html: leaks 1 source term(s): visible` — including `404.html`, a page
+with almost no prose. The published catalogue kept serving 37 packs while the tree
+said 38.
+
+**Surfaced at** stage 8, by the deploy's own gate. **Owned by** the leak guard's
+term derivation, which had never met a multi-label host whose first label is an
+English word.
+
+**Root cause, twice over.** `source_terms()` took only the FIRST label of a host as
+a brand stem: `visible.seranking.com` therefore contributed `visible` — which is a
+CSS pseudo-class fragment, and the site's own stylesheet says `:focus-visible` on
+every page — while `seranking`, the actual registrable brand, never entered the term
+set at all. One derivation produced a false positive that blocked the deploy and a
+false negative that would have let the real name through. The raw substring scan
+(`t in low`) finished the job by reading CSS as prose.
+
+**Fix by grade.** Two tiers, matching what NAMING means: a full host (contains a
+dot) stays a raw substring over the whole file, because a URL inside a stylesheet
+still makes a network request; a bare stem is matched at word boundaries over the
+page with `<style>`/`<script>` stripped, and hyphen compounds (`focus-visible`) do
+not count as the word. Stems now come from ALL labels. Watched saying no on five
+plants before shipping: a host inside a CSS `url()` fails, a stem in prose fails,
+the bare English word in prose fails (the stem IS the product's name here, so prose
+saying it is naming it), the pseudo-class passes, a hyphen compound passes. Then the
+real site built: 38 packs, 0 of 90 terms present.
+
+**The lesson that travels.** A guard's term set is itself a measurement, and it can
+be wrong in both directions at once from a single bad derivation. The failure that
+LOOKS like over-blocking (the deploy refused) can be the only visible symptom of
+under-blocking (the brand that was never guarded) — this run would not have read
+`source_terms()` at all if the false positive had not stopped the build. When a gate
+misfires, read what it should have caught, not just what it wrongly caught.
 
 ### 2026-08-27 — the blind reader out-hit the author, and the rule that split across two files
 

@@ -166,6 +166,17 @@ def crumbs(*trail: tuple[str, str]) -> dict:
 STOP = {"a", "the", "and", "of", "one", "its", "com", "www", "site", "page", "production"}
 
 
+TLDS = {"com", "org", "net", "dev", "app", "ing", "st", "so", "ai", "io", "global"}
+
+
+def _stems(host: str) -> set[str]:
+    """Every distinctive label of a host — not only the first. visible.seranking.com
+    must forbid `seranking`, which a first-label-only read never saw; the guard that
+    found this was its own false positive on `visible`."""
+    return {lab for lab in host.replace("www.", "").split(".")
+            if len(lab) > 3 and lab not in STOP and lab not in TLDS}
+
+
 def source_terms(packs: list[dict], audit: list[dict]) -> set[str]:
     """Every host and brand stem that must never reach a published page."""
     terms: set[str] = set()
@@ -176,9 +187,7 @@ def source_terms(packs: list[dict], audit: list[dict]) -> set[str]:
             if "." in h:
                 terms.add(h)
                 terms.add(h.replace("www.", ""))
-                stem = h.replace("www.", "").split(".")[0]
-                if len(stem) > 3 and stem not in STOP:
-                    terms.add(stem)
+                terms |= _stems(h)
     for a in audit:
         u = (a.get("origin_url") or "").lower()
         m = re.search(r"https?://([^/]+)", u)
@@ -186,10 +195,11 @@ def source_terms(packs: list[dict], audit: list[dict]) -> set[str]:
             host = m.group(1)
             terms.add(host)
             terms.add(host.replace("www.", ""))
-            stem = host.replace("www.", "").split(".")[0]
-            if len(stem) > 3 and stem not in STOP:
-                terms.add(stem)
+            terms |= _stems(host)
     return {t for t in terms if len(t) > 3}
+
+
+_MACHINE = re.compile(r"<style\b[^>]*>.*?</style>|<script\b[^>]*>.*?</script>", re.S | re.I)
 
 
 def leaks(text: str, terms: set[str], allow: set[str]) -> list[str]:
@@ -197,9 +207,27 @@ def leaks(text: str, terms: set[str], allow: set[str]) -> list[str]:
     carry their source brand as their own name — recorded in ADR-0001, and deliberately
     not renamed, because a pack name is a public API across four channels. Their names
     therefore cannot be stripped from a page that lists the packs, and this guard found
-    all three by refusing to publish until it was told so explicitly."""
+    all three by refusing to publish until it was told so explicitly.
+
+    Two tiers, because the guard's subject is NAMING. A full host (it contains a dot)
+    is searched raw over the whole file — a URL inside a stylesheet still makes a
+    network request, so CSS is no refuge for it. A bare stem is searched only in the
+    page with its <style> and <script> blocks removed, and only at word boundaries:
+    `visible.seranking.com` put `visible` in this set, and the raw substring scan
+    refused every page on the site for carrying `:focus-visible` in its own CSS —
+    a pseudo-class, not a source name."""
     low = text.lower()
-    return sorted(t for t in terms if t in low and t not in allow)
+    prose = _MACHINE.sub(" ", low)
+    hits = []
+    for t in sorted(terms):
+        if t in allow:
+            continue
+        if "." in t:
+            if t in low:
+                hits.append(t)
+        elif re.search(r"(?<![a-z0-9-])" + re.escape(t) + r"(?![a-z0-9-])", prose):
+            hits.append(t)
+    return hits
 
 
 # ---------------------------------------------------------------- the audit page
