@@ -24,6 +24,8 @@ import re
 import subprocess
 import sys
 
+chrome = None  # loaded in main(), like the other tool modules
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 # The published base. `ssheleg.github.io/sshlg-skills` 301s to the family's own
 # domain, so the back-link below names the destination rather than the redirect.
@@ -51,7 +53,12 @@ def page_meta(title: str, desc: str, canon: str) -> str:
     """The machine half of a page: what a crawler and a link preview read."""
     return (f'<meta name="description" content="{esc(desc)}">\n'
             f'<link rel="canonical" href="{esc(canon)}">\n'
-            '<meta name="robots" content="index,follow,max-image-preview:large">\n<meta name="color-scheme" content="dark">\n<meta name="theme-color" content="#0e0f11">\n<meta property="og:site_name" content="SHELEG style packs">\n<meta property="og:locale" content="en_US">\n'
+            '<meta name="robots" content="index,follow,max-image-preview:large">\n'
+            # The colour-scheme pair is DERIVED from the shell pack's own --bg and is
+            # emitted by `chrome.meta()`; a second hand-typed copy here is how the URL
+            # bar ends up a different colour from the page behind it.
+            f'{chrome.meta()}\n'
+            '<meta property="og:site_name" content="SHELEG style packs">\n<meta property="og:locale" content="en_US">\n'
             f'<meta property="og:type" content="website">\n'
             f'<meta property="og:title" content="{esc(title)}">\n'
             f'<meta property="og:description" content="{esc(desc)}">\n'
@@ -100,17 +107,10 @@ def prefetch(current: str) -> str:
                       for h, _, _ in TABS if h != current)
 
 
+# The tab strip's LOOK moved into `tools/chrome.py` with the rest of the shell, so it
+# is dressed in the same pack as everything else. What stays here is the only thing
+# that is about this site's layout rather than its palette: two sticky offsets.
 TABS_CSS = """<style>
-.tabs{position:sticky;top:0;z-index:9;background:#0b0c0eee;border-bottom:1px solid #1e2024;
- backdrop-filter:saturate(140%) blur(6px)}
-.tabs-inner{max-width:1600px;margin:0 auto;padding:0 32px;display:flex;gap:4px}
-.tab{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;
- color:#9a9ca4;text-decoration:none;font-size:14px;font-weight:500;
- border-bottom:2px solid transparent}
-.tab:hover{color:#e8e9ec;background:#ffffff08}
-.tab.on{color:#e8e9ec;border-bottom-color:#4a7dff}
-.tab:focus-visible{outline:2px solid #4a7dff;outline-offset:-2px}
-@media (max-width:600px){.tabs-inner{padding:0 12px}.tab{padding:0 12px}}
 /* The gallery's own filter bar is sticky at 0 too. Two sticky strips at the same
    offset overlap; the filter bar belongs under the tabs, so it starts where they end
    (44px of tab plus its 1px rule). The selector carries `body` because the gallery's
@@ -266,7 +266,7 @@ def audit_page(rows: list[dict], stamp: str) -> str:
             "isPartOf": {"@id": WEBSITE}, "publisher": {"@id": PUBLISHER},
             "inLanguage": "en"},
            crumbs(("Designs", f"{SITE}/"), ("Audit", canon)))])
-    return f"""{HEAD.format(title="Collection audit &mdash; SHELEG style packs", site=SITE, canon=canon, desc=desc)}
+    return f"""{head("Collection audit &mdash; SHELEG style packs", desc, canon)}
 {machine}
 {tabstrip("audit.html")}
 <header class="top">
@@ -313,14 +313,25 @@ def audit_page(rows: list[dict], stamp: str) -> str:
 {foot(stamp)}"""
 
 
-HEAD = """<!doctype html><html lang="en"><head><meta charset="utf-8">
+def head(title: str, desc: str, canon: str) -> str:
+    """Every page's `<head>`, with the shell and the theme switch already in it.
+
+    The three chrome pieces are filled here rather than at each call site, because a
+    page that forgets one is a page that ships unstyled or dark-only, and nothing
+    downstream would say so.
+    """
+    return HEAD.format(
+        title=title, desc=desc, canon=canon, site=SITE,
+        scheme=chrome.meta(), style=chrome.style_block(), switch=chrome.THEME_SWITCH)
+
+
+HEAD = """<!doctype html><html lang="en" data-theme="light"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{desc}">
 <link rel="canonical" href="{canon}">
 <meta name="robots" content="index,follow,max-image-preview:large">
-<meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#0e0f11">
+{scheme}
 <meta property="og:site_name" content="SHELEG style packs">
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="website">
@@ -333,40 +344,7 @@ HEAD = """<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{title}">
 <meta name="twitter:description" content="{desc}">
-<meta name="twitter:image" content="{site}/og.png">
-<style>
-*{{box-sizing:border-box}}
-body{{margin:0;background:#0e0f11;color:#e8e9ec;
- font:400 15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}}
-a{{color:#8ab0ff}} a:hover{{color:#b9cdff}}
-.top{{max-width:1100px;margin:0 auto;padding:44px 32px 20px}}
-.crumb{{margin:0 0 18px;font-size:13px}}
-h1{{margin:0 0 12px;font-size:32px;font-weight:600;letter-spacing:-.02em}}
-h2{{font-size:19px;font-weight:600;margin:34px 0 12px;letter-spacing:-.01em}}
-.sub{{color:#9a9ca4;max-width:80ch;margin:0 0 10px}}
-.sub b{{color:#e8e9ec;font-weight:600}} .sub code{{color:#c8cad0}}
-main{{max-width:1100px;margin:0 auto;padding:12px 32px 70px}}
-main.wide{{max-width:1320px}}
-table{{width:100%;border-collapse:collapse;font-size:13px}}
-th,td{{text-align:left;padding:8px 10px;border-bottom:1px solid #212328;white-space:nowrap}}
-th{{color:#7d8088;font-weight:500;font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;
- position:sticky;top:0;background:#0e0f11}}
-td small{{color:#6e7178}}
-.y{{color:#5ec98a}} .n{{color:#5a5d64}} .o{{color:#e0a458}}
-.notes dl{{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;max-width:96ch;font-size:13.5px}}
-.notes dt{{color:#c8cad0;font-weight:500;white-space:nowrap}}
-.notes dd{{margin:0;color:#9a9ca4}}
-.cards{{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:24px 0}}
-.tile{{border:1px solid #24262b;border-radius:14px;padding:20px;background:#141519;
- text-decoration:none;color:inherit;display:block}}
-.tile:hover{{border-color:#3a3d45}}
-.tile h3{{margin:0 0 6px;font-size:17px;font-weight:600}}
-.tile p{{margin:0;color:#9a9ca4;font-size:13px}}
-.n-big{{font-size:30px;font-weight:600;letter-spacing:-.02em;display:block;margin-bottom:2px}}
-footer{{max-width:1320px;margin:0 auto;padding:0 32px 60px;color:#6e7178;font-size:12.5px}}
-@media (max-width:640px){{.top,main,footer{{padding-left:16px;padding-right:16px}}
- table{{display:block;overflow-x:auto}}}}
-</style></head><body>"""
+{style}{switch}</head><body>"""
 
 
 def foot(stamp: str) -> str:
@@ -507,7 +485,7 @@ def method_page(packs: list[dict], rows: list[dict], stamp: str) -> str:
     meta = "\n".join([
         prefetch("method.html"), TABS_CSS,
         ld(*base_nodes(), app, crumbs(("Designs", f"{SITE}/"), ("Method", canon)))])
-    return f"""{HEAD.format(title="Method — how a SHELEG style pack is measured", site=SITE, canon=canon, desc=desc)}
+    return f"""{head("Method — how a SHELEG style pack is measured", desc, canon)}
 {meta}
 {tabstrip("method.html")}
 <header class="top">
@@ -558,31 +536,33 @@ def packs_alias() -> str:
     second copy, because two URLs serving one gallery is duplicate content that splits
     whatever authority the page has."""
     canon = f"{SITE}/"
-    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
+    return f"""<!doctype html><html lang="en" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SHELEG style packs</title>
 <link rel="canonical" href="{canon}">
 <meta name="robots" content="noindex,follow">
 <meta http-equiv="refresh" content="0;url=./">
-</head><body style="background:#0e0f11;color:#e8e9ec;font:400 15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:40px">
-<p>The pack gallery is now the front page. <a href="./" style="color:#8ab0ff">Continue to the packs</a>.</p>
+{chrome.style_block()}{chrome.THEME_SWITCH}
+</head><body>
+<main class="narrow"><p>The pack gallery is now the front page.
+<a href="./">Continue to the packs</a>.</p></main>
 </body></html>"""
 
 
 def not_found() -> str:
-    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
+    return f"""<!doctype html><html lang="en" data-theme="light"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Not found — SHELEG style packs</title>
 <meta name="robots" content="noindex,follow">
-{TABS_CSS}
-</head><body style="background:#0e0f11;color:#e8e9ec;font:400 15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;margin:0">
+{chrome.style_block()}{TABS_CSS}{chrome.THEME_SWITCH}
+</head><body>
 {tabstrip("")}
-<div style="max-width:1100px;margin:0 auto;padding:44px 32px">
-<h1 style="font-size:32px;font-weight:600;letter-spacing:-.02em;margin:0 0 12px">Not found</h1>
-<p style="color:#9a9ca4">That address is not part of this site. The three that are:
-<a href="./" style="color:#8ab0ff">the packs</a>,
-<a href="audit.html" style="color:#8ab0ff">the audit</a> and
-<a href="method.html" style="color:#8ab0ff">the method</a>.</p>
-</div></body></html>"""
+<main class="narrow">
+<h1>Not found</h1>
+<p class="sub">That address is not part of this site. The three that are:
+<a href="./">the packs</a>, <a href="audit.html">the audit</a> and
+<a href="method.html">the method</a>.</p>
+</main></body></html>"""
 
 
 def main() -> int:
@@ -590,8 +570,9 @@ def main() -> int:
     ap.add_argument("--out", default=str(ROOT / "_site"))
     args = ap.parse_args()
 
-    global gallery_mod
+    global gallery_mod, chrome
     gallery, auditor = load("gallery"), load("audit_packs")
+    chrome = load("chrome")
     gallery_mod = gallery
     packs = gallery.collect()
     stray = [p["name"] for p in packs if p["unresolved"]]

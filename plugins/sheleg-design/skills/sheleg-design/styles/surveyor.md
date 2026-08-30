@@ -361,6 +361,13 @@ a page with two closers, or a closer that drops to body-size copy (white on
 - **Card hover: nothing. Portrait hover: nothing.** The survey does not fidget.
 - `@media (hover: hover)` gates the two hovers above.
 
+**The ring on the closer panel is a second token, and it has to be.** `--focus-color`
+is `--action`, which is correct everywhere the pack is paper — and invisible on the
+one surface the pack fills with `--accent`: 1.55:1, under the 3:1 mark floor. The
+closer is where the final CTA lives, so `[data-surface="accent"]` re-declares the
+ring as `--focus-color-on-accent`, which is the pack's own `--bg` at 3.54:1 on the
+accent. Nothing else about that surface changes.
+
 ## Bans
 
 - **No shadow on anything but the detached nav.** `#ffffff` cards on `#fff7f3`

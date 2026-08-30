@@ -16,10 +16,10 @@ the reading that settled it; nothing here is asserted from confidence.
 | REQ-6 | **met** | counted claims moved 38 → 39 across eleven files; the widened remainder 32 → 33; `validate.py` OK |
 | REQ-7 | **met** | `validate_fork_reciprocity()` OK — `chorus` ↔ `surveyor`, `chorus` ↔ `deskmate`, both directions, in both the bundle and the `.cursor/` mirror |
 | REQ-8 | **met** | render log below |
-| REQ-9 | **NOT met — debt stated** | T37 is written with both branches and carries the result line *written, not yet run*; the session was instructed not to spawn subagents. Board row B-136 |
-| REQ-10 | pending | the tag, the GitHub release and the npm publish follow the merge; stamped in the close-out, not here |
-| REQ-11 | pending | launcher pin and local installs follow the publish |
-| REQ-12 | pending | docs/wiki/graph trio follows the merge |
+| REQ-9 | **met, 2026-08-30** | both branches ran blind on fresh contexts and both passed; the negative branch stayed on `surveyor`. 29 findings returned between the two reads, 13 fixed in v1.58.0. B-136 closed |
+| REQ-10 | **met** | PR #12 merged with 84 green checks, annotated `v1.55.0` pushed, release workflow green, `npm view` answered 1.55.0, and the published tarball carries `styles/chorus.md`, `styles/tokens/chorus.css` and `kits/chorus/` — read out of `npm pack sheleg-design-skill@1.55.0` |
+| REQ-11 | **partly met** | local installs refreshed: the plugin reads 1.56.0, `chorus.md` is present in the cache and in the hub, the shadow check and the broken-symlink check are both empty. **Not done:** the launcher's own pin in `~/DATA/sshlg-skills` still names v1.54.0, because that repository had ~2,100 lines of another session's uncommitted work in its tree. Named in the release notes rather than left silent |
+| REQ-12 | **partly met** | the ledgers, the board and this record are current as of v1.58.0. The graph artefact under `graphify-out/` is still stamped at `4b0d827` and is a separate refresh |
 
 ## The reference's failures, recomputed
 
@@ -98,4 +98,7 @@ split across a line break.
 
 | # | What | Where it goes |
 |---|---|---|
-| 1 | T37 written, not run — no subagents available to the filing session | board, and the release notes |
+| 1 | ~~T37 written, not run~~ — **closed 2026-08-30**, both branches run blind and both passed | `test/scenarios.md`, B-136 |
+| 2 | Nine verified `surveyor` findings from T37b, one fixed and eight filed | board B-137 |
+| 3 | Four `chorus` findings that were correct readings of a deliberate choice, now stated in the pack | board B-138 |
+| 4 | The launcher's pin still names v1.54.0 — blocked on another session's uncommitted work in that repository | release notes, and the operator |

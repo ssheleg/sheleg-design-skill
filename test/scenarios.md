@@ -1692,10 +1692,41 @@ which is the failure a positive-only branch cannot detect, per standing instruct
 Both branches are also asked, after choosing, to read their chosen pack in full and
 report defects with file and quoted text.
 
-**Result: WRITTEN, NOT YET RUN.** The filing session was instructed not to spawn
-subagents, so the two blind branches could not be executed before the tag. The debt
-ships in the same commit as the artifact, per standing instruction 3, and is carried
-on the board so the next run inherits a list rather than a silence. What is *not*
-owed: the render check behind REQ-8 ran in full — the kit was rendered at 1440, 768
-and an emulated 390×844×2 and its computed values read back against the pack's
-claims, and that log is in the acceptance record.
+**Result: both branches PASSED on 2026-08-30, fresh contexts, blind against the
+bundle directory** (both reported their file lists; neither opened `test/`, `docs/`,
+`kits/`, README or CHANGELOG). The debt this scenario shipped with — written on
+2026-08-30, run the same day once subagents were available — is closed.
+
+`T37a` routed to `styles/chorus.md` and quoted the identity sentence as what decided
+it (*"somebody else's question is the page's set piece"*), then rejected `surveyor`
+on its own reciprocal fork (*"no dark band anywhere"* against a brief asking for
+near-black bands, and two speaking hues against the brief's one) and `deskmate` on
+the speech-bubble fork (*"whose bubble it is"*). Its defect-read returned **sixteen
+findings on the pack it had just chosen**, and the filing run adjudicated every one:
+**twelve were real and are fixed in this change**, three were correct readings of a
+deliberate choice and are now stated rather than implied, one was refuted.
+
+The three that mattered most were all invisible to every gate. `--on-status` was
+left at its root white inside the slab block, putting white on the mint at
+**1.32:1** — inside the one surface the pack invented the mint for, and the comment
+above that block said it owed "two tokens" while the block changed five. The slab's
+overrides inherited into any light card nested in it, handing a white card a white
+hairline and re-admitting the mint the pack's own Bans forbid on paper. And the
+Responsive section's opening sentence — *"768 and 1440 differ only in the frame, not
+in the type"* — contradicted its own table two lines below it, where the display is
+40px at 768 and 56px at 1440.
+
+`T37b` stayed on `styles/surveyor.md` — the failure this branch exists to detect, a
+router seduced by the newest pack in the same category, did not occur — quoted the
+fork's own separation, and answered what would move it (`test-drive`, on the single
+variable of whether the visitor can drive the instrument). Its defect-read returned
+**thirteen findings on the shipped `surveyor`**. One is fixed here because it is an
+accessibility hole with a one-token remedy: `--focus-color` is `--action`, which on
+the pack's own `--accent` closer panel measures **1.55:1**, under the 3:1 mark floor,
+on the surface carrying the final CTA. The rest are filed for the pack's author.
+
+Both branches also found the same third-party defect independently, and it is the
+one neither pack could have caught: `MOTION_DOCTRINE.md` called `bulletin` at 3
+*"the lowest ceiling in the library"* while four packs pin **2**. It had been false
+for four releases. Corrected, and the number is now recomputed by
+`validate_motion_ceiling_floor()` rather than asserted.

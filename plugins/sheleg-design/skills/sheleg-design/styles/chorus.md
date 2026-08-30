@@ -26,7 +26,7 @@ it.
 
 Contract: widened — all thirteen headings.
 
-Themes: light only — the dark slab is a SURFACE variant (`.chorus-slab`), not a theme twin; the page never inverts.
+Themes: light only — the dark slab is a SURFACE variant (`[data-surface="slab"]`, with `.chorus-slab` as its class alias), not a theme twin; the page never inverts.
 Rank: unordered — 3 status role(s) and no severity ramp; a rank scale is yours.
 
 ## Contents
@@ -101,11 +101,13 @@ already talking. If the quoted words belong to your product, go there.
 Every value below is in
 [`tokens/chorus.css`](./tokens/chorus.css), which is the single home; this table
 documents roles. Provenance is marked per value in the token layer as MEASURED,
-SELECTED or DERIVED.
+DERIVED or PACK DECISION. There is no SELECTED family here — the reference offers
+no darker step of its own in any hue that fails, so every correction had to be
+derived rather than promoted, which is the opposite of `surveyor`.
 
 | Token | Value | Role and the number that licenses it |
 |---|---|---|
-| `--bg` | `#fbfaf9` | The field. 16.99M px² of the census, the largest painted area by a factor of three. |
+| `--bg` | `#fbfaf9` | The field. 16.99M px² of the census, 2.8× the next-largest painted area. |
 | `--surface` | `#ffffff` | Every card — 1.04:1 on `--bg`, which is the reference's entire card separation and the pack's first correction (see `--line`). |
 | `--paper` | `#faf8f0` | The cream well that holds a demo, and the 1050×682 hero deck. 1.06:1 on `--surface`. |
 | `--paper-deep` | `#f5f2e6` | The tinted 67px row. |
@@ -177,7 +179,7 @@ Three faces, and the display face has one job the others cannot take.
 | Body | `--font-sans` | 16px · 1.7 · 400, and the same size at 500 for emphasis |
 | Label | `--font-sans` | 14px · 1.4 · 400 or 500 |
 | Micro | `--font-sans` | 12px · 1.333 · 500 |
-| Eyebrow | `--font-mono` (DM Mono) | 13px · 1 · 500 · uppercase |
+| Eyebrow, mono | `--font-mono` (DM Mono) | 13px · 1 · 500 · uppercase — the section label over a heading, and nothing else |
 
 **The display face carries the stranger's words.** Outfit sets exactly two things
 in the census: the hero, and the question inside every cut-corner bubble. Inter
@@ -245,14 +247,14 @@ failure; the pack keeps the value steps and adds `--line` to the card.
 | Primary button | `--on-coral` at 6.20:1 on `--coral` | `--coral` | `--r-control` | 36px tall, 8px/16px padding, 14px/500 label |
 | Secondary button | `--on-slab` at 16.54:1 on `--slab` | `--ink-strong` | `--r-control` | same metrics |
 | Tertiary button | `--ink-strong` at 17.59:1 on `--surface` | `--surface` | `--r-control` | 1px `--line`; icon in `--coral` |
-| Eyebrow chip | `--ink-body` at 9.15:1 on `--surface` | `--surface` | `--r-chip` | 1px `--line`, 8px/10px padding, 14px/500 |
+| Eyebrow chip | `--ink-body` at 9.15:1 on `--surface` | `--surface` | `--r-chip` | 1px `--line`, 8px/10px padding, 14px/500 in `--font-sans` — it is not the mono eyebrow |
 | Nav item | `--ink-muted` at 5.36:1 on `--bg` | transparent | `--r-pill` | 6px/8px padding; hover fills `--line-quiet` |
 | Card | `--ink-body` at 9.15:1 on `--surface` | `--surface` | `--r-card` | **32px padding and 32px internal gap, unchanged at 390**; 1px `--line` |
 | Quote bubble | `--ink` at 18.88:1 on `--surface` | `--surface` | `--r-bubble` | 24px/600 in `--font-display`; `--shadow-bubble` |
 | Dark bubble | `--on-slab` at 16.54:1 on `--slab` | `--slab` | `--r-bubble` | the same object on the dark side of a pair |
 | Demo well | `--ink-body` at 8.61:1 on `--paper` | `--paper` | `--r-well` | sits inside a card, inset by the card's padding |
 | Product well | `--on-slab` at 17.76:1 on `--well` | `--well` | `--r-well` | the dark screen inside a light card |
-| Delta chip | its own solid, at the 4.5:1 body floor | `--good` or `--danger` wash | `--r-badge` | **arrow glyph and number, always both** |
+| Delta chip | its own solid, at the 4.5:1 body floor | `--good-weak` or `--danger-weak` | `--r-badge` | **arrow glyph and number, always both** |
 | Metric chip (on slab) | `--good-on-dark` at 13.31:1 on `--slab` | `--slab-raised` | `--r-chip` | 12px/500 |
 | Section slab | `--on-slab` at 16.54:1 on `--slab` | `--slab` | `--r-panel` | 30px inset from the viewport; re-declares `--focus-color` |
 
@@ -265,6 +267,14 @@ this page lifts or scales under a press. Disabled is `--disabled-fill` with
 On the slab, `--focus-color` resolves to the paper token instead, because the ink
 ring would otherwise vanish — #1b181c on #1b181c is 1.00:1.
 `--focus-color-on-dark` is 16.54:1 on `--slab`.
+
+**The nesting rule has one stated exception, and it is measured.** A nested box
+normally takes the outer radius minus its inset. A well does not: the reference
+draws a 24px well inside a 12px card at 32px of padding, so the inner corner is
+*rounder* than the outer one and the subtraction would yield a negative number.
+That is the reference's own geometry rather than a slip — the well reads as a
+separate object dropped into the card, which is the point of it — so `--r-well` is
+a free value by exception, and it is the only one in the pack.
 
 **Inputs.** The reference paints exactly one — a search field inside a demo well:
 `--surface` at `--r-control`, 1px `--line`, a 16px/400 value in `--ink-body`, the
@@ -299,17 +309,18 @@ frame:
 
 1. A full-bleed `--slab` announcement strip at radius 0, 43px tall, 16px/400 in
    `--on-slab`, one `--coral-hot` link at its end.
-2. A floating navigation pill — `--surface`, `--r-panel`, `--shadow-nav`, inset
-   from the frame rather than pinned to the viewport edge.
+2. The floating navigation bar — `--surface`, `--r-panel`, `--shadow-nav`, inset
+   from the frame rather than pinned to the viewport edge. It is not a pill:
+   `--r-pill` belongs to the nav *items* inside it, and to the capsule scatter.
 3. The display line, centred, in `--font-display` at 56px/600/−0.0625em, **with
    platform marks set inline as words**: rounded-square logo chips sitting on the
    baseline inside the sentence, at cap height. This is the hero's whole idea —
    the brands doing the mentioning are typeset into the claim.
 4. Behind it, pale routing lines in `--parchment` running from logo chips at the
    frame's left and right edges toward the centre — a wiring diagram in
-   `--parchment` at 1.15:1 on `--bg`, which is texture rather than a mark.
+   `--parchment` at 1.14:1 on `--bg`, which is texture rather than a mark.
 5. Two CTAs side by side — `--coral` first, `--ink-strong` second — then one
-   tertiary pill below, then a **stack of offset cream cards** peeking from behind
+   tertiary button below at `--r-control`, then a **stack of offset cream cards** peeking from behind
    one another under `--shadow-drift`.
 
 The lede is 18px/400 in `--ink-body`, two lines, centred, and never wider than the
@@ -317,8 +328,10 @@ The lede is 18px/400 in `--ink-body`, two lines, centred, and never wider than t
 
 ## Responsive
 
-One breakpoint does the work. Everything below 768 takes the narrow branch; 768
-and 1440 differ only in the frame, not in the type.
+One breakpoint does the work, and it sits **above** 768: 390 and 768 take the same
+narrow branch — same display size, same section head, same card padding — and 1440
+is the only width that differs from them. What separates 390 from 768 is the frame
+alone.
 
 | | 390 | 768 | 1440 |
 |---|---|---|---|
@@ -384,8 +397,10 @@ animations.
 motion over the doctrine's ceiling; `--dur-state` carries hover instead, on the
 measured curve.
 
-Nothing lifts, scales or parallaxes. There is no scroll clock: no
-`animation-timeline`, no scroll-linked transform, and one sticky element.
+Nothing lifts or scales **under interaction** — no hover lift, no press scale, no
+parallax. The one lift in the pack is the entrance above, which is a mount and
+fires once. There is no scroll clock: no `animation-timeline`, no scroll-linked
+transform, and one sticky element.
 
 ## Signature motifs
 
@@ -448,7 +463,8 @@ page has no stranger's words to put in it, the page does not want this pack.
 - **No italic anywhere** — the corpus has none, and `em, i` is pinned in the token
   layer.
 - **Nothing above weight 700**, and 700 only inside a running line.
-- **No lift, scale or parallax**, and no scroll clock.
+- **No lift, scale or parallax under interaction**, and no scroll clock. The
+  entrance's single lift is the stated exception, and it fires once on mount.
 - **No second accent hue.** The periwinkle is a gradient stop and a dark-surface
   series line; promoting it to a second button colour makes a different pack.
 - **No tightening of display tracking at narrow widths.** It relaxes; that is

@@ -39,10 +39,16 @@
 
    MEASURED — the literal was computed on the live page or read from an authored
    Framer token that the census confirmed paints.
-   SELECTED — a value the reference ships in another role, taken because a floor
-   forces the move; only the role changes.
    DERIVED — computed from a token here because the reference's own value fails a
    floor. Hue is held; lightness moves and chroma is clipped to gamut.
+   PACK DECISION — a value the reference does not carry at all, so there was
+   nothing to measure. Two of them, and both are named where they sit: the
+   mirrored cut corner, which the reference ships in one direction only, and the
+   state clock, because the reference's controls compute to 0s.
+
+   There is no SELECTED family here. The reference offers no darker step of its own
+   in any hue that fails, so every correction below had to be DERIVED — which is
+   the opposite of `surveyor`, whose whole remedy was its reference's own ladder.
 
    The corrections are in the pack's Gotchas, and there are six. */
 
@@ -150,6 +156,13 @@
   --danger: #d03950;
   --info: #1167f4;
   --on-status: #ffffff; /* 4.84:1 on --good, 4.79:1 on --danger, 4.92:1 on --info */
+  /* The delta chip's ground. The reference paints its rose at two alphas over the
+     field (10% and 15%); the green wash is the same construction at the same
+     alpha, which is a PACK DECISION stated rather than a measurement implied.
+     @role non-text: --good-weak, --danger-weak — a tint under a figure that
+     carries its own solid; nothing is written ON them. */
+  --good-weak: rgba(25, 132, 0, 0.1);
+  --danger-weak: rgba(208, 57, 80, 0.1);
 
   /* ---- Status on the slab: a separate ladder, and the mint lives only here */
   /* MEASURED on the dark wells. The mint is the identity of the reading — 36
@@ -215,7 +228,10 @@
   --focus-w: 2px;
   --focus-offset: 2px;
   --focus-color: var(--ink-strong);
-  --focus-color-on-dark: var(--paper); /* 16.54:1 on --slab */
+  /* It points at the ink token rather than at --paper: a ring on the dark IS ink,
+     and two names for one value is what this file's own coral comment argues
+     against. The ratio it has to clear is the one --on-slab already states. */
+  --focus-color-on-dark: var(--on-slab);
 
   /* ---- Radii: a measured ladder, and one corner that is not there -------- */
   /* MEASURED across the census: 8px on a badge, 10px on a chip and eyebrow, 12px
@@ -240,8 +256,13 @@
   --r-bubble: 24px 0 24px 24px;
   --r-bubble-mirror: 0 24px 24px 24px;
 
-  /* ---- Spacing: a 4-based ladder and a 100px section -------------------- */
-  /* MEASURED. The card's padding is 32px and its internal gap is 32px, and
+  /* ---- Spacing: the measured steps, named by their step number ---------- */
+  /* The suffix is the ladder's INDEX, not the value in quarters — `--space-10`
+     is the tenth step and it is 32px. That is worth stating because the values
+     are the reference's own measured gaps (4, 6, 8, 10, 12, 16, 24, 32, 40, 100)
+     and two of them are not multiples of four, so no arithmetic reading of the
+     name survives contact with the ladder. Read the comment, not the number.
+     MEASURED. The card's padding is 32px and its internal gap is 32px, and
      NEITHER CHANGES at 390 — the card keeps desktop padding on a 350px sheet,
      which is a deliberate property of the reference and is stated in Responsive.
      The section rhythm is 100px at desktop. */
@@ -310,6 +331,9 @@
   --track-display: -0.0625em; /* MEASURED — -3.5px at 56px */
   --track-display-sm: -0.025em; /* MEASURED — -1px at 40px; it RELAXES */
   --track-h2: -0.032em; /* MEASURED — -1.4px at 44px */
+  --track-h2-sm: -0.025em; /* MEASURED — -1px at 34px, the narrow section head.
+     It exists because the Responsive table asks for it: a size step with no
+     tracking token forces the literal this library bans everywhere else. */
   --track-quote: -0.02em; /* MEASURED — -0.48px at 24px */
 
   --weight-body: 400;
@@ -339,11 +363,21 @@
   line-height: var(--lh-body);
 }
 
-/* The slab is a surface, not a theme — the page never inverts. What it does owe
-   is the two tokens that would fail silently on it: the focus ring, which is ink
-   and therefore invisible — #1b181c on #1b181c is 1.00:1 — and the rule ink. */
+/* The slab is a surface, not a theme — the page never inverts. The hook is the
+   library's own `[data-surface]`, unprefixed: every other surface-variant pack in
+   this collection uses that attribute, and the index's selection protocol says to
+   compare candidates by changing the token layer alone. A namespaced hook would
+   have made chorus the one pack you cannot A/B without editing the markup, which
+   is a cost paid by every reader to buy nothing. `.chorus-slab` is kept beside it
+   as an alias, because a class is what a component library reaches for.
+
+   What the block owes is every token that would otherwise resolve to a light-field
+   value on a dark ground. There are SIX, and the count is stated because the first
+   version of this block listed two, changed five, and left the sixth — --on-status
+   — at its root white, which put white on the mint at 1.32:1 inside the one
+   surface the pack invented the mint for. */
 .chorus-slab,
-[data-chorus-surface="slab"] {
+[data-surface="slab"] {
   background-color: var(--slab);
   color: var(--on-slab);
   --focus-color: var(--focus-color-on-dark);
@@ -351,6 +385,24 @@
   --good: var(--good-on-dark);
   --danger: var(--danger-on-dark);
   --info: var(--info-on-dark);
+  /* The sixth. On the on-dark ladder the label is INK, not white: --slab on the
+     mint is 13.31:1, on the rose 6.01:1, on the periwinkle 7.40:1. White on those
+     three is 1.32:1, 2.93:1 and 2.38:1 — the first of them invisible. */
+  --on-status: var(--slab);
+}
+
+/* Custom properties inherit, and a slab is a section rather than a leaf: a white
+   card placed inside one would take the slab's white hairline and its mint, which
+   is the pack's own ban ("No mint on paper") arriving by inheritance. A light
+   surface nested in a slab therefore takes its tokens back. */
+.chorus-slab :is(.ch-card, .ch-well--paper, [data-surface="paper"]),
+[data-surface="slab"] :is(.ch-card, .ch-well--paper, [data-surface="paper"]) {
+  --focus-color: var(--ink-strong);
+  --line: rgba(70, 72, 77, 0.12);
+  --good: #198400;
+  --danger: #d03950;
+  --info: #1167f4;
+  --on-status: #ffffff;
 }
 
 /* The reference ships ZERO prefers-reduced-motion rules across 274KB. This block

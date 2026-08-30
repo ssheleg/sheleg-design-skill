@@ -91,12 +91,34 @@ def git(*args: str) -> str:
     return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True).stdout.strip()
 
 
+# The catalogue — the register and good-fit columns every card and every JSON-LD
+# description is built from — lives in STYLE_PACK_INDEX.md. It used to live in
+# SKILL.md, and this parser was still reading SKILL.md long after it moved: the
+# regex matched nothing, `look` and `for` came back empty for EVERY pack, and the
+# published front door shipped "Choose for" followed by silence on all of them,
+# with the ItemList descriptions and llms.txt entries empty behind it. Nothing
+# failed, because an empty string is a valid string.
+#
+# So the parse is now asserted rather than trusted: a run that finds fewer rows
+# than there are packs stops, instead of publishing a catalogue with no prose in it.
+CATALOGUE = STYLES.parent / "STYLE_PACK_INDEX.md"
+CATALOGUE_ROW = re.compile(r"^\| \[`([a-z-]+)`\]\([^)]+\) \| (.*?) \| (.*?) \|$", re.M)
+
+
+def catalogue() -> dict[str, tuple[str, str]]:
+    text = CATALOGUE.read_text()
+    rows = {m.group(1): (m.group(2).strip(), m.group(3).strip())
+            for m in CATALOGUE_ROW.finditer(text)}
+    if not rows:
+        raise SystemExit(
+            f"gallery: {CATALOGUE.name} yielded no catalogue rows — every card would "
+            f"ship with an empty register and an empty good-fit line, which is what "
+            f"happened for as long as this was read out of SKILL.md")
+    return rows
+
+
 def collect() -> list[dict]:
-    skill = (STYLES.parent / "SKILL.md").read_text()
-    table = {
-        m.group(1): (m.group(2).strip(), m.group(3).strip())
-        for m in re.finditer(r"^\| \[`([a-z-]+)`\]\([^)]+\) \| (.*?) \| (.*?) \|$", skill, re.M)
-    }
+    table = catalogue()
     packs = []
     for md in sorted(STYLES.glob("*.md")):
         if md.stem == "STYLE_PACK_TEMPLATE":
@@ -118,7 +140,12 @@ def collect() -> list[dict]:
         packs.append({
             "name": md.stem,
             "look": re.sub(r"[*`]", "", look),
-            "for": re.sub(r"[*`]", "", choose),
+            # The catalogue's good-fit cell ends in the same markers the badges below
+            # already render — `· (standalone)`, `· core contract`. Printing both puts
+            # the same fact on the card twice, so the tail is dropped here and the
+            # badges keep the job.
+            "for": re.sub(r"\s*·\s*(\(standalone\)|core contract)\s*", "",
+                          re.sub(r"[*`]", "", choose)).strip(" ·"),
             "host": host or "—",
             "added": git("log", "--diff-filter=A", "--format=%ad", "--date=short", "-1", "--", str(md)),
             "ceiling": (ceiling.group(1) or ceiling.group(2)) if ceiling else "",
@@ -188,56 +215,56 @@ def card(p: dict, public: bool = False) -> str:
 </article>'''
 
 
+# The card layer only. The page's SHELL — body, links, the sticky bars, the tab
+# strip, the tables — is `tools/chrome.py`, so this file and `tools/site.py` are
+# dressed by one pack instead of by two hand-written palettes. Everything below is
+# about a CARD, and every colour in it is a token.
+#
+# What is deliberately NOT a token: `.specimen`. Each card's specimen strip is
+# painted inline from the pack that card advertises, which is the whole argument of
+# the page — a card that looks wrong is a pack that is wrong.
 CSS = """
-* { box-sizing: border-box; }
-body { margin:0; background:#0e0f11; color:#e8e9ec;
-  font:400 15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
-header.top { padding:40px 32px 24px; max-width:1600px; margin:0 auto; }
-h1 { margin:0 0 8px; font-size:30px; font-weight:600; letter-spacing:-.02em; }
-.sub { color:#9a9ca4; max-width:78ch; }
-.sub b { color:#e8e9ec; font-weight:600; }
-.sub code { color:#c8cad0; }
-.controls { position:sticky; top:0; z-index:5; background:#0e0f11ee;
-  backdrop-filter:blur(8px); border-bottom:1px solid #24262b; padding:14px 32px; }
-.controls .inner { max-width:1600px; margin:0 auto; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-input[type=search] { background:#191b1f; border:1px solid #2b2e34; color:#e8e9ec;
-  border-radius:8px; padding:8px 12px; min-width:260px; font-size:14px; }
-button { background:#191b1f; border:1px solid #2b2e34; color:#c8cad0; border-radius:999px;
-  padding:6px 14px; font-size:13px; cursor:pointer; }
-button[aria-pressed=true] { background:#e8e9ec; color:#0e0f11; border-color:#e8e9ec; }
-.count { color:#7d8088; font-size:13px; margin-left:auto; }
-main { max-width:1600px; margin:0 auto; padding:24px 32px 80px;
-  display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:20px; }
-.card { border:1px solid #24262b; border-radius:14px; overflow:hidden; background:#141519;
-  display:flex; flex-direction:column; }
-.card.flag { border-color:#4a7dff; box-shadow:0 0 0 1px #4a7dff55; }
-.chead { padding:14px 16px 10px; display:flex; justify-content:space-between; align-items:baseline; gap:8px; }
-.chead h2 { margin:0; font-size:17px; font-weight:600; letter-spacing:-.01em; }
-.star { font-size:10px; text-transform:uppercase; letter-spacing:.1em; color:#4a7dff;
-  border:1px solid #4a7dff; border-radius:4px; padding:1px 5px; vertical-align:2px; }
-.meta { color:#7d8088; font-size:12px; white-space:nowrap; }
-.meta code { color:#9a9ca4; }
-.specimen { margin:0 16px; padding:18px; position:relative; min-height:132px;
-  display:flex; flex-direction:column; justify-content:center; gap:2px; overflow:hidden; }
-.sp-display { font-size:44px; line-height:1; letter-spacing:-.03em; }
-.sp-line { font-size:15px; opacity:.85; }
-.sp-small { font-size:11px; opacity:.6; letter-spacing:.04em; margin-top:4px; }
-.sp-dot { position:absolute; right:16px; top:16px; width:26px; height:26px; border-radius:999px; }
-.swatches { padding:12px 16px 4px; display:grid; gap:4px; }
-.sw { display:flex; align-items:center; gap:8px; font-size:11px; color:#9a9ca4; min-width:0; }
-.sw b { width:52px; color:#c8cad0; font-weight:500; flex:none; }
-.sw code { color:#7d8088; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.chip { width:16px; height:16px; border-radius:4px; border:1px solid #ffffff22; flex:none;
-  background-size:cover; }
-.badges { padding:8px 16px; display:flex; gap:5px; flex-wrap:wrap; }
-.b { font-size:10.5px; color:#9a9ca4; border:1px solid #2b2e34; border-radius:999px; padding:2px 8px; }
-.b-new { color:#4a7dff; border-color:#4a7dff66; }
-.b-core { color:#ffb86b; border-color:#ffb86b55; }
-.look { margin:4px 16px 0; font-size:12.5px; color:#9a9ca4; }
-.forr { margin:8px 16px 16px; font-size:12.5px; color:#c8cad0; }
-.forr b { color:#7d8088; font-weight:500; }
-footer { max-width:1600px; margin:0 auto; padding:0 32px 60px; color:#7d8088; font-size:12.5px; }
-@media (max-width:600px) { header.top, .controls, main, footer { padding-left:16px; padding-right:16px; } }
+header.top h1 + .sub{margin-top:0}
+main#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
+  gap:var(--space-5)}
+.card{border:1px solid var(--border);border-radius:var(--r-card);overflow:hidden;
+  background:var(--panel);display:flex;flex-direction:column;
+  transition:border-color var(--dur-hover) var(--motion-ease)}
+.card:hover{border-color:var(--border-strong)}
+.card.flag{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent-weak)}
+.chead{padding:14px 16px 10px;display:flex;justify-content:space-between;
+  align-items:baseline;gap:8px}
+.chead h2{margin:0;font-size:var(--t-card);font-weight:600;letter-spacing:-.01em}
+.star{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);
+  border:1px solid var(--accent);border-radius:4px;padding:1px 5px;vertical-align:2px}
+.meta{color:var(--muted);font-size:var(--t-chip);white-space:nowrap;
+  font-family:var(--font-data)}
+.meta code{color:var(--muted)}
+.specimen{margin:0 16px;padding:18px;position:relative;min-height:132px;
+  display:flex;flex-direction:column;justify-content:center;gap:2px;overflow:hidden;
+  border-radius:var(--r-control)}
+.sp-display{font-size:44px;line-height:1;letter-spacing:-.03em}
+.sp-line{font-size:15px;opacity:.85}
+.sp-small{font-size:11px;opacity:.6;letter-spacing:.04em;margin-top:4px}
+.sp-dot{position:absolute;right:16px;top:16px;width:26px;height:26px;border-radius:999px}
+.swatches{padding:12px 16px 4px;display:grid;gap:4px}
+.sw{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted);min-width:0}
+.sw b{width:52px;color:var(--ink);font-weight:500;flex:none}
+.sw code{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  font-family:var(--font-data)}
+/* The swatch chip sits on a pack colour, not on the shell, so its edge is the shell's
+   strong border rather than a white alpha — which vanished on a light field. */
+.chip{width:16px;height:16px;border-radius:4px;border:1px solid var(--border-strong);
+  flex:none;background-size:cover}
+.badges{padding:8px 16px;display:flex;gap:5px;flex-wrap:wrap}
+.b{font-size:10.5px;color:var(--muted);border:1px solid var(--border);
+  border-radius:var(--r-pill);padding:2px 8px}
+.b-new{color:var(--accent);border-color:var(--accent)}
+.b-core{color:var(--warn);border-color:var(--warn)}
+.look{margin:4px 16px 0;font-size:var(--t-chip);color:var(--muted)}
+.forr{margin:8px 16px 16px;font-size:var(--t-chip);color:var(--ink)}
+.forr b{color:var(--muted);font-weight:500}
+@media (max-width:600px){main#grid{grid-template-columns:1fr}}
 """
 
 JS = """
@@ -264,6 +291,16 @@ q.oninput=apply; apply();
 """
 
 
+
+def _chrome():
+    """The shared shell. Imported lazily so this file still runs standalone."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("chrome", ROOT / "tools" / "chrome.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
 def render(packs: list[dict], public: bool = False, meta: str = "",
            nav: str = "", title: str = "", intro: str = "") -> str:
     """`meta` is the machine layer — canonical, og:*, twitter:* — passed in by
@@ -283,11 +320,12 @@ def render(packs: list[dict], public: bool = False, meta: str = "",
   stack are the pack's real values rather than a description of them, so a card that looks wrong
   is a pack that <i>is</i> wrong. Each pack was extracted from a named production site and every
   colour carries a measured contrast ratio.</p>"""
-    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
+    chrome = _chrome()
+    return f"""<!doctype html><html lang="en" data-theme="light"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{head_title}</title>
 {meta}
-<style>{CSS}</style></head><body>
+{chrome.style_block()}<style>{CSS}</style>{chrome.THEME_SWITCH}</head><body>
 {nav}
 <header class="top">
   <h1>{head_title}</h1>

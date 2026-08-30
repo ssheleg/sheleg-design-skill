@@ -4,7 +4,7 @@ description: Use when deciding how something LOOKS or MOVES — cinematic landin
 license: MIT
 compatibility: Optional siblings — dataviz, shadcn, migrate-radix-to-base; each has an in-text fallback when absent.
 metadata:
-  version: 1.57.0
+  version: 1.58.0
 ---
 
 # SHELEG Design

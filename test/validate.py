@@ -4539,6 +4539,56 @@ def _ms(value: str, unit: str) -> float:
     return float(value) * (1.0 if unit == "ms" else 1000.0)
 
 
+def validate_motion_ceiling_floor():
+    """The doctrine's lowest-ceiling claim is recomputed, not read.
+
+    `MOTION_DOCTRINE.md` named `bulletin` at 3 "the lowest ceiling in the library"
+    and kept saying it for four releases while `onionskin` and `rimlight` already
+    pinned 2 — then `surveyor` and `chorus` made it four. Nothing noticed, because a
+    superlative about a set is exactly the shape of claim prose can hold and no
+    reader can check by reading.
+
+    So the minimum and the count of packs holding it are derived from the packs'
+    own Register lines. A pack states its ceiling as ``MOTION_INTENSITY` above
+    **N**``; the doctrine states the floor once, and the two have to agree.
+    """
+    styles = ROOT / PLUGIN_DIR / "skills" / PLUGIN / "styles"
+    doctrine = read(styles.parent / "MOTION_DOCTRINE.md") or ""
+    rx = re.compile(r"MOTION_INTENSITY`?\s*(?:above|at)?\s*\**(\d+)\**")
+    ceilings = {}
+    for pack in sorted(styles.glob("*.md")):
+        if pack.stem == "STYLE_PACK_TEMPLATE":
+            continue
+        m = rx.search(read(pack) or "")
+        if m:
+            ceilings[pack.stem] = int(m.group(1))
+    if not check(bool(ceilings),
+                 "MOTION_DOCTRINE.md: no pack states a MOTION_INTENSITY ceiling — the "
+                 "floor claim below cannot be derived from anything"):
+        return
+    low = min(ceilings.values())
+    holders = sorted(k for k, v in ceilings.items() if v == low)
+    claim = re.search(r"\*\*The lowest ceiling in the library is (\d+)\*\*,?\s*"
+                      r"and (\w+) of them pin it", doctrine)
+    if not check(claim is not None,
+                 "MOTION_DOCTRINE.md: states no derived floor — it must read 'The lowest "
+                 f"ceiling in the library is N, and W of them pin it' so the number can be "
+                 f"checked. Measured now: {low}, held by {len(holders)} "
+                 f"({', '.join(holders)})"):
+        return
+    check(
+        int(claim.group(1)) == low,
+        f"MOTION_DOCTRINE.md: claims the lowest ceiling is {claim.group(1)}, and the "
+        f"packs' own Register lines make it {low} ({', '.join(holders)})",
+    )
+    word = NUMBER_WORDS.get(len(holders), str(len(holders)))
+    check(
+        claim.group(2) == word,
+        f"MOTION_DOCTRINE.md: claims {claim.group(2)} of them pin the lowest ceiling, and "
+        f"{word} do ({', '.join(holders)})",
+    )
+
+
 def validate_motion_bands():
     """A press sits inside the doctrine's press band; UI motion sits under its ceiling."""
     skill_dir = ROOT / PLUGIN_DIR / "skills" / PLUGIN
@@ -4797,6 +4847,7 @@ def main():
     validate_elevation_tokens_named()
     validate_radius_single_valued()
     validate_motion_bands()
+    validate_motion_ceiling_floor()
     validate_emphasis_base_layer()
     validate_bundle_self_sufficiency()
     validate_coordination_claim()
