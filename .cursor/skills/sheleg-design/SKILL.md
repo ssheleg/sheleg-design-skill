@@ -3,7 +3,7 @@ name: sheleg-design
 description: Use when deciding how something LOOKS or MOVES — cinematic landing pages and hero sections, particle/WebGL backgrounds, scroll-linked or scrubbed motion, layers that drift, dashboards, admin or internal tools, mobile screens, chat or agent interfaces, tokens, themes, palettes, typography and the Figma border. Triggers include "design a landing" / "дизайн лендинга", "build a landing page" / "сделай лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens, style pack" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы, фигма в код", "mobile screen" / "мобильный экран", "palette, colors" / "палитра, цвета", "typography, font" / "типографика, шрифт", "how it looks, make it prettier" / "выглядит, красиво, красивее", "visual reference" / "визуальные референсы", "investor deck" / "презентация". Not for structure, copy or backend behavior.
 license: MIT
 metadata:
-  version: 1.55.0
+  version: 1.56.0
 ---
 
 # SHELEG Design
@@ -38,6 +38,9 @@ duration ceiling, the forbidden forms, and the reduced-motion contract.
 - AI product surfaces: chat and agent UI, streaming output, run logs, model errors,
   generated-content and confirmation states ([`AI_PRODUCT_PATTERNS.md`](./AI_PRODUCT_PATTERNS.md))
 - Moving a visual system across the Figma border either way ([`FIGMA_BRIDGE.md`](./FIGMA_BRIDGE.md))
+- Motion that has to leave the page as a rendered file — a launch video, a feature
+  loop, a social cut ([`MOTION_PRODUCTION.md`](./MOTION_PRODUCTION.md)), which also
+  names the two programmatic-video tools and which one to reach for
 
 **Never apply the cinematic motion layer to:** product UI, docs sites, static content
 sites — or any page whose visual system or copy isn't finished yet. Product UI takes

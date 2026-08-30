@@ -30,6 +30,7 @@ decision home. A run that settles something records it as an ADR.
 | **A duration band** | `MOTION_DOCTRINE.md` §3's table; a pack picks a token inside the band its prose names | `validate_motion_bands()` parses the band and the ceiling out of the doctrine rather than repeating them, so the gate cannot disagree with the document it enforces |
 | **Which status tokens a pack has** | the token layer; `SURFACE_COMPOSITION.md`'s status **table** maps it | `validate_status_vocabulary()`. It was prose until 1.45.0 and wrong in three places: `var()` on a token a pack does not define is invalid at computed-value time and fails with no error anywhere |
 | **What a release was** | `CHANGELOG.md` (one section per version) · the tag · `docs/evidence/retro.md`'s Run stamps row | `validate_release_register()`. Two sections claimed `1.35.0`, the stamp table sat eighteen versions behind, and four sections record releases with no tag — reported against a declared list, never created |
+| What changes when motion becomes a FILE — the cost of a rendered asset, the two programmatic-video tools, the recommendation and its reversing conditions, and where the reduced-motion obligation lands | `MOTION_PRODUCTION.md` | `MOTION_DOCTRINE.md` §10 routes to it and states nothing itself; `SKILL.md` lists it under scope; the README summarises in one row |
 | The Figma contract | `FIGMA_BRIDGE.md` | — |
 | The Claude Design contract | `DESIGN_SYNC_BRIDGE.md` | — |
 | AI-surface patterns | `AI_PRODUCT_PATTERNS.md` | — |

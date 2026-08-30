@@ -6,6 +6,65 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.56.0] - 2026-08-30
+
+### The render seam — what changes when motion stops being a page
+
+New companion document, `MOTION_PRODUCTION.md`. `MOTION_DOCTRINE.md` decides whether a
+thing on a page may move and how; this one starts at the question it never answered —
+what happens when the motion has to become a **file**, and what that costs.
+
+**The position it takes first, before naming any tool: a rendered asset is not page
+motion with a different extension.** Four things are given up and a page should give
+them up on purpose — the reduced-motion contract (a file has no user preference to
+read, so the obligation moves to the embedding page: no autoplay under the reduce
+query, a real poster frame, a control), the theme (every pack declares `Themes:` and a
+baked frame answers only one of them), the text (unselectable, untranslatable,
+unindexable), and the first frame's decode. The document states what a rendered asset
+is genuinely for — a surface you do not control, a piece with audio, a piece that must
+look identical everywhere — and carries the refusal phrase for the rest.
+
+**Two programmatic-video tools, measured on 2026-08-30 rather than characterised.**
+Both seek a headless browser frame by frame and encode with FFmpeg; they differ in the
+language the composition is written in and in what using them costs.
+
+- **Remotion** — the composition is a React component reading `useCurrentFrame()`. Its
+  licence is its own two-tier one, not an OSI licence: free for individuals, for-profit
+  organizations **with up to 3 employees**, non-profits and evaluation, and a paid
+  Company License above that. On `remotion` 4.0.518 after six years; FFmpeg bundled
+  since v4.0; `@remotion/player` is a React component that takes props.
+- **HyperFrames** — the composition is an HTML document with `data-start` /
+  `data-duration` timing and a seekable runtime (GSAP, CSS, WAAPI, Lottie, Three.js).
+  **Apache-2.0.** On `hyperframes` 0.8.20 and **pre-1.0**, which is stated as a real
+  risk rather than a footnote; requires Node 22+ and a separate FFmpeg. Its player is a
+  web component in an isolated iframe.
+
+**The recommendation is HyperFrames, and the reason is this library's own rule.** A
+pack's `styles/tokens/<pack>.css` is a `:root` block; in an HTML composition it is
+`<link>`ed in **unmodified** — the same file the site ships, which is the
+copy-never-transcribe rule the kits already follow, holding across the render seam. Two
+supporting reasons: Apache-2.0 removes a seat question that has nothing to do with
+design, and its determinism rules are the doctrine's anti-drift rules restated for a
+renderer.
+
+**Three conditions reverse it, and they are named rather than hedged:** motion driven
+by application state in the page (the Remotion player is a React component; the
+HyperFrames one is an iframe by design), a product that is a video pipeline rather
+than a page, and a team that cannot carry a pre-1.0 dependency. Where a brief hits none
+of them and the licence threshold is not close, the document says to use whichever the
+operator already knows instead of manufacturing a reason.
+
+### Also in this release
+
+- The token seam per tool, with the three families that need a decision the page never
+  forced: durations converted once at the edge (`frames = seconds × fps`, the token
+  staying the source), the reduced-motion branch that correctly fires on neither side
+  of a render, and webfonts, which are assets and must resolve before frame 0.
+- A ten-item pre-flight for a rendered asset, ending on the check that separates a tool
+  problem from a composition problem: a byte-identical re-render from the same input.
+- `MOTION_DOCTRINE.md` §10 gains the routing line, and states nothing itself — the
+  DOCMAP's single-home rule.
+
 ## [1.55.0] - 2026-08-30
 
 ### The thirty-ninth pack — somebody else's question, on a sheet that never stops being ruled
