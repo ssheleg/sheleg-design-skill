@@ -9,7 +9,7 @@ pack's `## Responsive` section covers that, and this file does not repeat it.
 
 - What a pack decides here, and what it does not
 - The six rules every pack already carries — and one no pack answers
-- Reference sweeps (Lazyweb, Mobbin) — structure crosses, identity does not
+- Reference sweeps — structure crosses, identity does not
 
 ## What a pack decides here, and what it does not
 

@@ -26,6 +26,18 @@ the pack forgot. Everything the pack does state is binding.
 Themes: light only — no second block of any kind ships here.
 Rank: unordered — 3 status role(s) and no severity ramp; a rank scale is yours.
 
+## Contents
+
+- Register
+- Palette
+- Type
+- Texture & surface
+- Motion tokens
+- Signature motifs
+- Micro-interactions
+- Bans
+- Gotchas
+
 ## Register
 
 Choose this pack for a **commerce or platform front door** — the surface that

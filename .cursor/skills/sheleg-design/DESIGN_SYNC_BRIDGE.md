@@ -15,6 +15,16 @@ agent that does not have it — the pack stands on its own and nothing below app
 
 ---
 
+## Contents
+
+- 1. What crosses, and in what shape
+- 2. Style packs — the pack is the source of truth
+- 3. Figma — one border at a time
+- 4. Reference sweeps (Lazyweb, Mobbin, Refero) — layout crosses, identity does not
+- 5. Live-site extraction — the pack first, the sync second
+- 6. What cannot cross
+- 7. Round-trip discipline
+
 ## 1. What crosses, and in what shape
 
 A kit ships **three layers**, and they are a stack rather than a menu:

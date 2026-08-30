@@ -45,6 +45,20 @@ Edit the canonical bundle, then copy the changed file into the `.cursor/`
 mirror. The validator compares the whole tree in both directions and fails on
 drift.
 
+**The bundle's layout deviates from the Agent Skills authoring guidance on
+purpose — do not "fix" it in a retrofit (SHD-11, recorded 2026-08-30).** The
+guidance keeps references in `references/`, one level deep. Here the references
+sit at the skill root (`SHELEG_DESIGN.md` beside `SKILL.md`) and the token CSS
+two levels deep (`styles/tokens/<pack>.css`). Both predate the guidance, and
+three things depend on the paths as they are: every relative link in every
+document (`validate_links()` resolves all of them), the byte-identical
+`.cursor/` mirror, and `install.sh`'s explicit file list. The rule the guidance
+protects — a reference an agent can find and load — is kept by other means:
+`SKILL.md` links every companion under a load condition, and the validator fails
+a companion that ships unlinked. Moving the files would rewrite hundreds of
+links across two channels to satisfy the letter of a rule whose substance
+already holds.
+
 ## Adding a style pack
 
 1. Copy `templates/style-pack-template.md` to
@@ -60,13 +74,21 @@ drift.
    the agent that reads it will invent the rest. This rule and the three
    beside it now live in `styles/STYLE_PACK_TEMPLATE.md`, which ships — an
    author holding only the installed bundle never sees this file. Edit them
-   there; this paragraph is the pointer, not the home.
+   there; this paragraph is the pointer, not the home. When the headings are
+   filled, run `npm run gen-contents`: a pack over 100 lines carries a
+   `## Contents` list **derived from its own headings**, and the gate refuses a
+   missing or hand-drifted one (SHD-01).
 3. Author `styles/tokens/<name>.css` in the **same change**. Values come from a
    real production system or a reference you can name in the pack's `Origin:`
    line — a pack whose tokens were invented defeats the point of the repo.
-4. Route it: add a row to the `SKILL.md` pack table and name the pack in
-   `bin/cli.js`. The validator requires both — a pack nobody routes to does not
-   exist.
+4. Route it: add a row to the `SKILL.md` pack table, a catalogue row to
+   `STYLE_PACK_INDEX.md`, and name the pack in `bin/cli.js`. The validator
+   requires all of it — a pack nobody routes to does not exist. Then run
+   `npm run gen-descriptions`: both host-facing manifest descriptions
+   (`plugin.json`, the plugin entry in `marketplace.json`) are **derived from
+   the catalogue row you just wrote**, and the gate refuses a hand-appended
+   description (SHD-03) — appending "and <pack> (…)" by hand is exactly the
+   habit that glossed `patchbay` and `nameplate` twice and `deskmate` not at all.
 5. Mirror the new files into `.cursor/skills/sheleg-design/`, add them to the
    `install.sh` file list, and re-run the validator.
 6. Add its React reference kit under `kits/<pack>/` — the six-name spine copied

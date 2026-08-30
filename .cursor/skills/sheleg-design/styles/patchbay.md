@@ -24,6 +24,23 @@ Rank: unordered — 3 status role(s) and no severity ramp; a rank scale is yours
 > you need a light twin, you are authoring it, and the reference has none to
 > measure.
 
+## Contents
+
+- Register
+- Palette
+- Type
+- Texture & surface
+- Components
+- Hero
+- Responsive
+- Motion tokens
+- Signature motifs
+- Signature element
+- Motion flavor
+- Micro-interactions
+- Bans
+- Gotchas
+
 ## Register
 
 Choose this pack for **products whose argument is an architecture**: engines,

@@ -15,6 +15,13 @@ stands on its own and nothing below applies.
 
 ---
 
+## Contents
+
+- 1. Code → Figma (publish the pack as variables)
+- 2. Figma → code (implement a design without importing slop)
+- 3. What cannot cross
+- 4. Round-trip discipline
+
 ## 1. Code → Figma (publish the pack as variables)
 
 Use when a project has the pack in code and needs the design file to match — or

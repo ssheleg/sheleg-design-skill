@@ -29,6 +29,22 @@ Contract: widened — all thirteen headings.
 Themes: light only — the dark slab is a SURFACE variant (`.chorus-slab`), not a theme twin; the page never inverts.
 Rank: unordered — 3 status role(s) and no severity ramp; a rank scale is yours.
 
+## Contents
+
+- Register
+- Palette
+- Type
+- Texture & surface
+- Components
+- Hero
+- Responsive
+- Motion tokens
+- Signature motifs
+- Signature element
+- Micro-interactions
+- Bans
+- Gotchas
+
 ## Register
 
 Choose Chorus for **products whose proof is other people's conversations** —

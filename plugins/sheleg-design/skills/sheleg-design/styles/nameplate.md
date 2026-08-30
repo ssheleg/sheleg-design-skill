@@ -32,6 +32,22 @@ Contract: widened — all thirteen headings.
 Themes: light only — the reference paints no dark band anywhere, and this pack does not invent one.
 Rank: unordered — 4 status role(s) and no severity ramp; a rank scale is yours.
 
+## Contents
+
+- Register
+- Palette
+- Type
+- Texture & surface
+- Components
+- Hero
+- Responsive
+- Motion tokens
+- Signature motifs
+- Signature element
+- Micro-interactions
+- Bans
+- Gotchas
+
 ## Register
 
 Choose Nameplate for **pages whose argument is that named third parties will vouch

@@ -14,6 +14,19 @@ and states, not a palette. Every token named here is workbench's.
 
 ---
 
+## Contents
+
+- 1. The five states of a model call
+- 2. Streaming beats spinners
+- 3. Latency has two numbers
+- 4. Provenance and uncertainty
+- 5. Agent actions: the confirm is the design
+- 6. Empty states carry the capability
+- 7. Chat is a shape, not the shape
+- 8. Cost, quota and scope
+- 9. Bans
+- Evidence
+
 ## 1. The five states of a model call
 
 Design all five before building any. Most AI UI ships state 2 and 3 only, then
