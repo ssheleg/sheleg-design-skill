@@ -12,6 +12,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
+      - name: Front-matter guard dependency (validate_front_matter_is_yaml fails closed without it)
+        # setup-python's tool-cache interpreter ships stdlib + pip and nothing
+        # else — PyYAML is only preinstalled for the runner's SYSTEM python, so
+        # assuming it here would fail the gate for a reason that is not a defect.
+        run: python3 -m pip install --quiet pyyaml
       - name: Validate repo consistency
         run: python3 test/validate.py
       - name: Validator negative self-test (must FAIL on corrupted version)

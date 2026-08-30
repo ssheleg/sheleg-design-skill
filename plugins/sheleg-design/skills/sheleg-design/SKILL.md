@@ -1,10 +1,10 @@
 ---
 name: sheleg-design
-description: Use when deciding how something LOOKS or MOVES — cinematic landing pages and hero sections, particle/WebGL backgrounds, scroll-linked or scrubbed motion, layers that drift, dashboards, admin or internal tools, mobile screens, chat or agent interfaces, tokens, themes, palettes, typography and the Figma border. Triggers: "design a landing" / "дизайн лендинга", "build a landing page" / "сделай лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens, style pack" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы, фигма в код", "mobile screen" / "мобильный экран", "palette, colors" / "палитра, цвета", "typography, font" / "типографика, шрифт", "how it looks, make it prettier" / "выглядит, красиво, красивее", "visual reference" / "визуальные референсы", "investor deck as a web page" / "веб-презентация". Not for structure, copy, backend behavior, or .pptx decks.
+description: Use when deciding how something LOOKS or MOVES — cinematic landing pages and hero sections, particle/WebGL backgrounds, scroll-linked or scrubbed motion, layers that drift, dashboards, admin or internal tools, mobile screens, chat or agent interfaces, tokens, themes, palettes, typography and the Figma border. Triggers - "design a landing" / "дизайн лендинга", "build a landing page" / "сделай лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens, style pack" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы, фигма в код", "mobile screen" / "мобильный экран", "palette, colors" / "палитра, цвета", "typography, font" / "типографика, шрифт", "how it looks, make it prettier" / "выглядит, красиво, красивее", "visual reference" / "визуальные референсы", "investor deck as a web page" / "веб-презентация". Not for structure, copy, backend behavior, or .pptx decks.
 license: MIT
 compatibility: Optional siblings — dataviz, shadcn, migrate-radix-to-base; each has an in-text fallback when absent.
 metadata:
-  version: 1.58.0
+  version: 1.58.1
 ---
 
 # SHELEG Design
