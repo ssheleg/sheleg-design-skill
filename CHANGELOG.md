@@ -6,6 +6,37 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.58.1] - 2026-08-30
+
+### Fixed
+
+**The description was not valid YAML — again, and this time the gate lives here.**
+The 1.57.0 trigger rewrite put `Triggers: "design a landing" …` into the
+front-matter description as an unquoted scalar, and the `: ` after `Triggers`
+turns the whole block into an invalid mapping (*"mapping values are not allowed
+here"*, line 3). Identical class to 1.37.4, twelve days earlier: this repo's own
+5598 checks, the pinned house auditor and `claude plugin validate --strict` all
+read the field with a regex and stayed green, while the umbrella's YAML-parsing
+gate refused the file when pinning v1.58.0. The fix is one character class —
+`Triggers - "…"`, the shape every family sibling already uses — so all 35 routed
+trigger phrases survive byte-for-byte (`advertised_check.js` re-run against this
+tree: `ok: sheleg-design advertises all 35 routed trigger(s)`), and the `.cursor`
+mirror carries the same bytes.
+
+**Why 1.37.4's fix did not hold: its strict gate lived one repository up.**
+`check_routed_triggers_still_advertised()` asks the umbrella's checker, which
+exists only when the umbrella sits above this checkout — and CI is always a
+standalone clone, so the check disclosed instead of looking and the defect
+shipped twice. `validate_front_matter_is_yaml()` now parses every shipped
+front-matter block (bundle SKILL.md, `.cursor` mirror, plugin commands, cursor
+rules — 4 files, 17 checks) with `yaml.safe_load` in this repo's own gate, fails
+closed when PyYAML is absent, and refuses a `description` that nests into a
+mapping without a parse error. Watched failing on the real defect before the fix
+and on a permanent self-test plant that restores `Triggers: "` verbatim — caught
+by its own message, not by the mirror-drift check that also trips. The three CI
+workflows that run `validate.py` install PyYAML explicitly rather than assuming
+the runner image carries it.
+
 ## [1.58.0] - 2026-08-30
 
 ### The catalogue stops being the one surface nobody designed, and two blind reads land

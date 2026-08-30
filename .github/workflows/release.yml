@@ -69,6 +69,10 @@ jobs:
       - name: Every gate (a release gated on one of three is not gated)
         run: |
           set -eu
+          # validate_front_matter_is_yaml fails closed without PyYAML; this job
+          # uses the runner's system python, whose package set is the image's
+          # business, not this repo's — so the dependency is installed, not assumed.
+          python3 -m pip install --quiet pyyaml
           python3 test/validate.py
           python3 test/validate_palette.py
           python3 test/sloplint.py

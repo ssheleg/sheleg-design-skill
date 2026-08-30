@@ -36,6 +36,9 @@ jobs:
           python-version: '3.12'
       - name: Gates must be green before anything is published
         run: |
+          # validate_front_matter_is_yaml fails closed without PyYAML — installed,
+          # not assumed, because setup-python's interpreter ships stdlib + pip only.
+          python3 -m pip install --quiet pyyaml
           python3 test/validate.py
           python3 test/validate_palette.py
           python3 test/sloplint.py

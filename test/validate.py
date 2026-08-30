@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""Consistency validator for the sheleg-design-skill repo (stdlib only).
+"""Consistency validator for the sheleg-design-skill repo (stdlib + PyYAML).
+
+PyYAML is the one non-stdlib import, and it is load-bearing: every other reader
+of front matter in this family is a regex, and twice (1.37.0, 1.57.0) that let a
+`: ` inside an unquoted `description` ship green through 5598 checks while a
+YAML-parsing installer refused the file outright. The guard fails closed when
+PyYAML is missing -- `python3 -m pip install pyyaml` is the remedy it names.
 
 The repo's defect class is contradiction *between* files, so every promise one
 file makes is checked against the file that has to keep it:
@@ -8,7 +14,9 @@ file makes is checked against the file that has to keep it:
      (marketplace.json / plugin.json / package.json / CHANGELOG top entry).
   2. Every skill has front-matter: name (matching its directory) + description,
      and the description canon: opens with "Use when", carries Russian trigger
-     aliases, front-matter under 1024 characters.
+     aliases, front-matter under 1024 characters. Every shipped front-matter
+     block also PARSES -- with a real YAML parser, not this file's regex reader,
+     because the two disagree exactly where installers refuse the file.
   3. The reference doc SHELEG_DESIGN.md ships next to SKILL.md, and the whole
      .cursor/ mirror matches the plugin bundle file-by-file, both directions.
   4. Every style pack carries the full section contract and a ready-made
@@ -491,6 +499,78 @@ def validate_skills():
         check(
             pack.stem in rules_text,
             f"cursor/rules: style pack '{pack.stem}' is not named in any .mdc rule",
+        )
+
+
+def validate_front_matter_is_yaml():
+    """Every shipped front-matter block parses with a REAL YAML parser.
+
+    The defect class this refuses has now shipped twice, twelve days apart: a
+    `: ` inside an unquoted `description` scalar turns the whole block into an
+    invalid mapping (`style packs: dashboards` in 1.37.0, `Triggers: "…"` in
+    1.57.0). Every reader in this repository -- front_matter() above, the pinned
+    house auditor, `claude plugin validate --strict` -- matches the field with a
+    regex and stayed green across 5598 checks both times, while any installer
+    that parses YAML refuses the file outright, so the hub copy freezes on the
+    previous version. The 1.37.4 fix leaned on the umbrella's
+    `advertised_check.js`, which check_routed_triggers_still_advertised() can
+    only ask when the umbrella sits ABOVE this checkout -- which CI never is, so
+    the strict form now lives here, on the exact bytes that ship.
+
+    Fails CLOSED when PyYAML is missing: a guard that discloses-and-passes when
+    its tool is absent is the hole the 1.37.4 fix left open.
+    """
+    try:
+        import yaml
+    except ImportError:
+        check(False, (
+            "PyYAML is not importable, and the front-matter YAML guard fails "
+            "closed without it -- an unparseable SKILL.md installs from every "
+            "regex reader and is refused by every YAML-parsing one. Remedy: "
+            "python3 -m pip install pyyaml"
+        ))
+        return
+    shipped = sorted({
+        *ROOT.glob("plugins/*/skills/*/SKILL.md"),
+        *(ROOT / ".cursor" / "skills").glob("*/SKILL.md"),
+        *ROOT.glob("plugins/*/commands/*.md"),
+        *(ROOT / "cursor" / "rules").glob("*.mdc"),
+    })
+    # The non-empty-walk guard: four glob patterns that all match nothing is a
+    # moved directory, not a clean tree.
+    if not check(bool(shipped),
+                 "front-matter YAML guard: no shipped front-matter files found -- "
+                 "the walk is empty, which is a moved directory rather than a pass"):
+        return
+    for path in shipped:
+        rel = path.relative_to(ROOT)
+        raw = raw_front_matter(path)
+        if not check(bool(raw), f"{rel}: no front-matter block to parse"):
+            continue
+        err, data = None, None
+        try:
+            data = yaml.safe_load(raw)
+        except yaml.YAMLError as exc:
+            err = exc
+        check(
+            err is None,
+            f"{rel}: front-matter is not valid YAML ({str(err).splitlines()[0] if err else ''} "
+            f"...). The shipped shape of this defect is a `: ` inside an unquoted "
+            f"scalar (1.37.0, 1.57.0) -- quote the scalar, or write `Triggers - ` "
+            f"the way every family sibling does",
+        )
+        check(
+            err is not None or isinstance(data, dict),
+            f"{rel}: front-matter parses to "
+            f"{type(data).__name__ if err is None else 'nothing'}, not a mapping",
+        )
+        desc = data.get("description") if isinstance(data, dict) else None
+        check(
+            not isinstance(data, dict) or "description" not in data
+            or isinstance(desc, str),
+            f"{rel}: `description` parses to {type(desc).__name__}, not a string "
+            f"-- an inner `key: value` can nest it into a mapping without any "
+            f"parse error, and an agent host then loads an empty description",
         )
 
 
@@ -1461,6 +1541,19 @@ def check_floor(script: str, count: int) -> None:
 # a neighbouring check proves nothing about the check it was written for. The two
 # reduced-motion plants below name the message they must provoke.
 PLANTS = (
+    (
+        # v1.57.0 as it shipped: `Triggers: "…"` unquoted inside the description,
+        # which this file's own regex reader passed through 5598 checks and a
+        # YAML-parsing installer refused at the door ("mapping values are not
+        # allowed here", line 3). The mutation restores that exact byte; the
+        # mirror-drift check also trips on any SKILL.md edit, which is why the
+        # expect string is this check's own message and not merely "went red".
+        "an unquoted `X: y` inside the description -- valid to a regex, refused by YAML",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md",
+        lambda t: t.replace('Triggers - "design a landing"',
+                            'Triggers: "design a landing"', 1),
+        "front-matter is not valid YAML",
+    ),
     (
         # The hole the product tier of this node's certification proved with a plant:
         # `REDUCE_DUR_DECL` keyed on a token NAME, so `paperclip`'s six `--t-*`
@@ -4801,6 +4894,7 @@ def main():
         sys.exit(2)
     validate_manifests()
     validate_skills()
+    validate_front_matter_is_yaml()
     validate_commands()
     validate_cursor_rules()
     validate_fork_reciprocity()
