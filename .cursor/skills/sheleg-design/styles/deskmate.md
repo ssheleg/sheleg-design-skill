@@ -93,6 +93,16 @@ painted once per section and never animated. There it is a **loop**: a field tha
 behind a fixed subject, with WebGL and real pinning. A ramp that moves is `cyclorama`; a
 ramp that hangs is this one.
 
+### The fork against [`chorus`](./chorus.md), which is the speech-bubble collision
+
+Both make a chat bubble the page's illustration and both sit on warm paper, so a
+thumbnail cannot separate them. The separation is **whose bubble it is**. Deskmate's
+transcript is the *product's own* — a request the user made and the work that came
+back — and its geometry is a pill over a 32px slab. [`chorus`](./chorus.md)'s bubble
+is a *stranger's*, asked on a forum the brand does not own, and its geometry is one
+squared corner on three 24px ones. If the quoted words belong to your product, stay
+here.
+
 ## Palette
 
 Copy [`tokens/deskmate.css`](./tokens/deskmate.css) verbatim. Every **colour** there
