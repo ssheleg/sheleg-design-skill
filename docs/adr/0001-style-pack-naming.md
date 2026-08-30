@@ -254,6 +254,22 @@ filename an agent is told to read (`styles/<name>.md`), the token-layer filename
 and a wiki link. After a release, renaming means a breaking change for every
 installed copy — which is what makes this an ADR rather than a preference.
 
+- **Applied again on 2026-08-30.** The thirty-ninth pack was extracted from
+  `crowdreply.io` and is named **`chorus`** for the register it encodes — many
+  voices naming one brand, and the page's job is to get the brand into the
+  conversation — not `crowdreply`. The sixth run whose opening request was an
+  address and an instruction to add it to the collection, and it was answered by
+  pointing at this ADR before a file was written. Four alternatives were weighed
+  and rejected on this ADR's own criteria: **`switchboard`**, accurate about the
+  routing lines in the hero but colliding head-on with two registers the library
+  already owns (`patchbay` and `router`), so *selection by intent* would send the
+  same brief to three places; **`soapbox`**, which names *broadcasting from your
+  own platform* where this register's whole point is that the brand answers inside
+  somebody else's thread; **`quorum`**, accurate about counted voices and rejected
+  because it reads as governance and would mis-route a brief about voting or a
+  DAO; and **`earshot`**, the closest of the four, rejected because it names only
+  the listening half — the page's set piece is the *reply* being placed, not the
+  mention being heard. The address is in the pack's `Origin:`.
 **What the rule buys.**
 
 - *Longevity.* A register outlives a company. `briefing-room` still describes

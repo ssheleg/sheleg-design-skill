@@ -1,0 +1,386 @@
+/* SHELEG Design — Chorus token layer (a warm paper page where many voices name
+   one brand: a faint construction grid with crosshair marks under everything,
+   cut-corner bubbles carrying somebody else's question, and dark wells where the
+   reading is taken).
+   Copy verbatim; consume only var(--…) in components.
+
+   Extracted from https://crowdreply.io on 2026-08-30 — the front page of an
+   AI-search visibility product. The site is FRAMER, and the authored layer is its
+   52 --token-<uuid> custom properties plus the per-element Framer classes:
+   274,355 bytes of CSS across 11 stylesheets and 1,106 rules. The token dump and
+   the render disagree, and the render won — 15 of the 52 declared tokens are
+   referenced once and reach no painted surface, so every value below comes from
+   an area-weighted census of background-color AND background-image over all 2,439
+   elements of an 11,750px page, VERIFIED AGAINST THE RENDER through CDP at
+   1440x900, an emulated 768x1024x2 and an emulated 390x844x2. Ratios were
+   computed by importing this repository's own palette gate.
+
+   THE PRINCIPLE, and it is measurable: THE PAGE IS A RULED SHEET AND EVERY CARD
+   IS A VALUE STEP ON IT. Two 1px vertical rules at rgba(70,72,77,.12) run the
+   whole height at x=162 and x=1278 of 1440, crossed by horizontals that carry a
+   small plus at each intersection — 63 such elements in the census. Inside that
+   frame the white card carries NO border and NO shadow: #ffffff on #fbfaf9 is
+   1.04:1, and that 4% of value is the entire separation. The pack keeps the
+   register and gives the card the hairline the reference withheld; the 1.04:1 is
+   in the Gotchas.
+
+   Motion is a lie told by the stylesheet. The corpus holds exactly ONE @keyframes
+   (Framer's own loading spinner, vendor), TWO transitions with a duration
+   (color .5s cubic-bezier(.44,0,.56,1) and opacity .4s ease-out) and ZERO
+   prefers-reduced-motion rules — while 383 elements carry a script-set inline
+   transform, 1,057 a script-set inline opacity, and 43 compute a will-change. A
+   reduced-motion media query cannot stop a transform a script sets, so this pack
+   states the JS contract in prose as well as collapsing the clocks below.
+
+   The reference ships ZERO :focus and ZERO :focus-visible rules in 274KB, and two
+   outline: none declarations. The whole focus mechanism below is the pack's.
+
+   Three families of value appear below:
+
+   MEASURED — the literal was computed on the live page or read from an authored
+   Framer token that the census confirmed paints.
+   SELECTED — a value the reference ships in another role, taken because a floor
+   forces the move; only the role changes.
+   DERIVED — computed from a token here because the reference's own value fails a
+   floor. Hue is held; lightness moves and chroma is clipped to gamut.
+
+   The corrections are in the pack's Gotchas, and there are six. */
+
+:root {
+  color-scheme: light;
+
+  /* ---- The field: warm paper, and every surface above it is a value step -- */
+  /* MEASURED. The warm off-white carries the page (16.99M px² of the census, the
+     largest painted area by a factor of three), white carries every card
+     (6.05M px²), and the two creams carry the wells that hold a demo: the pale
+     cream is the hero deck and the illustration well, the deeper one is a tinted
+     row, the parchment a standalone panel. */
+  --bg: #fbfaf9;
+  --surface: #ffffff; /* MEASURED — 1.04:1 on --bg, and the reference draws no
+     border and no shadow across it; see --line */
+  --paper: #faf8f0; /* MEASURED — the 1050x682 hero deck and every illustration
+     well; #faf8f0 on #ffffff is 1.06:1 */
+  --paper-deep: #f5f2e6; /* MEASURED — the tinted 67px row */
+  --parchment: #f1ecd9; /* MEASURED — the standalone warm panel */
+
+  /* ---- The dark band: a slab inset into the paper, not a second theme ----- */
+  /* MEASURED. One 1380x696 slab at 30px inset from a 1440 viewport, radius 16px,
+     plus the 43px announcement strip at radius 0 and the 301px columns at 18px.
+     The well is the product screen INSIDE a white card — a darker step again, and
+     the chip is the raised control on the slab. This is a surface set, not a
+     theme: the page never inverts. */
+  --slab: #1b181c;
+  --well: #111111; /* MEASURED — #111111 on #1b181c is 1.07:1, a step, not a tier */
+  --slab-raised: #28242a; /* MEASURED — 1.15:1 on --slab */
+
+  /* ---- Ink: four steps on paper, three on the slab ----------------------- */
+  /* MEASURED as the reference's own --token values, and the census agrees: the
+     display sits at #1b181c, section heads at #111111, all body at #46484d. */
+  --ink: #111111; /* 18.11:1 on --bg, 18.88:1 on --surface */
+  --ink-strong: #1b181c; /* 16.87:1 on --bg — the display and the dark button */
+  --ink-body: #46484d; /* 8.78:1 on --bg, 9.15:1 on --surface — all body copy */
+  --ink-muted: #6a6673; /* 5.36:1 on --bg, 5.58:1 on --surface — the nav item */
+  /* @role non-text: --ink-ghost — MEASURED as the reference's own muted step, and
+     it is the recorded failure: #8a8692 on #fbfaf9 is 3.41:1 and #8a8692 on
+     #ffffff is 3.56:1, both under AA at the 14px/400 the reference sets them at.
+     It rules, it fills a placeholder bar and it tints an icon; a word that must be
+     read takes --ink-muted. */
+  --ink-ghost: #8a8692;
+  --on-slab: #faf8f0; /* MEASURED — 16.54:1 on --slab, 17.76:1 on --well */
+  --on-slab-quiet: #9ca3af; /* MEASURED — 6.93:1 on --slab, 7.44:1 on --well */
+
+  /* ---- The coral: one hot voice that may fill but may not write ---------- */
+  /* @role accent: --coral — this pack names its accent `--coral`, and there is
+     no `--accent` here on purpose: the name carries the hue, which is how the
+     reference's own token set reads, and inventing a second alias for one
+     value is how a library ends up with two names for one colour. */
+  /* MEASURED. #f96f4b is the primary CTA fill and the flat answer-block, and it
+     is the sharpest recorded failure: the reference sets #ffffff on it at
+     14px/500, which measures 2.84:1 — under AA and under the 3:1 large floor too,
+     so no size rescues it. The same hue as a word measures #f96f4b on #fbfaf9 at
+     2.72:1, and the hover token #ff5d30 on #fbfaf9 at 2.94:1.
+     THE PACK'S CORRECTION KEEPS THE HUE AND CHANGES THE LABEL: #1b181c on
+     #f96f4b is 6.20:1, so the primary button stays exactly the reference's coral
+     and takes ink. Nothing was re-stepped to make the brand darker.
+     @role non-text: --coral — a fill, a block, a gradient stop, an icon beside a
+     label that carries the meaning. It may not be set as type at any size. */
+  --coral: #f96f4b;
+  /* @role non-text: --coral-hot — MEASURED as the reference's link and hover
+     token; #ff5d30 on #fbfaf9 is 2.94:1. A hover fill, never a word. */
+  --coral-hot: #ff5d30;
+  /* DERIVED — the coral held at hue 35.7° and pulled down, chroma clipped to
+     gamut, until it writes everywhere the pack puts paper: #cb441f on #fbfaf9 is
+     4.59:1, #cb441f on #ffffff is 4.79:1, #cb441f on #faf8f0 is 4.50:1. The coral
+     that may speak — a link, an inline emphasis, a small label. */
+  --coral-ink: #cb441f;
+  --on-coral: #1b181c; /* 6.20:1 on --coral */
+
+  /* ---- The periwinkle: the cool half of every gradient ------------------- */
+  /* MEASURED. #82a7f8 appears as the second stop of the signature sweep
+     (#f96f4b → #82a7f8 → #f1ecd9 at 90deg) and as a flat block behind a card. On
+     the slab it reads at 7.40:1; on paper it does not read at all.
+     @role non-text: --periwinkle — a gradient stop, a flat block, a series line
+     on the slab. On paper it carries no word. */
+  --periwinkle: #82a7f8;
+
+  /* ---- Status: three roles, and there is no warn — stated, not forgotten -- */
+  /* The authored token set declares an amber (#ffc300) that reaches NO painted
+     element at any of the three widths — the census found zero. A warn invented
+     from an unpainted declaration is exactly the trap this file's header names,
+     so the pack ships three roles and says so. A surface needing a fourth
+     severity is quoting a different library.
+
+     --good is DERIVED from the reference's own green #239806, which measures
+     3.62:1 on #fbfaf9 and cannot carry a word; hue 141.1° held, chroma clipped:
+     #198400 on #fbfaf9 is 4.64:1, #198400 on #ffffff is 4.84:1, #198400 on
+     #faf8f0 is 4.55:1.
+     --danger is DERIVED from the reference's rose #fc6373 (the falling-delta
+     voice, and the reference paints its negative rose rather than red — the pack
+     keeps that voice): hue 17.1° held, #d03950 on #fbfaf9 is 4.60:1, #d03950 on
+     #ffffff is 4.79:1, #d03950 on #faf8f0 is 4.51:1.
+     --info is MEASURED, unmodified: #1167f4 on #fbfaf9 is 4.72:1.
+
+     Separations, computed. --danger and --info sit 35.0 apart at full colour;
+     --good and --info 34.9. The tight pair is stated: **--good and --danger sit
+     32.4 apart at full colour and 6.2 apart under deuteranopia** — green against
+     red is the classic collision and no re-stepping fixes it, so status here is
+     NEVER BY COLOUR ALONE: every delta ships its arrow and its number, exactly as
+     the reference's own metric cards do. */
+  --good: #198400;
+  --danger: #d03950;
+  --info: #1167f4;
+  --on-status: #ffffff; /* 4.84:1 on --good, 4.79:1 on --danger, 4.92:1 on --info */
+
+  /* ---- Status on the slab: a separate ladder, and the mint lives only here */
+  /* MEASURED on the dark wells. The mint is the identity of the reading — 36
+     text instances, all of them inside a well — and it CANNOT be brought onto
+     paper: held at hue 153.7° it reaches AA only at near-black, which is a
+     different colour, not a step. So it is declared as an on-dark token and the
+     light ladder above is a separate answer, not a translation.
+     The three, measured: #36ff94 on #1b181c is 13.31:1 and #36ff94 on #111111 is
+     14.29:1; #fc6373 on #1b181c is 6.01:1; #82a7f8 on #1b181c is 7.40:1. */
+  --good-on-dark: #36ff94;
+  --danger-on-dark: #fc6373;
+  --info-on-dark: #82a7f8;
+
+  /* ---- Hairlines: the grid IS the texture, and the card owes it its edge -- */
+  /* MEASURED — rgba(70,72,77,.12) is the single rule ink for all 63 rule elements
+     in the census. Composited, #e5e5e4 on #fbfaf9 is 1.21:1 and #e9e9ea on
+     #ffffff is 1.21:1 — far under the mark floor of 3:1, and correct for a rule.
+     @role drawn-on: --bg, --surface, --paper, --paper-deep — the grid crosses
+     every light surface, and the card takes it as its edge. That last use is the
+     pack's correction: the reference gives the card no border at all and leans on
+     a 1.04:1 value step, which is not an edge.
+     @role drawn-on: --slab, --well — --line-on-slab is the same grid continued
+     across the dark band, and #363437 on #1b181c is 1.43:1. */
+  --line: rgba(70, 72, 77, 0.12);
+  --line-quiet: rgba(70, 72, 77, 0.08);
+  --line-on-slab: rgba(255, 255, 255, 0.12);
+
+  /* MEASURED — the reference's own disabled greys; #8a8692 on #f3f3f1 is a
+     disabled label and is not asked to clear AA. */
+  --disabled-fill: #f3f3f1;
+  --disabled-ink: #8a8692;
+
+  /* ---- Elevation: four shadows, and three of them belong to one object --- */
+  /* MEASURED verbatim, and named because a pack that mandates a glow it never
+     names bans its own signature. --shadow-bubble is the cut-corner card's, 24
+     instances and the most-used shadow on the page. --shadow-card is the wide
+     soft halo under a floating panel, 3 instances. --shadow-drift is the
+     left-biased warm triple under the stacked hero deck, 3 instances — it is
+     directional on purpose, because the deck is offset to the left. --shadow-nav
+     is the single drop under the floating navigation pill.
+     There is NO ladder: a card that is not one of these four objects has
+     box-shadow: none, and takes --line for its edge. */
+  --shadow-bubble:
+    0 0.602187px 0.602187px -1.25px rgba(0, 0, 0, 0.18),
+    0 2.28853px 2.28853px -2.5px rgba(0, 0, 0, 0.16),
+    0 10px 10px -3.75px rgba(0, 0, 0, 0.06);
+  --shadow-card: 0 9px 50px 0 rgba(0, 0, 0, 0.05);
+  --shadow-drift:
+    -1.8141px 8.36292px 13.9382px 0 rgba(128, 120, 106, 0.05),
+    -36.2821px 17.4228px 60px 0 rgba(128, 120, 106, 0.05),
+    -9.07052px 4.87837px 59px 0 rgba(128, 120, 106, 0.05);
+  --shadow-nav: 0 16px 40px -8px rgba(88, 92, 95, 0.16);
+
+  /* ---- Focus: the entire mechanism is the pack's ------------------------- */
+  /* The reference ships ZERO :focus rules, ZERO :focus-visible rules and two
+     outline: none declarations across 274KB — there is no keyboard indicator to
+     inherit. The ring is the ink, which clears the 3:1 mark floor on every light
+     surface: #1b181c on #fbfaf9 is 16.87:1, #1b181c on #ffffff is 17.59:1, and on
+     the coral fill #1b181c on #f96f4b is 6.20:1.
+     The ink ring VANISHES on the dark band — #1b181c on #1b181c is 1.00:1 — so
+     --focus-color is re-declared on the slab below rather than left to fail
+     silently, which is the shape of defect this file exists to catch. */
+  --focus-w: 2px;
+  --focus-offset: 2px;
+  --focus-color: var(--ink-strong);
+  --focus-color-on-dark: var(--paper); /* 16.54:1 on --slab */
+
+  /* ---- Radii: a measured ladder, and one corner that is not there -------- */
+  /* MEASURED across the census: 8px on a badge, 10px on a chip and eyebrow, 12px
+     on every button AND every card (one value, two roles — the reference draws
+     them the same and the pack does not invent a difference), 16px on the inset
+     slab, 18px on a dark column, 24px on an inner panel, 40px on the hero deck,
+     100px on a pill. A nested box takes the outer value minus its inset, never a
+     second free value.
+     --r-bubble is the signature and it is measured on all 24 instances of one
+     object: 24px on three corners and 0 on the top right. The mirrored form is a
+     PACK DECISION for the answering side and for RTL — the reference ships only
+     the one direction. */
+  --r-badge: 8px;
+  --r-chip: 10px;
+  --r-control: 12px;
+  --r-card: 12px;
+  --r-panel: 16px;
+  --r-column: 18px;
+  --r-well: 24px;
+  --r-deck: 40px;
+  --r-pill: 100px;
+  --r-bubble: 24px 0 24px 24px;
+  --r-bubble-mirror: 0 24px 24px 24px;
+
+  /* ---- Spacing: a 4-based ladder and a 100px section -------------------- */
+  /* MEASURED. The card's padding is 32px and its internal gap is 32px, and
+     NEITHER CHANGES at 390 — the card keeps desktop padding on a 350px sheet,
+     which is a deliberate property of the reference and is stated in Responsive.
+     The section rhythm is 100px at desktop. */
+  --space-1: 4px;
+  --space-2: 6px;
+  --space-3: 8px;
+  --space-4: 10px;
+  --space-5: 12px;
+  --space-6: 16px;
+  --space-8: 24px;
+  --space-10: 32px; /* MEASURED — card padding and card gap, all widths */
+  --space-12: 40px;
+  --space-25: 100px; /* MEASURED — the section's vertical rhythm at desktop */
+
+  /* MEASURED — the ruled frame is wider than the content it holds: the two
+     vertical rules sit at x=162 and x=1278 of 1440, a 1116px frame, and the
+     dominant repeated content block inside it is 936px. The page gutter is 20px
+     at 390 and at 768. */
+  --frame-max: 69.75rem; /* 1116px — the ruled frame */
+  --page-max: 58.5rem; /* 936px — the content column inside it */
+  --gutter: 20px; /* MEASURED at 390 and 768 */
+  --slab-inset: 30px; /* MEASURED — the dark band's inset from a 1440 viewport */
+  --control-h: 36px; /* MEASURED — both hero CTAs, 8px 16px on a 14px/500 label */
+  --control-px: 16px;
+  --tap-min: 44px; /* a floor, and the reference's 36px controls do not clear it */
+
+  /* ---- Type: three faces, and the display one carries the question ------- */
+  /* MEASURED. Outfit sets the hero and — this is the identity — the QUESTION
+     inside every cut-corner bubble; Inter sets every section head, all body and
+     all UI; DM Mono sets the uppercase eyebrow and nothing else. Two further
+     families appear in the corpus, Inter Display (9 instances) and Inter Tight
+     (1), and they are Framer's font-picker drift rather than an authored system:
+     the pack does not carry them. All three faces below are open licences.
+     Font loading is the consumer's, by this library's own rule. */
+  --font-display: "Outfit", "Inter", -apple-system, system-ui, sans-serif;
+  --font-sans: "Inter", -apple-system, system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* MEASURED. The display is 56px at 1440 and 40px from 768 down; the section
+     head is 44px and 34px. Tracking is the reverse of the usual move — it
+     RELAXES as the type shrinks, from -0.0625em on the 56px display to -0.025em
+     on the 40px one, measured at both widths. Body line-height is 1.7, which is
+     the loosest in this library and is the register's own generosity. */
+  --t-display: 3.5rem; /* 56px at 1440 */
+  --t-display-sm: 2.5rem; /* 40px from 768 down */
+  --t-h2: 2.75rem; /* 44px at 1440 */
+  --t-h2-sm: 2.125rem; /* 34px from 768 down */
+  --t-h3: 2rem; /* 32px, and MEASURED at weight 500 — the one heading that is not 600 */
+  --t-quote: 1.5rem; /* 24px — the question inside the bubble, in --font-display */
+  --t-card: 1.125rem; /* 18px/600 — a card head */
+  --t-lede: 1.125rem; /* 18px/400 */
+  --t-body: 1rem; /* 16px */
+  --t-label: 0.875rem; /* 14px */
+  --t-micro: 0.75rem; /* 12px */
+  --t-eyebrow: 0.8125rem; /* 13px — mono, uppercase, and set solid */
+
+  --lh-display: 1.1; /* MEASURED — 61.6/56 and 44/40 */
+  --lh-heading: 1.2; /* MEASURED — 52.8/44 and 40.8/34 */
+  --lh-h3: 1.4; /* MEASURED — 44.8/32 */
+  --lh-quote: 1.5; /* MEASURED — 36/24 */
+  --lh-body: 1.7; /* MEASURED — 27.2/16 and 30.6/18 */
+  --lh-label: 1.4; /* MEASURED — 19.6/14 */
+  --lh-micro: 1.333; /* MEASURED — 16/12 */
+  --lh-eyebrow: 1; /* MEASURED — 13/13, set solid */
+
+  --track-display: -0.0625em; /* MEASURED — -3.5px at 56px */
+  --track-display-sm: -0.025em; /* MEASURED — -1px at 40px; it RELAXES */
+  --track-h2: -0.032em; /* MEASURED — -1.4px at 44px */
+  --track-quote: -0.02em; /* MEASURED — -0.48px at 24px */
+
+  --weight-body: 400;
+  --weight-ui: 500; /* MEASURED — the most common weight on the page, 120 instances */
+  --weight-heading: 600; /* MEASURED — every display and section head */
+  --weight-strong: 700; /* MEASURED — twice, both inside a running line */
+
+  /* ---- Motion: two clocks in CSS, and the rest is JavaScript ------------- */
+  /* MEASURED — the corpus's only two timed transitions are a 0.5s colour
+     crossfade and a 0.4s opacity ease-out; the single @keyframes is Framer's own
+     loading spinner and is vendor, not design. --dur-reveal is the measured
+     entrance and answers the doctrine's ENTRANCE rule, not its 300ms UI ceiling.
+     --dur-state is a PACK DECISION inside the doctrine's 150-250ms band: the
+     reference's controls declare the shorthand with the keyword `all` and no
+     duration at all, which computes to 0s, so there is nothing to measure and an
+     instant state change is a gap rather than a position. The 0.5s colour crossfade is NOT shipped: at 500ms it
+     is UI motion over the doctrine's ceiling, and it is recorded in Gotchas. */
+  --ease-state: cubic-bezier(0.44, 0, 0.56, 1); /* MEASURED */
+  --ease-reveal: ease-out; /* MEASURED */
+  --dur-state: 0.2s;
+  --dur-reveal: 0.4s; /* MEASURED — an entrance, exempt from the UI ceiling */
+
+  background-color: var(--bg);
+  color: var(--ink-body);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-body);
+  line-height: var(--lh-body);
+}
+
+/* The slab is a surface, not a theme — the page never inverts. What it does owe
+   is the two tokens that would fail silently on it: the focus ring, which is ink
+   and therefore invisible — #1b181c on #1b181c is 1.00:1 — and the rule ink. */
+.chorus-slab,
+[data-chorus-surface="slab"] {
+  background-color: var(--slab);
+  color: var(--on-slab);
+  --focus-color: var(--focus-color-on-dark);
+  --line: var(--line-on-slab);
+  --good: var(--good-on-dark);
+  --danger: var(--danger-on-dark);
+  --info: var(--info-on-dark);
+}
+
+/* The reference ships ZERO prefers-reduced-motion rules across 274KB. This block
+   is the pack's, and it is only half of the answer: both CSS clocks collapse
+   here, and the 383 script-set transforms and 1,057 script-set opacities that
+   carry the real choreography are unreachable from a media query. The pack's
+   Motion tokens section states the JS half — the reveal observer must read
+   matchMedia('(prefers-reduced-motion: reduce)') and mount its elements at their
+   final transform. A stylesheet cannot do it. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-state: 0s;
+    --dur-reveal: 0s;
+  }
+}
+
+/* 700 is measured on this page, twice, both times inside a running line — so it
+   is the ceiling rather than a ban, and it is pinned to the token because the UA
+   supplies its own 700 whether the pack ships a rule or not. Nothing above 700
+   appears anywhere in the corpus and nothing here may reach for one. */
+strong,
+b {
+  font-weight: var(--weight-strong);
+}
+
+/* The display face is set at one weight and one slant. The corpus contains no
+   italic in either Outfit or Inter — measured across every text-bearing element
+   at all three widths — and the UA obliges an oblique on em and i whether the
+   pack agrees or not, so the ban is written where a browser can read it. */
+em,
+i {
+  font-style: normal;
+}

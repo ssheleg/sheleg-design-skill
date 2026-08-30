@@ -241,7 +241,7 @@ ${c("bold", "What it installs")}
   DESIGN_SYNC_BRIDGE.md   the Claude Design contract (what a pack sends, and
                        what does not cross)
   AI_PRODUCT_PATTERNS.md  chat / agent / streaming surfaces (honest state)
-  styles/              thirty-eight style packs — instrument-console (dark console),
+  styles/              thirty-nine style packs — instrument-console (dark console),
                        editorial-luxury (warm editorial), workbench (light/dark
                        product UI), briefing-room (dark 16:9 presentation deck),
                        atrium (warm cream consumer health), patchbay (dark live
@@ -265,6 +265,10 @@ ${c("bold", "What it installs")}
                        contour lines, flat shadowless cards, a teal that
                        states and a pink that answers, and the product
                        shown only as portraits),
+                       chorus (warm paper under a crosshair grid, a
+                       cut-corner bubble carrying somebody else's
+                       question, near-black slabs cut into the sheet, one
+                       coral that fills but never writes),
                        babylove (white +
                           one orange, seven tokens over Tailwind defaults),
                           outrank (white +

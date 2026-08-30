@@ -73,6 +73,17 @@ subject is not the application's surface but the *terrain it measures*, carried 
 contour lines, stat slabs and delta chips. One lit exhibit is `showroom`; a field
 survey pinned flat to warm paper is this pack.
 
+### The fork against [`chorus`](./chorus.md), which is the AI-visibility collision
+
+Both sell an AI-search visibility product on warm paper and both put a dark dashboard
+early, so the pitch cannot separate them. The separation is **what the page hands the
+reader**. Surveyor hands a reading — portraits of the instrument, counted stat slabs,
+contour lines, flat light surfaces with `box-shadow: none` and no dark band anywhere.
+[`chorus`](./chorus.md) hands a conversation — a cut-corner bubble carrying somebody's
+actual words, and full-bleed near-black slabs cut into the paper. If the deliverable
+is *here is where you stand*, stay here; if it is *here is the thread, go reply*, go
+there.
+
 ## Palette
 
 Copy [`tokens/surveyor.css`](./tokens/surveyor.css) verbatim. Every colour there

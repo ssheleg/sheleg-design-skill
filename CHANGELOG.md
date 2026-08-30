@@ -6,6 +6,80 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.55.0] - 2026-08-30
+
+### The thirty-ninth pack — somebody else's question, on a sheet that never stops being ruled
+
+`chorus`, extracted from `crowdreply.io`. Warm off-white paper under a construction
+grid that never switches off — two 1px verticals at `x=162` and `x=1278` of 1440,
+crossed by horizontals carrying a small plus at each intersection, 63 rule elements in
+the census, and the same grid continued across the dark band. The set piece is a
+**cut-corner bubble**: 24px on three corners and 0 on the top right, measured on all 24
+instances of one object, holding a stranger's question in the display face.
+
+Named for the register per ADR-0001, with `switchboard`, `soapbox`, `quorum` and
+`earshot` weighed and rejected — the record is in the ADR.
+
+**Measured, not restated.** The site is Framer, and the token dump and the render
+disagree: of its 52 declared `--token-<uuid>` properties, 15 are referenced once and
+reach no painted surface, so an area-weighted census over all 2,439 elements of an
+11,750px page decided every value. Read through CDP at 1440×900, an emulated
+768×1024×2 and an emulated 390×844×2. Ratios computed by importing this repository's
+own palette gate.
+
+**Six corrections, each a number the reference produces and the pack refuses.**
+
+- The primary CTA fails AA and no size saves it — `#ffffff` on `#f96f4b` is **2.84:1**,
+  under the 3:1 large floor too. The fix keeps the brand hue exactly and changes the
+  label: `#1b181c` on `#f96f4b` is **6.20:1**. Darkening the coral was rejected.
+- The coral cannot be a word: `#f96f4b` on `#fbfaf9` is **2.72:1**, the link token
+  `#ff5d30` is **2.94:1**. `--coral-ink` at 4.59:1 is derived at hue 35.7°.
+- A card is separated from the field by **1.04:1** and nothing else — no border and no
+  shadow on any card over 250×150px in the census. Every card gains a 1px `--line`.
+- **Zero `:focus` rules and zero `:focus-visible` rules** across 274,355 bytes, plus two
+  `outline: none` declarations. The whole mechanism is the pack's, including the
+  dark-surface re-declaration: the ink ring is 1.00:1 against `--slab`.
+- The muted step does not read: `#8a8692` on `#fbfaf9` is **3.41:1** at 14px/400, 38
+  instances.
+- **Zero reduced-motion rules against 383 script-set inline transforms** and 1,057
+  script-set opacities. The media query the pack adds cannot reach them, so the JS half
+  of the contract is stated in the pack rather than implied.
+
+Two more facts recorded because they will surprise an implementer: the controls are
+36px and miss the 44px tap floor, so the kit pads the hit area rather than resizing the
+button; and the declared amber `#ffc300` paints nothing at any of the three widths,
+which is why this pack has three status roles rather than four and says so.
+
+**The mint is dark-only, and that is a constraint rather than an omission.** `#36ff94`
+is 13.31:1 in a well and reaches AA on paper only at near-black, which is a different
+colour rather than a step — so the light ladder is a separate answer, not a
+translation.
+
+### Also in this release
+
+- Reciprocal forks: `chorus` ↔ `surveyor` (the AI-visibility collision — a reading
+  against a conversation) and `chorus` ↔ `deskmate` (the speech-bubble collision —
+  whose bubble it is).
+- `kits/chorus`: the six-name spine plus `Bubble`, `GridFrame`, `Slab`, `Well`,
+  `Delta`, `NavPill`, `Sweep`, `Field`, `Empty`, `Skeleton`, `Capsule`. Rendered at
+  1440 / 768 / 390 and its computed values read back against the pack's claims before
+  the tag; the log is in `docs/evidence/plans/2026-08-30-chorus-pack-acceptance.md`.
+- The kit's button carries no border on any variant: the reference's control is 36px
+  with 8px/16px padding and no edge, and a 1px border measured 38px. The ghost
+  variant's line is an inset ring instead, so no variant shifts when it swaps.
+- Counted claims moved 38 → 39 across eleven files, and the widened-contract remainder
+  moved 32 → 33 — the number that had been stale in two consecutive releases.
+- `SURFACE_COMPOSITION.md`: `chorus` joins the status map, and the accent-role
+  paragraph gains the fourth pack that names its accent itself (`--coral`).
+
+### Shipped with a stated debt
+
+Scenario **T37** (`chorus` against `surveyor`, with its negative branch) is **written,
+not yet run** — the filing session was instructed not to spawn subagents, so the two
+blind branches could not execute before the tag. Per standing instruction 3 the debt
+ships in the same commit as the artifact and is on the board. The render check behind
+REQ-8 is *not* part of that debt: it ran in full.
+
 ## [1.54.1] - 2026-08-29
 
 ### The installer refuses the shadow it documents

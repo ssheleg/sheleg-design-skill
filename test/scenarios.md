@@ -1653,3 +1653,49 @@ receipt**: the Register's "13–18s loops" lower bound is measured — the refer
 ships `df-demo-answer 13s`, confirmed live on 2026-08-29 — though the pack carries
 no receipt for it. Filed as board B-135 for the pack's author, per the shipped-pack
 precedent.**
+
+## T37 — Two AI-visibility landings, and whose words are on the page
+
+Added with the `chorus` pack. Two branches, two fresh contexts, run **blind against
+the bundle directory only** — `test/`, `docs/`, `kits/`, the README and the CHANGELOG
+are forbidden, because this file carries the answer beside the prompt.
+
+`chorus` and `surveyor` are the library's two AI-search-visibility packs, extracted
+seven weeks apart from two products that compete in the same category, and a router
+reading the pitch cannot separate them. The one-line test the branches should reach
+is *what does the page hand the reader — a reading of where they stand, or a
+conversation they are expected to enter?*
+
+**T37a — should select `chorus`.** "Landing page for a tool that finds Reddit and
+Quora threads where people are asking for a product like ours, and drafts the reply
+we should post. The whole page is built around real questions people asked — we want
+those quoted big, in a bubble with the source subreddit under it, with our suggested
+answer underneath. Warm paper, one hot accent, a faint drafting grid behind
+everything, and a couple of full-width near-black bands with the product screens
+inside them." Pass: routes to `styles/chorus.md`, quotes the clause that decided it,
+and names `surveyor` or `deskmate` as the closest rejected pack with the clause that
+ruled it out. Fail: routing to `surveyor` because the category is AI-search
+visibility; to `deskmate` because the illustration is a chat bubble; or to
+`test-drive` because the page is warm paper with one accent.
+
+**T37b — should still select `surveyor`.** "Marketing site for an AI-visibility
+tracker sold to enterprise SEO teams. The argument is coverage and benchmarking:
+where the brand appears across six engines, against four named competitors, with a
+score. We have polished dashboard screenshots and nothing live; we want it calm and
+flat — no dark bands, no shadows anywhere, one restrained working colour, big counted
+readings, and contour linework as the only decoration." Pass: stays on
+`styles/surveyor.md` and can say what would have moved it — the readings giving way
+to somebody else's quoted question, and the flat page gaining a dark band. Fail:
+routing to `chorus` because the newest pack is also an AI-search-visibility landing,
+which is the failure a positive-only branch cannot detect, per standing instruction 4.
+
+Both branches are also asked, after choosing, to read their chosen pack in full and
+report defects with file and quoted text.
+
+**Result: WRITTEN, NOT YET RUN.** The filing session was instructed not to spawn
+subagents, so the two blind branches could not be executed before the tag. The debt
+ships in the same commit as the artifact, per standing instruction 3, and is carried
+on the board so the next run inherits a list rather than a silence. What is *not*
+owed: the render check behind REQ-8 ran in full — the kit was rendered at 1440, 768
+and an emulated 390×844×2 and its computed values read back against the pack's
+claims, and that log is in the acceptance record.
