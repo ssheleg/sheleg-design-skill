@@ -305,6 +305,10 @@ Before calling motion done:
 - [ ] `markers` removed.
 - [ ] Reduced motion tested by actually turning it on.
 - [ ] The page still looks like the pack (§8).
+- [ ] Nothing in the diff is a rendered video standing in for page motion. If a file
+      IS the right answer, the obligations move with it —
+      [`MOTION_PRODUCTION.md`](./MOTION_PRODUCTION.md) owns that seam, including where
+      this section's contract lands once there is no user to read a media query.
 
 ---
 
