@@ -21,6 +21,23 @@ Contract: widened — all thirteen headings.
 Themes: light only — the second block (`[data-state="alarm"]`) is a SURFACE variant, not a theme twin.
 Rank: unordered — 4 status role(s) and no severity ramp; a rank scale is yours.
 
+## Contents
+
+- Register
+- Palette
+- Type
+- Texture & surface
+- Components
+- Hero
+- Responsive
+- Motion tokens
+- Signature motifs
+- Signature element
+- Motion flavor
+- Micro-interactions
+- Bans
+- Gotchas
+
 ## Register
 
 Choose this pack for **B2B SaaS whose product is a verdict about the visitor, the

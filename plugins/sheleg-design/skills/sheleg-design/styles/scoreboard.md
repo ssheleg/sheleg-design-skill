@@ -19,6 +19,23 @@ Contract: widened — all thirteen headings.
 Themes: light only — the second block (`[data-surface="panel"]`) is a SURFACE variant, not a theme twin.
 Rank: unordered — 4 status role(s) and no severity ramp; a rank scale is yours.
 
+## Contents
+
+- Register
+- Palette
+- Type
+- Texture & surface
+- Components
+- Hero
+- Responsive
+- Motion tokens
+- Signature motifs
+- Signature element
+- Motion flavor (optional — cinematic packs only)
+- Micro-interactions
+- Bans
+- Gotchas
+
 ## Register
 
 Choose this pack for a product whose argument is **an accumulating number**:

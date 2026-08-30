@@ -20,6 +20,18 @@ citation attached — which is the one thing this pack layer exists to prevent.
 Themes: light + dark — a full theme twin.
 Rank: unordered — 4 status role(s) and no severity ramp; a rank scale is yours.
 
+## Contents
+
+- Register
+- Palette
+- Type
+- Texture & surface
+- Motion tokens
+- Signature motifs
+- Micro-interactions
+- Bans
+- Gotchas
+
 ## Register
 
 Choose this pack for **product surfaces**: dashboards, admin panels,

@@ -21,6 +21,18 @@ citation attached — which is the one thing this pack layer exists to prevent.
 Themes: light only — no second block of any kind ships here.
 Rank: unordered — 1 status role(s) and no severity ramp; a rank scale is yours.
 
+## Contents
+
+- Register
+- Palette
+- Type
+- Texture & surface
+- Motion tokens
+- Signature motifs
+- Micro-interactions
+- Bans
+- Gotchas
+
 ## Register
 
 Choose this pack for **presentations rendered as a product**: investor and

@@ -20,6 +20,23 @@ already measured. Read on 2026-08-20 from `/_astro/utilities.*.css` and
 Themes: light only — no second block of any kind ships here.
 Rank: unordered — 3 status role(s) and no severity ramp; a rank scale is yours.
 
+## Contents
+
+- Register
+- Palette
+- Type
+- Texture & surface
+- Components
+- Hero
+- Responsive
+- Motion tokens
+- Signature motifs
+- Signature element
+- Motion flavor (cinematic packs only)
+- Micro-interactions
+- Bans
+- Gotchas
+
 ## Register
 
 Choose this pack for **consumer health and premium care**: longevity and

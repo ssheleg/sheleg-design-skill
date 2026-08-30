@@ -23,6 +23,22 @@ convert and a tool that must be worked in for hours, and the two halves *disagre
 brand. A team shipping both needs that agreement written down, and this is the
 first pack that writes it.
 
+## Contents
+
+- Register
+- Palette
+- Type
+- Texture & surface
+- Components
+- Hero
+- Responsive
+- Motion tokens
+- Signature motifs
+- Signature element
+- Micro-interactions
+- Bans
+- Gotchas
+
 ## Register
 
 Confident, operational, slightly playful. The product says *"How we make magic

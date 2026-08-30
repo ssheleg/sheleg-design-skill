@@ -26,6 +26,25 @@ build new sites on the same principles and understand *why* each piece works.
 
 ---
 
+## Contents
+
+- 0. The one-paragraph thesis
+- 1. Architecture at a glance
+- 2. Layer 1 — The scroll store (the single clock)
+- 3. Layer 2 — Smooth scroll (one position per frame)
+- 4. Layer 3 — The particle field (the scene-formation engine)
+- 5. Layer 4 — The 2D fallback (SignalMesh)
+- 6. Layer 5 — The projection bridge (fusing DOM and WebGL)
+- 7. Layer 6 — DOM choreography
+- 8. Layer 7 — Reveal primitives (act-themed entrances)
+- 9. Layer 8 — Scrubbed instruments (GSAP recipe)
+- 10. Cross-cutting rules
+- 11. Recipe — build a new SHELEG site from scratch
+- 12. Why it works (the deeper principles)
+- 13. File map (one file per idea)
+- Quick reference — each rule, and the failure it prevents
+- Three looks that are defaults, not decisions
+
 ## 0. The one-paragraph thesis
 
 A landing page feels "alive" not because it has many animations, but because a

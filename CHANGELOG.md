@@ -6,6 +6,71 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.57.0] - 2026-08-30
+
+### The siblings are declared, the maps are derived, the descriptions stop scarring
+
+Five closures from the family audit of 2026-08-29 (SHD-05, SHD-01, SHD-03, SHD-09,
+SHD-11), one release.
+
+**The three sibling skills are declared, and every one has a written absent-branch
+(SHD-05, the audit's HIGH).** `SKILL.md` handed charts to a `dataviz` skill that
+exists on no consumer machine this skill ships to, and asserted `shadcn` /
+`migrate-radix-to-base` "are installed" — a promise this repository has no way to
+keep. Three changes, none of them a removal:
+
+- A `compatibility` front-matter line names all three as optional siblings with
+  in-text fallbacks — the Agent Skills field for environment expectations, spent on
+  the one expectation this skill actually has.
+- The chart handoff is now conditional in both homes: where a `dataviz` skill is
+  installed it consumes the pack as its parameter set, and **where none is
+  installed, the role table in `SURFACE_COMPOSITION.md` IS the chart contract**,
+  applied by hand — which is what that table always was, stated instead of implied.
+- The component-layer section says what absence costs: nothing. `npx shadcn@latest
+  add` does the adding without the skill, and the token mapping binds either way.
+
+**Every long reference now carries a derived `## Contents` list (SHD-01).** The
+authoring rule — a reference over 100 lines carries a map, because that is what a
+partial read sees — held in 2 of 46 qualifying files. Hand-adding 44 lists creates
+44 lists that rot, so the list is **derived**: `scripts/gen_contents.py` writes the
+entries from the file's own `## ` headings (fenced code blocked out), `--write`
+regenerates bundle + mirror + template source together, and
+`validate_contents_lists()` refuses a file whose list is missing *or drifted* —
+including the one pre-existing list whose entries had already wandered from the
+headings they mapped (`MOBILE_SURFACES.md`). A new pack without a Contents list now
+fails the gate with the remedy in the message.
+
+**Both host-facing manifest descriptions are generated, never hand-appended
+(SHD-03).** `plugin.json` and the plugin entry in `marketplace.json` had converged
+to what per-release appending always produces: `patchbay` and `nameplate` glossed
+twice, `deskmate` never glossed, and `chorus` carrying `deskmate`'s orphaned
+parenthesis. Both descriptions are now derived from `STYLE_PACK_INDEX.md`'s
+catalogue — the register and good-fit columns packs are already chosen by — via
+`scripts/gen_manifest_descriptions.py` (`npm run gen-descriptions`), and
+`validate_manifest_descriptions()` refuses a manifest that differs from the
+derivation. The generator also refuses to run when the catalogue and `styles/`
+disagree, so the index parity gate fires first, not silently.
+
+**The deck trigger names the register it owns (SHD-09).** "investor deck" /
+«презентация» was broad enough to catch every presentation request, including the
+`.pptx` files the pptx/pitch-deck neighbours own. Now: *"investor deck as a web
+page" / "веб-презентация"*, with the file-based register explicitly declined in the
+description tail. The T1 carrier word `deck` survives, and the umbrella advertises
+no presentation trigger for this skill, so no routing hook loses a word.
+
+**The layout deviation is recorded where a retrofit would look (SHD-11).**
+References at the skill root and tokens two levels deep predate the layout
+guidance, and every deep link, the `.cursor` byte-mirror and `install.sh`'s file
+list depend on them. CONTRIBUTING.md now records the deviation as deliberate so the
+next standards pass reads a decision instead of an accident.
+
+Gate: 5060 → 5598 checks (the floor moves with it); both new checks watched
+failing against the real tree first — 46 references and 2 manifests red before the
+regeneration, green after — and each ships a planted defect in the self-test. The
+Contents gate's first live catch was the next release's own file: v1.56.0's
+`MOTION_PRODUCTION.md` landed mid-flight without a list, and the rebase gate
+refused it until `npm run gen-contents` wrote one.
+
 ## [1.56.0] - 2026-08-30
 
 ### The render seam — what changes when motion stops being a page

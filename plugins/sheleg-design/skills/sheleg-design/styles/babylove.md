@@ -20,6 +20,23 @@ priced, and the price is legible in both directions: `outrank` gets a semantic
 vocabulary and inherits somebody else's upgrade path; this gets a system a person
 holds in their head and no answer at all for a second theme.
 
+## Contents
+
+- Register
+- Palette
+- Type
+- Texture & surface
+- Components
+- Hero
+- Responsive
+- Motion tokens
+- Signature motifs
+- Signature element
+- Motion flavor
+- Micro-interactions
+- Bans
+- Gotchas
+
 ## Register
 
 Plain, warm, unhurried. The product is patient with itself — it ships a *What to

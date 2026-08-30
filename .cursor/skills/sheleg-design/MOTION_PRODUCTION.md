@@ -9,6 +9,16 @@ plays.
 That is a different medium with different physics, and treating it as "the same
 animation, exported" is the mistake this document exists to prevent.
 
+## Contents
+
+- The boundary
+- Before the tool: what a rendered asset costs
+- The two tools, measured
+- The recommendation, and the three conditions that reverse it
+- The token seam
+- Reduced motion, on the other side of the render
+- Pre-flight for a rendered asset
+
 ## The boundary
 
 | The motion is… | It belongs to | Read |

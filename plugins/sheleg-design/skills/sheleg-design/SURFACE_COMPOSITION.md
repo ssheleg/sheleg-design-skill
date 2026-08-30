@@ -53,9 +53,15 @@ A pack that bans grain and blur leaves the slot empty rather than filling it —
 
 ## Charts and data — hand the pack to `dataviz`
 
-Do not restyle charts from the pack by hand, and do not let a chart library pick
-its own colours. The `dataviz` skill already owns chart form, colour roles and
-the runnable palette validation; a pack is the *parameter set* it consumes.
+Do not let a chart library pick its own colours. Where a `dataviz` skill is
+installed, it owns chart form, colour roles and the runnable palette validation,
+and a pack is the *parameter set* it consumes — hand it the values mapped below.
+That skill is an **optional neighbour**: this skill declares it in its
+`compatibility` front-matter and does not ship it, so its absence is an ordinary
+state, not a broken install. **Where no dataviz skill is installed, the role
+table below is the contract** — resolve each role from the chosen pack's token
+layer by hand, and the status map and the two rules at the end of this section
+bind exactly the same, with nobody to hand them to.
 
 **Read the chosen pack's own token names before you write a single `var()`.**
 This table is by *role*, not by token, because the names are not uniform across

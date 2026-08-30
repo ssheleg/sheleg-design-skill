@@ -17,6 +17,23 @@ Contract: widened — all thirteen headings.
 Themes: light + dark — a full theme twin.
 Rank: unordered — 1 status role(s) and no severity ramp; a rank scale is yours.
 
+## Contents
+
+- Register
+- Palette
+- Type
+- Texture & surface
+- Components
+- Hero
+- Responsive
+- Motion tokens
+- Signature motifs
+- Signature element
+- Motion flavor (cinematic packs only)
+- Micro-interactions
+- Bans
+- Gotchas
+
 ## Register
 
 Choose this pack for **an open-source or developer product sold on

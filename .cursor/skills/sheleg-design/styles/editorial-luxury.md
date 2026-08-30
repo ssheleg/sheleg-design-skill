@@ -20,6 +20,19 @@ citation attached — which is the one thing this pack layer exists to prevent.
 Themes: light only — no second block of any kind ships here.
 Rank: unordered — this pack ships no status roles at all.
 
+## Contents
+
+- Register
+- Palette
+- Type
+- Texture & surface
+- Motion tokens
+- Signature motifs
+- Motion flavor
+- Micro-interactions
+- Bans
+- Gotchas
+
 ## Register
 
 Choose this pack for warm, editorial, print-inspired products: research /

@@ -8,6 +8,20 @@ Every number here is a decision someone else already paid for. Use them.
 
 ---
 
+## Contents
+
+- 1. Should this animate at all?
+- 2. Easing
+- 3. Duration
+- 4. Springs
+- 5. Forbidden forms
+- 6. Scroll motion
+- 7. Motion that came from a design tool
+- 8. Anti-drift
+- 9. Reduced motion
+- 10. Pre-flight
+- How the calibration dials bind
+
 ## 1. Should this animate at all?
 
 The first question is not "what animation" — it is "how often will a person see

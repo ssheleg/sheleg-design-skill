@@ -26,6 +26,22 @@ Contract: widened — all thirteen headings.
 Themes: light only — no second block of any kind ships here.
 Rank: unordered — 3 status role(s) and no severity ramp; a rank scale is yours.
 
+## Contents
+
+- Register
+- Palette
+- Type
+- Texture & surface
+- Components
+- Hero
+- Responsive
+- Motion tokens
+- Signature motifs
+- Signature element
+- Micro-interactions
+- Bans
+- Gotchas
+
 ## Register
 
 Choose Surveyor for **products that measure a landscape the buyer cannot see

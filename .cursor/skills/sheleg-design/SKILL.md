@@ -1,9 +1,10 @@
 ---
 name: sheleg-design
-description: Use when deciding how something LOOKS or MOVES — cinematic landing pages and hero sections, particle/WebGL backgrounds, scroll-linked or scrubbed motion, layers that drift, dashboards, admin or internal tools, mobile screens, chat or agent interfaces, tokens, themes, palettes, typography and the Figma border. Triggers include "design a landing" / "дизайн лендинга", "build a landing page" / "сделай лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens, style pack" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы, фигма в код", "mobile screen" / "мобильный экран", "palette, colors" / "палитра, цвета", "typography, font" / "типографика, шрифт", "how it looks, make it prettier" / "выглядит, красиво, красивее", "visual reference" / "визуальные референсы", "investor deck" / "презентация". Not for structure, copy or backend behavior.
+description: Use when deciding how something LOOKS or MOVES — cinematic landing pages and hero sections, particle/WebGL backgrounds, scroll-linked or scrubbed motion, layers that drift, dashboards, admin or internal tools, mobile screens, chat or agent interfaces, tokens, themes, palettes, typography and the Figma border. Triggers: "design a landing" / "дизайн лендинга", "build a landing page" / "сделай лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens, style pack" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы, фигма в код", "mobile screen" / "мобильный экран", "palette, colors" / "палитра, цвета", "typography, font" / "типографика, шрифт", "how it looks, make it prettier" / "выглядит, красиво, красивее", "visual reference" / "визуальные референсы", "investor deck as a web page" / "веб-презентация". Not for structure, copy, backend behavior, or .pptx decks.
 license: MIT
+compatibility: Optional siblings — dataviz, shadcn, migrate-radix-to-base; each has an in-text fallback when absent.
 metadata:
-  version: 1.56.0
+  version: 1.57.0
 ---
 
 # SHELEG Design
@@ -156,10 +157,14 @@ as a definition of done, in that order:
 - **Scene depth — six layers** ([`SURFACE_COMPOSITION.md`](./SURFACE_COMPOSITION.md)),
   before writing CSS for a cinematic page. A scene has planes; everything on one
   plane is the failure no amount of easing repairs.
-- **Charts — hand the pack to `dataviz`** (same file), before drawing a chart in
-  any pack. Token names are not uniform across the thirty-nine packs — only `--bg`
-  and `--ink` resolve in every one — and an undefined custom property does not error,
-  it silently falls back. Guessing one is the quietest way to ship a wrong chart.
+- **Charts — the role contract in the same file, plus the `dataviz` handoff
+  where that skill exists**, before drawing a chart in any pack. Token names are
+  not uniform across the thirty-nine packs — only `--bg` and `--ink` resolve in
+  every one — and an undefined custom property does not error, it silently falls
+  back. Guessing one is the quietest way to ship a wrong chart. A `dataviz`
+  skill is an optional neighbour this skill does not ship: where none is
+  installed, the role table in `SURFACE_COMPOSITION.md` IS the chart contract,
+  applied by hand.
 - **Mobile surfaces** ([`MOBILE_SURFACES.md`](./MOBILE_SURFACES.md)), when the
   brief is a native app screen or a mobile-web view — not a desktop page whose
   only mobile concern is collapse. Five mobile rules the packs each state alone,
@@ -232,9 +237,13 @@ there, the work is bespoke scroll and WebGL, and reaching for a component kit is
 how a hero ends up looking like a settings screen.
 
 **Who does the work.** This section decides *whether* and *against which tokens*.
-The `shadcn` skill does the adding, searching and composing, and
-`migrate-radix-to-base` handles the Radix→Base move; both are installed and
-trigger on their own words. Do not restate their component docs here.
+Where the `shadcn` skill is installed it does the adding, searching and
+composing, and `migrate-radix-to-base` handles the Radix→Base move; both are
+**optional neighbours** this skill declares in its `compatibility` line and does
+not ship, and they trigger on their own words where present. Where they are
+absent nothing is blocked: the kit's own CLI (`npx shadcn@latest add
+<component>`) does the adding, and the token mapping above binds either way. Do
+not restate their component docs here.
 
 ## Optional — Figma (design ↔ code)
 

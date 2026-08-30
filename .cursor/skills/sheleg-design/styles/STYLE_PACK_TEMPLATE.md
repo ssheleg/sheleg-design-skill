@@ -36,6 +36,24 @@ were chosen because their answers are **derived from the token layer**, so the
 gate re-derives both and refuses a declaration that has drifted from the thing
 it describes. Add a third only when it can be answered the same way.
 
+## Contents
+
+- Before you fill anything — six rules that decide whether this pack is real
+- Register
+- Palette
+- Type
+- Texture & surface
+- Components
+- Hero
+- Responsive
+- Motion tokens
+- Signature motifs
+- Signature element
+- Motion flavor (optional — cinematic packs only)
+- Micro-interactions
+- Bans
+- Gotchas
+
 ## Before you fill anything — six rules that decide whether this pack is real
 
 Until 1.11.0 these were spread across three places a reader of the installed

@@ -1017,6 +1017,86 @@ def validate_pack_enumerations():
         )
 
 
+# --------------------------------------------------------- derived surfaces
+#
+# Two surfaces stopped being authored on the family audit (2026-08-29) and are
+# now derived by a script in scripts/, which this gate imports rather than
+# re-implements -- one derivation, two callers, no second copy to drift. The
+# import is ROOT-relative on purpose: the self-test re-runs this file against a
+# copied tree, and the copy must be judged by its own scripts.
+def _load_script(name: str):
+    import importlib.util
+
+    path = ROOT / "scripts" / name
+    spec = importlib.util.spec_from_file_location(name[:-3], path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def validate_contents_lists():
+    """Every >100-line bundle reference carries a `## Contents` list derived
+    from its own headings.
+
+    The authoring rule is the Agent Skills one -- a partial read of a long
+    reference sees the map or sees nothing -- and the family audit (SHD-01)
+    found 42 of 44 qualifying files without one, which is where a hand-kept
+    list always ends up. So the list is derived: `scripts/gen_contents.py`
+    owns the derivation, `--write` regenerates, and this check refuses a file
+    whose list is missing or has drifted from the headings it maps.
+    """
+    gen = _load_script("gen_contents.py")
+    files = gen.targets(ROOT)
+    check(
+        bool(files),
+        "gen_contents.targets() found no qualifying reference -- the walk is broken",
+    )
+    for path in files:
+        rel = path.relative_to(ROOT)
+        what = gen.problem(read(path) or "")
+        check(
+            what is None,
+            f"{rel}: {what} -- a reference over {gen.LINE_FLOOR} lines is read "
+            "partially, and the map is derived, never authored. Run "
+            "`python3 scripts/gen_contents.py --write`",
+        )
+    report.append(
+        f"Contents lists: {len(files)} bundle references over {gen.LINE_FLOOR} "
+        "lines, every list derived from its own headings"
+    )
+
+
+def validate_manifest_descriptions():
+    """Both host-facing manifest descriptions equal the STYLE_PACK_INDEX.md
+    derivation.
+
+    The family audit (SHD-03) found them append-scarred -- `patchbay` and
+    `nameplate` glossed twice, `deskmate` never, `chorus` carrying a
+    neighbour's orphaned parenthesis -- which is what per-release hand-appends
+    converge to. `scripts/gen_manifest_descriptions.py` owns the derivation;
+    a description that differs from it was hand-edited and is refused.
+    """
+    gen = _load_script("gen_manifest_descriptions.py")
+    try:
+        want = gen.description(ROOT)
+    except SystemExit as exc:
+        check(False, f"manifest descriptions could not be derived -- {exc}")
+        return
+    plugin = load_json(f"{PLUGIN_DIR}/.claude-plugin/plugin.json", []) or {}
+    market = load_json(".claude-plugin/marketplace.json", []) or {}
+    entry = (market.get("plugins") or [{}])[0]
+    for rel, got in (
+        (f"{PLUGIN_DIR}/.claude-plugin/plugin.json", plugin.get("description")),
+        (".claude-plugin/marketplace.json", entry.get("description")),
+    ):
+        check(
+            got == want,
+            f"{rel}: the description differs from the STYLE_PACK_INDEX.md "
+            "derivation -- this surface is generated, never hand-appended. Run "
+            "`npm run gen-descriptions`",
+        )
+
+
 # ------------------------------------------------------ contract terminology
 #
 # The pack contract was called "nine", "ten" and "thirteen" simultaneously
@@ -1573,9 +1653,13 @@ PLANTS = (
         "a count is checkable, so it is checked",
     ),
     (
+        # Derived since 1.57.0: the description is generated from the pack index,
+        # so the pinned literal `briefing-room (dark 16:9 deck), ` stopped
+        # existing and the fixture changed nothing. Whatever gloss the generator
+        # currently writes for the pack, removing the whole entry is the defect.
         "a manifest naming three packs of twelve",
         f"{PLUGIN_DIR}/.claude-plugin/plugin.json",
-        lambda t: t.replace("briefing-room (dark 16:9 deck), ", ""),
+        lambda t: re.sub(r"briefing-room \([^)]*\), ", "", t, count=1),
         "the plugin description an agent host reads names",
     ),
     (
@@ -1599,9 +1683,12 @@ PLANTS = (
         # read until 1.19.0 -- which is how "twelve pluggable style packs" sat
         # above a list of thirteen for two releases. Derived from whatever the
         # manifest currently claims, for the reason given at the first plant.
+        # `visual` joined the modifier chain when the descriptions became
+        # generated (1.57.0), and the fixture that required the bare form
+        # changed nothing. Optional, so the plant survives either wording.
         "a count that is true of an older release, in a manifest",
         ".claude-plugin/marketplace.json",
-        lambda t: re.sub(r"[a-z-]+ (pluggable style packs)", r"six \1", t, count=1),
+        lambda t: re.sub(r"[a-z-]+ (pluggable (?:visual )?style packs)", r"six \1", t, count=1),
         "a count is checkable, so it is checked",
     ),
     (
@@ -2011,6 +2098,27 @@ PLANTS = (
         "docs/evidence/backlog.md",
         lambda t: t.replace("| B-007 |", "| B-007 | `grep x | wc -l` —", 1),
         "cells and its header declares",
+    ),
+    (
+        # SHD-01's shipped state, planted back: a long reference whose map is
+        # gone. Renaming the heading rather than deleting the block keeps the
+        # plant one line and still reads as "no `## Contents` list".
+        "a >100-line reference whose Contents list was dropped",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/MOTION_DOCTRINE.md",
+        lambda t: t.replace("## Contents", "## Map", 1),
+        "carries no `## Contents` list",
+    ),
+    (
+        # SHD-03's shipped state, planted back: one more clause hand-appended to
+        # a description that is now derived. The mutation lands inside the JSON
+        # string, so the manifest still parses and only the derivation check can
+        # say what is wrong with it.
+        "a manifest description hand-appended past the derivation",
+        f"{PLUGIN_DIR}/.claude-plugin/plugin.json",
+        lambda t: t.replace(
+            "pluggable visual style packs",
+            "pluggable visual style packs, and one glossed twice", 1),
+        "differs from the STYLE_PACK_INDEX.md derivation",
     ),
 )
 
@@ -4651,6 +4759,8 @@ def main():
     validate_links()
     validate_counted_claims()
     validate_pack_enumerations()
+    validate_contents_lists()
+    validate_manifest_descriptions()
     validate_contract_terminology()
     validate_contract_split()
     validate_contract_declaration()
