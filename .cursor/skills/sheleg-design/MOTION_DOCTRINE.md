@@ -353,10 +353,14 @@ parallax and `animation-timeline`; it keeps a sticky nav, which is the only diff
   **Four more standalone packs pin their own, and each states it in its own Register:**
   `ora` at **4**, `tenor` at **4**, `paperclip` at **5** — the last one higher because it
   is the only pack in the family that spends a native scroll-driven parallax —
-  and `bulletin` at **3**, the lowest ceiling in the library, because its whole
-  measured motion budget is an entrance fade, a 0.12s press and a 0.3s hover.
-  Its depth is drawn as a hard ink offset rather than animated, and animating
-  that offset is precisely what flattens it.
+  and `bulletin` at **3**, because its whole measured motion budget is an entrance
+  fade, a 0.12s press and a 0.3s hover. Its depth is drawn as a hard ink offset
+  rather than animated, and animating that offset is precisely what flattens it.
+  **The lowest ceiling in the library is 2**, and four of them pin it. This sentence
+  called `bulletin` the lowest for four releases while two others already sat under
+  it, which is why the number is now derived: `validate_motion_ceiling_floor()`
+  recomputes the minimum from the packs' own Register lines and fails when this
+  paragraph disagrees with them.
   `field-notes` is standalone **by default** and may opt into the cinematic layer — it carries a `## Motion flavor` section saying
   how — so it is the one standalone pack without a hard ceiling. Read that
   section before turning the dial up on it.

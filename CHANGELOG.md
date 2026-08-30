@@ -6,6 +6,92 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.58.0] - 2026-08-30
+
+### The catalogue stops being the one surface nobody designed, and two blind reads land
+
+**The site is now built from a pack.** The two generators behind
+`ssheleg.github.io/sheleg-design-skill` carried **sixty-seven colour literals**
+between them — a dark-only scheme that appears in no pack, answers no
+`prefers-color-scheme`, and had never been through the contrast gate every pack must
+pass. A library that ships thirty-nine measured token layers and paints its own
+catalogue in an undocumented one is arguing against itself.
+
+`tools/chrome.py` is the shell now: it inlines `styles/tokens/workbench.css`
+**verbatim** and the site's own CSS consumes `var(--…)` and nothing else.
+`workbench` for two checkable reasons — it is the library's stated default for
+product UI, which is what a catalogue is, and it is one of only two packs shipping a
+full `[data-theme="dark"]` twin, which a public page needs. The theme follows the
+pack's own written instruction (*"keep one switch, never two sources of truth"*): a
+`prefers-color-scheme` listener sets `data-theme`, and the two `theme-color` meta
+tags are **derived** from the layer's `--bg` rather than typed. `no_literals()` runs
+on every build and in `npm test`, so this cannot rot back.
+
+The site's links honour the pack rather than override it: `--accent` is declared
+`@role non-text` at 4.30:1, so a link is `--ink` wearing an accent underline, and
+hover thickens the rule instead of recolouring the word.
+
+**The front door had been publishing 39 blank cards.** `tools/gallery.py` parsed the
+pack catalogue out of `SKILL.md` long after that table moved to
+`STYLE_PACK_INDEX.md`. The regex matched nothing, `look` and `for` came back empty
+for **every** pack, and the live site shipped *"Choose for"* followed by silence on
+all thirty-nine — with the JSON-LD `ItemList` descriptions and the `llms.txt`
+entries empty behind it. Nothing failed, because an empty string is a valid string.
+Fixed, and the parse is now asserted: a run that finds no catalogue rows stops
+instead of publishing a catalogue with no prose in it.
+
+### Scenario T37 ran, both branches passed, and cost 29 findings
+
+Written on 2026-08-30 with its debt stated; run the same day once subagents were
+available. Both branches blind against the bundle directory, both correct — `T37a`
+reached `chorus` from a quoted-thread brief, `T37b` **stayed on `surveyor`** from an
+enterprise-tracker brief, which is the failure a positive-only branch cannot detect.
+
+**Twelve of `T37a`'s sixteen findings on `chorus` are fixed here.** The three that
+mattered were invisible to every gate:
+
+- `--on-status` stayed at its root white inside the slab block, putting **white on
+  the mint at 1.32:1** — in the one surface the pack invented the mint for. The
+  comment above that block said it owed "two tokens" while the block changed five.
+  It now re-declares six, and the count is stated.
+- The slab's overrides **inherited into light descendants**: a white card nested in a
+  slab took a white hairline and re-admitted the mint the pack's own Bans forbid on
+  paper. A nested light surface takes its tokens back.
+- The Responsive section's opening sentence contradicted its own table two lines
+  below: *"768 and 1440 differ only in the frame, not in the type"*, against a table
+  giving the display 40px at 768 and 56px at 1440.
+
+Also: `--track-h2-sm` now exists for the narrow section head the Responsive table
+asks for; the Delta chip's "wash" is two real tokens (`--good-weak`,
+`--danger-weak`); the provenance legend names the family it actually uses
+(**PACK DECISION**, and no SELECTED); one ratio was wrong (`--parchment` on `--bg` is
+1.14:1, not 1.15); "a factor of three" was 2.8; the eyebrow was two objects with two
+sizes; three things were called a pill and none of them used `--r-pill`; and the
+slab hook is now the library's own unprefixed `[data-surface="slab"]` — chorus had
+been the only pack you could not A/B by swapping the token layer alone.
+
+**One of `T37b`'s thirteen findings on `surveyor` is fixed here**, because it is an
+accessibility hole with a one-token remedy: `--focus-color` is `--action`, and
+`#0a7269` on the pack's own `--accent` closer panel measures **1.55:1** — under the
+3:1 mark floor, on the surface carrying the final CTA. `[data-surface="accent"]` now
+re-declares the ring to the pack's `--bg` at 3.54:1. The other eight are verified and
+filed as B-137 for the pack's author, per the B-134/B-135 precedent.
+
+**Both branches found the same third-party defect, and neither pack could have
+caught it.** `MOTION_DOCTRINE.md` called `bulletin` at 3 *"the lowest ceiling in the
+library"* — false for four releases, while four packs pin **2**. Corrected, and
+`validate_motion_ceiling_floor()` now recomputes both the minimum and the count from
+the packs' own Register lines; it was watched failing against a planted 3 before it
+went green.
+
+### Ledgers
+
+B-136 closed. B-137 and B-138 opened with the verified remainder. `REQ-CHORUS-3`
+moves off `never`, taking the ledger from two `never` rows to one. The `chorus`
+acceptance record's REQ-10/11/12 are closed against receipts — including the one
+that is only **partly** met and says so: the launcher's pin still names v1.54.0,
+because that repository holds ~2,100 lines of another session's uncommitted work.
+
 ## [1.57.0] - 2026-08-30
 
 ### The siblings are declared, the maps are derived, the descriptions stop scarring

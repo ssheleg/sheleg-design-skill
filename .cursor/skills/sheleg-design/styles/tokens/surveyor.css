@@ -152,6 +152,13 @@
   --focus-w: 2px;
   --focus-offset: 2px;
   --focus-color: var(--action);
+  /* The ring VANISHES on the one surface the pack fills with --accent: #0a7269 on
+     #0d9488 is 1.55:1, under the 3:1 mark floor, and the closer panel is where the
+     pack puts its final CTA. So the accent slab re-declares the ring in the pack's
+     own paper — #fff7f3 on #0d9488 is 3.54:1, over the floor. Found by a blind
+     read of the shipped pack, not by a gate: a token that resolves is a token the
+     gates accept, whatever it resolves to underneath. */
+  --focus-color-on-accent: var(--bg);
 
   /* ---- Radii: a 10px hand, a 24px card, a 32px panel ------------------- */
   /* MEASURED. The control is the se-uikit's own 10px on every button and
@@ -282,4 +289,11 @@
 strong,
 b {
   font-weight: var(--weight-heading);
+}
+
+/* The closer panel is the pack's only saturated surface, and the only place the ink
+   ring cannot be seen. It is a SURFACE variant, not a theme: nothing else changes. */
+[data-surface="accent"] {
+  background-color: var(--accent);
+  --focus-color: var(--focus-color-on-accent);
 }

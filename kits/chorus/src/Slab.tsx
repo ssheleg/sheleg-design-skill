@@ -8,7 +8,7 @@ export interface SlabProps {
 export function Slab({ children, className }: SlabProps) {
   return (
     <section
-      data-chorus-surface="slab"
+      data-surface="slab"
       className={['ch-slab', className].filter(Boolean).join(' ')}
     >
       {children}
