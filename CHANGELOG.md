@@ -6,6 +6,47 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.58.2] - 2026-08-31
+
+### Added
+
+**The evals ran, and the results table stops saying "never executed."** Every
+trigger case probed a genuinely blind fresh context — a headless session with
+no settings loaded, whose whole prompt was the query, the installed-skill list
+and one question — once per model: `claude-haiku-4-5-20251001` answered 15/15,
+`claude-sonnet-5` 14/15, and the one miss is recorded rather than smoothed
+(q10: a mechanical CSS-selector fix routed here, against the suite's
+"no visual decision required" negative). The three scenarios ran per model as
+fresh sessions with the skill on disk and are scored line by line; the lines
+that need a built page in a browser or a live Figma file are recorded as
+*not reproducible from this harness*, not guessed. Dated rows and the full
+method, including its limits, live in `test/evals/RESULTS.md` (SHD-08).
+
+**Three coexistence negatives name the installed neighbours that share this
+skill's ground.** `q13`–`q15` are near-miss queries that must NOT route here,
+and did not: an artifact styled with a pre-set theme went to `theme-factory`,
+a page rebuilt in Figma from its published design system went to
+`figma-generate-design`, and an explicitly bespoke no-pack brief went to
+`frontend-design` — on both models probed. They ride the same split and the
+same validator as the twelve authored cases.
+
+### Fixed
+
+**Both manifests declare their `$schema`.** `.claude-plugin/marketplace.json`
+names `json.schemastore.org/claude-code-marketplace.json` and
+`plugins/sheleg-design/.claude-plugin/plugin.json` names
+`json.schemastore.org/claude-code-plugin-manifest.json` — the shape
+`make-skill`'s own manifests ship — and `claude plugin validate` stays green
+over both (SHD-02).
+
+**The GitHub About description stops counting packs.** It said "35 style
+packs" while the tree shipped 39: the About box is not a file in this tree,
+and nothing in the release path can rewrite it — the release workflow's
+`GITHUB_TOKEN` cannot carry the `administration` permission that
+`PATCH /repos/{owner}/{repo}` requires — so the regenerated description
+states no count at all, and CONTRIBUTING records the decision beside the
+release procedure (SHD-04).
+
 ## [1.58.1] - 2026-08-30
 
 ### Fixed
