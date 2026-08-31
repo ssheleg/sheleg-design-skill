@@ -191,6 +191,19 @@ sentence sent a release's operator looking for a manual step that no longer
 exists. **The tag is the whole release**: push `vX.Y.Z` and GitHub cuts the
 release and publishes the package.
 
+### The GitHub repo description carries no pack count
+
+The repository description on GitHub — the line in the About box — is not a
+file in this tree, and nothing in the release path can rewrite it: the release
+workflow's `GITHUB_TOKEN` cannot carry the `administration` permission that
+`PATCH /repos/{owner}/{repo}` requires, and no local release script exists to
+own the step. A counted number typed there goes stale the release after it is
+typed — the count it carried had drifted well behind the tree by the time the
+family audit flagged it (SHD-04, closed 2026-08-31). So the description
+states **no count**. Edit it
+with `gh api -X PATCH repos/ssheleg/sheleg-design-skill -f description="…"`,
+and keep counted claims out of it — numbers live in files the validator can
+reach and re-derive.
 
 ### The family catalogue moves with the release
 

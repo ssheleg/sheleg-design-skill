@@ -8,7 +8,9 @@
       "q03",
       "q07",
       "q08",
-      "q09"
+      "q09",
+      "q13",
+      "q15"
     ],
     "validation": [
       "q04",
@@ -16,7 +18,8 @@
       "q06",
       "q10",
       "q11",
-      "q12"
+      "q12",
+      "q14"
     ]
   },
   "queries": [
@@ -103,7 +106,30 @@
       "query": "Run an accessibility audit of the checkout flow",
       "should_trigger": false,
       "why": "verification of behavior, not deciding visual language"
+    },
+    {
+      "id": "q13",
+      "lang": "en",
+      "query": "Style this quarterly report artifact with one of the pre-set themes - pick the palette and font pairing",
+      "should_trigger": false,
+      "why": "coexistence: applying a pre-set theme to an artifact is theme-factory's ground; no visual system is being designed",
+      "coexistence": "theme-factory"
+    },
+    {
+      "id": "q14",
+      "lang": "ru",
+      "query": "возьми эту страницу приложения и собери её в Figma из опубликованных компонентов нашей дизайн-системы",
+      "should_trigger": false,
+      "why": "coexistence: translating an existing page into Figma from its published design system is figma-generate-design's ground; no token layer or visual language is being decided",
+      "coexistence": "figma-generate-design"
+    },
+    {
+      "id": "q15",
+      "lang": "en",
+      "query": "Give this landing page a bespoke one-off aesthetic direction - deliberately avoid any pre-made style pack or ready-made token set",
+      "should_trigger": false,
+      "why": "coexistence: an explicitly bespoke no-pack brief is frontend-design's ground; this skill's offer is exactly the locked packs the brief refuses",
+      "coexistence": "frontend-design"
     }
   ]
 }
-
