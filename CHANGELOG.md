@@ -6,6 +6,28 @@ follow [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.58.3] - 2026-09-01
+
+### Fixed
+
+- **The registry card stopped being six releases stale.** `SKILL-CARD.md` carries the
+  fields Anthropic's Skills-for-enterprise guidance asks every organisation to keep —
+  *"written so somebody who did not build this can decide"* — and it said `1.52.0` while
+  this pack shipped `1.58.2`. Nothing read it, so it could only drift: the version moves
+  in `package.json`, `plugin.json` and `marketplace.json` on every release and the card
+  was in no list.
+- **The check that keeps it honest.** `validate_registry_card_names_the_version_that_ships`
+  refuses a card whose `Version` row disagrees with `package.json`, and refuses a card
+  that states no version at all — one a reader cannot see go stale is worse than one that
+  lags visibly. Watched failing before it shipped.
+
+### Context
+
+Measured 2026-09-01 across the family: **four of nine cards were behind** — `agent-stack`
+by ten minor releases, this one by six, `super-ux` by four, `sheleg-dev` by one. The same
+check now sits in each of the four, which is this family's own rule that a class seen
+twice becomes a script rather than a fourth manual repair.
+
 ## [1.58.2] - 2026-08-31
 
 ### Added

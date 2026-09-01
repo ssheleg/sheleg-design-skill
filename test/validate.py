@@ -4880,6 +4880,45 @@ def check_routed_triggers_still_advertised():
         _disclose_routing(f"routed triggers — {(proc.stderr or 'the checker could not look').strip()}")
 
 
+def validate_registry_card_names_the_version_that_ships():
+    """`SKILL-CARD.md` is the entry a stranger decides from, and nothing read it.
+
+    It carries the fields Anthropic's Skills-for-enterprise guidance asks every
+    organisation to keep -- "written so somebody who did not build this can decide" --
+    and the version moves in `package.json`, `plugin.json` and `marketplace.json` on
+    every release while the card was in no list. So it could only drift: it read
+    `1.52.0` against a shipped `1.58.2`, six minor releases behind.
+
+    Measured 2026-09-01 across the family: FOUR of nine cards were behind --
+    `agent-stack` by ten, this one by six, `super-ux` by four, `sheleg-dev` by one. The
+    same check now sits in each, which is this family's own rule that a class seen twice
+    becomes a script.
+
+    A card that states no version at all is refused too: one a reader cannot see go
+    stale is worse than one that lags visibly.
+    """
+    card = ROOT / "SKILL-CARD.md"
+    if not card.is_file():
+        return
+    ships = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))["version"]
+    row = r"\|\s*\*{0,2}Version\*{0,2}\s*\|\s*`?([0-9]+\.[0-9]+\.[0-9]+)`?\s*\|"
+    m = re.search(row, card.read_text(encoding="utf-8"))
+    check(
+        m is not None,
+        "SKILL-CARD.md: no `Version` row this check can read -- the card is the entry a "
+        "stranger decides from, and a version it does not state is one that cannot go "
+        "stale visibly. Write it as a table row.",
+    )
+    if m:
+        check(
+            m.group(1) == ships,
+            f"SKILL-CARD.md: the registry card says {m.group(1)} and package.json ships "
+            f"{ships} -- the card is what somebody who did not build this decides from, "
+            "so the one field that dates it may not lag. Bump it in the same change as "
+            "the manifests.",
+        )
+
+
 def main():
     if sys.argv[1:]:
         # An unknown flag silently running the normal pass is how a suite reports
@@ -4893,6 +4932,7 @@ def main():
         )
         sys.exit(2)
     validate_manifests()
+    validate_registry_card_names_the_version_that_ships()
     validate_skills()
     validate_front_matter_is_yaml()
     validate_commands()
