@@ -1,5 +1,26 @@
 ## [Unreleased]
 
+## [1.59.1] - 2026-09-03
+
+### Fixed
+
+- **`CREATIVE_DIRECTOR.md`'s Act 2 mandated a command from another package with no
+  fallback**, which breaks this skill's own declared contract: the front matter says
+  every optional sibling *"has an in-text fallback when absent"*, and `shadcn`'s and
+  `dataviz`'s both do. Act 2 now states what survives without the umbrella and what does
+  not, because the two halves are not equivalent: the **lane table is in this document**
+  and the agent's harness already lists every installed skill, so *whose answer is this*
+  and *what do I have* both stay answerable — coarsely, by reading. What is lost is the
+  half no local reading can reconstruct, **what is missing plus the command that installs
+  it, and what has been measured and declined**. The instruction is to cast from the
+  harness's list and **say in the cast that the roster was not measured**, rather than
+  presenting an unmeasured roster as a measured one.
+
+  Found in the close-out ladder walk rather than by the gate: the validator holds the
+  companion, its links and its contents list, and has no rule about a sibling's fallback
+  — the convention is stated by the skill about itself.
+
+
 ## [1.59.0] - 2026-09-03
 
 ### Added

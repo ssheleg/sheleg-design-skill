@@ -77,6 +77,19 @@ That prints, for the lane you named: what is **present** here, what is
 **missing** with the exact install command, and which of them have been
 **measured and declined**. It reports and never installs.
 
+**Absent, nothing is blocked** — the umbrella is an optional sibling like every
+other one this skill names. Two of the three things the command gives you have a
+substitute and one does not, and the difference is worth knowing before you
+proceed: the **lane table below is in this document**, so the question *whose
+answer is this* is still answerable, and the agent's harness already puts every
+installed skill's name and description in front of you, so *what do I have* is
+answerable too — coarsely, by reading rather than by matching. What you lose is
+the half no local reading can reconstruct: **what is MISSING and the command that
+would install it**, and **what has already been measured and declined**, which is
+the part that stops a plausible-looking recommendation from being taken twice.
+Cast from the harness's list, and **say in the cast that the roster was not
+measured** rather than presenting it as though it had been.
+
 **Then print the cast before starting** — the skills you will use, one line each
 saying what for, and the lane each serves. Not for approval; so the operator can
 see the choice and correct it. A cast that is never printed cannot be corrected,
