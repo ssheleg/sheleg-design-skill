@@ -391,6 +391,13 @@ def validate_skills():
     # a reference nothing links to is a file the agent never opens.
     skill_body = read(skills_dir / PLUGIN / "SKILL.md") or ""
     for companion in (
+        # The director is first in this tuple because it is first in the skill: the
+        # decision layer that says which craft, whose tools, and how anyone would know
+        # it worked. A companion nothing links to is a file the agent never opens, and
+        # this is the one whose absence would be invisible -- the craft references
+        # still read fine on their own, which is exactly why the layer above them has
+        # to be held mechanically.
+        "CREATIVE_DIRECTOR.md",
         "SHELEG_DESIGN.md",
         "FIGMA_BRIDGE.md",
         "AI_PRODUCT_PATTERNS.md",
