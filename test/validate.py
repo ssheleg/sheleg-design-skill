@@ -1579,7 +1579,7 @@ PLANTS = (
         # reads as additive. Derived from the phrase rather than its surroundings.
         "a description edit that drops the phrase a T1 task depends on",
         f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md",
-        lambda t: t.replace("scroll-linked or scrubbed motion", "scroll-linked motion", 1),
+        lambda t: _drop_a_t1_carrier(t),
         "the phrase T1's",
     ),
     (
@@ -3720,6 +3720,39 @@ T1_CARRIERS = (
     ("Russian mobile payment screen", "мобильный экран"),
     ("investor deck (added by B-006)", "deck"),
 )
+
+
+
+def _drop_a_t1_carrier(text: str) -> str:
+    """Delete one T1 carrier from the description, whatever the prose around it says.
+
+    Instruction #6, paid for here rather than read: this plant used to hardcode
+    ``"scroll-linked or scrubbed motion"``. A release reworded that clause to buy
+    description budget, the replace no-oped, and the self-test reported the guard as
+    BROKEN while the guard was fine -- the exact failure the standing instruction
+    describes, on the exact kind of anchor it warns about.
+
+    So the victim is DERIVED from ``T1_CARRIERS`` and the assertion is made on the
+    parsed description, read the way ``validate_t1_carriers_survive`` reads it, not on
+    the raw file. A plant that changed some other byte would still be testing nothing.
+    """
+    m = re.search(r"^description:\s*(.*?)^[a-z_]+:", text, re.M | re.S)
+    assert m, "plant: the description did not parse -- the front-matter shape moved"
+    desc = m.group(1)
+    for _task, phrase in T1_CARRIERS:
+        if phrase in desc:
+            wounded = desc.replace(phrase, "", 1)
+            out = text[: m.start(1)] + wounded + text[m.end(1) :]
+            after = re.search(r"^description:\s*(.*?)^[a-z_]+:", out, re.M | re.S)
+            assert after and phrase not in after.group(1), (
+                f"plant: {phrase!r} survived the edit the guard reads -- "
+                "the plant would have tested nothing"
+            )
+            return out
+    raise AssertionError(
+        "plant: the description carries none of T1_CARRIERS, so there was nothing to "
+        "remove -- either the carriers moved or the guard is already failing for real"
+    )
 
 
 def validate_t1_carriers_survive():
