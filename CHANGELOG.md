@@ -1,10 +1,17 @@
-# Changelog
-
-All notable changes to this project are documented in this file. The format
-follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions
-follow [SemVer](https://semver.org/spec/v2.0.0.html).
-
 ## [Unreleased]
+
+## [1.58.4] - 2026-09-03
+
+### Fixed
+
+- The committed social preview is the umbrella's own render, byte for byte, with the
+  corrected fit metric. The install line no longer overruns the padding box.
+- `scripts/site.js` kept this member in a `LEGACY_FIT` set because the card pixels are
+  committed here and byte-checked from the umbrella: a member whose card the corrected
+  metric would repaint had to stay on the old metric until its own release recommitted
+  the card. This release is that recommit; the umbrella drops the entry in the same pass,
+  and its exactness fixture fails on a stale entry, so forgetting is loud. (`B-118`)
+
 
 ## [1.58.3] - 2026-09-01
 
