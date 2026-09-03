@@ -1,5 +1,53 @@
 ## [Unreleased]
 
+## [1.59.2] - 2026-09-03
+
+### Fixed
+
+- **The skill did not advertise the two words its own router text names.** The umbrella's
+  routing block says *"before design, **redesign**, **layout**, front-end or mobile-UI
+  work"*, and the trigger layer only ever fires on words a skill claims in its own
+  description. Measured 2026-09-03 against the real matcher: `редизайн сайта` → nothing,
+  `переделай дизайн` → nothing, `свёрстай дашборд` → nothing. The router text was inert
+  for exactly the vocabulary it was written for.
+
+  Four triggers added — `"redesign" / "редизайн, свёрстай, вёрстка"` — and paid for by
+  trimming prose no trigger depends on, verified against `lib/triggers.js` before cutting:
+  `layers that drift`, `or scrubbed`, `particle/`. Description **965 → 969, against a
+  working limit of 970.**
+
+- **`B-84` was right and this entry's first draft said it was stale — the correction is
+  recorded rather than quietly rewritten.** That row cites a *970 working limit* and calls
+  this fix blocked. Reading this repository's own `test/validate.py` finds only the Agent
+  Skills cap of 1024, so the draft concluded no 970 existed and shipped a description at
+  1014. **CI refused it**: the limit is a family HOUSE RULE, enforced by `make-skill`'s
+  `audit_skill.py --house` (`DESC_HEADROOM`), which runs in this repository's own
+  workflow — *"inside the 1024 cap but past the 970 working limit: leave room for the
+  'what this is NOT for' clause a near-miss neighbour will require."*
+
+  **Two limits, two enforcers, and only one of them lives here.** A number absent from the
+  validator you happen to open is not a number that does not exist.
+
+Headroom after this change is **ten characters**, at 960 of 970, bought by trimming
+  prose rather than by raising a limit. B-84's underlying claim — that the descriptions
+  which miss most cannot accept another trigger for free — holds.
+
+- **The first trim removed three phrases a second consumer depended on.** `particle`,
+  `scrubbed` and `drift` are not hook triggers, so a check against `lib/triggers.js`
+  called them free; they are `T1_CARRIERS` here, the phrases this repository's own eval
+  tasks are matched on, and its gate refused the edit. Every span in the shipping trim
+  was tested against **both** lists before being cut — *"a description edit that reads
+  as additive can still remove the only phrase carrying a task"*, which is that guard's
+  own sentence.
+
+- **The plant guarding that rule had gone quiet, and this release is why it was found.**
+  It hardcoded `"scroll-linked or scrubbed motion"`; the trim reworded exactly that
+  clause, the replace no-oped, and the self-test reported the guard as BROKEN while the
+  guard was fine. Standing instruction #6, on the anchor it warns about. The victim is
+  derived from `T1_CARRIERS` now and the assertion is made on the **parsed description,
+  read the way the guard reads it** — a plant that changed some other byte would still
+  be testing nothing.
+
 ## [1.59.1] - 2026-09-03
 
 ### Fixed
