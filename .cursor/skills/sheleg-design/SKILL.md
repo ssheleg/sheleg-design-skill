@@ -4,7 +4,7 @@ description: Use when deciding how something LOOKS or MOVES — cinematic landin
 license: MIT
 compatibility: Optional siblings — dataviz, shadcn, migrate-radix-to-base; each has an in-text fallback when absent.
 metadata:
-  version: 1.58.4
+  version: 1.59.0
 ---
 
 # SHELEG Design
@@ -16,6 +16,19 @@ truth** (measured scroll position) driving **many cheap, layered,
 independently-degradable responses**. Centralize scroll into one store; layers
 read it per frame and react in their own language. Nothing crossfades — things
 *redeploy*. Every layer degrades to a calm static state.
+
+**READ FIRST, BEFORE ANY OF THE CRAFT BELOW:**
+[`CREATIVE_DIRECTOR.md`](./CREATIVE_DIRECTOR.md) — the decision layer. What the
+surface is for and **what would prove it failed**; which lane and which mode the
+task is in, because a redesign starts by measuring the thing it replaces and an
+update changes a token rather than the components that read it; which tools to
+cast, measured with `npx sshlg-skills pack design --lane <lane>` rather than
+recalled; when to build **two variations with two disjoint casts in parallel
+subagents** — and the rule that keeps that honest, which is that the rubric is
+written before either one exists; and the validation split that matters, where
+alignment to the brief and measurable quality are two different questions and
+neither implies the other. **The failure mode of an agent doing design is not
+ugliness, it is plausibility**, and that document is what refuses it.
 
 **REQUIRED REFERENCE — for the cinematic path:** read
 [`SHELEG_DESIGN.md`](./SHELEG_DESIGN.md) before implementing a scroll-driven page —

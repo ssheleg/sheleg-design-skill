@@ -1,5 +1,49 @@
 ## [Unreleased]
 
+## [1.59.0] - 2026-09-03
+
+### Added
+
+- **`CREATIVE_DIRECTOR.md` — the decision layer, and it is now the skill's first
+  act.** Everything else in this bundle is a craft reference. This is what says
+  which craft, whose tools, and how anyone would know it worked. It exists because
+  the failure mode of an agent doing design is not ugliness but **plausibility**: a
+  page that looks like a design, answers no stated need, was built with whatever
+  skill happened to fire first, and cannot be argued with because nobody wrote down
+  what it was supposed to do.
+
+  Five acts. **Act 1** is a four-line brief whose fourth line is a **falsifier** —
+  what would prove this design failed, stated so it could actually happen — plus
+  the mode table, where a redesign enters at `verify` and `a11y` because you
+  measure the thing you are replacing before you take it away, and an update
+  changes a token rather than the components that read it. **Act 2** casts the
+  tools by MEASURING with `npx sshlg-skills pack design --lane <lane>` rather than
+  recalling, and prints the cast before starting. **Act 3** runs two variations in
+  parallel subagents with disjoint casts — under the rule that keeps it honest,
+  which is that **the rubric is written before either variation exists**; build two
+  and then decide what you were comparing and you have picked the one you liked and
+  written the justification backwards. It also names when NOT to fork, because two
+  variations of a spacing fix is theatre. **Act 4** grafts what the loser did
+  better and records which tool produced which trait, so the next casting decision
+  is better than this one. **Act 5** splits validation into alignment (does it
+  answer the brief) and quality (eight measurable checks, each producing a number a
+  second reader can reproduce) — and states the limit rather than implying it:
+  **taste is not on that table**, and where two directions both pass, that is a
+  person's decision and the honest output is the pair plus the trade-off.
+
+- The director is held by the validator like every other companion: it ships in the
+  bundle, is linked from `SKILL.md`, is mirrored into `.cursor/`, and carries a
+  derived `## Contents` list. **Its absence would otherwise be invisible** — the
+  craft references still read fine on their own, which is exactly why the layer
+  above them has to be held mechanically.
+
+- Three findings from this repository's own gate, all real: the bundle file list in
+  `install.sh` did not carry the new file, the derived contents list was missing,
+  and the draft cited a repository path (`docs/ux/…`) that dead-ends for every
+  reader who installed the bundle rather than cloning the repo. The last one is
+  reworded to point at `/ux` instead.
+
+
 ## [1.58.4] - 2026-09-03
 
 ### Fixed
