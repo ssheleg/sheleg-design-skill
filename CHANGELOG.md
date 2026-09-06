@@ -1,11 +1,12 @@
 ## [Unreleased]
 
+
+## [1.59.4] - 2026-09-06
+
 > **v1.59.3 is a burned tag.** It was pushed against `origin/main` before the release
 > PR had actually merged, so it names the v1.59.2 tree; the version-sync gate refuses
 > it and the remote forbids tag deletion. Nothing shipped under it — this version is
 > the same change, tagged on the verified merge commit.
-
-## [1.59.4] - 2026-09-06
 
 ### Fixed
 
