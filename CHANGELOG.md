@@ -1,5 +1,58 @@
 ## [Unreleased]
 
+> **v1.59.3 is a burned tag.** It was pushed against `origin/main` before the release
+> PR had actually merged, so it names the v1.59.2 tree; the version-sync gate refuses
+> it and the remote forbids tag deletion. Nothing shipped under it — this version is
+> the same change, tagged on the verified merge commit.
+
+## [1.59.4] - 2026-09-06
+
+### Fixed
+
+- **The front matter declared the optional siblings and said nothing about the
+  hard requirement.** `compatibility:` named `dataviz`, `shadcn` and
+  `migrate-radix-to-base` — three skills the body can work without — while the
+  body REQUIRES node with npx and network twice (`npx sheleg-design-skill --kit
+  <pack>`, `npx sshlg-skills pack design --lane`) and named no path for a
+  machine where npx is unreachable. Found by the family audit (2026-09-06, wave
+  AUDIT-WAVE-0906). Both halves fixed: the front matter now opens with
+  *"Kit/lane commands need node>=16, npx, network"*, and the kit-authoritative
+  paragraph states the degraded path in the same voice v1.59.1 gave the
+  director's Act 2 — nothing is blocked, the pack and its token layer in
+  `styles/tokens/<pack>.css` still carry the rules by reading, and the component
+  states only a kit materializes are then **unverified**, said out loud rather
+  than presented as kit-checked.
+
+  **The honest first draft was refused by this repository's own gate, and the
+  refusal is the interesting part.** The full declaration measured 342 chars —
+  comfortably inside the Agent Skills spec's 500-char `compatibility` cap — and
+  `check_description_canon` refused it at **432 of a 256 overhead budget**,
+  because every non-description key is read every session and the budget exists
+  so front matter never becomes a place to write prose. Two limits, and the
+  binding one was the house budget, not the spec cap — the same lesson v1.59.2
+  paid for on the description. So the front matter carries the compressed form
+  (**253 of 256**) and the body carries the detail, which is where a reader who
+  hit the failure would look anyway.
+
+- **An empty recursive directory chain sat in checkouts, and the mirror
+  validator could not see the class it belongs to.**
+  `.cursor/skills/sheleg-design/styles/tokens/.cursor/skills/sheleg-design/` —
+  zero files, invisible to `git status` (git tracks no directory), to the npm
+  tarball (npm packs files), and to both directions of the mirror-drift check,
+  which walk `rglob("*")` filtered by `is_file()`. Measured on this machine
+  2026-09-06: the umbrella's submodule checkout at `skills/sheleg-design`
+  carried the chain at commit `0902ef6`; this repository's own checkout was
+  clean. The artefact is removed, and the CLASS is closed: the mirror block now
+  reads **directories** over both trees — a nested `.cursor` anywhere inside
+  either bundle is refused as a copy artefact whatever it contains, and an
+  empty directory is refused wholesale. Watched failing against a real planted
+  chain before being believed — both checks answered with their own messages,
+  not a neighbour's — and planted permanently in the self-test as two
+  **directory fixtures**, a shape `PLANTS` cannot express because its mutations
+  are text edits to a file, and each fixture asserts the plant landed before
+  trusting any red. Floor raised 5621 → 5641, measured by running the gate on
+  this tree.
+
 ## [1.59.2] - 2026-09-03
 
 ### Fixed

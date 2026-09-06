@@ -2,9 +2,9 @@
 name: sheleg-design
 description: Use when deciding how something LOOKS or MOVES — cinematic landing pages and hero sections, particle/WebGL, scrubbed motion, drift, dashboards, admin or internal tools, mobile screens, chat or agent interfaces, tokens, palettes, typography and the Figma border. Triggers - "design a landing" / "дизайн лендинга", "build a landing page" / "сделай лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens, style pack" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы, фигма в код", "mobile screen" / "мобильный экран", "palette, colors" / "палитра, цвета", "typography, font" / "типографика, шрифт", "how it looks, make it prettier" / "выглядит, красиво, красивее", "visual reference" / "визуальные референсы", "investor deck as a web page" / "веб-презентация", "redesign" / "редизайн, свёрстай, вёрстка". Not for structure, copy, backend behavior, or .pptx decks.
 license: MIT
-compatibility: Optional siblings — dataviz, shadcn, migrate-radix-to-base; each has an in-text fallback when absent.
+compatibility: Kit/lane commands need node>=16, npx, network. Optional siblings — dataviz, shadcn, migrate-radix-to-base. Each has an in-text fallback when absent or unreachable.
 metadata:
-  version: 1.59.2
+  version: 1.59.4
 ---
 
 # SHELEG Design
@@ -89,7 +89,11 @@ npx sheleg-design-skill --kit <pack>
 ```
 
 The generated `src/styles.css` is authoritative for states a core pack leaves
-open. A widened pack's kit and `## Components` section must agree. To author a
+open. A widened pack's kit and `## Components` section must agree. Where `npx`
+is unreachable — no node, no registry — nothing is blocked: the chosen pack and
+its token layer in `styles/tokens/<pack>.css` still carry the rules by reading,
+but the component states only a kit materializes are then **unverified** — say
+so, rather than presenting a read-off state as a kit-checked one. To author a
 pack, start from
 [`styles/STYLE_PACK_TEMPLATE.md`](./styles/STYLE_PACK_TEMPLATE.md) and ship its
 token file in the same change.
