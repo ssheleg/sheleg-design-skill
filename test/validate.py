@@ -387,6 +387,29 @@ def validate_skills():
                 (canonical_dir / rel_path).is_file(),
                 f".cursor/skills/{PLUGIN}/{rel_path}: not in the plugin bundle",
             )
+        # Both loops above iterate FILES, so an empty directory chain passes
+        # unseen: v1.59.2 checkouts carried a recursive
+        # `.cursor/skills/sheleg-design/styles/tokens/.cursor/skills/sheleg-design/`
+        # -- invisible to `git status` (git tracks no directory), to both
+        # `is_file()` walks here, and to the npm tarball (npm packs files). The
+        # directories are read too, over BOTH trees: a nested `.cursor` anywhere
+        # inside either bundle is a copy artefact whatever it contains, and an
+        # empty directory is refused wholesale because the only thing it can do
+        # is mislead the next tool that walks the tree.
+        for tree_label, tree in (
+            (f"{PLUGIN_DIR}/skills/{PLUGIN}", canonical_dir),
+            (f".cursor/skills/{PLUGIN}", mirror_dir),
+        ):
+            for d in sorted(p for p in tree.rglob("*") if p.is_dir()):
+                rel_path = d.relative_to(tree)
+                check(
+                    d.name != ".cursor",
+                    f"{tree_label}/{rel_path}: a nested .cursor directory inside the bundle tree",
+                )
+                check(
+                    next(d.iterdir(), None) is not None,
+                    f"{tree_label}/{rel_path}: an empty directory the file-by-file mirror check cannot see",
+                )
     # Companion docs ship with the bundle AND are reachable from SKILL.md --
     # a reference nothing links to is a file the agent never opens.
     skill_body = read(skills_dir / PLUGIN / "SKILL.md") or ""
@@ -2298,6 +2321,50 @@ def self_test() -> int:
             print(f"  MISSED  {label} -- no failure said {expect!r}")
             ok = False
     del failures[:]
+
+    # Two plants that are DIRECTORIES rather than text mutations, so they cannot
+    # live in PLANTS: the artefact v1.59.2 checkouts actually carried -- an empty
+    # recursive `.cursor/...` chain inside the mirror's token directory -- and
+    # its plainer sibling, an empty directory anywhere in the bundle. Both are
+    # invisible to git and to every `is_file()` walk, which is exactly why each
+    # fixture asserts the plant LANDED before believing any red, and why each
+    # names its own check's message: an empty-chain plant caught by some
+    # neighbouring check would prove nothing about the directory reader.
+    for label, rel_parts, expect in (
+        (
+            "an empty recursive .cursor chain inside the mirror tree",
+            (".cursor", "skills", PLUGIN, "styles", "tokens",
+             ".cursor", "skills", PLUGIN),
+            "a nested .cursor directory inside the bundle tree",
+        ),
+        (
+            "an empty directory inside the plugin bundle",
+            (PLUGIN_DIR, "skills", PLUGIN, "styles", "planted-empty-dir"),
+            "an empty directory the file-by-file mirror check cannot see",
+        ),
+    ):
+        with tempfile.TemporaryDirectory() as tmp:
+            dst = Path(tmp) / "repo"
+            shutil.copytree(src, dst, ignore=shutil.ignore_patterns(*COPY_IGNORE))
+            chain = dst.joinpath(*rel_parts)
+            chain.mkdir(parents=True, exist_ok=False)
+            if not chain.is_dir():
+                print(f"  BROKEN  {label}: the fixture created nothing")
+                ok = False
+                continue
+            env = {**os.environ, "SHELEG_ROOT": str(dst)}
+            run = subprocess.run(
+                [sys.executable, str(Path(__file__).resolve())],
+                capture_output=True, text=True, env=env,
+            )
+            if run.returncode == 0:
+                print(f"  MISSED  {label} -- validator stayed green")
+                ok = False
+            elif expect not in run.stdout + run.stderr:
+                print(f"  MISSED  {label} -- went red without saying {expect!r}")
+                ok = False
+            else:
+                print(f"  caught  {label}")
 
     # The one plant whose pass condition is silence. Every other fixture proves the
     # validator says no; this one proves a nested checkout changes neither the
