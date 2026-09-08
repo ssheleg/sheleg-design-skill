@@ -42,6 +42,13 @@ is built; the doctrine says whether to build it — the frequency table that kil
 animation on high-repetition paths, the easing tree and the `ease-in` ban, the
 duration ceiling, the forbidden forms, and the reduced-motion contract.
 
+**REQUIRED BEFORE ANY ACCESSIBILITY CLAIM:** read
+[`ACCESSIBILITY_EVIDENCE.md`](./ACCESSIBILITY_EVIDENCE.md) — which bar a claim
+is held to (a WCAG criterion with number/version/level/units/exceptions, or a
+platform heuristic), what a screenshot can and cannot prove about the DOM and
+assistive technology, and the verdict contract: an absent tool is NOT_RUN,
+never PASS, and no check installs a scanner to complete itself.
+
 ## When to Use
 
 - Landing/marketing/hero pages where motion is a stated goal; particle or WebGL

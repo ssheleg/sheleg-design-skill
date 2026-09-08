@@ -427,6 +427,9 @@ def validate_skills():
         "MOTION_DOCTRINE.md",
         "DESIGN_SYNC_BRIDGE.md",
         "STYLE_PACK_INDEX.md",
+        # The evidence contract for accessibility claims (ADOPT-M-11.01): unlinked,
+        # every render critique quietly reverts to screenshot-grade "accessible".
+        "ACCESSIBILITY_EVIDENCE.md",
     ):
         if check(
             (skills_dir / PLUGIN / companion).is_file(),
