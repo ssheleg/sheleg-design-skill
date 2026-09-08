@@ -48,6 +48,13 @@ is held to (a WCAG criterion with number/version/level/units/exceptions, or a
 platform heuristic), what a screenshot can and cannot prove about the DOM and
 assistive technology, and the verdict contract: an absent tool is NOT_RUN,
 never PASS, and no check installs a scanner to complete itself.
+The connection is **scoped, not routed**: the craft gate's contrast row and
+the render critique consume these verdicts at the claim they are making — an
+existing capability, no new router, no new entry point. And a quality receipt
+keeps two kinds of row apart: **visual judgment** (how the render reads) and
+**WCAG conformance** (a computed, scoped check naming its criterion). A glance
+cannot produce a conformance row — a receipt where it did is refused, because
+"looked accessible" is a screenshot claim wearing a criterion's name.
 
 ## When to Use
 
