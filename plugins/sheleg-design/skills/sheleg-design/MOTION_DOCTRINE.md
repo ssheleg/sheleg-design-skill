@@ -165,11 +165,20 @@ effect is decorative. On a functional readout, no motion beats smoothed motion.
 
 These are not stylistic preferences. Each one is a defect with a known failure.
 
-- **`window.addEventListener("scroll", …)`** — runs every frame, unbatched,
-  janky. Use `useScroll()`, `ScrollTrigger`, `IntersectionObserver`, or CSS
-  scroll-driven animation (`animation-timeline: view()`).
-- **Scroll progress computed from `window.scrollY` into component state** — same
-  defect, now with a re-render on every frame.
+- **A HEAVY scroll handler — the defect is the WORK, not the API.** A passive
+  listener doing a cheap read (`addEventListener("scroll", fn, {passive: true})`
+  toggling a flag or class) is legitimate — MDN documents exactly this pattern
+  with throttling
+  (https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event).
+  What fails is the work inside: synchronous layout reads (thrashing), state
+  writes per frame, an unthrottled handler doing real computation. The recipe:
+  passive listener → cheap read → batch writes in rAF → clean up on unmount —
+  and a handler is rejected only on a MEASURED defect (long tasks, dropped
+  frames in a profile), never on the API's name. `useScroll()`,
+  `ScrollTrigger`, `IntersectionObserver` and `animation-timeline: view()`
+  stay the first reach because they make the cheap path the default.
+- **Scroll progress computed from `window.scrollY` into component state** — the
+  work-per-frame defect above in its worst form: a re-render on every frame.
 - **`requestAnimationFrame` loops that write to component state** — use motion
   values (`useMotionValue` / `useTransform`) so the work stays off the render
   cycle.
@@ -179,13 +188,20 @@ These are not stylistic preferences. Each one is a defect with a known failure.
 - **Animating a property that triggers layout** — `top`, `left`, `width`,
   `height`, `padding`, `margin`, `gap`, `font-size`. These re-lay-out the
   document on every frame. Animate `transform` and `opacity`, which the
-  compositor handles alone; `filter` and `clip-path` are also safe. Paint-only
+  compositor handles alone; `filter` and `clip-path` are CONDITIONAL, not
+  free — a small clipped element is fine, while a full-screen animated blur
+  passes only a MEASURED performance budget on the target devices (web.dev's
+  animations guide warns about exactly this cost:
+  https://web.dev/articles/animations-guide). Profile at 60 AND 120 Hz, and
+  check `prefers-reduced-motion` separately — a budget met at 60 Hz with
+  motion on says nothing about either. Paint-only
   changes (`background-color`, `border-color`, `color`, `box-shadow`) are
   cheaper than layout and are permitted — §2 gives them an ease and §9 treats a
   colour change as the baseline everything else is measured against. The ban is
   on **layout**, not on everything outside a list of four; an earlier wording
   said "anything but `transform`, `opacity`, `filter`, `clip-path`", which
-  contradicted both of those sections.
+  contradicted both of those sections — and a still-earlier one called filter
+  and clip-path unconditionally safe, which the budget above replaces.
 - **`backdrop-filter` on a scrolling container** — continuous GPU repaint. Blur
   belongs on fixed or sticky elements.
 - **Grain and noise on a scrolling container** — same reason. Put them on a
