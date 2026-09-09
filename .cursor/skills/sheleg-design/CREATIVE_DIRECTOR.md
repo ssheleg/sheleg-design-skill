@@ -228,16 +228,26 @@ Two different questions, and passing one says nothing about the other.
 These are checks, not opinions. Each one produces a number or a yes/no that a
 second reader can reproduce:
 
-| Check | How it is measured |
-|---|---|
-| Contrast | every text/background pair against WCAG AA; body text ≥ 4.5:1, large ≥ 3:1 — a **computed ratio**, never a glance |
-| Colour is not the only signal | every status, link and error state carries a second cue — shape, icon, weight, text |
-| Keyboard path | every interactive element reachable and visibly focused, in DOM order |
-| One anchor per viewport | count what competes for first attention; more than one means none |
-| Type scale | count the distinct font sizes actually rendered — an ad-hoc scale shows up as a long tail |
-| Token discipline | `grep` for raw hex and raw px outside the token layer; a one-off value is a system leaking |
-| Motion, and its absence | every duration inside the doctrine's bands, and the surface fully usable under `prefers-reduced-motion: reduce` — checked by turning it on, not by reading the CSS |
-| Renders without JS | the content is present in the served HTML — matters for the reader who is a crawler as much as for the one on a slow connection |
+Each check carries an **applicability predicate** — the class of surface it is a
+fact about. A check outside its class is reported **NOT_APPLICABLE with the
+reason**, never PASS without running: a SwiftUI screen has no served HTML to
+check, and an authenticated admin SPA has no crawler to serve it to. The
+classes: **all** (any rendered surface), **web** (runs in a browser, public or
+internal), **public-web** (a logged-out reader or crawler can reach it —
+the same boundary the SEO router draws), **native** (platform semantics
+instead of DOM ones).
+
+| Check | Applies to | How it is measured |
+|---|---|---|
+| Contrast | all | every text/background pair against WCAG AA; body text ≥ 4.5:1, large ≥ 3:1 — a **computed ratio**, never a glance |
+| Colour is not the only signal | all | every status, link and error state carries a second cue — shape, icon, weight, text |
+| Keyboard path | web | every interactive element reachable and visibly focused, in DOM order; on **native**, the platform's focus/accessibility semantics stand in — VoiceOver order, not DOM order |
+| One anchor per viewport | all | count what competes for first attention; more than one means none |
+| Type scale | all | count the distinct font sizes actually rendered — an ad-hoc scale shows up as a long tail |
+| Token discipline | all | `grep` for raw hex and raw px outside the token layer; a one-off value is a system leaking |
+| Motion, and its absence | all | every duration inside the doctrine's bands, and the surface fully usable under reduced motion — `prefers-reduced-motion: reduce` on web, the platform's Reduce Motion on native — checked by turning it on, not by reading the CSS |
+| Loading / error states | web | internal surfaces earn this INSTEAD of the crawler check: every fetch has a loading state and an honest error state |
+| Renders without JS | public-web | the content is present in the served HTML — matters for the reader who is a crawler as much as for the one on a slow connection. An internal tool behind a login is N/A here (with that reason), not quietly PASSed — and a native screen has no served HTML at all |
 
 **Run them where the thing runs.** A screenshot in a browser at the target
 viewport beats reading the diff, every time; `webapp-testing` and the Chrome
