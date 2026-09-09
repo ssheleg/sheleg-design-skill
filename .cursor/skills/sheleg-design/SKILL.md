@@ -234,6 +234,20 @@ UI and **`showroom`** for a marketing page: both are quiet enough that switching
 away later costs layout, not identity. (This used to say "the default pack" and
 name none, which is not a fallback.)
 
+**What a comparison records — one component, one content, one viewport at a
+time, through the adapters.** A difference is attributable to the pack only
+when everything else is pinned: the receipt per candidate names the pack, its
+adapter status, the compared component's geometry (positions and sizes as
+rendered) and its states (hover, focus, disabled). A content or viewport
+mismatch between two records INVALIDATES the pair — it never counts as a pack
+difference. A pack switch is *expected* to change rendered semantics — that is
+what is being chosen — so identical geometry and states across a compared pair is a
+signal the adapter never reached the component, not a finding of equivalence.
+And a candidate without a complete adapter makes the whole comparison **not
+ready**: the pack is named and either adapted or struck from the candidate
+list explicitly — "compared what had adapters" silently is a comparison of a
+different question.
+
 The comparison harness is scaffolding, not a deliverable: it comes out with the
 same change that records the decision.
 
