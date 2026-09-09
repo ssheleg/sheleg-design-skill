@@ -571,9 +571,10 @@ function main() {
       `  ${c("dim", "SHELEG_DESIGN.md")}    the full reference\n` +
       `  ${c("dim", "MOTION_DOCTRINE.md")}  whether to animate at all — read before any animation\n` +
       `  ${c("dim", "styles/")}             style packs + token CSS (instrument-console / editorial-luxury / workbench / briefing-room / atrium / orchard / field-notes / cyclorama / showroom / blueprint / prism / maquette / scoreboard / datasheet / manpage / pigeonhole / roster)\n\n` +
-      `Your Cursor / Claude agent can now discover the skill and build\n` +
-      `cinematic, scroll-driven pages — or style product UI (dashboards, admin,\n` +
-      `internal tools) from a standalone pack — on its principles.\n\n` +
+      `Files are on disk; a running agent has NOT loaded them yet — skills are\n` +
+      `read at session start, so reload (a new session) before expecting the\n` +
+      `skill, then build cinematic scroll-driven pages or style product UI from\n` +
+      `a standalone pack. Writing files is not the same as the host loading them.\n\n` +
       `${c("dim", "Docs: " + pkg.homepage)}\n`,
   );
 
