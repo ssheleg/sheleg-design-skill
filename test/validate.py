@@ -120,7 +120,7 @@ SPINE = ("Button", "Card", "Chip", "Stat", "Heading", "Rule")
 CARD_GROUPS = ("Foundations", "Actions", "Surfaces", "Data", "Signature")
 COLOR_LITERAL = re.compile(r"#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\(|oklch\(")
 PROPS_RE = re.compile(
-    r"export\s+interface\s+(\w+Props)\s*\{(.*?)^\}", re.S | re.M
+    r"export\s+interface\s+(\w+Props)\s*(?:extends[^{]*)?\{(.*?)^\}", re.S | re.M
 )
 CATEGORY_RE = re.compile(r"^category:\s*(\S+)\s*$", re.M)
 
@@ -4945,7 +4945,13 @@ def validate_bundle_self_sufficiency():
         rel = doc.relative_to(ROOT)
         if "six component names" not in text:
             continue
-        missing = [name for name in SPINE if f"`{name}`" not in text]
+        # The members must travel with the COUNT, inside the sentence that
+        # enumerates them -- not merely somewhere in the document. A passing
+        # mention of `Button` in a later paragraph must not let a member dropped
+        # from the enumeration hide behind it.
+        enum = re.search(r"The six are (.+?`Rule`)", text, re.S)
+        scope = enum.group(1) if enum else text
+        missing = [name for name in SPINE if f"`{name}`" not in scope]
         check(
             not missing,
             f"{rel}: claims 'the same six component names' but does not name "

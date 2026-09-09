@@ -75,6 +75,21 @@ The pack is the primary reference type; the other three feed it rather than bypa
   `maquette` — and belongs to it alone. Until 1.11.0 this paragraph asserted the
   count and named none of the six bridges, which left a reader with a number and no way
   to check a delivered kit against it.
+- **The spine is a passthrough, not a wall.** The six props bodies own *identity* —
+  `variant`, `size`, the class composition — and nothing else. Everything native to
+  the element travels THROUGH them: each `*Props` extends the host element's own
+  attribute type, forwards a `ref`, and spreads the rest onto the node. So
+  `Button` defaults `type="button"` but an explicit `type="submit"` wins (a form
+  submit must work); `aria-label` reaches an icon-only button; `aria-controls` /
+  `aria-expanded` reach a trigger; `ref.focus()` lands on the real DOM node. **A
+  design default may never silently erase a prop the caller set** — the default fills
+  a hole, it does not overwrite. `Heading` carries the same rule with `as`/`level`
+  (the semantic tag) kept independent of visual `size`.
+- **These are reference primitives, not a product component system.** The pack ships
+  the spine and its bans; forms, dialogs and navigation are COMPOSED from it with
+  recipes that live beside the kit, never smuggled into a primitive. A primitive that
+  grows a `<form>` inside it stops being swappable, which is the one thing the spine
+  exists to guarantee.
 
 ## 3. Figma — one border at a time
 
