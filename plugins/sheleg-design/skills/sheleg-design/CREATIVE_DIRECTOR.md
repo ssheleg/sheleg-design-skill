@@ -223,6 +223,36 @@ viewport beats reading the diff, every time; `webapp-testing` and the Chrome
 DevTools tooling exist for this, and the `verify` lane in Act 2 casts them. A
 quality claim made from source is a claim about source.
 
+### Render critique — the soft half, made actionable
+
+The measurable table is not the whole review, and "premium" / "generic" are not
+findings — a phrase with no region attached is not acceptance (ADOPT-M-10). A
+render critique is a separate pass AFTER the render, and each observation is a
+**triple**: an image region (a crop or a coordinate on the observed render), the
+**observable defect** there, and the **intended change** — followed by a second
+render that applies it. Three such observations is the working shape; the lenses
+are hierarchy, spacing rhythm, optical alignment, type treatment, platform feel,
+and specificity to THIS product — applied by the brief, not all at once.
+
+Four rules keep it honest:
+
+- **A clean render is a valid result — there is no defect quota.** If the
+  observed render has no observable defect, the critique says so and the loop
+  STOPS. Manufacturing a third observation to fill a slot fabricates a defect on
+  a clean render, which is the opposite of the pass's job.
+- **Observed render, subjective judgment and source CSS are different evidence**
+  and are labelled as such — a taste call is never dressed as a measurement, and
+  a pseudo-precise score is never assigned to a preference. Show the LIMIT of the
+  assessment instead.
+- **Missing brand context is `NOT_ASSESSED`, not a P1.** Absent the brand pack,
+  brand fit is not automatically the top defect — it is unassessed, and said to
+  be.
+- **The strict constraints gate BEFORE the soft winner.** Contrast and keyboard
+  (the measurable table) are a gate: a render that fails them is out regardless
+  of how it reads. Only among renders that pass the gate does the soft critique
+  choose — and where two both pass every hard gate and read equally well, that
+  is the person's decision (Act 4's rule), not a manufactured preference.
+
 ### The limit, stated rather than implied
 
 **Taste is not on that table, and this document will not pretend otherwise.**
