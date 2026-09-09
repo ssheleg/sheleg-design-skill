@@ -141,7 +141,10 @@ Fork when **all three** hold:
 
 A token change. A spacing fix. A bug. A surface with a locked design system,
 where the answer is *apply the system* and two variations are two ways of
-disobeying it. Anything where the brief already determines the answer — forking
+disobeying it — but note WHICH lock that is: a locked BRAND is not a locked
+composition. Under a preserve-the-brand brief the invariants hold and the
+open axes still fork (`VISUAL_EXPLORATION.md`); an existing token file
+alone never turns "explore" into "apply". Anything where the brief already determines the answer — forking
 there does not explore a space, it manufactures a choice and then spends someone's
 attention resolving it.
 

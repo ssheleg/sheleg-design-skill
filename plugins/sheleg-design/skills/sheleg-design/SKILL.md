@@ -203,6 +203,16 @@ as a definition of done, in that order:
   user's text size), and the half no pack decides on a phone: platform
   convention.
 
+## Setting a visual language — invariants locked, axes open
+
+When the visual language is being SET or revised under a preserved brand,
+run the split in [`VISUAL_EXPLORATION.md`](./VISUAL_EXPLORATION.md) first:
+locked invariants (brand colors, logo, accessibility) versus open axes
+(composition, type hierarchy, control anatomy, motion purpose), two to
+three direction renders for an under-determined brief, exactly one for an
+explicit decision — and exact-Figma reproduction generates none. An
+existing token file closes nothing by itself.
+
 ## Choosing between packs — mount them, don't imagine them
 
 **The mounting rides the semantic token contract.** Token names are not
