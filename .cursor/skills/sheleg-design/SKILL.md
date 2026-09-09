@@ -171,19 +171,28 @@ their Register. The table, the per-pack ceilings and why each one is where it is
 ## The craft bar — what "done" means, in order
 
 When anyone can prompt their way to a prototype, craft is the only
-differentiator left. Designers rank what it means (Figma, *State of the
-Designer 2026*, n=906): **visual polish 58% · thoughtful problem solving 47% ·
-clear intuitive UX 36% · emotion and delight 35% · consistency 15%.** Read that
-as a definition of done, in that order:
+differentiator left. Context: designers rank what the WORD means to them
+(Figma, *State of the Designer 2026*, n=906, an association survey —
+https://www.figma.com/blog/state-of-the-designer-2026/): visual polish 58% ·
+thoughtful problem solving 47% · clear intuitive UX 36% · emotion and delight
+35% · consistency 15%. **Those percentages are how often a definition was
+picked — 58% proves an association in a survey, never a causal effect or a
+work order.** The gate order below is DERIVED FROM DEPENDENCIES (each gate is
+meaningless until the one before it holds) and is this pack's authored
+decision, not a research conclusion:
 
-1. **Polish** — the pack applied without exception: tokens, not literals; no
+1. **The task** — the core job the brief names actually works. A brief with a
+   broken primary task fixes THAT first, with perfect tokens or without them.
+2. **States** — flows and states decided; if they aren't, stop and decide them
+   first (structure is `super-ux`'s half).
+3. **Availability** — the interface can be used at all: keyboard, contrast,
+   text scaling — the lane this family delegates and never skips.
+4. **System** — the visual decision lives in one place (the token layer, the
+   `SCENES` registry) and everything else reads it.
+5. **Polish** — the pack applied without exception: tokens, not literals; no
    ad-hoc hex, radius or font size anywhere in the diff.
-2. **Systems thinking** — the visual decision lives in one place (the token
-   layer, the `SCENES` registry) and everything else reads it.
-3. **Clear UX** — structure and behavior are not this skill's half; if the
-   flows and states aren't decided, stop and decide them first.
-4. **Emotion** — earned motion only (principle 4), and never at the cost of 1–3.
-5. **Consistency** — one ease, one duration set, one accent, one atom per job
+6. **Emotion** — earned motion only (principle 4), never at the cost of 1–5.
+7. **Consistency** — one ease, one duration set, one accent, one atom per job
    across every screen.
 
 ## Load on demand — three things the pack layer does not decide
