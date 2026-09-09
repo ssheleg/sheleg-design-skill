@@ -438,10 +438,25 @@ function claudeHomeOf(targetDir) {
  * as "no plugin": the fresh HOME is the common case, and an installer that
  * crashes on a parse error refuses the machines that need it most.
  */
+// The bundled HostContext resolver (FIX-UP-08.02) — one contract, a local copy
+// per member (npx installers share no lib): a host's config root is an explicit
+// root > the documented host env var > `~/<dir>`, verbatim (spaces preserved).
+// Only the USER-scoped Claude config (the plugin registry) uses this; a
+// PROJECT-level `.claude/` under cwd is not a host config root and is left as
+// is. Host existence stays a separate probe on the returned path.
+const HOST_ENV = { claude: "CLAUDE_CONFIG_DIR", codex: "CODEX_HOME", gemini: "GEMINI_CONFIG_DIR" };
+const HOST_DIR = { claude: ".claude", codex: ".codex", gemini: ".gemini" };
+function hostRoot(agent, home, env, explicit) {
+  if (explicit) return explicit;
+  const e = (env || process.env)[HOST_ENV[agent]];
+  if (e) return e;
+  return path.join(home, HOST_DIR[agent]);
+}
+
 function installedPluginSpec(home) {
   try {
     const raw = fs.readFileSync(
-      path.join(home, ".claude", "plugins", "installed_plugins.json"),
+      path.join(hostRoot("claude", home, process.env), "plugins", "installed_plugins.json"),
       "utf8",
     );
     const parsed = JSON.parse(raw);
