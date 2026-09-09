@@ -10,6 +10,7 @@ pack's `## Responsive` section covers that, and this file does not repeat it.
 - What a pack decides here, and what it does not
 - The six rules every pack already carries — and one no pack answers
 - Platform target and prototype renderer are two decisions, not one
+- The native state matrix — what each surface owes, and how it is verified
 - Reference sweeps — structure crosses, identity does not
 
 ## What a pack decides here, and what it does not
@@ -106,6 +107,31 @@ field does not, and a browser screenshot proves nothing about Dynamic Type or
 VoiceOver. State those as **measured/unverified** in the receipt, never inferred
 from the web render. And the semantic states of an AI surface stay independent
 of any one pack's mono size or motion durations — a platform is not a pack.
+
+## The native state matrix — what each surface owes, and how it is verified
+
+A web mockup with a native-equivalent column (above) still owes a **per-target
+STATE matrix**: for the surface's interactive states, the expected NATIVE
+behaviour and its **evidence status** (`measured` on a real device/simulator,
+or `unverified`). For a context sheet the states are: **keyboard** (does it push
+or cover, what is the accessory), **dismissal** (swipe-to-dismiss, the detents
+it snaps to), **restore** (the sheet and its input state after backgrounding),
+**safe-area / insets** (the notch, the home indicator, the keyboard inset), and
+**text-scale** (Dynamic Type / font-scale — measured on a device, never
+inferred from a browser render). Fill each cell with the behaviour AND the
+status; a plausible-looking web render leaves every native cell `unverified`
+until a device or simulator says otherwise.
+
+Two rules on the numbers and the settings:
+
+- **A numeric norm is verified against the current official source before it is
+  written as normative** (a HIG spacing figure, an Android touch-target size) —
+  the primary-verification step is required only before importing a specific
+  normative number, not for every sentence.
+- **Record the simulator/device type and the PRIOR settings, and restore them.**
+  A verification that turns Dynamic Type up to check text-scale must return the
+  device to its **saved** value afterwards — never unconditionally to 1.0, which
+  silently changes the tester's own device.
 
 ## Reference sweeps — structure crosses, identity does not
 

@@ -110,7 +110,13 @@ knowing rather than adjectives about certainty:
 
 Shape, so it annotates instead of shouting: monospace at ~10px, positive
 tracking, a bracketed label, a transparent fill and a 1px border of the state's
-own colour at ~25% alpha, on a small radius. It sits **beside the claim**, never
+own colour at ~25% alpha, on a small radius. That **shape is a web-render
+convention, not the semantic contract** (VD-03): the SEMANTIC states
+(`[VERIFIED]` / `[INFERRED]` / `[AMBIGUOUS]` and the rest) are independent of
+the 10px mono size and of any pack's motion durations — a native surface renders
+the same meanings with its platform's type and timing (a SwiftUI caption, a
+Compose label), and a platform is not a pack. Keep the meaning; let the target
+choose the metrics. It sits **beside the claim**, never
 collected into a legend at the bottom — a legend makes the reader hold a mapping
 in their head, which is the cost the tag exists to remove.
 
