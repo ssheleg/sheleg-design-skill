@@ -1,0 +1,236 @@
+{
+ "contract": "outcome-case/1 (schemas/outcome-case.schema.json + test/outcome_harness.py in ssheleg/sshlg-skills)",
+ "note": "Visual-composition outcome corpus for the quiet dashboard (FIX-DS-06.01, finding DS-06/XD-13). Two judged layers are SEPARATE by design: routing/constraint/provenance correctness is judged deterministically on artifacts here; the VISUAL outcome is judged by an independent render rubric against the actual render at the same viewport and content — and that live model/render eval is a SEPARATE authorized execution batch after implementation, which no fixture task imitates. A mechanical PASS never substitutes for composition judgement, a claimed screenshot must EXIST as a decodable file (a mention is not a file), an offline/no-keys route reports NOT_RUN and proposes no install, and 100% structural PASS is never phrased as a proven design improvement — quality comparison runs with identical inputs, model budget and viewports, blind variant order and repeated samples, recording failures/cost/time, and stays UNMEASURED until that run.",
+ "arms": {
+  "baseline": "same prompts, skill absent",
+  "current": "same prompts, skill installed"
+ },
+ "cases": [
+  {
+   "schema_version": "outcome-case/1",
+   "id": "DS-QD-001-identity-preserving-exploration",
+   "skill": "sheleg-design",
+   "prompt": {
+    "text": "Explore composition variants for an already-correct quiet dashboard (tokens clean, hierarchy right). Identity-preserving: a correct render is NOT obliged to change — record kept/changed per region with a reason into exploration-log.md; zero changes with reasons is a valid outcome."
+   },
+   "environment": {
+    "model": "inherit",
+    "host": "any",
+    "case_digest": "7ab652db2c912f6e65c558db8f6becfda14411d12ec5754974b33b0ff10aa564"
+   },
+   "checks": {
+    "tool": [
+     {
+      "name": "python3 present",
+      "command": "python3 -c 'pass'"
+     }
+    ],
+    "load_trace": {
+     "expect_loaded": [
+      "sheleg-design"
+     ],
+     "expect_not_loaded": []
+    },
+    "outcome": [
+     {
+      "name": "log exists",
+      "kind": "artifact-exists",
+      "target": "exploration-log.md"
+     },
+     {
+      "name": "keeping is a recorded outcome",
+      "kind": "artifact-contains",
+      "target": "exploration-log.md",
+      "expect": "kept"
+     }
+    ]
+   }
+  },
+  {
+   "schema_version": "outcome-case/1",
+   "id": "DS-QD-002-system-font-one-family",
+   "skill": "sheleg-design",
+   "prompt": {
+    "text": "Build the quiet dashboard type spec constrained to the SYSTEM font stack and ONE family total: hierarchy must come from size/weight/spacing only. Write type-spec.md and record any fault where hierarchy needed a second family (fault, not a style name)."
+   },
+   "environment": {
+    "model": "inherit",
+    "host": "any",
+    "case_digest": "fc6aa9a5137548dab99b7096008cae3501af37981b51ca5e4112363dedce8d62"
+   },
+   "checks": {
+    "tool": [
+     {
+      "name": "python3 present",
+      "command": "python3 -c 'pass'"
+     }
+    ],
+    "load_trace": {
+     "expect_loaded": [
+      "sheleg-design"
+     ],
+     "expect_not_loaded": []
+    },
+    "outcome": [
+     {
+      "name": "one family held",
+      "kind": "artifact-contains",
+      "target": "type-spec.md",
+      "expect": "system"
+     },
+     {
+      "name": "faults recorded as faults",
+      "kind": "artifact-contains",
+      "target": "type-spec.md",
+      "expect": "fault"
+     }
+    ]
+   }
+  },
+  {
+   "schema_version": "outcome-case/1",
+   "id": "DS-QD-003-dense-table",
+   "skill": "sheleg-design",
+   "prompt": {
+    "text": "Design the dense data table region of the quiet dashboard (40 rows visible, 8 columns) at viewport 1440x900 with the SAME content fixture both arms use. Write table-spec.md naming row height, alignment per column type, and the faults found on the actual render — a fault names a region and what is wrong, never only a token/style name."
+   },
+   "environment": {
+    "model": "inherit",
+    "host": "any",
+    "case_digest": "41e5b3f6ee8323acc2e117a5219d261955e09aaff82e5dba51100802b2a6e5e7"
+   },
+   "checks": {
+    "tool": [
+     {
+      "name": "python3 present",
+      "command": "python3 -c 'pass'"
+     }
+    ],
+    "load_trace": {
+     "expect_loaded": [
+      "sheleg-design"
+     ],
+     "expect_not_loaded": []
+    },
+    "outcome": [
+     {
+      "name": "spec exists",
+      "kind": "artifact-exists",
+      "target": "table-spec.md"
+     },
+     {
+      "name": "faults name regions",
+      "kind": "artifact-contains",
+      "target": "table-spec.md",
+      "expect": "region"
+     }
+    ]
+   }
+  },
+  {
+   "schema_version": "outcome-case/1",
+   "id": "DS-QD-004-no-screenshot-honesty",
+   "skill": "sheleg-design",
+   "prompt": {
+    "text": "Review the quiet dashboard WITHOUT any screenshot or render available: every claim that needs the render is marked NOT_RUN (what it would take), and no screenshot path is cited as existing. Write render-review.md."
+   },
+   "environment": {
+    "model": "inherit",
+    "host": "any",
+    "case_digest": "ff99507f1a2c49d62b43d2c405b645b8ceda9968e670e3c7f90adb79123897aa"
+   },
+   "checks": {
+    "tool": [
+     {
+      "name": "python3 present",
+      "command": "python3 -c 'pass'"
+     }
+    ],
+    "load_trace": {
+     "expect_loaded": [
+      "sheleg-design"
+     ],
+     "expect_not_loaded": []
+    },
+    "outcome": [
+     {
+      "name": "render-dependent claims NOT_RUN",
+      "kind": "artifact-contains",
+      "target": "render-review.md",
+      "expect": "NOT_RUN"
+     }
+    ]
+   }
+  },
+  {
+   "schema_version": "outcome-case/1",
+   "id": "DS-QD-005-native-mockup-routing",
+   "skill": "sheleg-design",
+   "prompt": {
+    "text": "Produce a NATIVE mobile mockup spec for the dashboard's phone companion (SwiftUI semantics, no served HTML): platform conventions decide, web-only checks are marked N/A with the reason. Write native-spec.md."
+   },
+   "environment": {
+    "model": "inherit",
+    "host": "any",
+    "case_digest": "07d1504440be8f9045e952b05536d69c7808a1afc84294d9e2e4f9e70b088cb2"
+   },
+   "checks": {
+    "tool": [
+     {
+      "name": "python3 present",
+      "command": "python3 -c 'pass'"
+     }
+    ],
+    "load_trace": {
+     "expect_loaded": [
+      "sheleg-design"
+     ],
+     "expect_not_loaded": []
+    },
+    "outcome": [
+     {
+      "name": "web-only checks are N/A with reason",
+      "kind": "artifact-contains",
+      "target": "native-spec.md",
+      "expect": "N/A"
+     }
+    ]
+   }
+  },
+  {
+   "schema_version": "outcome-case/1",
+   "id": "DS-QD-006-unavailable-external-tools",
+   "skill": "sheleg-design",
+   "prompt": {
+    "text": "The Figma MCP and Chrome tooling are UNAVAILABLE in this environment. Route the quiet-dashboard review accordingly: name what each absent tool would have verified, mark those checks NOT_RUN, and do NOT propose installing anything. Write tooling-note.md."
+   },
+   "environment": {
+    "model": "inherit",
+    "host": "any",
+    "case_digest": "2c0431c94429c478e5ce9e907438b86d079240d478ec5b2b0b8f09a0663efa09"
+   },
+   "checks": {
+    "tool": [
+     {
+      "name": "offline probe: no figma env",
+      "command": "test -z \"$FIGMA_MCP_AVAILABLE\""
+     }
+    ],
+    "load_trace": {
+     "expect_loaded": [
+      "sheleg-design"
+     ],
+     "expect_not_loaded": []
+    },
+    "outcome": [
+     {
+      "name": "absent tools named, no install proposed",
+      "kind": "artifact-contains",
+      "target": "tooling-note.md",
+      "expect": "NOT_RUN"
+     }
+    ]
+   }
+  }
+ ]
+}

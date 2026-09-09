@@ -1,0 +1,36 @@
+{
+ "contract": "knowledge-transfer/1 — external methods this outcome enriches the pack with; each row names the method, its source discipline, and the check that would notice its loss",
+ "owner": "FIX-DS-06.01 (quiet dashboard visual-composition eval)",
+ "rows": [
+  {
+   "method": "blind variant ordering",
+   "from": "sensory panel testing",
+   "applied_as": "quality comparison presents variants in blind order so the judge cannot favour the labelled 'new' one",
+   "loss_check": "the comparison plan names blind order before any run"
+  },
+  {
+   "method": "identical-stimulus control",
+   "from": "A/B experiment design",
+   "applied_as": "same inputs, same model budget, same viewports across arms — a difference in output then measures the skill, not the setup",
+   "loss_check": "the plan pins inputs/budget/viewports as constants"
+  },
+  {
+   "method": "repeated sampling",
+   "from": "measurement statistics",
+   "applied_as": "one render per variant is an anecdote; repeated samples with failures/cost/time recorded make the spread visible",
+   "loss_check": "the plan records n>1 and keeps failure/cost/time columns"
+  },
+  {
+   "method": "unmeasured-until-run status",
+   "from": "evidence-docs doctrine",
+   "applied_as": "no quality claim ships before the authorized live batch; the status prints UNMEASURED, and 100% structural PASS is never phrased as a proven design improvement",
+   "loss_check": "the corpus note carries the UNMEASURED rule verbatim"
+  },
+  {
+   "method": "fault taxonomy over style naming",
+   "from": "usability inspection",
+   "applied_as": "a render finding names the region and what is wrong; a token or style name alone is not a finding",
+   "loss_check": "case DS-QD-003 demands region-named faults"
+  }
+ ]
+}
