@@ -205,6 +205,18 @@ as a definition of done, in that order:
 
 ## Choosing between packs — mount them, don't imagine them
 
+**The mounting rides the semantic token contract.** Token names are not
+uniform across the packs, so the comparison never swaps raw CSS: each pack's
+token file ends with an `@adapter` block mapping ten semantic roles
+(`--sem-surface`, `--sem-surface-raised`, `--sem-text`, `--sem-text-muted`,
+`--sem-line`, `--sem-primary`, `--sem-on-primary`, `--sem-positive`,
+`--sem-caution`, `--sem-negative`) onto its own tokens — or declaring a role
+`@absent` where the pack has no such concept. A role neither mapped nor
+declared blocks the comparison BEFORE any render, because an undefined custom
+property does not error, it silently falls back — and a comparison built on
+silent fallbacks compares the fallbacks. No CSS-swap promise follows:
+components keep consuming the pack's own tokens.
+
 When more than one pack could carry a product, do not argue about it. Render
 them.
 

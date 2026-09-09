@@ -136,3 +136,19 @@
     --reveal-floor: 1;
   }
 }
+
+/* @adapter — the semantic token contract (FIX-DS-01); see workbench.css for the
+   rules. Roles a pack has no concept for are DECLARED absent, never left to the
+   silent-fallback behaviour of an undefined custom property. */
+:root {
+  --sem-surface: var(--bg);
+  --sem-surface-raised: var(--surface);
+  --sem-text: var(--ink);
+  --sem-text-muted: var(--ink-soft);
+  --sem-line: var(--line);
+  --sem-primary: var(--primary);
+  --sem-on-primary: var(--on-primary);
+}
+/* @absent --sem-positive --sem-caution --sem-negative — orchard is a landing
+   pack and ships no status colours; a comparison needing them excludes this
+   pack out loud instead of rendering silent fallbacks. */

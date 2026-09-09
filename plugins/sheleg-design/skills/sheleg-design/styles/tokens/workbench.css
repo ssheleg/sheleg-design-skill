@@ -96,3 +96,21 @@
     --dur-hover: 0s;
   }
 }
+
+/* @adapter — the semantic token contract (FIX-DS-01). Pack comparison mounts
+   packs through these roles, so two packs can carry one component without a
+   shared native vocabulary. NO CSS-swap promise: components keep consuming the
+   pack's own tokens; the adapter exists for the comparison harness, and a role
+   neither mapped nor declared @absent blocks the comparison BEFORE any render. */
+:root {
+  --sem-surface: var(--bg);
+  --sem-surface-raised: var(--panel);
+  --sem-text: var(--ink);
+  --sem-text-muted: var(--muted);
+  --sem-line: var(--border);
+  --sem-primary: var(--accent);
+  --sem-on-primary: var(--accent-ink);
+  --sem-positive: var(--ok);
+  --sem-caution: var(--warn);
+  --sem-negative: var(--danger);
+}
