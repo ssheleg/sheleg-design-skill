@@ -108,6 +108,27 @@ point.** Some of them advertise themselves as one; a broad `user-invocable`
 design skill will fire on the same prompt you did. That is not a reason to avoid
 it. It is a reason to say, out loud, which one is directing.
 
+**Cast with a SCOPED brief, not a bare name.** A tool handed a prompt with no
+boundary becomes a second end-to-end router — the thing the rule above forbids.
+Each cast line states, for that tool: what is FIXED (may not change), what is
+OPEN (it may explore), the DELIVERABLE expected back, and whose copy/
+implementation instructions apply. Two worked scopes:
+
+- **preserve-brand** — pass the palette and type invariants as FIXED; leave
+  composition, layout and hierarchy OPEN. `frontend-design` here is cast for
+  *concept hypotheses and visual critique within those bounds*, never to repaint
+  the brand. Deliverable: composition options that keep every fixed token.
+- **exact-Figma reproduction** — the design IS the spec; aesthetic risk is
+  turned OFF. Nothing is open to invention; the deliverable is a faithful build,
+  and a tool that proposes a "better" look has misread its scope.
+
+A specific claim about a cast tool — a ban it enforces, a rule it applies — is
+verified against the tool's REACHED descriptor before it is repeated, not copied
+from a catalog line; the family's `npx sshlg-skills pack design` resolves the
+claim against the file actually on this machine and records the digest it read.
+A catalog that ascribes a ban the reached file does not contain is how a cast is
+briefed on a capability that is not there.
+
 ---
 
 ## Act 3 — Fork, but only when the fork is real — and write the rubric first
