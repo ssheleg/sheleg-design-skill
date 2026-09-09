@@ -45,6 +45,7 @@ build new sites on the same principles and understand *why* each piece works.
 - 13. File map (one file per idea)
 - Quick reference — each rule, and the failure it prevents
 - Three looks that are defaults, not decisions
+- Three looks that are defaults, not decisions
 
 ## 0. The one-paragraph thesis
 
@@ -766,3 +767,12 @@ Moved out of `SKILL.md` on 2026-08-16 for the body budget. It sits here because
 it is the same argument this file makes throughout: the values come from a pack
 extracted off a live reference, never from taste at the keyboard.
 
+## Three looks that are defaults, not decisions
+
+Left to itself, generated design lands in one of three places whatever the product
+is — warm cream with a serif and terracotta; near-black with one acid accent;
+broadsheet hairlines at zero radius. Each is legitimate for some brief, and each
+arrives whether or not the brief called for it, which is what makes it a default.
+**If a pack's field sits near one of these, that is a measurement; if a page arrives
+at one without a pack, that is the default talking** — say which out loud before
+shipping. The three documents, in full: [`SHELEG_DESIGN.md`](./SHELEG_DESIGN.md).

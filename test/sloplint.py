@@ -227,9 +227,20 @@ def lint_doctrine():
     check(bool(doctrine), "MOTION_DOCTRINE.md: missing or empty")
     for label, needle in DOCTRINE_REQUIRED:
         check(needle in doctrine, f"MOTION_DOCTRINE.md: {label} is gone (looked for {needle!r})")
+    # The bundle, not one file inside it. These needles assert that a rule REACHES
+    # the agent, and the agent loads SKILL.md plus what it links to. Reading SKILL.md
+    # alone made the house rule's own remedy for a budget breach — a split into a
+    # bundled document — delete the rules this guard exists to keep. Links are
+    # RESOLVED, so a rule parked in a file nothing points at is still gone.
     skill = read(SKILL_DIR / "SKILL.md")
+    bundle = [skill]
+    for rel in sorted(set(re.findall(r"\]\(\./([A-Za-z0-9_./-]+\.md)\)", skill))):
+        linked = SKILL_DIR / rel
+        if linked.is_file():
+            bundle.append(read(linked))
+    bundle_text = "\n".join(bundle)
     for label, needle in SKILL_REQUIRED:
-        check(needle in skill, f"SKILL.md: {label} is gone (looked for {needle!r})")
+        check(needle in bundle_text, f"the skill bundle: {label} is gone (looked for {needle!r})")
 
 
 # ------------------------------------------------------------------ pack rules

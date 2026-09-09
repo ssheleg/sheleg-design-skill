@@ -165,9 +165,9 @@ hints inform, not a scale they grade.
 | redesign, preserve the existing identity | match | match | match |
 | redesign, explicit overhaul | +2 | +2 | match |
 
-**When two rows fire and disagree** — the surface-over-mood precedence, an audience
-posture's narrower authority, and the frequency-table ceiling that caps
-`MOTION_INTENSITY`: [`CALIBRATION.md`](./CALIBRATION.md).
+**When two rows fire and disagree** — surface beats mood, a posture wins only on motion
+and ornament, and the frequency table caps `MOTION_INTENSITY`:
+[`CALIBRATION.md`](./CALIBRATION.md).
 
 ## The craft bar — what "done" means, in order
 
@@ -300,12 +300,10 @@ line, and without it, whatever file names the pack. Default **yes**; a project
 that already has a component layer has already answered, and migrating one on
 taste is not a design decision.
 
-**It composes rather than competes**, and the mapping is where it goes wrong: the
-packs resolve `--bg`/`--ink`, the kit expects `--background`/`--foreground`/`--primary`,
-and an undefined custom property falls back silently instead of erroring. The token
-remap is only one axis of six — color, geometry, density, typography, elevation,
-state/anatomy — so a kit mounted on colors alone still renders in its starter look.
-The full mechanics, and who does the work:
+**It composes rather than competes**, and the mapping is where it goes wrong: an
+undefined custom property falls back silently instead of erroring, and the token remap
+is only one axis of six — so a kit mounted on colors alone still renders in its starter
+look. The mechanics, and who does the work:
 [`COMPONENT_LAYER.md`](./COMPONENT_LAYER.md).
 
 **The boundary — product UI, not the cinematic surface.** Dashboards, admin
@@ -343,18 +341,12 @@ A pack fixes *how it looks*, not what a good version of the screen contains. Whe
 these are connected, look at real products before inventing a layout — evidence about
 **content and structure**, never a licence to copy a visual (`DESIGN_SYNC_BRIDGE.md` §4).
 
-## Three looks that are defaults, not decisions
-
-Left to itself, generated design lands in one of three places whatever the product
-is — warm cream with a serif and terracotta; near-black with one acid accent;
-broadsheet hairlines at zero radius. Each is legitimate for some brief, and each
-arrives whether or not the brief called for it, which is what makes it a default.
-**If a pack's field sits near one of these, that is a measurement; if a page arrives
-at one without a pack, that is the default talking** — say which out loud before
-shipping. The three documents, in full: [`SHELEG_DESIGN.md`](./SHELEG_DESIGN.md).
+**Three looks are defaults, not decisions** — cream/serif/terracotta, near-black with
+one acid accent, broadsheet hairlines at zero radius. A page arriving at one WITHOUT a
+pack is the default talking; say which before shipping
+([`SHELEG_DESIGN.md`](./SHELEG_DESIGN.md)).
 
 ## Applying it, and the mistakes that repeat
 
-The order of work once the pack and the calibration are decided, and the failure list to
-check a finished surface against — a hero that reads as a settings screen, motion claimed
-but not shown, a kit mounted on colors alone: [`APPLYING.md`](./APPLYING.md).
+The order of work once pack and calibration are decided, and the repeat-failure list:
+[`APPLYING.md`](./APPLYING.md).
