@@ -4727,7 +4727,7 @@ def validate_radius_single_valued():
 # press band, with nothing faster in the layer to reach for. `showroom` wrote `0.3s`
 # into two prose sites instead of naming `--dur-base`, which is the same number and
 # is what the layer ships.
-PRESS_ROW = re.compile(r"^\|\s*Button press[^|]*\|\s*(\d+)\s*[–—-]\s*(\d+)\s*ms", re.M | re.I)
+PRESS_ROW = re.compile(r"^\|(?:\s*DUR-[A-Z-]+\s*\|)?\s*Button press[^|]*\|\s*(\d+)\s*[–—-]\s*(\d+)\s*ms", re.M | re.I)
 UI_CEILING = re.compile(r"UI motion stays at or under\s+(\d+)\s*ms", re.I)
 DUR_DECL = re.compile(r"^\s*(--dur[a-z0-9-]*)\s*:\s*([0-9.]+)(m?s)\s*;", re.M)
 PRESS_WORD = re.compile(r"\bpress(?:ed|es)?\b", re.I)

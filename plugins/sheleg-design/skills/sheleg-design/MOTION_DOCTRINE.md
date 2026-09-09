@@ -106,22 +106,30 @@ names its curve explicitly. A pack that ships no curve inherits these three, and
 
 ## 3. Duration
 
-| Element | Duration |
-|---|---|
-| Button press feedback | 100–160 ms |
-| Tooltips, small popovers | 125–200 ms |
-| Dropdowns, selects | 150–250 ms |
-| Modals, drawers, sheets | 200–500 ms |
-| Marketing, explanatory, scrollytelling | longer, deliberately |
+One table decides every duration verdict, and each row carries a canonical
+rule ID so a checker and this document cannot disagree. A row is keyed by
+PURPOSE + frequency + platform; a value is judged by exactly ONE row — the
+most specific that matches — and the verdict cites the row's ID.
 
-**UI motion stays at or under 300 ms.** A 180 ms select feels responsive; the
-same select at 400 ms feels like the app is thinking. The boundary is stated
-because a gate applies it: 300 ms is the ceiling itself and a control may sit on
-it with a reason, 301 ms is over. **An entrance is not UI motion** and is not
-bounded by this number — it may run longer when the value is measured off a
-reference, provided it never gates content and the pack says which of the two
-rules its token answers to. `--dur-reveal` at 500 ms and `--dur-fast` at 150 ms
-are both correct; the same 500 ms on a button is not.
+| ID | Purpose (frequency, platform) | Duration | Over it |
+|---|---|---|---|
+| DUR-FEEDBACK | Button press feedback, toggles (every click, all) | 100–160 ms | FAIL |
+| DUR-OVERLAY | tooltips, small popovers (frequent, all) | 125–200 ms | FAIL |
+| DUR-SELECT | dropdowns, selects (frequent, all) | 150–250 ms | FAIL |
+| DUR-SPATIAL | modal / drawer / sheet transition (occasional, desktop) | 200–300 ms | FAIL |
+| DUR-SHEET-MOBILE | full-height sheet riding `--ease-drawer` (occasional, mobile) | 200–500 ms | FAIL — the one spatial exception, and it names its platform |
+| DUR-ENTRANCE | marketing, explanatory, scrollytelling entrance (once per view, all) | longer, authored off a reference | never gates content |
+
+**UI motion stays at or under 300 ms.** That gate is the ceiling of
+DUR-FEEDBACK through DUR-SPATIAL — a control may sit on 300 with a reason, 301
+is over — and the two rows below it
+are its ONLY exceptions, each explicit: DUR-SHEET-MOBILE because the iOS sheet
+feel genuinely runs long on that platform, DUR-ENTRANCE because an entrance is
+not UI motion. A 400 ms desktop modal is one verdict — FAIL under DUR-SPATIAL —
+not a value caught between a permissive row and a strict gate; the old
+`200–500 ms` modal row that overlapped the gate is gone. A token names its row:
+`--dur-reveal: 500ms` answers to DUR-ENTRANCE and `--dur-fast: 150ms` to
+DUR-FEEDBACK — both correct; the same 500 ms on a button FAILs DUR-FEEDBACK.
 
 Speed is not only comfort — it is perceived performance. A faster spinner makes
 an identical load feel shorter. A tooltip that skips its delay after the first
