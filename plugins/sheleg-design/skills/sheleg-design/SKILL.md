@@ -52,7 +52,10 @@ The connection is **scoped, not routed**: the craft gate's contrast row and
 the render critique consume these verdicts at the claim they are making — an
 existing capability, no new router, no new entry point. And a quality receipt
 keeps two kinds of row apart: **visual judgment** (how the render reads) and
-**WCAG conformance** (a computed, scoped check naming its criterion). A glance
+**WCAG conformance** (a computed, scoped check naming its criterion) — and a
+render fixed on the critique is judged on the SAME before/after matrix inside a
+bounded budget ([`CREATIVE_DIRECTOR.md`](./CREATIVE_DIRECTOR.md)), where an
+unresolved observation stays unresolved rather than being renamed shipped. A glance
 cannot produce a conformance row — a receipt where it did is refused, because
 "looked accessible" is a screenshot claim wearing a criterion's name.
 

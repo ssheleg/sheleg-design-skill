@@ -253,6 +253,24 @@ Four rules keep it honest:
   choose — and where two both pass every hard gate and read equally well, that
   is the person's decision (Act 4's rule), not a manufactured preference.
 
+### The bounded rerender comparison
+
+The second render (the one that applies the critique's changes) is judged on
+the SAME matrix as the first — before/after on the SAME content and viewport
+(nothing else may move, or the comparison compares two questions), scored
+resolved / partial / unresolved per observation, and re-run against the hard
+gates for regressions. Two bounds keep it from becoming endless polish:
+
+- **A fixed budget, and its exhaustion leaves UNRESOLVED as unresolved.**
+  When the budget is spent, an observation still open is reported `unresolved`
+  — never renamed `ship`. Budget exhaustion is a state, not a pass.
+- **Mechanical result is not craft result.** The presence of a PNG, tokens
+  passing, or "all gates green" is a compliance/functional outcome; it never
+  becomes a craft PASS on its own, and a token-clean render of the same dull
+  composition is still a dull composition. An already-chosen direction gets a
+  single critique pass here — no mandatory fork (that is Act 3's decision) —
+  and a sequential independent pass is a valid substitute for a fresh subagent.
+
 ### The limit, stated rather than implied
 
 **Taste is not on that table, and this document will not pretend otherwise.**
