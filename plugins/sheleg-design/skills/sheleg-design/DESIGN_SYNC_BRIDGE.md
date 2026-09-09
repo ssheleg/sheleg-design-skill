@@ -188,7 +188,11 @@ kit.
 
 **The order is the rule:** extraction lands in a pack first — **the full thirteen
 headings** (plus `## Motion flavor` if it is cinematic) and a `tokens/<pack>.css` —
-and only a pack syncs. A site's raw values never reach
+and only a pack syncs. The thirteen headings are a **publication gate, not a sketch
+gate**: while a direction is still being chosen, exploration runs on provisional
+semantic tokens (roles + working values, locally), and nothing provisional syncs —
+the full contract is owed at the moment of consolidation into a reusable pack,
+which is also the only thing this bridge will carry. A site's raw values never reach
 claude.ai/design, because a kit assembled straight from a scrape carries that site's
 accidents, its dead ends and its one-off hexes, and the design agent will treat every
 one of them as a decision.
