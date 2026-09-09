@@ -114,12 +114,23 @@ so, rather than presenting a read-off state as a kit-checked one. To author a
 pack, start from
 [`styles/STYLE_PACK_TEMPLATE.md`](./styles/STYLE_PACK_TEMPLATE.md) and ship its
 token file in the same change.
-## Calibration — three dials
+## Calibration — observable targets first, dials as shorthand
 
 A pack answers *which register*. It does not answer *how far*. Two landing
 pages on the same pack, one for a regulated insurer and one for a design
-studio, are not the same page. Three dials carry that difference, and they are
-set once, out loud, before any layout exists.
+studio, are not the same page.
+
+**The primary contract is a set of OBSERVABLE TARGETS for this scenario** —
+things a second reader can check on the render: the reading width, whether the
+CTA is reachable without scrolling past the fold it belongs to, how many
+alternatives are visible at once, what the keyboard state looks like, and what
+each deliberate stretch of empty space is FOR. Two independent executors on
+one brief must be able to explain density or variance through the SAME
+observable anchors — a bare number cannot do that, so **a number without its
+anchors is not evidence**.
+
+**Three dials carry the same intent as optional shorthand** — preference
+hints, not measurements of quality:
 
 - **`DESIGN_VARIANCE`** 1–10 — 1 is perfect symmetry, 10 is deliberate
   asymmetry and no two sections alike.
@@ -128,7 +139,17 @@ set once, out loud, before any layout exists.
 
 **Baseline `7 / 5 / 4`.** State the values and one line of reasoning before
 building; do not ask the user to edit a file, and do not silently drift from
-what you announced.
+what you announced. Each announced value carries **an example or a
+counterexample** ("density 5 — like the pack's own dashboard reference, NOT
+the marketing hero"), or is derived from the accepted direction after a first
+render — a digit pinned before anything exists binds nothing. **The same digit
+does not equalise different platform tasks**: a quiet dashboard, a consumer
+chat and an accessibility-large-text surface can all announce density 5 and
+owe three different renders, because their anchors differ. And **an explicit
+user requirement beats the baseline and any style floor** — the dials tune
+defaults, they never overrule the brief. The token contract stays invariant
+(values come from the pack); composition within it is an open choice these
+hints inform, not a scale they grade.
 
 ### Reading them off the brief
 
@@ -141,7 +162,7 @@ what you announced.
 | product UI: dashboards, admin, internal tools | 4–5 | 2–3 | 6–8 |
 | trust-first: regulated, public-sector, clinical | 3–4 | 2–3 | 4–5 |
 | presentation deck | 5–6 | 1–2 | 3–4 |
-| redesign, preserve the existing identity | match | match +1 | match |
+| redesign, preserve the existing identity | match | match | match |
 | redesign, explicit overhaul | +2 | +2 | match |
 
 **A brief can match two rows, and they can disagree by a factor of three.** "A quiet

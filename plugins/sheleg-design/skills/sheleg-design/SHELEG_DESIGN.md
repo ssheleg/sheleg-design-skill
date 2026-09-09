@@ -40,6 +40,7 @@ build new sites on the same principles and understand *why* each piece works.
 - 9. Layer 8 — Scrubbed instruments (GSAP recipe)
 - 10. Cross-cutting rules
 - 11. Recipe — build a new SHELEG site from scratch
+- 11b. Calibrating by anchors, not by digits (external method)
 - 12. Why it works (the deeper principles)
 - 13. File map (one file per idea)
 - Quick reference — each rule, and the failure it prevents
@@ -640,6 +641,21 @@ A pragmatic order that front-loads the parts everything else depends on.
     ~390px viewport. Then deploy.
 
 ---
+
+## 11b. Calibrating by anchors, not by digits (external method)
+
+Borrowed from content-out design and sensory panel practice: a target is
+operational only when a second executor can verify it on the artifact. So a
+SHELEG build states its calibration as OBSERVABLE ANCHORS — the reading width,
+CTA reachability, visible alternatives, keyboard state, and the purpose of
+each deliberate emptiness — and treats the three dials as shorthand for those
+anchors, never as a measurement of quality. A digit with no
+example/counterexample beside it is a ritual; two builds announcing the same
+digit can owe different renders when the platform task differs (a quiet
+dashboard is not a consumer chat is not a large-text surface). The invariant
+half stays the token contract; composition inside it is a choice the anchors
+inform. `SKILL.md` → *Calibration* owns the contract; this section is why it
+is shaped that way.
 
 ## 12. Why it works (the deeper principles)
 
