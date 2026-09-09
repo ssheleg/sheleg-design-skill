@@ -84,7 +84,9 @@ The pack is the primary reference type; the other three feed it rather than bypa
   `aria-expanded` reach a trigger; `ref.focus()` lands on the real DOM node. **A
   design default may never silently erase a prop the caller set** — the default fills
   a hole, it does not overwrite. `Heading` carries the same rule with `as`/`level`
-  (the semantic tag) kept independent of visual `size`.
+  (the semantic tag) kept independent of visual `size`: `size` defaults to the
+  level so existing call sites keep their look, an `h2` may wear the display
+  size, and the DOM outline never moves with a visual variant.
 - **These are reference primitives, not a product component system.** The pack ships
   the spine and its bans; forms, dialogs and navigation are COMPOSED from it with
   recipes that live beside the kit, never smuggled into a primitive. A primitive that
