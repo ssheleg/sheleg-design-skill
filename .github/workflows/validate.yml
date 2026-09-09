@@ -120,7 +120,13 @@ jobs:
         run: |
           mkdir -p /tmp/smoke && cd /tmp/smoke
           node "$GITHUB_WORKSPACE/bin/cli.js" --claude
-          diff -r \
+          # `.sheleg-manifest.json` is the installer's OWN record of what it wrote
+          # (FIX-UP-05.03's writer contract) — it exists in the install and not in
+          # the source, by design, so the tree comparison excludes it. Every file
+          # the bundle ships is still compared byte for byte.
+          test -f .claude/skills/sheleg-design/.sheleg-manifest.json \
+            || { echo "the installer wrote no manifest"; exit 1; }
+          diff -r -x '.sheleg-manifest.json' \
             "$GITHUB_WORKSPACE/plugins/sheleg-design/skills/sheleg-design" \
             .claude/skills/sheleg-design
       - name: POSIX installer smoke test (same bundle, no Node)
