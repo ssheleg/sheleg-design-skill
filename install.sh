@@ -77,18 +77,36 @@ esac
 
 mkdir -p "$TARGET" "$TARGET/styles" "$TARGET/styles/tokens"
 
+# Transactional install (FIX-UP-05.03): fetch every file into a same-filesystem
+# staging area first, then swap each into place, so a crash mid-fetch leaves the
+# ACTIVE install intact rather than a partial mix of old and new files.
+STAGING="$TARGET/.sheleg-staging.$$"
+rm -rf "$STAGING"
+mkdir -p "$STAGING/styles" "$STAGING/styles/tokens"
+trap 'rm -rf "$STAGING"' EXIT
+
 for f in SKILL.md CREATIVE_DIRECTOR.md VISUAL_EXPLORATION.md ACCESSIBILITY_EVIDENCE.md STYLE_PACK_INDEX.md DESIGN_SYNC_BRIDGE.md SHELEG_DESIGN.md FIGMA_BRIDGE.md AI_PRODUCT_PATTERNS.md MOTION_DOCTRINE.md MOTION_PRODUCTION.md SURFACE_COMPOSITION.md MOBILE_SURFACES.md styles/STYLE_PACK_TEMPLATE.md styles/instrument-console.md styles/editorial-luxury.md styles/workbench.md styles/briefing-room.md styles/atrium.md styles/orchard.md styles/field-notes.md styles/cyclorama.md styles/showroom.md styles/blueprint.md styles/prism.md styles/maquette.md styles/scoreboard.md styles/tokens/instrument-console.css styles/tokens/editorial-luxury.css styles/tokens/workbench.css styles/tokens/briefing-room.css styles/tokens/atrium.css styles/tokens/orchard.css styles/tokens/field-notes.css styles/tokens/cyclorama.css styles/tokens/showroom.css styles/tokens/blueprint.css styles/tokens/prism.css styles/tokens/maquette.css styles/tokens/scoreboard.css styles/datasheet.md styles/tokens/datasheet.css styles/manpage.md styles/tokens/manpage.css styles/pigeonhole.md styles/tokens/pigeonhole.css styles/roster.md styles/tokens/roster.css styles/ora.md styles/outrank.md styles/babylove.md styles/tokens/ora.css styles/tokens/outrank.css styles/tokens/babylove.css styles/tenor.md styles/tokens/tenor.css styles/paperclip.md styles/tokens/paperclip.css styles/ledger.md styles/tokens/ledger.css styles/awning.md styles/tokens/awning.css styles/router.md styles/tokens/router.css styles/daylight.md styles/tokens/daylight.css styles/notation.md styles/tokens/notation.css styles/almanac.md styles/tokens/almanac.css styles/vitrine.md styles/tokens/vitrine.css styles/proscenium.md styles/tokens/proscenium.css styles/bulletin.md styles/tokens/bulletin.css styles/patchbay.md styles/tokens/patchbay.css styles/nameplate.md styles/tokens/nameplate.css styles/rimlight.md styles/tokens/rimlight.css styles/onionskin.md styles/tokens/onionskin.css styles/deskmate.md styles/tokens/deskmate.css styles/test-drive.md styles/tokens/test-drive.css styles/surveyor.md styles/tokens/surveyor.css styles/chorus.md styles/tokens/chorus.css; do
+  mkdir -p "$STAGING/$(dirname "$f")"
   if [ -f "$SRC_DIR/$f" ]; then
-    cp "$SRC_DIR/$f" "$TARGET/$f"
+    cp "$SRC_DIR/$f" "$STAGING/$f"
   elif command -v curl >/dev/null 2>&1; then
-    curl -fsSL "$RAW/$f" -o "$TARGET/$f"
+    curl -fsSL "$RAW/$f" -o "$STAGING/$f"
   elif command -v wget >/dev/null 2>&1; then
-    wget -q "$RAW/$f" -O "$TARGET/$f"
+    wget -q "$RAW/$f" -O "$STAGING/$f"
   else
     echo "Need a local checkout, curl, or wget to install $f" >&2
     exit 1
   fi
 done
+
+# Switch: every file fetched and staged — now move them into place. A rename is
+# atomic; the active install is only replaced once the staged set is complete.
+for f in $(cd "$STAGING" && find . -type f | sed 's|^\./||'); do
+  mkdir -p "$TARGET/$(dirname "$f")"
+  mv "$STAGING/$f" "$TARGET/$f"
+done
+rm -rf "$STAGING"
+trap - EXIT
 
 echo "SHELEG Design installed to $TARGET/"
 # The last line says how the next version arrives.
