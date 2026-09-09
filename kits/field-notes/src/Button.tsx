@@ -1,39 +1,34 @@
-import type { ReactNode } from 'react';
+import { forwardRef } from 'react';
+import type { ButtonHTMLAttributes, ReactNode } from 'react';
 
-export interface ButtonProps {
+export interface ButtonProps
+  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'> {
   /** `primary` is the accent fill — at most one per view. */
   variant?: 'primary' | 'secondary' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
-  disabled?: boolean;
-  onClick?: () => void;
   children: ReactNode;
   className?: string;
 }
 
-/**
- * Three buttons with three geometries, because the pack measures three. The
- * primary is a pill in ink that moves `opacity` and nothing else; the secondary
- * is a hairline block; the ghost is the pack's hero button and inverts inside
- * `.fn-hero` without any prop of its own.
- */
-export function Button({
-  variant = 'primary',
-  size = 'md',
-  disabled = false,
-  onClick,
-  children,
-  className,
-}: ButtonProps) {
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
+  { variant = 'primary', size = 'md', className, type, children, ...rest },
+  ref,
+) {
   return (
     <button
-      type="button"
+      ref={ref}
+      // default is `button`, but an explicit caller `type` (submit, reset) wins —
+      // a design default must never silently erase a prop the caller set.
+      type={type ?? 'button'}
       className={['fn-btn', `fn-btn--${variant}`, `fn-btn--${size}`, className]
         .filter(Boolean)
         .join(' ')}
-      disabled={disabled}
-      onClick={onClick}
+      // native + ARIA + state pass through: aria-label for icon-only buttons,
+      // aria-controls / aria-expanded for trigger controls, disabled, and onClick
+      // with its real event. The spine forwards, it does not swallow.
+      {...rest}
     >
       {children}
     </button>
   );
-}
+});

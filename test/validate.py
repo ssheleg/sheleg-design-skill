@@ -120,7 +120,7 @@ SPINE = ("Button", "Card", "Chip", "Stat", "Heading", "Rule")
 CARD_GROUPS = ("Foundations", "Actions", "Surfaces", "Data", "Signature")
 COLOR_LITERAL = re.compile(r"#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\(|oklch\(")
 PROPS_RE = re.compile(
-    r"export\s+interface\s+(\w+Props)\s*\{(.*?)^\}", re.S | re.M
+    r"export\s+interface\s+(\w+Props)\s*(?:extends[^{]*)?\{(.*?)^\}", re.S | re.M
 )
 CATEGORY_RE = re.compile(r"^category:\s*(\S+)\s*$", re.M)
 
@@ -427,6 +427,9 @@ def validate_skills():
         "MOTION_DOCTRINE.md",
         "DESIGN_SYNC_BRIDGE.md",
         "STYLE_PACK_INDEX.md",
+        # The evidence contract for accessibility claims (ADOPT-M-11.01): unlinked,
+        # every render critique quietly reverts to screenshot-grade "accessible".
+        "ACCESSIBILITY_EVIDENCE.md",
     ):
         if check(
             (skills_dir / PLUGIN / companion).is_file(),
@@ -4724,7 +4727,7 @@ def validate_radius_single_valued():
 # press band, with nothing faster in the layer to reach for. `showroom` wrote `0.3s`
 # into two prose sites instead of naming `--dur-base`, which is the same number and
 # is what the layer ships.
-PRESS_ROW = re.compile(r"^\|\s*Button press[^|]*\|\s*(\d+)\s*[–—-]\s*(\d+)\s*ms", re.M | re.I)
+PRESS_ROW = re.compile(r"^\|(?:\s*DUR-[A-Z-]+\s*\|)?\s*Button press[^|]*\|\s*(\d+)\s*[–—-]\s*(\d+)\s*ms", re.M | re.I)
 UI_CEILING = re.compile(r"UI motion stays at or under\s+(\d+)\s*ms", re.I)
 DUR_DECL = re.compile(r"^\s*(--dur[a-z0-9-]*)\s*:\s*([0-9.]+)(m?s)\s*;", re.M)
 PRESS_WORD = re.compile(r"\bpress(?:ed|es)?\b", re.I)
@@ -4942,7 +4945,13 @@ def validate_bundle_self_sufficiency():
         rel = doc.relative_to(ROOT)
         if "six component names" not in text:
             continue
-        missing = [name for name in SPINE if f"`{name}`" not in text]
+        # The members must travel with the COUNT, inside the sentence that
+        # enumerates them -- not merely somewhere in the document. A passing
+        # mention of `Button` in a later paragraph must not let a member dropped
+        # from the enumeration hide behind it.
+        enum = re.search(r"The six are (.+?`Rule`)", text, re.S)
+        scope = enum.group(1) if enum else text
+        missing = [name for name in SPINE if f"`{name}`" not in scope]
         check(
             not missing,
             f"{rel}: claims 'the same six component names' but does not name "

@@ -1,19 +1,32 @@
-import type { ReactNode } from 'react';
+import { forwardRef } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 
-export interface HeadingProps {
+export interface HeadingProps
+  extends Omit<HTMLAttributes<HTMLHeadingElement>, 'className'> {
   /** 1 = hero claim (57→80px), 2 = section (48→64px), 3 = category (34→45px). */
   level?: 1 | 2 | 3;
+  /** Visual size — defaults to the level, so existing call sites keep their look. */
+  size?: 1 | 2 | 3;
   children: ReactNode;
   className?: string;
 }
 
-export function Heading({ level = 2, children, className }: HeadingProps) {
+export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(function Heading(
+  { level = 2, size, className, children, ...rest },
+  ref,
+) {
   const Tag = `h${level}` as 'h1' | 'h2' | 'h3';
   return (
     <Tag
-      className={['at-heading', `at-heading--${level}`, className].filter(Boolean).join(' ')}
+      ref={ref}
+      // The TAG follows the semantic level; the CLASS follows the visual size —
+      // an h2 may wear the display size without touching the document outline.
+      className={['at-heading', `at-heading--${size ?? level}`, className]
+        .filter(Boolean)
+        .join(' ')}
+      {...rest}
     >
       {children}
     </Tag>
   );
-}
+});

@@ -1,17 +1,32 @@
-import type { ReactNode } from 'react';
+import { forwardRef } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 
-export interface HeadingProps {
+export interface HeadingProps
+  extends Omit<HTMLAttributes<HTMLHeadingElement>, 'className'> {
   /** 1 = page title (`dsp`), 2 = section (`t1`), 3 = card title (`t3`). */
   level?: 1 | 2 | 3;
+  /** Visual size — defaults to the level, so existing call sites keep their look. */
+  size?: 1 | 2 | 3;
   children: ReactNode;
   className?: string;
 }
 
-export function Heading({ level = 2, children, className }: HeadingProps) {
+export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(function Heading(
+  { level = 2, size, className, children, ...rest },
+  ref,
+) {
   const Tag = `h${level}` as 'h1' | 'h2' | 'h3';
   return (
-    <Tag className={['aw-h', `aw-h--${level}`, className].filter(Boolean).join(' ')}>
+    <Tag
+      ref={ref}
+      // The TAG follows the semantic level; the CLASS follows the visual size —
+      // an h2 may wear the display size without touching the document outline.
+      className={['aw-h', `aw-h--${size ?? level}`, className]
+        .filter(Boolean)
+        .join(' ')}
+      {...rest}
+    >
       {children}
     </Tag>
   );
-}
+});

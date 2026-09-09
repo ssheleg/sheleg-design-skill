@@ -1,0 +1,207 @@
+{
+ "contract": "outcome-case/1 (schemas/outcome-case.schema.json + test/outcome_harness.py in ssheleg/sshlg-skills)",
+ "note": "Visual-composition outcome corpus for the large-text accessibility surface (FIX-DS-06.05, finding DS-06/XD-13; fifth sibling, after 06.01–06.04; the family's accessibility lane has NO owner, so this corpus judges only what sheleg-design owns — composition under large text — and never claims a WCAG audit). The same two judged layers stay SEPARATE: routing/constraint/provenance correctness is judged deterministically on artifacts here; the VISUAL outcome is judged by an independent render rubric against the actual render at the same viewport and content — that live model/render eval is a SEPARATE authorized execution batch after implementation, which no fixture task imitates. A correct render is NOT obliged to change; a mechanical PASS never substitutes for composition judgement; a fault names a region and what is wrong, never only a token/style name; a claimed screenshot must EXIST as a decodable file (a mention is not a file); an offline/no-keys route reports NOT_RUN and proposes no install; 100% structural PASS is never phrased as a proven design improvement — comparison stays UNMEASURED until the authorized run (identical inputs/budget/viewports, blind order, repeated samples, failures/cost/time recorded).",
+ "arms": {
+  "baseline": "same prompts, skill absent",
+  "current": "same prompts, skill installed"
+ },
+ "cases": [
+  {
+   "schema_version": "outcome-case/1",
+   "id": "DS-LT-001-identity-preserving-review",
+   "skill": "sheleg-design",
+   "prompt": {
+    "text": "Review an already-correct screen at 200% text zoom (no clipped labels, rhythm held). Identity-preserving: a correct render is NOT obliged to change — record kept/changed per region with a reason into largetext-review.md; zero changes with reasons is a valid outcome."
+   },
+   "environment": {
+    "model": "inherit",
+    "host": "any",
+    "case_digest": "00e65d43d8daf0bba1019d86b9ad338edd7433cc229d6e5f2bda6ba30a8e8108"
+   },
+   "checks": {
+    "tool": [
+     {
+      "name": "python3 present",
+      "command": "python3 -c 'pass'"
+     }
+    ],
+    "load_trace": {
+     "expect_loaded": [
+      "sheleg-design"
+     ],
+     "expect_not_loaded": []
+    },
+    "outcome": [
+     {
+      "name": "review exists",
+      "kind": "artifact-exists",
+      "target": "largetext-review.md"
+     },
+     {
+      "name": "keeping is a recorded outcome",
+      "kind": "artifact-contains",
+      "target": "largetext-review.md",
+      "expect": "kept"
+     }
+    ]
+   }
+  },
+  {
+   "schema_version": "outcome-case/1",
+   "id": "DS-LT-002-zoom-pressure",
+   "skill": "sheleg-design",
+   "prompt": {
+    "text": "Stress the dashboard fixture at 200% browser zoom and 1.5x platform font scale at viewport 1280x800 with the SAME content fixture both arms use: a stat row, a button row and a dense table. Write zoom-stress.md naming the faults on the actual render — a fault names a region and what is wrong (clipped, overlapped, pushed off-viewport), never only a token/style name."
+   },
+   "environment": {
+    "model": "inherit",
+    "host": "any",
+    "case_digest": "bfd262386f17b2d5efe83021be56d53e637cf3197764ef8dfc315b11636dc1b9"
+   },
+   "checks": {
+    "tool": [
+     {
+      "name": "python3 present",
+      "command": "python3 -c 'pass'"
+     }
+    ],
+    "load_trace": {
+     "expect_loaded": [
+      "sheleg-design"
+     ],
+     "expect_not_loaded": []
+    },
+    "outcome": [
+     {
+      "name": "stress spec exists",
+      "kind": "artifact-exists",
+      "target": "zoom-stress.md"
+     },
+     {
+      "name": "faults name regions",
+      "kind": "artifact-contains",
+      "target": "zoom-stress.md",
+      "expect": "region"
+     }
+    ]
+   }
+  },
+  {
+   "schema_version": "outcome-case/1",
+   "id": "DS-LT-003-hierarchy-survives-zoom",
+   "skill": "sheleg-design",
+   "prompt": {
+    "text": "Judge whether the visual hierarchy survives large text on the actual render: the one-anchor rule per viewport, and whether size-based hierarchy collapses when all sizes grow — the composition question no token check answers. Write hierarchy-review.md; a mechanical token PASS does not close this review."
+   },
+   "environment": {
+    "model": "inherit",
+    "host": "any",
+    "case_digest": "f94ee01c464de03ef0a99ffb2aef6e776fa2c18ada956fe978bc539b37c116d7"
+   },
+   "checks": {
+    "tool": [
+     {
+      "name": "python3 present",
+      "command": "python3 -c 'pass'"
+     }
+    ],
+    "load_trace": {
+     "expect_loaded": [
+      "sheleg-design"
+     ],
+     "expect_not_loaded": []
+    },
+    "outcome": [
+     {
+      "name": "hierarchy judged under zoom",
+      "kind": "artifact-contains",
+      "target": "hierarchy-review.md",
+      "expect": "anchor"
+     },
+     {
+      "name": "mechanical PASS not a substitute",
+      "kind": "artifact-contains",
+      "target": "hierarchy-review.md",
+      "expect": "composition"
+     }
+    ]
+   }
+  },
+  {
+   "schema_version": "outcome-case/1",
+   "id": "DS-LT-004-no-screenshot-honesty",
+   "skill": "sheleg-design",
+   "prompt": {
+    "text": "Review the large-text surface WITHOUT any screenshot or render available: every claim that needs the render is marked NOT_RUN (what it would take), and no screenshot path is cited as existing. Write render-review.md."
+   },
+   "environment": {
+    "model": "inherit",
+    "host": "any",
+    "case_digest": "a3ce8178790a5279556f4a0b0bd0930961d463f9100ca1fc56acca543b0af06f"
+   },
+   "checks": {
+    "tool": [
+     {
+      "name": "python3 present",
+      "command": "python3 -c 'pass'"
+     }
+    ],
+    "load_trace": {
+     "expect_loaded": [
+      "sheleg-design"
+     ],
+     "expect_not_loaded": []
+    },
+    "outcome": [
+     {
+      "name": "render-dependent claims NOT_RUN",
+      "kind": "artifact-contains",
+      "target": "render-review.md",
+      "expect": "NOT_RUN"
+     }
+    ]
+   }
+  },
+  {
+   "schema_version": "outcome-case/1",
+   "id": "DS-LT-005-scope-honesty",
+   "skill": "sheleg-design",
+   "prompt": {
+    "text": "State what this review DOES NOT cover: the family has no accessibility owner, so composition-under-large-text is judged here and a WCAG audit is NOT claimed — name the unowned lane and what a full audit would additionally need. Write scope-note.md."
+   },
+   "environment": {
+    "model": "inherit",
+    "host": "any",
+    "case_digest": "3bed662aee7189e64168b75f907820f0ffe9fec81c0b6be91320028eb7d5ce9d"
+   },
+   "checks": {
+    "tool": [
+     {
+      "name": "python3 present",
+      "command": "python3 -c 'pass'"
+     }
+    ],
+    "load_trace": {
+     "expect_loaded": [
+      "sheleg-design"
+     ],
+     "expect_not_loaded": []
+    },
+    "outcome": [
+     {
+      "name": "the unowned lane is named",
+      "kind": "artifact-contains",
+      "target": "scope-note.md",
+      "expect": "accessibility"
+     },
+     {
+      "name": "no WCAG audit claimed",
+      "kind": "artifact-contains",
+      "target": "scope-note.md",
+      "expect": "NOT"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,43 +1,35 @@
-import type { ReactNode } from 'react';
+import { forwardRef } from 'react';
+import type { ButtonHTMLAttributes, ReactNode } from 'react';
 
-export interface ButtonProps {
+export interface ButtonProps
+  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'> {
   /** `primary` is the ink fill; `secondary` the hairline outline. At most one
    *  accent fill per view — see the `tone` note below. */
   variant?: 'primary' | 'secondary' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
-  disabled?: boolean;
-  onClick?: () => void;
   children: ReactNode;
   className?: string;
 }
 
-/**
- * `primary` is an `--ink` fill whose label is `--on-ink` — the *field* colour,
- * not white. That is the pack's one counter-intuitive button rule and it is
- * measured: the reference tints its button labels with the page.
- *
- * Press is instant on purpose. Hover scales to 1.02 over `--dur-base`; the
- * active state drops to 0.98 with **zero** duration, so the button answers the
- * finger rather than easing after it.
- */
-export function Button({
-  variant = 'primary',
-  size = 'md',
-  disabled = false,
-  onClick,
-  children,
-  className,
-}: ButtonProps) {
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
+  { variant = 'primary', size = 'md', className, type, children, ...rest },
+  ref,
+) {
   return (
     <button
-      type="button"
+      ref={ref}
+      // default is `button`, but an explicit caller `type` (submit, reset) wins —
+      // a design default must never silently erase a prop the caller set.
+      type={type ?? 'button'}
       className={['cy-btn', `cy-btn--${variant}`, `cy-btn--${size}`, className]
         .filter(Boolean)
         .join(' ')}
-      disabled={disabled}
-      onClick={onClick}
+      // native + ARIA + state pass through: aria-label for icon-only buttons,
+      // aria-controls / aria-expanded for trigger controls, disabled, and onClick
+      // with its real event. The spine forwards, it does not swallow.
+      {...rest}
     >
       {children}
     </button>
   );
-}
+});

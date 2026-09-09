@@ -21,3 +21,13 @@ whether the intended skill loaded. To measure scenarios, record each expected
 line as pass or fail. Always record the model, pack version and other installed
 skills; coexistence changes routing.
 
+## Outcome corpus — the arm that judges artifacts
+
+`scenarios.json` and `triggers.json` test that the right skill NAME is
+picked, which proves nothing about whether running it helped. The outcome
+corpus at `evals/cases/sheleg-design.json` (contract: `outcome-case/1` in
+`ssheleg/sshlg-skills` — `schemas/outcome-case.schema.json` +
+`test/outcome_harness.py`) judges ARTIFACTS instead, with with/without-skill
+arms; probe-gated cases (a browser for computed styles) go NOT_RUN where the
+tool is unavailable — measured degradation, never PASS.
+`test/audit_regressions/fix-ev-01.14.py` keeps the corpus honest.

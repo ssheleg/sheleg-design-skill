@@ -1,0 +1,194 @@
+{
+ "contract": "outcome-case/1 (schemas/outcome-case.schema.json + test/outcome_harness.py in ssheleg/sshlg-skills)",
+ "note": "Outcome corpus for sheleg-design (FIX-EV-01.14). Judged on ARTIFACTS via the family harness: the runner records the actual output oracle verdict AND the raw result per case; with/without-skill arms are the harness's baseline contract. Probe-gated cases go NOT_RUN where their tool is unavailable — a missing browser is measured degradation, never PASS and never a silently skipped scenario. Nothing in the production skill was changed for grader convenience.",
+ "arms": {
+  "baseline": "same prompts, skill absent",
+  "current": "same prompts, skill installed"
+ },
+ "cases": [
+  {
+   "schema_version": "outcome-case/1",
+   "id": "DS-OUT-001-positive-adapter-audit",
+   "skill": "sheleg-design",
+   "prompt": {
+    "text": "Audit the semantic token adapters of the workbench and orchard packs (plugins/sheleg-design/skills/sheleg-design/styles/tokens/): for each of the ten roles report mapped/absent/MISSING per pack into adapter-report.md."
+   },
+   "environment": {
+    "model": "inherit",
+    "host": "any",
+    "case_digest": "d17d4de00f1dc63d60aa30265f2407850610318927f9a350e9a668cf7b1a6001"
+   },
+   "checks": {
+    "tool": [
+     {
+      "name": "python3 present",
+      "command": "python3 -c 'pass'"
+     }
+    ],
+    "load_trace": {
+     "expect_loaded": [
+      "sheleg-design"
+     ],
+     "expect_not_loaded": []
+    },
+    "outcome": [
+     {
+      "name": "report exists",
+      "kind": "artifact-exists",
+      "target": "adapter-report.md"
+     },
+     {
+      "name": "per-role verdicts are present",
+      "kind": "artifact-contains",
+      "target": "adapter-report.md",
+      "expect": "--sem-surface"
+     }
+    ]
+   }
+  },
+  {
+   "schema_version": "outcome-case/1",
+   "id": "DS-OUT-002-negative-routing",
+   "skill": "sheleg-design",
+   "prompt": {
+    "text": "Explain in two sentences what a webhook is."
+   },
+   "environment": {
+    "model": "inherit",
+    "host": "any",
+    "case_digest": "a5da94aa03520bb6226ea88328a75ab6d7e3985c73a0e90a1379bf168fead57e"
+   },
+   "checks": {
+    "tool": [
+     {
+      "name": "python3 present",
+      "command": "python3 -c 'pass'"
+     }
+    ],
+    "load_trace": {
+     "expect_loaded": [],
+     "expect_not_loaded": [
+      "sheleg-design"
+     ]
+    },
+    "outcome": [
+     {
+      "name": "no design artifact appears",
+      "kind": "command-exit-0",
+      "target": "test ! -f adapter-report.md"
+     }
+    ]
+   }
+  },
+  {
+   "schema_version": "outcome-case/1",
+   "id": "DS-OUT-003-one-verdict-with-rule-id",
+   "skill": "sheleg-design",
+   "prompt": {
+    "text": "A modal enters with a 400ms transition. Judge it against the pack motion rules and write the verdict with the governing rule id to motion-verdict.md."
+   },
+   "environment": {
+    "model": "inherit",
+    "host": "any",
+    "case_digest": "8fef52a916fd83e4724b45647761537d18aceddc55e47f0c72e66a888dae109f"
+   },
+   "checks": {
+    "tool": [
+     {
+      "name": "python3 present",
+      "command": "python3 -c 'pass'"
+     }
+    ],
+    "load_trace": {
+     "expect_loaded": [
+      "sheleg-design"
+     ],
+     "expect_not_loaded": []
+    },
+    "outcome": [
+     {
+      "name": "one verdict names its rule",
+      "kind": "artifact-contains",
+      "target": "motion-verdict.md",
+      "expect": "rule:"
+     },
+     {
+      "name": "the verdict is singular (DS-04: one table, one gate)",
+      "kind": "command-exit-0",
+      "target": "test \"$(grep -c 'verdict:' motion-verdict.md)\" = 1"
+     }
+    ]
+   }
+  },
+  {
+   "schema_version": "outcome-case/1",
+   "id": "DS-OUT-004-noop-exact-figma",
+   "skill": "sheleg-design",
+   "prompt": {
+    "text": "Fix the spacing of this screen to match the exact Figma frame — change nothing else. Record what was done in spacing-report.md."
+   },
+   "environment": {
+    "model": "inherit",
+    "host": "any",
+    "case_digest": "26e53f5add33afc67229a8e69e6a7caf4ac47c4309a267360fa3e166737dd16f"
+   },
+   "checks": {
+    "tool": [
+     {
+      "name": "python3 present",
+      "command": "python3 -c 'pass'"
+     }
+    ],
+    "load_trace": {
+     "expect_loaded": [
+      "sheleg-design"
+     ],
+     "expect_not_loaded": []
+    },
+    "outcome": [
+     {
+      "name": "no composition exploration was opened (VD-01: exact reproduction creates no variations)",
+      "kind": "artifact-contains",
+      "target": "spacing-report.md",
+      "expect": "variations: none"
+     }
+    ]
+   }
+  },
+  {
+   "schema_version": "outcome-case/1",
+   "id": "DS-OUT-005-computed-style-render",
+   "skill": "sheleg-design",
+   "prompt": {
+    "text": "Render the workbench button in light, dark and focus states and assert the computed styles resolve every role variable; write computed-styles.md."
+   },
+   "environment": {
+    "model": "inherit",
+    "host": "browser",
+    "case_digest": "1105d84c86099e0d497d9494c7a74e08e6b39622b9feb0528d83f565c96f4ab2"
+   },
+   "checks": {
+    "tool": [
+     {
+      "name": "a browser binary is present (DS-06: no browser is measured degradation, never a silent skip)",
+      "command": "command -v chromium || command -v google-chrome || test -d '/Applications/Google Chrome.app'"
+     }
+    ],
+    "load_trace": {
+     "expect_loaded": [
+      "sheleg-design"
+     ],
+     "expect_not_loaded": []
+    },
+    "outcome": [
+     {
+      "name": "resolved computed styles are recorded",
+      "kind": "artifact-contains",
+      "target": "computed-styles.md",
+      "expect": "resolved:"
+     }
+    ]
+   }
+  }
+ ]
+}

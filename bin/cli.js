@@ -83,6 +83,69 @@ const COLORS = {
 const useColor = process.stdout.isTTY && !process.env.NO_COLOR;
 const c = (color, s) => (useColor ? COLORS[color] + s + COLORS.reset : s);
 
+/**
+ * A TRANSACTIONAL file install (FIX-UP-05.03): the writer contract from UP-05
+ * applied to the design CLI. The old path copied each managed file straight
+ * into the target, so a crash mid-install left a partial write. Now the managed
+ * set is staged into a same-filesystem sibling and VERIFIED, the previous
+ * generation is snapshotted (recoverable under --force), the staged files are
+ * renamed into place, and OBSOLETE managed files (managed, gone from the source)
+ * are removed — while unknown user files are never touched. No runtime
+ * dependency on a sibling checkout: everything reads from `srcDir`.
+ */
+function installFilesTransactionally(srcDir, targetDir, files) {
+  const staging = path.join(targetDir, `.sheleg-staging-${process.pid}`);
+  const prevGen = path.join(targetDir, `.sheleg-prev-${process.pid}`);
+  const manifestPath = path.join(targetDir, ".sheleg-manifest.json");
+  // The previously-installed MANAGED set, so obsolete-managed-only removal can
+  // tell a file this installer wrote from an unknown user file it must not touch.
+  let prevManaged = [];
+  try { prevManaged = JSON.parse(fs.readFileSync(manifestPath, "utf8")).files || []; }
+  catch (e) { prevManaged = []; }
+  fs.rmSync(staging, { recursive: true, force: true });
+  try {
+    // 1. STAGE + VERIFY.
+    for (const f of files) {
+      const s = path.join(srcDir, f);
+      const d = path.join(staging, f);
+      fs.mkdirSync(path.dirname(d), { recursive: true });
+      fs.copyFileSync(s, d);
+      if (!fs.readFileSync(s).equals(fs.readFileSync(d))) {
+        throw new Error(`staged ${f} does not match its source`);
+      }
+    }
+    // 2. Snapshot the previous generation of the managed files (recoverable).
+    fs.rmSync(prevGen, { recursive: true, force: true });
+    for (const f of files) {
+      const cur = path.join(targetDir, f);
+      if (fs.existsSync(cur)) {
+        const save = path.join(prevGen, f);
+        fs.mkdirSync(path.dirname(save), { recursive: true });
+        fs.copyFileSync(cur, save);
+      }
+    }
+    // 3. SWITCH: rename each staged file into place.
+    for (const f of files) {
+      const d = path.join(targetDir, f);
+      fs.mkdirSync(path.dirname(d), { recursive: true });
+      fs.renameSync(path.join(staging, f), d);
+    }
+    // 4. Remove OBSOLETE managed files — managed before, gone from the source
+    //    now — and never an unknown user file.
+    const wanted = new Set(files);
+    for (const f of (prevManaged || [])) {
+      if (!wanted.has(f)) fs.rmSync(path.join(targetDir, f), { force: true });
+    }
+    fs.writeFileSync(manifestPath, JSON.stringify({ files }));
+    fs.rmSync(staging, { recursive: true, force: true });
+    fs.rmSync(prevGen, { recursive: true, force: true });
+    return { installed: files, removed: prevManaged.filter((f) => !new Set(files).has(f)) };
+  } catch (err) {
+    fs.rmSync(staging, { recursive: true, force: true });
+    throw new Error(`install aborted, previous install intact: ${err.message}`);
+  }
+}
+
 function parseArgs(argv) {
   const opts = {
     target: null, // explicit --dir
@@ -375,10 +438,25 @@ function claudeHomeOf(targetDir) {
  * as "no plugin": the fresh HOME is the common case, and an installer that
  * crashes on a parse error refuses the machines that need it most.
  */
+// The bundled HostContext resolver (FIX-UP-08.02) — one contract, a local copy
+// per member (npx installers share no lib): a host's config root is an explicit
+// root > the documented host env var > `~/<dir>`, verbatim (spaces preserved).
+// Only the USER-scoped Claude config (the plugin registry) uses this; a
+// PROJECT-level `.claude/` under cwd is not a host config root and is left as
+// is. Host existence stays a separate probe on the returned path.
+const HOST_ENV = { claude: "CLAUDE_CONFIG_DIR", codex: "CODEX_HOME", gemini: "GEMINI_CONFIG_DIR" };
+const HOST_DIR = { claude: ".claude", codex: ".codex", gemini: ".gemini" };
+function hostRoot(agent, home, env, explicit) {
+  if (explicit) return explicit;
+  const e = (env || process.env)[HOST_ENV[agent]];
+  if (e) return e;
+  return path.join(home, HOST_DIR[agent]);
+}
+
 function installedPluginSpec(home) {
   try {
     const raw = fs.readFileSync(
-      path.join(home, ".claude", "plugins", "installed_plugins.json"),
+      path.join(hostRoot("claude", home, process.env), "plugins", "installed_plugins.json"),
       "utf8",
     );
     const parsed = JSON.parse(raw);
@@ -499,11 +577,7 @@ function main() {
   }
 
   fs.mkdirSync(targetDir, { recursive: true });
-  for (const f of files) {
-    const dest = path.join(targetDir, f);
-    fs.mkdirSync(path.dirname(dest), { recursive: true });
-    fs.copyFileSync(path.join(SKILL_DIR, f), dest);
-  }
+  installFilesTransactionally(SKILL_DIR, targetDir, files);
 
   const rel = path.relative(cwd, targetDir) || ".";
   console.log(
@@ -512,9 +586,10 @@ function main() {
       `  ${c("dim", "SHELEG_DESIGN.md")}    the full reference\n` +
       `  ${c("dim", "MOTION_DOCTRINE.md")}  whether to animate at all — read before any animation\n` +
       `  ${c("dim", "styles/")}             style packs + token CSS (instrument-console / editorial-luxury / workbench / briefing-room / atrium / orchard / field-notes / cyclorama / showroom / blueprint / prism / maquette / scoreboard / datasheet / manpage / pigeonhole / roster)\n\n` +
-      `Your Cursor / Claude agent can now discover the skill and build\n` +
-      `cinematic, scroll-driven pages — or style product UI (dashboards, admin,\n` +
-      `internal tools) from a standalone pack — on its principles.\n\n` +
+      `Files are on disk; a running agent has NOT loaded them yet — skills are\n` +
+      `read at session start, so reload (a new session) before expecting the\n` +
+      `skill, then build cinematic scroll-driven pages or style product UI from\n` +
+      `a standalone pack. Writing files is not the same as the host loading them.\n\n` +
       `${c("dim", "Docs: " + pkg.homepage)}\n`,
   );
 
@@ -569,4 +644,8 @@ function offerRouters() {
   }
 }
 
-main();
+if (require.main === module) {
+  main();
+}
+
+module.exports = { installFilesTransactionally, copyKitTree };

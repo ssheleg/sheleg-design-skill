@@ -1,27 +1,32 @@
-import type { ReactNode } from 'react';
+import { forwardRef } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 
-export interface HeadingProps {
+export interface HeadingProps
+  extends Omit<HTMLAttributes<HTMLHeadingElement>, 'className'> {
   /** 1 = `--t-h1`, 2 = `--t-h2` section heading, 3 = `--t-h3` sub-head. */
   level?: 1 | 2 | 3;
+  /** Visual size — defaults to the level, so existing call sites keep their look. */
+  size?: 1 | 2 | 3;
   children: ReactNode;
   className?: string;
 }
 
-/**
- * The monospaced display face at the pack's three section sizes, all tracking
- * at the one authored `-0.02em`.
- *
- * `text-wrap: balance` matters more here than in a proportional pack: every
- * glyph is the same width, so a ragged last line is visible as a measured gap
- * rather than as ordinary rag.
- */
-export function Heading({ level = 2, children, className }: HeadingProps) {
+export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(function Heading(
+  { level = 2, size, className, children, ...rest },
+  ref,
+) {
   const Tag = `h${level}` as 'h1' | 'h2' | 'h3';
   return (
     <Tag
-      className={['cy-heading', `cy-heading--${level}`, className].filter(Boolean).join(' ')}
+      ref={ref}
+      // The TAG follows the semantic level; the CLASS follows the visual size —
+      // an h2 may wear the display size without touching the document outline.
+      className={['cy-heading', `cy-heading--${size ?? level}`, className]
+        .filter(Boolean)
+        .join(' ')}
+      {...rest}
     >
       {children}
     </Tag>
   );
-}
+});

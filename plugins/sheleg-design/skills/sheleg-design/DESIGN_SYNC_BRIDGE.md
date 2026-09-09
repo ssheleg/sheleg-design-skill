@@ -75,6 +75,35 @@ The pack is the primary reference type; the other three feed it rather than bypa
   `maquette` — and belongs to it alone. Until 1.11.0 this paragraph asserted the
   count and named none of the six bridges, which left a reader with a number and no way
   to check a delivered kit against it.
+- **The spine is a passthrough, not a wall.** The six props bodies own *identity* —
+  `variant`, `size`, the class composition — and nothing else. Everything native to
+  the element travels THROUGH them: each `*Props` extends the host element's own
+  attribute type, forwards a `ref`, and spreads the rest onto the node. So
+  `Button` defaults `type="button"` but an explicit `type="submit"` wins (a form
+  submit must work); `aria-label` reaches an icon-only button; `aria-controls` /
+  `aria-expanded` reach a trigger; `ref.focus()` lands on the real DOM node. **A
+  design default may never silently erase a prop the caller set** — the default fills
+  a hole, it does not overwrite. `Heading` carries the same rule with `as`/`level`
+  (the semantic tag) kept independent of visual `size`: `size` defaults to the
+  level so existing call sites keep their look, an `h2` may wear the display
+  size, and the DOM outline never moves with a visual variant.
+- **These are reference primitives, not a product component system.** The pack ships
+  the spine and its bans; forms, dialogs and navigation are COMPOSED from it with
+  recipes that live beside the kit, never smuggled into a primitive. A primitive that
+  grows a `<form>` inside it stops being swappable, which is the one thing the spine
+  exists to guarantee.
+- **One canonical spine, propagated mechanically — and tested once, not 39 times.**
+  A change to a spine component is made to the canonical source and then copied into
+  all 39 kits by machine, preserving each kit's class prefix and doc comment; the
+  `*Props` bodies stay byte-identical (comments stripped) across every kit. Two gates
+  guard the propagation and they check different things: **structural parity** —
+  every kit's `*Props` body equals the exemplar's, so a kit left behind is caught
+  without building it — and **one representative DOM/semantic test** on the exemplar,
+  because the behaviour a spine change alters (an `h2` wearing the display size, an
+  explicit `type` winning over the default, a `ref` reaching the node) is the same in
+  every kit by construction. Thirty-nine full app builds would prove the same fact
+  thirty-nine times; parity plus one representative proves it once and names the kit
+  that drifted.
 
 ## 3. Figma — one border at a time
 
@@ -159,7 +188,11 @@ kit.
 
 **The order is the rule:** extraction lands in a pack first — **the full thirteen
 headings** (plus `## Motion flavor` if it is cinematic) and a `tokens/<pack>.css` —
-and only a pack syncs. A site's raw values never reach
+and only a pack syncs. The thirteen headings are a **publication gate, not a sketch
+gate**: while a direction is still being chosen, exploration runs on provisional
+semantic tokens (roles + working values, locally), and nothing provisional syncs —
+the full contract is owed at the moment of consolidation into a reusable pack,
+which is also the only thing this bridge will carry. A site's raw values never reach
 claude.ai/design, because a kit assembled straight from a scrape carries that site's
 accidents, its dead ends and its one-off hexes, and the design agent will treat every
 one of them as a decision.

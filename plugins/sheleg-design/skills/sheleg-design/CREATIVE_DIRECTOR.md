@@ -108,6 +108,27 @@ point.** Some of them advertise themselves as one; a broad `user-invocable`
 design skill will fire on the same prompt you did. That is not a reason to avoid
 it. It is a reason to say, out loud, which one is directing.
 
+**Cast with a SCOPED brief, not a bare name.** A tool handed a prompt with no
+boundary becomes a second end-to-end router — the thing the rule above forbids.
+Each cast line states, for that tool: what is FIXED (may not change), what is
+OPEN (it may explore), the DELIVERABLE expected back, and whose copy/
+implementation instructions apply. Two worked scopes:
+
+- **preserve-brand** — pass the palette and type invariants as FIXED; leave
+  composition, layout and hierarchy OPEN. `frontend-design` here is cast for
+  *concept hypotheses and visual critique within those bounds*, never to repaint
+  the brand. Deliverable: composition options that keep every fixed token.
+- **exact-Figma reproduction** — the design IS the spec; aesthetic risk is
+  turned OFF. Nothing is open to invention; the deliverable is a faithful build,
+  and a tool that proposes a "better" look has misread its scope.
+
+A specific claim about a cast tool — a ban it enforces, a rule it applies — is
+verified against the tool's REACHED descriptor before it is repeated, not copied
+from a catalog line; the family's `npx sshlg-skills pack design` resolves the
+claim against the file actually on this machine and records the digest it read.
+A catalog that ascribes a ban the reached file does not contain is how a cast is
+briefed on a capability that is not there.
+
 ---
 
 ## Act 3 — Fork, but only when the fork is real — and write the rubric first
@@ -141,7 +162,10 @@ Fork when **all three** hold:
 
 A token change. A spacing fix. A bug. A surface with a locked design system,
 where the answer is *apply the system* and two variations are two ways of
-disobeying it. Anything where the brief already determines the answer — forking
+disobeying it — but note WHICH lock that is: a locked BRAND is not a locked
+composition. Under a preserve-the-brand brief the invariants hold and the
+open axes still fork (`VISUAL_EXPLORATION.md`); an existing token file
+alone never turns "explore" into "apply". Anything where the brief already determines the answer — forking
 there does not explore a space, it manufactures a choice and then spends someone's
 attention resolving it.
 
@@ -204,21 +228,79 @@ Two different questions, and passing one says nothing about the other.
 These are checks, not opinions. Each one produces a number or a yes/no that a
 second reader can reproduce:
 
-| Check | How it is measured |
-|---|---|
-| Contrast | every text/background pair against WCAG AA; body text ≥ 4.5:1, large ≥ 3:1 — a **computed ratio**, never a glance |
-| Colour is not the only signal | every status, link and error state carries a second cue — shape, icon, weight, text |
-| Keyboard path | every interactive element reachable and visibly focused, in DOM order |
-| One anchor per viewport | count what competes for first attention; more than one means none |
-| Type scale | count the distinct font sizes actually rendered — an ad-hoc scale shows up as a long tail |
-| Token discipline | `grep` for raw hex and raw px outside the token layer; a one-off value is a system leaking |
-| Motion, and its absence | every duration inside the doctrine's bands, and the surface fully usable under `prefers-reduced-motion: reduce` — checked by turning it on, not by reading the CSS |
-| Renders without JS | the content is present in the served HTML — matters for the reader who is a crawler as much as for the one on a slow connection |
+Each check carries an **applicability predicate** — the class of surface it is a
+fact about. A check outside its class is reported **NOT_APPLICABLE with the
+reason**, never PASS without running: a SwiftUI screen has no served HTML to
+check, and an authenticated admin SPA has no crawler to serve it to. The
+classes: **all** (any rendered surface), **web** (runs in a browser, public or
+internal), **public-web** (a logged-out reader or crawler can reach it —
+the same boundary the SEO router draws), **native** (platform semantics
+instead of DOM ones).
+
+| Check | Applies to | How it is measured |
+|---|---|---|
+| Contrast | all | every text/background pair against WCAG AA; body text ≥ 4.5:1, large ≥ 3:1 — a **computed ratio**, never a glance |
+| Colour is not the only signal | all | every status, link and error state carries a second cue — shape, icon, weight, text |
+| Keyboard path | web | every interactive element reachable and visibly focused, in DOM order; on **native**, the platform's focus/accessibility semantics stand in — VoiceOver order, not DOM order |
+| One anchor per viewport | all | count what competes for first attention; more than one means none |
+| Type scale | all | count the distinct font sizes actually rendered — an ad-hoc scale shows up as a long tail |
+| Token discipline | all | `grep` for raw hex and raw px outside the token layer; a one-off value is a system leaking |
+| Motion, and its absence | all | every duration inside the doctrine's bands, and the surface fully usable under reduced motion — `prefers-reduced-motion: reduce` on web, the platform's Reduce Motion on native — checked by turning it on, not by reading the CSS |
+| Loading / error states | web | internal surfaces earn this INSTEAD of the crawler check: every fetch has a loading state and an honest error state |
+| Renders without JS | public-web | the content is present in the served HTML — matters for the reader who is a crawler as much as for the one on a slow connection. An internal tool behind a login is N/A here (with that reason), not quietly PASSed — and a native screen has no served HTML at all |
 
 **Run them where the thing runs.** A screenshot in a browser at the target
 viewport beats reading the diff, every time; `webapp-testing` and the Chrome
 DevTools tooling exist for this, and the `verify` lane in Act 2 casts them. A
 quality claim made from source is a claim about source.
+
+### Render critique — the soft half, made actionable
+
+The measurable table is not the whole review, and "premium" / "generic" are not
+findings — a phrase with no region attached is not acceptance (ADOPT-M-10). A
+render critique is a separate pass AFTER the render, and each observation is a
+**triple**: an image region (a crop or a coordinate on the observed render), the
+**observable defect** there, and the **intended change** — followed by a second
+render that applies it. Three such observations is the working shape; the lenses
+are hierarchy, spacing rhythm, optical alignment, type treatment, platform feel,
+and specificity to THIS product — applied by the brief, not all at once.
+
+Four rules keep it honest:
+
+- **A clean render is a valid result — there is no defect quota.** If the
+  observed render has no observable defect, the critique says so and the loop
+  STOPS. Manufacturing a third observation to fill a slot fabricates a defect on
+  a clean render, which is the opposite of the pass's job.
+- **Observed render, subjective judgment and source CSS are different evidence**
+  and are labelled as such — a taste call is never dressed as a measurement, and
+  a pseudo-precise score is never assigned to a preference. Show the LIMIT of the
+  assessment instead.
+- **Missing brand context is `NOT_ASSESSED`, not a P1.** Absent the brand pack,
+  brand fit is not automatically the top defect — it is unassessed, and said to
+  be.
+- **The strict constraints gate BEFORE the soft winner.** Contrast and keyboard
+  (the measurable table) are a gate: a render that fails them is out regardless
+  of how it reads. Only among renders that pass the gate does the soft critique
+  choose — and where two both pass every hard gate and read equally well, that
+  is the person's decision (Act 4's rule), not a manufactured preference.
+
+### The bounded rerender comparison
+
+The second render (the one that applies the critique's changes) is judged on
+the SAME matrix as the first — before/after on the SAME content and viewport
+(nothing else may move, or the comparison compares two questions), scored
+resolved / partial / unresolved per observation, and re-run against the hard
+gates for regressions. Two bounds keep it from becoming endless polish:
+
+- **A fixed budget, and its exhaustion leaves UNRESOLVED as unresolved.**
+  When the budget is spent, an observation still open is reported `unresolved`
+  — never renamed `ship`. Budget exhaustion is a state, not a pass.
+- **Mechanical result is not craft result.** The presence of a PNG, tokens
+  passing, or "all gates green" is a compliance/functional outcome; it never
+  becomes a craft PASS on its own, and a token-clean render of the same dull
+  composition is still a dull composition. An already-chosen direction gets a
+  single critique pass here — no mandatory fork (that is Act 3's decision) —
+  and a sequential independent pass is a valid substitute for a fresh subagent.
 
 ### The limit, stated rather than implied
 
