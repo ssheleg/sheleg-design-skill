@@ -9,6 +9,7 @@ pack's `## Responsive` section covers that, and this file does not repeat it.
 
 - What a pack decides here, and what it does not
 - The six rules every pack already carries — and one no pack answers
+- Platform target and prototype renderer are two decisions, not one
 - Reference sweeps — structure crosses, identity does not
 
 ## What a pack decides here, and what it does not
@@ -78,6 +79,33 @@ Every one of the fourteen was extracted from a web reference. Their tokens hold 
 colour and type do not care about the runtime — but no pack's `## Components`
 was written against a tab bar or a sheet, so the component half is yours on any
 native surface, in every pack, whatever its `Contract:` line says about the web.
+
+## Platform target and prototype renderer are two decisions, not one
+
+Before choosing components, separate **what the surface ships as** from **what
+you render the mockup in** — conflating them is how a SwiftUI brief gets Expo
+as its only answer, or an HTML screenshot gets passed off as native proof
+(VD-03). The platform target picks the component adapter:
+
+| Platform target | Component adapter |
+|---|---|
+| **iOS native** | UIKit / SwiftUI against Apple's **HIG** |
+| **Android native** | Jetpack **Compose** / Material |
+| **React Native** | RN's own primitives — a separate branch, not "web that happens to run on a phone" |
+| **Web / mobile-web** | the pack's web `## Components` |
+
+A route to one target must not silently receive another's toolkit — a SwiftUI
+screen is not answered with Expo, and RN is not the single mobile answer for a
+native brief.
+
+**A web HTML mockup is a demonstration, never native proof**, and it must carry
+an explicit **native-equivalent** column: for each control, the native control
+it stands in for and its **touch/input behaviour** — an HTML `<select>` is not
+an iOS wheel picker, a 14px input triggers Safari zoom-on-focus where a native
+field does not, and a browser screenshot proves nothing about Dynamic Type or
+VoiceOver. State those as **measured/unverified** in the receipt, never inferred
+from the web render. And the semantic states of an AI surface stay independent
+of any one pack's mono size or motion durations — a platform is not a pack.
 
 ## Reference sweeps — structure crosses, identity does not
 

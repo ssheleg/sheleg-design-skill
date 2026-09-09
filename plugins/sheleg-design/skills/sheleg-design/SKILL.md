@@ -199,7 +199,10 @@ as a definition of done, in that order:
   skill is an optional neighbour this skill does not ship: where none is
   installed, the role table in `SURFACE_COMPOSITION.md` IS the chart contract,
   applied by hand.
-- **Mobile surfaces** ([`MOBILE_SURFACES.md`](./MOBILE_SURFACES.md)), when the
+- **Mobile surfaces** ([`MOBILE_SURFACES.md`](./MOBILE_SURFACES.md)) — separate
+  the platform target (iOS/Android/RN/web, each with its own component adapter)
+  from the prototype renderer, and treat a browser HTML mockup as a
+  demonstration with a native-equivalent column, never as native proof — when the
   brief is a native app screen or a mobile-web view — not a desktop page whose
   only mobile concern is collapse. Five mobile rules the packs each state alone,
   a sixth **no pack answers** (the type ramp follows viewport width, not the
