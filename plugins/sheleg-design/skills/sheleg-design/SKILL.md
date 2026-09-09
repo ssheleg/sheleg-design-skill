@@ -165,29 +165,9 @@ hints inform, not a scale they grade.
 | redesign, preserve the existing identity | match | match | match |
 | redesign, explicit overhaul | +2 | +2 | match |
 
-**A brief can match two rows, and they can disagree by a factor of three.** "A quiet
-internal admin dashboard" fires both *"quiet like Linear"* (DENSITY 2–3) and *"product
-UI"* (DENSITY 6–8). The precedence rule: **the row that names the surface wins over the
-row that names a mood.** A surface decides how much has to fit; a mood decides how it is
-handled — in a product-UI pack, "quiet" is bought with restraint in colour and motion,
-not with emptiness. Say which row you took and why when two fire.
-
-**A row that names neither is an audience posture** — *"trust-first: regulated,
-public-sector, clinical"* names who reads it, not what they read it on. It does not
-arbitrate DENSITY, because a posture says nothing about how much has to fit; it **wins
-on MOTION and ornament**, because that is the whole of what it constrains. Both T24
-branches hit this and both split two-to-one on MOTION, which is the tell that the rule
-above had no third case.
-
-### How they bind
-
-The pack wins on values, the dials win on amount — a dial never invents a colour,
-a face or a radius. **`MOTION_INTENSITY` is capped by the frequency table, not the
-other way round**, and **motion claimed is motion shown**: a static page announcing
-7 is broken, so drop the dial to 3 and ship a clean still page rather than
-half-build motion that stalls. Several packs pin their own ceiling and say so in
-their Register. The table, the per-pack ceilings and why each one is where it is:
-[`MOTION_DOCTRINE.md`](./MOTION_DOCTRINE.md) → *How the calibration dials bind*.
+**When two rows fire and disagree** — the surface-over-mood precedence, an audience
+posture's narrower authority, and the frequency-table ceiling that caps
+`MOTION_INTENSITY`: [`CALIBRATION.md`](./CALIBRATION.md).
 
 ## The craft bar — what "done" means, in order
 
@@ -251,18 +231,6 @@ existing token file closes nothing by itself.
 
 ## Choosing between packs — mount them, don't imagine them
 
-**The mounting rides the semantic token contract.** Token names are not
-uniform across the packs, so the comparison never swaps raw CSS: each pack's
-token file ends with an `@adapter` block mapping ten semantic roles
-(`--sem-surface`, `--sem-surface-raised`, `--sem-text`, `--sem-text-muted`,
-`--sem-line`, `--sem-primary`, `--sem-on-primary`, `--sem-positive`,
-`--sem-caution`, `--sem-negative`) onto its own tokens — or declaring a role
-`@absent` where the pack has no such concept. A role neither mapped nor
-declared blocks the comparison BEFORE any render, because an undefined custom
-property does not error, it silently falls back — and a comparison built on
-silent fallbacks compares the fallbacks. No CSS-swap promise follows:
-components keep consuming the pack's own tokens.
-
 When more than one pack could carry a product, do not argue about it. Render
 them.
 
@@ -280,7 +248,20 @@ UI and **`showroom`** for a marketing page: both are quiet enough that switching
 away later costs layout, not identity. (This used to say "the default pack" and
 name none, which is not a fallback.)
 
+**The mounting rides the semantic token contract.** Token names are not
+uniform across the packs, so the comparison never swaps raw CSS: each pack's
+token file ends with an `@adapter` block mapping ten semantic roles
+(`--sem-surface`, `--sem-surface-raised`, `--sem-text`, `--sem-text-muted`,
+`--sem-line`, `--sem-primary`, `--sem-on-primary`, `--sem-positive`,
+`--sem-caution`, `--sem-negative`) onto its own tokens — or declaring a role
+`@absent` where the pack has no such concept. A role neither mapped nor
+declared blocks the comparison BEFORE any render, because an undefined custom
+property does not error, it silently falls back — and a comparison built on
+silent fallbacks compares the fallbacks. No CSS-swap promise follows:
+components keep consuming the pack's own tokens.
+
 **What a comparison records — one component, one content, one viewport at a
+time, through the adapters.** **What a comparison records — one component, one content, one viewport at a
 time, through the adapters.** A difference is attributable to the pack only
 when everything else is pinned: the receipt per candidate names the pack, its
 adapter status, the compared component's geometry (positions and sizes as
@@ -319,28 +300,13 @@ line, and without it, whatever file names the pack. Default **yes**; a project
 that already has a component layer has already answered, and migrating one on
 taste is not a design decision.
 
-**Why it composes rather than competes.** `shadcn/ui` is not a theme, but it is
-NOT unstyled either — its docs ship "Beautiful Defaults" (styled, opinionated
-components you copy INTO your repo and edit), built on HEADLESS primitives
-(Radix/Base), themed through CSS custom properties (https://ui.shadcn.com/docs,
-checked 2026-09-09). So it arrives with a look and *consumes* a token layer to
-change it. That is the seam a pack is: the pack decides the tokens, the kit
-decides what a `DropdownMenu` is — and because the components are yours to edit,
-a custom component edit is a normal adaptation, NOT automatically a redesign.
-
-**The two vocabularies are different, and this is the trap.** The packs resolve
-`--bg` and `--ink` everywhere and little else by that name; `shadcn/ui` expects
-`--background`, `--foreground`, `--primary`, `--muted` and the rest of its own
-contract. **Map them explicitly in the pack's token file** — an undefined custom
-property does not error, it silently falls back, which is the same failure the
-chart rule above exists for. And color is only ONE axis of the adapter contract:
-semantic **color + geometry + density + typography + elevation + state/anatomy**.
-A kit mounted with only the color vars remapped keeps shadcn's default radius,
-padding, shadows and type — so after the token remap **compare the RENDERED
-component matrix (Card/Button/Dialog: computed sizes, padding, radius, shadow,
-fonts, states) against the chosen direction**, not just the color variables, and
-list the defaults you deliberately kept. A kit mounted without any of that
-renders in its starter look and looks like nobody chose anything.
+**It composes rather than competes**, and the mapping is where it goes wrong: the
+packs resolve `--bg`/`--ink`, the kit expects `--background`/`--foreground`/`--primary`,
+and an undefined custom property falls back silently instead of erroring. The token
+remap is only one axis of six — color, geometry, density, typography, elevation,
+state/anatomy — so a kit mounted on colors alone still renders in its starter look.
+The full mechanics, and who does the work:
+[`COMPONENT_LAYER.md`](./COMPONENT_LAYER.md).
 
 **The boundary — product UI, not the cinematic surface.** Dashboards, admin
 panels, internal tools, chat and agent interfaces: yes, and the answer is yes by
@@ -368,41 +334,16 @@ file needs a named destination rather than a guess.
 ## Optional — Claude Design (design-sync)
 
 Where `/design-sync` is available, a pack can be pushed to claude.ai/design so the
-design agent builds screens from **this pack's** tokens rather than its own
-defaults. The contract, and what it does not carry across, is in
-[`DESIGN_SYNC_BRIDGE.md`](./DESIGN_SYNC_BRIDGE.md).
+design agent builds from **this pack's** tokens, not its own defaults. The contract
+and its gaps: [`DESIGN_SYNC_BRIDGE.md`](./DESIGN_SYNC_BRIDGE.md).
 
 ## Optional — real-world references (Lazyweb, Mobbin, Refero)
 
-A pack fixes *how it looks*; it does not say what a good version of the screen
-contains. Where Lazyweb, Mobbin or Refero are connected, look at real products
-before inventing a layout — and treat what you find as evidence about **content
-and structure**, never as a licence to copy someone's visual. The full rule is
-`DESIGN_SYNC_BRIDGE.md` §4.
+A pack fixes *how it looks*, not what a good version of the screen contains. Where
+these are connected, look at real products before inventing a layout — evidence about
+**content and structure**, never a licence to copy a visual (`DESIGN_SYNC_BRIDGE.md` §4).
 
-## How to Apply
-
-1. Visual system first: pick (or author) a style pack, apply its tokens as
-   the site-wide design tokens (color, type, spacing, components). If Lazyweb
-   MCP is available, sweep references for the target screen at this point —
-   before any layout exists to defend.
-2. Build bottom-up in the §11 layer order: scroll clock → smooth scroll →
-   particle field → 2D fallback → DOM choreography → reveals → scrubbed
-   instruments → optional DOM↔WebGL bridge. One small file per layer.
-3. Storyboard in data: a `SCENES` registry (`{ anchor, formation, focusX,
-   energy }` per section); iterate on the data before touching render loops.
-4. Ship each layer's reduced-motion/fallback branch in the same commit.
-5. Verify: typecheck/lint/build; screenshot each scene mid-hold and mid-morph;
-   reduced-motion pass; narrow-viewport pass.
-
-## Common Mistakes
-
-- Paying the fallback/a11y tax "at the end" → it never ships. Same commit.
-- Parallax on everything → nausea. At most one drifting figure per viewport.
-- Scrub on hero/entrances → motion feels unearned; reserve scrub for
-  instruments.
-
-### Three looks that are defaults, not decisions
+## Three looks that are defaults, not decisions
 
 Left to itself, generated design lands in one of three places whatever the product
 is — warm cream with a serif and terracotta; near-black with one acid accent;
@@ -411,3 +352,9 @@ arrives whether or not the brief called for it, which is what makes it a default
 **If a pack's field sits near one of these, that is a measurement; if a page arrives
 at one without a pack, that is the default talking** — say which out loud before
 shipping. The three documents, in full: [`SHELEG_DESIGN.md`](./SHELEG_DESIGN.md).
+
+## Applying it, and the mistakes that repeat
+
+The order of work once the pack and the calibration are decided, and the failure list to
+check a finished surface against — a hero that reads as a settings screen, motion claimed
+but not shown, a kit mounted on colors alone: [`APPLYING.md`](./APPLYING.md).

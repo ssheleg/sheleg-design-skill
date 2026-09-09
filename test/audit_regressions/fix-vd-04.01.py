@@ -24,7 +24,29 @@ sys.dont_write_bytecode = True
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
-SKILL = os.path.join(ROOT, "plugins", "sheleg-design", "skills", "sheleg-design", "SKILL.md")
+SKILL_DIR = os.path.join(ROOT, "plugins", "sheleg-design", "skills", "sheleg-design")
+SKILL = os.path.join(SKILL_DIR, "SKILL.md")
+
+
+def bundle_text():
+    """SKILL.md plus every document it LINKS TO — what the agent actually loads.
+
+    The needles below assert that a doctrine sentence REACHES the agent. They read
+    SKILL.md alone until 2026-09-10, when the body breached the house 5000-token
+    budget and the house rule's own remedy — a split into a bundled reference —
+    would have deleted them. The address a doctrine claim has is the bundle, not
+    one file inside it, so the links are RESOLVED here rather than listed: a
+    sentence parked in a document SKILL.md does not point at is still gone, which
+    is the same reachability the house auditor enforces (BUNDLE_UNREACHABLE).
+    """
+    import re
+    text = open(SKILL, encoding="utf-8").read()
+    parts = [text]
+    for rel in sorted(set(re.findall(r"\]\(\./([A-Za-z0-9_./-]+\.md)\)", text))):
+        path = os.path.join(SKILL_DIR, rel)
+        if os.path.isfile(path):
+            parts.append(open(path, encoding="utf-8").read())
+    return " ".join(" ".join(parts).split())
 
 failures = []
 
@@ -39,7 +61,7 @@ def case(name, fn):
 
 
 def t_doctrine_corrects_shadcn():
-    flat = " ".join(open(SKILL, encoding="utf-8").read().split())
+    flat = bundle_text()
     for needle in ("it is\nNOT unstyled either".replace("\n", " "),
                    'ship "Beautiful Defaults"',
                    "built on HEADLESS\nprimitives (Radix/Base)".replace("\n", " "),
@@ -48,9 +70,9 @@ def t_doctrine_corrects_shadcn():
                    "color + geometry + density + typography + elevation + state/anatomy**",
                    "compare the RENDERED\ncomponent matrix".replace("\n", " "),
                    "list the defaults you deliberately kept"):
-        assert needle in flat, f"SKILL.md no longer states {needle!r}"
+        assert needle in flat, f"the skill bundle no longer states {needle!r}"
     assert "It is\nunstyled primitives plus Tailwind".replace("\n", " ") not in flat, \
-        "the 'unstyled primitives' claim survived"
+        "the 'unstyled primitives' claim survived somewhere in the bundle"
 
 
 # ---------------- the adapter-sufficiency rule, executed
