@@ -9,7 +9,7 @@ was shipped on the strength of an argument rather than an observation.
 
 Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (REQ-10, carried to board B-004). Extended 2026-08-12 by the `pigeonhole` run with twenty rows, none of them `never`.
 
-## Shipped state — v1.60.0 (2026-09-10)
+## Shipped state — v1.60.2 (2026-09-10)
 
 Sherlock external-v3 (34 findings) and the CREATIVE_DIRECTOR handoff.
 
