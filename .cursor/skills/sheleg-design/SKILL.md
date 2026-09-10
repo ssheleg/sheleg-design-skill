@@ -4,7 +4,7 @@ description: Use when deciding how something LOOKS or MOVES — cinematic landin
 license: MIT
 compatibility: Kit/lane commands need node>=16, npx, network. Optional siblings — dataviz, shadcn, migrate-radix-to-base. Each has an in-text fallback when absent or unreachable.
 metadata:
-  version: 1.60.1
+  version: 1.60.2
 ---
 
 # SHELEG Design
