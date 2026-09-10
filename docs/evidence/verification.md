@@ -9,6 +9,21 @@ was shipped on the strength of an argument rather than an observation.
 
 Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (REQ-10, carried to board B-004). Extended 2026-08-12 by the `pigeonhole` run with twenty rows, none of them `never`.
 
+## Shipped state — v1.60.0 (2026-09-10)
+
+Sherlock external-v3 (34 findings) and the CREATIVE_DIRECTOR handoff.
+
+| REQ | What ships | How it was confirmed | Watched |
+|---|---|---|---|
+| SH-regressions | Every sherlock finding assigned here closes with an executable regression | `test/audit_regressions/` holds 29 suites; `npm test` runs all of them and exits 0 | **observed** |
+| SH-split | The SKILL body is back inside the budget by a SPLIT, not a trim | the audit's own doctrine took it 4275 → 5703, a hard breach of 5000. `CALIBRATION.md`, `COMPONENT_LAYER.md` and `APPLYING.md` now carry what a run does not need in the same breath; body 4730, `audit_skill.py --house` 0 GAP | **planted** — the auditor refused the pre-split tree with `GAP BODY_TOKENS … 5703` |
+| SH-revert | `PACK_COMPARISON.md` was tried and REVERTED | every sentence in it is asserted by a guard, so the comparison protocol and the ten-role adapter contract belong in the SKILL. Found by running the suite, not by reading | **planted** — four guarded phrases went missing one at a time until the split was undone |
+| SH-bundle | Two guards read the resolved BUNDLE rather than SKILL.md alone | they assert a sentence REACHES the agent, and the agent loads the SKILL plus what it links to — so reading one file made the house rule's own remedy delete the doctrine they protect. Links are RESOLVED, not listed: a sentence parked where nothing points is still gone, and the negative assertion now covers the whole bundle | **observed** |
+| SH-smoke | The CLI smoke test compares the bundle, not the installer's own record | `.sheleg-manifest.json` is FIX-UP-05.03's writer contract — it exists in the install and not in the source by design. The comparison excludes it AND asserts it was written, because dropping a file from a diff without checking it exists is how a missing manifest passes as a match | **planted** — the step failed on `Only in .claude/skills/sheleg-design: .sheleg-manifest.json` |
+| Gate | The whole suite on this tree | `npm test` EXIT=0, including the style-pack matrix | **observed** |
+
+## Per-REQ ledger (seeded 2026-08-10)
+
 | REQ | What must stay true | How it is checked | Last verified | Status |
 |---|---|---|---|---|
 | REQ-01 | Every counted claim (packs, kits, scenarios, headings) is true | `validate_counted_claims()` — whitespace-normalised across line breaks | 2026-08-10 · planted `six locked style packs`, caught | **green** |
