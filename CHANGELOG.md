@@ -1,3 +1,13 @@
+## 1.60.1 — the ledger catches up to the version it ships
+
+A member's ledger is fixed in that member's own release. The umbrella's ratchet
+counts members whose ledger describes a version older than they ship, and the
+release wave of 2026-09-10 put this one on that list — its gate did not demand a
+section, the umbrella does.
+
+The v1.60.0 section is written now, naming what shipped and what
+confirmed it.
+
 ## 1.60.0 — the SKILL body splits back under budget, and the guards read the bundle
 
 Sherlock external-v3 (34 findings) plus the CREATIVE_DIRECTOR handoff (PR #28).

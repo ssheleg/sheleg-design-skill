@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Pack and skill | `sheleg-design` |
-| Version | `1.60.0` |
+| Version | `1.60.1` |
 | License | MIT |
 | Source | https://github.com/ssheleg/sheleg-design-skill |
 
