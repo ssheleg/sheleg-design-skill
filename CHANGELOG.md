@@ -1,3 +1,24 @@
+## 1.60.0 — the SKILL body splits back under budget, and the guards read the bundle
+
+Sherlock external-v3 (34 findings) plus the CREATIVE_DIRECTOR handoff (PR #28).
+
+- **The body breached the 5000-token budget** — 4275 → 5703 from the audit's own
+  doctrine — and the house rule's answer to a breach is a SPLIT. Three documents
+  now carry what a run does not need in the same breath: `CALIBRATION.md` (what
+  to do when two brief rows disagree), `COMPONENT_LAYER.md` (how a kit composes
+  with a token layer), `APPLYING.md` (the order of work and the repeat-failure
+  list). `PACK_COMPARISON.md` was tried and REVERTED: every sentence in it is
+  asserted by a guard, so the comparison protocol and the ten-role adapter
+  contract belong in the SKILL.
+- **Two guards now read the resolved BUNDLE rather than SKILL.md alone.** They
+  assert that a sentence REACHES the agent, and the agent loads the SKILL plus
+  what it links to — so reading one file made the house rule's own remedy delete
+  the doctrine those guards protect. Links are resolved, not listed: a sentence
+  parked where nothing points is still gone, and the negative assertion got
+  stricter, not looser.
+- The CLI smoke test compares the bundle rather than the installer's own manifest,
+  and asserts that manifest was written.
+
 ## [Unreleased]
 
 
