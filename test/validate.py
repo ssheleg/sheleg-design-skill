@@ -35,6 +35,7 @@ from __future__ import annotations
 
 import json
 import os
+import pathlib
 import re
 import shutil
 import subprocess
@@ -4960,6 +4961,51 @@ def validate_bundle_self_sufficiency():
         )
 
 
+def validate_every_shipped_document_is_reachable():
+    """A document nothing names is doctrine nobody can load.
+
+    Four files — `LAYOUT_CRAFT.md`, `TYPE_CRAFT.md`, `KNOWLEDGE_PROVENANCE.md` and
+    `VISUAL_REVIEW.md`, 17,001 bytes added in `381d2f9` — shipped in the bundle,
+    carried their own regressions in `test/audit_regressions/`, and were named by no
+    file an agent ever opens. `git log -S` on SKILL.md is empty: they were never
+    linked. The auditor's `BUNDLE_UNREACHABLE` does not see them because this skill is
+    flat — its documents sit beside SKILL.md rather than under `references/`, which is
+    exactly the shape that check does not walk.
+
+    Reachability is TRANSITIVE and closed over the bundle: SKILL.md names some, those
+    name others. A file in neither set is dead weight that costs a reader nothing only
+    because they never find it.
+    """
+    bundle = ROOT / PLUGIN_DIR / "skills" / PLUGIN
+    if not bundle.is_dir():
+        return
+    docs = {p.relative_to(bundle).as_posix(): p for p in bundle.rglob("*.md")}
+    entry = "SKILL.md"
+    if entry not in docs:
+        return
+    reached, stack = {entry}, [entry]
+    while stack:
+        cur = stack.pop()
+        text = read(docs[cur]) or ""
+        here = pathlib.PurePosixPath(cur).parent
+        for target in re.findall(r"\]\(([^)\s#]+)\)", text):
+            if target.startswith(("http://", "https://", "mailto:")):
+                continue
+            resolved = os.path.normpath(str(here / target)).replace(os.sep, "/")
+            resolved = resolved[2:] if resolved.startswith("./") else resolved
+            if resolved in docs and resolved not in reached:
+                reached.add(resolved)
+                stack.append(resolved)
+    for rel in sorted(docs):
+        check(
+            rel in reached,
+            f"{PLUGIN_DIR}/skills/{PLUGIN}/{rel}: ships in the bundle and no document "
+            "an agent opens names it, directly or through another — doctrine that "
+            "cannot be loaded is weight without reach. Give it a load trigger in "
+            "SKILL.md, or in the file that owns its subject",
+        )
+
+
 def _disclose_routing(msg):
     """A check that could not run, said out loud rather than counted as a pass."""
     print(f"  unlooked: {msg}")
@@ -5100,6 +5146,7 @@ def main():
     validate_motion_ceiling_floor()
     validate_emphasis_base_layer()
     validate_bundle_self_sufficiency()
+    validate_every_shipped_document_is_reachable()
     validate_coordination_claim()
     check_routed_triggers_still_advertised()
 

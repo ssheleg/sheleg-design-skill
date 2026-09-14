@@ -1,3 +1,25 @@
+## 1.61.0 — 17 KB of doctrine no agent could load
+
+`LAYOUT_CRAFT.md`, `TYPE_CRAFT.md`, `KNOWLEDGE_PROVENANCE.md` and `VISUAL_REVIEW.md`
+shipped in the bundle from `381d2f9`, carried their own regressions in
+`test/audit_regressions/`, and were named by **no document an agent ever opens**.
+`git log -S` on SKILL.md is empty: they were never linked. Four files, 17,001 bytes,
+reachable only by listing the directory.
+
+The auditor's `BUNDLE_UNREACHABLE` could not see them: this skill is flat — its
+documents sit beside SKILL.md rather than under `references/` — and that is exactly the
+shape the auditor's bundle walk does not enter.
+
+- **Four load triggers in SKILL.md**, each naming when to open the file, not just that
+  it exists. Added **by displacement**: the chart paragraph moved to
+  `SURFACE_COMPOSITION.md`, which already carries the role contract in full, and the
+  mobile paragraph to the file that owns it. Body 4922 → **4748**/4750 after the
+  auditor refused four drafts.
+- **`validate_every_shipped_document_is_reachable`** closes the class: reachability is
+  transitive and closed over the bundle — SKILL.md names some, those name others, and a
+  file in neither set fails. Watched refusing the pre-change tree by name, on all four.
+  `test/floors.json` 5641 → 5773.
+
 ## 1.60.2 — the ledger section names the version it ships
 
 The previous patch wrote the ledger section BEFORE bumping the version, so the

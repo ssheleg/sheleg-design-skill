@@ -9,6 +9,16 @@ was shipped on the strength of an argument rather than an observation.
 
 Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (REQ-10, carried to board B-004). Extended 2026-08-12 by the `pigeonhole` run with twenty rows, none of them `never`.
 
+## Shipped state — 1.61.0 (2026-09-14)
+
+From the 2026-09-13 family audit (HK-06).
+
+| REQ | What ships | How it was confirmed | Confirmed |
+|---|---|---|---|
+| HK-6a | Every document in the bundle is reachable from SKILL.md, transitively | `validate_every_shipped_document_is_reachable` walks the closure; `OK (5773 checks)` on this tree | **planted** — a copy with the four load triggers removed is refused by name, once per file |
+| HK-6b | The triggers were added by displacement, not by growing the body | the chart paragraph moved into `SURFACE_COMPOSITION.md` (which already carries the role contract) and the mobile paragraph into `MOBILE_SURFACES.md`; body 4922 → 4748/4750 | **observed** — `audit_skill.py --house` refused the tree at 4922, 4780, 4752, 4751 and 4750 first |
+| Gate | The whole suite on this tree | `npm test` EXIT=0 | **observed** |
+
 ## Shipped state — v1.60.2 (2026-09-10)
 
 Sherlock external-v3 (34 findings) and the CREATIVE_DIRECTOR handoff.

@@ -4,7 +4,7 @@ description: Use when deciding how something LOOKS or MOVES — cinematic landin
 license: MIT
 compatibility: Kit/lane commands need node>=16, npx, network. Optional siblings — dataviz, shadcn, migrate-radix-to-base. Each has an in-text fallback when absent or unreachable.
 metadata:
-  version: 1.60.2
+  version: 1.61.0
 ---
 
 # SHELEG Design
@@ -196,28 +196,31 @@ decision, not a research conclusion:
 7. **Consistency** — one ease, one duration set, one accent, one atom per job
    across every screen.
 
-## Load on demand — three things the pack layer does not decide
+## Load on demand — what the pack layer does not decide
 
 - **Scene depth — six layers** ([`SURFACE_COMPOSITION.md`](./SURFACE_COMPOSITION.md)),
-  before writing CSS for a cinematic page. A scene has planes; everything on one
-  plane is the failure no amount of easing repairs.
-- **Charts — the role contract in the same file, plus the `dataviz` handoff
-  where that skill exists**, before drawing a chart in any pack. Token names are
-  not uniform across the thirty-nine packs — only `--bg` and `--ink` resolve in
-  every one — and an undefined custom property does not error, it silently falls
-  back. Guessing one is the quietest way to ship a wrong chart. A `dataviz`
-  skill is an optional neighbour this skill does not ship: where none is
-  installed, the role table in `SURFACE_COMPOSITION.md` IS the chart contract,
-  applied by hand.
-- **Mobile surfaces** ([`MOBILE_SURFACES.md`](./MOBILE_SURFACES.md)) — separate
-  the platform target (iOS/Android/RN/web, each with its own component adapter)
-  from the prototype renderer, and treat a browser HTML mockup as a
-  demonstration with a native-equivalent column, never as native proof — when the
-  brief is a native app screen or a mobile-web view — not a desktop page whose
-  only mobile concern is collapse. Five mobile rules the packs each state alone,
-  a sixth **no pack answers** (the type ramp follows viewport width, not the
-  user's text size), and the half no pack decides on a phone: platform
-  convention.
+  before writing CSS for a cinematic page. Everything on one plane is the failure
+  no easing repairs.
+- **Charts — the role contract and the `dataviz` handoff**, in the same file,
+  before drawing a chart in any pack. Token names are not uniform across the
+  packs and an undefined custom property falls back silently rather than erroring.
+- **Mobile surfaces** ([`MOBILE_SURFACES.md`](./MOBILE_SURFACES.md)) — when the
+  brief is a native app screen or a mobile-web view, not a desktop page whose only
+  mobile concern is collapse. It says to separate
+  the platform target from the prototype renderer, refuses a browser mockup as
+  native proof, and carries the sixth rule no pack answers: the type ramp follows
+  viewport width, not the user's text size.
+
+- **Layout and type craft** ([`LAYOUT_CRAFT.md`](./LAYOUT_CRAFT.md),
+  [`TYPE_CRAFT.md`](./TYPE_CRAFT.md)) — before composing a page or setting a type
+  ramp. The portable half: observed, never dialled — an uncalibrated axis is a
+  number nobody can check.
+- **Visual review** ([`VISUAL_REVIEW.md`](./VISUAL_REVIEW.md)) — before a
+  screenshot is offered as evidence. It proves what it is OF, and the wrong frame
+  is the claim this file refuses.
+- **Where the knowledge came from**
+  ([`KNOWLEDGE_PROVENANCE.md`](./KNOWLEDGE_PROVENANCE.md)) — when a rule is
+  challenged or copied.
 
 ## Setting a visual language — invariants locked, axes open
 
