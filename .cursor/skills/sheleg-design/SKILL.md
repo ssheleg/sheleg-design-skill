@@ -4,7 +4,7 @@ description: Use when deciding how something LOOKS or MOVES — cinematic landin
 license: MIT
 compatibility: Kit/lane commands need node>=16, npx, network. Optional siblings — dataviz, shadcn, migrate-radix-to-base. Each has an in-text fallback when absent or unreachable.
 metadata:
-  version: 1.61.0
+  version: 1.61.1
 ---
 
 # SHELEG Design
@@ -62,7 +62,8 @@ cannot produce a conformance row — a receipt where it did is refused, because
 ## When to Use
 
 - Landing/marketing/hero pages where motion is a stated goal; particle or WebGL
-  backgrounds tied to scroll; scroll-linked charts, step flows, rails, parallax
+  backgrounds tied to scroll (3D engine: web3d-dev); scroll-linked charts, step flows,
+  rails, parallax
 - An existing scroll site that feels nervous, janky, or out of phase
 - Product UI needing a locked visual system — dashboards, admin, internal/dev tools,
   tokens, light/dark — **style-pack only**, via [`workbench`](./styles/workbench.md)
@@ -70,8 +71,8 @@ cannot produce a conformance row — a receipt where it did is refused, because
   generated-content and confirmation states ([`AI_PRODUCT_PATTERNS.md`](./AI_PRODUCT_PATTERNS.md))
 - Moving a visual system across the Figma border either way ([`FIGMA_BRIDGE.md`](./FIGMA_BRIDGE.md))
 - Motion that has to leave the page as a rendered file — a launch video, a feature
-  loop, a social cut ([`MOTION_PRODUCTION.md`](./MOTION_PRODUCTION.md)), which also
-  names the two programmatic-video tools and which one to reach for
+  loop, a social cut ([`MOTION_PRODUCTION.md`](./MOTION_PRODUCTION.md)), naming both
+  programmatic-video tools
 
 **Never apply the cinematic motion layer to:** product UI, docs sites, static content
 sites — or any page whose visual system or copy isn't finished yet. Product UI takes

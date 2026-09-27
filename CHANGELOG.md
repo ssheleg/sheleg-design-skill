@@ -1,3 +1,12 @@
+## 1.61.1 — the WebGL boundary names who owns the engine
+
+The skill owns particle and WebGL backgrounds tied to scroll, and until now said nothing
+about the engine underneath them — renderer, shaders, glTF assets, character animation —
+which a new family member, `web3d-dev`, now owns. The boundary is stated where a reader
+decides: the *When to Use* line for WebGL backgrounds. (`compatibility` was tried too and
+refused by the front-matter budget — 305 of 256 characters.) The body stays inside the house limit by displacement (4749/4750 tokens):
+two phrases about the video tools were tightened, nothing was removed.
+
 ## 1.61.0 — 17 KB of doctrine no agent could load
 
 `LAYOUT_CRAFT.md`, `TYPE_CRAFT.md`, `KNOWLEDGE_PROVENANCE.md` and `VISUAL_REVIEW.md`
