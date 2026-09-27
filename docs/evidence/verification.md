@@ -9,6 +9,16 @@ was shipped on the strength of an argument rather than an observation.
 
 Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (REQ-10, carried to board B-004). Extended 2026-08-12 by the `pigeonhole` run with twenty rows, none of them `never`.
 
+## Shipped state — 1.61.1 (2026-09-27)
+
+From the `web3d-dev` run: the WebGL boundary names the engine's owner.
+
+| REQ | What ships | How it was confirmed | Confirmed |
+|---|---|---|---|
+| W3D-1 | *When to Use* names `web3d-dev` for the 3D engine, assets and character animation under a WebGL background | the two lines in `plugins/sheleg-design/skills/sheleg-design/SKILL.md`; the Cursor mirror is byte-identical | **observed** |
+| W3D-2 | The body stays inside the house limit by displacement | `audit_skill.py --house`: refused at 4751 and 4750, passes at 4749/4750; nothing removed, two phrases tightened | **observed** |
+| Gate | The whole suite on this tree | `npm test` EXIT=0 | **observed** |
+
 ## Shipped state — 1.61.0 (2026-09-14)
 
 From the 2026-09-13 family audit (HK-06).
