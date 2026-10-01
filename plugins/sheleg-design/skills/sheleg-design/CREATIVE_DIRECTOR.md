@@ -367,6 +367,9 @@ direction, or run every lens for a single local correction.
 | **State adaptation** | Walk empty, long-content, error, pending, keyboard and recovery states relevant to the scenario. Separate browser prototype behavior from native platform expectations. | State/viewport identifiers, declared versus walked coverage and explicit simulations. No invented latency or claim that a browser preview proves native behavior. |
 | **Finish** | Revisit the already identified defects and check what the changes introduced. Keep useful details that were already working. Stop when no actionable finding remains or the agreed budget is reached. | Each previous finding is resolved, partial or unresolved, with current captures and any regressions. The number of edits is not a success metric. |
 
+At the copy/design seam, use the [rendered-copy review](VISUAL_REVIEW.md#rendered-copy)
+for visible text roles, project policy, counterexamples and coverage receipts.
+
 Before visual review, check that each capture belongs to the expected build,
 screen, state, viewport and content. A stale screenshot or one taken before an
 overlay opened cannot prove that overlay correct. If the capture cannot be

@@ -4,7 +4,7 @@ description: Use when deciding how something LOOKS or MOVES — cinematic landin
 license: MIT
 compatibility: Kit/lane commands need node>=16, npx, network. Optional siblings — dataviz, shadcn, migrate-radix-to-base. Each has an in-text fallback when absent or unreachable.
 metadata:
-  version: 1.61.1
+  version: 1.61.2
 ---
 
 # SHELEG Design
@@ -216,9 +216,9 @@ decision, not a research conclusion:
   [`TYPE_CRAFT.md`](./TYPE_CRAFT.md)) — before composing a page or setting a type
   ramp. The portable half: observed, never dialled — an uncalibrated axis is a
   number nobody can check.
-- **Visual review** ([`VISUAL_REVIEW.md`](./VISUAL_REVIEW.md)) — before a
-  screenshot is offered as evidence. It proves what it is OF, and the wrong frame
-  is the claim this file refuses.
+- **Visual review** ([`VISUAL_REVIEW.md`](./VISUAL_REVIEW.md)) — before accepting a
+  screenshot or rendered copy. Verify the frame, then inspect visible text
+  against project policy.
 - **Where the knowledge came from**
   ([`KNOWLEDGE_PROVENANCE.md`](./KNOWLEDGE_PROVENANCE.md)) — when a rule is
   challenged or copied.
