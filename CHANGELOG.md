@@ -1,3 +1,13 @@
+## 1.61.2 — rendered copy is part of visual review
+
+Visual review now inspects headings, hero fragments, captions and labels against
+the project's copy policy, preserving meaningful punctuation and ordinary prose.
+The review records visible text and source-role coverage; a successful linter
+that never checked headings cannot stand in for this review. Copywriting keeps
+ownership of its rules and parser. The existing load trigger and director route
+to one review home, covered by mutation-tested contract probes. These are
+instruction-integrity checks, not measured improvements in model behavior.
+
 ## 1.61.1 — the WebGL boundary names who owns the engine
 
 The skill owns particle and WebGL backgrounds tied to scroll, and until now said nothing

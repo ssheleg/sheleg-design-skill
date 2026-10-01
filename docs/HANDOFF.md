@@ -1,3 +1,17 @@
+# Display-copy review follow-up — 2026-10-01
+
+DC-02 prepares sheleg-design 1.61.2: rendered-copy review now names visible
+roles and coverage at the design/copywriting seam. See the
+[bounded report](evidence/audits/2026-10-01-display-copy/report.md) for scope,
+receipts and limitations. The coordinator owns PR review, release and umbrella
+pinning; this branch alone is not a published or installed update.
+
+Next task: review this branch with the companion super-ux punctuation parser
+change, then follow the family release sequence. Do not add a second copy parser
+here. Model-output improvement remains unmeasured.
+
+---
+
 # Sherlock family audit: handoff
 
 This branch contains the prepared sheleg-design-skill instruction changes from the family

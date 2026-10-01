@@ -11,7 +11,7 @@ one control that changes the condition.
 
 ```tsx
 <Empty
-  title="No integrations match “zzq”."
+  title="No integrations match “zzq”"
   detail="Check the spelling, or clear the filter to see all of them."
   action={<Button variant="secondary" size="sm">Clear filter</Button>}
 />

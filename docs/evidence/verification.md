@@ -9,6 +9,20 @@ was shipped on the strength of an argument rather than an observation.
 
 Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (REQ-10, carried to board B-004). Extended 2026-08-12 by the `pigeonhole` run with twenty rows, none of them `never`.
 
+## Release candidate — 1.61.2 (2026-10-01)
+
+DC-02: the [bounded report](audits/2026-10-01-display-copy/report.md) records
+source evidence and executed checks. Publication and installed-state verification
+belong to the coordinator's release receipt, not this candidate heading.
+
+| REQ | What the candidate carries | How confirmed | Status |
+|---|---|---|---|
+| DC-02-review | Visible-copy roles, project policy, exceptions and coverage in one review home | `python3 test/audit_regressions/dc-02.py`: 5 tests, including 6 removed-boundary mutations; pre-fix probes failed | observed contract integrity |
+| DC-02-example | Empty-state title corrected; ordinary detail punctuation retained | The example regression failed before the edit and passed after | observed source correction |
+| DC-02-package | Entry, director and review reach source, Cursor and npm bundle | `validate.py` mirrors/reachability; npm archive byte comparison | observed packaging integrity |
+| DC-02-gate | Full normal suite and final source consistency | `npm test` exit 0; final `python3 test/validate.py` exit 0 / 5778 checks | observed |
+| DC-02-outcome | Whether models follow the new review in real UI work | No before/after model evaluation executed | NOT_RUN |
+
 ## Shipped state — 1.61.1 (2026-09-27)
 
 From the `web3d-dev` run: the WebGL boundary names the engine's owner.
