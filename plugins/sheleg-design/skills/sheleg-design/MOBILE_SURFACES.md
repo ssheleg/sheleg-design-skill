@@ -12,6 +12,7 @@ pack's `## Responsive` section covers that, and this file does not repeat it.
 - Tools inside this lane — mobile-web fixes and React Native motion
 - Platform target and prototype renderer are two decisions, not one
 - The native state matrix — what each surface owes, and how it is verified
+- The axes matrix — every surface, every state, every axis
 - Reference sweeps — structure crosses, identity does not
 
 ## What a pack decides here, and what it does not
@@ -131,7 +132,9 @@ of any one pack's mono size or motion durations — a platform is not a pack.
 
 ## The native state matrix — what each surface owes, and how it is verified
 
-A web mockup with a native-equivalent column (above) still owes a **per-target
+This is the native case of the [axes matrix](#the-axes-matrix--every-surface-every-state-every-axis)
+below: the same rows and columns, with an evidence status that only a device or
+a simulator can set. A web mockup with a native-equivalent column (above) still owes a **per-target
 STATE matrix**: for the surface's interactive states, the expected NATIVE
 behaviour and its **evidence status** (`measured` on a real device/simulator,
 or `unverified`). For a context sheet the states are: **keyboard** (does it push
@@ -153,6 +156,42 @@ Two rules on the numbers and the settings:
   A verification that turns Dynamic Type up to check text-scale must return the
   device to its **saved** value afterwards — never unconditionally to 1.0, which
   silently changes the tester's own device.
+
+## The axes matrix — every surface, every state, every axis
+
+A surface is not one screenshot. Before a flagship or product surface is
+reviewed, its frames are planned as a matrix, and the contact sheet a person
+approves is that matrix filled in — on the web as much as on a phone.
+
+- **Rows are states** — the ones the surface's screens record names: default,
+  loading, empty, error, offline, long content, keyboard up, first run. A state
+  that does not apply is struck with its reason, not left out.
+- **Columns are four axes**: **viewport** (iPhone SE, a Pro Max, an iPad — or
+  375, 768 and 1280 on the web), **theme** (light, dark, increased contrast),
+  **text size** (default and the platform's largest: iOS AX5, Android's maximum
+  font scale, 200% on the web) and **locale** (base, a double-length
+  pseudolocale, RTL).
+- **Coverage is pairwise, not Cartesian.** Eight states across three viewports,
+  three themes, two text sizes and three locales is 432 frames, which no person
+  reads in one pass. The columns are a pairwise set — every pair of axis values
+  appears together at least once — **plus two mandatory pairs: dark × largest
+  text, and RTL × the narrowest viewport**, where layouts break most often.
+- **Each cell carries its capture record** ([`VISUAL_REVIEW.md`](./VISUAL_REVIEW.md))
+  and, on a native target, its evidence status. A cell that was planned and not
+  captured is a hole in the matrix, never a pass.
+
+Setting the axes is a command, not a mockup: on the iOS simulator
+`xcrun simctl ui <device> appearance dark`, `… increase_contrast enabled` and
+`… content_size accessibility-extra-extra-extra-large`; on Android the system
+font scale and the `en-XA` / `ar-XB` pseudolocales; on the web the DevTools
+emulation of `prefers-color-scheme`, `prefers-contrast` and `prefers-reduced-motion`,
+and browser zoom. Record the settings you changed and restore the saved ones,
+as above.
+
+**The native evidence rule does not loosen here.** A web render at phone width
+fills the web cells; it leaves every native cell `unverified` until a simulator
+or a device sets it. The items of [`ADA_RUBRIC.md`](./ADA_RUBRIC.md) that read
+the matrix (R5, R12, R15, R19, R20, R23, R25) are NOT_RUN where their cells are.
 
 ## Reference sweeps — structure crosses, identity does not
 

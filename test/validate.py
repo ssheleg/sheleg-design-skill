@@ -1576,6 +1576,29 @@ def check_floor(script: str, count: int) -> None:
 # reduced-motion plants below name the message they must provoke.
 PLANTS = (
     (
+        # A field the template asks for and the validator does not know: the drift
+        # three lists of the same sixteen names grow into first.
+        "a director-record field the validator does not know",
+        "bin/record.js",
+        lambda t: t.replace('"Surfaces", "Haptics"', '"Surfaces", "Haptic"', 1),
+        "a field the template asks for and the validator does not know",
+    ),
+    (
+        # The rubric saying it is Apple's is the one sentence it must never say.
+        "an ADA rubric that stops saying it is derived",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/ADA_RUBRIC.md",
+        lambda t: t.replace("**This rubric is derived. Apple does not publish one.**",
+                            "**This is the Apple Design Awards rubric.**", 1),
+        "the rubric is derived, not Apple's",
+    ),
+    (
+        # A judged item promoted to a gate: the judge would then block on taste.
+        "an ADA item typed as nothing the contract knows",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/ADA_RUBRIC.md",
+        lambda t: t.replace("| J | i a w ad |", "| X | i a w ad |", 1),
+        "is not G, J, H or a pair of them",
+    ),
+    (
         # A catalogue row that promises a machine check nothing implements: the
         # drift a rule list grows into first. Derived from the row, not its wording.
         "a SLOP_MARKERS.md lint: row with no implementation behind it",
@@ -5169,6 +5192,96 @@ def validate_slop_markers():
     print(f"  slop markers: {len(rows)} rows, {len(by_rule)} lint rules, {len(impl)} implemented")
 
 
+RECORD_FIELDS = ("Brief", "Mode", "Taste", "References", "Cast", "Fork", "Rubric", "Critique",
+                 "Markers", "Alignment", "Quality", "Signature", "Surfaces", "Haptics", "ADA", "Open")
+
+
+def validate_director_record():
+    """The record's three homes agree: the template, the validator and the doctrine.
+
+    The director record (K3) is a template a person copies
+    (`templates/director-record.md`), a validator that reads it (`bin/record.js`,
+    `--check-record`) and a paragraph in `CREATIVE_DIRECTOR.md` that names its
+    fields. Three lists of the same sixteen names drift one edit at a time, and a
+    field the template has and the validator does not know is a field nobody checks.
+    """
+    bundle = ROOT / PLUGIN_DIR / "skills" / PLUGIN
+    rel_t = f"{PLUGIN_DIR}/skills/{PLUGIN}/templates/director-record.md"
+    tmpl = read(bundle / "templates" / "director-record.md")
+    if not check(tmpl is not None, f"{rel_t}: missing — the director record has no template"):
+        return
+    heads = tuple(re.findall(r"^## (.+?)\s*$", tmpl, re.M))
+    check(heads == RECORD_FIELDS, f"{rel_t}: fields {heads} are not the record's sixteen, in order "
+          f"{RECORD_FIELDS}")
+    check(re.search(r"^surface_class:", tmpl, re.M) is not None,
+          f"{rel_t}: no surface_class header — the class decides which fields are owed")
+    src = read(ROOT / "bin" / "record.js") or ""
+    m = re.search(r"const FIELDS = \[(.*?)\];", src, re.S)
+    if check(m is not None, "bin/record.js: no FIELDS list — the validator reads no field set"):
+        fields = tuple(re.findall(r'"([A-Za-z]+)"', m.group(1)))
+        check(fields == RECORD_FIELDS, f"bin/record.js: FIELDS {fields} disagree with the template's "
+              f"{RECORD_FIELDS} — a field the template asks for and the validator does not know is "
+              "never checked")
+    cd = read(bundle / "CREATIVE_DIRECTOR.md") or ""
+    sec = _section(cd, "## The record the director owes")
+    check("templates/director-record.md" in sec and "--check-record" in sec,
+          "CREATIVE_DIRECTOR.md: 'The record the director owes' does not point at the template and "
+          "the validator")
+    flat = " ".join(sec.split())
+    check(", ".join(RECORD_FIELDS[:-1]) + ", " + RECORD_FIELDS[-1] in flat,
+          "CREATIVE_DIRECTOR.md: the record section does not name the sixteen fields in order")
+    print(f"  director record: {len(heads)} template fields, validator and doctrine agree")
+
+
+ADA_PROFILE_PRODUCT = ("R1", "R3", "R4", "R5", "R8", "R9", "R12", "R13", "R14", "R15", "R16",
+                       "R17", "R19", "R20", "R22")
+ADA_PROFILE_AD = ("R7", "R8", "R10", "R11", "R14", "R18", "R21", "R22")
+
+
+def validate_ada_rubric():
+    """ADA_RUBRIC.md (K6): 25 binary items, typed, with applicability, derived and dated."""
+    rel = f"{PLUGIN_DIR}/skills/{PLUGIN}/ADA_RUBRIC.md"
+    text = read(ROOT / PLUGIN_DIR / "skills" / PLUGIN / "ADA_RUBRIC.md")
+    if not check(text is not None, f"{rel}: missing"):
+        return
+    rows = re.findall(r"^\|\s*(R\d+)\s*\|(.*)\|\s*$", text, re.M)
+    ids = [r[0] for r in rows]
+    check(ids == [f"R{i}" for i in range(1, 26)], f"{rel}: items are {ids}, not R1–R25 in order")
+    for rid, rest in rows:
+        cells = [c.strip() for c in rest.split("|")]
+        if not check(len(cells) == 5, f"{rel}: {rid} has {len(cells) + 1} cells, the contract is six "
+                     "(#, category, item, how to verify, type, applies)"):
+            continue
+        cat, item, how, typ, applies = cells
+        check(all((cat, item, how)), f"{rel}: {rid} leaves its category, item or verification empty")
+        check(re.fullmatch(r"[GJH](\+[GJH])?", typ) is not None, f"{rel}: {rid} type {typ!r} is not "
+              "G, J, H or a pair of them")
+        check(re.fullmatch(r"all|(?:(?:i|a|w|ad)(?: |$))+", applies) is not None,
+              f"{rel}: {rid} applicability {applies!r} is not all or i / a / w / ad")
+    flat = " ".join(text.split())
+    check("This rubric is derived. Apple does not publish one." in flat,
+          f"{rel}: the file must say plainly that the rubric is derived, not Apple's")
+    check(len(re.findall(r"https://(?:developer|www)\.apple\.com/\S+ \(read \d{4}-\d{2}-\d{2}\)", text)) >= 3,
+          f"{rel}: Apple's public category pages are not cited with the date they were read")
+    for needle, why in (
+        ("NOT_ASSESSED", "a judged item stays NOT_ASSESSED until a labelled set exists"),
+        ("both orders", "pairwise only against a reference, in both orders"),
+        ("Three samples", "k = 3 samples, disagreement is uncertain"),
+        ("`uncertain`", "disagreement goes to the human as uncertain"),
+        ("never turns a G-FAIL into a PASS", "the judge never overrides a gate"),
+        ("region → defect → change", "every FAIL is a triple"),
+        ("The generator is not the judge", "generator and judge are different agents"),
+    ):
+        check(needle in flat, f"{rel}: {why} (looked for {needle!r})")
+    for name, items in (("product", ADA_PROFILE_PRODUCT), ("ad", ADA_PROFILE_AD)):
+        line = next((l for l in text.splitlines() if l.startswith(f"| **{name}**")), "")
+        found = tuple(f"R{n}" for n in re.findall(r"R(\d+)", re.sub(r"R(\d+)–R(\d+)", lambda m: " ".join(
+            f"R{i}" for i in range(int(m.group(1)), int(m.group(2)) + 1)), line.split("|")[2] if line.count("|") > 2 else "")))
+        found = tuple(dict.fromkeys(found))
+        check(set(items) <= set(found), f"{rel}: the {name} profile lists {found}, the contract is {items}")
+    print(f"  ADA rubric: {len(rows)} items, profiles product {len(ADA_PROFILE_PRODUCT)} / ad {len(ADA_PROFILE_AD)}")
+
+
 def _disclose_routing(msg):
     """A check that could not run, said out loud rather than counted as a pass."""
     print(f"  unlooked: {msg}")
@@ -5311,6 +5424,8 @@ def main():
     validate_bundle_self_sufficiency()
     validate_every_shipped_document_is_reachable()
     validate_slop_markers()
+    validate_director_record()
+    validate_ada_rubric()
     validate_coordination_claim()
     check_routed_triggers_still_advertised()
 

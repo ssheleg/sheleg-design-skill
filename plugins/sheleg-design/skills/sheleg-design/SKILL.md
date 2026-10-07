@@ -4,7 +4,7 @@ description: Use when deciding how something LOOKS or MOVES — cinematic landin
 license: MIT
 compatibility: Kit/lane commands need node>=16, npx, network. Optional siblings — dataviz, shadcn, migrate-radix-to-base. Each has an in-text fallback when absent or unreachable.
 metadata:
-  version: 1.62.0
+  version: 1.63.0
 ---
 
 # SHELEG Design
@@ -18,16 +18,13 @@ read it per frame and react in their own language. Nothing crossfades — things
 *redeploy*. Every layer degrades to a calm static state.
 
 **READ FIRST, BEFORE ANY OF THE CRAFT BELOW:**
-[`CREATIVE_DIRECTOR.md`](./CREATIVE_DIRECTOR.md) — the decision layer. What the
-surface is for and **what would prove it failed**; which lane and which mode the
-task is in, because a redesign starts by measuring the thing it replaces and an
-update changes a token rather than the components that read it; which tools to
-cast, measured with `npx sshlg-skills pack design --lane <lane>` rather than
-recalled; when to build **two variations with two disjoint casts in parallel
-subagents** — and the rule that keeps that honest, which is that the rubric is
-written before either one exists; and the validation split that matters, where
-alignment to the brief and measurable quality are two different questions and
-neither implies the other. **The failure mode of an agent doing design is not
+[`CREATIVE_DIRECTOR.md`](./CREATIVE_DIRECTOR.md) — the decision layer: what the
+surface is for and **what would prove it failed**; the lane and the mode (a
+redesign starts by measuring what it replaces, an update changes a token); which
+tools to cast, measured with `npx sshlg-skills pack design --lane <lane>`; when to
+fork into **two variations with disjoint casts**, the rubric written first;
+alignment and measurable quality as two separate questions; and the director
+record all of it lands in. **The failure mode of an agent doing design is not
 ugliness, it is plausibility**, and that document is what refuses it.
 
 **REQUIRED REFERENCE — for the cinematic path:** read
@@ -223,6 +220,10 @@ decision, not a research conclusion:
 - **The visual floor** ([`SLOP_MARKERS.md`](./SLOP_MARKERS.md)) — before shipping,
   pack or no pack: markers with a reason and an exception, the three default looks
   among them. `npx sheleg-design-skill --lint <dir>` checks the machine half.
+- **The director record and the award bar**
+  ([`templates/director-record.md`](./templates/director-record.md),
+  [`ADA_RUBRIC.md`](./ADA_RUBRIC.md)) — before a flagship renders; checked by
+  `--check-record <file>`.
 - **Where the knowledge came from**
   ([`KNOWLEDGE_PROVENANCE.md`](./KNOWLEDGE_PROVENANCE.md)) — when a rule is
   challenged or copied.
@@ -331,8 +332,8 @@ not restate their component docs here.
 ## Optional — Figma (design ↔ code)
 
 Touching a Figma file — publishing the pack as variables, or building from a
-design — starts at [`FIGMA_BRIDGE.md`](./FIGMA_BRIDGE.md). It owns the contract,
-including the one rule worth knowing before you open the tool: **a frame is read
+design — starts at [`FIGMA_BRIDGE.md`](./FIGMA_BRIDGE.md). It owns the contract
+and the one rule to know before opening the tool: **a frame is read
 by designers and stakeholders, so drawing in one is publishing**, and creating a
 file needs a named destination rather than a guess.
 
@@ -342,11 +343,11 @@ Where `/design-sync` is available, a pack can be pushed to claude.ai/design so t
 design agent builds from **this pack's** tokens, not its own defaults. The contract
 and its gaps: [`DESIGN_SYNC_BRIDGE.md`](./DESIGN_SYNC_BRIDGE.md).
 
-## Optional — real-world references (Lazyweb, Mobbin, Refero)
+## Real-world references (Refero, Lazyweb, Mobbin)
 
-A pack fixes *how it looks*, not what a good version of the screen contains. Where
-these are connected, look at real products before inventing a layout — evidence about
-**content and structure**, never a licence to copy a visual (`DESIGN_SYNC_BRIDGE.md` §4).
+A pack fixes *how it looks*, not what a good screen contains. A new design or brand
+redesign sweeps real products first — **content and structure**, never a visual to
+copy (`DESIGN_SYNC_BRIDGE.md` §4); an empty sweep is recorded.
 
 ## Applying it, and the mistakes that repeat
 

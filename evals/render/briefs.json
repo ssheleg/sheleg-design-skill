@@ -1,0 +1,38 @@
+{
+  "schema": "render-eval-briefs/1",
+  "note": "Four fixed briefs. They never change wording between runs: a run is comparable to the last one only while the briefs are byte-identical. A new brief is a new file, not an edit.",
+  "briefs": [
+    {
+      "id": "landing-hero-motion",
+      "surface_class": "flagship",
+      "surface": "landing hero with motion",
+      "prompt": "Design and build the first screen of the marketing site for a time-tracking tool used by freelance translators. The hero carries one piece of motion that explains how the product works. Deliver HTML and CSS in this directory, and the director record as director-record.md.",
+      "falsifier": "a first-time visitor cannot say what the product does after five seconds, or the motion is the only place the explanation lives",
+      "states": ["default", "reduced-motion", "narrow viewport"]
+    },
+    {
+      "id": "mobile-onboarding",
+      "surface_class": "flagship",
+      "surface": "mobile onboarding screen",
+      "prompt": "Design and build the first onboarding screen of a mobile app that reminds people to water their house plants. Deliver the screen as React (TSX) and CSS in this directory, and the director record as director-record.md.",
+      "falsifier": "a new user cannot add their first plant without leaving onboarding",
+      "states": ["first-run", "keyboard-up", "large text"]
+    },
+    {
+      "id": "product-dashboard",
+      "surface_class": "product",
+      "surface": "product dashboard",
+      "prompt": "Design and build the main dashboard of an internal-facing tool where a support team sees open tickets by age and by queue. Deliver React (TSX) and CSS in this directory, and the director record as director-record.md.",
+      "falsifier": "the oldest open ticket is not visible without sorting at 1280×800",
+      "states": ["default", "empty", "loading", "error"]
+    },
+    {
+      "id": "paywall",
+      "surface_class": "flagship",
+      "surface": "paywall",
+      "prompt": "Design and build the paywall of a language-learning app that offers a monthly and a yearly plan with a free trial. Deliver HTML and CSS in this directory, and the director record as director-record.md.",
+      "falsifier": "the price after the trial ends is not readable without scrolling on a 375×667 screen",
+      "states": ["default", "selected plan", "error"]
+    }
+  ]
+}

@@ -25,6 +25,7 @@ are in [`KNOWLEDGE_PROVENANCE.md`](./KNOWLEDGE_PROVENANCE.md).
 - 9. Reduced motion
 - 10. Pre-flight
 - 11. Tools inside this lane
+- 12. Reviewing motion — the procedure, and what it hands the record
 - How the calibration dials bind
 
 ## 1. Should this animate at all?
@@ -371,6 +372,7 @@ Before calling motion done:
 - [ ] Every ScrollTrigger has a cleanup path.
 - [ ] `markers` removed.
 - [ ] Reduced motion tested by actually turning it on.
+- [ ] The review in §12 ran on the build, and its numbers are in the record.
 - [ ] The page still looks like the pack (§8).
 - [ ] Nothing in the diff is a rendered video standing in for page motion. If a file
       IS the right answer, the obligations move with it —
@@ -402,6 +404,53 @@ Its numbers are the ones §1–4 adapted; where it and this file disagree, this 
 wins, and the pack wins over both on values. The differences are decided one rule
 at a time in `KNOWLEDGE_PROVENANCE.md`, so the doctrine and the tool never hand
 an agent two answers.
+
+---
+
+## 12. Reviewing motion — the procedure, and what it hands the record
+
+Reading the CSS is not reviewing motion. A duration in a token says what was
+meant; the frames say what ships. Four steps, in this order, on the real build
+— each one produces evidence a second reader can check.
+
+1. **Capture a frame strip and a run video.** One frame per phase — start,
+   mid, settle; one per step of a stagger — not smooth playback, plus the video
+   of one full run.
+   - Web: a performance trace with screenshots in DevTools, or a Playwright
+     video; frames pulled from it at the phase times.
+   - Native: the simulator's or device's screen recording
+     (`xcrun simctl io <device> recordVideo`, `adb shell screenrecord`).
+   - A rendered file ([`MOTION_PRODUCTION.md`](./MOTION_PRODUCTION.md)):
+     `npx hyperframes snapshot --at <t1>,<t2>,<t3>` for the frames, and
+     `npx hyperframes compare <baseline> <candidate> --at <t>` for a
+     before/after sheet. Compare is a review surface, not a gate: the command
+     succeeding approves nothing — the sheet is read.
+   - Motion authored in Figma: the file's own video export, sampled into frames
+     ([`FIGMA_BRIDGE.md`](./FIGMA_BRIDGE.md) §3) — a frame screenshot shows only
+     the resting state.
+2. **Timings against the bands.** Each animation's measured duration is judged
+   by exactly one row of the §3 table and the verdict cites its ID
+   (`DUR-OVERLAY: 180 ms, PASS`). The curve is named and is not `ease-in` (§2);
+   nothing from §5 appears in the frames.
+3. **Reduced motion, turned on.** The setting is switched on — DevTools'
+   `prefers-reduced-motion: reduce` emulation, the simulator's or device's
+   Reduce Motion — and the strip is captured again. The surface is fully usable,
+   no content waits on a transition, and script-driven motion stopped too (§9).
+4. **One moment per viewport.** In every frame, count what moves for attention.
+   More than one drifting figure, or a second "signature" competing with the
+   one the record names, is a finding.
+
+**The tool is `review-animations`, invoked by name** (§11): it reads the diff,
+and its Block/Approve verdict is read against §3. It never loads itself; absent,
+the four steps above are the whole review and its verdict is NOT_RUN, not PASS.
+
+**What the review hands over.** The measured durations with their row IDs and
+the reduced-motion result go into the director record's `Quality` field; every
+defect seen on a frame goes into `Critique` as a triple —
+`card stack, frame at 0.24 s → overshoots its rest position by 12 px → the
+pack's ease-out, no spring`. On a flagship, the same evidence answers
+[`ADA_RUBRIC.md`](./ADA_RUBRIC.md) R10 and R20. The video and the frames are
+media: they stay out of git, and the record names what they showed.
 
 ---
 

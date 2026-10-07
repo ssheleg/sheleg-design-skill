@@ -1,0 +1,17 @@
+:root {
+  --paper: #f6f1e7;
+  --ink: #1d1b16;
+  --accent: #b4532a;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "IBM Plex Sans", "Helvetica Neue", sans-serif;
+  --dur-state: 200ms;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+body { background: var(--paper); color: var(--ink); font-family: var(--font-body); }
+.hero__title { font-family: var(--font-display); }
+.hero__cta { background: var(--accent); color: var(--paper); }
+.segment { transition: transform var(--dur-state) var(--ease-out), opacity var(--dur-state) var(--ease-out); }
+.segment.is-counting { transform: translateX(4px); }
+@media (prefers-reduced-motion: reduce) {
+  .segment { transition: none; }
+}

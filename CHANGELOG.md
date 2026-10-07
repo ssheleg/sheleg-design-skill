@@ -1,3 +1,96 @@
+## 1.63.0 — the director record is a file with a validator, and a flagship is scored on a rubric that says where it came from
+
+The director's output was a prose block at the end of `CREATIVE_DIRECTOR.md`: nothing
+held it, so a brief with no falsifier, a taste of "modern, clean", a fork judged by a
+rubric written afterwards and a `Markers` line nobody ran all passed as a record. The
+plan's pipeline (contracts K3, K6, K7) needs a record the next stage can check, and a
+quality bar for flagship surfaces that is more than the measurable table.
+
+- **D3 — `templates/director-record.md` and `npx sheleg-design-skill --check-record
+  <file> [--json]`.** A header with `surface_class` (`flagship`, `product`,
+  `internal`, `ad`) and sixteen `## <Field>` headings: Brief, Mode, Taste, References,
+  Cast, Fork, Rubric, Critique, Markers, Alignment, Quality, Signature, Surfaces,
+  Haptics, ADA, Open. A flagship owes all sixteen; a product screen Brief, Mode,
+  References, Markers, Open; an internal tool Brief, Mode, Markers, Open; an ad Brief,
+  Mode, Taste, References, Markers, Signature, ADA, Open. Each owed field is held to
+  its rule: Brief needs Surface, Job, Constraint and Falsifier; Taste needs `Take:` and
+  `Ban:` lines with something other than generic words (English and Russian); References
+  needs five real-product URLs each with `take:`, or `none found` with `Searched:`;
+  `Fork: yes` needs a Rubric section it names, `A:`/`B:` and a `Winner:`; Rubric three
+  criteria; Critique region → defect → change triples or `clean render`; Markers a
+  `--lint` run with its revision and counts, and no S1; Signature exactly one moment
+  with What/Where/Why; ADA the class profile, every G item passing, at most two J FAIL
+  on a flagship, no J PASS without a `Labelled set:`, safe zones on an ad. Guidance
+  lives in HTML comments, so a copied template fails until it is filled. `Mode:
+  declined` with its reason passes on its own. Exit 0 valid, 1 violations as
+  `<Field>: <problem>`, 2 usage. `bin/record.js`, Node, no dependencies; its rules
+  join `--self-test`. The prose block in `CREATIVE_DIRECTOR.md` is replaced by a
+  pointer to both, keeping the doctrine on `Open`.
+- **K6 — `ADA_RUBRIC.md`.** R1–R25, each binary, typed G (a gate no judge outvotes),
+  J (a judge on a per-task checklist) or H (the human on the contact sheet), with
+  applicability and how to verify (tool → artifact). Profiles: flagship all 25, every
+  G PASS and at most two J FAIL with reasons; product the G items R1, R3–R5, R8, R9,
+  R12–R17, R19, R20, R22; ad R7, R8, R10, R11, R14, R18, R21, R22 plus safe zones. The
+  judge: a checklist per task, pairwise only against an approved reference in both
+  orders, three samples, disagreement `uncertain` to the human, J items NOT_ASSESSED
+  until a labelled set exists, never above a G-FAIL, and never the agent that
+  rendered the surface. Every FAIL is a triple. **The file says plainly that the
+  rubric is derived and Apple publishes none**, and cites Apple's award pages with
+  the date they were read. Linked from Act 5 and `SKILL.md`.
+- **D4 — the reference sweep is mandatory** for a new design and a redesign of a brand
+  or flagship surface (Act 2, `APPLYING.md`, `SKILL.md`), through whichever reference
+  servers the session exposes — Refero, Lazyweb, Mobbin where authorized — with an
+  empty result recorded as `none found` and where it looked.
+- **First time right**, a new section of `CREATIVE_DIRECTOR.md`: decisions before
+  pixels in the record; the forbidden list loaded into context and the linter run;
+  one key screen in one state first; feedback only external and specific; a
+  re-render budget of one, at most two, then `unresolved` to the person; the
+  generator is not the judge.
+- **D5 — `MOTION_DOCTRINE.md` §12, reviewing motion:** a frame strip and a run video,
+  timings judged by one `DUR-*` row each, reduced motion turned on and captured again,
+  one moment per viewport; `npx hyperframes snapshot` / `compare` as the evidence for a
+  rendered file (compare is a review surface, not a gate); `review-animations` by name.
+  It feeds the record's Quality and Critique.
+- **D6 — `FIGMA_BRIDGE.md` §3 re-drawn.** "Motion stays in code — Figma has no easing
+  variable type" was no longer true: the official Figma plugin (2.2.120) documents
+  TIMING and EASING variables, keyframes, animation styles and `get_motion_context`
+  snippets. Durations and curves can now be published; motion read back is held to
+  the doctrine (Figma's `EASE_IN`, `…_BACK` and `BOUNCY` are banned forms in UI); the
+  scroll clock, scrubbed motion and the reduced-motion branch stay in code. Read from
+  the plugin's documentation, not confirmed by a call (B-144). New §5: a frame is
+  critiqued — `get_screenshot`, the record's rubric, triples, `get_variable_defs` —
+  before anyone approves it; and one Figma file per surface (App / Web / ASO). README,
+  the Cursor rule and `DESIGN_SYNC_BRIDGE.md` follow.
+- **D10 — the taste profile** is the record's `Taste` field and a guide in the template
+  (what we take, what we ban, anti-patterns, the three dials); Act 1 writes it beside
+  the brief. A profile of "modern / clean" is empty. A personal profile's content stays
+  with its owner.
+- **`MOBILE_SURFACES.md`, the axes matrix:** states × viewport × theme × text size ×
+  locale, pairwise coverage plus the mandatory pairs dark × largest text and RTL ×
+  narrowest viewport, a capture record per cell, the commands that set each axis; the
+  native state matrix is its native case, and a web render still proves no native cell.
+- **D8 — `evals/render/`:** four fixed briefs (landing hero with motion, mobile
+  onboarding, product dashboard, paywall) and a runner that counts linter findings by
+  severity, validates each director record, and scores the G items source can decide
+  (R8, R20, R24), reporting the rest NOT_RUN; `--write` appends a dated row to
+  `test/evals/RESULTS.md`, whose new section states the method. The model generation
+  step is NOT_RUN in CI; the harness row on the hand-written sample is recorded as
+  such (B-142).
+- **B-140 — the kits obey their own floor.** `workbench`'s progress fill slides by a
+  translate instead of transitioning `width`, `paperclip`'s lane mark grows by a scale
+  instead of `width`/`height`, both rendered before and after with the same geometry;
+  `deskmate`'s gradient word carries its waiver and reason. `node bin/cli.js --lint
+  kits` runs in `npm test` and in CI: 0 S1.
+- **Provenance:** a new table for sources with no commit to pin — Apple's award pages,
+  the judge papers, the Figma plugin's motion skills and the HyperFrames CLI skill,
+  each `derived`, dated, with SHA256 where a file was read.
+- **Gates:** `test/record_test.js` (49 cases through the real CLI, every rule watched
+  failing on one planted defect before `bin/record.js` existed); `validate_director_record()`
+  and `validate_ada_rubric()` with three plants; `test/render_eval_test.js` on the sample.
+
+The `SKILL.md` body is 4747/4750 tokens: the new load-on-demand line was paid for by
+tightening the READ FIRST paragraph and the references section.
+
 ## 1.62.0 — a visual floor with reasons and exceptions, and a linter that reads a project against it
 
 Generated design kept shipping through reviews that had nothing to point at.

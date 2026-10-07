@@ -202,8 +202,8 @@ to close, in the pack, before anything is pushed.
 
 ## 6. What cannot cross
 
-The same border [`FIGMA_BRIDGE.md`](./FIGMA_BRIDGE.md) §3 draws, for the same reason,
-and it is a contract rather than a gap:
+The border [`FIGMA_BRIDGE.md`](./FIGMA_BRIDGE.md) §3 draws for the scroll-driven
+layer, for the same reason, and it is a contract rather than a gap:
 
 - **Motion stays in code.** The scroll clock, the particle formations, the
   fluted-glass shader, the word-by-word headline, scrubbed instruments, parallax —

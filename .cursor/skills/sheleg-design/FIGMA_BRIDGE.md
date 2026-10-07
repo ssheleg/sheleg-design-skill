@@ -19,8 +19,9 @@ stands on its own and nothing below applies.
 
 - 1. Code → Figma (publish the pack as variables)
 - 2. Figma → code (implement a design without importing slop)
-- 3. What cannot cross
+- 3. What cannot cross — and what motion can now
 - 4. Round-trip discipline
+- 5. A frame is critiqued before it is approved
 
 ## 1. Code → Figma (publish the pack as variables)
 
@@ -100,24 +101,53 @@ faithfully — that is what it is for. Identity is not.
 
 ---
 
-## 3. What cannot cross
+## 3. What cannot cross — and what motion can now
 
 Say this out loud when someone asks why the Figma file "doesn't have all the
-tokens":
+tokens".
 
-- **Motion stays in code.** Figma has no easing variable type — the site ease
-  (`cubic-bezier(…)`), the duration set and the stagger have no representation.
-  Prototype easing is set by hand and is an approximation; the token layer
-  remains the source. Everything in SHELEG_DESIGN.md §10 is code-only.
+**Motion crosses in part, and the pack still wins.** This section used to say
+motion stays in code because Figma had no easing variable type. Re-checked on
+2026-10-07 against the official Figma plugin's own skills (`figma-use`,
+`figma-use-motion`, `figma-implement-motion`, plugin 2.2.120): that is no longer
+true, and the boundary moved. It was read from the plugin's documentation, not
+confirmed by a call on a file — Figma gates its motion API per account, and an
+account without it gets `"<name>" is not a supported API`.
+
+- **What crosses now.** Variables have two motion types besides the four below:
+  **TIMING** (a duration in seconds) and **EASING** (a cubic, a custom
+  cubic-bezier, a spring, or a hold). So the pack's duration tokens and named
+  curves can be published as a `<pack>/motion` collection: `--dur-*` converted
+  from milliseconds to seconds, and `cubic-bezier(a, b, c, d)` as a
+  `CUSTOM_CUBIC_BEZIER` with those four control points. Frames can carry keyframe
+  tracks and animation styles on a timeline, and `get_motion_context` hands the
+  motion back as CSS `@keyframes` or motion.dev snippets.
+- **Motion that comes back is still held to the doctrine.** A snippet's values
+  are a proposal like any other value in the file (§2): its durations are judged
+  by the bands in [`MOTION_DOCTRINE.md`](./MOTION_DOCTRINE.md) §3, and Figma's
+  `EASE_IN`, the `…_BACK` curves and the `BOUNCY` spring are forms the doctrine
+  bans in UI (§2, §5) — map them to the pack's curve or refuse them. §7 of the
+  doctrine (motion that came from a design tool) applies in full.
+- **What still stays in code.** The single scroll clock and everything in
+  SHELEG_DESIGN.md §10 — scrubbed instruments, scroll-linked progress,
+  formations, parallax — has no Figma timeline to live on; a frame's timeline is
+  time, not scroll. The reduced-motion branch is code-only too: Figma has no
+  reduced-motion state, and the implementing code adds it.
+- **A screenshot does not show motion.** `get_screenshot` shows the resting
+  state only; motion is reviewed from the file's video export, sampled into
+  frames ([`MOTION_DOCTRINE.md`](./MOTION_DOCTRINE.md) §12).
+
+The rest is unchanged:
+
 - **Shadows and textures are styles, not variables.** A shadow is an effect
   style; only its *parts* (`radius`, `color`, `spread`, `offsetX`, `offsetY`) can
   be bound to variables. Publish the pack's elevation as effect styles and bind
   what binds. `editorial-luxury`'s film-grain overlay and `instrument-console`'s
   signal glow have no variable form at all.
-- **Variables are four types only** — COLOR, FLOAT, STRING, BOOLEAN. Anything
-  composite (a full shadow string, a gradient, a font stack with fallbacks)
-  either decomposes into those or stays code-side. Publish the primary family as
-  the STRING variable and keep the fallback stack in CSS.
+- **Variables are COLOR, FLOAT, STRING and BOOLEAN — plus TIMING and EASING for
+  motion, above.** Anything composite (a full shadow string, a gradient, a font
+  stack with fallbacks) either decomposes into those or stays code-side. Publish
+  the primary family as the STRING variable and keep the fallback stack in CSS.
 - **Extra modes may be refused.** Adding a second mode to a collection throws
   once a plan's mode cap is reached. If `dark` cannot be added, ship light-only
   variables and say so — do not fake it with a parallel collection that will
@@ -133,3 +163,28 @@ tokens":
   the cheapest proof the write landed as intended.
 - When the pack changes, the file is stale until republished. Treat the pack's
   version as the design system's version and note it in the file description.
+- **One file per surface, not one file for everything.** A product's Figma
+  project holds a file per surface — **App**, **Web**, and **ASO** (store
+  screenshots, icon, logo) — each publishing the same pack. One file for all
+  three mixes three reviewers, three cadences and three sets of frames that
+  never need to be compared, and the file becomes the thing nobody can approve.
+
+---
+
+## 5. A frame is critiqued before it is approved
+
+A frame drawn in Figma is a render like any other, and it gets the same review
+before anyone approves it — approving a flow does not approve its art direction.
+
+1. **Read the frame, not its description.** `get_screenshot` on the frame, at
+   the size it ships.
+2. **Hold it to the record's rubric.** The criteria in the director record's
+   `Rubric` field ([`templates/director-record.md`](./templates/director-record.md)),
+   written before the frame existed — not criteria made up while looking at it.
+3. **Write what is wrong as triples** — region → defect → change — into the
+   record's `Critique`. A clean frame is a valid result.
+4. **Check the variables before the pixels.** `get_variable_defs` on the frame:
+   a value bound to no variable is drift, whatever the screenshot looks like.
+
+Only then does the frame go to the person for approval, with the critique beside
+it. A frame approved without one was approved on how it looked in a thumbnail.
