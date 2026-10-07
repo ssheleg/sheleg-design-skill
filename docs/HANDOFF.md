@@ -1,3 +1,22 @@
+# Visual floor and project linter — 2026-10-07
+
+Branch `feat/slop-markers-lint` prepares sheleg-design 1.62.0: tasks D1, D2 and D9
+of the anti-slop design plan. `SLOP_MARKERS.md` is the floor (49 markers, reasons
+and exceptions, dated); `npx sheleg-design-skill --lint <dir>` is its machine half
+(`bin/lint.js`, 20 rules, exit 0/1/2); `CREATIVE_DIRECTOR.md` records
+markers-not-bans and follows the umbrella's new lanes. Receipts: the 1.62.0
+section of [verification.md](evidence/verification.md) and the CHANGELOG.
+
+Open: B-140 (two kits transition `width`; then gate `--lint kits` in CI), B-141
+(three known linter limits). Not done here: the director record as a file and its
+validator (D3, `--check-record`), the render eval (D8). The coordinator owns PR
+review, release, tag, umbrella pin and local install update.
+
+Next task: review the PR; then D3 builds the director record on the `Markers`
+line this branch adds.
+
+---
+
 # Provenance and motion-tool reconciliation — 2026-10-07
 
 Branch `feat/provenance-emil` prepares sheleg-design 1.61.3: tasks P1, D7 and E1b

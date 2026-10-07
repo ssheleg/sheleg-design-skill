@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Pack and skill | `sheleg-design` |
-| Version | `1.61.3` |
+| Version | `1.62.0` |
 | License | MIT |
 | Source | https://github.com/ssheleg/sheleg-design-skill |
 
@@ -31,11 +31,14 @@ service. Drawing inside a shared Figma frame is treated as publishing.
 
 Install from npm/GitHub, through the Agent Skills CLI, or as the
 `sheleg-design` Claude Code plugin. `npx sheleg-design-skill --kit <pack>`
-materializes a component token kit.
+materializes a component token kit. `npx sheleg-design-skill --lint <dir>`
+checks a project against the visual floor in `SLOP_MARKERS.md` (exit 1 on an
+S1 marker; `--json`, `--ratchet <budget.json>`, `--include-tests`).
 
 ## Verification
 
 - Repository validator: `python3 test/validate.py`
+- Project linter: `node test/lint_test.js` and `npx sheleg-design-skill --self-test`
 - Token/style checks: repository test suite
 - House audit: pinned `make-skill` auditor in `validate.yml`
 - Behavioral data: `test/evals/`

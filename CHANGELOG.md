@@ -1,3 +1,58 @@
+## 1.62.0 — a visual floor with reasons and exceptions, and a linter that reads a project against it
+
+Generated design kept shipping through reviews that had nothing to point at.
+`CREATIVE_DIRECTOR.md` had refused impeccable's fixed style bans, rightly, because a
+ban that cannot lose an argument contradicts "an explicit user requirement beats the
+baseline"; what it left was no floor at all. Two private production codebases read
+on 2026-10-07 carried emoji standing in for icons, overshoot curves, a side-stripe
+alert card and layout-property transitions, all found by audits after the fact.
+
+- **`SLOP_MARKERS.md`, the visual floor (catalogue version 2026-10-07).** 49 markers
+  `V001`–`V049` in eight groups (color, type, layout, icon-decor, content, motion,
+  mobile, platform), each with severity S1–S3, the tell, why it reads as a default,
+  what a designer does instead, how it is checked, the exception under which it is
+  not slop, and a commit-pinned or dated source. The floor holds with `Style pack:
+  none`; a pack may tighten it and never loosen it; a brief that asks for a marked
+  pattern wins once the director record names the marker. The three default looks
+  are markers V012, V013 and V026, and the `SHELEG_DESIGN.md` section now points
+  there. Copy tells stay with `copywriting`; no punctuation rule is adopted (in
+  Russian the em dash is normative).
+- **`npx sheleg-design-skill --lint <dir> [--json] [--ratchet <budget.json>]
+  [--include-tests]`.** Twenty rules, one per `lint:` row: purple gradients,
+  gradient text, decorative glass, glows, the side stripe, grid and stripe
+  backgrounds, grey on colour, uniform card chrome, raw colour (under `--ratchet`),
+  default faces, emoji as icons (in markup and in data such as `icon: "📊"`, never
+  in prose), sparkles, fade-in on every section, overshoot curves, `transition:
+  all`, layout-property animation, `scale(0)`, `ease-in` and a missing reduced-motion
+  path. Exit 0 no S1, 1 an S1 or a file over its budget, 2 a usage error; S2 and S3
+  print and never block. Tests, dependencies, build output, hidden directories,
+  comments and a copied pack token layer's measured tokens are not reported. A
+  recorded exception is `sheleg-lint-allow: V0NN <reason>`, and a bare id waives
+  nothing. Written in Node like the installer, so it runs wherever `npx` does.
+- **D9, decided.** `CREATIVE_DIRECTOR.md` records markers-not-bans in place of the
+  old refusal, and the director's record gains a `Markers` line (the lint run and
+  each waived marker with the line that earned it).
+- **The lane references follow the umbrella's design pack.** A new design enters at
+  `references`; a redesign at `verify` + `visual-qa` + `a11y`; an update at
+  `tokens`, then `visual-qa`; an audit runs `a11y → verify → visual-qa → speed`; the
+  `--lane` list names `references`, `critique`, `visual-qa` and `speed`.
+- **Provenance, 16 → 20 rows**, all `derived`: impeccable's detector catalogue,
+  craft floor and motion reference at `12b25ae`, and `anthropics/skills`
+  `frontend-design` at `41bbe19`. Nothing was copied.
+- **Gates.** `validate_slop_markers()` holds the catalogue's shape and required
+  markers, and rule, id and severity in both directions between `bin/lint.js` and the
+  catalogue, with three plants; `test/lint_test.js` runs the real CLI on throwaway
+  trees (every S1 rule blocking, every quiet case quiet, the ratchet, the exit
+  contract); `--self-test` plants a defect and a clean twin for every rule.
+
+Calibrated on the two private codebases (read-only): 107 S1 / 18 S2 and 83 S1 / 5 S2,
+every listed defect found, the two test-fixture hits impeccable's detector reported
+absent by default and present under `--include-tests`. One false-positive class found
+there (a bare `"back"` string read as an ease) was fixed with a regression case. The
+same run over this repository's kits found two layout transitions of its own (B-140).
+The `SKILL.md` body is 4742/4750 tokens. Whether models produce fewer markers with the
+floor loaded was not measured (plan task D8).
+
 ## 1.61.3 — every borrowed rule names its source, and the motion tools agree with the doctrine
 
 `MOTION_DOCTRINE.md` §1–4 is Emil Kowalski's animation doctrine almost word for word

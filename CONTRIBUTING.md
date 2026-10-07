@@ -10,10 +10,10 @@ have a check that fails when it stops being true**.
 No dependencies. You need Node ≥ 16 (installer) and Python 3 (validator).
 
 ```bash
-npm test        # all five gates — run this one
+npm test        # all six gates — run this one
 ```
 
-Run it before and after every change. It is five gates, not one:
+Run it before and after every change. It is six gates, not one:
 
 | Gate | What it decides |
 |---|---|
@@ -22,9 +22,10 @@ Run it before and after every change. It is five gates, not one:
 | `python3 test/sloplint.py` | bundle compliance and doctrine completeness |
 | `node --check bin/cli.js` | the installer parses |
 | `node test/installer_test.js` | both installers against throwaway HOMEs — above all that a home whose plugin channel owns the skill is refused (exit 3) instead of shadowed |
+| `node test/lint_test.js` | the project linter (`--lint`) on throwaway trees: each rule against its plant, each quiet case, the ratchet and the exit codes |
 
-`npm run selftest` runs the planted-defect self-tests for the palette gate and
-the slop lint — the proof each check has been watched saying no. CI runs all of
+`npm run selftest` runs the planted-defect self-tests for the palette gate,
+the slop lint and the project linter (`node bin/cli.js --self-test`) — the proof each check has been watched saying no. CI runs all of
 it on every push and PR; a green from `validate.py` alone covers one gate of
 four.
 
@@ -37,6 +38,7 @@ four.
 | `plugins/sheleg-design/commands/` | The `/sheleg-design` slash command |
 | `cursor/rules/sheleg-design.mdc` | Self-contained condensed rule — **no relative links** (it gets copied into foreign projects alone) |
 | `bin/cli.js`, `install.sh` | The two installers; both must ship the whole bundle |
+| `bin/lint.js` | The project linter behind `--lint`; each rule declares `rule`, `id` and `severity` on one line, and `validate.py` holds them to `SLOP_MARKERS.md` |
 | `test/validate.py` | Structural gate |
 | `test/scenarios.md` | Behavioral harness (T1–T19) |
 | `templates/style-pack-template.md` | Source of the shipped pack skeleton |

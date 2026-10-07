@@ -226,6 +226,12 @@ Frequency decides before taste gets a vote. (Full doctrine:
 - Visual system (color, type, spacing, components) is finished before any
   motion work starts. Its values come from the chosen style pack's token
   layer; where a pack sets its own ease/durations, the pack wins.
+- The visual floor holds with or without a pack: purple gradients, gradient
+  text, emoji as icons, a default face with no reason, the side stripe, the
+  three default looks and the rest are markers with a reason and an exception
+  (SLOP_MARKERS.md in the installed skill). A brief that asks for one wins once
+  the director record names the marker. Check the machine half with
+  `npx sheleg-design-skill --lint <dir>`; it blocks only on S1.
 
 ## Product UI (dashboards, admin, internal tools) — workbench register
 

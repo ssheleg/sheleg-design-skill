@@ -9,6 +9,29 @@ was shipped on the strength of an argument rather than an observation.
 
 Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (REQ-10, carried to board B-004). Extended 2026-08-12 by the `pigeonhole` run with twenty rows, none of them `never`.
 
+## Release candidate — 1.62.0 (2026-10-07)
+
+D1, D2 and D9 of the anti-slop design plan, plus the lane references the
+umbrella's design pack changed. Publication and installed-state checks belong to
+the coordinator's release receipt, not this candidate heading.
+
+| REQ | What the candidate carries | How confirmed | Status |
+|---|---|---|---|
+| D1-catalogue | `SLOP_MARKERS.md`: 49 markers in the K1 shape (id, group, severity, tell, why, instead, check, exception, source), dated, floor / pack / brief precedence stated | `validate_slop_markers()`: nine cells per row, groups and severities from the contract, every source commit-pinned, dated or in-bundle, 29 required markers by needle; plant "a required marker removed" caught | observed |
+| D1-links | Reachable from `SKILL.md` (Load on demand) and from the `SHELEG_DESIGN.md` three-looks section, which now points into it | `validate_every_shipped_document_is_reachable()` red before the link, green after; `audit_skill.py --house` body 4742/4750 | observed |
+| D2-cli | `--lint <dir> [--json] [--ratchet] [--include-tests]` and `--self-test`; exit 0 / 1 / 2 per the contract | `test/lint_test.js` (47 cases, real CLI as a process), all red before `bin/lint.js` existed, all green after | observed |
+| D2-rules | 20 rules, each fires on its plant and is quiet on its clean twin | `node bin/cli.js --self-test`: 20 caught | observed |
+| D2-sync | Every `lint:` row has a rule and every rule a row, with the same id and severity | `validate_slop_markers()` plus plants "a lint: row with no implementation" and "a severity that disagrees", both caught; `--self-test` repeats it from the package | observed |
+| D2-emoji | `icon: "📊"` data and emoji-only elements flagged; prose emoji, reaction lists and © ™ not | two `lint_test.js` cases; calibration: all 18 landing-data emoji and both category-map emoji named in the plan found | observed |
+| D2-font | Inter or the system stack as the face shown, unless a copied pack token layer names it first or a waiver records why | three `lint_test.js` cases. Calibration: the Inter call the plan listed is NOT reported, because that tree carries the `ledger` token layer whose `--font-ui` names Inter first; linted alone the same file is reported at that line | observed, deviation recorded |
+| D2-tests | Tests and fixtures excluded by default | calibration: the two fixture hits impeccable reported (`gray-on-color`, `bounce-easing`) absent by default, present with `--include-tests` | observed |
+| D2-calibration | Two private production codebases, read-only | 107 S1 / 18 S2 and 83 S1 / 5 S2; overshoot curve (2), layout transition, `border-l-4`, emoji icons, grid background all found; one false-positive class (`"back"` read as an ease) fixed with a regression case first | observed |
+| D9 | Markers with reason and exception replace the refused fixed bans; the record gains `Markers` | `CREATIVE_DIRECTOR.md` text; `SKILL.md` "explicit user requirement beats the baseline" unchanged and cited | observed |
+| Lanes | Mode table and `--lane` list match the umbrella's design pack | read against `sshlg-skills` `lib/packs.js` at `ff5f845` | observed |
+| Provenance | Rows 17–20, `derived`, SHA256 of each reviewed file | `shasum -a 256` over the clones at `12b25ae`; `gh api …/contents/skills/frontend-design/SKILL.md?ref=41bbe19` hashed; `xd-01.01.py` green | observed |
+| Gate | Full normal suite | `npm test` exit 0 | see PR |
+| Outcome | Fewer markers in model output with the floor loaded | No render eval executed (plan task D8) | NOT_RUN |
+
 ## Release candidate — 1.61.3 (2026-10-07)
 
 P1, D7 and E1b of the anti-slop design plan: provenance for borrowed doctrine,

@@ -45,12 +45,17 @@ in this file.
 | 14 | emilkowalski/skills @ `e8a175de22ae1e49370fc144c1f3bb9aeedf988d` | `skills/mobile-native/SKILL.md` | `888b7651d66d66dbac4e72b7c554638eb19bd971d686d6cbdf030a5ef3788f55` | derived | 2026-10-07 | https://github.com/emilkowalski/skills/blob/e8a175de22ae1e49370fc144c1f3bb9aeedf988d/skills/mobile-native/SKILL.md |
 | 15 | Leonxlnx/taste-skill @ `e3c92037548e3e49bea8e6b906c99a8549654e71` | `skills/taste-skill/SKILL.md` | `aa194351b246b8b4799099d4ed7b033d29eab6e6e3d58d8d2172978be7b3ec89` | adapted | 2026-10-07 | https://github.com/Leonxlnx/taste-skill/blob/e3c92037548e3e49bea8e6b906c99a8549654e71/skills/taste-skill/SKILL.md |
 | 16 | anthropics/skills @ `2235be7c60b551f5de82ade908fd3816455afcda` | `skills/frontend-design/SKILL.md` | `1608ea77fbb6fc30d13a97d12cfa8ebf31358d40f0dd97beed24829d6b3f45dd` | adapted | 2026-10-07 | https://github.com/anthropics/skills/blob/2235be7c60b551f5de82ade908fd3816455afcda/skills/frontend-design/SKILL.md |
+| 17 | pbakaus/impeccable @ `12b25ae25848202ce7a9092442198ada5c4fd984` | `crates/live/assets/antipatterns.json` | `3a5132b063fc3ba66a6bd6b0af72d96683c1237b674b365fac9524da806880ed` | derived | 2026-10-07 | https://github.com/pbakaus/impeccable/blob/12b25ae25848202ce7a9092442198ada5c4fd984/crates/live/assets/antipatterns.json |
+| 18 | pbakaus/impeccable @ `12b25ae25848202ce7a9092442198ada5c4fd984` | `plugin/skills/impeccable/reference/craft-floor.md` | `96e2e6bd4fcf9a2c6da65fb029f96d9176308fae2efd9d8653d3b8d838960e07` | derived | 2026-10-07 | https://github.com/pbakaus/impeccable/blob/12b25ae25848202ce7a9092442198ada5c4fd984/plugin/skills/impeccable/reference/craft-floor.md |
+| 19 | pbakaus/impeccable @ `12b25ae25848202ce7a9092442198ada5c4fd984` | `plugin/skills/impeccable/reference/animate.md` | `94b4ce6299fea93d9f256b2d25705961a76bc5ea940c56db4145686ebc99df1b` | derived | 2026-10-07 | https://github.com/pbakaus/impeccable/blob/12b25ae25848202ce7a9092442198ada5c4fd984/plugin/skills/impeccable/reference/animate.md |
+| 20 | anthropics/skills @ `41bbe19d1a1a7eaab5e7bb9050a417e5c6cffc8f` | `skills/frontend-design/SKILL.md` | `d91970639e9f5c37682ac7ab60094d35f1c7c1f38d731bd56396563aee10c1d3` | derived | 2026-10-07 | https://github.com/anthropics/skills/blob/41bbe19d1a1a7eaab5e7bb9050a417e5c6cffc8f/skills/frontend-design/SKILL.md |
 
 Rows 1–6 were first recorded on 2026-09-07 and re-verified on 2026-10-07: rows
 1–5 moved from impeccable `4db7f6b` to `12b25ae` (only `SKILL.md` changed bytes;
 the four platform references hash the same at both commits), and row 6 hashes
 the same as when it was first read. Rows 7–16 were added on 2026-10-07 for
-material that was already in this pack without a receipt.
+material that was already in this pack without a receipt, and rows 17–20 the
+same day for the slop-marker catalogue, which is new material.
 
 ### What each row informed
 
@@ -96,6 +101,24 @@ explain, so each one names where it landed.
   the version installed when the section was written. At the source's current
   commit (`41bbe19`, checked 2026-10-07) that paragraph lists five traits; the
   two new ones are not adopted here.
+
+- **Rows 17–20** — [`SLOP_MARKERS.md`](./SLOP_MARKERS.md), every row paraphrased:
+  impeccable's detector catalogue (row 17: the side stripe, gradient text, the
+  violet palette, nested cards, the glow, the grid and stripe backgrounds, bounce
+  curves, layout transitions, grey on colour, the eyebrow, numbered sections,
+  status dots, the marquee), its craft floor (row 18: glass as decoration, emoji
+  for icons, mono as a costume, placeholder data, the hero-metric template) and
+  its motion reference (row 19: no bounce or elastic curve); `frontend-design` at
+  `41bbe19` (row 20: the SaaS card kit, template chrome, the one-word headline
+  accent, the fade-and-rise default, the hero-metric template). The same file
+  also informs rows the catalogue draws on without new text: row 2 (the mobile
+  markers V045–V048), row 11 (`transition: all` and `scale(0)`), row 15 (the
+  taste-skill production-test tells behind V006, V024, V025, V029, V032, V033
+  and V035; its em dash ban is **not** adopted, because in Russian the dash is
+  normative) and row 16 (the three default looks, V012, V013 and V026). No rule
+  text and no detector code was carried over, so all four new rows are `derived`.
+  Impeccable's own detector is not run by this pack; the catalogue's linter is
+  this pack's code.
 
 **Kind.** *derived* — the method was read and re-expressed in this pack's own
 words; no source text was carried over, so no source licence rides on it beyond
