@@ -3,7 +3,8 @@
 (sherlock audit, XD-01, external-adoption).
 
 Adopting method from open repositories (pbakaus/impeccable,
-julianoczkowski/designer-skills) is only legitimate if each adopted fragment
+julianoczkowski/designer-skills, emilkowalski/skills, Leonxlnx/taste-skill,
+anthropics/skills) is only legitimate if each adopted fragment
 records WHERE it came from and WHAT was done with it. This leaf creates
 KNOWLEDGE_PROVENANCE.md; the test holds it to the acceptance:
 
@@ -97,6 +98,68 @@ def t_package_boundary():
         "the API/font service exclusion is missing"
 
 
+def section(heading):
+    body = text()
+    start = body.find(heading)
+    if start == -1:
+        return ""
+    nxt = body.find("\n## ", start + len(heading))
+    return body[start:nxt if nxt != -1 else len(body)]
+
+
+def t_permalink_agrees_with_its_row():
+    # A row edited in one cell and not the next pins one commit and links another;
+    # rows 1-5 moved from 4db7f6b to 12b25ae on 2026-10-07, which is the edit
+    # where that slips.
+    for r in rows():
+        source, path, _sha, _kind, _verified, permalink = r[:6]
+        repo = source.split("@")[0].strip()
+        commit = re.search(r"`([0-9a-f]{40})`", source).group(1)
+        want = f"https://github.com/{repo}/blob/{commit}/{path.strip('`')}"
+        assert permalink == want, f"permalink {permalink} does not match its row ({want})"
+
+
+def t_adapted_rows_carry_their_notice():
+    notices = section("## Third-party notices")
+    adapted = [r for r in rows() if r[3] == "adapted"]
+    assert not adapted or notices, \
+        f"{len(adapted)} row(s) are `adapted` but there is no `## Third-party notices` section"
+    for r in rows():
+        if r[3] != "adapted":
+            continue
+        repo = r[0].split("@")[0].strip()
+        assert f"### {repo}" in notices, f"adapted row from {repo} has no notice block"
+        block = notices.split(f"### {repo}", 1)[1].split("\n### ", 1)[0]
+        assert "MIT License" in block or "Apache License" in block, \
+            f"the notice for {repo} names no licence"
+        if "MIT License" in block:
+            assert "Copyright (c)" in block and "permission notice shall be included" in block, \
+                f"the MIT notice for {repo} lacks its copyright line or permission text"
+
+
+def t_reconciliation_recorded():
+    rec = section("## Reconciliation with the installed motion tools")
+    assert rec, "the decisions against the installed motion tools are not recorded"
+    for needle in ("`transition: all`", "`scale(0)`", "spring", "modal", "`ease-in`",
+                   "reduced motion"):
+        assert needle in rec, f"the reconciliation has no row for {needle}"
+
+
+def t_default_looks_credited_to_their_source():
+    # Row 6 (julianoczkowski/designer-skills) was read as the source of the three
+    # default looks; that file carries none of them. The paragraph names its real
+    # source where it sits, and that source has a row.
+    looks = os.path.join(os.path.dirname(DOC), "SHELEG_DESIGN.md")
+    with open(looks, encoding="utf-8") as fh:
+        body = fh.read()
+    assert body.count("## Three looks that are defaults, not decisions") == 1, \
+        "the default-looks section is not exactly one section"
+    assert "`anthropics/skills`" in body and "Apache-2.0" in body, \
+        "the default-looks section does not name its source and licence"
+    assert any(r[0].startswith("anthropics/skills") and "frontend-design" in r[1]
+               for r in rows()), "no provenance row for anthropics/skills frontend-design"
+
+
 def main():
     case("KNOWLEDGE_PROVENANCE.md exists with adopted rows", t_doc_exists_and_has_rows)
     case("every adopted row has source(commit)+path+SHA256+permalink",
@@ -107,6 +170,11 @@ def main():
          t_no_auto_clear_and_no_vendored_assets)
     case("launcher, foreign router/hook and API/font service are excluded",
          t_package_boundary)
+    case("every permalink agrees with its row's repo, commit and path",
+         t_permalink_agrees_with_its_row)
+    case("every adapted row carries its licence notice", t_adapted_rows_carry_their_notice)
+    case("the motion-tool reconciliation is recorded", t_reconciliation_recorded)
+    case("the default looks name their real source", t_default_looks_credited_to_their_source)
     if failures:
         print(f"\n{len(failures)} failure(s)")
         return 1

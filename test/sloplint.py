@@ -206,6 +206,11 @@ DOCTRINE_REQUIRED = (
     ("transform collision", "collide"),
     ("anti-drift", "Anti-drift"),
     ("reduced motion contract", "prefers-reduced-motion"),
+    # Reconciled with the installed motion tools on 2026-10-07: both bans exist so
+    # the doctrine and `review-animations` never give an agent two answers.
+    ("transition-all ban", "`transition: all`"),
+    ("scale(0) ban", "`scale(0)`"),
+    ("tools are not entry points", "never a second entry point"),
 )
 
 SKILL_REQUIRED = (
@@ -241,6 +246,54 @@ def lint_doctrine():
     bundle_text = "\n".join(bundle)
     for label, needle in SKILL_REQUIRED:
         check(needle in bundle_text, f"the skill bundle: {label} is gone (looked for {needle!r})")
+
+
+# ------------------------------------------------------- a sentence said twice
+#
+# D7 (closed 2026-10-07): a bold lead sentence in SKILL.md was pasted twice in a
+# row and shipped through every gate, because nothing reads prose for repetition.
+# The check is deliberately narrow — the SAME sentence, adjacent, at least
+# REPEAT_MIN_WORDS long — so a deliberate refrain three paragraphs apart stays
+# legal and a short "No." answered by "No." does not fire.
+REPEAT_MIN_WORDS = 6
+_SENTENCE_END = re.compile(r"(?<=[.!?])\s+")
+
+
+def repeated_sentences(text: str) -> list[str]:
+    """Adjacent identical sentences of REPEAT_MIN_WORDS+ words, outside fences."""
+    found, fenced, para = [], False, []
+
+    def flush():
+        joined = " ".join(para).replace("**", "").replace("__", "")
+        sentences = [s.strip() for s in _SENTENCE_END.split(joined) if s.strip()]
+        for a, b in zip(sentences, sentences[1:]):
+            if a == b and len(a.split()) >= REPEAT_MIN_WORDS:
+                found.append(a)
+        para.clear()
+
+    for line in text.splitlines():
+        if line.lstrip().startswith("```"):
+            fenced = not fenced
+            flush()
+            continue
+        if fenced:
+            continue
+        if not line.strip() or line.lstrip().startswith(("#", "|", "- ", "* ")):
+            flush()
+            if line.lstrip().startswith(("- ", "* ")):
+                para.append(line.strip()[2:])
+            continue
+        para.append(line.strip())
+    flush()
+    return found
+
+
+def lint_repeats():
+    for md in sorted(SKILL_DIR.rglob("*.md")):
+        for sentence in repeated_sentences(read(md)):
+            check(False, f"{md.relative_to(ROOT)}: says the same sentence twice in a row "
+                         f"-- {sentence[:80]!r}; delete the copy")
+        check(True, "repeat scan")
 
 
 # ------------------------------------------------------------------ pack rules
@@ -322,6 +375,21 @@ def self_test() -> int:
     if failures:
         problems.append("false positive on clean CSS")
 
+    # A sentence said twice, both directions.
+    doubled = ("**What a comparison records — one component, one content.** "
+               "**What a comparison records — one component, one content.** A difference")
+    single = ("**What a comparison records — one component, one content.** A difference "
+              "is attributable to the pack only when everything else is pinned.")
+    for label, sample, expected in (
+        ("a sentence pasted twice in a row", doubled, True),
+        ("the same sentence said once", single, False),
+    ):
+        got = bool(repeated_sentences(sample))
+        ok = got is expected
+        print(f"  {'caught ' if ok and expected else 'quiet  ' if ok else 'WRONG  '} {label}")
+        if not ok:
+            problems.append(f"{label}: expected {expected}, got {got}")
+
     # Origin addressability, both directions. A pack cites its reference the way
     # a person says it, so requiring a scheme rejects real provenance -- which is
     # exactly what this check did until a neighbouring run's pack tripped it.
@@ -383,6 +451,7 @@ def main() -> int:
         return 2
     lint_sources()
     lint_doctrine()
+    lint_repeats()
     lint_packs()
     if failures:
         for f in failures:

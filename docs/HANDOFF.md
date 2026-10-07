@@ -1,3 +1,24 @@
+# Provenance and motion-tool reconciliation — 2026-10-07
+
+Branch `feat/provenance-emil` prepares sheleg-design 1.61.3: tasks P1, D7 and E1b
+of the anti-slop design plan. `KNOWLEDGE_PROVENANCE.md` grows from 6 to 16 rows
+with MIT and Apache-2.0 notices for the three `adapted` rows; the installed
+`emilkowalski/skills` tools are named inside the motion, mobile and visual-review
+lanes; eleven rules are reconciled with those tools (RC-01…RC-11); the duplicated
+`SKILL.md` sentence and `SHELEG_DESIGN.md` section are gone, and both defect
+classes now have a gate. Receipts: the 1.61.3 section of
+[verification.md](evidence/verification.md) and the CHANGELOG.
+
+Open: B-139 (28 packs name `100dvh`; hero → `svh` sweep). Not done here, by
+decision: carrying impeccable and taste-skill doctrine in by paraphrase (later
+plan tasks D1, D11, D12). The coordinator owns PR review, release, tag, umbrella
+pin and local install update; this branch alone is not a published update.
+
+Next task: review the PR, then the family release sequence. After it, D1
+(`SLOP_MARKERS.md`) can start on top of rows 15–16.
+
+---
+
 # Display-copy review follow-up — 2026-10-01
 
 DC-02 prepares sheleg-design 1.61.2: rendered-copy review now names visible

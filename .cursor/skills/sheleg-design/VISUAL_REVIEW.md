@@ -11,6 +11,7 @@ rather than dressed up as a reading.
 
 - The capture record
 - Fitness — what disqualifies a frame
+- Worst-case data before the capture
 - Capture is tool-agnostic
 - Visual evidence is its own class — do not launder others into it
 - Rendered copy — the design/copywriting seam
@@ -51,6 +52,19 @@ When none of the above can be checked because **no runtime capture is
 available**, the claim is recorded as **`unverified`**, not as a pass. Static
 work continues — the contract never demands a mandatory tool install — it is
 just honest that the visual half was not seen.
+
+## Worst-case data before the capture
+
+A populated frame of the happy path proves the happy path. Before capturing a
+`populated` state, put the component through its worst data: long names,
+unbreakable emails, one-letter names, missing fields, huge counts, zero items,
+non-Latin text, emoji. Where **`break-ui`** is installed (from
+`emilkowalski/skills`), it is the tool for this inside the sheleg-design route,
+never a second entry point: it renders the component behind a demo-versus-worst
+toggle and reports what broke, what it left for you to decide, and what held.
+Absent, list the worst cases by hand. Either way the capture record's `state`
+names which data the frame shows, and a demo-data frame never answers a claim
+about overflow, truncation or wrapping.
 
 ## Capture is tool-agnostic
 

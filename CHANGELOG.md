@@ -1,3 +1,52 @@
+## 1.61.3 — every borrowed rule names its source, and the motion tools agree with the doctrine
+
+`MOTION_DOCTRINE.md` §1–4 is Emil Kowalski's animation doctrine almost word for word
+(the frequency table with its Raycast example, the easing tree, the three curves with
+their comments, the duration rows, both spring notations), and `KNOWLEDGE_PROVENANCE.md`
+had no row for `emilkowalski/skills`. The same was true of the three calibration dials
+(`Leonxlnx/taste-skill`) and the "three default looks" paragraph (`anthropics/skills`
+`frontend-design`), while row 6 pointed at `julianoczkowski/designer-skills`, whose file
+carries none of those looks. The file's own rule is "a source path, a SHA and a
+permalink, or it is not adopted"; it was not being kept.
+
+- **Provenance, 6 → 16 rows.** Rows 1–5 re-pinned to `pbakaus/impeccable@12b25ae` (only
+  `SKILL.md` changed bytes); row 6 kept and re-verified, with a note on what it did and
+  did not inform; rows 7–9 for the impeccable type, layout and finish-review files
+  `CREATIVE_DIRECTOR.md` already cited (now linked at the same commit); rows 10–14 for
+  `emilkowalski/skills@e8a175d`; row 15 for `taste-skill@e3c9203`; row 16 for
+  `anthropics/skills@2235be7`, the version installed when the looks section was
+  written. Three rows are `adapted`, so the MIT notices (Emil Kowalski, Leonxlnx) and an
+  Apache-2.0 notice now travel in the file, and each adapted passage names its source
+  where it sits, the condensed Cursor rule included.
+- **Emil's skills are tools inside the lanes, not a second entry point.**
+  `MOTION_DOCTRINE.md` §11 names `review-animations`, `improve-animations`,
+  `find-animation-opportunities`, `animate`, `animate-expo` and `apple-design`, and says
+  that `emil-design-eng` loads by itself; `MOBILE_SURFACES.md` names `mobile-native` and
+  `animate-expo`; `VISUAL_REVIEW.md` names `break-ui` for worst-case data before a
+  populated capture; `MOTION_PRODUCTION.md` says none of them reads a render timeline.
+- **Eleven rules reconciled, one value each** (table in `KNOWLEDGE_PROVENANCE.md`). The
+  doctrine changes four: no `ease-in` exit exception; the default spring is
+  `duration 0.4, bounce 0` with bounce only after a flick; `transition: all` and
+  entrances from `scale(0)` are banned; under reduced motion an opacity or colour change
+  that carries state may stay. It keeps its modal and drawer ceiling (200–300 ms;
+  500 ms only for a mobile sheet) against the tool's 200–500 ms, which contradicts the
+  tool's own under-300 rule, and the Cursor rule's stale `200–500ms` line is corrected
+  to match. `MOBILE_SURFACES.md` rule 1 now gives a hero `100svh` and an app shell
+  `100dvh`; the 28 packs that write `100dvh` are B-139.
+- **D7 text defects.** A bold lead sentence in `SKILL.md` said twice in a row, and the
+  "Three looks" section of `SHELEG_DESIGN.md` pasted twice with two Contents lines, the
+  second copy linking to itself. One copy of each is kept.
+- **The class, not only the instances.** `scripts/gen_contents.py` refuses a repeated
+  `## ` heading (a derived list derives the duplicate too, so drift never saw it), with a
+  validator plant; `test/sloplint.py` refuses the same sentence twice in a row, watched
+  failing on the pre-fix `SKILL.md`, and requires the `transition: all`, `scale(0)` and
+  "never a second entry point" text; `test/audit_regressions/xd-01.01.py` adds four
+  checks (permalink agrees with its row, adapted rows carry a notice, the reconciliation
+  is recorded, the looks name their source), three watched failing on the pre-fix files.
+
+The `SKILL.md` body is 4746/4750 tokens after the edit (house auditor at `5ca5c36`).
+Whether models follow the reconciled values was not measured.
+
 ## 1.61.2 — rendered copy is part of visual review
 
 Visual review now inspects headings, hero fragments, captions and labels against
