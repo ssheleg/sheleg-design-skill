@@ -2236,6 +2236,19 @@ PLANTS = (
         "carries no `## Contents` list",
     ),
     (
+        # D7's shipped state, planted back: one section pasted twice. The derived
+        # list derives the copy too, so drift alone never saw it; the heading is
+        # appended with its own Contents line so only the repeat can fire.
+        "a >100-line reference that repeats a section heading",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/SHELEG_DESIGN.md",
+        lambda t: t.replace(
+            "- Three looks that are defaults, not decisions\n",
+            "- Three looks that are defaults, not decisions\n"
+            "- Three looks that are defaults, not decisions\n", 1,
+        ) + "\n## Three looks that are defaults, not decisions\n\nPasted twice.\n",
+        "repeats the heading",
+    ),
+    (
         # SHD-03's shipped state, planted back: one more clause hand-appended to
         # a description that is now derived. The mutation lands inside the JSON
         # string, so the manifest still parses and only the derivation check can

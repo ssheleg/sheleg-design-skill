@@ -32,6 +32,12 @@ animation, exported" is the mistake this document exists to prevent.
 and stays page motion. Reaching for a rendered file there is a downgrade, and the
 next section prices it.
 
+**The motion tools stop at the same line.** `animate`, `animate-expo`, `apple-design`,
+`review-animations`, `improve-animations` and `find-animation-opportunities` are
+tools for the page rows of the table above, called from inside this route
+(`MOTION_DOCTRINE.md` §11). None of them reads a render timeline, so on the third
+row their verdict is not evidence; the pre-flight at the end of this document is.
+
 ## Before the tool: what a rendered asset costs
 
 A video in a hero looks like a shortcut and is a trade. Four things are given up, and

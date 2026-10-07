@@ -6,6 +6,10 @@ how long it runs, what curve it rides, and which forms are simply wrong.
 
 Every number here is a decision someone else already paid for. Use them.
 
+§1–4 are adapted from `emilkowalski/skills` (`emil-design-eng`, MIT, © 2026 Emil
+Kowalski); the notice, the commit and every value this file decided differently
+are in [`KNOWLEDGE_PROVENANCE.md`](./KNOWLEDGE_PROVENANCE.md).
+
 ---
 
 ## Contents
@@ -20,6 +24,7 @@ Every number here is a decision someone else already paid for. Use them.
 - 8. Anti-drift
 - 9. Reduced motion
 - 10. Pre-flight
+- 11. Tools inside this lane
 - How the calibration dials bind
 
 ## 1. Should this animate at all?
@@ -80,8 +85,9 @@ Is the element entering or leaving?
 It starts slow. The delay lands in the exact moment the user is watching hardest
 — just after the click. A dropdown on `ease-in` at 300 ms *feels* slower than
 the same dropdown on `ease-out` at 300 ms, with identical duration on the clock.
-Keep `ease-in` for something leaving the screen entirely, and even then prefer
-`ease-in-out`.
+**Exits ride `ease-out` too; there is no exit exception.** An earlier wording kept
+`ease-in` for an element leaving the screen entirely, which contradicted the tree
+above and is blocked by `review-animations`.
 
 ### The curves
 
@@ -131,6 +137,11 @@ not a value caught between a permissive row and a strict gate; the old
 `--dur-reveal: 500ms` answers to DUR-ENTRANCE and `--dur-fast: 150ms` to
 DUR-FEEDBACK — both correct; the same 500 ms on a button FAILs DUR-FEEDBACK.
 
+**Where `emil-design-eng` or `review-animations` quotes `200–500ms` for modals and
+drawers, this table wins.** That row contradicts the same source's own under-300
+rule, so the 500 survives here only as DUR-SHEET-MOBILE. The ceilings agree:
+the review tool escalates a UI duration over 300 ms, and 300 itself passes both.
+
 Speed is not only comfort — it is perceived performance. A faster spinner makes
 an identical load feel shorter. A tooltip that skips its delay after the first
 one makes the whole toolbar feel quicker. Easing amplifies this: `ease-out` at
@@ -151,12 +162,17 @@ physical rather than scheduled:
 Prefer Apple's parameterisation — it is the one you can reason about:
 
 ```js
-{ type: "spring", duration: 0.5, bounce: 0.2 }   // preferred
-{ type: "spring", mass: 1, stiffness: 100, damping: 10 }   // when you need the control
+{ type: "spring", duration: 0.4, bounce: 0 }     // default: critically damped, no overshoot
+{ type: "spring", duration: 0.4, bounce: 0.2 }   // only after a flick or a drag release
+{ type: "spring", mass: 1, stiffness: 100, damping: 10 }   // decorative pointer tracking only
 ```
 
-Keep `bounce` between 0.1 and 0.3, and keep it out of most UI. Bounce belongs to
-drag-to-dismiss and to play, not to a settings panel.
+Keep `bounce` between 0.1 and 0.3, and only where the gesture carried momentum.
+Bounce belongs to drag-to-dismiss and to play, not to a settings panel. **The
+default carries no bounce:** an earlier version made `duration 0.5, bounce 0.2`
+the preferred spring, which contradicted the sentence above; `apple-design`
+starts UI critically damped and adds bounce only after a flick, and this file now
+says the same.
 
 **Interruptibility is the real reason to use one.** A spring keeps its velocity
 when interrupted; CSS keyframes restart from zero. Expand a row, hit Escape
@@ -217,6 +233,13 @@ These are not stylistic preferences. Each one is a defect with a known failure.
 - **`will-change` left behind** — it is a hint for motion about to happen, not a
   decoration. Remove it when the animation ends.
 - **More than one marquee per page.** One can carry content; two read as filler.
+- **`transition: all`.** It animates whatever property changes next, layout
+  included, and nobody chose it. Name the properties instead:
+  `transition: transform 200ms var(--ease-out), opacity 200ms var(--ease-out)`.
+- **Entering from `scale(0)`.** Nothing real appears from a point. Enter from
+  `scale(0.95)` with `opacity: 0`; a pack may name another start inside
+  0.9–0.97. A popover scales from its trigger (`transform-origin` at the
+  anchor); a modal stays centred.
 
 ---
 
@@ -289,6 +312,12 @@ Not a feature. A contract.
 - Anything beyond a colour change honours `prefers-reduced-motion: reduce`.
 - Infinite loops, parallax, scroll hijack, magnetic physics and spring chases
   collapse to static or instant — not to "slower".
+- **What may stay is an opacity or colour change that carries a state change**,
+  at DUR-OVERLAY length or shorter. The branch removes movement, not
+  comprehension; `review-animations` and `apple-design` say the same, and neither
+  licenses a slower slide. A pure fade is therefore a correct entrance under the
+  query, and wherever a pack's motion tokens prescribe one, even though the
+  review tool escalates a pure-fade entrance elsewhere.
 - In a motion library, gate on the reduced-motion hook and render the resting
   state. In CSS, put motion behind `@media (prefers-reduced-motion: no-preference)`.
 - WebGL and canvas scenes degrade to their CSS or SVG still.
@@ -347,6 +376,32 @@ Before calling motion done:
       IS the right answer, the obligations move with it —
       [`MOTION_PRODUCTION.md`](./MOTION_PRODUCTION.md) owns that seam, including where
       this section's contract lands once there is no user to read a media query.
+
+---
+
+## 11. Tools inside this lane
+
+Where `emilkowalski/skills` is installed (Markdown only: no hooks, no scripts),
+its motion skills are **tools this lane calls, never a second entry point.** The
+route still starts at [`SKILL.md`](./SKILL.md), the pack still sets the values,
+and this file still decides whether a thing moves. Absent, nothing here depends
+on them: the sections above are the whole answer.
+
+| Tool | Call it when | What it owes this lane |
+|---|---|---|
+| `review-animations` | reviewing the motion in a diff before it merges; explicit invocation only, it never loads itself | its Block/Approve verdict is read against §3 and the reconciliation in [`KNOWLEDGE_PROVENANCE.md`](./KNOWLEDGE_PROVENANCE.md) |
+| `improve-animations` | auditing a whole codebase's motion; read-only, it writes plans for other agents | each plan item still passes §1 before it is built |
+| `find-animation-opportunities` | asking where something should move and does not; read-only, it proposes values | a proposal on a 100+/day path is rejected by §1, whatever it suggests |
+| `animate` | building one web animation from scratch | durations come from the pack's motion tokens first and §3 second |
+| `animate-expo` | the same in React Native or Expo, the RN branch of [`MOBILE_SURFACES.md`](./MOBILE_SURFACES.md) | the frequency table and §9 bind on a phone exactly as on the web |
+| `apple-design` | springs, gestures, momentum, sheets, translucent materials | the default spring in §4; the pack's face over its system-font default |
+
+**`emil-design-eng` loads on its own.** It has no `disable-model-invocation` and a
+broad description, so on a design task it can arrive beside this skill unasked.
+Its numbers are the ones §1–4 adapted; where it and this file disagree, this file
+wins, and the pack wins over both on values. The differences are decided one rule
+at a time in `KNOWLEDGE_PROVENANCE.md`, so the doctrine and the tool never hand
+an agent two answers.
 
 ---
 

@@ -85,7 +85,19 @@ def _span(text: str):
 
 
 def problem(text: str) -> str | None:
-    """None when the list is present and derived; otherwise what is wrong."""
+    """None when the list is present and derived; otherwise what is wrong.
+
+    A heading that appears twice is refused before the list is compared. A
+    derived list cannot see it: the duplicate is derived too, so two copies of
+    "Three looks that are defaults, not decisions" sat in `SHELEG_DESIGN.md`
+    and in its Contents for a month, the second copy linking to itself, with
+    this check green throughout (D7, closed 2026-10-07).
+    """
+    seen: set[str] = set()
+    for h in headings(text):
+        if h in seen:
+            return f"repeats the heading `## {h}` -- keep one section and delete the copy"
+        seen.add(h)
     span = _span(text)
     if span is None:
         return "carries no `## Contents` list"
@@ -128,7 +140,7 @@ def main() -> int:
         print(f"unknown argument {sys.argv[1]!r} (expected --write or none)", file=sys.stderr)
         return 2
     bundle = ROOT / BUNDLE_REL
-    stale = 0
+    stale = written = 0
     for path in targets(ROOT):
         text = path.read_text(encoding="utf-8")
         what = problem(text)
@@ -136,7 +148,10 @@ def main() -> int:
             continue
         stale += 1
         rel = path.relative_to(ROOT)
-        if not write:
+        if not write or what.startswith("repeats the heading"):
+            # A repeated heading is a content defect, not a stale map: rewriting
+            # the list would derive the duplicate again, so it is reported and the
+            # file is left for a person to decide which copy survives.
             print(f"STALE  {rel}: {what}")
             continue
         new = apply(text)
@@ -148,8 +163,9 @@ def main() -> int:
             template = ROOT / "templates" / "style-pack-template.md"
             if template.is_file():
                 shutil.copyfile(path, template)
+        written += 1
         print(f"wrote  {rel}")
-    if stale and not write:
+    if stale and (not write or stale > written):
         print(
             f"\n{stale} file(s) out of contract -- run "
             "`python3 scripts/gen_contents.py --write`"

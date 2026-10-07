@@ -163,24 +163,31 @@ Frequency decides before taste gets a vote. (Full doctrine:
   consistency, state indication, feedback, explanation, or preventing a jarring
   cut. "It looked cool" is not an answer; if you cannot write the sentence,
   delete the animation.
-- **`ease-in` is banned in UI.** It starts slow, in the exact moment the user is
-  watching hardest. Entering or leaving → `ease-out`; moving or morphing on
+- **`ease-in` is banned in UI**, exits included. It starts slow, in the exact moment
+  the user is watching hardest. Entering or leaving → `ease-out`; moving or morphing on
   screen → `ease-in-out`; hover or colour change → `ease`; constant motion →
   `linear`. Curves: `--ease-out: cubic-bezier(.23,1,.32,1)`,
   `--ease-in-out: cubic-bezier(.77,0,.175,1)`,
   `--ease-drawer: cubic-bezier(.32,.72,0,1)`.
 - **UI motion stays at or under 300 ms.** Button press 100–160ms · tooltip 125–200ms ·
-  dropdown 150–250ms · modal/drawer 200–500ms. Marketing and scrollytelling are
-  deliberately longer.
+  dropdown 150–250ms · modal/drawer 200–300ms; only a full-height mobile sheet may run
+  to 500ms. Marketing and scrollytelling are deliberately longer.
+- Springs: `{ type: "spring", duration: 0.4, bounce: 0 }` by default; bounce 0.1–0.3
+  only after a flick or a drag release.
 - Never animate a property that triggers layout (`width`, `height`, `top`,
   `left`, `padding`, `margin`, `gap`, `font-size`). Never a bare scroll
   listener, never `requestAnimationFrame` writing component state, never
   `backdrop-filter` or grain on a scrolling container, never a left-behind
-  `will-change`, never two marquees.
+  `will-change`, never two marquees, never `transition: all` (name the properties),
+  never an entrance from `scale(0)` (start at `scale(0.95)` with `opacity: 0`).
 - **Reduced motion is a contract, not a feature.** Anything beyond a colour
   change honours `prefers-reduced-motion: reduce`; loops, parallax and springs
-  collapse to static or instant, never to "slower". Shipping an animation
-  without that branch is a bug, not a polish item.
+  collapse to static or instant, never to "slower"; an opacity or colour change that
+  carries state may stay. Shipping an animation without that branch is a bug, not a
+  polish item.
+- This section is adapted from `emilkowalski/skills` (MIT License, Copyright (c) 2026
+  Emil Kowalski); the full notice ships in the skill's `KNOWLEDGE_PROVENANCE.md` and
+  at https://github.com/emilkowalski/skills/blob/e8a175de22ae1e49370fc144c1f3bb9aeedf988d/LICENSE.
 
 ## Five principles, in order
 

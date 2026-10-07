@@ -384,9 +384,9 @@ binary, service, API key, font download or new framework. Reuse local assets and
 existing inspection tools; missing inspection remains NOT_RUN.
 
 These local procedures were informed by a comparison of Impeccable's
-[type](https://github.com/pbakaus/impeccable/blob/4db7f6ba4b6ef661bc8a721261b691b40648c08a/plugin/skills/impeccable/reference/typeset.md),
-[layout](https://github.com/pbakaus/impeccable/blob/4db7f6ba4b6ef661bc8a721261b691b40648c08a/plugin/skills/impeccable/reference/layout.md)
-and [finish-review methods](https://github.com/pbakaus/impeccable/blob/4db7f6ba4b6ef661bc8a721261b691b40648c08a/plugin/skills/impeccable/reference/degraded/finish-reviewer.md) (Apache-2.0). They use this family's contracts; no
+[type](https://github.com/pbakaus/impeccable/blob/12b25ae25848202ce7a9092442198ada5c4fd984/plugin/skills/impeccable/reference/typeset.md),
+[layout](https://github.com/pbakaus/impeccable/blob/12b25ae25848202ce7a9092442198ada5c4fd984/plugin/skills/impeccable/reference/layout.md)
+and [finish-review methods](https://github.com/pbakaus/impeccable/blob/12b25ae25848202ce7a9092442198ada5c4fd984/plugin/skills/impeccable/reference/degraded/finish-reviewer.md) (Apache-2.0). They use this family's contracts; no
 upstream runtime, assets, fixed style bans or automatic workflow are included.
 The links record provenance, not instructions to fetch during every run.
 

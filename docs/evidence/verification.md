@@ -9,6 +9,25 @@ was shipped on the strength of an argument rather than an observation.
 
 Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (REQ-10, carried to board B-004). Extended 2026-08-12 by the `pigeonhole` run with twenty rows, none of them `never`.
 
+## Release candidate — 1.61.3 (2026-10-07)
+
+P1, D7 and E1b of the anti-slop design plan: provenance for borrowed doctrine,
+two duplicated texts, and the installed `emilkowalski/skills` tools named inside
+the lanes with their values reconciled. Publication and installed-state checks
+belong to the coordinator's release receipt, not this candidate heading.
+
+| REQ | What the candidate carries | How confirmed | Status |
+|---|---|---|---|
+| P1-rows | 16 provenance rows; rows 1–5 at impeccable `12b25ae`; SHA256 of every reviewed file | `shasum -a 256` over clean clones at the pinned commits, `SKILL.md` re-read through `gh api …?ref=12b25ae`; `xd-01.01.py` permalink-agrees-with-row check | observed |
+| P1-row6 | Row 6 kept for what it informed; the default looks credited to `anthropics/skills@2235be7` | `gh api …/designer-skills/contents/frontend-design/SKILL.md?ref=c259656` has no `F4F1EA`/terracotta/broadsheet; `2235be7` carries the paragraph and hashes as the installed copy (`1608ea77…`) | observed |
+| P1-notice | MIT (Emil Kowalski, Leonxlnx) and Apache-2.0 notices for the three `adapted` rows; each passage names its source in place | `xd-01.01.py` adapted-rows-carry-notice check, watched failing on the pre-change file | observed |
+| E1b-tools | Tools named in `MOTION_DOCTRINE.md` §11, `MOTION_PRODUCTION.md`, `MOBILE_SURFACES.md`, `VISUAL_REVIEW.md`; never a second entry point | `sloplint.py` needle "never a second entry point"; installed copies hash as `e8a175d` | observed |
+| E1b-reconcile | Eleven rules, one value each, recorded RC-01…RC-11 | `xd-01.01.py` reconciliation check; `sloplint.py` needles for `transition: all` and `scale(0)` | observed |
+| D7 | One "Three looks" section, one Contents line; the doubled `SKILL.md` sentence removed | `gen_contents.py` repeated-heading refusal with a validator plant; `sloplint.py` repeated-sentence check failed on the pre-fix `SKILL.md` | observed |
+| Budget | `SKILL.md` body inside the house limit | `audit_skill.py --house` at `5ca5c36`: 4746/4750 tokens | observed |
+| Gate | Full normal suite | `npm test` exit 0 | see PR |
+| Outcome | Whether models follow the reconciled values | No before/after model evaluation executed | NOT_RUN |
+
 ## Release candidate — 1.61.2 (2026-10-01)
 
 DC-02: the [bounded report](audits/2026-10-01-display-copy/report.md) records

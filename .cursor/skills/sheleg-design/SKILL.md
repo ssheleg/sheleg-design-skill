@@ -4,7 +4,7 @@ description: Use when deciding how something LOOKS or MOVES — cinematic landin
 license: MIT
 compatibility: Kit/lane commands need node>=16, npx, network. Optional siblings — dataviz, shadcn, migrate-radix-to-base. Each has an in-text fallback when absent or unreachable.
 metadata:
-  version: 1.61.2
+  version: 1.61.3
 ---
 
 # SHELEG Design
@@ -131,7 +131,8 @@ observable anchors — a bare number cannot do that, so **a number without its
 anchors is not evidence**.
 
 **Three dials carry the same intent as optional shorthand** — preference
-hints, not measurements of quality:
+hints, not measurements of quality (from `Leonxlnx/taste-skill`, MIT,
+[notice](./KNOWLEDGE_PROVENANCE.md)):
 
 - **`DESIGN_VARIANCE`** 1–10 — 1 is perfect symmetry, 10 is deliberate
   asymmetry and no two sections alike.
@@ -265,7 +266,6 @@ silent fallbacks compares the fallbacks. No CSS-swap promise follows:
 components keep consuming the pack's own tokens.
 
 **What a comparison records — one component, one content, one viewport at a
-time, through the adapters.** **What a comparison records — one component, one content, one viewport at a
 time, through the adapters.** A difference is attributable to the pack only
 when everything else is pinned: the receipt per candidate names the pack, its
 adapter status, the compared component's geometry (positions and sizes as

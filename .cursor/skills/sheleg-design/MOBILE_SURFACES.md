@@ -9,6 +9,7 @@ pack's `## Responsive` section covers that, and this file does not repeat it.
 
 - What a pack decides here, and what it does not
 - The six rules every pack already carries — and one no pack answers
+- Tools inside this lane — mobile-web fixes and React Native motion
 - Platform target and prototype renderer are two decisions, not one
 - The native state matrix — what each surface owes, and how it is verified
 - Reference sweeps — structure crosses, identity does not
@@ -36,10 +37,15 @@ looking for *mobile* would not think to look, so they are collected here with
 their homes named. Rule 6 is the opposite: nothing in this library answers it,
 and pretending otherwise is worse than the gap.
 
-1. **`100vh` is banned; use `svh`, with `dvh` behind `@supports`.** A bare
-   `100vh` is why a mobile hero jumps when the URL bar hides
+1. **`100vh` is banned; a hero takes `100svh`, an app shell takes `100dvh`.** A
+   bare `100vh` is why a mobile hero jumps when the URL bar hides
    (`styles/field-notes.md`, `styles/cyclorama.md`, and the template's
-   *Responsive* brief).
+   *Responsive* brief). `dvh` resizes as the URL bar collapses, which is right
+   for an app shell or bottom-pinned input and is a layout shift mid-scroll on
+   a hero; `svh` never moves. An earlier wording put `dvh` behind `@supports` on
+   every full-height section, which hands the hero the shift. A viewport unit is
+   platform convention, not identity, so where a pack writes `100dvh` for a
+   full-height marketing section this rule decides it on mobile.
 2. **Inputs are `16px` minimum — a functional floor, not a type choice.**
    Anything smaller triggers zoom-on-focus on iOS. Keep it even where 14px would
    look better (`styles/field-notes.md`, `styles/cyclorama.md`).
@@ -80,6 +86,21 @@ Every one of the fourteen was extracted from a web reference. Their tokens hold 
 colour and type do not care about the runtime — but no pack's `## Components`
 was written against a tab bar or a sheet, so the component half is yours on any
 native surface, in every pack, whatever its `Contract:` line says about the web.
+
+## Tools inside this lane — mobile-web fixes and React Native motion
+
+Two installed skills (from `emilkowalski/skills`) serve this file as tools,
+called from inside the route and never as a second entry point. Absent, the
+rules here stand alone.
+
+- **`mobile-native`** — the fix list for a **mobile-web** view: the viewport and
+  `theme-color` meta tags, tap highlight, `16px` inputs, hover gated behind
+  `(hover: hover) and (pointer: fine)`, safe-area insets, overscroll. Run it
+  on a mobile-web view, not on a native screen. Its viewport split is rule 1
+  above; on anything identity, the pack wins.
+- **`animate-expo`** — motion on the **React Native / Expo** branch of the
+  table below. The frequency table and the reduced-motion contract in
+  [`MOTION_DOCTRINE.md`](./MOTION_DOCTRINE.md) bind there as on the web.
 
 ## Platform target and prototype renderer are two decisions, not one
 
