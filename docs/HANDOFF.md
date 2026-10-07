@@ -1,3 +1,29 @@
+# Director record, ADA rubric and the render eval — 2026-10-07
+
+Branch `feat/director-record-ada` prepares sheleg-design 1.63.0: tasks D3, D4, D5,
+D6, D8, D10, the K6 rubric, the first-time-right rules and B-140 of the anti-slop
+design plan. The director record is a file with a validator
+(`templates/director-record.md`, `npx sheleg-design-skill --check-record <file>`,
+`bin/record.js`, exit 0/1/2, per-class field sets for flagship / product /
+internal / ad, `Mode: declined` passes); `ADA_RUBRIC.md` carries R1–R25 with G/J/H
+types, three profiles and the judge rules, stated as derived; the reference sweep
+is mandatory for a new design or a brand redesign; `MOTION_DOCTRINE.md` §12 is
+the motion review; `FIGMA_BRIDGE.md` §3 is re-drawn for TIMING/EASING variables
+and §5 critiques a frame before approval; `MOBILE_SURFACES.md` gains the axes
+matrix; `evals/render/` is the render eval harness; the kits pass their own
+floor and CI runs `--lint kits`. Receipts: the 1.63.0 section of
+[verification.md](evidence/verification.md) and the CHANGELOG.
+
+Open: B-141 (linter limits), B-142 (a model run of the render eval), B-143 (a
+labelled set before J items count), B-144 (one Figma call to confirm §3). The
+coordinator owns PR review, release, tag, umbrella pin and local install update.
+
+Next task: review the PR; then task-pipeline T1 can gate stage 3 on
+`--check-record` (K3), and super-ux U3 can require the frame critique of
+`FIGMA_BRIDGE.md` §5 before approval.
+
+---
+
 # Visual floor and project linter — 2026-10-07
 
 Branch `feat/slop-markers-lint` prepares sheleg-design 1.62.0: tasks D1, D2 and D9

@@ -483,11 +483,20 @@
   border-radius: var(--r-pill);
   overflow: hidden;
 }
+/* The fill is always full width and slides in from the inline start: a
+   translate, never a width transition, which lays out the track on every frame
+   (MOTION_DOCTRINE §5). The track clips it, and the fill keeps its own rounded
+   leading edge, which a scaleX would squash. */
 .wb-progress__fill {
+  width: 100%;
   height: 100%;
   background: var(--accent);
   border-radius: var(--r-pill);
-  transition: width var(--dur-state) var(--motion-ease);
+  transform: translateX(var(--wb-progress-offset, -100%));
+  transition: transform var(--dur-state) var(--motion-ease);
+}
+.wb-progress__fill:dir(rtl) {
+  transform: translateX(calc(-1 * var(--wb-progress-offset, -100%)));
 }
 .wb-progress--accent .wb-progress__fill {
   background: var(--accent);

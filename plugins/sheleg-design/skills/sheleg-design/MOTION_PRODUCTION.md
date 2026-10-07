@@ -208,3 +208,6 @@ file adds.
 - [ ] A byte-identical re-render was produced from the same input. If two runs differ,
       something in the composition is reading the machine — pin the environment
       (a container) before blaming the tool.
+- [ ] After the render: the motion review in [`MOTION_DOCTRINE.md`](./MOTION_DOCTRINE.md)
+      §12 — `snapshot` frames at each phase and a `compare` sheet against the approved
+      baseline, read rather than taken as a pass.

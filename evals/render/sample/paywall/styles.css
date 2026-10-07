@@ -1,0 +1,2 @@
+:root { --bg: #fbfaf7; --ink: #191714; --font-body: "Source Sans 3", "Helvetica Neue", sans-serif; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); }

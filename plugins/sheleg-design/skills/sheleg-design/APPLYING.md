@@ -16,9 +16,13 @@ Read this when starting the build, and again before calling a surface done.
 
 
 1. Visual system first: pick (or author) a style pack, apply its tokens as
-   the site-wide design tokens (color, type, spacing, components). If Lazyweb
-   MCP is available, sweep references for the target screen at this point —
-   before any layout exists to defend.
+   the site-wide design tokens (color, type, spacing, components). For a new
+   design or a redesign of a brand or flagship surface, the reference sweep has
+   already run by this point — before any layout exists to defend — through
+   whichever reference servers the session exposes (Refero, Lazyweb, Mobbin
+   where authorized), and its result, an empty one included, is in the director
+   record's `References` field ([`CREATIVE_DIRECTOR.md`](./CREATIVE_DIRECTOR.md),
+   Act 2).
 2. Build bottom-up in the §11 layer order: scroll clock → smooth scroll →
    particle field → 2D fallback → DOM choreography → reveals → scrubbed
    instruments → optional DOM↔WebGL bridge. One small file per layer.

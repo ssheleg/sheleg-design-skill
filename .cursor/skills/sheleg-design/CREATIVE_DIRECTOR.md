@@ -20,8 +20,9 @@ the middle three worth doing.
 - Act 3 — Fork, but only when the fork is real — and write the rubric first
 - Act 4 — Judge, then graft, then record what the cast produced
 - Act 5 — Validate: alignment first, then quality
+- First time right — decisions before pixels
 - Focused visual work
-- The output the director owes
+- The record the director owes
 
 ## Act 1 — The brief, and the sentence that could falsify it
 
@@ -40,6 +41,15 @@ this product does after five seconds"*, *"the primary action is below the fold o
 a 13-inch laptop"*, *"the dashboard's densest table needs horizontal scrolling at
 1280px"*. If you cannot write one, the brief is a mood and the rest of this
 document cannot help you.
+
+**The taste profile is written beside the brief.** What this surface takes and
+what it bans — materials, references, type, rhythm, the subject's own vernacular
+— in words a second reader can check against the render, plus the markers it is
+most at risk of and the three dials with their anchors. "Modern", "clean",
+"minimal" and "sleek" alone are an empty profile: every product claims them. An
+owner who keeps a standing profile of their own taste makes it the default input
+here; the profile's content stays with the owner, and the record's `Taste` field
+carries what this surface took from it.
 
 **Where the brief comes from, in order of preference.** If `super-ux` is
 installed and the project keeps a UX scenario base — `/ux` reports whether it
@@ -90,6 +100,19 @@ would install it**, and **what has already been measured and declined**, which i
 the part that stops a plausible-looking recommendation from being taken twice.
 Cast from the harness's list, and **say in the cast that the roster was not
 measured** rather than presenting it as though it had been.
+
+**The reference sweep is not optional for a new design, or for a redesign of a
+brand or flagship surface.** Before `style`, look at what has shipped: at least
+five real products, each with what this surface takes from it — a structural
+trait, never its palette. Use whichever reference servers the session actually
+exposes — Refero, Lazyweb, and Mobbin where the account is authorized — and,
+with none of them present, shipped products found on the open web, saying the
+servers were absent. Structure crosses and identity does not
+([`DESIGN_SYNC_BRIDGE.md`](./DESIGN_SYNC_BRIDGE.md) §4). **An empty sweep is a
+result, not a skip:** it is recorded as `none found` with where you searched, in
+the record's `References` field, and the validator refuses one without the
+other. An update, an audit or a product screen inside a settled system owes no
+sweep.
 
 **Then print the cast before starting** — the skills you will use, one line each
 saying what for, and the lane each serves. Not for approval; so the operator can
@@ -171,6 +194,10 @@ Falsifier.
 A usable rubric line looks like *"the primary action is reachable without
 scrolling at 1280×800"* or *"the type scale uses at most five distinct sizes"* —
 not *"feels more premium"*.
+
+The rubric goes into the record's `Rubric` field before either direction exists,
+and `Fork: yes` names it; a fork whose record carries no rubric is refused by the
+validator, because it compared nothing.
 
 ### When to fork
 
@@ -272,6 +299,14 @@ instead of DOM ones).
 | Loading / error states | web | internal surfaces earn this INSTEAD of the crawler check: every fetch has a loading state and an honest error state |
 | Renders without JS | public-web | the content is present in the served HTML — matters for the reader who is a crawler as much as for the one on a slow connection. An internal tool behind a login is N/A here (with that reason), not quietly PASSed — and a native screen has no served HTML at all |
 
+**A flagship or ad surface is also scored on
+[`ADA_RUBRIC.md`](./ADA_RUBRIC.md)** — 25 binary items derived from the Apple
+Design Awards categories, typed as gates (G), judged (J) or human (H), with a
+profile per surface class. The table above is its floor, not a substitute: every
+G item passes, a judge never outvotes one, and a judged item stays NOT_ASSESSED
+until the judge has been measured against a labelled set. The verdict goes into
+the record's `ADA` field.
+
 **Run them where the thing runs.** A screenshot in a browser at the target
 viewport beats reading the diff, every time; `webapp-testing` and the Chrome
 DevTools tooling exist for this, and the `verify` lane in Act 2 casts them. A
@@ -355,6 +390,39 @@ manufactured winner.
 
 ---
 
+## First time right — decisions before pixels
+
+Every review round is expensive, and each one buys less than the one before. A
+model asked to "look again and improve" its own render gains close to nothing;
+what moves quality is constraint before generation and feedback from outside.
+So the order of work for a new surface is fixed:
+
+1. **Decisions before pixels, in one file.** The director record
+   ([`templates/director-record.md`](./templates/director-record.md)) holds the
+   brief, the taste profile, the references, the signature moment, the rubric
+   and the state matrix before the first render. The generator gets it as
+   context, not as inspiration.
+2. **The forbidden list is in the prompt AND in the linter.**
+   [`SLOP_MARKERS.md`](./SLOP_MARKERS.md) is loaded into context before
+   generating, and `npx sheleg-design-skill --lint <dir>` runs on what was
+   generated. A prompt without the linter is a wish; a linter without the prompt
+   is an extra round of fixes.
+3. **One key screen, in one state, first.** Render it, get the direction
+   approved, and only then build the other states and screens. A wrong
+   direction found on one screen costs one screen.
+4. **Feedback is external and specific, or it is not feedback.** The linter's
+   output, an audit violation, a diff against the approved baseline, a triple
+   (region → defect → change). Never "take another look".
+5. **The re-render budget is one, at most two.** After that the gain is inside
+   the noise. A finding still open is recorded `unresolved` and goes to the
+   person; it does not start another round. Keep every version: the last one is
+   not always the best one.
+6. **The generator is not the judge.** The agent that rendered the surface does
+   not score it — a separate agent or a separate pass does
+   ([`ADA_RUBRIC.md`](./ADA_RUBRIC.md), the judge).
+
+---
+
 ## Focused visual work
 
 For a bounded request, reuse the existing brief and select the relevant lens
@@ -410,22 +478,28 @@ enters the catalogue paraphrased, with provenance rows, never as copied rule
 text, and impeccable's detector stays an optional cross-check that is `NOT_RUN`
 when absent.
 
-## The output the director owes
+## The record the director owes
 
-One short record, every time, whether the work took ten minutes or a day:
+One record, every time, whether the work took ten minutes or a day — a file in
+the product repository, `docs/design/<surface>/director-record.md`, not prose in
+a chat. Its shape is
+[`templates/director-record.md`](./templates/director-record.md): a header with
+`surface_class` (`flagship`, `product`, `internal` or `ad`) and one `## <Field>`
+per decision — Brief, Mode, Taste, References, Cast, Fork, Rubric, Critique,
+Markers, Alignment, Quality, Signature, Surfaces, Haptics, ADA, Open. The class
+decides which fields are owed: a flagship owes all of them, a product screen
+Brief, Mode, References, Markers and Open. The validator holds each field to its
+rule, not just its presence:
 
+```bash
+npx sheleg-design-skill --check-record docs/design/<surface>/director-record.md
 ```
-Brief      surface / job / constraint / falsifier      (+ scenario id where one exists)
-Mode       new | redesign | update | audit             → entered at <lane>
-Cast       <skill> — <what for>, per lane              (measured with `pack design`)
-Fork       yes → rubric (written first), A: <cast>, B: <cast>, winner + what was grafted
-           no  → why not
-Alignment  falsifier checked: <result>
-Quality    the table above, with numbers
-Markers    `--lint` run: command, commit, findings by severity; each waived marker
-           with the Brief or Open line that earned it
-Open       what a person still has to decide
-```
+
+Exit 0 valid, 1 with the list of missing or empty fields, 2 usage. A taste
+profile of "modern, clean" is empty; five references on placeholder hosts are
+none; a `Fork: yes` that never names its rubric compared nothing; a `Markers`
+field that cites no `--lint` run with its revision and counts is a claim. A
+refusal is a record too: `Mode: declined` with the reason passes on its own.
 
 **`Open` is not an admission of failure.** It is the line that separates a
 director from a generator: the generator returns something finished-looking with

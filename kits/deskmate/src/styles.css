@@ -642,7 +642,7 @@ b {
 .dm-word {
   color: var(--gradient-word-fallback);
   background-image: var(--gradient-word);
-  background-clip: text;
+  background-clip: text; /* sheleg-lint-allow: V002 the gradient word is deskmate's measured signature (styles/deskmate.md), with a solid fallback colour first */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

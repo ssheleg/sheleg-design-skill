@@ -176,6 +176,8 @@ skills.
 | `SHELEG_DESIGN.md` | The full reference: architecture, layer-by-layer mechanics with code, the exact morph math, the DOM↔WebGL projection bridge, a build-from-scratch recipe, and why each piece works |
 | `SURFACE_COMPOSITION.md` | Two decisions the pack layer does not make: the six depth layers of a scene, read before writing CSS for a cinematic page; and the handoff to `dataviz`, read before drawing a chart in any pack — token names are not uniform across the thirteen and an undefined custom property fails silently |
 | `SLOP_MARKERS.md` | The visual floor: 49 markers of generated design (purple gradients, emoji as icons, default faces, the side stripe, the three default looks, banned motion forms…), each with severity, reason, what to do instead and the exception under which it is not slop. Holds with or without a pack; twenty of them are checked by `--lint` |
+| `ADA_RUBRIC.md` | 25 binary checks derived from the Apple Design Awards categories (Apple publishes no rubric; the file says so and cites the pages it read), each typed as a deterministic gate, a judged item or a human one, with profiles for flagship, product and ad surfaces and the rules that keep a model judge honest |
+| `templates/director-record.md` | The director record: one `## <Field>` per decision — brief, taste, references, fork and rubric, critique, markers, signature moment, ADA verdict, what is left open — filled before the first render and checked by `--check-record` |
 | `MOTION_DOCTRINE.md` | Whether to animate at all, before how: the frequency table that kills motion on high-repetition paths, the easing tree and the `ease-in` ban, the duration ceiling, the forbidden forms, and the reduced-motion contract. `SKILL.md` marks it required before any animation |
 | `MOTION_PRODUCTION.md` | What changes when motion leaves the page as a file: the four things a rendered asset gives up, the two programmatic-video tools measured side by side with the licence threshold and the pre-1.0 risk stated, which one this library recommends and the three conditions that reverse it, how a pack's token layer crosses the render seam, and where the reduced-motion obligation lands once there is no user to read a media query |
 | `DESIGN_SYNC_BRIDGE.md` | The Claude Design contract: what a pack sends to claude.ai/design and in what shape, the rule for each of the four reference types, and the border motion does not cross |
@@ -207,6 +209,25 @@ recorded exception is a comment, `sheleg-lint-allow: V015 <reason>`, and the
 reason is required. `--self-test` plants a defect for every rule. It is a pattern
 reader, not a renderer: the catalogue's `review` rows stay with the render
 critique.
+
+### Check a director record
+
+```bash
+npx sheleg-design-skill --check-record docs/design/pricing/director-record.md
+npx sheleg-design-skill --check-record docs/design/pricing/director-record.md --json
+```
+
+A design's decisions live in a record before the first pixel: a header with
+`surface_class` (`flagship`, `product`, `internal` or `ad`) and one `## <Field>`
+per decision, from the template in the installed skill. The class decides which
+fields are owed — a flagship all sixteen, a product screen Brief, Mode,
+References, Markers and Open — and each owed field is held to its rule, not just
+its presence: a taste profile of "modern, clean" is empty, five references on
+placeholder hosts are none, `Fork: yes` with no rubric compared nothing,
+`Markers` must cite a `--lint` run with its revision and counts, and a flagship's
+ADA verdict fails on any G item. A refusal is a record too: `Mode: declined` with
+its reason passes. Exit 0 valid, 1 with each violation as `<Field>: <problem>`,
+2 a usage error.
 
 ## What you get out of it
 
@@ -255,9 +276,10 @@ values *onto* the pack's tokens instead of inlining hexes.
 The bridge is specific because the traps are: `workbench`'s light and dark are
 two **modes of one collection**, while `editorial-luxury`'s espresso sections
 are surfaces and not a mode at all; Figma colors are 0..1 floats, not hex; and
-motion never crosses — Figma has no easing variable type, so the ease, durations
-and stagger stay code-only, and shadows are effect styles whose parts bind to
-variables. A value in a file with no matching token is either a gap in the pack
+motion crosses only in part — durations and curves publish as Figma's TIMING and
+EASING variables, but the scroll clock, scrubbed motion and the reduced-motion branch
+stay code-only, and motion read back from a file is held to the doctrine — and
+shadows are effect styles whose parts bind to variables. A value in a file with no matching token is either a gap in the pack
 or drift in the file — the one thing it is never is a literal in a component.
 
 ## Claude Design, in one direction
@@ -283,18 +305,22 @@ stops an agent inventing motion to fill the silence.
 The kits are not part of the install. `--kit` fetches one on demand, which is how
 the skill stays documentation while still having real components to hand.
 
-## Optional: Lazyweb MCP
+## Reference sweeps (Refero, Lazyweb, Mobbin)
 
 A style pack locks *how it looks*. It says nothing about what a good version of
-the screen you're about to build actually **contains**. If the
-[Lazyweb](https://www.lazyweb.com) MCP server is connected, the skill sweeps
-real-world references for the target screen (signup, onboarding, paywall,
-pricing, checkout, dashboard, settings) before laying anything out.
+the screen you're about to build actually **contains**. For a new design or a
+redesign of a brand or flagship surface the sweep is not optional: through
+whichever reference servers are connected — Refero, [Lazyweb](https://www.lazyweb.com),
+Mobbin where the account is authorized — the skill looks at five or more shipped
+products for the target screen (signup, onboarding, paywall, pricing, checkout,
+dashboard, settings) before laying anything out, and records what it takes from
+each. An empty sweep is recorded as `none found` with where it looked.
 
 The division of labor keeps the result one system: references inform **layout,
 hierarchy and content order**; palette, type and motion stay the pack's. Setup
 is a Streamable HTTP MCP server plus a per-user token — keep it out of your
-repo. Entirely optional; without it the skill works from the pack alone.
+repo. Without any reference server the sweep runs on the open web, and the
+record says the servers were absent.
 
 ## Development
 
@@ -317,6 +343,9 @@ third of the contract:
 | `node --check bin/cli.js` | the installer parses |
 | `node test/installer_test.js` | both installers against throwaway HOMEs, above all the refusal to shadow an installed plugin |
 | `node test/lint_test.js` | the project linter end to end: every S1 rule blocks on its plant, every quiet case stays quiet, the ratchet and the exit contract; `--self-test` checks the catalogue against the rules |
+| `node test/record_test.js` | the director-record validator end to end: a valid record for every surface class and a declined one pass; one planted defect per rule fails, each on its own field |
+| `node test/render_eval_test.js` | the render eval runner (`evals/render/`) on the committed hand-written sample: every count it must report |
+| `node bin/cli.js --lint kits` | the reference kits obey the floor they ship with: no S1 marker in any kit |
 
 Each gate ships a `--self-test` that plants a defect it must catch (`npm run
 selftest`), rejects an unknown argument instead of silently running the normal

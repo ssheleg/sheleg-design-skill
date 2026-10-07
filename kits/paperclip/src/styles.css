@@ -838,15 +838,17 @@
   border: 2px solid var(--mark-rest);
   background-color: var(--bg);
   transform: translate(-50%, -50%);
-  transition: width var(--t-short) var(--ease-enter),
-    height var(--t-short) var(--ease-enter),
+  /* The 10 × 20 → 12 × 22 growth is a scale, never a width/height transition:
+     a layout property re-lays-out the lane on every frame (MOTION_DOCTRINE §5).
+     With the 2px border the box is 14 × 24 → 16 × 26, so the factors are
+     16/14 and 26/24. */
+  transition: transform var(--t-short) var(--ease-enter),
     background-color var(--t-short) var(--ease-enter),
     border-color var(--t-short) var(--ease-enter);
 }
 
 .pc-lane__mark--active {
-  width: 12px;
-  height: 22px;
+  transform: translate(-50%, -50%) scale(1.1429, 1.0833);
   border-color: var(--good);
   background-color: var(--good);
   box-shadow: 0 0 8px color-mix(in srgb, var(--good) 60%, transparent);
@@ -959,4 +961,5 @@
 @media (prefers-reduced-motion: reduce) {
   .pc-reveal { opacity: 1; transform: none; transition: none; }
   .pc-ledger__fill { transition: none; }
+  .pc-lane__mark { transition: none; }
 }

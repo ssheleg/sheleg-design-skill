@@ -9,6 +9,32 @@ was shipped on the strength of an argument rather than an observation.
 
 Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (REQ-10, carried to board B-004). Extended 2026-08-12 by the `pigeonhole` run with twenty rows, none of them `never`.
 
+## Release candidate — 1.63.0 (2026-10-07)
+
+D3, D4, D5, D6, D8, D10, the K6 rubric, the first-time-right rules and B-140 of the
+anti-slop design plan. Publication and installed-state checks belong to the
+coordinator's release receipt, not this candidate heading.
+
+| REQ | What the candidate carries | How confirmed | Status |
+|---|---|---|---|
+| D3-template | `templates/director-record.md`: `surface_class` header, the sixteen K3 fields in order, guidance in HTML comments, per-class owed sets stated | `validate_director_record()` (template, `bin/record.js` `FIELDS` and the `CREATIVE_DIRECTOR.md` record section agree); plant "a field the validator does not know" watched failing by hand; the unfilled template fails `--check-record` with all 16 fields empty (`record_test.js`) | observed |
+| D3-validator | `--check-record <file> [--json]`, exit 0 / 1 / 2; flagship, product, internal and ad field sets; `Mode: declined` + reason passes | `test/record_test.js`, 49 cases through the real CLI: 46 red and 3 vacuously green (exit 2 from an unknown flag) before `bin/record.js` existed, all 49 green after | observed |
+| D3-rules | One planted defect per rule fails on its own field: header, missing, empty, duplicate, Brief falsifier, Mode, declined without reason, Taste generic (EN and RU) and no Ban, References 3 of 5 / placeholder hosts / no `take:` / `none found` without `Searched:`, Fork rubric / no Rubric / no winner / neither yes nor no / no without reason, Rubric < 3, Critique not a triple, Markers no `--lint` / no revision / no counts / S1 > 0, Quality no number, two signatures / no Why, Haptics n/a without reason, ADA n/a on flagship / G FAIL / J FAIL > 2 / J PASS without a labelled set / ad without safe zones | the same suite; `--self-test` repeats 14 rule plants from the installed package | observed |
+| D3-doctrine | The prose output block in `CREATIVE_DIRECTOR.md` replaced by "The record the director owes", pointing at the template and validator, keeping the `Open` doctrine | file read; `validate_director_record()` checks the pointer and the field list | observed |
+| K6 | `ADA_RUBRIC.md`: R1–R25 typed G / J / H with applicability and verification; flagship / product / ad profiles and thresholds; the judge rules; derived, with Apple's pages cited and dated | `validate_ada_rubric()`; plants "stops saying it is derived", "an item typed X" and a product profile missing R8 watched failing by hand; Apple's six category sentences checked against the fetched pages on 2026-10-07 | observed |
+| K6-links | Linked from Act 5 and from `SKILL.md` load-on-demand | `validate_every_shipped_document_is_reachable()` green; `audit_skill.py --house` at `5ca5c36`: body 4747/4750, 0 GAP | observed |
+| D4 | The sweep is mandatory for new design and brand/flagship redesign; Refero, Lazyweb, Mobbin named; empty result recorded | `CREATIVE_DIRECTOR.md` Act 2, `APPLYING.md` step 1, `SKILL.md` references section; the validator refuses `none found` without `Searched:` | observed |
+| First-time-right | The six rules of raw/10 §B.3 as a `CREATIVE_DIRECTOR.md` section | file read | observed |
+| D5 | `MOTION_DOCTRINE.md` §12: strip + video → `DUR-*` row per duration → reduced motion turned on → one moment per viewport; `snapshot`/`compare` for a rendered file; `review-animations` by name; output to Quality/Critique | file read; the HyperFrames commands checked against the installed `hyperframes-cli` skill (W5) | observed |
+| D6 | §3 re-drawn for TIMING/EASING variables and motion snippets; doctrine still binds; scroll clock and reduced motion code-only; §5 frame critique before approval; a file per surface | the plugin's `figma-use-motion`, `figma-implement-motion`, `figma-use` variable reference read at 2.2.120 (W4) | observed from documentation; a live call NOT_RUN (B-144) |
+| D10 | `Taste` field with Take / Ban / Anti-patterns / Dials / Profile guide; generic-only profiles refused | two `record_test.js` cases (English and Russian generic words) | observed |
+| Axes matrix | `MOBILE_SURFACES.md`: states × viewport × theme × text × locale, pairwise + dark × largest text and RTL × narrow; native matrix is its case; web ≠ native | file read; `fix-vd-03.02.py` (the native matrix strings) still green | observed |
+| D8 | `evals/render/`: four fixed briefs, a runner (lint, record, R8 / R20 / R24 from source, rest NOT_RUN), `--write` to `test/evals/RESULTS.md` with the method stated | `test/render_eval_test.js` on the hand-written sample (9 cases); the sample row written with model `NOT_RUN (sample, no model)` | harness observed; model generation NOT_RUN (B-142) |
+| B-140 | Kits: no layout transition; deskmate's waiver with its reason; `--lint kits` in `npm test` and CI | `--lint kits` before: 4 S1, exit 1; after: 0 S1, 4 S2, 5 S3, 2 waived, exit 0. Rendered in headless Chrome over CDP: workbench fill edge 76.23 → 76.24 px of 200 at 38%, LTR and RTL; paperclip active mark 16 × 26 at the same centre before and after; workbench kit `tsc` build green | observed |
+| Provenance | Sources without a commit: Apple pages, judge papers, Figma plugin skills, HyperFrames CLI skill — derived, dated, SHA256 where read from disk | `xd-01.01.py` green (the numbered table is unchanged) | observed |
+| Gate | Full normal suite | `npm test` exit 0 | see PR |
+| Outcome | Fewer markers and valid records in model output with the record and floor loaded | No model run of the render eval yet | NOT_RUN |
+
 ## Release candidate — 1.62.0 (2026-10-07)
 
 D1, D2 and D9 of the anti-slop design plan, plus the lane references the

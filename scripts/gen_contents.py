@@ -130,6 +130,9 @@ def targets(root: Path) -> list[Path]:
         p
         for p in bundle.rglob("*.md")
         if p.name not in EXEMPT
+        # A template is a form a person copies and fills, not a reference read
+        # partially; a Contents list inside it would be copied into every record.
+        and "templates" not in p.relative_to(bundle).parts
         and len((p.read_text(encoding="utf-8")).splitlines()) > LINE_FLOOR
     )
 

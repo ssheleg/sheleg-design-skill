@@ -20,6 +20,7 @@ in this file.
 ## Contents
 
 - Adopted sources
+- Sources without a commit to pin
 - Transfer rules (apply the moment a row becomes `adapted`)
 - Reconciliation with the installed motion tools
 - Third-party notices
@@ -125,6 +126,23 @@ words; no source text was carried over, so no source licence rides on it beyond
 attribution. *adapted* — source text was carried over; a row of that kind
 additionally requires the transfer rules below. Rows 10, 15 and 16 are of that
 kind, and their notices are in [Third-party notices](#third-party-notices).
+
+## Sources without a commit to pin
+
+Some material came from pages and installed tools that have no git commit to
+pin: Apple's award pages, research papers, and skills read from an installed
+plugin. They cannot satisfy the table above, so they are recorded here with the
+date they were read and — where a file was read from disk — its SHA256. Every
+row is **derived**: no text was carried over, so no licence rides on it. These
+rows are not numbered, so they never pass for adopted rows.
+
+| Id | Source | Read | Kind | What it informed |
+|---|---|---|---|---|
+| W1 | Apple Developer, Apple Design Awards — https://developer.apple.com/design/awards/ ; the 2025 and 2024 winner pages under the same path | 2026-10-07 | derived | [`ADA_RUBRIC.md`](./ADA_RUBRIC.md): the six categories and their one-sentence criteria, quoted there and nowhere else. The 25 items are this pack's derivation; Apple publishes no rubric |
+| W2 | Apple Newsroom, *Apple reveals winners of the 2026 Apple Design Awards* — https://www.apple.com/newsroom/2026/06/apple-reveals-winners-of-the-2026-apple-design-awards/ | 2026-10-07 | derived | `ADA_RUBRIC.md`: what the winners were named for (accessibility settings, platform adoption, system surfaces, one signature moment), read as the mechanisms behind R7, R12, R15, R21 and R24 |
+| W3 | ArtifactsBench (arXiv 2507.04952), MLLM-as-a-Judge (arXiv 2402.04788), Anthropic *Harness design for long-running application development* | 2026-10-07 | derived | `ADA_RUBRIC.md`, the judge: per-task checklists, pairwise only against a reference in both orders, separate skeptical evaluators; [`CREATIVE_DIRECTOR.md`](./CREATIVE_DIRECTOR.md), first time right: the re-render budget and external feedback only |
+| W4 | Figma plugin 2.2.120 (installed), `skills/figma-use-motion/SKILL.md` `d74fa8c9435a5260f8a61e3a8fbf11c068f940ae3423e9be2efde8b5e785d78c`, `skills/figma-implement-motion/SKILL.md` `2e26e67284d47c6a74aedf9dca7543f4c8817dafc59a11abb156d4f7feedb2c2`, `skills/figma-use/references/variable-patterns.md` `cab86c964d75e6e5a3ab80a59275de137828e92e989873852c9775a22a5584e3`, `skills/figma-use-motion/references/motion-easing.md` `bb687254ab222747d385e1604ead72a439a444dec8aa0a51ef8a2189a9f45637` | 2026-10-07 | derived | [`FIGMA_BRIDGE.md`](./FIGMA_BRIDGE.md) §3: TIMING and EASING variables, keyframes and animation styles, `get_motion_context` snippets, the per-account gate, `get_screenshot` showing the resting state only. Read from the documentation, not confirmed by a call on a file |
+| W5 | heygen-com/hyperframes `skills/hyperframes-cli/SKILL.md` `f722ee03ba20a3a8c6d2ba200729230e0245827a3178a02ef56e8b4b92c92a4e` and `references/compare-and-batch.md` `d17fa5a16707d981fa6473b99a28aa45abf41bca0fd96c5157c632abd0bfc222` (installed copy) | 2026-10-07 | derived | [`MOTION_DOCTRINE.md`](./MOTION_DOCTRINE.md) §12: `snapshot --at` for frames and `compare … --at` for a before/after sheet, which the tool itself calls a review surface rather than a gate |
 
 ## Transfer rules (apply the moment a row becomes `adapted`)
 

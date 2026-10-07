@@ -23,6 +23,9 @@ Run it before and after every change. It is six gates, not one:
 | `node --check bin/cli.js` | the installer parses |
 | `node test/installer_test.js` | both installers against throwaway HOMEs — above all that a home whose plugin channel owns the skill is refused (exit 3) instead of shadowed |
 | `node test/lint_test.js` | the project linter (`--lint`) on throwaway trees: each rule against its plant, each quiet case, the ratchet and the exit codes |
+| `node test/record_test.js` | the director-record validator (`--check-record`): a valid record per surface class and a declined one, one planted defect per rule, the exit codes and `--json` |
+| `node test/render_eval_test.js` | the render eval runner (`evals/render/run.js`) on the committed sample: the counts it must report, `--write` into a copy |
+| `node bin/cli.js --lint kits` | the reference kits against the floor: no S1 in any kit |
 
 `npm run selftest` runs the planted-defect self-tests for the palette gate,
 the slop lint and the project linter (`node bin/cli.js --self-test`) — the proof each check has been watched saying no. CI runs all of
@@ -39,6 +42,8 @@ four.
 | `cursor/rules/sheleg-design.mdc` | Self-contained condensed rule — **no relative links** (it gets copied into foreign projects alone) |
 | `bin/cli.js`, `install.sh` | The two installers; both must ship the whole bundle |
 | `bin/lint.js` | The project linter behind `--lint`; each rule declares `rule`, `id` and `severity` on one line, and `validate.py` holds them to `SLOP_MARKERS.md` |
+| `bin/record.js` | The director-record validator behind `--check-record`; its `FIELDS` list is held to `templates/director-record.md` and `CREATIVE_DIRECTOR.md` by `validate.py` |
+| `evals/render/` | The render eval: four fixed briefs, the runner, and a hand-written sample CI runs it on |
 | `test/validate.py` | Structural gate |
 | `test/scenarios.md` | Behavioral harness (T1–T19) |
 | `templates/style-pack-template.md` | Source of the shipped pack skeleton |

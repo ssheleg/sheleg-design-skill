@@ -130,3 +130,37 @@ Probe and scenario transcripts were produced under `/tmp/shd-evals/`
 `scenarios-rerun.jsonl`) on the machine that ran this; the scored evidence —
 answers per query and the quoted plan lines above — is carried in this file
 so the row survives the temp directory.
+
+## Render eval (D8)
+
+The rows above measure whether the skill is **picked**. These measure what a
+surface built under it **contains**: four fixed briefs
+(`evals/render/briefs.json` — a landing hero with motion, a mobile onboarding
+screen, a product dashboard, a paywall), one output directory per brief, and
+`node evals/render/run.js <outputs-dir>` reading each one.
+
+### Method
+
+- **What the runner counts, per brief:** findings of the project linter
+  (`bin/lint.js`, the machine half of `SLOP_MARKERS.md`) by severity; whether
+  the run's `director-record.md` passes `--check-record`; and the G items of
+  `ADA_RUBRIC.md` that source can decide — R8 (raw colour outside the tokens,
+  the linter's `raw-color` rule), R20 (a reduced-motion branch present where
+  there is motion — source only, the setting is not toggled in a browser) and
+  R24 (the record's `Surfaces` field, flagship only). The other thirteen G items
+  need a browser, a simulator or a scenario run and are reported NOT_RUN per
+  brief, never PASS.
+- **What it does not do: generate.** A model row comes from one fresh session
+  per brief with the skill installed, the brief's `prompt` verbatim, and the
+  output written to `<outputs-dir>/<brief id>/`; then the runner, with
+  `--model <id> --write`. That step is made by hand and is **NOT_RUN in CI**.
+  CI runs the runner on `evals/render/sample/`, hand-written stand-ins with
+  known contents, and asserts the counts (`test/render_eval_test.js`).
+- **Comparable only while the briefs are byte-identical.** A changed brief is a
+  new file and a new series.
+- A sample row below is a harness check and says so in its Model column; it
+  measures no model.
+
+| Date | Version | Outputs | Model | Briefs | S1 / S2 / S3 | Records valid | G items | Notes |
+|---|---|---|---|---|---|---|---|---|
+| 2026-10-07 | 1.63.0 | `evals/render/sample` | NOT_RUN (sample, no model) | 4/4 | 4 / 0 / 0 | 2/4 | 5 PASS / 4 FAIL / 3 N/A / 52 NOT_RUN | harness check on hand-written stand-ins with known contents; generation NOT_RUN; the model baseline is owed (B-142) |

@@ -36,7 +36,10 @@ export function ProgressBar({
         aria-valuemax={safeMax}
         aria-label={label}
       >
-        <div className="wb-progress__fill" style={{ width: `${percent}%` }} />
+        <div
+          className="wb-progress__fill"
+          style={{ ['--wb-progress-offset' as string]: `${percent - 100}%` } as object}
+        />
       </div>
     </div>
   );

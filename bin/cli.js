@@ -160,6 +160,7 @@ function parseArgs(argv) {
     ratchet: null, // --ratchet <budget.json>: per-file budgets that only fall
     includeTests: false, // --include-tests: lint test files and fixtures too
     selfTest: false, // --self-test: every lint rule against its planted defect
+    checkRecord: null, // --check-record <file>: validate a director record (bin/record.js)
     error: null, // set → print help and exit non-zero
   };
   const seen = [];
@@ -205,6 +206,10 @@ function parseArgs(argv) {
       const value = a === "--ratchet" ? argv[++i] : a.slice("--ratchet=".length);
       if (!value || value.startsWith("-")) opts.error = "--ratchet needs a budget file";
       else opts.ratchet = value;
+    } else if (a === "--check-record" || a.startsWith("--check-record=")) {
+      const value = a === "--check-record" ? argv[++i] : a.slice("--check-record=".length);
+      if (!value || value.startsWith("-")) opts.error = "--check-record needs a director-record file";
+      else opts.checkRecord = value;
     } else if (a === "--json") opts.json = true;
     else if (a === "--include-tests") opts.includeTests = true;
     else if (a === "--self-test") opts.selfTest = true;
@@ -219,6 +224,16 @@ function parseArgs(argv) {
   const OTHERS = ["--cursor", "--claude", "--dir", "--force", "-f", "--kit", "--out"];
   if (opts.selfTest && seen.some((x) => x !== "--self-test")) {
     opts.error = "--self-test runs on its own";
+    return opts;
+  }
+  // The record validator reads one file and writes nothing; --json is the only
+  // flag it takes, and it does not run beside the linter or an install.
+  if (opts.checkRecord) {
+    const other = seen.find((x) => x !== "--check-record" && x !== "--json");
+    if (other) {
+      opts.error = `--check-record reads one record and takes only --json — ${other} does not combine with it`;
+      return opts;
+    }
     return opts;
   }
   if (!opts.lint && seen.some((x) => LINT_ONLY.includes(x))) {
@@ -328,10 +343,19 @@ ${c("bold", "Project linter")}
                         also counts raw palette classes and hex outside tokens
   --include-tests       Read tests and fixtures too (skipped by default)
   --self-test           Every rule against its planted defect, and the
-                        catalogue against the rules
+                        catalogue against the rules (the record rules too)
 
   Exit: 0 no S1 finding, 1 an S1 finding or a file over budget, 2 usage error.
   S2 and S3 findings print and do not change the exit code.
+
+${c("bold", "Director record")}
+  --check-record <file> Validate a director record (templates/director-record.md
+                        in the installed skill): the fields its surface_class
+                        owes are present and filled by their rules
+  --json                The verdict as {valid, surface_class, violations[]}
+
+  Exit: 0 valid (a declined record with its reason included), 1 violations,
+  each listed as <Field>: <problem>, 2 usage error.
 
 ${c("bold", "Default")}
   Auto-detects: uses .cursor/ if present, else .claude/ if present,
@@ -589,15 +613,28 @@ function main() {
     return;
   }
 
+  if (opts.checkRecord) {
+    const record = require("./record.js");
+    const io = { out: (l) => console.log(l), err: (l) => console.error(l) };
+    process.exitCode = record.runCheckRecord({ file: opts.checkRecord, json: opts.json }, io);
+    return;
+  }
+
   if (opts.selfTest || opts.lint) {
     const lint = require("./lint.js");
     const io = { out: (l) => console.log(l), err: (l) => console.error(l) };
-    process.exitCode = opts.selfTest
-      ? lint.selfTest(io.out)
-      : lint.runLint(
-          { dir: opts.lint, json: opts.json, ratchet: opts.ratchet, includeTests: opts.includeTests },
-          io,
-        );
+    if (opts.selfTest) {
+      // Both validators answer for themselves; either failing fails the run.
+      const record = require("./record.js");
+      const a = lint.selfTest(io.out);
+      const b = record.selfTest(io.out);
+      process.exitCode = a || b ? 1 : 0;
+    } else {
+      process.exitCode = lint.runLint(
+        { dir: opts.lint, json: opts.json, ratchet: opts.ratchet, includeTests: opts.includeTests },
+        io,
+      );
+    }
     return;
   }
 

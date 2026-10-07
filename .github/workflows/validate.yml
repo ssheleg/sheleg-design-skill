@@ -123,6 +123,17 @@ jobs:
         run: |
           node test/lint_test.js
           node bin/cli.js --self-test
+      - name: The reference kits obey the floor they ship with
+        # B-140: two kits shipped a width transition, an S1 marker of the floor
+        # the same release added. The bundle is held to its own linter from here
+        # on; an S1 in any kit fails this step (waivers carry their reason inline).
+        run: node bin/cli.js --lint kits
+      - name: Director-record validator suite (--check-record)
+        # A valid record per surface class and a declined one pass; one planted
+        # defect per rule fails on its own field; the exit contract and --json.
+        run: node test/record_test.js
+      - name: Render eval harness on the committed sample (generation is NOT_RUN in CI)
+        run: node test/render_eval_test.js
       - name: CLI help smoke test
         run: npm run smoke
       - name: CLI smoke test (npx channel installs the whole bundle)
