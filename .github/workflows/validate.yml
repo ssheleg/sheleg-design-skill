@@ -114,6 +114,15 @@ jobs:
         # references/distribution.md, "The installer must refuse the shadow it
         # documents").
         run: node test/installer_test.js
+      - name: Project linter (--lint) suite and self-test
+        # The linter is the machine half of SLOP_MARKERS.md. The suite runs the
+        # real CLI on throwaway trees -- every S1 rule watched blocking, every
+        # quiet case (prose emoji, a pack-declared face, test fixtures, comments)
+        # watched staying quiet, the ratchet and the exit contract. The self-test
+        # plants a defect per rule and checks the catalogue against the rules.
+        run: |
+          node test/lint_test.js
+          node bin/cli.js --self-test
       - name: CLI help smoke test
         run: npm run smoke
       - name: CLI smoke test (npx channel installs the whole bundle)

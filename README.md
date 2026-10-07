@@ -175,6 +175,7 @@ skills.
 | `SKILL.md` | The agent-facing skill: discovery triggers, the principles, how to apply them, quick-reference rules, common mistakes |
 | `SHELEG_DESIGN.md` | The full reference: architecture, layer-by-layer mechanics with code, the exact morph math, the DOM↔WebGL projection bridge, a build-from-scratch recipe, and why each piece works |
 | `SURFACE_COMPOSITION.md` | Two decisions the pack layer does not make: the six depth layers of a scene, read before writing CSS for a cinematic page; and the handoff to `dataviz`, read before drawing a chart in any pack — token names are not uniform across the thirteen and an undefined custom property fails silently |
+| `SLOP_MARKERS.md` | The visual floor: 49 markers of generated design (purple gradients, emoji as icons, default faces, the side stripe, the three default looks, banned motion forms…), each with severity, reason, what to do instead and the exception under which it is not slop. Holds with or without a pack; twenty of them are checked by `--lint` |
 | `MOTION_DOCTRINE.md` | Whether to animate at all, before how: the frequency table that kills motion on high-repetition paths, the easing tree and the `ease-in` ban, the duration ceiling, the forbidden forms, and the reduced-motion contract. `SKILL.md` marks it required before any animation |
 | `MOTION_PRODUCTION.md` | What changes when motion leaves the page as a file: the four things a rendered asset gives up, the two programmatic-video tools measured side by side with the licence threshold and the pre-1.0 risk stated, which one this library recommends and the three conditions that reverse it, how a pack's token layer crosses the render seam, and where the reduced-motion obligation lands once there is no user to read a media query |
 | `DESIGN_SYNC_BRIDGE.md` | The Claude Design contract: what a pack sends to claude.ai/design and in what shape, the rule for each of the four reference types, and the border motion does not cross |
@@ -183,6 +184,29 @@ skills.
 | `styles/*.md` | The thirty-nine style packs — palette, type, texture, motion tokens, motifs, bans, and the traps each one carries |
 | `styles/tokens/*.css` | The ready-made token layer per pack, copied verbatim instead of transcribed (`workbench` and `field-notes` each ship a light `:root` plus a `data-theme="dark"` twin) |
 | `styles/STYLE_PACK_TEMPLATE.md` | The pack contract as a skeleton, so a new style is authored against the same headings rather than improvised |
+
+### Check a project against the floor
+
+```bash
+npx sheleg-design-skill --lint ./src            # human report, exit 1 on any S1
+npx sheleg-design-skill --lint ./src --json     # [{id, rule, severity, file, line, snippet}]
+npx sheleg-design-skill --lint ./src --ratchet sloplint-budget.json   # per-file budgets that only fall
+```
+
+The linter reads `html`, `css`, `scss`, `js`, `jsx`, `ts`, `tsx`, `vue`, `svelte`
+and `astro`, skips dependencies, build output, hidden directories and tests
+(`--include-tests` reads them), and checks the `lint:` rows of
+[`SLOP_MARKERS.md`](plugins/sheleg-design/skills/sheleg-design/SLOP_MARKERS.md):
+emoji used as icons (in markup and in data such as `icon: "📊"`), purple
+gradients, gradient text, a default face with no declared reason, decorative
+glass, the side stripe, glows, grid backgrounds, grey on colour, `transition: all`,
+layout-property animation, `scale(0)`, `ease-in`, overshoot curves and a missing
+`prefers-reduced-motion` path. Exit 0 means no S1 finding, 1 an S1 finding or a
+file over its budget, 2 a usage error; S2 and S3 print and never block. A
+recorded exception is a comment, `sheleg-lint-allow: V015 <reason>`, and the
+reason is required. `--self-test` plants a defect for every rule. It is a pattern
+reader, not a renderer: the catalogue's `review` rows stay with the render
+critique.
 
 ## What you get out of it
 
@@ -282,8 +306,8 @@ These run **in a clone of this repository**. The published npm package ships no
 python3 test/validate.py   # or: npm test
 ```
 
-`npm test` is **four gates**, not one, and `validate.py` alone is about a third
-of the contract:
+`npm test` is **several gates**, not one, and `validate.py` alone is about a
+third of the contract:
 
 | Gate | What it decides |
 |---|---|
@@ -291,6 +315,8 @@ of the contract:
 | `test/validate_palette.py` | contrast floors and semantic separation per theme, including three simulated dichromacies · AI-default-cluster provenance · **every contrast ratio the docs state, recomputed from the token layer** |
 | `test/sloplint.py` | the bundle obeying its own bans, in token layers, fenced examples **and the inline CSS the packs prescribe in prose** · doctrine completeness · pack origin addressability |
 | `node --check bin/cli.js` | the installer parses |
+| `node test/installer_test.js` | both installers against throwaway HOMEs, above all the refusal to shadow an installed plugin |
+| `node test/lint_test.js` | the project linter end to end: every S1 rule blocks on its plant, every quiet case stays quiet, the ratchet and the exit contract; `--self-test` checks the catalogue against the rules |
 
 Each gate ships a `--self-test` that plants a defect it must catch (`npm run
 selftest`), rejects an unknown argument instead of silently running the normal

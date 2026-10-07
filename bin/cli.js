@@ -155,10 +155,17 @@ function parseArgs(argv) {
     version: false,
     kit: null, // --kit <pack>: materialize a reference kit instead of installing
     out: null, // --out <path>: where the kit goes
+    lint: null, // --lint <dir>: run the project linter (bin/lint.js) on a tree
+    json: false, // --json: lint findings as a JSON array
+    ratchet: null, // --ratchet <budget.json>: per-file budgets that only fall
+    includeTests: false, // --include-tests: lint test files and fixtures too
+    selfTest: false, // --self-test: every lint rule against its planted defect
     error: null, // set → print help and exit non-zero
   };
+  const seen = [];
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
+    seen.push(a.split("=")[0]);
     if (a === "--help" || a === "-h") opts.help = true;
     else if (a === "--version" || a === "-v") opts.version = true;
     else if (a === "--force" || a === "-f") opts.force = true;
@@ -190,9 +197,37 @@ function parseArgs(argv) {
       const value = a.slice("--out=".length);
       if (!value) opts.error = "--out needs a path";
       else opts.out = value;
-    } else {
+    } else if (a === "--lint" || a.startsWith("--lint=")) {
+      const value = a === "--lint" ? argv[++i] : a.slice("--lint=".length);
+      if (!value || value.startsWith("-")) opts.error = "--lint needs a directory";
+      else opts.lint = value;
+    } else if (a === "--ratchet" || a.startsWith("--ratchet=")) {
+      const value = a === "--ratchet" ? argv[++i] : a.slice("--ratchet=".length);
+      if (!value || value.startsWith("-")) opts.error = "--ratchet needs a budget file";
+      else opts.ratchet = value;
+    } else if (a === "--json") opts.json = true;
+    else if (a === "--include-tests") opts.includeTests = true;
+    else if (a === "--self-test") opts.selfTest = true;
+    else {
       opts.error = `unknown argument: ${a}`;
     }
+  }
+  if (opts.error) return opts;
+  // The linter reads a tree and writes nothing, so any install or kit flag beside
+  // it is a request for two different things at once.
+  const LINT_ONLY = ["--json", "--ratchet", "--include-tests"];
+  const OTHERS = ["--cursor", "--claude", "--dir", "--force", "-f", "--kit", "--out"];
+  if (opts.selfTest && seen.some((x) => x !== "--self-test")) {
+    opts.error = "--self-test runs on its own";
+    return opts;
+  }
+  if (!opts.lint && seen.some((x) => LINT_ONLY.includes(x))) {
+    opts.error = `${seen.find((x) => LINT_ONLY.includes(x))} is only meaningful with --lint <dir>`;
+    return opts;
+  }
+  if (opts.lint && seen.some((x) => OTHERS.includes(x))) {
+    opts.error = `--lint reads a project and installs nothing — ${seen.find((x) => OTHERS.includes(x))} does not combine with it`;
+    return opts;
   }
   if (opts.flavor && opts.target) {
     opts.error = "--dir cannot be combined with --cursor / --claude";
@@ -283,6 +318,20 @@ ${c("bold", "Claude Design")} ${c("dim", "(Claude Code only)")}
   The kits are not installed with the skill — they ship in this package and
   come out only when asked for by name. Then: npm install && npm run build,
   and run /design-sync in that directory.
+
+${c("bold", "Project linter")}
+  --lint <dir>          Check a project against the visual floor in
+                        SLOP_MARKERS.md (emoji icons, purple gradients, default
+                        faces, banned motion forms and the rest of the lint: rows)
+  --json                Findings as [{id, rule, severity, file, line, snippet}]
+  --ratchet <budget>    Per-file budgets ({"<file>": count}) that may only fall;
+                        also counts raw palette classes and hex outside tokens
+  --include-tests       Read tests and fixtures too (skipped by default)
+  --self-test           Every rule against its planted defect, and the
+                        catalogue against the rules
+
+  Exit: 0 no S1 finding, 1 an S1 finding or a file over budget, 2 usage error.
+  S2 and S3 findings print and do not change the exit code.
 
 ${c("bold", "Default")}
   Auto-detects: uses .cursor/ if present, else .claude/ if present,
@@ -537,6 +586,18 @@ function main() {
   }
   if (opts.help) {
     printHelp();
+    return;
+  }
+
+  if (opts.selfTest || opts.lint) {
+    const lint = require("./lint.js");
+    const io = { out: (l) => console.log(l), err: (l) => console.error(l) };
+    process.exitCode = opts.selfTest
+      ? lint.selfTest(io.out)
+      : lint.runLint(
+          { dir: opts.lint, json: opts.json, ratchet: opts.ratchet, includeTests: opts.includeTests },
+          io,
+        );
     return;
   }
 

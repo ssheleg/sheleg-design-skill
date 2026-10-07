@@ -4,7 +4,7 @@ description: Use when deciding how something LOOKS or MOVES — cinematic landin
 license: MIT
 compatibility: Kit/lane commands need node>=16, npx, network. Optional siblings — dataviz, shadcn, migrate-radix-to-base. Each has an in-text fallback when absent or unreachable.
 metadata:
-  version: 1.61.3
+  version: 1.62.0
 ---
 
 # SHELEG Design
@@ -220,6 +220,9 @@ decision, not a research conclusion:
 - **Visual review** ([`VISUAL_REVIEW.md`](./VISUAL_REVIEW.md)) — before accepting a
   screenshot or rendered copy. Verify the frame, then inspect visible text
   against project policy.
+- **The visual floor** ([`SLOP_MARKERS.md`](./SLOP_MARKERS.md)) — before shipping,
+  pack or no pack: markers with a reason and an exception, the three default looks
+  among them. `npx sheleg-design-skill --lint <dir>` checks the machine half.
 - **Where the knowledge came from**
   ([`KNOWLEDGE_PROVENANCE.md`](./KNOWLEDGE_PROVENANCE.md)) — when a rule is
   challenged or copied.
@@ -344,11 +347,6 @@ and its gaps: [`DESIGN_SYNC_BRIDGE.md`](./DESIGN_SYNC_BRIDGE.md).
 A pack fixes *how it looks*, not what a good version of the screen contains. Where
 these are connected, look at real products before inventing a layout — evidence about
 **content and structure**, never a licence to copy a visual (`DESIGN_SYNC_BRIDGE.md` §4).
-
-**Three looks are defaults, not decisions** — cream/serif/terracotta, near-black with
-one acid accent, broadsheet hairlines at zero radius. A page arriving at one WITHOUT a
-pack is the default talking; say which before shipping
-([`SHELEG_DESIGN.md`](./SHELEG_DESIGN.md)).
 
 ## Applying it, and the mistakes that repeat
 

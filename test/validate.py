@@ -1576,6 +1576,30 @@ def check_floor(script: str, count: int) -> None:
 # reduced-motion plants below name the message they must provoke.
 PLANTS = (
     (
+        # A catalogue row that promises a machine check nothing implements: the
+        # drift a rule list grows into first. Derived from the row, not its wording.
+        "a SLOP_MARKERS.md lint: row with no implementation behind it",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/SLOP_MARKERS.md",
+        lambda t: t.replace("`lint:gradient-text`", "`lint:gradient-texture`", 1),
+        "which bin/lint.js does not implement",
+    ),
+    (
+        # The severity decides the exit code, so a rule and its row disagreeing
+        # changes what blocks a merge without anybody choosing that.
+        "a lint rule whose severity disagrees with its catalogue row",
+        "bin/lint.js",
+        lambda t: t.replace('rule: "glow", id: "V004", severity: "S2"',
+                            'rule: "glow", id: "V004", severity: "S1"', 1),
+        "the severity decides the exit code",
+    ),
+    (
+        # A marker the plan named, deleted from the floor.
+        "a required marker removed from the catalogue",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/SLOP_MARKERS.md",
+        lambda t: t.replace("Cards nested inside cards.", "Containers, stacked.", 1),
+        "no marker covers card nesting",
+    ),
+    (
         # v1.57.0 as it shipped: `Triggers: "…"` unquoted inside the description,
         # which this file's own regex reader passed through 5598 checks and a
         # YAML-parsing installer refused at the door ("mapping values are not
@@ -5019,6 +5043,132 @@ def validate_every_shipped_document_is_reachable():
         )
 
 
+# ------------------------------------------------ the visual floor and its linter
+#
+# SLOP_MARKERS.md is a catalogue with a machine half (`bin/lint.js`). The defect
+# this guards is the one every rule list grows into: a row that promises
+# `lint:<rule>` with no implementation behind it, or a rule that quietly checks a
+# marker the catalogue no longer lists, or the two disagreeing on severity, which
+# decides the exit code. The rule table is read off the JavaScript by the shape
+# each rule is declared in, so a rule written any other way is refused rather
+# than silently uncounted.
+
+SLOP_GROUPS = ("color", "type", "layout", "icon-decor", "content", "motion", "mobile", "platform")
+SLOP_REQUIRED = (
+    # (what must be covered, a needle the row's tell carries) — the markers the
+    # anti-slop plan named, so deleting one fails the build instead of quietly
+    # shrinking the floor.
+    ("purple gradients", "violet, purple, fuchsia or indigo"),
+    ("gradient text", "Gradient-filled text"),
+    ("decorative glass", "backdrop-blur"),
+    ("emoji as icons, data included", 'icon: "📊"'),
+    ("sparkles", "✨"),
+    ("default face", "Inter, Roboto, Arial or the system stack"),
+    ("centred hero and three icon cards", "three equal cards"),
+    ("side stripe", "border-l-4"),
+    ("card nesting", "Cards nested inside cards"),
+    ("uniform radius and shadow", "rounded-2xl shadow-lg"),
+    ("bento", "bento"),
+    ("neon glow", "coloured glow"),
+    ("grid background", "hairline grid"),
+    ("numbered sections", "01 / 02 / 03"),
+    ("invented proof", "stat rows, customer logos and testimonials"),
+    ("generic hero copy", "Generic hero copy"),
+    ("grey on colour", "Grey text sitting on a saturated"),
+    ("low-contrast body", "fails 4.5:1"),
+    ("fade-up everywhere", "fade-and-rise"),
+    ("bounce", "overshoot"),
+    ("transition all", "`transition: all`"),
+    ("layout animation", "triggers layout"),
+    ("scale(0)", "`scale(0)`"),
+    ("ease-in", "`ease-in` on UI"),
+    ("reduced motion", "prefers-reduced-motion"),
+    ("glass on the native content layer", "content layer of a native screen"),
+    ("default look one", "Default look one"),
+    ("default look two", "Default look two"),
+    ("default look three", "Default look three"),
+)
+LINT_DECL = re.compile(r'rule:\s*"([a-z0-9-]+)",\s*id:\s*"(V\d{3})",\s*severity:\s*"(S[123])"')
+
+
+def validate_slop_markers():
+    bundle = ROOT / PLUGIN_DIR / "skills" / PLUGIN
+    doc = bundle / "SLOP_MARKERS.md"
+    text = read(doc)
+    if not check(text is not None, f"{PLUGIN_DIR}/skills/{PLUGIN}/SLOP_MARKERS.md: missing — "
+                 "the visual floor has no catalogue"):
+        return
+    rel = f"{PLUGIN_DIR}/skills/{PLUGIN}/SLOP_MARKERS.md"
+    check(re.search(r"\*\*Catalogue version: \d{4}-\d{2}-\d{2}\.\*\*", text) is not None,
+          f"{rel}: no dated `Catalogue version:` line — the catalogue is reviewed every "
+          "release because the target moves, and an undated list cannot say when")
+    for needle, why in (
+        ("`Style pack: none`", "the floor must say it holds with no pack"),
+        ("never loosen it", "a pack may tighten the floor, never loosen it"),
+        ("director record", "a brief's exception counts only once the director record carries it"),
+        ("retired", "a retired marker keeps its id"),
+    ):
+        check(needle in text, f"{rel}: {why} (looked for {needle!r})")
+    refs = dict(re.findall(r"^\[([a-z0-9-]+)\]:\s*(\S.*)$", text, re.M))
+    rows, ids = [], []
+    for n, line in enumerate(text.splitlines(), 1):
+        m = re.match(r"^\|\s*(V\d{3})\s*\|(.*)\|\s*$", line)
+        if not m:
+            continue
+        cells = [c.strip() for c in m.group(2).split("|")]
+        vid = m.group(1)
+        ids.append(vid)
+        if not check(len(cells) == 8, f"{rel}:{n}: {vid} has {len(cells) + 1} cells, the "
+                     "contract is nine (id, group, severity, tell, why, instead, check, "
+                     "exception, source)"):
+            continue
+        group, sev, tell, why, instead, chk, exc, src = cells
+        rows.append((vid, group, sev, tell, chk))
+        if sev == "retired":
+            continue
+        check(group in SLOP_GROUPS, f"{rel}:{n}: {vid} group {group!r} is not one of {SLOP_GROUPS}")
+        check(sev in ("S1", "S2", "S3"), f"{rel}:{n}: {vid} severity {sev!r} is not S1, S2 or S3")
+        check(all((tell, why, instead, exc)), f"{rel}:{n}: {vid} leaves tell, why, instead or "
+              "exception empty — a marker without its reason and its exception is a ban")
+        check(re.fullmatch(r"`lint:[a-z0-9-]+`|`review`", chk) is not None,
+              f"{rel}:{n}: {vid} check {chk!r} is neither `lint:<rule>` nor `review`")
+        names = re.findall(r"\[([a-z0-9-]+)\]", src)
+        check(bool(names), f"{rel}:{n}: {vid} names no source")
+        for name in names:
+            target = refs.get(name, "")
+            ok = (re.search(r"/blob/[0-9a-f]{40}/", target) is not None
+                  or re.search(r"read \d{4}-\d{2}-\d{2}", target) is not None
+                  or re.fullmatch(r"\./[A-Z_]+\.md", target) is not None)
+            check(ok, f"{rel}:{n}: {vid} source [{name}] is not a commit-pinned link, a dated "
+                  "URL or a document in this bundle")
+    check(ids == sorted(ids) and len(ids) == len(set(ids)),
+          f"{rel}: marker ids are not unique and ascending — an id is issued once and never reused")
+    check(len(rows) >= 40, f"{rel}: {len(rows)} markers — the floor lost rows")
+    tells = " ".join(r[3] for r in rows)
+    for label, needle in SLOP_REQUIRED:
+        check(needle in tells, f"{rel}: no marker covers {label} (looked for {needle!r} in a tell)")
+
+    lint_src = read(ROOT / "bin" / "lint.js")
+    if not check(lint_src is not None, "bin/lint.js: missing — the catalogue's lint: rows have no "
+                 "implementation"):
+        return
+    impl = {m.group(1): (m.group(2), m.group(3)) for m in LINT_DECL.finditer(lint_src)}
+    declared = len(re.findall(r"^\s*rule:\s*\"", lint_src, re.M))
+    check(declared == len(impl), f"bin/lint.js: {declared} rule declarations but {len(impl)} in the "
+          "`rule:, id:, severity:` shape — a rule declared any other way is invisible to this check")
+    by_rule = {r[4].strip("`")[5:]: r for r in rows if r[4].startswith("`lint:")}
+    for name, (vid, sev) in sorted(impl.items()):
+        row = by_rule.get(name)
+        if check(row is not None, f"bin/lint.js: lint:{name} is implemented but no "
+                 f"SLOP_MARKERS.md row checks it"):
+            check((row[0], row[2]) == (vid, sev),
+                  f"bin/lint.js: lint:{name} is {vid}/{sev} but SLOP_MARKERS.md says "
+                  f"{row[0]}/{row[2]} — the severity decides the exit code, so the two must agree")
+    for name in sorted(set(by_rule) - set(impl)):
+        check(False, f"SLOP_MARKERS.md: checks lint:{name}, which bin/lint.js does not implement")
+    print(f"  slop markers: {len(rows)} rows, {len(by_rule)} lint rules, {len(impl)} implemented")
+
+
 def _disclose_routing(msg):
     """A check that could not run, said out loud rather than counted as a pass."""
     print(f"  unlooked: {msg}")
@@ -5160,6 +5310,7 @@ def main():
     validate_emphasis_base_layer()
     validate_bundle_self_sufficiency()
     validate_every_shipped_document_is_reachable()
+    validate_slop_markers()
     validate_coordination_claim()
     check_routed_triggers_still_advertised()
 

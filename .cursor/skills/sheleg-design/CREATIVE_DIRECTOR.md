@@ -52,10 +52,10 @@ plainly that it is unvalidated.
 
 | Mode | Enters at | Why |
 |---|---|---|
-| **New design** | `style` | there is nothing to measure yet; the direction is the first commitment |
-| **Redesign** | `verify` + `a11y` **first** | you are replacing something that works for somebody. Measure it before you take it away, or you will re-ship its defects and lose its accidents |
-| **Update** | the affected visual role | preserve the chosen identity; a targeted component, type or spacing correction does not automatically replace the design direction |
-| **Audit** | checks relevant to the stated scope | inspect before proposing changes; distinguish visual evidence, behavior, accessibility and performance, and state unavailable checks |
+| **New design** | `references`, then `style` | there is nothing of yours to measure yet, but there is what has shipped: a direction is chosen against real products, then committed to |
+| **Redesign** | `verify` + `visual-qa` + `a11y` **first**, then `references` → `style` | you are replacing something that works for somebody. Measure it before you take it away, or you will re-ship its defects and lose its accidents |
+| **Update** | `tokens` (or the affected visual role), then `visual-qa` on the screens that read it | preserve the chosen identity; a targeted component, type or spacing correction does not automatically replace the design direction |
+| **Audit** | `a11y` → `verify` → `visual-qa` → `speed`, within the stated scope | inspect before proposing changes; nothing is redrawn until all four have spoken, and an unavailable check is stated, not skipped |
 
 The redesign row is the one people get wrong. **A redesign starts with a
 measurement of the thing being replaced** — contrast, keyboard path, what the
@@ -71,7 +71,7 @@ small fraction of what is installed, and most of it is invisible to a router tha
 only knows its own roster.
 
 ```bash
-npx sshlg-skills pack design --lane <style|brand-surface|product-surface|motion|tokens|figma|implement|mobile|verify|a11y|handoff>
+npx sshlg-skills pack design --lane <references|style|brand-surface|product-surface|motion|tokens|figma|critique|implement|mobile|verify|visual-qa|a11y|speed|handoff>
 ```
 
 That prints, for the lane you named: what is **present** here, what is
@@ -97,8 +97,10 @@ see the choice and correct it. A cast that is never printed cannot be corrected,
 and an agent that silently reached for the first skill that fired has made a
 decision nobody can audit.
 
-**The three lanes with no owner in this family are the ones to check hardest** —
-implementation, verification and **accessibility**. Nothing here asks whether the
+**Of the lanes with no owner in this family, check these hardest** —
+implementation, functional verification and **accessibility** (mobile and handoff
+have no owner either; `visual-qa`, the look across states, viewports, themes and
+text sizes, is this skill's own). Nothing here asks whether the
 interface can be used at all; that lane is delegated, and delegation only works
 if somebody actually casts for it.
 
@@ -387,8 +389,26 @@ These local procedures were informed by a comparison of Impeccable's
 [type](https://github.com/pbakaus/impeccable/blob/12b25ae25848202ce7a9092442198ada5c4fd984/plugin/skills/impeccable/reference/typeset.md),
 [layout](https://github.com/pbakaus/impeccable/blob/12b25ae25848202ce7a9092442198ada5c4fd984/plugin/skills/impeccable/reference/layout.md)
 and [finish-review methods](https://github.com/pbakaus/impeccable/blob/12b25ae25848202ce7a9092442198ada5c4fd984/plugin/skills/impeccable/reference/degraded/finish-reviewer.md) (Apache-2.0). They use this family's contracts; no
-upstream runtime, assets, fixed style bans or automatic workflow are included.
-The links record provenance, not instructions to fetch during every run.
+upstream runtime, assets or automatic workflow are included. The links record
+provenance, not instructions to fetch during every run.
+
+**Markers, not fixed bans (decided 2026-10-07).** This section used to refuse
+impeccable's fixed style bans outright, and the refusal was right about one
+thing: a ban that cannot lose an argument contradicts *an explicit user
+requirement beats the baseline* ([`SKILL.md`](./SKILL.md), Calibration). What it
+left was no floor at all, and generated defaults kept shipping through reviews
+that had nothing to point at. The floor is now
+[`SLOP_MARKERS.md`](./SLOP_MARKERS.md): each pattern is a marker with an id, a
+severity, the reason it reads as a default, what to do instead and **the
+exception under which it is not slop**. It holds with `Style pack: none`; a pack
+may tighten it and may not loosen it; a brief that explicitly asks for a marked
+pattern wins, once the record below carries the requirement on its `Brief` or
+`Open` line with the marker id. The machine half runs as
+`npx sheleg-design-skill --lint <dir>` and blocks only on S1; the `review` rows
+belong to the render critique above. Material from impeccable and taste-skill
+enters the catalogue paraphrased, with provenance rows, never as copied rule
+text, and impeccable's detector stays an optional cross-check that is `NOT_RUN`
+when absent.
 
 ## The output the director owes
 
@@ -402,6 +422,8 @@ Fork       yes → rubric (written first), A: <cast>, B: <cast>, winner + what w
            no  → why not
 Alignment  falsifier checked: <result>
 Quality    the table above, with numbers
+Markers    `--lint` run: command, commit, findings by severity; each waived marker
+           with the Brief or Open line that earned it
 Open       what a person still has to decide
 ```
 

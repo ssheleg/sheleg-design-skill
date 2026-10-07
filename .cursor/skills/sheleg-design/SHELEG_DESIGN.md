@@ -747,28 +747,21 @@ through accuracy and restraint, not spectacle.*
 
 ## Three looks that are defaults, not decisions
 
-Left to itself, generated design lands in one of three places, regardless of
-what the product is:
-
-1. **Warm cream field (near `#F4F1EA`) + high-contrast serif display +
-   terracotta accent.**
-2. **Near-black field + a single acid-green or vermilion accent.**
-3. **Broadsheet: hairline rules, zero border-radius, dense newspaper columns.**
-
-Each is legitimate for some brief — and each shows up whether or not the brief
-called for it, which is what makes it a default. This skill's answer is the
-same either way: **the values come from a pack extracted off a live reference,
-never from taste at the keyboard.** If a pack's field happens to sit near one of
-these, that is a measurement; if a page arrives at one without a pack, that is
-the default talking. Say which of the two it is out loud before shipping.
-
-Moved out of `SKILL.md` on 2026-08-16 for the body budget. It sits here because
-it is the same argument this file makes throughout: the values come from a pack
-extracted off a live reference, never from taste at the keyboard.
+Left to itself, generated design lands in one of three places whatever the
+product is: a warm cream field with a high-contrast serif and a terracotta
+accent; a near-black field with one acid accent; a broadsheet of hairline rules
+at zero radius. Since 2026-10-07 they are markers V012, V013 and V026 of the
+visual floor, [`SLOP_MARKERS.md`](./SLOP_MARKERS.md), beside the rest of the
+generated defaults, each with its reason and its exception. This section keeps
+the argument that answers them, because it is the argument this file makes
+throughout: **the values come from a pack extracted off a live reference, never
+from taste at the keyboard.** If a pack's field sits near one of these looks, that
+is a measurement; if a page arrives at one without a pack, that is the default
+talking. Say which before shipping.
 
 *Adapted from the "For calibration" paragraph of `anthropics/skills`
 `frontend-design` (Apache-2.0, commit `2235be7`). Changed here: the three looks
-are restated as a numbered list and answered with this library's rule — values
-come from a pack — rather than the source's advice on spending a free axis. The
-licence notice and the row are in
+are restated in this library's words and answered with its rule (values come
+from a pack) rather than the source's advice on spending a free axis. The licence
+notice and the row are in
 [`KNOWLEDGE_PROVENANCE.md`](./KNOWLEDGE_PROVENANCE.md).*
