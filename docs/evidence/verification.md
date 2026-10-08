@@ -9,6 +9,27 @@ was shipped on the strength of an argument rather than an observation.
 
 Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (REQ-10, carried to board B-004). Extended 2026-08-12 by the `pigeonhole` run with twenty rows, none of them `never`.
 
+## Release candidate — 1.64.0 (2026-10-08)
+
+Figma practices from a 2026-10-08 study of Figma's own guidance (the *Claude Code for
+designers* article, the MCP server's structure, custom-rules, code-to-canvas and Code
+Connect pages, and the installed plugin's `figma-generate-library` rules 5–6),
+re-read on 2026-10-08 and recorded as W6/W7 in `KNOWLEDGE_PROVENANCE.md`.
+Publication and installed-state checks belong to the coordinator's release receipt.
+
+| REQ | What the candidate carries | How confirmed | Status |
+|---|---|---|---|
+| F1-syntax | `FIGMA_BRIDGE.md` §1 *Naming and code syntax*: every variable with a CSS custom property behind it carries it as WEB code syntax, `var(--…)` with the wrapper; iOS/Android only where native tokens exist | `validate_figma_contract()`; plant "code syntax written without its var() wrapper" caught; source re-read: `figma-generate-library` rule 6 and `token-creation.md` §6 at 2.2.127 (W7) | observed in the document; reaching `get_design_context` NOT_RUN on a file (B-145) |
+| F1-scopes | §1 *Scopes*: a ten-row family table, Figma's own scope names, `[]` for primitives, never `ALL_SCOPES` | `validate_figma_contract()` reads every row against Figma's 22 scope names; plant "a scope row that assigns ALL_SCOPES" caught; source: rule 5 and `token-creation.md` §5 (W7) | observed |
+| F1-reread | §4: the re-read checks value, code syntax and scopes; a semantic variable holding a raw value fails | `validate_figma_contract()` (§4 names both) | observed |
+| F2-tiers | `FIGMA_BRIDGE.md` §1 `### Token tiers` (anchor `#token-tiers`): two tiers, primitive → semantic alias; the pack's own ramp steps are primitives by name, other literals by value; no component tier Figma invents; "map, don't import" and "the pack stays the authority" kept. Written so `super-ux` links the anchor | `validate_figma_contract()`: the tier table equals (`Primitive`, `Semantic`), the statement and the two kept rules present; a tier count beside Figma anywhere in the bundle, README or cursor rule must be two and link the anchor (2 found, both linked); plant "restated … as three tiers" caught. Checked against `awning`'s token layer, which already aliases a ramp (`--shade-*`) and declares `--radius-button` | observed |
+| F3-capture | `CREATIVE_DIRECTOR.md` Redesign row and the paragraph under it: `generate_figma_design` into the surface's recorded file, a page marked `captured`, never a new file in drafts, variables published first, an unbound value is a finding, the page kept until the redesign ships; §4 of the bridge points at it | `validate_figma_contract()` (row and four needles); source: code-to-canvas page and the tool's own description (W6) | observed in the document; a live capture NOT_RUN (B-145) |
+| F4-codeconnect | §6: "Add instructions for MCP" generated from the pack's `## Bans` (and `## Components` entry) or unused, never hand-written; a differing field is file content | `validate_figma_contract()`; source: code-connect-integration page (W6) | observed |
+| F5-overrides | §6: a `generate_image` placeholder named `placeholder/<…>`, labelled and listed in `Open`, else V035; a font that fails to load declared, the step not reported done, the written family read back and asserted | `validate_figma_contract()`; sources: `figma-generate-design` placeholder step, the font-loading line of `figma-generate-library` and `figma-generate-design` (W7); V035 checked in `SLOP_MARKERS.md` | observed |
+| F6-conflicts | §6 *Where Figma's guidance and the pack disagree*: 1:1 is layout and structure, never identity, bans win; the pack is the token authority; corrections go into the director record and the skills | `validate_figma_contract()`; quotes re-read on 2026-10-08 from the add-custom-rules page and *Claude Code for designers* (W6) | observed |
+| F7-routing | Description: surfaces in the lead before `Triggers -`; «сделай дашборд», «админка», «анимации», «макеты»; 964 of 1024 chars | `validate_routing_forms_lead()`; plant "drops a Russian routing form" caught; `validate_t1_carriers_survive()` green; umbrella `test/advertised_check.js --member sheleg-design`: all 41 routed triggers advertised (it refused a draft that dropped `investor deck as a web page` and one that dropped `style pack`); pinned house audit `audit_skill.py --house` at `5ca5c36`: 0 GAP, 17 PASS, body 4747/4750 (it refused the 1018-char draft at the 970 working limit); `evals_validate.py` 15 trigger cases + self-test green | observed; a fresh-context T1 routing run NOT_RUN |
+| Gate | Full normal suite | `npm test` on this tree: `validate.py` OK (6640 checks), `validate_palette.py` OK (3409), `sloplint.py` OK (938), chrome, installer (13 cases), lint, record, render-eval, `--lint kits` (0 S1), the three self-tests (every plant caught, the four new ones among them) and `test:audit` all green. The first full run died in `installer_test.js` on ENOSPC (the machine disk at 100%); the steps from there were re-run and passed | observed; CI on the PR |
+
 ## Release candidate — 1.63.0 (2026-10-07)
 
 D3, D4, D5, D6, D8, D10, the K6 rubric, the first-time-right rules and B-140 of the

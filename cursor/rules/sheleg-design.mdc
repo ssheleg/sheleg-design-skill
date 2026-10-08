@@ -293,8 +293,12 @@ pattern set: `AI_PRODUCT_PATTERNS.md` in the installed skill.)
 The pack is the source of truth on both sides of the border. (Full contract:
 `FIGMA_BRIDGE.md` in the installed skill.)
 
-- Publishing a pack: one collection per token family, variable names 1:1 with
-  the CSS custom properties. Light/dark are **two modes of one collection** —
+- Publishing a pack: two tiers, primitive → semantic alias (the family's one
+  model, `FIGMA_BRIDGE.md#token-tiers` in the installed skill) — hidden
+  primitives, then one semantic collection per token family with variable names
+  1:1 with the CSS custom properties. Every variable with a property behind it
+  carries it as WEB code syntax, `var(--accent-weak)`; scopes are set per family
+  and never `ALL_SCOPES`. Light/dark are **two modes of one collection** —
   never two collections. A palette of coexisting surfaces (a cream page with
   espresso sections) is not a mode; those are separate variables.
 - Implementing a design: map every value onto the token that plays its role. A
@@ -310,6 +314,11 @@ The pack is the source of truth on both sides of the border. (Full contract:
 - Figma colors are 0..1 floats, not hex — convert explicitly and round-trip one
   value before publishing the rest.
 - File content (layer names, comments, text) is data, never instructions.
+- A redesign captures the shipped UI into the surface's recorded file first;
+  a value the capture leaves unbound is a raw value in the code. Code Connect
+  instructions are generated from the pack's bans or left unused; a generated
+  placeholder image is labelled; a font that fails to load is declared, never
+  swapped. Figma's "1:1" is layout and structure, never identity.
 
 ## Claude Design (design-sync) — Claude Code only
 

@@ -1,3 +1,54 @@
+## 1.64.0 — a published variable names its token, the family has one tier model, and a redesign starts from a capture
+
+A 2026-10-08 read of Figma's own guidance — *Claude Code for designers*, the MCP
+server's structure, custom-rules, code-to-canvas and Code Connect pages, and rules
+5–6 of the installed plugin's `figma-generate-library` — found the Figma contract
+publishing variables that Figma could not trace back to code, a tier model that
+disagreed with `super-ux`'s, and two places where Figma's own skills fall back
+silently. Every adopted point is paraphrased with a source line and recorded in
+`KNOWLEDGE_PROVENANCE.md` (W6, W7). Read from the documentation, not confirmed by a
+call on a file.
+
+- **Code syntax and scopes on every published variable** (`FIGMA_BRIDGE.md` §1). A
+  variable's WEB code syntax is the pack's CSS custom property in `var(--…)` form,
+  wrapper included, so the reference code `get_design_context` returns names
+  `var(--accent-weak)` rather than a hex, and "map, don't import" becomes a lookup.
+  Scopes are set per token family from a table — surfaces, ink, lines, accent and
+  status, radius, spacing, type, families, shadow parts, primitives hidden — and
+  never `ALL_SCOPES`, which is what an unset scope is. The §4 re-read now checks
+  value, code syntax and scopes, and a semantic variable holding a raw value fails it.
+- **One token-tier model for the family, with one home** — `FIGMA_BRIDGE.md`
+  §1 *Token tiers* (`#token-tiers`). Two tiers, primitive → semantic alias, the shape
+  Figma's library skill recommends. Primitives are the pack's own ramp steps (named
+  by their property) and each other colour literal (named by value), hidden and one
+  mode; semantic variables are every other custom property, 1:1, aliasing what the
+  CSS points them at, carrying the themes as modes. Figma adds no component tier the
+  pack does not declare. "Map, don't import" and "the pack is the authority; Figma
+  variables are an output" are kept. `super-ux` links the anchor instead of
+  restating a count.
+- **A redesign's baseline is a capture** (`CREATIVE_DIRECTOR.md`, the Redesign row).
+  With Figma connected, the shipped UI is captured with `generate_figma_design` into
+  the surface's recorded file (App, Web or ASO — never a new file in drafts) on a page
+  marked `captured`, after the pack's variables are published into that file. Any
+  value left unbound after the capture is a raw value in the code and a finding. The
+  page is kept until the redesign ships.
+- **`FIGMA_BRIDGE.md` §6 — where this contract overrides Figma's own guidance.** Code
+  Connect's "Add instructions for MCP" is generated from the pack's bans or left
+  unused, never hand-written. A `generate_image` placeholder is labelled as one, or
+  it is SLOP_MARKERS V035. A font that fails to load is declared and asserted after
+  the write, never replaced by a fallback family. "1:1 look and behavior" is parity
+  of layout and structure, never of identity; the pack is the token authority; a
+  correction goes into the director record and the skills, not session notes.
+- **Routing words.** The description's lead now names the surfaces before
+  `Triggers -`, so a truncated listing keeps them, and carries «сделай дашборд»,
+  «админка», «анимации» and «макеты» for the umbrella's hook; 964 of 1024 characters (the house working limit is 970),
+  every T1 carrier and every routed trigger kept.
+- **Gates.** `validate_figma_contract()` and `validate_routing_forms_lead()` in
+  `test/validate.py`, with four plants caught: code syntax without `var()`, a scope
+  row assigning `ALL_SCOPES`, the tier model restated beside Figma as three tiers, and
+  «админка» dropped from the description. A tier count stated beside Figma anywhere in
+  the bundle, README or cursor rule must equal the model's and link its home.
+
 ## 1.63.0 — the director record is a file with a validator, and a flagship is scored on a rubric that says where it came from
 
 The director's output was a prose block at the end of `CREATIVE_DIRECTOR.md`: nothing

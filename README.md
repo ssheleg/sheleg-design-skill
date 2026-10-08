@@ -181,7 +181,7 @@ skills.
 | `MOTION_DOCTRINE.md` | Whether to animate at all, before how: the frequency table that kills motion on high-repetition paths, the easing tree and the `ease-in` ban, the duration ceiling, the forbidden forms, and the reduced-motion contract. `SKILL.md` marks it required before any animation |
 | `MOTION_PRODUCTION.md` | What changes when motion leaves the page as a file: the four things a rendered asset gives up, the two programmatic-video tools measured side by side with the licence threshold and the pre-1.0 risk stated, which one this library recommends and the three conditions that reverse it, how a pack's token layer crosses the render seam, and where the reduced-motion obligation lands once there is no user to read a media query |
 | `DESIGN_SYNC_BRIDGE.md` | The Claude Design contract: what a pack sends to claude.ai/design and in what shape, the rule for each of the four reference types, and the border motion does not cross |
-| `FIGMA_BRIDGE.md` | The design↔code contract: how a pack's tokens map onto Figma variable collections and modes, how to implement a design without importing raw values, and what cannot cross the border |
+| `FIGMA_BRIDGE.md` | The design↔code contract: the family's token-tier model, how a pack's tokens map onto Figma variables (collections, modes, code syntax, scopes), how to implement a design without importing raw values, what cannot cross the border, and where it overrides Figma's own guidance |
 | `AI_PRODUCT_PATTERNS.md` | The surfaces a model drives: the five states of a call, streaming instead of spinners, latency, provenance and uncertainty, agent confirmations, and the bans that keep it honest |
 | `styles/*.md` | The thirty-nine style packs — palette, type, texture, motion tokens, motifs, bans, and the traps each one carries |
 | `styles/tokens/*.css` | The ready-made token layer per pack, copied verbatim instead of transcribed (`workbench` and `field-notes` each ship a light `:root` plus a `data-theme="dark"` twin) |
@@ -270,8 +270,12 @@ now that anyone can prompt their way to a prototype.
 Design files and design tokens are two encodings of one system, and the usual
 outcome is that they drift until nobody trusts either. The skill's rule is that
 **the pack is the source of truth on both sides**: publishing writes a pack's
-values into Figma variable collections; implementing a design maps the file's
-values *onto* the pack's tokens instead of inlining hexes.
+values into Figma variables — hidden primitives under semantic aliases, each alias
+carrying its CSS custom property as code syntax and a scope set per token family,
+so the code Figma hands back names `var(--accent)` instead of a hex; implementing a
+design maps the file's values *onto* the pack's tokens instead of inlining hexes. A
+redesign starts by capturing the shipped UI into the surface's file, where every
+value the capture cannot bind to a variable is a raw value in the code.
 
 The bridge is specific because the traps are: `workbench`'s light and dark are
 two **modes of one collection**, while `editorial-luxury`'s espresso sections
