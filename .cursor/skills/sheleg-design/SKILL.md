@@ -1,10 +1,10 @@
 ---
 name: sheleg-design
-description: Use when deciding how something LOOKS or MOVES — cinematic landing pages and hero sections, particle/WebGL, scrubbed motion, drift, dashboards, admin or internal tools, mobile screens, chat or agent interfaces, tokens, palettes, typography and the Figma border. Triggers - "design a landing" / "дизайн лендинга", "build a landing page" / "сделай лендинг", "scroll animation" / "скролл-анимация", "dashboard style" / "стиль дашборда", "design tokens, style pack" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы, фигма в код", "mobile screen" / "мобильный экран", "palette, colors" / "палитра, цвета", "typography, font" / "типографика, шрифт", "how it looks, make it prettier" / "выглядит, красиво, красивее", "visual reference" / "визуальные референсы", "investor deck as a web page" / "веб-презентация", "redesign" / "редизайн, свёрстай, вёрстка". Not for structure, copy, backend behavior, or .pptx decks.
+description: Use when deciding how something LOOKS or MOVES — landing/hero pages, dashboards, admin/internal tools, mobile screens, web decks, chat/agent UIs; particle/WebGL, scrubbed motion, drift; tokens, themes, palettes, typography, Figma mockups. Triggers - "design a landing" / "дизайн лендинга", "build a landing page" / "сделай лендинг", "dashboard style" / "стиль дашборда, сделай дашборд, админка", "scroll animation" / "скролл-анимация, анимации", "design tokens, style pack" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы, фигма в код, макеты", "mobile screen" / "мобильный экран", "palette, colors" / "палитра, цвета", "typography, font" / "типографика, шрифт", "how it looks, make it prettier" / "выглядит, красиво, красивее", "visual reference" / "визуальные референсы", "investor deck as a web page" / "веб-презентация", "redesign" / "редизайн, свёрстай, вёрстка". Not for structure, copy, backend or .pptx.
 license: MIT
 compatibility: Kit/lane commands need node>=16, npx, network. Optional siblings — dataviz, shadcn, migrate-radix-to-base. Each has an in-text fallback when absent or unreachable.
 metadata:
-  version: 1.63.0
+  version: 1.64.0
 ---
 
 # SHELEG Design

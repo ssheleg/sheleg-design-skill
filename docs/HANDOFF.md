@@ -1,3 +1,28 @@
+# Figma practices — 2026-10-08
+
+Branch `feat/figma-practices` prepares sheleg-design 1.64.0 from a 2026-10-08 read
+of Figma's own guidance (provenance W6, W7). `FIGMA_BRIDGE.md` §1 gains the
+family's one token-tier model under `### Token tiers` (anchor `#token-tiers`: two
+tiers, primitive → semantic alias), code syntax in `var(--…)` form and a scope
+table on every published variable; §4's re-read checks both; new §6 overrides
+Figma's guidance where the pack is the authority (Code Connect instructions
+generated or unused, labelled placeholder images, declared font failures, 1:1 as
+layout only, corrections into the record). `CREATIVE_DIRECTOR.md`'s Redesign row
+starts from a `generate_figma_design` capture into the surface's recorded file.
+The description carries «сделай дашборд», «админка», «анимации», «макеты».
+Gates: `validate_figma_contract()`, `validate_routing_forms_lead()`, four plants.
+Receipts: the 1.64.0 section of [verification.md](evidence/verification.md) and
+the CHANGELOG.
+
+Open: B-145 (one live Figma call to observe code syntax reaching
+`get_design_context`), B-146 (super-ux links `#token-tiers`). The coordinator owns
+PR review, release, tag, umbrella pin and local install update.
+
+Next task: review the PR; then merge the parallel super-ux change that links
+`FIGMA_BRIDGE.md#token-tiers`.
+
+---
+
 # Director record, ADA rubric and the render eval — 2026-10-07
 
 Branch `feat/director-record-ada` prepares sheleg-design 1.63.0: tasks D3, D4, D5,

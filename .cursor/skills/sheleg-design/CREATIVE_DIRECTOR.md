@@ -63,7 +63,7 @@ plainly that it is unvalidated.
 | Mode | Enters at | Why |
 |---|---|---|
 | **New design** | `references`, then `style` | there is nothing of yours to measure yet, but there is what has shipped: a direction is chosen against real products, then committed to |
-| **Redesign** | `verify` + `visual-qa` + `a11y` **first**, then `references` → `style` | you are replacing something that works for somebody. Measure it before you take it away, or you will re-ship its defects and lose its accidents |
+| **Redesign** | `verify` + `visual-qa` + `a11y` **first** — with Figma connected, the shipped UI **captured** into the surface's recorded file as the baseline — then `references` → `style` | you are replacing something that works for somebody. Measure it before you take it away, or you will re-ship its defects and lose its accidents |
 | **Update** | `tokens` (or the affected visual role), then `visual-qa` on the screens that read it | preserve the chosen identity; a targeted component, type or spacing correction does not automatically replace the design direction |
 | **Audit** | `a11y` → `verify` → `visual-qa` → `speed`, within the stated scope | inspect before proposing changes; nothing is redrawn until all four have spoken, and an unavailable check is stated, not skipped |
 
@@ -71,6 +71,21 @@ The redesign row is the one people get wrong. **A redesign starts with a
 measurement of the thing being replaced** — contrast, keyboard path, what the
 current page actually does on the target viewport — because half of "the old one
 was bad" turns out to be "the old one handled a case I have not thought about".
+
+**Where Figma is in the session, the measurement includes a capture.** Capture the
+shipped UI with `generate_figma_design` into the surface's **recorded** Figma file
+— the one file per surface the project already keeps (App, Web or ASO;
+[`FIGMA_BRIDGE.md`](./FIGMA_BRIDGE.md) §4) — onto its own page, named so it reads
+as `captured` with the date and the build it came from. **Never a new file in
+drafts:** a project with no recorded file for the surface is asked where it is,
+because a baseline nobody can find is not a baseline. Publish the pack's variables
+into that file before capturing; Figma binds the file's variables to matching
+values in the captured layers, so **any value left unbound after the capture is a
+raw value in the code, and each one is a finding** in the record's `Critique`. The
+captured page is kept until the redesign ships — Figma's own screen-building
+workflow deletes a capture once the screen is rebuilt from components, but a
+baseline that is deleted cannot be compared against. The record's `Mode` line
+names the file and the page.
 
 ---
 

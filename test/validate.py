@@ -2307,6 +2307,40 @@ PLANTS = (
             "pluggable visual style packs, and one glossed twice", 1),
         "differs from the STYLE_PACK_INDEX.md derivation",
     ),
+    (
+        # 1.64.0 item 1: the code syntax without its `var()` wrapper -- the form
+        # Figma's own library skill names as the one that makes Dev Mode show the
+        # hex, so get_design_context would hand back a literal again.
+        "a published variable's code syntax written without its var() wrapper",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/FIGMA_BRIDGE.md",
+        lambda t: t.replace("WEB code syntax `var(--accent-weak)`", "WEB code syntax `--accent-weak`", 1),
+        "WEB code syntax to the pack's custom property",
+    ),
+    (
+        # 1.64.0 item 1: Figma's default scope assigned to a family. Derived from the
+        # radius row's scope rather than its wording.
+        "a scope row that assigns ALL_SCOPES",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/FIGMA_BRIDGE.md",
+        lambda t: re.sub(r"(\| Radius \([^|]*\| )`CORNER_RADIUS`", r"\1`ALL_SCOPES`", t, count=1),
+        "assigns `ALL_SCOPES`",
+    ),
+    (
+        # 1.64.0 item 2: the family's tier model restated elsewhere with another
+        # count -- the state super-ux's figma-structure reference was in (three
+        # tiers) against this skill's flat collections, before one home existed.
+        "the token-tier model restated beside Figma with a different count",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/CREATIVE_DIRECTOR.md",
+        lambda t: t + "\nFigma variables come in three tiers: primitive → semantic → component.\n",
+        "restates the token-tier model as three tiers",
+    ),
+    (
+        # 1.64.0 item 7: a Russian routing form the umbrella's hook fires on,
+        # dropped from the description. Derived from the tuple, not the prose.
+        "a description that drops a Russian routing form the umbrella fires on",
+        f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md",
+        lambda t: t.replace(RU_ROUTING_FORMS[1], "admin", 1),
+        "the umbrella's hook fires on it for this skill",
+    ),
 )
 
 
@@ -5287,6 +5321,175 @@ def _disclose_routing(msg):
     print(f"  unlooked: {msg}")
 
 
+# ------------------------------------- the Figma contract's 1.64.0 obligations
+#
+# Seven items came out of a 2026-10-08 read of Figma's own guidance (provenance W6,
+# W7). Prose alone holds none of them: the motion boundary in §3 was a sentence
+# that had been false for a release before anybody re-read it. So the parts an
+# edit can silently drop are read here — the code syntax and scopes a published
+# variable carries, the re-read that verifies both, the family's one tier model
+# and the count it states, the overrides of Figma's own fallbacks, the redesign
+# capture, and the Russian routing forms the umbrella's hook fires on.
+#
+# The scope vocabulary is Figma's own (figma-use/references/variable-patterns.md,
+# plugin 2.2.127), so a misspelt scope in the table is refused rather than
+# published as a picker nobody sees.
+FIGMA_SCOPES = (
+    "ALL_SCOPES", "TEXT_CONTENT", "CORNER_RADIUS", "WIDTH_HEIGHT", "GAP", "ALL_FILLS",
+    "FRAME_FILL", "SHAPE_FILL", "TEXT_FILL", "STROKE_COLOR", "STROKE_FLOAT",
+    "EFFECT_FLOAT", "EFFECT_COLOR", "OPACITY", "FONT_FAMILY", "FONT_STYLE",
+    "FONT_WEIGHT", "FONT_SIZE", "LINE_HEIGHT", "LETTER_SPACING", "PARAGRAPH_SPACING",
+    "PARAGRAPH_INDENT",
+)
+# The family's tier model, in order. Its single home is FIGMA_BRIDGE.md §1
+# `### Token tiers` (anchor `#token-tiers`); super-ux links there.
+TOKEN_TIERS = ("Primitive", "Semantic")
+TIER_HOME = "FIGMA_BRIDGE.md#token-tiers"
+TIER_STATEMENT = "**Two tiers: primitive → semantic alias.**"
+_NUMBER_WORDS = {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6}
+# Forms the umbrella's routing table fires on for this skill (ssheleg/sshlg-skills
+# lib/triggers.js), named here so the gate refuses a description that drops one
+# even where no umbrella checkout sits above this repository.
+RU_ROUTING_FORMS = ("сделай дашборд", "админка", "анимации", "макеты")
+
+
+def _subsection(text: str, heading: str) -> str:
+    """The body of one `### Heading`, up to the next `###` or `##`. Empty when absent."""
+    lines = text.splitlines()
+    try:
+        start = next(i for i, l in enumerate(lines) if l.strip() == heading)
+    except StopIteration:
+        return ""
+    end = next((i for i in range(start + 1, len(lines))
+                if lines[i].startswith(("### ", "## "))), len(lines))
+    return "\n".join(lines[start + 1:end])
+
+
+def _flat(text: str) -> str:
+    return " ".join(text.split())
+
+
+def validate_figma_contract():
+    bundle = ROOT / PLUGIN_DIR / "skills" / PLUGIN
+    rel = f"{PLUGIN_DIR}/skills/{PLUGIN}/FIGMA_BRIDGE.md"
+    fb = read(bundle / "FIGMA_BRIDGE.md")
+    if not check(fb is not None, f"{rel}: missing"):
+        return
+    s1 = _section(fb, "## 1. Code → Figma (publish the pack as variables)")
+
+    # Item 1 — code syntax equals the pack's custom property, in var() form.
+    naming = _flat(_subsection(s1, "### Naming and code syntax"))
+    check("WEB code syntax `var(--" in naming,
+          f"{rel}: §1 Naming does not set a variable's WEB code syntax to the pack's custom "
+          "property in `var(--…)` form -- without it get_design_context returns a literal and "
+          "'map, don't import' is a judgement again")
+
+    # Item 1 — scopes per family, from Figma's vocabulary, never ALL_SCOPES.
+    scopes = _subsection(s1, "### Scopes")
+    check("never `ALL_SCOPES`" in _flat(scopes),
+          f"{rel}: §1 Scopes does not say never `ALL_SCOPES`")
+    rows = [l for l in scopes.splitlines() if l.startswith("| ") and not l.startswith("| Family")
+            and not set(l) <= set("|- ")]
+    check(len(rows) >= 8, f"{rel}: §1 Scopes has {len(rows)} family rows -- the table is the rule")
+    for row in rows:
+        cells = [c.strip() for c in row.strip().strip("|").split("|")]
+        named = re.findall(r"`([A-Z_]+)`", cells[-1])
+        check(bool(named) or "`[]`" in cells[-1], f"{rel}: §1 Scopes row {cells[0]!r} names no scope")
+        for scope in named:
+            check(scope in FIGMA_SCOPES,
+                  f"{rel}: §1 Scopes row {cells[0]!r} names `{scope}`, which is not a Figma scope")
+            check(scope != "ALL_SCOPES",
+                  f"{rel}: §1 Scopes row {cells[0]!r} assigns `ALL_SCOPES` -- the one scope the "
+                  "contract refuses on every variable")
+
+    # Item 1 — the §4 re-read verifies both.
+    s4 = _flat(_section(fb, "## 4. Round-trip discipline")).lower()
+    check("code syntax" in s4 and "scopes" in s4,
+          f"{rel}: §4's re-read does not verify code syntax and scopes -- a write that dropped "
+          "either still passes a value-only comparison")
+
+    # Item 2 — one tier model, one home, one count.
+    tiers = _subsection(s1, "### Token tiers")
+    if check(bool(tiers), f"{rel}: no `### Token tiers` under §1 -- the family's tier model has no home"):
+        names = tuple(re.findall(r"^\| \*\*([A-Za-z]+)\*\* \|", tiers, re.M))
+        check(names == TOKEN_TIERS,
+              f"{rel}: the tier table lists {names}, the model is {TOKEN_TIERS}")
+        check(TIER_STATEMENT in _flat(tiers),
+              f"{rel}: `### Token tiers` does not state the model as {TIER_STATEMENT!r}")
+        for kept in ("map, don't import", "The pack stays the authority"):
+            check(kept in _flat(tiers), f"{rel}: `### Token tiers` no longer keeps {kept!r}")
+    sources = sorted(p for p in bundle.rglob("*.md") if p.name != "FIGMA_BRIDGE.md")
+    sources += [ROOT / "README.md", *sorted((ROOT / "cursor" / "rules").glob("*.mdc"))]
+    restated = 0
+    for path in sources:
+        text = read(path) or ""
+        for para in re.split(r"\n\s*\n", text):
+            low = para.lower()
+            if "figma" not in low:
+                continue
+            counts = re.findall(r"\b(one|two|three|four|five|six|\d+)[- ]tiers?\b", low)
+            for word in counts:
+                n = _NUMBER_WORDS.get(word, int(word) if word.isdigit() else 0)
+                restated += 1
+                check(n == len(TOKEN_TIERS),
+                      f"{path.relative_to(ROOT)}: restates the token-tier model as {word} tiers -- "
+                      f"the family's model is {len(TOKEN_TIERS)} ({' → '.join(TOKEN_TIERS)}) and "
+                      f"its one home is {TIER_HOME}; link it, do not restate it")
+            check(not counts or TIER_HOME in para,
+                  f"{path.relative_to(ROOT)}: states a token-tier count beside Figma without "
+                  f"linking {TIER_HOME}")
+
+    # Items 4–6 — the overrides of Figma's own guidance.
+    s6 = _flat(_section(fb, "## 6. Where this contract overrides Figma's own guidance"))
+    for needle, why in (
+        ("Add instructions for MCP", "Code Connect's instruction field is not addressed"),
+        ("Never hand-write it.", "Code Connect instructions are not refused as hand-written"),
+        ("`generate_image` placeholder is labelled", "a generated placeholder image is not labelled"),
+        ("V035", "the unlabelled placeholder is not tied to its marker"),
+        ("A font that fails to load is declared, and asserted after the write.",
+         "a font that fails to load is not declared and asserted"),
+        ("is parity of layout and structure, never of identity", "1:1 parity is not bounded"),
+        ("the pack is the token authority", "Figma tokens are not subordinated to the pack"),
+        ("corrections go where the next agent reads them", "session notes are not redirected"),
+    ):
+        check(needle in s6, f"{rel}: §6 -- {why} (no {needle!r})")
+
+    # Item 3 — the redesign baseline is a capture into the recorded file.
+    cd = read(bundle / "CREATIVE_DIRECTOR.md") or ""
+    row = next((l for l in cd.splitlines() if l.startswith("| **Redesign** |")), "")
+    check("**captured**" in row,
+          "CREATIVE_DIRECTOR.md: the Redesign row does not capture the shipped UI as the baseline")
+    flat_cd = _flat(cd)
+    for needle in ("`generate_figma_design`", "**recorded** Figma file", "Never a new file in drafts",
+                   "any value left unbound after the capture is a raw value in the code, and each "
+                   "one is a finding"):
+        check(needle in flat_cd, f"CREATIVE_DIRECTOR.md: the redesign capture paragraph lost {needle!r}")
+    print(f"  figma contract: {len(rows)} scope rows, {len(TOKEN_TIERS)} tiers, "
+          f"{restated} tier count(s) stated beside Figma outside the home")
+
+
+def validate_routing_forms_lead():
+    """Item 7 — the Russian forms are advertised and the surfaces are front-loaded.
+
+    Harness listings truncate a description, so the surface classes must sit in the
+    lead clause, before `Triggers -`, where a cut leaves them standing.
+    """
+    text = read(ROOT / PLUGIN_DIR / "skills" / PLUGIN / "SKILL.md") or ""
+    m = re.search(r"^description:\s*(.*?)(?=^[a-z-]+:|^---)", text, re.S | re.M)
+    if not check(m is not None, "SKILL.md: no description to read routing forms from"):
+        return
+    desc = " ".join(m.group(1).split())
+    for form in RU_ROUTING_FORMS:
+        check(form in desc,
+              f"SKILL.md description never says «{form}» -- the umbrella's hook fires on it for "
+              "this skill, so the skill must claim it")
+    lead = desc.split(" Triggers - ", 1)[0].lower()
+    for word in sorted(SURFACE_CLASSES):
+        check(word in lead,
+              f"SKILL.md description: '{word}' is not in the lead clause before 'Triggers -' -- a "
+              "listing that truncates the description would drop the surface")
+
+
 def check_routed_triggers_still_advertised():
     """The family's routing hook fires on words this description has to keep.
 
@@ -5426,6 +5629,8 @@ def main():
     validate_slop_markers()
     validate_director_record()
     validate_ada_rubric()
+    validate_figma_contract()
+    validate_routing_forms_lead()
     validate_coordination_claim()
     check_routed_triggers_still_advertised()
 
