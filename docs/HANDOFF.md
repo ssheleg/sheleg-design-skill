@@ -1,3 +1,16 @@
+# Annotated-tag release gate — 2026-10-10
+
+Branch `fix/family-round-1010` prepares sheleg-design 1.64.1: one step in
+`release.yml`, right after checkout, refuses a tag whose `git cat-file -t` is not
+`tag` (umbrella plan 2026-10-10, T5 / REQ-6). No doctrine, kit or installer change.
+Receipts: the 1.64.1 section of [verification.md](evidence/verification.md) and the
+CHANGELOG.
+
+Open: B-145, B-146 (unchanged). Next task: after the release, the umbrella re-pins
+this member at `v1.64.1`.
+
+---
+
 # Figma practices — 2026-10-08
 
 Branch `feat/figma-practices` prepares sheleg-design 1.64.0 from a 2026-10-08 read

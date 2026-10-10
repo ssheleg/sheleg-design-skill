@@ -189,7 +189,9 @@ umbrella report the member at the last *annotated* tag plus an offset. v1.53.0
 and v1.54.0 shipped lightweight and did exactly that (family audit
 SHD-07/UM-03). The rule applies from v1.54.1 forward; the old tags are already
 public and are **not** re-cut — moving a published tag is a worse defect than
-the one it would fix.
+the one it would fix. Since 1.64.1 the release job checks it: right after checkout,
+`git cat-file -t` on the tag must print `tag`, or the job fails before anything is
+published.
 
 `npm publish` used to be the one human step here, because 2FA blocks a token
 that is not automation-scoped; the workflow's `publish` job replaced it and this
