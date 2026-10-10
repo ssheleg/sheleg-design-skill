@@ -9,6 +9,16 @@ was shipped on the strength of an argument rather than an observation.
 
 Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (REQ-10, carried to board B-004). Extended 2026-08-12 by the `pigeonhole` run with twenty rows, none of them `never`.
 
+## Release candidate — 1.64.1 (2026-10-10)
+
+A lightweight tag cannot publish a release (umbrella plan 2026-10-10, T5 / REQ-6).
+Publication and installed-state checks belong to the coordinator's release receipt.
+
+| REQ | What the candidate carries | How confirmed | Status |
+|---|---|---|---|
+| REQ-6 | `release.yml`: right after checkout, `git cat-file -t` on the tag must print `tag`, or the job fails before the reachability check, the gates and publish | the step's `run:` body extracted by YAML parse from `release.yml` (identical bytes in the seven members released 2026-10-10) and replayed in a scratch repository: lightweight `v9.9.9` → `::error::v9.9.9 is a commit, not an annotated tag object…`, exit 1; annotated `v9.9.10` → `v9.9.10 is annotated`, exit 0 | planted — the lightweight case watched failing; the pass on the real annotated `v1.64.1` is read on its release run |
+| Gate | Normal suite, without the self-tests | `npm test` on this tree up to `selftest`: `validate.py` OK (6641 checks), `validate_palette.py` OK (3409), `sloplint.py` OK (938), chrome, installer (13 cases), lint, record, render-eval, `--lint kits` (0 S1); `npm run test:audit` all green. The three self-tests were stopped at 18 min when free disk fell below 3 GB (2.9 GB); CI runs them | observed (local, partial); self-tests owed to CI |
+
 ## Release candidate — 1.64.0 (2026-10-08)
 
 Figma practices from a 2026-10-08 study of Figma's own guidance (the *Claude Code for
