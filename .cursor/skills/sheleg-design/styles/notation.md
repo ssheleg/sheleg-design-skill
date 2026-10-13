@@ -71,9 +71,9 @@ is to mark what can be **pressed**. Swapping them is the single change that
 stops this pack working.
 
 **Status is never by colour alone.** Every state is a dot or an icon **plus a
-word**. Under deuteranopia `--danger` and `--warn` separate by 1.6 and `--ok`
-and `--warn` by 7.9 — no palette solves the green/amber/red triple, so the word
-carries the meaning.
+word**. In light, `--danger` and `--warn` separate by 1.6 under deuteranopia.
+In dark, `--ok` and `--warn` separate by 7.9 under deuteranopia. The word carries
+the meaning when hue cannot separate these states.
 
 **`--danger` is derived, not measured**, and the token layer says so at the
 declaration: the reference paints no error state, so a red was authored to clear
@@ -81,6 +81,31 @@ AA on the field, the panel and its own tint (6.54 / 6.26 / 5.50).
 
 **`--info` is the accent value**, because a second blue would separate from
 `--ok` by less than the palette gate's hard floor.
+
+### Dark theme — values from the token layer
+
+This table resolves the dark theme's core colour roles from the shipped token
+layer, including aliases and inherited values. It is checked against that source;
+copy the CSS rather than transcribing this table. It is a source-value check,
+not a rendered contrast or accessibility result.
+
+<!-- dark-palette:derived -->
+| Token | Dark value |
+|---|---|
+| `--bg` | `#141414` |
+| `--panel` | `#1c1c1c` |
+| `--panel-2` | `#242424` |
+| `--ink` | `#f2f2f2` |
+| `--muted` | `#a0a0a0` |
+| `--border` | `#2b2b2b` |
+| `--edge` | `#686868` |
+| `--accent` | `#3392ff` |
+| `--accent-ink` | `#141414` |
+| `--ok` | `#46d39a` |
+| `--warn` | `#e0a030` |
+| `--danger` | `#ff7b72` |
+| `--info` | `#3392ff` |
+<!-- /dark-palette:derived -->
 
 ## Type
 

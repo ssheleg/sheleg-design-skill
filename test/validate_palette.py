@@ -739,6 +739,9 @@ def _declared_set_plants() -> list[str]:
            "  --a: #8f3f1f;\n  --b: #9a3016;\n  --c: #0a7558;\n"
            "  /* [ONE] -> --a * [TWO] -> --b * [THREE] -> --c */\n}\n")
     cases = [
+        ("multiple token pairs with an unbound disclosure",
+         "- `--a`, `--b` and `--c` are one hue family, 9.9 apart at full colour.\n",
+         "unbound token pairs"),
         ("a state map whose two states are one colour, with nothing said",
          "The pack ships three states.\n",
          "below the hard floor"),
@@ -764,6 +767,7 @@ def _declared_set_plants() -> list[str]:
                 (TOKENS / "_planted_.css").write_text(css, encoding="utf-8")
                 (PACKS / "_planted_.md").write_text(md, encoding="utf-8")
                 validate_declared_semantic_sets(TOKENS / "_planted_.css")
+                validate_disclosure_coverage()
                 fired = [f for f in failures if expect in f] if expect else []
                 ok = bool(fired) if expect else not failures
                 print(f"  {'caught ' if ok else 'MISSED '} {label}")
@@ -1055,6 +1059,7 @@ def self_test() -> int:
     _reset()
     problems += _ratio_plants()
     problems += _declared_set_plants()
+    problems += _dark_palette_plants()
     problems += _composite_plants()
     problems += _prescribed_pair_plants()
     if problems:
@@ -2241,6 +2246,104 @@ def validate_prescribed_pairs(css: Path) -> None:
 
 
 
+
+# FW05: a full theme twin needs an explicit dark-value table. Existing hand-written
+# tables stay supported; marked tables are derived exactly from the shipped graph.
+DARK_PALETTE_START = "<!-- dark-palette:derived -->"
+DARK_PALETTE_END = "<!-- /dark-palette:derived -->"
+DARK_THEME = re.compile(r'theme=["\']dark["\']|\.dark\b|prefers-color-scheme', re.I)
+LEGACY_DARK_TABLES = {"workbench", "manpage", "ledger", "field-notes"}
+# These four already shipped hand-authored dark tables at f5244f6. Their presence
+# remains checked; their values are not certified by the generated-table check.
+DARK_ROLES = ("bg", "base", "paper", "canvas", "surface", "panel", "panel-2",
+              "ink", "fg", "text", "muted", "ink-2", "ink-soft", "border", "edge",
+              "accent", "accent-ink", "on-accent", *STATUS_TOKENS)
+
+
+def dark_palette_table(css_text: str) -> str:
+    candidates = [(label, values) for label, values in themes(css_text)
+                  if DARK_THEME.search(label)]
+    if len(candidates) != 1:
+        raise ValueError("expected one declared dark colour theme")
+    _, values = candidates[0]
+    rows = ["| Token | Dark value |", "|---|---|"]
+    for role in dict.fromkeys(DARK_ROLES):
+        token = "--" + role
+        value = resolve(token, values)
+        if value is not None and COLOR_SHAPED.match(value):
+            rows.append(f"| `{token}` | `{value}` |")
+    if len(rows) < 4:
+        raise ValueError("dark palette needs at least two resolved colour roles")
+    return "\n".join(rows)
+
+
+def dark_palette_problems(css_text: str, pack_text: str, legacy=False) -> list[str]:
+    declared = re.search(r"(?m)^Themes:\s*(.+)$", pack_text)
+    if not declared or "theme twin" not in declared[1] or "not a theme twin" in declared[1]:
+        return []  # the structural gate owns whether this declaration matches CSS
+    match = re.search(r"(?ms)^## Palette\n(.*?)(?=^## |\Z)", pack_text)
+    palette = match[1] if match else ""
+    lines = palette.splitlines()
+    populated = False
+    for i, line in enumerate(lines[:-2]):
+        if not line.startswith("|"):
+            continue
+        cells = [c.strip().lower() for c in line.strip().strip("|").split("|")]
+        dark = next((j for j, cell in enumerate(cells) if cell in ("dark", "dark value")), None)
+        if dark is None:
+            continue
+        separator = [c.strip() for c in lines[i + 1].strip().strip("|").split("|")]
+        row = [c.strip() for c in lines[i + 2].strip().strip("|").split("|")]
+        if (len(separator) == len(cells) and all(re.fullmatch(r":?-{3,}:?", c) for c in separator)
+                and lines[i + 2].startswith("|") and len(row) == len(cells) and row[dark]):
+            populated = True
+    if not populated:
+        return ["full theme twin has no explicit dark-value table in Palette (B-113)"]
+    if DARK_PALETTE_START not in palette and DARK_PALETTE_END not in palette:
+        return [] if legacy else ["dark palette lacks its required derived-table markers (B-113)"]
+    parts = re.findall(re.escape(DARK_PALETTE_START) + r"\s*(.*?)\s*" +
+                       re.escape(DARK_PALETTE_END), palette, re.S)
+    if len(parts) != 1 or palette.count(DARK_PALETTE_START) != 1 or palette.count(DARK_PALETTE_END) != 1:
+        return ["dark palette has malformed derived-table markers (B-113)"]
+    try:
+        expected = dark_palette_table(css_text)
+    except ValueError as exc:
+        return [f"dark palette cannot be derived: {exc} (B-113)"]
+    return [] if parts[0] == expected else ["dark palette table differs from shipped token graph (B-113)"]
+
+
+def validate_dark_palette(css: Path) -> None:
+    md = PACKS / (css.stem + ".md")
+    if md.is_file():
+        problems = dark_palette_problems(css.read_text(), md.read_text(),
+                                         legacy=css.stem in LEGACY_DARK_TABLES)
+        check(not problems, f"styles/{md.name}: " + "; ".join(problems))
+
+
+def validate_disclosure_coverage():
+    check(_tally["delta_unbound"] == 0,
+          "disclosure figures have unbound token pairs (B-055); name one pair per sentence")
+
+
+def _dark_palette_plants() -> list[str]:
+    css = ':root { --bg: #fff;\n --ink: #111; }\n[data-theme="dark"] { --bg: #111;\n --ink: #eee; }'
+    prefix = "Themes: light + dark — a full theme twin.\n\n## Palette\n"
+    good = prefix + DARK_PALETTE_START + "\n" + dark_palette_table(css) + "\n" + DARK_PALETTE_END
+    cases = [("derived dark palette", good, False),
+             ("missing dark table", prefix + "| Token | Value |\n", True),
+             ("stale dark value", good.replace("`#eee`", "`#ddd`"), True),
+             ("broken derived marker", good.replace(DARK_PALETTE_END, ""), True),
+             ("both derived markers removed", good.replace(DARK_PALETTE_START, "").replace(DARK_PALETTE_END, ""), True),
+             ("single theme positive", "Themes: single — not a theme twin.\n## Palette\n", False)]
+    problems = []
+    for label, text, reject in cases:
+        ok = bool(dark_palette_problems(css, text)) == reject
+        print(f"  {'caught ' if ok else 'MISSED '} {label}")
+        if not ok:
+            problems.append(label)
+    return problems
+
+
 def check_floor(script: str, count: int) -> int:
     """The ratchet. See test/floors.json for why a falling count is a defect."""
     import json as _json
@@ -2285,6 +2388,8 @@ def main() -> int:
         validate_composited_fill_contrast(css)
         validate_prescribed_pairs(css)
         validate_stated_ratios(css)
+        validate_dark_palette(css)
+    validate_disclosure_coverage()
     for line in notes:
         print(line)
     print(f"  {stated_ratio_report()}")

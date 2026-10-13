@@ -125,6 +125,31 @@ instead, to `#4d8dff` at 5.73.
 and a danger chip is exactly where the word most needs to be read. Lifted until
 it clears the tint it sits on: 5.13.
 
+### Dark theme — values from the token layer
+
+This table resolves the dark theme's core colour roles from the shipped token
+layer, including aliases and inherited values. It is checked against that source;
+copy the CSS rather than transcribing this table. It is a source-value check,
+not a rendered contrast or accessibility result.
+
+<!-- dark-palette:derived -->
+| Token | Dark value |
+|---|---|
+| `--bg` | `#10151d` |
+| `--panel` | `#181d25` |
+| `--panel-2` | `#20252c` |
+| `--ink` | `#f5f7f9` |
+| `--muted` | `#a0a3a7` |
+| `--border` | `#20242c` |
+| `--edge` | `#606369` |
+| `--accent` | `#4d8dff` |
+| `--accent-ink` | `#10151d` |
+| `--ok` | `#34dfaa` |
+| `--warn` | `#e5a000` |
+| `--danger` | `#ff5470` |
+| `--info` | `#4d8dff` |
+<!-- /dark-palette:derived -->
+
 ## Type
 
 Two families and no third.

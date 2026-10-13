@@ -85,6 +85,31 @@ red was authored to clear AA on the field, the panel and its own tint (6.09 /
 less than the palette gate's hard floor, and "running" is this product's own
 signal rather than a new colour.
 
+### Dark theme — values from the token layer
+
+This table resolves the dark theme's core colour roles from the shipped token
+layer, including aliases and inherited values. It is checked against that source;
+copy the CSS rather than transcribing this table. It is a source-value check,
+not a rendered contrast or accessibility result.
+
+<!-- dark-palette:derived -->
+| Token | Dark value |
+|---|---|
+| `--bg` | `#0b0f14` |
+| `--panel` | `#161b23` |
+| `--panel-2` | `#1b2430` |
+| `--ink` | `#eef2f7` |
+| `--muted` | `#a3adbb` |
+| `--border` | `#1c2531` |
+| `--edge` | `#5b6675` |
+| `--accent` | `#3392ff` |
+| `--accent-ink` | `#0e1218` |
+| `--ok` | `#46d39a` |
+| `--warn` | `#e0a030` |
+| `--danger` | `#ff7b72` |
+| `--info` | `#3392ff` |
+<!-- /dark-palette:derived -->
+
 ## Type
 
 Two families, and the split is the pack.

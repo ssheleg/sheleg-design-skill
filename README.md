@@ -336,6 +336,12 @@ These run **in a clone of this repository**. The published npm package ships no
 python3 test/validate.py   # or: npm test
 ```
 
+Marked dark-palette tables resolve their values from the shipped CSS graph.
+`python3 scripts/sync-dark-palettes.py --check` reports drift; `--write` refreshes
+the marked canonical tables and their Cursor mirror. The palette gate also
+requires every full theme twin to have a populated dark table and refuses
+unbound multi-pair disclosure figures. These are source checks, not render tests.
+
 `npm test` is **several gates**, not one, and `validate.py` alone is about a
 third of the contract:
 

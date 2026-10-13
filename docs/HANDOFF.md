@@ -1,3 +1,18 @@
+# FW05 source facts — 2026-10-13
+
+Branch `fix/fw05-derived-design-facts`, based on `f5244f6`, implements
+B-055/B-056/B-113/B-126/B-128. The current scope and exact commands live in the
+[FW05 receipt](evidence/runs/2026-10-13-fw05-design-facts.md). B-146 was already
+resolved in super-ux source; its historical board text is preserved with a
+commit-addressed reconciliation. No palette choice or runtime rendering changed.
+
+Next: independent review of this candidate, then the coordinator's deliberate
+PR promotion and normal integration. Version/release/umbrella pins/install are
+separate. B-145 live Figma observation and other board rows remain open. The next
+family packet is super-ux B-025/B-026, owned and validated in that repository.
+
+---
+
 # Annotated-tag release gate — 2026-10-10
 
 Branch `fix/family-round-1010` prepares sheleg-design 1.64.1: one step in

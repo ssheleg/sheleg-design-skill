@@ -170,9 +170,10 @@ the 3:1 non-text floor, so there they are bar fills, dots and chip tints and the
 status pill is a coloured chip **with the state written in it** (`In Progress`),
 its trace lines are `passed` / `done` / `running` in words, and its org node
 announces itself with an `Active` chip rather than a green ring alone. The
-measured separations that make this mandatory rather than stylistic: `--good`
-and `--warn` separate by 6.2–6.4 under protanopia and `--good` and `--info` by
-6.7 under tritanopia, all below the 8.0 dichromacy floor. The word is not
+measured separations make this mandatory: `--good` and `--warn` separate by
+6.2 under protanopia in dark and 6.4 under protanopia in light. In dark,
+`--good` and `--info` separate by 6.7 under tritanopia. These measurements are
+below the 8.0 dichromacy floor. The word is not
 decoration on those pairs; it is the message.
 
 **The chromatic layer is ornament, and the rule is one sentence.** Twelve badge

@@ -29,7 +29,8 @@ Run it before and after every change. It is six gates, not one:
 
 `npm run selftest` runs the planted-defect self-tests for the palette gate,
 the slop lint and the project linter (`node bin/cli.js --self-test`) — the proof each check has been watched saying no. CI runs all of
-it on every push and PR; a green from `validate.py` alone covers one gate of
+it nightly at 23:00 Europe/Warsaw and on deliberate frozen-PR
+`ready_for_review` promotion; a green from `validate.py` alone covers one gate of
 four.
 
 ## Repo layout

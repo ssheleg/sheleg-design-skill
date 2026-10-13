@@ -183,8 +183,10 @@ Frequency decides before taste gets a vote. (Full doctrine:
 - **Reduced motion is a contract, not a feature.** Anything beyond a colour
   change honours `prefers-reduced-motion: reduce`; loops, parallax and springs
   collapse to static or instant, never to "slower"; an opacity or colour change that
-  carries state may stay. Shipping an animation without that branch is a bug, not a
-  polish item.
+  carries state may stay. Every time-valued token appears in that branch: collapse it
+  or re-declare it with a `KEPT` / `ON PURPOSE` / `deliberate` CSS reason and verify
+  the consumer stops (atrium removes its canvas; roster pauses its float animations).
+  Shipping an animation without that branch is a bug, not a polish item.
 - This section is adapted from `emilkowalski/skills` (MIT License, Copyright (c) 2026
   Emil Kowalski); the full notice ships in the skill's `KNOWLEDGE_PROVENANCE.md` and
   at https://github.com/emilkowalski/skills/blob/e8a175de22ae1e49370fc144c1f3bb9aeedf988d/LICENSE.

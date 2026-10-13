@@ -1,3 +1,18 @@
+## Unreleased — derived palette facts and explicit calm fallback
+
+- Dark theme documentation now includes source-derived tables for almanac,
+  daylight, notation, outrank, proscenium, router, test-drive and vitrine. The
+  palette guard checks their values and required markers; four existing tables
+  retain a presence check. `scripts/sync-dark-palettes.py` refreshes marked tables.
+- Colour-distance disclosures name one pair per sentence and an explicit
+  qualifier. Unbound disclosure figures now fail the palette gate.
+- Reduced-motion guidance documents the existing keep-with-reason contract;
+  prism's point-cloud guidance names a static fallback and frame-loop shutdown.
+- Validation runs nightly and on deliberate ready-for-review promotion, with
+  manual dispatch retained for diagnostics. No push/synchronize trigger.
+- No CSS colour values, package version, runtime installation or release changed.
+  Evidence: [FW05 receipt](docs/evidence/runs/2026-10-13-fw05-design-facts.md).
+
 ## 1.64.1 — a lightweight tag cannot publish a release
 
 - **The release refuses a lightweight tag.** `release.yml` gains one step, right after

@@ -323,6 +323,15 @@ Not a feature. A contract.
   state. In CSS, put motion behind `@media (prefers-reduced-motion: no-preference)`.
 - WebGL and canvas scenes degrade to their CSS or SVG still.
 
+**Every time-valued token answers the reduced-motion branch.** Collapse it, or
+re-declare its existing value in that branch with a CSS comment marked `KEPT`,
+`ON PURPOSE` or `deliberate` that names why it cannot move anything there.
+`atrium` keeps its flute durations because the canvas is removed and its still
+is displayed; `roster` keeps the float durations while the component layer sets
+`animation-play-state: paused`. Neither permits a slower moving alternative.
+Verify the promised removal or pause at the consuming component; a duration
+comment alone cannot stop a loop. State-carrying fades follow the exception above.
+
 **Shipping an animation without a reduced-motion path is a bug, not a polish
 item.** It fails review the same way a crash does.
 

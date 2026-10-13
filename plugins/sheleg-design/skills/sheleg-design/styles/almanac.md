@@ -94,6 +94,31 @@ measured **6.4 apart at full colour** against the palette gate's hard floor of
 It is moved along the hue until it separates, and the token layer marks it
 derived at the declaration.
 
+### Dark theme — values from the token layer
+
+This table resolves the dark theme's core colour roles from the shipped token
+layer, including aliases and inherited values. It is checked against that source;
+copy the CSS rather than transcribing this table. It is a source-value check,
+not a rendered contrast or accessibility result.
+
+<!-- dark-palette:derived -->
+| Token | Dark value |
+|---|---|
+| `--bg` | `#15140f` |
+| `--panel` | `#1e1c15` |
+| `--panel-2` | `#26241b` |
+| `--ink` | `#f0efe3` |
+| `--muted` | `#b3b0a2` |
+| `--border` | `#3c3a31` |
+| `--edge` | `#6f6d64` |
+| `--accent` | `#3392ff` |
+| `--accent-ink` | `#15140f` |
+| `--ok` | `#46d39a` |
+| `--warn` | `#fa6838` |
+| `--danger` | `#ff6f9a` |
+| `--info` | `#3392ff` |
+<!-- /dark-palette:derived -->
+
 ## Type
 
 Two families, and one of them only ever shouts in capitals.

@@ -76,6 +76,28 @@ Motion ceiling: **2**. Measured, not chosen — the entire site's motion budget 
   4.5 on both fields. The reference's warning `#FF642D` measures **2.95:1**, under
   even the non-text floor; `#E5511B` is the smallest darkening that clears it.
 
+### Dark theme — values from the token layer
+
+This table resolves the dark theme's core colour roles from the shipped token
+layer, including aliases and inherited values. It is checked against that source;
+copy the CSS rather than transcribing this table. It is a source-value check,
+not a rendered contrast or accessibility result.
+
+<!-- dark-palette:derived -->
+| Token | Dark value |
+|---|---|
+| `--bg` | `#191b23` |
+| `--surface` | `#1d232a` |
+| `--ink` | `#ffffff` |
+| `--ink-soft` | `#a6adba` |
+| `--accent` | `#ab6cfe` |
+| `--on-accent` | `#220358` |
+| `--success` | `#009f81` |
+| `--warning` | `#c2740a` |
+| `--danger` | `#ff4953` |
+| `--info` | `#008ff8` |
+<!-- /dark-palette:derived -->
+
 ## Type
 
 Two families, and the split is the whole typographic idea: **Plus Jakarta Sans**
@@ -200,9 +222,9 @@ sits above every metric on the page.
 - **Status is never by colour alone.** Every state in this pack carries a word or
   an icon beside the hue — which is what the reference does: its category chips
   are iconned, its wins feed is checked, its at-risk rows are flagged. Measured
-  under simulated CVD, `--info` and `--success` separate by only 6.9 under
-  tritanopia and `--accent` and `--info` by 2.9 under deuteranopia, so the hue is
-  the second signal here and never the first.
+  under simulated CVD, `--info` and `--success` separate by 6.9 under
+  tritanopia in both themes. In dark, `--accent` and `--info` separate by
+  2.9 under deuteranopia. Hue is the second signal here and never the first.
 - **No second brand hue.** One violet. The status four are states, not brand.
 - **No skeleton, no spinner** on a surface that has a previous value — stamp it.
 - **No serif, anywhere.** Two sans families and no third.
