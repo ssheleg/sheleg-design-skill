@@ -112,6 +112,31 @@ blue.
 laid behind the field at low opacity. They never carry state, never sit under
 text that has to be read, and never appear in a chart.
 
+### Dark theme — values from the token layer
+
+This table resolves the dark theme's core colour roles from the shipped token
+layer, including aliases and inherited values. It is checked against that source;
+copy the CSS rather than transcribing this table. It is a source-value check,
+not a rendered contrast or accessibility result.
+
+<!-- dark-palette:derived -->
+| Token | Dark value |
+|---|---|
+| `--bg` | `#07061d` |
+| `--panel` | `#18143a` |
+| `--panel-2` | `#0c0a26` |
+| `--ink` | `#f7f6ff` |
+| `--muted` | `#a9a6c8` |
+| `--border` | `#262159` |
+| `--edge` | `#6f6aa0` |
+| `--accent` | `#8f7dff` |
+| `--accent-ink` | `#07061d` |
+| `--ok` | `#4fd39b` |
+| `--warn` | `#e0a63c` |
+| `--danger` | `#ff8177` |
+| `--info` | `#8f7dff` |
+<!-- /dark-palette:derived -->
+
 ## Type
 
 **One family, and that is the pack.** The reference loads Inter at nine weights

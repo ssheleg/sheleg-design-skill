@@ -80,6 +80,31 @@ carries the meaning and the colour reinforces it.
 one pack of the five ported from live references whose reference paints an error
 state, so nothing in its semantic set is derived.
 
+### Dark theme — values from the token layer
+
+This table resolves the dark theme's core colour roles from the shipped token
+layer, including aliases and inherited values. It is checked against that source;
+copy the CSS rather than transcribing this table. It is a source-value check,
+not a rendered contrast or accessibility result.
+
+<!-- dark-palette:derived -->
+| Token | Dark value |
+|---|---|
+| `--bg` | `#101112` |
+| `--panel` | `#17191b` |
+| `--panel-2` | `#17191b` |
+| `--ink` | `#f7f8f9` |
+| `--muted` | `#b8c0cb` |
+| `--border` | `#26292d` |
+| `--edge` | `#60656d` |
+| `--accent` | `#3392ff` |
+| `--accent-ink` | `#101112` |
+| `--ok` | `#3fcf7f` |
+| `--warn` | `#ffb020` |
+| `--danger` | `#ff7b72` |
+| `--info` | `#3392ff` |
+<!-- /dark-palette:derived -->
+
 ## Type
 
 Three families, each with one job.

@@ -143,7 +143,7 @@ Three rules carry this palette.
   orange in this palette.
 - **Status is never by colour alone.** `--good` and `--danger` separate by 14.0
   at full colour but **7.2 under protanopia and 5.9 under deuteranopia**;
-  `--warning` and `--danger` by 14.8. Every status renders as a mark **plus its
+  `--warning` and `--danger` separate by 14.8 at full colour. Every status renders as a mark **plus its
   word** — which is a measurement of the reference, not a licence: its status
   pill reads `● Listening`, and every comparison row pairs its dot with a text
   phrase. A dot alone is a bug in this pack.

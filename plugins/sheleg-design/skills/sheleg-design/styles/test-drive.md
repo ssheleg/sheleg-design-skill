@@ -158,6 +158,26 @@ under colour-vision deficiency are stated at the declaration, and every state ca
 a word or a glyph beside its colour — the reference's own dashboard writes the
 percentage next to every delta arrow.
 
+### Dark theme — values from the token layer
+
+This table resolves the dark theme's core colour roles from the shipped token
+layer, including aliases and inherited values. It is checked against that source;
+copy the CSS rather than transcribing this table. It is a source-value check,
+not a rendered contrast or accessibility result.
+
+<!-- dark-palette:derived -->
+| Token | Dark value |
+|---|---|
+| `--bg` | `#1f1f1f` |
+| `--surface` | `#262626` |
+| `--ink` | `#dedddc` |
+| `--accent` | `#e16540` |
+| `--good` | `#3ddc97` |
+| `--warn` | `#ffd05c` |
+| `--danger` | `#ff8095` |
+| `--info` | `#63c1ff` |
+<!-- /dark-palette:derived -->
+
 ## Type
 
 One working face and one hand — the second is the voice, not a display face.

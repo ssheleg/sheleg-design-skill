@@ -150,10 +150,9 @@ The thirty-six tint tokens are not listed here: a table of them would be a
 transcription, and `styles/tokens/pigeonhole.css` is the copy to take. What the
 table above is for is the functional half — the tokens a component names by hand.
 
-**Status is never by colour alone.** The four status tokens are close under
-dichromacy — the gate measures `--danger`/`--good` at ΔE 3.4 and `--good`/`--warn`
-at 5.0 under deuteranopia — so every status in this pack carries a word, an icon
-or a position as well as a hue. That is not a mitigation bolted on afterwards; it
+**Status is never by colour alone.** The gate measures `--danger` and `--good`
+at 3.4 under deuteranopia. It measures `--good` and `--warn` at 5.0 under
+deuteranopia. Every status carries a word, an icon or a position as well as a hue. That is not a mitigation bolted on afterwards; it
 is the same rule the taxonomy below is built on.
 
 ### The taxonomy — the reason this pack exists

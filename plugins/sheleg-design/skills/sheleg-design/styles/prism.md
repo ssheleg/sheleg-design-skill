@@ -269,7 +269,11 @@ at `--dur-base` on the one curve, translate 10px and opacity.
 The ambient layer, if there is one, is a **point cloud in the accent** at low
 opacity inside the hero only — points, not particles, and they must die at the
 wash's bottom edge along with everything else. Nothing generative appears on the
-white.
+white. Under `prefers-reduced-motion: reduce`, coarse pointer or no WebGL,
+render a fixed CSS or SVG point pattern clipped to the same hero boundary; never
+start the point cloud's requestAnimationFrame loop. On a preference change, cancel
+the scheduled frame and show that still. The static wash, text and controls remain
+visible, and no point moves or waits for a scroll event to appear.
 
 The wash is layer 1 in the depth model and it is `pointer-events: none`. It is
 never put on a scroller, never parallaxed, and never faded — it ends where the

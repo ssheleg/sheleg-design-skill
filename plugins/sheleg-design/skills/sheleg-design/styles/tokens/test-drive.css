@@ -354,10 +354,10 @@
   --focus-color: var(--accent); /* 4.82:1 on --bg — over the mark floor */
 
   /* DERIVED the way the light set was: each hue held, lightness raised until it
-     writes on both dark fields. The tight pairs move with the physics: --good and
-     --warn sit 7.2 apart under protanopia, --good and --danger 3.8 under
-     deuteranopia, --good and --info 4.0 under tritanopia — and the rule does not
-     change: a state is told apart by the word beside it, not by hue. */
+     writes on both dark fields. The tight pairs move with the physics. In dark, --good and
+     --warn sit 7.2 apart under protanopia. In dark, --good and --danger sit
+     3.8 under deuteranopia. In dark, --good and --info sit 4.0 under tritanopia.
+     A state is told apart by the word beside it, not by hue. */
   --good: #3ddc97; /* 9.33:1 on --bg, 8.56:1 on --surface */
   --warn: #ffd05c; /* 11.33:1 on --bg, 10.40:1 on --surface */
   --danger: #ff8095; /* 6.89:1 on --bg, 6.32:1 on --surface */
