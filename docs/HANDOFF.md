@@ -9,9 +9,10 @@ Registry and remote tags read 1.64.1 before packaging. This branch synchronizes
 manifests, skill metadata/mirror, card, changelog and release stamp only.
 
 Local packaging gate: `python3 test/validate.py` passed 6651 checks.
-Next: independent diff review, frozen PR
-promotion, normal merge and exact-source release checks before any annotated
-tag. Publication, registry readback, umbrella pins and installed/native checks
+Independent packaging review passed at `a4fe6b23fde92aeb58116eac4b4849196b983a46`: manifests,
+metadata, card and changelog only; no code or workflow changes.
+Next: frozen PR promotion, normal merge and exact-source release checks before
+any annotated tag. Publication, registry readback, umbrella pins and installed/native checks
 remain pending. B-145 and other provider/render observations remain open.
 
 ---
