@@ -2970,7 +2970,17 @@ BOARD_ROW = re.compile(r"^\**[A-Z]{1,3}-\d+")
 
 
 def _table_cells(line: str) -> list[str]:
-    return [x.strip() for x in re.split(r"(?<!\\)\|", line.strip().strip("|"))]
+    from owner_board import cells
+    return cells(line)
+
+
+def validate_owner_contracts():
+    from owner_board import check as inspect_board
+    from owner_release import check as inspect_release
+    errors = []
+    inspect_board(ROOT, errors.append)
+    inspect_release(ROOT, errors.append)
+    check(not errors, "\n".join(errors))
 
 
 def validate_board_columns():
@@ -5596,6 +5606,7 @@ def main():
     validate_kit_breakpoints()
     validate_release_register()
     validate_board_columns()
+    validate_owner_contracts()
     validate_hero_states_its_obligations()
     validate_pack_declares_its_silences()
     validate_a_count_names_its_noun()
