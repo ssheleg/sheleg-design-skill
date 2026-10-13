@@ -55,7 +55,7 @@ idempotence, stale-value repair, malformed/reversed-marker refusal and unknown
 arguments. A separate `--write` on the synchronized real tree reported zero
 changed tables. Workflow job bodies compare byte-identical to the base.
 
-Independent verdict: pending. No release/version bump/native install is claimed.
+Independent bounded verdict: PASS at `6a24c2390d66a70eb17c034719d1681bff624ec8`; see the review below. No release/version bump/native install is claimed.
 
 ## Guard boundary and maintenance
 
@@ -84,3 +84,31 @@ Next: independent review, freeze exact head, promote the draft once, observe all
 required checks at that head, integrate normally. Separate version selection,
 publication, parent pins and installed/native acceptance. Open live observations
 such as B-145 remain on the owner board.
+
+## Independent review — 2026-10-13
+
+Reviewer: Codex `/root/fresh_research`, separate from the implementation author.
+Reviewed frozen source `6a24c2390d66a70eb17c034719d1681bff624ec8` against
+`f5244f6422c8ed18f72f61eb7afaef44a42276c0`. Bounded PASS: no remaining finding in
+the changed source-derived table, disclosure, generator or documented motion scope.
+
+Reviewer-executed checks:
+
+- `python3 -B test/audit_regressions/fw05_design_facts.py`: exit 0, 56 controls.
+- `python3 -B scripts/sync-dark-palettes.py --check`: exit 0, eight marked tables,
+  zero drift.
+- Nine separately constructed pure controls passed: valid derived table,
+  removed-marker and stale-value refusal, duplicate-marker refusal, generator
+  idempotence and stale repair, plus three malformed-marker refusals.
+- An independent Git-source comparison removed CSS comments and whitespace and
+  compared each changed CSS file with the base: all three retained executable
+  CSS text. All 14 changed canonical skill files matched their Cursor mirrors
+  byte for byte. Workflow `jobs:` content matched the base byte for byte.
+
+The earlier marker-removal escape is closed by the exact four-name legacy
+allowlist; an arbitrary newly generated table cannot become a presence-only
+exception by deleting its markers. The generator checks all marked sources before
+writing and defaults to read-only operation. This review does not certify browser
+cascade, rendered appearance, runtime motion stopping, provider/native discovery,
+release or installation. The owner's full-suite observation above is separate
+from these independently executed focused checks.

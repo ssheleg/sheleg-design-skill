@@ -6,8 +6,9 @@ B-055/B-056/B-113/B-126/B-128. The current scope and exact commands live in the
 resolved in super-ux source; its historical board text is preserved with a
 commit-addressed reconciliation. No palette choice or runtime rendering changed.
 
-Next: independent review of this candidate, then the coordinator's deliberate
-PR promotion and normal integration. Version/release/umbrella pins/install are
+Independent bounded review passed at `6a24c23` (receipt below).
+Next: freeze and deliberately promote [PR43](https://github.com/ssheleg/sheleg-design-skill/pull/43),
+then normal integration only after the genuine checks pass. Version/release/umbrella pins/install are
 separate. B-145 live Figma observation and other board rows remain open. The next
 family packet is super-ux B-025/B-026, owned and validated in that repository.
 
