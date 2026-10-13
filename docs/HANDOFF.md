@@ -1,3 +1,22 @@
+# FW05 release packaging — 2026-10-13
+
+Branch `release/fw05-1.64.2` prepares patch version 1.64.2 from accepted source
+`ab7d82e97dc33e22d22de69b8b09c380c68a3ec2` (PR43). The genuine validation run
+[38338843437](https://github.com/ssheleg/sheleg-design-skill/actions/runs/38338843437)
+passed at candidate `e5055a69b8df44f9182060eba61d3820bcffe77c`; independent review
+and local gate detail remain in the [source receipt](evidence/runs/2026-10-13-fw05-design-facts.md).
+Registry and remote tags read 1.64.1 before packaging. This branch synchronizes
+manifests, skill metadata/mirror, card, changelog and release stamp only.
+
+Local packaging gate: `python3 test/validate.py` passed 6651 checks.
+Independent packaging review passed at `a4fe6b23fde92aeb58116eac4b4849196b983a46`: manifests,
+metadata, card and changelog only; no code or workflow changes.
+Next: frozen PR promotion, normal merge and exact-source release checks before
+any annotated tag. Publication, registry readback, umbrella pins and installed/native checks
+remain pending. B-145 and other provider/render observations remain open.
+
+---
+
 # FW05 source facts — 2026-10-13
 
 Branch `fix/fw05-derived-design-facts`, based on `f5244f6`, implements

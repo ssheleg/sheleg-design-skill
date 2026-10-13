@@ -1,4 +1,4 @@
-## Unreleased — derived palette facts and explicit calm fallback
+## 1.64.2 — derived palette facts and explicit calm fallback
 
 - Dark theme documentation now includes source-derived tables for almanac,
   daylight, notation, outrank, proscenium, router, test-drive and vitrine. The
@@ -10,7 +10,7 @@
   prism's point-cloud guidance names a static fallback and frame-loop shutdown.
 - Validation runs nightly and on deliberate ready-for-review promotion, with
   manual dispatch retained for diagnostics. No push/synchronize trigger.
-- No CSS colour values, package version, runtime installation or release changed.
+- No CSS colour values or runtime installation changed; publication is a separate gate.
   Evidence: [FW05 receipt](docs/evidence/runs/2026-10-13-fw05-design-facts.md).
 
 ## 1.64.1 — a lightweight tag cannot publish a release
