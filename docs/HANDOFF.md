@@ -1,3 +1,15 @@
+# FW05 ledger correction — 2026-10-13
+
+The umbrella detected a missing 1.64.2 verification heading after publication.
+The [correction receipt](evidence/runs/2026-10-13-fw05-ledger-correction.md)
+records reproduction, payload parity and integration scope. The new ledger entry
+links accepted source, genuine publication and exact registry bytes. Only excluded
+documentation changes; keep 1.64.2 and its existing tag. Next: independent review,
+frozen PR promotion and normal merge; then umbrella successor pin. Historical
+packaging handoff below is retained as the earlier candidate snapshot.
+
+---
+
 # FW05 release packaging — 2026-10-13
 
 Branch `release/fw05-1.64.2` prepares patch version 1.64.2 from accepted source

@@ -9,6 +9,25 @@ was shipped on the strength of an argument rather than an observation.
 
 Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (REQ-10, carried to board B-004). Extended 2026-08-12 by the `pigeonhole` run with twenty rows, none of them `never`.
 
+## Release verification — 1.64.2 (2026-10-13)
+
+FW05 source and metadata were integrated at
+[`9caedc1c46d78d2a37f60f92c697beb8bb3dfcf9`](https://github.com/ssheleg/sheleg-design-skill/commit/9caedc1c46d78d2a37f60f92c697beb8bb3dfcf9)
+and published as annotated `v1.64.2`. This section corrects the missing ledger
+entry discovered by the umbrella's heading-based ledger check after publication;
+the earlier packaging review missed it. Historical entries below retain their scope.
+
+| Evidence | Observation | Boundary |
+|---|---|---|
+| Source guards | [FW05 receipt](runs/2026-10-13-fw05-design-facts.md): independent source review at `6a24c2390d66a70eb17c034719d1681bff624ec8`; focused 56 controls, eight generated tables without drift, structural 6650 checks | Source facts, not rendered appearance |
+| Packaging | Genuine candidate validation and normal integration in [PR44](https://github.com/ssheleg/sheleg-design-skill/pull/44); local structural gate 6651 checks | Version metadata and source acceptance |
+| Publication | [Release run 38340955417](https://github.com/ssheleg/sheleg-design-skill/actions/runs/38340955417) succeeded for `v1.64.2` | Release/publish jobs observed separately from registry content |
+| Registry bytes | [Immutable coordinator receipt](https://github.com/ssheleg/sshlg-skills/blob/e3b8f4213a1c807af6708a85339d0a8f87081544/docs/evidence/completion-1013/releases/design-1.64.2.json): all 1238 published files equal accepted source; SHA-512 and SHA-1 archive integrity checked | Installation, native/model routing and live Figma/browser rendering NOT_RUN here; B-145 remains open |
+
+The ledger correction changes repository documentation only. The package stays
+1.64.2; no replacement tag or publication is needed. Successor payload parity and
+local correction checks are recorded in [the correction receipt](runs/2026-10-13-fw05-ledger-correction.md).
+
 ## Release candidate — 1.64.1 (2026-10-10)
 
 A lightweight tag cannot publish a release (umbrella plan 2026-10-10, T5 / REQ-6).
