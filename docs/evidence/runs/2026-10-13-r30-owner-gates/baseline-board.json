@@ -1,0 +1,34 @@
+{
+  "owner": "sheleg-design-skill",
+  "sha": "678fe483eea128be0125b033f442934f1ece7c32",
+  "remote": "git@github.com:ssheleg/sheleg-design-skill.git",
+  "cases": [
+    {
+      "kind": "baseline",
+      "exit_code": 0,
+      "elapsed_seconds": 1.09,
+      "board_sha256": "ebd8d2bef22758bfb1944bb50b334e6dcb45bc1ab59f9d8968d91dce9d907e22",
+      "other_tracked_changes": false,
+      "output": "  component classes: 2 unanswered across 33 packs (pinned at most 2)\n  token population: --accent in 35 of 39 layers (babylove, chorus, field-notes, orchard name it otherwise), 26 carry an @role non-text colour\n  token-layer bands: 17 declaration(s) name a banded element, all inside their band\n  confined tokens: 93 base-declaring table(s), 0 row measured against a surface it is confined away from\n  T1 carriers: 12 phrase(s) present, description 964/1024 chars\n  run stamps: 87 rows, 35 unrecorded (preamble says 35)\n  retirement window: CLOSED (1 of 5 unrecorded) \u2014 the 'has not fired in five run stamps' trigger is UNAVAILABLE\n    blind stamps: 2026-08-25\n  plant shape: 78 plant(s), every one names the check it exercises\n  gate hygiene: 5 module(s), no shadowed top-level name\n  reduce coverage: 39 layers, 172 duration(s) examined, 0 silent, 6 kept with a reason, 2 promise a component-layer stop\n  prescribed tokens: 39 packs, 0 dangling (1 declared exemption)\n  scrub exception: 4 of 5 pack(s) uncarved (pinned at most 4)\n  slop markers: 49 rows, 20 lint rules, 20 implemented\n  director record: 16 template fields, validator and doctrine agree\n  ADA rubric: 25 items, profiles product 15 / ad 8\n  figma contract: 10 scope rows, 2 tiers, 2 tier count(s) stated beside Figma outside the home\n  unlooked: routed triggers \u2014 no sshlg-skills umbrella above this checkout\n  Contents lists: 53 bundle references over 100 lines, every list derived from its own headings\n  contract split: 6 core / 33 widened of 39 packs (core: awning, briefing-room, editorial-luxury, instrument-console, orchard, workbench)\n  release register: 101 versions, 105 tags, 3 declared untagged (1.5.0, 1.28.0, 1.30.0)\nOK (6654 checks)\n"
+    },
+    {
+      "kind": "duplicate",
+      "exit_code": 0,
+      "elapsed_seconds": 1.539,
+      "board_sha256": "4d9b0d33ecba9f9c39f57ccf42e49055b486a2b825417293b9fdc9455e19d212",
+      "other_tracked_changes": false,
+      "output": "  component classes: 2 unanswered across 33 packs (pinned at most 2)\n  token population: --accent in 35 of 39 layers (babylove, chorus, field-notes, orchard name it otherwise), 26 carry an @role non-text colour\n  token-layer bands: 17 declaration(s) name a banded element, all inside their band\n  confined tokens: 93 base-declaring table(s), 0 row measured against a surface it is confined away from\n  T1 carriers: 12 phrase(s) present, description 964/1024 chars\n  run stamps: 87 rows, 35 unrecorded (preamble says 35)\n  retirement window: CLOSED (1 of 5 unrecorded) \u2014 the 'has not fired in five run stamps' trigger is UNAVAILABLE\n    blind stamps: 2026-08-25\n  plant shape: 78 plant(s), every one names the check it exercises\n  gate hygiene: 5 module(s), no shadowed top-level name\n  reduce coverage: 39 layers, 172 duration(s) examined, 0 silent, 6 kept with a reason, 2 promise a component-layer stop\n  prescribed tokens: 39 packs, 0 dangling (1 declared exemption)\n  scrub exception: 4 of 5 pack(s) uncarved (pinned at most 4)\n  slop markers: 49 rows, 20 lint rules, 20 implemented\n  director record: 16 template fields, validator and doctrine agree\n  ADA rubric: 25 items, profiles product 15 / ad 8\n  figma contract: 10 scope rows, 2 tiers, 2 tier count(s) stated beside Figma outside the home\n  unlooked: routed triggers \u2014 no sshlg-skills umbrella above this checkout\n  Contents lists: 53 bundle references over 100 lines, every list derived from its own headings\n  contract split: 6 core / 33 widened of 39 packs (core: awning, briefing-room, editorial-luxury, instrument-console, orchard, workbench)\n  release register: 101 versions, 105 tags, 3 declared untagged (1.5.0, 1.28.0, 1.30.0)\nOK (6655 checks)\n"
+    },
+    {
+      "kind": "width",
+      "exit_code": 1,
+      "elapsed_seconds": 1.25,
+      "board_sha256": "a0a660f1698ffb660f39af13c78dc289828df08d6320abc076838b19171ae1c1",
+      "other_tracked_changes": false,
+      "output": "  component classes: 2 unanswered across 33 packs (pinned at most 2)\n  token population: --accent in 35 of 39 layers (babylove, chorus, field-notes, orchard name it otherwise), 26 carry an @role non-text colour\n  token-layer bands: 17 declaration(s) name a banded element, all inside their band\n  confined tokens: 93 base-declaring table(s), 0 row measured against a surface it is confined away from\n  T1 carriers: 12 phrase(s) present, description 964/1024 chars\n  run stamps: 87 rows, 35 unrecorded (preamble says 35)\n  retirement window: CLOSED (1 of 5 unrecorded) \u2014 the 'has not fired in five run stamps' trigger is UNAVAILABLE\n    blind stamps: 2026-08-25\n  plant shape: 78 plant(s), every one names the check it exercises\n  gate hygiene: 5 module(s), no shadowed top-level name\n  reduce coverage: 39 layers, 172 duration(s) examined, 0 silent, 6 kept with a reason, 2 promise a component-layer stop\n  prescribed tokens: 39 packs, 0 dangling (1 declared exemption)\n  scrub exception: 4 of 5 pack(s) uncarved (pinned at most 4)\n  slop markers: 49 rows, 20 lint rules, 20 implemented\n  director record: 16 template fields, validator and doctrine agree\n  ADA rubric: 25 items, profiles product 15 / ad 8\n  figma contract: 10 scope rows, 2 tiers, 2 tier count(s) stated beside Figma outside the home\n  unlooked: routed triggers \u2014 no sshlg-skills umbrella above this checkout\nFAIL: docs/evidence/backlog.md:17: row B-001 has 6 cells and its header declares 5. An unescaped `|` inside the row shifts every cell after it, so the status and priority columns come back holding prose -- escape it as `\\|`\n"
+    }
+  ],
+  "plant_line": 17,
+  "plant_id": "B-001",
+  "board_sha256": "ebd8d2bef22758bfb1944bb50b334e6dcb45bc1ab59f9d8968d91dce9d907e22"
+}
