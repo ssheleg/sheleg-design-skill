@@ -323,9 +323,12 @@ until the judge has been measured against a labelled set. The verdict goes into
 the record's `ADA` field.
 
 **Run them where the thing runs.** A screenshot in a browser at the target
-viewport beats reading the diff, every time; `webapp-testing` and the Chrome
-DevTools tooling exist for this, and the `verify` lane in Act 2 casts them. A
-quality claim made from source is a claim about source.
+viewport beats reading the diff, every time. WebKit first
+([`VISUAL_REVIEW.md`](./VISUAL_REVIEW.md#engine-order)): Safari through
+`safaridriver`, or Playwright's `webkit` under `webapp-testing`; the Chrome
+DevTools tooling is the stated Chromium fallback when the task needs Chrome
+itself. The `verify` lane in Act 2 casts them. A quality claim made from source
+is a claim about source.
 
 ### Render critique — the soft half, made actionable
 

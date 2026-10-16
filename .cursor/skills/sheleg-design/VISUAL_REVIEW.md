@@ -13,6 +13,7 @@ rather than dressed up as a reading.
 - Fitness — what disqualifies a frame
 - Worst-case data before the capture
 - Capture is tool-agnostic
+- Engine order — WebKit (Safari) first
 - Visual evidence is its own class — do not launder others into it
 - Rendered copy — the design/copywriting seam
 
@@ -33,6 +34,7 @@ screenshot with no record is an image, not evidence:
 | `motion` | reduced or full — a still of an animated surface says which |
 | `captured-at` | ISO-8601 UTC, so staleness is computable |
 | `source` | the capability that took it (see below) — never assumed |
+| `engine` | the rendering engine behind it — WebKit, Chromium or Gecko; a frame from one engine says nothing about another |
 
 ## Fitness — what disqualifies a frame
 
@@ -74,6 +76,32 @@ headless run, a screenshot MCP. **Playwright is not required**; a review does
 not fail because one specific tool is absent, and it does not install a tool to
 manufacture a pass. If no capability is present, that is the `unverified` case
 above, stated plainly.
+
+<a id="engine-order"></a>
+## Engine order — WebKit (Safari) first
+
+Which tool takes the frame is open; which engine renders it first is not.
+**Check a rendered surface in WebKit first.** Its support envelope is the
+narrowest of the three big engines, so a pass there is the stricter claim.
+
+| Need | WebKit route (first) |
+|---|---|
+| a real browser, driven | Safari through `safaridriver` (WebDriver); enable remote automation once with `sudo safaridriver --enable` |
+| automation and captures | Playwright's `webkit` — the `webkit` project, `--browser webkit`, installed with `npx playwright install webkit` |
+| debugging a render | Safari Web Inspector |
+| opening a page by hand on macOS | `open -a Safari <url>` — not the system default browser, which may be another engine |
+| an automation library (browser-use and the like) | its WebKit/Safari backend, where it has one |
+
+**Chromium is a stated fallback, never the default.** Use it only when the task
+needs Chrome itself — a Chrome-only API, Lighthouse, a CDP trace, the
+chrome-devtools MCP — and say which and why in the record. Prefer the Chrome Dev
+build for that run. When you launch your own Chrome or Chromium for a UI run,
+give it a temporary profile (never the user's), record what you started, and
+close every process you started before you finish.
+
+A surface checked only in Chromium is reported as exactly that — `engine:
+Chromium`, "checked only in Chromium" — never as "tested in a browser". Where
+the claim is about cross-engine behaviour, both engines appear in the record.
 
 ## Visual evidence is its own class — do not launder others into it
 

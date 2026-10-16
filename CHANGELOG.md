@@ -1,3 +1,21 @@
+## 1.65.0 — a rendered surface is checked in WebKit (Safari) first
+
+- **Engine order in the visual-review contract.** `VISUAL_REVIEW.md` gains
+  *Engine order — WebKit (Safari) first*: Safari through `safaridriver`,
+  Playwright's `webkit` (`--browser webkit`, `npx playwright install webkit`),
+  Safari Web Inspector, and `open -a Safari <url>` on macOS rather than the
+  system default browser. Chromium is a stated fallback for a task that needs
+  Chrome itself (a Chrome-only API, Lighthouse, a CDP trace, the chrome-devtools
+  MCP), on the Chrome Dev build, with a temporary profile and every started
+  process closed. A Chromium-only check is reported as exactly that.
+- The capture record gains an `engine` field. Capture stays tool-agnostic:
+  any working browser capability still qualifies and Playwright is still not required.
+- Motion review (`MOTION_DOCTRINE.md` §12) and the director's verify lane
+  (`CREATIVE_DIRECTOR.md`) put the WebKit route first and keep the Chrome
+  DevTools tooling as the stated Chromium fallback.
+- New regression `test/audit_regressions/safari-first.py`, with mutations that
+  drop each point. Text integrity only; no claim that a model follows it.
+
 ## 1.64.2 — derived palette facts and explicit calm fallback
 
 - Dark theme documentation now includes source-derived tables for almanac,
