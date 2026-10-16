@@ -9,6 +9,22 @@ was shipped on the strength of an argument rather than an observation.
 
 Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (REQ-10, carried to board B-004). Extended 2026-08-12 by the `pigeonhole` run with twenty rows, none of them `never`.
 
+## Release verification — 1.65.0 (2026-10-17)
+
+The WebKit (Safari) first engine order (`VISUAL_REVIEW.md` § Engine order, the capture record's
+`engine` field, motion review and the director's verify lane) was integrated at
+[`6dee513b0dc5dd1beee94d54ce422b2e7e7d398b`](https://github.com/ssheleg/sheleg-design-skill/commit/6dee513b0dc5dd1beee94d54ce422b2e7e7d398b)
+([PR48](https://github.com/ssheleg/sheleg-design-skill/pull/48)) and published as annotated `v1.65.0`.
+
+| Evidence | Observation | Boundary |
+|---|---|---|
+| Doctrine guard | `test/audit_regressions/safari-first.py` watched failing on the pre-change tree (4 failures, 2 errors), green after | checks the text, not an agent's behaviour |
+| Local gate | `npm test` exit 0 on the PR head `71da65d` (`OK (6667 checks)`, `OK (3461 checks)`, `OK (938 checks)`, installer 13 cases) | local run |
+| CI | [validate run 38971794586](https://github.com/ssheleg/sheleg-design-skill/actions/runs/38971794586) succeeded on `71da65d` before the squash merge | the PR head, not the merge commit |
+| Publication | [release run 38972535223](https://github.com/ssheleg/sheleg-design-skill/actions/runs/38972535223) selected by the tag `v1.65.0`, success; `npm view sheleg-design-skill version` → `1.65.0` | registry read 2026-10-17 |
+
+Whether an agent actually opens Safari first is not observed here.
+
 ## Release verification — 1.64.2 (2026-10-13)
 
 FW05 source and metadata were integrated at
