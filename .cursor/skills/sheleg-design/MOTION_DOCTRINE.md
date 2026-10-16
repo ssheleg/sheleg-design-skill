@@ -425,8 +425,11 @@ meant; the frames say what ships. Four steps, in this order, on the real build
 1. **Capture a frame strip and a run video.** One frame per phase — start,
    mid, settle; one per step of a stagger — not smooth playback, plus the video
    of one full run.
-   - Web: a performance trace with screenshots in DevTools, or a Playwright
-     video; frames pulled from it at the phase times.
+   - Web: WebKit first ([`VISUAL_REVIEW.md`](./VISUAL_REVIEW.md#engine-order))
+     — a Playwright `webkit` video or a Safari Web Inspector timeline
+     recording; a Chromium DevTools performance trace with screenshots is the
+     stated fallback when the task needs the CDP trace itself. Frames are
+     pulled from it at the phase times.
    - Native: the simulator's or device's screen recording
      (`xcrun simctl io <device> recordVideo`, `adb shell screenrecord`).
    - A rendered file ([`MOTION_PRODUCTION.md`](./MOTION_PRODUCTION.md)):

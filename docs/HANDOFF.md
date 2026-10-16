@@ -1,3 +1,20 @@
+# WebKit (Safari) first in visual review — 2026-10-16
+
+Branch `docs/safari-first` prepares sheleg-design 1.65.0 (family iteration
+ITER-1016, REQ R12): `VISUAL_REVIEW.md` gains *Engine order — WebKit (Safari)
+first* and an `engine` field in the capture record; motion review and the
+director's verify lane put the WebKit route first, with Chromium as the stated
+fallback. Five version homes, `SKILL-CARD.md` and the `.cursor/` mirror moved
+together. Regression: `test/audit_regressions/safari-first.py` (watched failing
+first: 4 failures, 2 errors; then green). Gate: `npm test` exit 0.
+
+Open: none in this branch. The coordinator owns PR review, the annotated tag,
+the umbrella pin and the local install update.
+
+Next task: review the draft PR, then the family release sequence.
+
+---
+
 # FW05 ledger correction — 2026-10-13
 
 The umbrella detected a missing 1.64.2 verification heading after publication.
