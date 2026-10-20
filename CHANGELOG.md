@@ -1,3 +1,27 @@
+## 1.66.0 (2026-10-20): a short description, triggers in the body
+
+- **The skill description is a router of 425 characters** (was 964). The
+  operator's Claude Code skill listing measured 29,995 of about 30,000
+  characters for 134 skills, and 81 skills showed no description; a plugin
+  skill cannot be hidden, so length is the only lever. One "Use when" sentence
+  that keeps every surface class and T1 carrier, five trigger phrases, a "Not
+  for" boundary naming `ux-flows` and `copywriting`, and the refusal phrase.
+- **Every removed trigger phrase moved verbatim into a `## Triggers` section**
+  of the SKILL.md body, before *When to Use*, with the four bare nouns the hook
+  routes only behind an action verb.
+- **The `/sheleg-design` command carries one sentence** (75 characters, was 213).
+- **Two passages left the body so it stays inside the house auditor's 4,750-token
+  working limit** (4,747 before, 4,706 after, with the new section): *Who does the
+  work* moved to `COMPONENT_LAYER.md`, whose header already said it lived there,
+  and *What a comparison records* moved to `STYLE_PACK_INDEX.md` § Selection
+  protocol; `SKILL.md` links both. `fix-ds-01.02` reads the bundle. The row table
+  stays in `SKILL.md`, as `CALIBRATION.md` records.
+- **`validate.py`:** the description is a single-quoted scalar so `Triggers:`
+  carries a colon rather than a spaced hyphen; the YAML plant now strips those
+  quotes. The Russian routing forms are checked in the `## Triggers` section,
+  not the description. A description over 500 characters or without "Not for"
+  fails, and a command description over 120 fails.
+
 ## 1.65.0 — a rendered surface is checked in WebKit (Safari) first
 
 - **Engine order in the visual-review contract.** `VISUAL_REVIEW.md` gains

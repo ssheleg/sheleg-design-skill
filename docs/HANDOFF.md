@@ -1,3 +1,17 @@
+# Short description, 1.66.0 (2026-10-20)
+
+Branch `desc-budget-1020`. The description went from 964 to 425 characters and
+the command from 213 to 75, because the operator's skill listing was full and
+81 skills showed no description. Removed trigger phrases live verbatim under
+`## Triggers` in SKILL.md; the routing-form check reads that section. Two passages moved
+out of the body (to `COMPONENT_LAYER.md` and `STYLE_PACK_INDEX.md`) to stay under
+4,750 tokens. Gates:
+`npm test` alone, exit 0, and `python3 test/validate.py --self-test`.
+
+Next task: none here; the hub re-pins 1.66.0 in its own change.
+
+---
+
 # WebKit (Safari) first in visual review — 2026-10-16
 
 Branch `docs/safari-first` prepares sheleg-design 1.65.0 (family iteration

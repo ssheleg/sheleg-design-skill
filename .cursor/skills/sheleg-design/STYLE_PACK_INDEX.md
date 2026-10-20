@@ -69,3 +69,19 @@ route cannot expose the difference.
 
 The pack wins on values. The calibration dials in `SKILL.md` win on amount.
 Neither may invent a token the chosen pack does not define.
+
+Moved from `SKILL.md` on 2026-10-20 to keep its body inside the house budget.
+
+**What a comparison records: one component, one content, one viewport at a
+time, through the adapters.** A difference is attributable to the pack only
+when everything else is pinned: the receipt per candidate names the pack, its
+adapter status, the compared component's geometry (positions and sizes as
+rendered) and its states (hover, focus, disabled). A content or viewport
+mismatch between two records INVALIDATES the pair; it never counts as a pack
+difference. A pack switch is *expected* to change rendered semantics (that is
+what is being chosen), so identical geometry and states across a compared pair is a
+signal the adapter never reached the component, not a finding of equivalence.
+And a candidate without a complete adapter makes the whole comparison **not
+ready**: the pack is named and either adapted or struck from the candidate
+list explicitly, because "compared what had adapters" silently is a comparison of a
+different question.

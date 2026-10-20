@@ -160,6 +160,10 @@ def raw_front_matter(path) -> str:
     return "" if end == -1 else text[4:end]
 
 
+DESCRIPTION_SOFT_CAP = 500
+COMMAND_DESCRIPTION_CAP = 120
+
+
 def check_description_canon(rel, path, desc: str) -> None:
     """The three canon rules every skill description must satisfy."""
     check(
@@ -189,6 +193,20 @@ def check_description_canon(rel, path, desc: str) -> None:
     check(
         len(desc) <= 1024,
         f"{rel}/SKILL.md: description is {len(desc)} chars, the spec limit is 1024",
+    )
+    # 2026-10-20: the operator's skill listing was full (29,995 of ~30,000 chars,
+    # 81 of 134 skills shown with no description), and a plugin skill cannot be
+    # hidden, so description length is the only lever. Family soft cap 500; the
+    # trigger phrases a description drops live in the body's `## Triggers`.
+    check(
+        len(desc) <= DESCRIPTION_SOFT_CAP,
+        f"{rel}/SKILL.md: description is {len(desc)} chars, over the family soft cap "
+        f"of {DESCRIPTION_SOFT_CAP} -- move trigger phrases into the body's ## Triggers",
+    )
+    check(
+        "Not for" in desc,
+        f"{rel}/SKILL.md: description names no boundary ('Not for ...') -- a router "
+        f"that does not say what it hands away competes with its siblings",
     )
     raw = raw_front_matter(path)
     overhead = len(raw) - len(desc)
@@ -645,6 +663,10 @@ def validate_commands():
         ok = check(fm is not None, f"commands/{name}: missing front-matter")
         if ok:
             check(bool(fm.get("description")), f"commands/{name}: missing description")
+            check(len(fm.get("description") or "") <= COMMAND_DESCRIPTION_CAP,
+                  f"commands/{name}: description is {len(fm.get('description') or '')} "
+                  f"chars, over {COMMAND_DESCRIPTION_CAP} -- one short sentence; every "
+                  f"character is spent in the host's listing budget")
 
 
 def validate_cursor_rules():
@@ -1631,8 +1653,10 @@ PLANTS = (
         # expect string is this check's own message and not merely "went red".
         "an unquoted `X: y` inside the description -- valid to a regex, refused by YAML",
         f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md",
-        lambda t: t.replace('Triggers - "design a landing"',
-                            'Triggers: "design a landing"', 1),
+        # Since 1.66.0 the description is a single-quoted scalar so `Triggers:` can
+        # carry a colon (the no-dash rule); the plant strips the quotes, which is
+        # the 1.57.0 byte shape again.
+        lambda t: re.sub(r"^description: '(.*)'$", r"description: \1", t, count=1, flags=re.M),
         "front-matter is not valid YAML",
     ),
     (
@@ -2336,9 +2360,9 @@ PLANTS = (
     (
         # 1.64.0 item 7: a Russian routing form the umbrella's hook fires on,
         # dropped from the description. Derived from the tuple, not the prose.
-        "a description that drops a Russian routing form the umbrella fires on",
+        "a Triggers section that drops a Russian routing form the umbrella fires on",
         f"{PLUGIN_DIR}/skills/{PLUGIN}/SKILL.md",
-        lambda t: t.replace(RU_ROUTING_FORMS[1], "admin", 1),
+        lambda t: _wound_triggers_section(t, RU_ROUTING_FORMS[1]),
         "the umbrella's hook fires on it for this skill",
     ),
 )
@@ -5478,25 +5502,44 @@ def validate_figma_contract():
           f"{restated} tier count(s) stated beside Figma outside the home")
 
 
+def _triggers_section(text: str) -> str:
+    """The body's `## Triggers` section, up to the next level-2 heading."""
+    m = re.search(r"^## Triggers\n(.*?)(?=^## )", text, re.S | re.M)
+    return " ".join(m.group(1).split()) if m else ""
+
+
+def _wound_triggers_section(text: str, form: str) -> str:
+    """Remove one routing form from the `## Triggers` section only."""
+    m = re.search(r"^## Triggers\n(.*?)(?=^## )", text, re.S | re.M)
+    assert m and form in m.group(1), "plant: the Triggers section does not carry the form"
+    return text[: m.start(1)] + m.group(1).replace(form, "admin") + text[m.end(1):]
+
+
 def validate_routing_forms_lead():
     """Item 7 — the Russian forms are advertised and the surfaces are front-loaded.
 
     Harness listings truncate a description, so the surface classes must sit in the
-    lead clause, before `Triggers -`, where a cut leaves them standing.
+    lead clause, before the `Triggers` label, where a cut leaves them standing.
     """
     text = read(ROOT / PLUGIN_DIR / "skills" / PLUGIN / "SKILL.md") or ""
     m = re.search(r"^description:\s*(.*?)(?=^[a-z-]+:|^---)", text, re.S | re.M)
     if not check(m is not None, "SKILL.md: no description to read routing forms from"):
         return
     desc = " ".join(m.group(1).split())
+    # Since 1.66.0 the hook's words live in the body's `## Triggers` section, not the
+    # description: the operator's listing budget was full (2026-10-20), and the
+    # umbrella's fixture reads the SKILL.md text. The section is read on its own so a
+    # stray mention elsewhere in the body cannot stand in for it.
+    section = _triggers_section(text)
+    check(bool(section), "SKILL.md: no `## Triggers` section -- the hook's words have no home")
     for form in RU_ROUTING_FORMS:
-        check(form in desc,
-              f"SKILL.md description never says «{form}» -- the umbrella's hook fires on it for "
+        check(form in section,
+              f"SKILL.md `## Triggers` never says «{form}» -- the umbrella's hook fires on it for "
               "this skill, so the skill must claim it")
-    lead = desc.split(" Triggers - ", 1)[0].lower()
+    lead = re.split(r" Triggers(?: - |: )", desc, maxsplit=1)[0].lower()
     for word in sorted(SURFACE_CLASSES):
         check(word in lead,
-              f"SKILL.md description: '{word}' is not in the lead clause before 'Triggers -' -- a "
+              f"SKILL.md description: '{word}' is not in the lead clause before the 'Triggers' label -- a "
               "listing that truncates the description would drop the surface")
 
 

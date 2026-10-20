@@ -14,6 +14,7 @@ starter theme.
 
 - [Why it composes rather than competes](#why-it-composes-rather-than-competes)
 - [The two vocabularies, and the adapter contract](#the-two-vocabularies-and-the-adapter-contract)
+- [Who does the work](#who-does-the-work)
 
 ## Why it composes rather than competes
 
@@ -41,3 +42,16 @@ component matrix (Card/Button/Dialog: computed sizes, padding, radius, shadow,
 fonts, states) against the chosen direction**, not just the color variables, and
 list the defaults you deliberately kept. A kit mounted without any of that
 renders in its starter look and looks like nobody chose anything.
+
+## Who does the work
+
+Moved from `SKILL.md` on 2026-10-20, as this file's header already promised.
+
+This section decides *whether* and *against which tokens*.
+Where the `shadcn` skill is installed it does the adding, searching and
+composing, and `migrate-radix-to-base` handles the Radix→Base move; both are
+**optional neighbours** this skill declares in its `compatibility` line and does
+not ship, and they trigger on their own words where present. Where they are
+absent nothing is blocked: the kit's own CLI (`npx shadcn@latest add
+<component>`) does the adding, and the token mapping above binds either way. Do
+not restate their component docs here.

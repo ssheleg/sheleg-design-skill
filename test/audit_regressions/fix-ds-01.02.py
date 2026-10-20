@@ -21,6 +21,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 SKILL = os.path.join(ROOT, "plugins", "sheleg-design", "skills", "sheleg-design",
                      "SKILL.md")
+INDEX = os.path.join(os.path.dirname(SKILL), "STYLE_PACK_INDEX.md")
 
 failures = []
 
@@ -35,7 +36,12 @@ def case(name, fn):
 
 
 def t_doctrine_states_the_protocol():
-    flat = " ".join(open(SKILL, encoding="utf-8").read().split())
+    # The bundle, not one file: since 1.66.0 the receipt paragraph lives in
+    # STYLE_PACK_INDEX.md's Selection protocol, which SKILL.md links.
+    skill = open(SKILL, encoding="utf-8").read()
+    assert "STYLE_PACK_INDEX.md#selection-protocol" in skill, \
+        "SKILL.md no longer links the comparison protocol"
+    flat = " ".join((skill + open(INDEX, encoding="utf-8").read()).split())
     for needle in ("one component, one content, one viewport",
                    "INVALIDATES the pair",
                    "identical geometry and states across a compared pair is a "

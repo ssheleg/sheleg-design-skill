@@ -9,6 +9,18 @@ was shipped on the strength of an argument rather than an observation.
 
 Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (REQ-10, carried to board B-004). Extended 2026-08-12 by the `pigeonhole` run with twenty rows, none of them `never`.
 
+## Release candidate: 1.66.0 (2026-10-20)
+
+Short description, triggers in the body. Branch `desc-budget-1020`.
+
+| Evidence | Observation | Boundary |
+|---|---|---|
+| `python3 test/validate.py` | exit 0; T1 carriers 12 of 12 and surface classes 7 of 7 still in the 425-character description | string presence, not a fresh-context routing run (B-052) |
+| Hub words | the sshlg-skills `lib/triggers.js` route for sheleg-design read by a scratch check: 49 trigger and object words, 0 missing from SKILL.md | hub fixture itself unchanged here |
+| Hub completeness | every quoted phrase after `Triggers:` reaches the sheleg-design route | same scratch check |
+| Body budget | pinned make-skill auditor `5ca5c36` `--house`: 5,128 tokens with the full trigger list inline (GAP), 4,706 after the two moves, 0 GAP | measured |
+| Agent behaviour | whether a host now shows the description | never |
+
 ## Release verification — 1.65.0 (2026-10-17)
 
 The WebKit (Safari) first engine order (`VISUAL_REVIEW.md` § Engine order, the capture record's
