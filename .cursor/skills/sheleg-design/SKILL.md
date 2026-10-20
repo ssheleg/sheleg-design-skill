@@ -1,10 +1,10 @@
 ---
 name: sheleg-design
-description: Use when deciding how something LOOKS or MOVES — landing/hero pages, dashboards, admin/internal tools, mobile screens, web decks, chat/agent UIs; particle/WebGL, scrubbed motion, drift; tokens, themes, palettes, typography, Figma mockups. Triggers - "design a landing" / "дизайн лендинга", "build a landing page" / "сделай лендинг", "dashboard style" / "стиль дашборда, сделай дашборд, админка", "scroll animation" / "скролл-анимация, анимации", "design tokens, style pack" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы, фигма в код, макеты", "mobile screen" / "мобильный экран", "palette, colors" / "палитра, цвета", "typography, font" / "типографика, шрифт", "how it looks, make it prettier" / "выглядит, красиво, красивее", "visual reference" / "визуальные референсы", "investor deck as a web page" / "веб-презентация", "redesign" / "редизайн, свёрстай, вёрстка". Not for structure, copy, backend or .pptx.
+description: 'Use when deciding how something looks or moves (landing, hero, particle/WebGL, scrubbed motion, drift, dashboard, admin and internal tool UI, mobile screen, web deck, tokens, light/dark theme). Triggers: "design a landing" / "дизайн лендинга", "palette" / "палитра", "redesign" / "редизайн", "мобильный экран", "figma variables". Not for structure (ux-flows) or copy (copywriting). Refusal phrase "no design" / «без дизайна».'
 license: MIT
 compatibility: Kit/lane commands need node>=16, npx, network. Optional siblings — dataviz, shadcn, migrate-radix-to-base. Each has an in-text fallback when absent or unreachable.
 metadata:
-  version: 1.65.0
+  version: 1.66.0
 ---
 
 # SHELEG Design
@@ -55,6 +55,10 @@ bounded budget ([`CREATIVE_DIRECTOR.md`](./CREATIVE_DIRECTOR.md)), where an
 unresolved observation stays unresolved rather than being renamed shipped. A glance
 cannot produce a conformance row — a receipt where it did is refused, because
 "looked accessible" is a screenshot claim wearing a criterion's name.
+
+## Triggers
+
+"build a landing page" / "сделай лендинг", "dashboard style" / "стиль дашборда, сделай дашборд, админка", "scroll animation" / "скролл-анимация, анимации", "design tokens, style pack" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы, фигма в код, макеты", "palette, colors" / "палитра, цвета", "typography, font" / "типографика, шрифт", "how it looks, make it prettier" / "выглядит, красиво, красивее", "visual reference" / "визуальные референсы", "investor deck as a web page" / "веб-презентация", "redesign" / "редизайн, свёрстай, вёрстка".
 
 ## When to Use
 
@@ -269,19 +273,8 @@ property does not error, it silently falls back — and a comparison built on
 silent fallbacks compares the fallbacks. No CSS-swap promise follows:
 components keep consuming the pack's own tokens.
 
-**What a comparison records — one component, one content, one viewport at a
-time, through the adapters.** A difference is attributable to the pack only
-when everything else is pinned: the receipt per candidate names the pack, its
-adapter status, the compared component's geometry (positions and sizes as
-rendered) and its states (hover, focus, disabled). A content or viewport
-mismatch between two records INVALIDATES the pair — it never counts as a pack
-difference. A pack switch is *expected* to change rendered semantics — that is
-what is being chosen — so identical geometry and states across a compared pair is a
-signal the adapter never reached the component, not a finding of equivalence.
-And a candidate without a complete adapter makes the whole comparison **not
-ready**: the pack is named and either adapted or struck from the candidate
-list explicitly — "compared what had adapters" silently is a comparison of a
-different question.
+**What a comparison records**, and when the whole comparison is **not ready**:
+[`STYLE_PACK_INDEX.md`](./STYLE_PACK_INDEX.md#selection-protocol).
 
 The comparison harness is scaffolding, not a deliverable: it comes out with the
 same change that records the decision.
@@ -319,15 +312,6 @@ panels, internal tools, chat and agent interfaces: yes, and the answer is yes by
 default. A scroll-driven landing page: **no** — there are no controls to reuse
 there, the work is bespoke scroll and WebGL, and reaching for a component kit is
 how a hero ends up looking like a settings screen.
-
-**Who does the work.** This section decides *whether* and *against which tokens*.
-Where the `shadcn` skill is installed it does the adding, searching and
-composing, and `migrate-radix-to-base` handles the Radix→Base move; both are
-**optional neighbours** this skill declares in its `compatibility` line and does
-not ship, and they trigger on their own words where present. Where they are
-absent nothing is blocked: the kit's own CLI (`npx shadcn@latest add
-<component>`) does the adding, and the token mapping above binds either way. Do
-not restate their component docs here.
 
 ## Optional — Figma (design ↔ code)
 
