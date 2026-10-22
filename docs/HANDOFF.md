@@ -1,3 +1,9 @@
+## v1.66.2: the ledger records the shipped version (2026-10-22)
+
+- **Objective.** Record the shipped version in the verification ledger (the sshlg-skills validator reads it).
+- **Done.** Ledger entry v1.66.2.
+- **Next task.** After merge: tag `v1.66.2`, watch the release run, then the sshlg-skills pin bump.
+
 ## v1.66.1: no private product name in the origin notes (2026-10-22)
 
 - **Objective.** Remove a private product name from shipped doctrine (operator, 2026-10-22).
