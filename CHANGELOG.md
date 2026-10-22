@@ -1,3 +1,7 @@
+## 1.66.2 (2026-10-22): the ledger records the shipped version
+
+- The verification ledger records this version: 1.66.1 shipped with the ledger still headed by the version before it. No skill changes.
+
 ## 1.66.1 (2026-10-22): no private product name in the origin notes
 
 - `SHELEG_DESIGN.md` and the Instrument Console style pack named the private product landing the system was reverse-engineered from. Both now say "a production product landing". No token, layout or motion changes.

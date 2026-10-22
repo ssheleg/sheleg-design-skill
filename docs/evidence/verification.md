@@ -9,6 +9,12 @@ was shipped on the strength of an argument rather than an observation.
 
 Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (REQ-10, carried to board B-004). Extended 2026-08-12 by the `pigeonhole` run with twenty rows, none of them `never`.
 
+## Release candidate: v1.66.2 (2026-10-22)
+
+the ledger records the shipped version
+
+Evidence: `npm test` exit 0 on the candidate tree before the PR; the PR CI run and the tag release run are named in docs/HANDOFF.md.
+
 ## Release candidate: 1.66.0 (2026-10-20)
 
 Short description, triggers in the body. Branch `desc-budget-1020`.
