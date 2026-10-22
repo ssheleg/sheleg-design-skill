@@ -1,3 +1,8 @@
+## 1.66.2 released and pinned (2026-10-22)
+
+- **State.** sheleg-design 1.66.2 is tagged, on npm and pinned by sshlg-skills 1.73.2; installed on the operator machine.
+- **Next task.** B-052: re-measure discovery for the changed description (`docs/evidence/backlog.md`). B-004 waits on the operator's design call.
+
 ## v1.66.2: the ledger records the shipped version (2026-10-22)
 
 - **Objective.** Record the shipped version in the verification ledger (the sshlg-skills validator reads it).
