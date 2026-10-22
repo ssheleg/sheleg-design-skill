@@ -1,3 +1,9 @@
+## v1.66.1: no private product name in the origin notes (2026-10-22)
+
+- **Objective.** Remove a private product name from shipped doctrine (operator, 2026-10-22).
+- **Done.** Origin notes neutral in the plugin and the `.cursor` mirror; version 1.66.1.
+- **Next task.** After merge: tag `v1.66.1`, watch the release run, then the sshlg-skills pin bump.
+
 # Short description, 1.66.0 (2026-10-20)
 
 Branch `desc-budget-1020`. The description went from 964 to 425 characters and

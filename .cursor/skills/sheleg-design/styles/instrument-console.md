@@ -1,6 +1,6 @@
 # Style pack — Instrument Console
 
-Origin: Nicegram Business OS landing (the SHELEG reference implementation).
+Origin: a production product landing (the SHELEG reference implementation).
 A near-black aerospace console: deep layered surfaces, hairline seams, one
 electric-blue signal accent, mono telemetry labels. The particle field and
 every instrument read as one precision device responding to the hand.

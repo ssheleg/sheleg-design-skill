@@ -1,3 +1,7 @@
+## 1.66.1 (2026-10-22): no private product name in the origin notes
+
+- `SHELEG_DESIGN.md` and the Instrument Console style pack named the private product landing the system was reverse-engineered from. Both now say "a production product landing". No token, layout or motion changes.
+
 ## 1.66.0 (2026-10-20): a short description, triggers in the body
 
 - **The skill description is a router of 425 characters** (was 964). The
