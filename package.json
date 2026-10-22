@@ -19,7 +19,7 @@
     "node": ">=16"
   },
   "scripts": {
-    "test": "python3 test/validate.py && python3 test/validate_palette.py && python3 test/sloplint.py && python3 tools/chrome.py && node --check bin/cli.js && node test/installer_test.js && node test/lint_test.js && node test/record_test.js && node test/render_eval_test.js && node bin/cli.js --lint kits && npm run selftest && npm run test:audit",
+    "test": "python3 test/validate.py && python3 test/family_gate.py && python3 test/family_gate.py --self-test && python3 test/validate_palette.py && python3 test/sloplint.py && python3 tools/chrome.py && node --check bin/cli.js && node test/installer_test.js && node test/lint_test.js && node test/record_test.js && node test/render_eval_test.js && node bin/cli.js --lint kits && npm run selftest && npm run test:audit",
     "validate": "python3 test/validate.py && python3 test/validate_palette.py && python3 test/sloplint.py",
     "smoke": "node bin/cli.js --help",
     "palette": "python3 test/validate_palette.py",

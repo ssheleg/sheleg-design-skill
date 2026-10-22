@@ -1,3 +1,10 @@
+## Unreleased
+
+- `test/family_gate.py`, the family's canonical member gate (hub B-108, B-109): the board
+  parses (every row as wide as its header, no id twice) and `release.yml` keeps the tag-ancestry
+  check (`fetch-depth: 0`, `git merge-base --is-ancestor`), each watched failing on a plant by
+  `--self-test`. Wired into `npm test`; a byte-for-byte copy of the hub's `member-gate/family_gate.py`.
+
 ## 1.66.2 (2026-10-22): the ledger records the shipped version
 
 - The verification ledger records this version: 1.66.1 shipped with the ledger still headed by the version before it. No skill changes.
