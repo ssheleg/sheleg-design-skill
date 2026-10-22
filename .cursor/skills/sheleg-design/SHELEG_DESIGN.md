@@ -1,7 +1,7 @@
 # SHELEG Design
 
-A motion-and-particle interface system, reverse-engineered from the Nicegram
-Business OS landing page. This document captures *how* the page reaches its
+A motion-and-particle interface system, reverse-engineered from one
+production product landing page. This document captures *how* the page reaches its
 level — the layout discipline, the scroll narrative, the WebGL particle field,
 the DOM choreography, and the registration tricks that fuse them — so you can
 build new sites on the same principles and understand *why* each piece works.
