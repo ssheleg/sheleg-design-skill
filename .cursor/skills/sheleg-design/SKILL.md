@@ -4,7 +4,7 @@ description: 'Use when deciding how something looks or moves (landing, hero, par
 license: MIT
 compatibility: Kit/lane commands need node>=16, npx, network. Optional siblings — dataviz, shadcn, migrate-radix-to-base. Each has an in-text fallback when absent or unreachable.
 metadata:
-  version: 1.66.2
+  version: 1.66.3
 ---
 
 # SHELEG Design
