@@ -1,3 +1,11 @@
+## 1.66.4 (2026-10-25): descriptions within a 300-character budget
+
+- **Description within a 300-character budget** (hub board row B-255 (a)): Claude Code lists every
+  skill's description in one ~30,000-character budget, and on the operator's machine the listing
+  stood at 51,178. The description falls from 427 to 298 characters (hub measure) and keeps every
+  surface class and T1 carrier; "design a landing" / "дизайн лендинга" and "mobile screen" /
+  "мобильный экран" join `## Triggers`. The Cursor mirror is synced.
+
 ## 1.66.3 (2026-10-24): the family member gate
 
 - `test/family_gate.py`, the family's canonical member gate (hub B-108, B-109): the board
