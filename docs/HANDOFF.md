@@ -1,3 +1,15 @@
+## Unreleased: the retro floor within its budget (2026-10-26)
+
+- **Done.** `docs/evidence/retro.md`'s floor (standing instructions and run stamps, read at every
+  task-pipeline run's stage 0) fell from 58,392 to 8,544 bytes (budget 12,000) via task-pipeline
+  1.102.2 `retro_budget.py migrate --write`: stories, 63 older stamps and loose paragraphs moved
+  verbatim into `docs/evidence/retro/2026-Q4.md`, each hash-pinned (`retro_budget.py verify` ok).
+  Eight long stamp rows were rebuilt by hand from their archived text, because the tool shortened
+  the Commit column of this four-column table and kept the long Task cell (hub board row filed).
+  `test/validate.py` counts archived stamp rows toward the release register (plant and control in
+  the self-test); the preamble count is restored. Hub board row B-237. Gate: `npm test` all green.
+- **Next task.** None owed by this change; no plugin payload changed, so no release.
+
 ## v1.66.4: descriptions within a 300-character budget (2026-10-25)
 
 - **Done.** Every skill description in this member is at or under 300 characters (hub measure:
