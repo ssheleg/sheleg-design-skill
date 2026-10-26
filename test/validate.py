@@ -2014,9 +2014,11 @@ PLANTS = (
     ),
     (
         # The Run stamps table sat at v1.26.0 while 1.44.0 shipped, and the
-        # retirement trigger in the same file counts rows in it.
+        # retirement trigger in the same file counts rows in it. Since 2026-10-26 the
+        # row lives in the archive `retro_budget.py migrate` rotated it into, so the
+        # plant there also proves the archive's rows are read.
         "a release with no row in the Run stamps table",
-        "docs/evidence/retro.md",
+        "docs/evidence/retro/2026-Q4.md",
         lambda t: t.replace("**`v1.44.0` shipped**", "**shipped**", 1),
         "has no row for 1.44.0",
     ),
@@ -2433,15 +2435,31 @@ def self_test() -> int:
              "## Run stamps\n| x | y | 1.28.0 | z |\n## Log\n", ["1.28.0"]),
             "sections -- one of them is",
         ),
+        (
+            # The archive counts rows only: a version named in its prose is no stamp.
+            "a release whose version the archive only mentions in prose",
+            ("## [1.28.0] - 2026-08-14\n", "## Run stamps\n| x | y | 1.27.0 | z |\n## Log\n",
+             ["1.28.0"], "1.28.0 shipped; see the release notes\n"),
+            "has no row for 1.28.0",
+        ),
     ):
         del failures[:]
-        _release_register(*args, complete=True)
+        _release_register(*args[:3], complete=True, archive=args[3] if len(args) > 3 else "")
         fired = [f for f in failures if expect in f]
         if fired:
             print(f"  caught  {label}")
         else:
             print(f"  MISSED  {label} -- no failure said {expect!r}")
             ok = False
+    del failures[:]
+    # The control: a stamp rotated into the archive keeps its release covered.
+    _release_register("## [1.28.0] - 2026-08-14\n", "## Run stamps\n| x | y | 1.27.0 | z |\n## Log\n",
+                      ["1.28.0"], complete=True, archive="| x | y | 1.28.0 | z |\n")
+    if any("has no row for" in f for f in failures):
+        print("  MISSED  a stamp rotated into the archive -- still reported missing")
+        ok = False
+    else:
+        print("  passed  a stamp rotated into the archive keeps its release covered")
     del failures[:]
 
     # Two plants that are DIRECTORIES rather than text mutations, so they cannot
@@ -2827,7 +2845,7 @@ def _git_tags() -> list[str]:
 
 
 def _release_register(changelog: str, retro: str, tags: list[str],
-                      complete: bool | None = None) -> None:
+                      complete: bool | None = None, archive: str = "") -> None:
     found = CHANGELOG_VERSION.findall(changelog)
     versions = [v for v, _ in found]
     if not check(bool(versions), "CHANGELOG.md: no '## [x.y.z] - date' sections found"):
@@ -2882,6 +2900,11 @@ def _release_register(changelog: str, retro: str, tags: list[str],
     # planted a deleted row and the check stayed green because the header still
     # mentioned the version.
     table = "\n".join(l for l in retro[start:stop].splitlines() if l.startswith("|"))
+    # 2026-10-26: task-pipeline's `retro_budget.py migrate` rotates the oldest stamps
+    # into `docs/evidence/retro/<quarter>.md`, verbatim and hash-pinned (its `verify`
+    # checks every pointer). A rotated stamp is still a stamp: its ROWS count here,
+    # its prose does not, the same rule as the table above.
+    table += "\n" + "\n".join(l for l in archive.splitlines() if l.startswith("|"))
     # `\b` before the digits does not work: the rows write `` `v1.27.0` ``, and
     # between `v` and `1` there is no word boundary, so every backticked version in
     # the table read as absent and forty-six correct rows were reported missing.
@@ -4623,6 +4646,7 @@ def validate_release_register():
         read(ROOT / "CHANGELOG.md") or "",
         read(ROOT / "docs/evidence/retro.md") or "",
         _git_tags(),
+        archive="\n".join(read(f) or "" for f in sorted((ROOT / "docs/evidence/retro").glob("*.md"))),
     )
 
 
