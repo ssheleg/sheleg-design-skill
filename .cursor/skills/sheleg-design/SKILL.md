@@ -58,7 +58,7 @@ cannot produce a conformance row — a receipt where it did is refused, because
 
 ## Triggers
 
-"build a landing page" / "сделай лендинг", "design a landing" / "дизайн лендинга", "mobile screen" / "мобильный экран", "dashboard style" / "стиль дашборда, сделай дашборд, админка", "scroll animation" / "скролл-анимация, анимации", "design tokens, style pack" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы, фигма в код, макеты", "palette, colors" / "палитра, цвета", "typography, font" / "типографика, шрифт", "how it looks, make it prettier" / "выглядит, красиво, красивее", "visual reference" / "визуальные референсы", "investor deck as a web page" / "веб-презентация", "redesign" / "редизайн, свёрстай, вёрстка", "redesign this" / "переделай дизайн", "dark theme" / "тёмная тема, сделай тёмную тему", "theme tokens" / "токены темы", "contrast" / "контрастность".
+"build a landing page" / "сделай лендинг", "design a landing" / "дизайн лендинга", "mobile screen" / "мобильный экран", "dashboard style" / "стиль дашборда, сделай дашборд, админка", "scroll animation" / "скролл-анимация, анимации", "design tokens, theme tokens, style pack" / "дизайн-токены, токены темы", "light/dark theme" / "светлая/тёмная тема, тёмная тема, тёмную тему", "figma variables" / "переменные фигмы, фигма в код, макеты", "palette, colors, contrast" / "палитра, цвета, контрастность", "typography, font" / "типографика, шрифт", "how it looks, make it prettier" / "выглядит, красиво, красивее", "visual reference" / "визуальные референсы", "investor deck as a web page" / "веб-презентация", "redesign" / "редизайн, переделай дизайн, свёрстай, вёрстка".
 
 ## When to Use
 
@@ -109,7 +109,7 @@ npx sheleg-design-skill --kit <pack>
 
 The generated `src/styles.css` is authoritative for states a core pack leaves
 open. A widened pack's kit and `## Components` section must agree. Where `npx`
-is unreachable — no node, no registry — nothing is blocked: the chosen pack and
+is unreachable, nothing is blocked: the chosen pack and
 its token layer in `styles/tokens/<pack>.css` still carry the rules by reading,
 but the component states only a kit materializes are then **unverified** — say
 so, rather than presenting a read-off state as a kit-checked one. To author a
@@ -258,8 +258,7 @@ populated page yet, the choice is premature — build the page in the pack the
 brief's register points at, and revisit once there is something real to switch.
 If the brief gives no signal at all, the defaults are **`workbench`** for product
 UI and **`showroom`** for a marketing page: both are quiet enough that switching
-away later costs layout, not identity. (This used to say "the default pack" and
-name none, which is not a fallback.)
+away later costs layout, not identity.
 
 **The mounting rides the semantic token contract.** Token names are not
 uniform across the packs, so the comparison never swaps raw CSS: each pack's
@@ -317,7 +316,7 @@ how a hero ends up looking like a settings screen.
 
 Touching a Figma file — publishing the pack as variables, or building from a
 design — starts at [`FIGMA_BRIDGE.md`](./FIGMA_BRIDGE.md). It owns the contract
-and the one rule to know before opening the tool: **a frame is read
+and its first rule: **a frame is read
 by designers and stakeholders, so drawing in one is publishing**, and creating a
 file needs a named destination rather than a guess.
 
