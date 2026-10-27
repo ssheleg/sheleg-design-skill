@@ -1,3 +1,16 @@
+## 1.66.5 (2026-10-27): route misses join the Triggers section
+
+- **Route misses join `## Triggers`** (hub board row B-267), each inside its existing entry:
+  «переделай дизайн» beside "redesign", «тёмная тема, тёмную тему» beside "light/dark theme"
+  (the hub stemmer cannot reach «тёмную» from «тёмная»), "theme tokens" / «токены темы» beside
+  "design tokens", and "contrast" / «контрастность» beside "palette, colors" (the palette gate
+  computes contrast ratios, so contrast is this skill's ground). The description is unchanged.
+  Accessibility checks are not added: the family delegates that lane on the record (hub B-140),
+  and this skill's accessibility evidence section is scoped, not routed.
+- **Body back inside the 4,750-token working limit** (4,744): the triggers cost 41 tokens, paid
+  by dropping a historical aside in *Choosing between packs* and two wordy clauses (Figma, the
+  unreachable `npx` case). No rule changed. The Cursor mirror is synced.
+
 ## 1.66.4 (2026-10-25): descriptions within a 300-character budget
 
 - **Description within a 300-character budget** (hub board row B-255 (a)): Claude Code lists every
