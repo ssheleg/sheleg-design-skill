@@ -4,7 +4,7 @@ description: 'Use when deciding how a surface looks or moves: landing, particle/
 license: MIT
 compatibility: Kit/lane commands need node>=16, npx, network. Optional siblings — dataviz, shadcn, migrate-radix-to-base. Each has an in-text fallback when absent or unreachable.
 metadata:
-  version: 1.66.4
+  version: 1.66.5
 ---
 
 # SHELEG Design
@@ -58,7 +58,7 @@ cannot produce a conformance row — a receipt where it did is refused, because
 
 ## Triggers
 
-"build a landing page" / "сделай лендинг", "design a landing" / "дизайн лендинга", "mobile screen" / "мобильный экран", "dashboard style" / "стиль дашборда, сделай дашборд, админка", "scroll animation" / "скролл-анимация, анимации", "design tokens, style pack" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы, фигма в код, макеты", "palette, colors" / "палитра, цвета", "typography, font" / "типографика, шрифт", "how it looks, make it prettier" / "выглядит, красиво, красивее", "visual reference" / "визуальные референсы", "investor deck as a web page" / "веб-презентация", "redesign" / "редизайн, свёрстай, вёрстка".
+"build a landing page" / "сделай лендинг", "design a landing" / "дизайн лендинга", "mobile screen" / "мобильный экран", "dashboard style" / "стиль дашборда, сделай дашборд, админка", "scroll animation" / "скролл-анимация, анимации", "design tokens, style pack" / "дизайн-токены", "light/dark theme" / "светлая/тёмная тема", "figma variables" / "переменные фигмы, фигма в код, макеты", "palette, colors" / "палитра, цвета", "typography, font" / "типографика, шрифт", "how it looks, make it prettier" / "выглядит, красиво, красивее", "visual reference" / "визуальные референсы", "investor deck as a web page" / "веб-презентация", "redesign" / "редизайн, свёрстай, вёрстка", "redesign this" / "переделай дизайн", "dark theme" / "тёмная тема, сделай тёмную тему", "theme tokens" / "токены темы", "contrast" / "контрастность".
 
 ## When to Use
 

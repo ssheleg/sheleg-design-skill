@@ -1,3 +1,14 @@
+## v1.66.5: route misses join the Triggers section (2026-10-27)
+
+- **Done.** Hub board row B-267 (sheleg-design part): `## Triggers` in the skill body gains
+  "redesign this" / "переделай дизайн", "dark theme" / "тёмная тема, сделай тёмную тему",
+  "theme tokens" / "токены темы" and "contrast" / "контрастность"; the description is unchanged
+  and the Cursor mirror is synced. "accessibility check" is intentionally not added: the family
+  delegates accessibility (hub B-140) and the skill's own text says the accessibility evidence is
+  scoped, not routed. Gate: `npm test`.
+- **Next task.** After merge: tag `v1.66.5`, watch the release, then the hub adds route rows with
+  fixtures (B-267) and bumps the pin.
+
 ## Unreleased: the retro floor within its budget (2026-10-26)
 
 - **Done.** `docs/evidence/retro.md`'s floor (standing instructions and run stamps, read at every
