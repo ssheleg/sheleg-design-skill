@@ -20,7 +20,7 @@ agent that does not have it — the pack stands on its own and nothing below app
 - 1. What crosses, and in what shape
 - 2. Style packs — the pack is the source of truth
 - 3. Figma — one border at a time
-- 4. Reference sweeps (Lazyweb, Mobbin, Refero) — layout crosses, identity does not
+- 4. Reference sweeps (Mobbin, Refero): layout crosses, identity does not
 - 5. Live-site extraction — the pack first, the sync second
 - 6. What cannot cross
 - 7. Round-trip discipline
@@ -121,13 +121,12 @@ Practically: a value only ever enters the system **at the pack**. Figma variable
 Claude Design components are both *outputs* of it. When they disagree, the pack wins
 and the other side is stale.
 
-## 4. Reference sweeps (Lazyweb, Mobbin, Refero) — layout crosses, identity does not
+## 4. Reference sweeps (Mobbin, Refero): layout crosses, identity does not
 
 A reference sweep answers *what a good version of this screen contains* — sections,
 hierarchy, content order. It never answers what it looks like.
 
-Three servers can fill the slot and they are not interchangeable. **Lazyweb** is
-web-product screens and growth mechanics. **Mobbin** searches screens, **flows** and
+Two servers can fill the slot and they are not interchangeable. **Mobbin** searches screens, **flows** and
 web **sections** (hero, pricing, footer), strongest on native iOS and also carrying
 web; its flows come back as evenly-spaced *preview images* per step, and its own tool
 description says to look at them rather than trust the metadata. **Refero** searches
@@ -135,8 +134,8 @@ screens, returns visually and functionally *similar* screens for one you already
 have, and returns flows as *structure* — a goal, an action and a system response per
 step.
 
-**That is the split worth knowing: two of the three answer "flow", and they answer it
-in different media.** Mobbin shows you what each step looked like; Refero tells you
+**That is the split worth knowing: both answer "flow", and they answer it in
+different media.** Mobbin shows you what each step looked like; Refero tells you
 what each step did. Drawing a diagram with decision points and recovery paths reads
 Refero; judging whether a step actually works on a phone looks at Mobbin. Sweep
 whichever are present; with more than one, sweep them all and say which answered

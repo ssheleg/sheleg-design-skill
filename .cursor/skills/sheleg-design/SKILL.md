@@ -4,7 +4,7 @@ description: 'Use when deciding how a surface looks or moves: landing, particle/
 license: MIT
 compatibility: Kit/lane commands need node>=16, npx, network. Optional siblings — dataviz, shadcn, migrate-radix-to-base. Each has an in-text fallback when absent or unreachable.
 metadata:
-  version: 1.66.5
+  version: 1.66.6
 ---
 
 # SHELEG Design
@@ -18,7 +18,9 @@ read it per frame and react in their own language. Nothing crossfades — things
 *redeploy*. Every layer degrades to a calm static state.
 
 **READ FIRST, BEFORE ANY OF THE CRAFT BELOW:**
-[`CREATIVE_DIRECTOR.md`](./CREATIVE_DIRECTOR.md) — the decision layer: what the
+[`CREATIVE_DIRECTOR.md`](./CREATIVE_DIRECTOR.md). An update or a bounded fix reads
+only its first section, [Focused visual work](./CREATIVE_DIRECTOR.md#focused-visual-work).
+New work reads it whole: the decision layer, what the
 surface is for and **what would prove it failed**; the lane and the mode (a
 redesign starts by measuring what it replaces, an update changes a token); which
 tools to cast, measured with `npx sshlg-skills pack design --lane <lane>`; when to
@@ -292,13 +294,11 @@ A style pack is a **token layer and a set of rules**. It does not ship a button.
 Every product UI therefore needs a second decision the packs deliberately do not
 make: which component kit draws the controls.
 
-**The default is `shadcn/ui`, and the question is asked once per project.** Ask it
-the way `ux-foundation` asks the Figma question — once, at the point design work
-starts, never per screen — and record the answer wherever the style pack is
-recorded: with `super-ux` installed that is the screens record's *Design system*
-line, and without it, whatever file names the pack. Default **yes**; a project
-that already has a component layer has already answered, and migrating one on
-taste is not a design decision.
+**The default is `shadcn/ui`: record it once per project and say so, do not ask.**
+Record it where the style pack is recorded (with `super-ux`, the screens record's
+*Design system* line; without it, whatever file names the pack). Ask only when an
+existing component layer conflicts: that project has already answered, and migrating
+one on taste is not a design decision.
 
 **It composes rather than competes**, and the mapping is where it goes wrong: an
 undefined custom property falls back silently instead of erroring, and the token remap
@@ -326,7 +326,7 @@ Where `/design-sync` is available, a pack can be pushed to claude.ai/design so t
 design agent builds from **this pack's** tokens, not its own defaults. The contract
 and its gaps: [`DESIGN_SYNC_BRIDGE.md`](./DESIGN_SYNC_BRIDGE.md).
 
-## Real-world references (Refero, Lazyweb, Mobbin)
+## Real-world references (Refero, Mobbin)
 
 A pack fixes *how it looks*, not what a good screen contains. A new design or brand
 redesign sweeps real products first — **content and structure**, never a visual to

@@ -25,7 +25,7 @@ def engine_contract(text):
         'macOS open': ('open -a Safari',),
         'libraries': ('WebKit/Safari backend',),
         'fallback': ('stated fallback', 'Chrome Dev', 'say which and why',
-                     'Lighthouse', 'CDP trace', 'chrome-devtools MCP'),
+                     'Lighthouse CLI', 'CDP trace', 'headless Chromium'),
         'own chrome': ('temporary profile', 'close every process'),
         'honest label': ('checked only in Chromium',),
     }
@@ -77,6 +77,7 @@ class EngineOrder(unittest.TestCase):
         for token in ('safaridriver', 'open -a Safari', 'stated fallback',
                       'temporary profile', 'close every process',
                       'checked only in Chromium', 'Chrome Dev',
+                      'headless Chromium', 'Lighthouse CLI',
                       'Playwright is not required'):
             with self.subTest(token=token):
                 with self.assertRaises((AssertionError, IndexError)):

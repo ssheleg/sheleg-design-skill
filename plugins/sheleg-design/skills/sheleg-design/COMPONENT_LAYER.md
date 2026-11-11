@@ -1,9 +1,9 @@
 # The component layer — how a kit composes with a pack
 
 Split out of `SKILL.md` on 2026-09-10, when its body measured 5703 tokens against the
-house budget of 5000. The DECISION stays in `SKILL.md` — the default is `shadcn/ui`,
-asked once per project, recorded where the pack is recorded, and it does not apply to a
-cinematic scroll surface. What moved here is the MECHANICS: why a kit composes with a
+house budget of 5000. The DECISION stays in `SKILL.md`: the default is `shadcn/ui`,
+recorded once per project where the pack is recorded (asked only when an existing component
+layer conflicts), and it does not apply to a cinematic scroll surface. What moved here is the MECHANICS: why a kit composes with a
 token layer rather than competing with it, the two vocabularies that must be mapped, the
 six axes of the adapter contract, and who does the work.
 

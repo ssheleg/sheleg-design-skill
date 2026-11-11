@@ -19,7 +19,7 @@ Read this when starting the build, and again before calling a surface done.
    the site-wide design tokens (color, type, spacing, components). For a new
    design or a redesign of a brand or flagship surface, the reference sweep has
    already run by this point — before any layout exists to defend — through
-   whichever reference servers the session exposes (Refero, Lazyweb, Mobbin
+   whichever reference servers the session exposes (Refero, and Mobbin
    where authorized), and its result, an empty one included, is in the director
    record's `References` field ([`CREATIVE_DIRECTOR.md`](./CREATIVE_DIRECTOR.md),
    Act 2).

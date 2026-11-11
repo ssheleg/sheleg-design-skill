@@ -1,3 +1,15 @@
+## v1.66.6: the short path first, retired sources out (2026-11-11)
+
+- **Done.** Family audit 2026-11-11 findings SD1, SD2, SD4, SD5 and SD7 (details in CHANGELOG.md
+  1.66.6): `Focused visual work` opens `CREATIVE_DIRECTOR.md` and `SKILL.md` routes bounded fixes
+  to it; Lazyweb removed from the live text and the `DESIGN_SYNC_BRIDGE.md` §4 pin; the Chromium
+  fallback names Chrome Dev, headless Chromium and the Lighthouse CLI; `shadcn/ui` is recorded,
+  not asked; the director-record template has no em dash. SD8 (Figma survey figures) checked
+  against the published report on 2026-11-11 and left unchanged. Body 4,740 of 4,750 tokens.
+  Gate: `npm test`.
+- **Open.** B-147 (style-pack template em dashes).
+- **Next task.** After merge: tag `v1.66.6`, watch the release, then the sshlg-skills pin bump.
+
 ## v1.66.5: route misses join the Triggers section (2026-10-27)
 
 - **Done.** Hub board row B-267 (sheleg-design part): `## Triggers` in the skill body now

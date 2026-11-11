@@ -1,3 +1,28 @@
+## 1.66.6 (2026-11-11): the short path first, retired sources out
+
+Family audit 2026-11-11 (SD1, SD2, SD4, SD5, SD7). The description is unchanged.
+
+- **Small work reads one section, not the whole decision layer** (SD1). `SKILL.md` sends an
+  update or a bounded fix straight to [Focused visual work](plugins/sheleg-design/skills/sheleg-design/CREATIVE_DIRECTOR.md#focused-visual-work),
+  and that section now opens `CREATIVE_DIRECTOR.md` (it sat at line 444 of 524). Every rule is
+  kept; this is a reordering, plus one line saying new work goes on to Act 1.
+- **Lazyweb is gone from the live text** (SD2): its MCP is retired. The reference servers are
+  Refero and Mobbin in `SKILL.md`, `CREATIVE_DIRECTOR.md`, `APPLYING.md`,
+  `DESIGN_SYNC_BRIDGE.md` §4 (heading and validator pin together), `MOBILE_SURFACES.md` (Refero
+  takes the table row), the director-record template, the Cursor rule (which named only Lazyweb),
+  the README, the live release scenarios and two sample records. Dated records keep their wording.
+- **The Chromium fallback names runnable routes** (SD4): Chrome Dev or the agent's own headless
+  Chromium, with the Lighthouse CLI, instead of the chrome-devtools MCP. WebKit stays first;
+  `test/audit_regressions/safari-first.py` pins the new wording.
+- **The component kit is recorded, not asked** (SD5): `shadcn/ui` is recorded once per project
+  with a one-line notice; the question is asked only when an existing component layer conflicts.
+  `COMPONENT_LAYER.md` says the same.
+- **The director-record template carries no em dash** (SD7): 20 replaced by colons, commas and
+  parentheses; `--check-record` accepts both forms. The style-pack template is filed as B-147.
+- Body 4,740 of 4,750 tokens (`audit_skill.py --house`). The Figma survey figures in *The craft
+  bar* were checked against the published report on 2026-11-11 (n=906; 58, 47, 36, 35, 15 per
+  cent) and are unchanged.
+
 ## 1.66.5 (2026-10-27): route misses join the Triggers section
 
 - **Route misses join `## Triggers`** (hub board row B-267), each inside its existing entry:

@@ -204,7 +204,7 @@ having two sources instead of one.
 
 | Server | Tools | Best at |
 |---|---|---|
-| **Lazyweb** | `mcp__lazyweb__*` | web product screens, flows, paywalls, growth mechanics |
+| **Refero** | `mcp__refero__*` | screens and flows on web and mobile; similar screens for one you already have; flows as structure (goal, action and system response per step) |
 | **Mobbin** | `mcp__mobbin__*` | shipped app screens and flows by category — strongest on native iOS and Android, and it carries web products too, so it is worth a sweep on a website as well |
 
 **Gate on the tools, never on the config.** A server can be registered and still
