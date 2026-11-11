@@ -4,7 +4,7 @@ surface_class: <flagship | product | internal | ad>
 revision: <commit or date this record describes>
 ---
 
-# Director record — <surface>
+# Director record: <surface>
 
 <!--
 HOW TO USE THIS TEMPLATE
@@ -46,8 +46,8 @@ marker id here or under Open.
 
 <!--
 One word first: new | redesign | update | audit | declined
-then where you entered, e.g. "redesign — entered at verify + visual-qa".
-Declined: "declined — <the reason, in a sentence>".
+then where you entered, e.g. "redesign: entered at verify + visual-qa".
+Declined: "declined: <the reason, in a sentence>".
 -->
 
 ## Taste
@@ -60,27 +60,27 @@ decide nothing. Name materials, references, type, rhythm, the subject's own
 vernacular.
   Take: e.g. "ledger-paper rhythm from the subject; tabular figures; one warm accent"
   Ban: e.g. "violet gradients; three equal feature cards; stock 3D blobs"
-  Anti-patterns: optional — SLOP_MARKERS ids this surface is most at risk of
-  Dials: optional — VARIANCE / MOTION / DENSITY with one anchor each (SKILL.md, Calibration)
-  Profile: optional — the standing taste profile this was read from, if any
+  Anti-patterns: (optional) SLOP_MARKERS ids this surface is most at risk of
+  Dials: (optional) VARIANCE / MOTION / DENSITY with one anchor each (SKILL.md, Calibration)
+  Profile: (optional) the standing taste profile this was read from, if any
 -->
 
 ## References
 
 <!--
-At least five real products, each with its URL and what we take from it — the
+At least five real products, each with its URL and what we take from it: the
 structural trait, not its palette. One line each:
-  - <Product> — https://… — take: <the trait>
+  - <Product>, https://…, take: <the trait>
 Or, when the sweep came back empty, say so and say where you looked:
   none found
-  Searched: <the reference servers and queries, e.g. Refero "pricing table", Lazyweb "usage-based pricing">
+  Searched: <the reference servers and queries, e.g. Refero "pricing table", Mobbin "usage-based pricing">
 Mandatory for new design and redesign of a brand or flagship surface.
 -->
 
 ## Cast
 
 <!--
-Each skill or tool, what it is for, and the lane it serves — one line each.
+Each skill or tool, what it is for, and the lane it serves, one line each.
 Say whether the roster was measured (`npx sshlg-skills pack design`) or read
 from the harness list.
 -->
@@ -89,11 +89,11 @@ from the harness list.
 
 <!--
 Start with yes or no.
-  no — <why: the brief already determines the answer, a locked system, a fix>
-  yes — rubric below written before either direction; then
+  no: <why, e.g. the brief already determines the answer, a locked system, a fix>
+  yes: rubric below written before either direction; then
     A: <cast / direction>
     B: <cast / direction>
-    Winner: <A or B> — grafted from the other: <the trait>
+    Winner: <A or B>, grafted from the other: <the trait>
 -->
 
 ## Rubric
@@ -119,9 +119,9 @@ A clean render is a valid result: write "clean render" and stop. No defect quota
 <!--
 The `--lint` run this record stands on: the command, the revision it ran at and
 the counts by severity, copied from its summary line.
-  npx sheleg-design-skill --lint src @ 3f2a9c1 — 0 S1, 2 S2, 1 S3, 1 waived
+  npx sheleg-design-skill --lint src @ 3f2a9c1: 0 S1, 2 S2, 1 S3, 1 waived
 Each waived marker: its id and the Brief or Open line that earned it. An S1
-finding blocks — fix it, or waive it in source with `sheleg-lint-allow: V0NN <reason>`.
+finding blocks: fix it, or waive it in source with `sheleg-lint-allow: V0NN <reason>`.
 -->
 
 ## Alignment
@@ -141,7 +141,7 @@ ratios, type sizes counted, durations measured, NOT_APPLICABLE with its reason.
 ## Signature
 
 <!--
-Exactly one signature moment for the flow — what it is, where it happens, and
+Exactly one signature moment for the flow: what it is, where it happens, and
 why it comes from the subject rather than from a catalogue.
   What: <the moment>
   Where: <screen / state / transition>
@@ -151,15 +151,15 @@ why it comes from the subject rather than from a catalogue.
 ## Surfaces
 
 <!--
-Where the job also lives outside the app or page — widget, Live Activity, App
-Intent, Watch, PWA install, share card — or why none is needed.
+Where the job also lives outside the app or page (widget, Live Activity, App
+Intent, Watch, PWA install, share card), or why none is needed.
 -->
 
 ## Haptics
 
 <!--
 Native only: a table of event → pattern, each pattern used for its documented
-meaning and switchable off. Otherwise "n/a — <reason, e.g. web surface>".
+meaning and switchable off. Otherwise "n/a: <reason, e.g. web surface>".
 -->
 
 ## ADA
@@ -171,11 +171,11 @@ are NOT_ASSESSED until a labelled set exists.
   Profile: flagship
   Targets: Interaction, Inclusivity
   G: 15 PASS / 0 FAIL / 2 N/A
-  J: NOT_ASSESSED — no labelled set yet
+  J: NOT_ASSESSED (no labelled set yet)
   H: contact sheet reviewed by <who>, <date>
   FAIL triples: region → defect → change
 ad: the same lines on the ad profile, plus "Safe zones: <placement and result>".
-Any other class: "n/a — <reason>".
+Any other class: "n/a: <reason>".
 -->
 
 ## Open

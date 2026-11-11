@@ -19,7 +19,7 @@ update — entered at tokens, then visual-qa on the billing screens
 ## References
 
 none found
-Searched: Refero "usage table billing", Lazyweb "usage breakdown" — the sweep returned settings tables with no per-project spend.
+Searched: Refero "usage table billing", Mobbin "usage breakdown": the sweep returned settings tables with no per-project spend.
 
 ## Markers
 

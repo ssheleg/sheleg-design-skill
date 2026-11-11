@@ -309,13 +309,13 @@ stops an agent inventing motion to fill the silence.
 The kits are not part of the install. `--kit` fetches one on demand, which is how
 the skill stays documentation while still having real components to hand.
 
-## Reference sweeps (Refero, Lazyweb, Mobbin)
+## Reference sweeps (Refero, Mobbin)
 
 A style pack locks *how it looks*. It says nothing about what a good version of
 the screen you're about to build actually **contains**. For a new design or a
 redesign of a brand or flagship surface the sweep is not optional: through
-whichever reference servers are connected — Refero, [Lazyweb](https://www.lazyweb.com),
-Mobbin where the account is authorized — the skill looks at five or more shipped
+whichever reference servers are connected (Refero, and Mobbin where the account
+is authorized) the skill looks at five or more shipped
 products for the target screen (signup, onboarding, paywall, pricing, checkout,
 dashboard, settings) before laying anything out, and records what it takes from
 each. An empty sweep is recorded as `none found` with where it looked.

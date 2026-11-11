@@ -16,7 +16,7 @@ update — entered at tokens
 ## References
 
 none found
-Searched: Refero "support queue dashboard", Lazyweb "ticket aging" — no per-queue age view in the results
+Searched: Refero "support queue dashboard", Mobbin "ticket aging": no per-queue age view in the results
 
 ## Markers
 

@@ -304,14 +304,14 @@ cross (the pack's bans as the design system's README, `styles.css` from
 `tokens/<pack>.css` verbatim, the components), and states that **motion does
 not cross** — no particle field, no shader hero, no scroll clock. On the four
 reference types it holds the line: references inform layout and never identity,
-a Lazyweb sweep is never uploaded, a live-site extraction lands in a pack
+a reference sweep is never uploaded, a live-site extraction lands in a pack
 before it syncs, and Figma/pack/Claude Design move one direction per change.
 Fail: hand-writing card HTML or `@dsCard` markers instead of letting the
 converter emit them, linking to a `kits/` path that does not exist in an
 install, committing a `projectId`, treating a swept reference as a component,
 or shipping motion into the design system. In a session **without**
 `/design-sync` (Cursor), the correct behaviour is to ignore all of it — the
-bridge is gated on the tool, like Lazyweb.
+bridge is gated on the tool, like the reference servers.
 
 **Result, 2026-08-10 (tree `9312a85`, bundle-only): GREEN, and it is the run that
 named this release.** Given the bundle and told to read nothing above it, the

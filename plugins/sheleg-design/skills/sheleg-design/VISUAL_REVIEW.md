@@ -93,9 +93,9 @@ narrowest of the three big engines, so a pass there is the stricter claim.
 | an automation library (browser-use and the like) | its WebKit/Safari backend, where it has one |
 
 **Chromium is a stated fallback, never the default.** Use it only when the task
-needs Chrome itself — a Chrome-only API, Lighthouse, a CDP trace, the
-chrome-devtools MCP — and say which and why in the record. Prefer the Chrome Dev
-build for that run. When you launch your own Chrome or Chromium for a UI run,
+needs Chrome itself (a Chrome-only API, a Lighthouse audit through the
+Lighthouse CLI, a CDP trace) and say which and why in the record. Run it in the Chrome Dev
+build or in your own headless Chromium. When you launch your own Chrome or Chromium for a UI run,
 give it a temporary profile (never the user's), record what you started, and
 close every process you started before you finish.
 

@@ -15,14 +15,73 @@ the middle three worth doing.
 
 ## Contents
 
+- Focused visual work
 - Act 1 — The brief, and the sentence that could falsify it
 - Act 2 — Cast the tools, by measuring rather than recalling
 - Act 3 — Fork, but only when the fork is real — and write the rubric first
 - Act 4 — Judge, then graft, then record what the cast produced
 - Act 5 — Validate: alignment first, then quality
 - First time right — decisions before pixels
-- Focused visual work
 - The record the director owes
+
+## Focused visual work
+
+An update or a bounded fix (one token, one screen's type or spacing, a list of
+known defects) needs only this section: reuse the existing brief and select the
+relevant lens below. New work and redesigns go on to Act 1. These lenses are
+modes inside this skill, not new global routers or an external command
+dependency. Do not repeat direction selection for an already chosen direction,
+or run every lens for a single local correction.
+
+| Lens | Question and concrete work | Evidence to keep |
+|---|---|---|
+| **Type** | List the text roles and the faces/weights actually in use. Improve distinctions between those roles through size, weight, spacing and contrast. Keep a single family when it does the job. Check long labels, the target languages, zoom and fallback fonts. | Representative rendered roles; loaded/fallback font status; the specific reading or hierarchy defect fixed. A font name or a universal line-length target is not a quality verdict. |
+| **Composition** | Establish the leading element, supporting elements and meaningful groups. Adjust proximity, rhythm and density to the task. Inspect the relevant supported sizes and content extremes; preserve a sensible reading and focus order. | Before/after of the same state and content; evidence of wrapping, overflow and order. Optical adjustments follow inspection rather than guessed pixel offsets. |
+| **State adaptation** | Walk empty, long-content, error, pending, keyboard and recovery states relevant to the scenario. Separate browser prototype behavior from native platform expectations. | State/viewport identifiers, declared versus walked coverage and explicit simulations. No invented latency or claim that a browser preview proves native behavior. |
+| **Finish** | Revisit the already identified defects and check what the changes introduced. Keep useful details that were already working. Stop when no actionable finding remains or the agreed budget is reached. | Each previous finding is resolved, partial or unresolved, with current captures and any regressions. The number of edits is not a success metric. |
+
+At the copy/design seam, use the [rendered-copy review](VISUAL_REVIEW.md#rendered-copy)
+for visible text roles, project policy, counterexamples and coverage receipts.
+
+Before visual review, check that each capture belongs to the expected build,
+screen, state, viewport and content. A stale screenshot or one taken before an
+overlay opened cannot prove that overlay correct. If the capture cannot be
+verified, mark the visual claim unverified and continue only the checks the
+available evidence supports.
+
+Judge the render against the brief before reading an explanation of how hard it
+was to build. Separate observed defects from preferences and hypotheses. A fresh
+reviewer is useful when available and authorized; an explicit separate review
+pass by one agent is a valid fallback. Neither requires an external detector,
+binary, service, API key, font download or new framework. Reuse local assets and
+existing inspection tools; missing inspection remains NOT_RUN.
+
+These local procedures were informed by a comparison of Impeccable's
+[type](https://github.com/pbakaus/impeccable/blob/12b25ae25848202ce7a9092442198ada5c4fd984/plugin/skills/impeccable/reference/typeset.md),
+[layout](https://github.com/pbakaus/impeccable/blob/12b25ae25848202ce7a9092442198ada5c4fd984/plugin/skills/impeccable/reference/layout.md)
+and [finish-review methods](https://github.com/pbakaus/impeccable/blob/12b25ae25848202ce7a9092442198ada5c4fd984/plugin/skills/impeccable/reference/degraded/finish-reviewer.md) (Apache-2.0). They use this family's contracts; no
+upstream runtime, assets or automatic workflow are included. The links record
+provenance, not instructions to fetch during every run.
+
+**Markers, not fixed bans (decided 2026-10-07).** This section used to refuse
+impeccable's fixed style bans outright, and the refusal was right about one
+thing: a ban that cannot lose an argument contradicts *an explicit user
+requirement beats the baseline* ([`SKILL.md`](./SKILL.md), Calibration). What it
+left was no floor at all, and generated defaults kept shipping through reviews
+that had nothing to point at. The floor is now
+[`SLOP_MARKERS.md`](./SLOP_MARKERS.md): each pattern is a marker with an id, a
+severity, the reason it reads as a default, what to do instead and **the
+exception under which it is not slop**. It holds with `Style pack: none`; a pack
+may tighten it and may not loosen it; a brief that explicitly asks for a marked
+pattern wins, once the record below carries the requirement on its `Brief` or
+`Open` line with the marker id. The machine half runs as
+`npx sheleg-design-skill --lint <dir>` and blocks only on S1; the `review` rows
+belong to the render critique in Act 5. Material from impeccable and taste-skill
+enters the catalogue paraphrased, with provenance rows, never as copied rule
+text, and impeccable's detector stays an optional cross-check that is `NOT_RUN`
+when absent.
+
+---
 
 ## Act 1 — The brief, and the sentence that could falsify it
 
@@ -120,7 +179,7 @@ measured** rather than presenting it as though it had been.
 brand or flagship surface.** Before `style`, look at what has shipped: at least
 five real products, each with what this surface takes from it — a structural
 trait, never its palette. Use whichever reference servers the session actually
-exposes — Refero, Lazyweb, and Mobbin where the account is authorized — and,
+exposes (Refero, and Mobbin where the account is authorized) and,
 with none of them present, shipped products found on the open web, saying the
 servers were absent. Structure crosses and identity does not
 ([`DESIGN_SYNC_BRIDGE.md`](./DESIGN_SYNC_BRIDGE.md) §4). **An empty sweep is a
@@ -438,63 +497,6 @@ So the order of work for a new surface is fixed:
 6. **The generator is not the judge.** The agent that rendered the surface does
    not score it — a separate agent or a separate pass does
    ([`ADA_RUBRIC.md`](./ADA_RUBRIC.md), the judge).
-
----
-
-## Focused visual work
-
-For a bounded request, reuse the existing brief and select the relevant lens
-below. These are modes inside this skill, not new global routers or an external
-command dependency. Do not repeat direction selection for an already chosen
-direction, or run every lens for a single local correction.
-
-| Lens | Question and concrete work | Evidence to keep |
-|---|---|---|
-| **Type** | List the text roles and the faces/weights actually in use. Improve distinctions between those roles through size, weight, spacing and contrast. Keep a single family when it does the job. Check long labels, the target languages, zoom and fallback fonts. | Representative rendered roles; loaded/fallback font status; the specific reading or hierarchy defect fixed. A font name or a universal line-length target is not a quality verdict. |
-| **Composition** | Establish the leading element, supporting elements and meaningful groups. Adjust proximity, rhythm and density to the task. Inspect the relevant supported sizes and content extremes; preserve a sensible reading and focus order. | Before/after of the same state and content; evidence of wrapping, overflow and order. Optical adjustments follow inspection rather than guessed pixel offsets. |
-| **State adaptation** | Walk empty, long-content, error, pending, keyboard and recovery states relevant to the scenario. Separate browser prototype behavior from native platform expectations. | State/viewport identifiers, declared versus walked coverage and explicit simulations. No invented latency or claim that a browser preview proves native behavior. |
-| **Finish** | Revisit the already identified defects and check what the changes introduced. Keep useful details that were already working. Stop when no actionable finding remains or the agreed budget is reached. | Each previous finding is resolved, partial or unresolved, with current captures and any regressions. The number of edits is not a success metric. |
-
-At the copy/design seam, use the [rendered-copy review](VISUAL_REVIEW.md#rendered-copy)
-for visible text roles, project policy, counterexamples and coverage receipts.
-
-Before visual review, check that each capture belongs to the expected build,
-screen, state, viewport and content. A stale screenshot or one taken before an
-overlay opened cannot prove that overlay correct. If the capture cannot be
-verified, mark the visual claim unverified and continue only the checks the
-available evidence supports.
-
-Judge the render against the brief before reading an explanation of how hard it
-was to build. Separate observed defects from preferences and hypotheses. A fresh
-reviewer is useful when available and authorized; an explicit separate review
-pass by one agent is a valid fallback. Neither requires an external detector,
-binary, service, API key, font download or new framework. Reuse local assets and
-existing inspection tools; missing inspection remains NOT_RUN.
-
-These local procedures were informed by a comparison of Impeccable's
-[type](https://github.com/pbakaus/impeccable/blob/12b25ae25848202ce7a9092442198ada5c4fd984/plugin/skills/impeccable/reference/typeset.md),
-[layout](https://github.com/pbakaus/impeccable/blob/12b25ae25848202ce7a9092442198ada5c4fd984/plugin/skills/impeccable/reference/layout.md)
-and [finish-review methods](https://github.com/pbakaus/impeccable/blob/12b25ae25848202ce7a9092442198ada5c4fd984/plugin/skills/impeccable/reference/degraded/finish-reviewer.md) (Apache-2.0). They use this family's contracts; no
-upstream runtime, assets or automatic workflow are included. The links record
-provenance, not instructions to fetch during every run.
-
-**Markers, not fixed bans (decided 2026-10-07).** This section used to refuse
-impeccable's fixed style bans outright, and the refusal was right about one
-thing: a ban that cannot lose an argument contradicts *an explicit user
-requirement beats the baseline* ([`SKILL.md`](./SKILL.md), Calibration). What it
-left was no floor at all, and generated defaults kept shipping through reviews
-that had nothing to point at. The floor is now
-[`SLOP_MARKERS.md`](./SLOP_MARKERS.md): each pattern is a marker with an id, a
-severity, the reason it reads as a default, what to do instead and **the
-exception under which it is not slop**. It holds with `Style pack: none`; a pack
-may tighten it and may not loosen it; a brief that explicitly asks for a marked
-pattern wins, once the record below carries the requirement on its `Brief` or
-`Open` line with the marker id. The machine half runs as
-`npx sheleg-design-skill --lint <dir>` and blocks only on S1; the `review` rows
-belong to the render critique above. Material from impeccable and taste-skill
-enters the catalogue paraphrased, with provenance rows, never as copied rule
-text, and impeccable's detector stays an optional cross-check that is `NOT_RUN`
-when absent.
 
 ## The record the director owes
 
