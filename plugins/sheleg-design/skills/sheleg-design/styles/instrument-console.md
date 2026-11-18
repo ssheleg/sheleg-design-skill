@@ -78,6 +78,14 @@ ornament the copy sits on top of, and every control, card and readout is
 monochrome. Ask what happens if you delete every colour from the page: this pack
 loses its meaning, that one loses only its poster.
 
+### Against [`phosphor`](./phosphor.md)
+
+Both are dark, mono-labelled and built around one luminous accent. This pack
+reports **a value that changes while the reader watches**, in electric blue, with
+no ornament and no blur. `phosphor` reports nothing live: it stages a story in a
+green terminal, with digital rain, glass windows and comic panels that would be
+noise on a cockpit. Telemetry stays here; a narrative with a cast goes there.
+
 ## Palette
 
 Ready-made token layer: [`tokens/instrument-console.css`](./tokens/instrument-console.css)

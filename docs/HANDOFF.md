@@ -1,3 +1,17 @@
+## v1.67.0: the fortieth pack, `phosphor` (2026-11-18)
+
+- **Done.** `styles/phosphor.md` (widened) and `styles/tokens/phosphor.css`, measured off
+  `assessment.passioncode.ai` through CDP at 1440, 768 and 390 plus reduced motion; routing in
+  the index, README, Cursor rule, CLI, command and both derived manifest descriptions; reciprocal
+  forks in `patchbay` and `instrument-console`; ADR-0001 naming entry; `kits/phosphor` (spine plus
+  ten signature components) rendered at the three widths with computed values read back; scenario
+  T38 run blind on two fresh contexts, both branches passed. Details in CHANGELOG.md 1.67.0.
+- **Open.** B-148 (`patchbay` findings from T38b), B-149 (`@adapter` in three of forty layers),
+  B-147 (template em dashes). `kits/phosphor` was not built with `tsc` (no TypeScript on the
+  machine and no room to install it): run `npm install && npm run build` in `kits/phosphor`.
+- **Next task.** Review and merge the `kit/phosphor` PR, then tag `v1.67.0` (annotated), watch the
+  release, then bump the sshlg-skills pin.
+
 ## v1.66.6: the short path first, retired sources out (2026-11-11)
 
 - **Done.** Family audit 2026-11-11 findings SD1, SD2, SD4, SD5 and SD7 (details in CHANGELOG.md

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """The catalogue's own shell, dressed in a pack from this library rather than in nothing.
 
-A library that ships thirty-nine measured token layers and paints its own catalogue in
+A library that ships forty measured token layers and paints its own catalogue in
 an undocumented palette is arguing against itself. Before this file existed, the two
 generators carried sixty-seven colour literals between them — a dark-only scheme that
 appears in no pack, answers no `prefers-color-scheme`, and had never been through the
@@ -16,7 +16,7 @@ it runs on every build rather than on a promise.
 **Why `workbench`.** Two reasons a reader can check rather than take. It is the
 library's own stated default for product UI, which is what a catalogue is; and it is
 one of the two packs shipping a full `[data-theme="dark"]` twin, which a public page
-needs and thirty-seven of the packs cannot give. Its own header names the switch used
+needs and thirty-eight of the packs cannot give. Its own header names the switch used
 here — *"have the app set data-theme='dark' from a prefers-color-scheme listener —
 keep one switch, never two sources of truth for the theme"* — so following it is
 obedience to the pack rather than a workaround around it.

@@ -11,8 +11,8 @@ motion and bans.
 - Presentation or board deck: [briefing-room](./styles/briefing-room.md).
 - Cinematic systems or infrastructure page: [instrument-console](./styles/instrument-console.md).
 
-**Six of the thirty-nine are on the core contract.
-The other thirty-three answer all four widened sections.** A pack marked **core contract** leaves component
+**Six of the forty are on the core contract.
+The other thirty-four answer all four widened sections.** A pack marked **core contract** leaves component
 states, hero, responsive rules and the signature element open. Generate its kit
 before building components.
 
@@ -34,6 +34,7 @@ before building components.
 | [`test-drive`](./styles/test-drive.md) | warm paper with one coral | self-serve SaaS proven by the live product · (standalone) |
 | [`surveyor`](./styles/surveyor.md) | peach paper with teal and pink | visibility, monitoring and benchmark tools · (standalone) |
 | [`chorus`](./styles/chorus.md) | warm paper under a crosshair grid, with a cut-corner bubble | AI-search visibility, brand monitoring and community marketing · (standalone) |
+| [`phosphor`](./styles/phosphor.md) | green-black terminal with digital rain | agent products and story-told launches · (standalone) |
 | [`outrank`](./styles/outrank.md) | white with violet | one brand across marketing and product |
 | [`orchard`](./styles/orchard.md) | warm oat slabs | friendly biotech and wellness · **core contract** |
 | [`field-notes`](./styles/field-notes.md) | ruled green paper | auditable open-source developer tools · (standalone) |

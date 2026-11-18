@@ -1730,3 +1730,66 @@ one neither pack could have caught: `MOTION_DOCTRINE.md` called `bulletin` at 3
 *"the lowest ceiling in the library"* while four packs pin **2**. It had been false
 for four releases. Corrected, and the number is now recomputed by
 `validate_motion_ceiling_floor()` rather than asserted.
+
+## T38 · Two near-black schematics in one green, and who is on the page
+
+Added with the `phosphor` pack. Two branches, two fresh contexts, run **blind against
+the bundle directory only**: `test/`, `docs/`, `kits/`, the README and the CHANGELOG
+are forbidden, because this file carries the answer beside the prompt.
+
+`phosphor` and `patchbay` are the library's two near-black packs that draw a schematic
+in a single green-cyan and run a loop that never stops, and a router reading the
+category (agents, automation, infrastructure) cannot separate them. The one-line test
+the branches should reach is *what does the reader watch: data crossing an
+architecture, or a story being staged with a cast?*
+
+**T38a · should select `phosphor`.** "Landing page for an AI agent platform that runs
+a company's operations. We want it told as a story: the visitor scrolls through a
+team chat where an agent joins, then a sequence of comic-style scenes where our agents
+(each with a portrait) talk in speech balloons and hand work to each other. Dark,
+green-on-black like an old terminal, glyphs falling in the background, everything
+glowing a little." Pass: routes to `styles/phosphor.md`, quotes the clause that
+decided it, and names `patchbay` or `instrument-console` as the closest rejected pack
+with the clause that ruled it out. Fail: routing to `patchbay` because the product is
+agent infrastructure, or to `instrument-console` because the page is dark with one
+luminous accent.
+
+**T38b · should still select `patchbay`.** "Front page for an open-source message
+broker. The hero is an architecture diagram: producers, topics, consumers, each a
+named box, with thin lines between them and small dots travelling the lines so you
+can see messages move. Near-black, one teal, mono uppercase labels, no characters, no
+story, nothing that glows." Pass: stays on `styles/patchbay.md` and can say what would
+have moved it (a cast that speaks, a story told in scenes, a glowing phosphor behind
+falling glyphs). Fail: routing to `phosphor` because the newest pack is also a
+near-black schematic in green, the failure a positive-only branch cannot detect, per
+standing instruction 4.
+
+Both branches are also asked, after choosing, to read their chosen pack in full and
+report defects with file and quoted text.
+
+**Result: both branches PASSED on 2026-11-18, fresh contexts, blind against the
+bundle directory** (both listed their files; neither opened `test/`, `docs/`,
+`kits/`, the README or the CHANGELOG).
+
+`T38a` routed to `styles/phosphor.md` on its Register (*"a page that tells a story
+about machines doing the work"*) and its fork (*"If it is a story with a cast, it
+is this pack"*), and rejected `patchbay` on that pack's reciprocal fork (*"a
+sequence of scenes with characters belongs there"*). It recomputed all nineteen
+stated ratios and found them right, then returned twelve findings on the pack it
+had chosen. Fixed in this change: the hero glow named a 30px blur the token does not
+carry, a measured bracket colour that nothing paints was shipped as a token, the
+nesting paragraph contradicted the cell radius, two triggers were given for one
+chat-line step (now one, the window's own width), the button's glow was a literal
+(now `--glow-action`), the glow allow-list omitted the hero's emphasis, a chip was
+given two radii in comments, two references pointed outside the bundle or named no
+unit, `--accent-soft` was missing from the Palette, and the panel's entrance sat in
+a state column. Refuted or by design: the `Themes:` wording (the library's word for
+one block, explained under the line), and the cursor collapsing to 0.01ms (the kit
+pauses it, which is the promise the gate checks). Filed: the `@adapter` claim in
+`SKILL.md` holds for three of forty packs (B-149).
+
+`T38b` stayed on `styles/patchbay.md` on its Register (*"products whose argument is
+an architecture"*) and the new fork, and said what would have moved it: a story
+told in scenes with characters, glowing behind digital rain. Its full read of
+`patchbay` returned twelve findings on that pack, none introduced here; filed as
+B-148 for a change that re-reads its reference.

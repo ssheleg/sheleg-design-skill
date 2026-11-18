@@ -377,7 +377,7 @@ ${c("bold", "What it installs")}
   DESIGN_SYNC_BRIDGE.md   the Claude Design contract (what a pack sends, and
                        what does not cross)
   AI_PRODUCT_PATTERNS.md  chat / agent / streaming surfaces (honest state)
-  styles/              thirty-nine style packs — instrument-console (dark console),
+  styles/              forty style packs — instrument-console (dark console),
                        editorial-luxury (warm editorial), workbench (light/dark
                        product UI), briefing-room (dark 16:9 presentation deck),
                        atrium (warm cream consumer health), patchbay (dark live
@@ -405,6 +405,9 @@ ${c("bold", "What it installs")}
                        cut-corner bubble carrying somebody else's
                        question, near-black slabs cut into the sheet, one
                        coral that fills but never writes),
+                       phosphor (a green-black terminal with digital rain
+                       behind glass windows, one phosphor green that fills,
+                       writes and glows, comic panels and duotone portraits),
                        babylove (white +
                           one orange, seven tokens over Tailwind defaults),
                           outrank (white +

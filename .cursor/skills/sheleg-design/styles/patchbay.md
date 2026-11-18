@@ -65,6 +65,17 @@ admission.
 by §1's frequency table alone — the dial turns up what is left after that table,
 and nothing in this pack narrows it further.
 
+### Against [`phosphor`](./phosphor.md)
+
+Both are near-black, both draw a schematic in one green-cyan and both run a loop
+that never stops. Route on what the reader watches. Here it is **data crossing an
+architecture**: named ports, cords, packets in transit, and a teal whose only
+light is a faint wash around the primary button. In `phosphor` it is **a story
+being staged**: a terminal whose lines arrive, a cast that speaks in balloons,
+comic panels, and a phosphor green that lights words, figures and lines behind a
+curtain of falling glyphs. A diagram of named parts
+belongs here; a sequence of scenes with characters belongs there.
+
 ## Palette
 
 Ready-made token layer: [`tokens/patchbay.css`](tokens/patchbay.css) — copy it

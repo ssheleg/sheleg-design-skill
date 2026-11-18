@@ -69,7 +69,7 @@ The pack is the primary reference type; the other three feed it rather than bypa
   every pack — exists so switching packs swaps identity, not API. This is the
   component-level form of a lesson the token layer already learned the hard way.
   The six are `Button`, `Card`, `Chip`, `Stat`, `Heading` and `Rule`, and their
-  `*Props` bodies are byte-identical across all thirty-nine kits once comments are
+  `*Props` bodies are byte-identical across all forty kits once comments are
   stripped. Everything a kit ships beyond them is that pack's signature —
   `Specimen` in `showroom`, `RegistrationMarks` in `blueprint`, `ModelBlock` in
   `maquette` — and belongs to it alone. Until 1.11.0 this paragraph asserted the
@@ -94,7 +94,7 @@ The pack is the primary reference type; the other three feed it rather than bypa
   exists to guarantee.
 - **One canonical spine, propagated mechanically — and tested once, not 39 times.**
   A change to a spine component is made to the canonical source and then copied into
-  all 39 kits by machine, preserving each kit's class prefix and doc comment; the
+  all 40 kits by machine, preserving each kit's class prefix and doc comment; the
   `*Props` bodies stay byte-identical (comments stripped) across every kit. Two gates
   guard the propagation and they check different things: **structural parity** —
   every kit's `*Props` body equals the exemplar's, so a kit left behind is caught
@@ -102,7 +102,7 @@ The pack is the primary reference type; the other three feed it rather than bypa
   because the behaviour a spine change alters (an `h2` wearing the display size, an
   explicit `type` winning over the default, a `ref` reaching the node) is the same in
   every kit by construction. Thirty-nine full app builds would prove the same fact
-  thirty-nine times; parity plus one representative proves it once and names the kit
+  forty times; parity plus one representative proves it once and names the kit
   that drifted.
 
 ## 3. Figma — one border at a time
