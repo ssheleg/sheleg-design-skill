@@ -1,3 +1,43 @@
+## 1.67.0 (2026-11-18): the fortieth pack, a lit terminal with rain behind the glass
+
+- **`phosphor`, the fortieth style pack** (widened, all thirteen headings), extracted from
+  the story landing at `assessment.passioncode.ai` on the operator's request to mark its
+  green, schematic look in the collection. A green-black field that is never neutral,
+  one phosphor `#00ff66` that fills, writes, rules and glows (15.04:1 on the field), a
+  mono voice for everything the machine says, digital rain on a canvas behind glass
+  windows (the signature element), comic story panels with hard offsets, a light speech
+  balloon outlined in a pure-black keyline, drawn connectors and duotone portraits.
+  Named per ADR-0001 for the register, with `terminal`, `rainfall` and `comicbook`
+  weighed and rejected.
+- **Measured, not invented.** Every value was read with `getComputedStyle` through CDP at
+  1440x900, an emulated 768x1024x2 and an emulated 390x844x2, plus reduced motion, and
+  cross-checked against the page's one authored palette block; the rain from its canvas
+  script, the duotone from its SVG filter. Ratios were computed with the palette gate.
+- **Corrections the pack makes to its reference**, each recorded in its Gotchas or
+  Bans: the balloons paint pale text on a pale fill at 1.01:1 (a later `.panel p` rule
+  outranks the declared ink), so the pack pins `--on-balloon` with a selector a panel
+  cannot outrank; there is no focus-visible ring anywhere, so the pack adds a 2px
+  phosphor outline; `100vh` becomes `100dvh`; gradient text, overshoot curves and
+  `scale(0)` entries are banned; the pure-black comic ink is renamed `--keyline`
+  because this library's `--ink` is the text colour. `--warn` is a measured gold given
+  the warn role, `--ok` aliases the phosphor, and status is never by colour alone.
+- **`kits/phosphor`**: the six-name spine plus `Rain`, `Glass`, `ChatLine`, `Balloon`,
+  `Panel` with `Cells`, `Connector`, `Duotone`, `Prompt`, `Waiting` and `Empty`, the token
+  layer copied byte for byte, and the `@adapter` block. Rendered at all three widths and
+  under reduced motion with computed values read back (CONTRIBUTING step 8): button 37px
+  (44px on a coarse pointer), large button 55px, panel padding 26/28px then 18/16px below
+  860px, cells four then two columns by the panel's width, chat lines 19px in a 640px
+  window and 16px under 560px, balloon text `rgb(6, 17, 11)` inside a panel, focus ring
+  2px phosphor at a 2px offset, no horizontal overflow; under reduced motion the rain is
+  `display: none` and the cursor is paused.
+- **Routing**: `STYLE_PACK_INDEX.md`, the README table, the Cursor rule, the CLI banner,
+  the command's fast path and both derived manifest descriptions; reciprocal forks in
+  `patchbay` and `instrument-console`; the status map in `SURFACE_COMPOSITION.md`; counts
+  moved from thirty-nine to forty.
+- **Scenario T38** (phosphor against patchbay) ran blind on two fresh contexts and both
+  branches passed. The first read's ten fixable findings on `phosphor` are fixed here;
+  two findings on the library are filed as B-148 (`patchbay`) and B-149 (`@adapter`).
+
 ## 1.66.6 (2026-11-11): the short path first, retired sources out
 
 Family audit 2026-11-11 (SD1, SD2, SD4, SD5, SD7). The description is unchanged.

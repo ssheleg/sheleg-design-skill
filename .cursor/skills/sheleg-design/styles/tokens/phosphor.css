@@ -1,0 +1,192 @@
+/* SHELEG Design, Phosphor token layer.
+   Copy verbatim; consume only var(--…) in components. */
+:root {
+  /* ---- Field and ink ------------------------------------------------------
+     MEASURED 2026-11-18 off https://assessment.passioncode.ai/ with
+     getComputedStyle through CDP at 1440x900, an emulated 768x1024x2 and an
+     emulated 390x844x2. The page's own palette lives in ONE authored block
+     (the `html.matrix` rule in /story/matrix.css), which remaps the host design
+     system's roles locally; every value below was read off a painted element
+     and cross-checked against that block. Text-node census at 1440: #e6ffee on
+     563 nodes, #00ff66 on 372, #8fbf9f on 242.
+
+     One field and no light twin. The register is a lit terminal: the field is
+     a green-black, never a neutral one, so even the darkest step carries the
+     phosphor's hue. */
+  color-scheme: dark;
+  --bg: #020604; /* MEASURED, the body field, 68 painted backgrounds */
+  --panel: #06100a; /* 1.05:1 on --bg, MEASURED, the instrument cell, 34 elements */
+  --panel-raised: #0a1a10; /* 1.13:1 on --bg, MEASURED, a chat line's fill */
+  --face: #1d3326; /* 1.51:1 on --bg, MEASURED, the initials disc and an idle bar */
+
+  --ink: #e6ffee; /* 19.32:1 on --bg, MEASURED, body and headings */
+  --ink-muted: #8fbf9f; /* 9.82:1 on --bg, MEASURED, the lede and every secondary line */
+  --ink-caption: #bfffd6; /* 17.95:1 on --bg, MEASURED, mono captions over the scene */
+  --ink-bright: #d6ffe2; /* 18.69:1 on --bg, MEASURED, the rain's leading glyph and the light end of every gradient */
+
+  /* ---- The hairline ladder ------------------------------------------------
+     A dark green rule and a brighter one. Neither is ever a word.
+     @role non-text: --line, --line-strong, rules and control borders. */
+  --line: #14331f; /* 1.48:1 on --bg, MEASURED, the quiet border */
+  --line-strong: #2e6a45; /* 3.17:1 on --bg, MEASURED, a control's border */
+
+  /* ---- THE phosphor -------------------------------------------------------
+     One green does every functional job: the action fill, a heading in a mono
+     panel, a link, the focus ring, a chart line, the glow. It is text-safe at
+     15.04:1, which is what lets it set a word as well as fill a button. The
+     label ON a filled phosphor is the near-black green, never white. */
+  --accent: #00ff66; /* 15.04:1 on --bg, MEASURED, 372 text nodes and 34 fills */
+  --accent-hover: #5cff9a; /* 15.75:1 on --bg, MEASURED, the hover step */
+  --on-accent: #001a09; /* 13.45:1 on --accent, MEASURED, the label on a filled phosphor */
+  --accent-deep: #00a63e; /* 6.33:1 on --bg, MEASURED, the dark stop of the core's radial */
+  /* @role non-text: --accent-soft, --face, fills under a word, never the word. */
+  --accent-soft: #063a1a; /* 1.58:1 on --bg, MEASURED, a quiet phosphor fill */
+
+  /* The phosphor's alpha ladder. Each step was measured as a hex-alpha
+     literal in the reference (#00ff6614 to #00ff66aa) and is written here as
+     the same channels at the same alpha. Written as literals, not relative
+     colour, so a browser without relative colour still paints every glow; if
+     --accent moves, move these with it.
+     @role non-text: --accent-haze, --accent-wash, --accent-trace, --accent-edge, --accent-rim, --accent-halo, washes, rules, glows, never a word. */
+  --accent-haze: rgba(0, 255, 102, 0.08); /* MEASURED #00ff6614, an inset glow */
+  --accent-wash: rgba(0, 255, 102, 0.133); /* MEASURED #00ff6622, a panel's offset shadow, a window's glow */
+  --accent-trace: rgba(0, 255, 102, 0.2); /* MEASURED #00ff6633, the agent line's glow, the bar's rule */
+  --accent-edge: rgba(0, 255, 102, 0.25); /* MEASURED #00ff6640, dashed rules and cell offset shadows */
+  --accent-rim: rgba(0, 255, 102, 0.333); /* MEASURED #00ff6655, a panel's border, the chip border */
+  --accent-halo: rgba(0, 255, 102, 0.533); /* MEASURED #00ff6688, the glow colour */
+
+  /* ---- Glass --------------------------------------------------------------
+     A window over the scene is the field itself at 85% with a blur behind it,
+     so the rain shows through and the text still clears AA (see the pack's
+     Gotchas for the arithmetic). The channels are --bg's; measured as rgba. */
+  --glass: rgba(2, 6, 4, 0.85); /* MEASURED, the chat window, 0.85 */
+  --glass-panel: rgba(2, 6, 4, 0.88); /* MEASURED, a story panel, #020604e0 */
+  --glass-bar: rgba(2, 6, 4, 0.82); /* MEASURED, the top bar, 82% mix */
+  --blur-glass: 8px; /* MEASURED, the chat window's backdrop blur */
+  --blur-bar: 10px; /* MEASURED, the top bar's backdrop blur */
+
+  /* ---- The comic keyline --------------------------------------------------
+     The reference calls this token ink and sets it to pure black: the outline
+     around a balloon and the hard offset shadow under a pressed control. It is
+     renamed here because in this library `--ink` is the text colour, and pure
+     black as text is banned. It is never a text colour and never a field.
+     @role non-text: --keyline, an outline and an offset shadow only. */
+  --keyline: #000000; /* MEASURED, the reference's comic ink (pure black), outlines and offset shadows */
+
+  /* The speech balloon is the one light object on the page.
+     @role non-text: --balloon, a fill; its text is --on-balloon. */
+  --balloon: #e9fff1; /* MEASURED, the balloon fill, 16 balloons */
+  --on-balloon: #06110b; /* 18.34:1 on --balloon, MEASURED as declared; see Gotchas for what actually painted */
+  --balloon-who: #2a6a44; /* 6.18:1 on --balloon, MEASURED, the speaker label */
+
+  /* ---- Status -------------------------------------------------------------
+     The reference maps its host's positive role straight onto the phosphor, so
+     --ok IS the accent (an alias, not a second green). --danger is MEASURED:
+     the cost line, the stamp and the falling arrow, 20 text nodes. --warn is
+     SELECTED: the reference paints this gold on 20 nodes as the marker of the
+     guarded thing (the vault, the loop's core), and the pack assigns it the warn
+     role because it is the only third hue the page owns. There is no info role:
+     a fourth would be a second phosphor or an invented hue. */
+  --ok: var(--accent); /* MEASURED, the host's positive role remapped to the phosphor */
+  --warn: #ffd21a; /* 14.06:1 on --bg, SELECTED, a measured hue given the warn role */
+  --danger: #ff4d6d; /* 6.34:1 on --bg, MEASURED */
+
+  /* ---- Glow ---------------------------------------------------------------
+     The signature light. Every glow is the phosphor at --accent-halo, centred
+     (zero offset), and the blur names its job. MEASURED off the reference's
+     `--glow:0 0 12px #00ff6688` and the text shadows beside it. */
+  --glow: 0 0 12px var(--accent-halo); /* MEASURED, a lit control, a live dot */
+  --glow-text: 0 0 18px var(--accent-halo); /* MEASURED, a mono headline or the hero's emphasis */
+  --glow-action: 0 0 24px var(--accent-rim); /* MEASURED, the primary button's light */
+  --glow-window: 0 0 60px var(--accent-wash); /* MEASURED, the chat window's ambient light */
+
+  /* The comic offsets: hard, unblurred, down and to the right. */
+  --offset-keyline: 4px 4px 0 var(--keyline); /* MEASURED, a balloon, a pressed control */
+  --offset-panel: 8px 8px 0 var(--accent-wash); /* MEASURED, a story panel */
+  --offset-cell: 4px 4px 0 var(--accent-edge); /* MEASURED, an instrument cell */
+
+  /* The halftone dot screen behind a scene. MEASURED: 1.1px dots of the
+     phosphor at #00ff6626 on a 7px pitch. */
+  --halftone: radial-gradient(rgba(0, 255, 102, 0.15) 1.1px, transparent 1.4px) 0 0 / 7px 7px;
+
+  /* ---- Radii: a ramp from a 3px tag to a 999px control --------------------
+     Counted over the painted page. Not proportional: each step is an object.
+     A control is a pill; a story panel is nearly square; a window is soft. */
+  --r-tag: 3px; /* MEASURED, the panel number tag */
+  --r-glass: 4px; /* MEASURED, a glass panel docked over a full-screen scene */
+  --r-panel: 6px; /* MEASURED, the story panel */
+  --r-cell: 8px; /* MEASURED, instrument cells and the solid card */
+  --r-window: 14px; /* MEASURED, a floating chat window and a chat line's three soft corners */
+  --r-balloon: 18px; /* MEASURED, the speech balloon */
+  --r-pill: 999px; /* MEASURED, every control: the action, the toggle, the chip */
+
+  /* ---- Motion -------------------------------------------------------------
+     The interface clock is the host's: one curve, two short steps. The story
+     clock is longer and stepped where it imitates a terminal. Durations in ms
+     are MEASURED off the stylesheets; nothing here is interpolated. */
+  --ease-ui: cubic-bezier(0.2, 0, 0, 1); /* MEASURED, the host's one curve */
+  --ease-settle: cubic-bezier(0.2, 1, 0.3, 1); /* MEASURED, a story frame settling into place */
+  --dur-hover: 120ms; /* MEASURED, colour on hover */
+  --dur-state: 180ms; /* MEASURED, a control changing state */
+  --dur-line: 0.35s; /* MEASURED, a chat line arriving */
+  --dur-enter: 0.7s; /* MEASURED, a story frame entering the view */
+  --dur-type: 0.7s; /* MEASURED, a headline typed on in 24 steps */
+  --dur-draw: 1s; /* MEASURED, the connector arrow drawing itself */
+  --dur-cursor: 1.6s; /* MEASURED, the waiting cursor's blink, two steps */
+  --dur-glyph: 140ms; /* MEASURED, the rain's leading glyph changing */
+  --stagger: 160ms; /* MEASURED, instruments inside a story frame, one after another */
+
+  /* ---- The rain -----------------------------------------------------------
+     MEASURED off /story/rain.js: a canvas of falling glyph columns behind the
+     page at half opacity. Columns are one glyph wide; each falls at 40 to 130
+     px a second, trails 8 to 30 glyphs, its head in --ink-bright and its tail in
+     --accent fading to nothing. A canvas cannot read a custom property's
+     colour by itself; the component reads these with getComputedStyle. */
+  --rain-opacity: 0.5; /* MEASURED, the canvas element's opacity */
+  --rain-glyph: 16px; /* MEASURED, glyph size and column pitch; 13px below 700px */
+  --rain-glyph-narrow: 13px; /* MEASURED */
+}
+
+/* ---- Reduced motion -------------------------------------------------------
+   MOTION_DOCTRINE.md §9. Every duration collapses, and the stagger with them.
+
+   TWO THINGS THIS BLOCK CANNOT DO, stated here because each is a trap:
+   1. The rain is a canvas drawn by requestAnimationFrame. A custom property
+      stops nothing in it. The component layer must not start the loop at all
+      under this query and must hide the canvas; the reference does both
+      (`display:none` on the canvas, and no frame is drawn).
+   2. The waiting cursor's blink is an infinite animation. Its duration
+      collapses here like every other, and a collapsed infinite animation
+      strobes, so the component layer must also stop it: the kit does it with
+      `animation-play-state: paused` inside its own reduced-motion branch. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-hover: 0.01ms;
+    --dur-state: 0.01ms;
+    --dur-line: 0.01ms;
+    --dur-enter: 0.01ms;
+    --dur-type: 0.01ms;
+    --dur-draw: 0.01ms;
+    --dur-cursor: 0.01ms;
+    --dur-glyph: 0.01ms;
+    --stagger: 0s;
+  }
+}
+
+/* @adapter, the semantic token contract. Pack comparison mounts packs through
+   these roles, so two packs can carry one component without a shared native
+   vocabulary. NO CSS-swap promise: components keep consuming the pack's own
+   tokens; the adapter exists for the comparison harness, and a role neither
+   mapped nor declared @absent blocks the comparison BEFORE any render. */
+:root {
+  --sem-surface: var(--bg);
+  --sem-surface-raised: var(--panel);
+  --sem-text: var(--ink);
+  --sem-text-muted: var(--ink-muted);
+  --sem-line: var(--line);
+  --sem-primary: var(--accent);
+  --sem-on-primary: var(--on-accent);
+  --sem-positive: var(--ok);
+  --sem-caution: var(--warn);
+  --sem-negative: var(--danger);
+}

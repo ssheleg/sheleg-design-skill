@@ -270,6 +270,19 @@ installed copy — which is what makes this an ADR rather than a preference.
   DAO; and **`earshot`**, the closest of the four, rejected because it names only
   the listening half — the page's set piece is the *reply* being placed, not the
   mention being heard. The address is in the pack's `Origin:`.
+- **Applied again on 2026-11-18.** The fortieth pack was extracted from the
+  story landing at `assessment.passioncode.ai` and is named **`phosphor`** for the
+  register it encodes (the green light of a terminal screen, lit from inside), not
+  for the product, the page or the film its scenes allude to. The operator asked
+  for the look to be marked in the collection; the name was chosen on this ADR's
+  criteria. Three alternatives were weighed and rejected: **`terminal`**, accurate
+  and too wide, because half the library's developer packs are terminal-adjacent
+  (`manpage`, `notation`) and *selection by intent* would send every CLI brief
+  here; **`rainfall`**, which names the signature element and not the register,
+  and reads as weather; and **`comicbook`**, which names one layer of the page (the
+  panels and balloons) and would mis-route a brief for a light, inked comic, which
+  is a different register the reference also ships and this pack does not carry.
+  The address is in the pack's `Origin:`.
 **What the rule buys.**
 
 - *Longevity.* A register outlives a company. `briefing-room` still describes
