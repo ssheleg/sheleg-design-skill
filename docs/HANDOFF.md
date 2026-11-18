@@ -1,3 +1,10 @@
+## v1.67.1: the ledger records the shipped version (2026-11-18)
+
+- **Objective.** Record the shipped version in the verification ledger (the sshlg-skills validator reads it and
+  refused to pin 1.67.0 without it).
+- **Done.** Ledger entry v1.67.1; version set moved to 1.67.1. No skill changes.
+- **Next task.** After merge: tag `v1.67.1`, watch the release, then the sshlg-skills pin bump.
+
 ## v1.67.0: the fortieth pack, `phosphor` (2026-11-18)
 
 - **Done.** `styles/phosphor.md` (widened) and `styles/tokens/phosphor.css`, measured off

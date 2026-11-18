@@ -9,6 +9,13 @@ was shipped on the strength of an argument rather than an observation.
 
 Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (REQ-10, carried to board B-004). Extended 2026-08-12 by the `pigeonhole` run with twenty rows, none of them `never`.
 
+## Release candidate: v1.67.1 (2026-11-18)
+
+the ledger records the shipped version; it also covers v1.67.0 (the `phosphor` pack, PR #65, release run
+44280802407), which shipped without its own entry.
+
+Evidence: `npm test` exit 0 on the candidate tree before the PR; the PR CI run and the tag release run are named in docs/HANDOFF.md.
+
 ## Release candidate: v1.66.6 (2026-11-11)
 
 family audit fixes SD1, SD2, SD4, SD5, SD7. Evidence: the repository gate exits 0 on the candidate tree; the PR CI run

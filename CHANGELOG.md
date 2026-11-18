@@ -1,3 +1,8 @@
+## 1.67.1 (2026-11-18): the ledger records the shipped version
+
+- The verification ledger records this version: 1.67.0 shipped with the ledger still headed by 1.66.6, so the
+  sshlg-skills validator refused its pin (member ledger ratchet at 0). No skill changes; `phosphor` is unchanged.
+
 ## 1.67.0 (2026-11-18): the fortieth pack, a lit terminal with rain behind the glass
 
 - **`phosphor`, the fortieth style pack** (widened, all thirteen headings), extracted from
