@@ -26,7 +26,7 @@ shipped text; where they differ, the shipped files win:
   WCAG 2.2 SC 2.5.8 is 24 CSS px (sheleg-design `ACCESSIBILITY_EVIDENCE.md`).
 - **Line citations** of `MOBILE_SURFACES.md` in the draft predate its new contents list; the numeric-norm rule
   lives in its section *The native state matrix*.
-- **Trial findings (first run, app D lyrics-and-beat screen, 2026-11-23).** Linter on the action maps: 17
+- **Trial findings (first run, app D lyrics-and-beat screen, 2026-11-23).** Linter on the action maps: 18
   findings before, 0 after; counted visible actions 9 before, 5 after. Novice walk (two novices, one expert,
   run blind by the task-pipeline design-tester): find-it 2 of 5 before, 5 of 5 after for both novices; job
   named after only; no expert action got slower. Two rule corrections came out of it: (1) on a rehearse-then-record

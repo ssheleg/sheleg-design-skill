@@ -15,7 +15,7 @@
 - **Done here.** MOBILE_SURFACES control profiles, iPad, materials, recipes; LAYOUT_CRAFT screen ceilings;
   CREATIVE_DIRECTOR UIM-24, UIM-25; ACCESSIBILITY_EVIDENCE profiles; ADA R17; provenance W8 to W12; the report.
   Gate: `npm test` exit 0 on the branch.
-- **Trial, first run (2026-11-23).** Linter on the lyrics-and-beat screen: 17 findings before, 0 after; novice
+- **Trial, first run (2026-11-23).** Linter on the lyrics-and-beat screen: 18 findings before, 0 after; novice
   walk find-it 2 of 5 before, 5 of 5 after. Rule corrections from it are in the doctrine's *Read this first*.
 - **Open (planned, not in this PR).** D5 done (R25 pointer); the record field B-150; the task-pipeline
   finding vocabulary and one walk row per novice per screen (task-pipeline T2).
