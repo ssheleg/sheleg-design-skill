@@ -54,7 +54,7 @@ The squint test made countable, for a screen whose action map (super-ux) is in h
   a state (recording, error) appears on nothing else.
 - **UIM-16, groups.** At most 5 groups per viewport on compact width (bars included) and 7 on regular width,
   each gap between groups at least twice the largest gap inside one (HOUSE DEFAULT; Apple's three toolbar
-  groups are FACT). A text button never shares a group with an icon. No content rests under a pinned control:
+  groups are FACT). In a toolbar a text button never shares a group with an icon (Apple HIG). No content rests under a pinned control:
   at the end of scroll the last item sits fully above the pinned bar.
 - **UIM-17, type and emphasis.** At most 3 text sizes plus 1 display size, 3 emphasis levels and 2 big
   elements per screen (NN/g, Kelley Gordon; the display size is HOUSE DEFAULT, kept for the signature).
