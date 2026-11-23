@@ -34,6 +34,12 @@ shipped text; where they differ, the shipped files win:
   control that becomes stop is one action). The draft's UIM-18 check, amendment 19(a) and its U105 row say rows.
 - **Recipe 1 (performance tool)** shipped in MOBILE_SURFACES as one lamp miniature with three read-out chips,
   not the draft's separate 60 pt dots and one read-out row (amendment 21).
+- **Recipe 2 (content plus transport)** shipped with the menus named after the object they change in the bottom
+  row beside the transport, no generic "More" anywhere, and the strip as one seek target with no button on it
+  (amendment 22), not the draft's "Ideas" and "More" in the top bar and a "Beat" button on the strip.
+- **Disclosure levels.** A group heading inside an open sheet is not a level: level 2 is a second container that
+  must be opened, not a group inside level 1 as the draft ladder table says. `Elements:` stays readable as a
+  legacy field with no end date.
 - **Target profiles.** The web value of the standard profile (44 CSS px) is a labelled house level, not FACT;
   WCAG 2.2 SC 2.5.8 is 24 CSS px (sheleg-design `ACCESSIBILITY_EVIDENCE.md`).
 - **Line citations** of `MOBILE_SURFACES.md` in the draft predate its new contents list; the numeric-norm rule
