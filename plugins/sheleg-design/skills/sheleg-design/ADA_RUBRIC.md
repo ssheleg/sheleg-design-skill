@@ -63,7 +63,7 @@ creative. "all" is all four.
 | R14 | Inclusivity | Contrast at least 4.5:1, large text at least 3:1, in every theme | axe `color-contrast`; an XCUITest contrast audit; Android's accessibility checks | G | all |
 | R15 | Inclusivity | The largest text size (iOS AX5, web 200% and a 320px reflow) clips nothing and loses no function | the simulator's content size at its accessibility maximum with a Dynamic Type and clipping audit; Compose `fontScale`; browser zoom | G | i a w |
 | R16 | Inclusivity | Every element has a meaningful label and trait, reading order is logical, and one manual VoiceOver or TalkBack pass is recorded | the element-description, trait and element-detection audits; axe; the recorded pass | G+H | i a w |
-| R17 | Inclusivity | Touch targets: 44pt on iOS, 48dp on Android, 24px on the web | a hit-region audit; Android's touch-target check; axe `target-size` | G | i a w |
+| R17 | Inclusivity | Touch targets: 44pt on iOS, 48dp on Android, 24px on the web; above the floor, by profile (`MOBILE_SURFACES.md`, UIM-18) | a hit-region audit; Android's touch-target check; axe `target-size` | G | i a w |
 | R18 | Inclusivity | Colour is never the only signal (Differentiate Without Color) | a grayscale capture → a judge; the setting turned on in the matrix | J | all |
 | R19 | Inclusivity | A double-length pseudolocale and RTL break nothing; at least two real locales if the product promises them | the platform pseudolocales (Xcode double-length and RTL, Android `en-XA` and `ar-XB`, a web pseudolocale) → the locale columns of the matrix | G | i a w |
 | R20 | Inclusivity | Reduce Motion and Reduce Transparency are honoured | captures and video with the setting on; `prefers-reduced-motion` turned on, not read from the CSS | G | i a w |
@@ -71,7 +71,7 @@ creative. "all" is all four.
 | R22 | Delight | The text is in the brand's voice, with no AI tells | the family's `copywriting` skill and its brand linter where installed; NOT_RUN where absent | G | all |
 | R23 | Delight | The empty state and the first run are designed: a next step, never a bare "No data" | the `empty` row of the matrix → a judge | G+J | i a w |
 | R24 | Innovation | The job is taken where it lives — widget, Live Activity, App Intent, Watch — or the record says why not | the record's `Surfaces` field; captures of the widget families | G | i a |
-| R25 | Social impact | Every element traces to the person's job; no dark pattern; errors and offline are honest | the alignment check of Act 5 ([`CREATIVE_DIRECTOR.md`](./CREATIVE_DIRECTOR.md)) and the `error` and `offline` rows of the matrix | J+H | all |
+| R25 | Social impact | Every element traces to the person's job (checkable half: super-ux action map, `U098`); no dark pattern; errors and offline are honest | the alignment check of Act 5 ([`CREATIVE_DIRECTOR.md`](./CREATIVE_DIRECTOR.md)) and the `error` and `offline` rows of the matrix | J+H | all |
 
 **R3, R6, R15 and R24 name Apple's platform.** On Android and the web they mean
 their equivalents — Material navigation, WCAG reflow and zoom, an installable PWA

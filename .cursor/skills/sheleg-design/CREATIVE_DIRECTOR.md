@@ -367,6 +367,8 @@ instead of DOM ones).
 | Colour is not the only signal | all | every status, link and error state carries a second cue — shape, icon, weight, text |
 | Keyboard path | web | every interactive element reachable and visibly focused, in DOM order; on **native**, the platform's focus/accessibility semantics stand in — VoiceOver order, not DOM order |
 | One anchor per viewport | all | count what competes for first attention; more than one means none |
+| Signature survives simplification (UIM-24) | all, `product` included | point to one element a stock template for this screen type would not have, tied to the screen's job; in a before and after pair it is still there. Simplifying never removes it |
+| Unusual control with proof (UIM-25) | all | a non-standard control stays when the novice walk (task-pipeline design-tester) predicts what it does from visible text, and the action map has a standard path for the same action |
 | Type scale | all | count the distinct font sizes actually rendered — an ad-hoc scale shows up as a long tail |
 | Token discipline | all | `grep` for raw hex and raw px outside the token layer; a one-off value is a system leaking |
 | Motion, and its absence | all | every duration inside the doctrine's bands, and the surface fully usable under reduced motion — `prefers-reduced-motion: reduce` on web, the platform's Reduce Motion on native — checked by turning it on, not by reading the CSS |

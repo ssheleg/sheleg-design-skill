@@ -19,6 +19,7 @@ against a bar nobody can name. Every claim states which it is held to.
 | target size, minimum | criterion — WCAG 2.5.8, AA, added in 2.2 | **24×24 CSS px**, with spacing/inline/equivalent exceptions | the AA criterion is 24, not 44 |
 | target size, enhanced | criterion — WCAG 2.5.5, AAA | **44×44 CSS px** | a 24px target satisfies AA and still fails AAA — the two cases are different claims |
 | touch target comfort | heuristic — Apple HIG 44pt, Material 48dp | platform guidance | a design held to the house heuristic says so; "WCAG requires 44px" is false at AA |
+| touch target profiles | standard 44 pt / 48 dp is the platform figure; frequent, performance and the web 44 CSS px are house levels, labelled as such (UIM-18) | standard, frequent, performance: 44, 60, 72 pt on iOS; 48, 64, 76 dp on Android; 44, 60, 72 CSS px on the web | on the web the visible tiers of an action map use 44 CSS px as a **house level**, not a WCAG claim; the profiles and their reasons live in [`MOBILE_SURFACES.md`](./MOBILE_SURFACES.md) *Control profiles and spacing* |
 | contrast exceptions | part of 1.4.3 itself | logotypes, incidental text, inactive controls | an exception invoked is named, not assumed |
 
 Units matter twice: WCAG sizes are **CSS pixels** (zoom-independent), and text

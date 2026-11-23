@@ -4,7 +4,7 @@ description: 'Use when deciding how a surface looks or moves: landing, particle/
 license: MIT
 compatibility: Kit/lane commands need node>=16, npx, network. Optional siblings — dataviz, shadcn, migrate-radix-to-base. Each has an in-text fallback when absent or unreachable.
 metadata:
-  version: 1.67.1
+  version: 1.68.0
 ---
 
 # SHELEG Design

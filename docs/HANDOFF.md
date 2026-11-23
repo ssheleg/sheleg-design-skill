@@ -1,3 +1,31 @@
+## v1.68.0: UI mechanics doctrine, sheleg-design part (2026-11-23)
+
+- **Objective.** The operator's order of 2026-11-23 00:47 (request dcc725be): screens that are beautiful and
+  simple, grouped, with few actions, clear to a user new to the app but not stupid, and a pipeline that checks it.
+- **Siblings.** sheleg-design, super-ux and task-pipeline branches `feat/ui-mechanics-2026-11-23`, one PR each.
+  Research and doctrine: sheleg-design `docs/reports/2026-11-23-ui-guidelines/` (README, guidelines.md,
+  doctrine.md). Private material (captures, audits, trial plans of the two apps) stays in those apps' own
+  repositories and on the operator machine, never here.
+- **Trial run.** Two app teams took the rules: the app D session builds wave-3 mockups of the lyrics-and-beat screen on the
+  target action map (due 2026-11-25), the app P session builds the metronome after into 0.9.0 (estimate
+  2026-12-04). The after scorecards close when their captures arrive.
+- **Release.** Hold the merge and tags until the trial's first after captures are read (the operator: release
+  the skills after the trial, from 2026-11-27); then merge super-ux, sheleg-design, task-pipeline in that order,
+  tag, publish, bump the sshlg-skills pins and update the local install.
+- **Done here.** MOBILE_SURFACES control profiles, iPad, materials, recipes; LAYOUT_CRAFT screen ceilings;
+  CREATIVE_DIRECTOR UIM-24, UIM-25; ACCESSIBILITY_EVIDENCE profiles; ADA R17; provenance W8 to W12; the report.
+  Gate: `npm test` exit 0 on the branch.
+- **Trial, first run (2026-11-23).** Linter on the lyrics-and-beat screen: 18 findings before, 0 after; novice
+  walk find-it 2 of 5 before, 5 of 5 after. Rule corrections from it are in the doctrine's *Read this first*.
+- **Open (planned, not in this PR).** D5 done (R25 pointer); the record field B-150; the task-pipeline
+  finding vocabulary and one walk row per novice per screen (task-pipeline T2).
+- **Open.** Product records owing `Signature` (and an `Anchor` line) is not enforced by `bin/record.js` yet:
+  staged as a warning first in a later release (backlog row).
+- **Trial, second and third runs (2026-11-23).** App D's wave-3 frames (revisions 2 to 5) were judged twice more; every
+  finding was closed in the frames before code. App P's metronome after is in its next build (estimate 2026-12-04).
+- **Next task.** After merge: tag `v1.68.0` (annotated) on the merge commit, watch the release, then the sshlg-skills pin
+  bump; then the pass-B check on app D's build captures when they arrive.
+
 ## v1.67.1: the ledger records the shipped version (2026-11-18)
 
 - **Objective.** Record the shipped version in the verification ledger (the sshlg-skills validator reads it and
