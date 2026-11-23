@@ -1,4 +1,4 @@
-## Unreleased: UI mechanics (control profiles, iPad, screen ceilings)
+## 1.68.0 (2026-11-23): UI mechanics (control profiles, iPad, screen ceilings)
 
 Operator order 2026-11-23 00:47 Europe/Warsaw (Telegram, relayed by the Fabric CEO, request dcc725be): simple, grouped screens with few actions that a user new to the app understands, checked by the pipeline. Research: https://github.com/ssheleg/sheleg-design-skill/tree/main/docs/reports/2026-11-23-ui-guidelines
 

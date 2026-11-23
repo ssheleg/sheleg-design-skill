@@ -1,4 +1,4 @@
-## Unreleased: UI mechanics doctrine, sheleg-design part (2026-11-23)
+## v1.68.0: UI mechanics doctrine, sheleg-design part (2026-11-23)
 
 - **Objective.** The operator's order of 2026-11-23 00:47 (request dcc725be): screens that are beautiful and
   simple, grouped, with few actions, clear to a user new to the app but not stupid, and a pipeline that checks it.
@@ -21,8 +21,10 @@
   finding vocabulary and one walk row per novice per screen (task-pipeline T2).
 - **Open.** Product records owing `Signature` (and an `Anchor` line) is not enforced by `bin/record.js` yet:
   staged as a warning first in a later release (backlog row).
-- **Next task.** Read the app D wave-3 SCR-78 mockups (2026-11-25) with the novice walk and the scorecard, then
-  release.
+- **Trial, second and third runs (2026-11-23).** App D's wave-3 frames (revisions 2 to 5) were judged twice more; every
+  finding was closed in the frames before code. App P's metronome after is in its next build (estimate 2026-12-04).
+- **Next task.** After merge: tag `v1.68.0` (annotated) on the merge commit, watch the release, then the sshlg-skills pin
+  bump; then the pass-B check on app D's build captures when they arrive.
 
 ## v1.67.1: the ledger records the shipped version (2026-11-18)
 
