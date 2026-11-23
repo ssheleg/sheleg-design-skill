@@ -71,7 +71,7 @@ creative. "all" is all four.
 | R22 | Delight | The text is in the brand's voice, with no AI tells | the family's `copywriting` skill and its brand linter where installed; NOT_RUN where absent | G | all |
 | R23 | Delight | The empty state and the first run are designed: a next step, never a bare "No data" | the `empty` row of the matrix → a judge | G+J | i a w |
 | R24 | Innovation | The job is taken where it lives — widget, Live Activity, App Intent, Watch — or the record says why not | the record's `Surfaces` field; captures of the widget families | G | i a |
-| R25 | Social impact | Every element traces to the person's job; no dark pattern; errors and offline are honest | the alignment check of Act 5 ([`CREATIVE_DIRECTOR.md`](./CREATIVE_DIRECTOR.md)) and the `error` and `offline` rows of the matrix | J+H | all |
+| R25 | Social impact | Every element traces to the person's job (checkable half: super-ux action map, `U098`); no dark pattern; errors and offline are honest | the alignment check of Act 5 ([`CREATIVE_DIRECTOR.md`](./CREATIVE_DIRECTOR.md)) and the `error` and `offline` rows of the matrix | J+H | all |
 
 **R3, R6, R15 and R24 name Apple's platform.** On Android and the web they mean
 their equivalents — Material navigation, WCAG reflow and zoom, an installable PWA

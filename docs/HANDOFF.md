@@ -4,10 +4,10 @@
   simple, grouped, with few actions, clear to a user new to the app but not stupid, and a pipeline that checks it.
 - **Siblings.** sheleg-design, super-ux and task-pipeline branches `feat/ui-mechanics-2026-11-23`, one PR each.
   Research and doctrine: sheleg-design `docs/reports/2026-11-23-ui-guidelines/` (README, guidelines.md,
-  doctrine.md). Private material (captures, audits, trial plans of the two apps) stays in those apps' repos and
-  in `~/DATA/_artifacts/ui-mechanics-2026-11-23/` on the operator machine.
-- **Trial run.** Two app teams took the rules: the Dissy session builds wave-3 mockups of «Текст и бит» on the
-  target action map (due 2026-11-25), the PlaySing session builds the metronome after into 0.9.0 (estimate
+  doctrine.md). Private material (captures, audits, trial plans of the two apps) stays in those apps' own
+  repositories and on the operator machine, never here.
+- **Trial run.** Two app teams took the rules: the app D session builds wave-3 mockups of the lyrics-and-beat screen on the
+  target action map (due 2026-11-25), the app P session builds the metronome after into 0.9.0 (estimate
   2026-12-04). The after scorecards close when their captures arrive.
 - **Release.** Hold the merge and tags until the trial's first after captures are read (the operator: release
   the skills after the trial, from 2026-11-27); then merge super-ux, sheleg-design, task-pipeline in that order,
@@ -15,9 +15,13 @@
 - **Done here.** MOBILE_SURFACES control profiles, iPad, materials, recipes; LAYOUT_CRAFT screen ceilings;
   CREATIVE_DIRECTOR UIM-24, UIM-25; ACCESSIBILITY_EVIDENCE profiles; ADA R17; provenance W8 to W12; the report.
   Gate: `npm test` exit 0 on the branch.
+- **Trial, first run (2026-11-23).** Linter on the lyrics-and-beat screen: 17 findings before, 0 after; novice
+  walk find-it 2 of 5 before, 5 of 5 after. Rule corrections from it are in the doctrine's *Read this first*.
+- **Open (planned, not in this PR).** D5 done (R25 pointer); the record field B-150; the task-pipeline
+  finding vocabulary and one walk row per novice per screen (task-pipeline T2).
 - **Open.** Product records owing `Signature` (and an `Anchor` line) is not enforced by `bin/record.js` yet:
   staged as a warning first in a later release (backlog row).
-- **Next task.** Read the Dissy wave-3 SCR-78 mockups (2026-11-25) with the novice walk and the scorecard, then
+- **Next task.** Read the app D wave-3 SCR-78 mockups (2026-11-25) with the novice walk and the scorecard, then
   release.
 
 ## v1.67.1: the ledger records the shipped version (2026-11-18)
@@ -56,8 +60,8 @@
 ## v1.66.5: route misses join the Triggers section (2026-10-27)
 
 - **Done.** Hub board row B-267 (sheleg-design part): `## Triggers` in the skill body now
-  advertises «переделай дизайн», «тёмная тема, тёмную тему», "theme tokens" / «токены темы» and
-  "contrast" / «контрастность» ("redesign" and "dark theme" were already advertised); the
+  advertises «…», «…», "theme tokens" / «…» and
+  "contrast" / «…» ("redesign" and "dark theme" were already advertised); the
   description is unchanged and the Cursor mirror is synced. The body stays inside the house
   working limit (4,744 of 4,750 tokens, `audit_skill.py --house`) after three unguarded wording
   trims. "accessibility check" is intentionally not added: the family delegates accessibility
@@ -215,7 +219,7 @@ Figma's guidance where the pack is the authority (Code Connect instructions
 generated or unused, labelled placeholder images, declared font failures, 1:1 as
 layout only, corrections into the record). `CREATIVE_DIRECTOR.md`'s Redesign row
 starts from a `generate_figma_design` capture into the surface's recorded file.
-The description carries «сделай дашборд», «админка», «анимации», «макеты».
+The description carries «…», «…», «…», «…».
 Gates: `validate_figma_contract()`, `validate_routing_forms_lead()`, four plants.
 Receipts: the 1.64.0 section of [verification.md](evidence/verification.md) and
 the CHANGELOG.

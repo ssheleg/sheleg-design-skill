@@ -4,6 +4,36 @@ Packaged on 2026-11-23 by Claude Fable 5.2 through the Anthropic API (the operat
 
 Where each rule lives now: UIM-01 to UIM-14, UIM-29 and UIM-31 to UIM-34 in super-ux `scenario-format.md` (the action map, lint U096 to U106) and `templates/test-panel.md` (the novice walk); UIM-15 to UIM-28 in sheleg-design `LAYOUT_CRAFT.md`, `MOBILE_SURFACES.md`, `CREATIVE_DIRECTOR.md` and `ACCESSIBILITY_EVIDENCE.md`; UIM-30 in task-pipeline `design_gate.py` and `agents/design-tester.md`. The sections below are the packaged text as written, with amendments listed after the rules they change; where a shipped file and this text disagree, the shipped file wins and this file gets a correction.
 
+
+## Read this first: where the shipped text differs (2026-11-23)
+
+The sections below are the packaged drafts. Two blind verification rounds and the first trial run changed the
+shipped text; where they differ, the shipped files win:
+
+- **File names.** The draft names its own files (concept.md, rules.md, amendments.md, action-map.md,
+  novice-persona.md, ipad-and-controls.md, pipeline-changes.md, trial-protocol.md): each is the section of this
+  document with that name.
+- **Lint codes.** The shipped linter is super-ux `ux_lint.py` U096 to U106 and its contract table in
+  `scenario-format.md`. Differences from the draft table: U099 also fires on an empty `Scenarios:`; U100 also
+  fires on a fourth visible exit; U103 reads «More…», its Russian equivalent and «More options» as generic; U104 also fires on a
+  visible row with no readable word; U106 spans the screen and lets `hint` and `receipt` rows repeat labels; the
+  draft's "an action has two labels" half of U106 is not shipped. Uncounted rows are written as a backticked
+  flag or a leading `flag:`.
+- **The metronome example in the action-map section** predates amendments 4 to 6 (one parameter folds up to
+  three controls; three chips; depth counts containers only): read the plan in the amendments for the current
+  form.
+- **Target profiles.** The web value of the standard profile (44 CSS px) is a labelled house level, not FACT;
+  WCAG 2.2 SC 2.5.8 is 24 CSS px (sheleg-design `ACCESSIBILITY_EVIDENCE.md`).
+- **Line citations** of `MOBILE_SURFACES.md` in the draft predate its new contents list; the numeric-norm rule
+  lives in its section *The native state matrix*.
+- **Trial findings (first run, app D lyrics-and-beat screen, 2026-11-23).** Linter on the action maps: 17
+  findings before, 0 after; counted visible actions 9 before, 5 after. Novice walk (two novices, one expert,
+  run blind by the task-pipeline design-tester): find-it 2 of 5 before, 5 of 5 after for both novices; job
+  named after only; no expert action got slower. Two rule corrections came out of it: (1) on a rehearse-then-record
+  screen both novices tapped Listen first, so test 1.2 passes when the first tap is the scenario's first step,
+  not only the primary; (2) on the narrowest phone the two menu buttons lost their chevron and read as tabs, so a
+  menu button keeps its menu mark at every width (super-ux contract, *Labels in the map*).
+
 ## UI mechanics: the doctrine on two pages
 
 ### Stance
@@ -106,7 +136,7 @@ The 10 ms latency target is UNVERIFIED [P7] and is not doctrine yet.
 
 **Reading the thresholds.** FACT means a platform or research source states the number. HOUSE DEFAULT means it is our choice and revisable after the trial.
 
-**Point-to-millimetre conversions** use roughly 0.16 mm per point on current iPhones. This is house arithmetic that is not in the research set. Verify it before it is written as normative (MOBILE_SURFACES.md:151-154).
+**Point-to-millimetre conversions** use roughly 0.16 mm per point on current iPhones. This is house arithmetic that is not in the research set. Verify it before it is written as normative (MOBILE_SURFACES.md (section The native state matrix)).
 
 **What the reviewer holds.** The reviewer has the screen captures (one per state, plus any open sheet or menu), the scenario list and the action map. Captures are read at 1x point scale.
 
@@ -585,7 +615,7 @@ A fail by either novice is a fail for the screen.
 
 ## iPhone and iPad layout, control profiles (for MOBILE_SURFACES.md)
 
-Every number marked HOUSE DEFAULT is our choice. Every platform number must be re-verified against the current HIG before it is written as normative, and recorded in KNOWLEDGE_PROVENANCE.md (MOBILE_SURFACES.md:151-154).
+Every number marked HOUSE DEFAULT is our choice. Every platform number must be re-verified against the current HIG before it is written as normative, and recorded in KNOWLEDGE_PROVENANCE.md (MOBILE_SURFACES.md (section The native state matrix)).
 
 ### Decide by size class, not by device
 

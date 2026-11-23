@@ -1,6 +1,6 @@
 # Run ledger: UI mechanics doctrine (2026-11-23)
 
-Task in one line: research modern interface guidelines, audit PlaySing and Dissy against them, close the
+Task in one line: research modern interface guidelines, audit app P and app D against them, close the
 gaps in the design pipeline (sheleg-design, super-ux, task-pipeline) with a packaged doctrine (UIM rules),
 and trial the new pipeline on one screen of each app, before and after.
 
@@ -20,7 +20,7 @@ check instead of passing every stage; plus the research report, two app audits a
 Why: the operator's order (verbatim in the Fabric task); the gap analysis showed that almost no existing
 check can fail an ordinary `product` screen.
 Expected: see the REQ spine. Out of scope: changing the two apps' code (their own sessions build the
-after); the Dissy and PlaySing captures and audits never enter this public repository.
+after); the app D and app P captures and audits never enter this public repository.
 Must not change: existing rules keep working; new rules are additions or versioned clauses, staged where
 a gate tightens (warning first, failure in the next release).
 
@@ -29,12 +29,12 @@ a gate tightens (warning first, failure in the next release).
 | REQ | Row | Verified by |
 |---|---|---|
 | REQ-1 | Research of 2025-2026 guidelines with author and date per source, trusted sources only | `docs/reports/2026-11-23-ui-guidelines/` + `reports.py check` exit 0; one figure re-read at source |
-| REQ-2 | Audit of PlaySing and Dissy: good, exotic-good, weak, with screens | audit files delivered to each app session for its own repo; their receipt |
+| REQ-2 | Audit of app P and app D: good, exotic-good, weak, with screens | audit files delivered to each app session for its own repo; their receipt |
 | REQ-3 | sheleg-design: control profiles, iPad layout, grouping and type ceilings, Anchor and Signature, provenance | `npm test` exit 0 on the branch; the new sections present and linked |
 | REQ-4 | super-ux: action map format, lint U096 to U105, novice level in the test panel | super-ux gate exit 0; lint seen failing on a plant |
 | REQ-5 | task-pipeline: novice walk (panel level, finding vocabulary), word-neutral design-tester edit, Anchor and Signature on product | task-pipeline gate exit 0; design_gate seen failing on a panel without novices |
-| REQ-6 | Trial run before and after: Dissy «Текст и бит» SCR-78 and PlaySing metronome SCR-08 | scorecards with the decision rule applied |
-| REQ-7 | Coordination: rough cut to Dissy and PlaySing by 2026-11-24 14:00 Warsaw; super-ux and task-pipeline told on the board | message receipts; board message ids |
+| REQ-6 | Trial run before and after: app D lyrics-and-beat screen and app P metronome SCR-08 | scorecards with the decision rule applied |
+| REQ-7 | Coordination: rough cut to app D and app P by 2026-11-24 14:00 Warsaw; super-ux and task-pipeline told on the board | message receipts; board message ids |
 | REQ-8 | Fable spend reported, under USD 100 | `fable-ledger.jsonl` totals in the report |
 | REQ-9 | Result to the operator's thread | board message id |
 | REQ-10 | Skills released through make-skill after 2026-11-27 | tags, npm versions, hub pins |
@@ -46,11 +46,11 @@ a gate tightens (warning first, failure in the next release).
 | `docs/evidence/retro.md` floor | 2026-11-23, 8,760 bytes, budget 12,000 | Standing 8 and 10 apply: delegated findings reproduced; new artifacts checked against each other |
 | Research (subagent) | 2026-11-23 | 61 sources, V or U marks; the NN/g tutorial figures re-read at source by the lead (Alita Kendrick, 2020-03-08) |
 | Pipeline gap analysis (subagent) | 2026-11-23 | file:line evidence; three citations reproduced by the lead (`design_gate.py:48`, `ux-audit/SKILL.md:274`, `MOBILE_SURFACES.md:169`) |
-| Dissy pack (Dissy session) | 2026-11-23 | captures 2026-11-18; two PlaySing files misfiled, confirmed by headers and fixed by the Dissy session |
-| PlaySing pack (PlaySing session) | 2026-11-23 | build 0.8.1 frames; metronome target sizes reproduced on the capture (minus and plus about 43 pt) |
+| app D pack (app D session) | 2026-11-23 | captures 2026-11-18; two app P files misfiled, confirmed by headers and fixed by the app D session |
+| app P pack (app P session) | 2026-11-23 | build 0.8.1 frames; metronome target sizes reproduced on the capture (minus and plus about 43 pt) |
 | Fable 5.2 package | 2026-11-23 | two calls; every source id it cites resolves in the research |
 
-Contradictions: the PlaySing session's unmeasured 60/44 pt rule against the doctrine's 44/60/72 profiles
+Contradictions: the app P session's unmeasured 60/44 pt rule against the doctrine's 44/60/72 profiles
 (resolved: 44 standard, 60 frequent, 72 performance, measured in the trial's hands test).
 
 ## Fable 5.2 spend (price: USD 8 per million input, 40 per million output, 2026-11-23 pricing page)
@@ -69,7 +69,7 @@ Contradictions: the PlaySing session's unmeasured 60/44 pt rule against the doct
 - [x] 3 Spec (UIM-01..34; private copy with app evidence `~/DATA/_artifacts/ui-mechanics-2026-11-23/doctrine/`, public neutral copy `docs/reports/2026-11-23-ui-guidelines/doctrine.md`)
 - [x] 4 Plan (pipeline-changes.md, amended)
 
-REQ-7: rough cut, audits and trial plans delivered to dissy-84 and riffly-d7 on 2026-11-23 about 01:30 (SendMessage receipts 22ca4b6e, fe39a14b).
+REQ-7: rough cut, audits and trial plans delivered to the app D session and the app P session on 2026-11-23 about 01:30 (SendMessage receipts 22ca4b6e, fe39a14b).
 - [ ] 5 Dev
 - [ ] 6 Tests
 - [ ] 7 Lint and integrate (PRs)
