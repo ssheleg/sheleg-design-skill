@@ -60,8 +60,8 @@
 ## v1.66.5: route misses join the Triggers section (2026-10-27)
 
 - **Done.** Hub board row B-267 (sheleg-design part): `## Triggers` in the skill body now
-  advertises «…», «…», "theme tokens" / «…» and
-  "contrast" / «…» ("redesign" and "dark theme" were already advertised); the
+  advertises «переделай дизайн», «тёмная тема, тёмную тему», "theme tokens" / «токены темы» and
+  "contrast" / «контрастность» ("redesign" and "dark theme" were already advertised); the
   description is unchanged and the Cursor mirror is synced. The body stays inside the house
   working limit (4,744 of 4,750 tokens, `audit_skill.py --house`) after three unguarded wording
   trims. "accessibility check" is intentionally not added: the family delegates accessibility
@@ -219,7 +219,7 @@ Figma's guidance where the pack is the authority (Code Connect instructions
 generated or unused, labelled placeholder images, declared font failures, 1:1 as
 layout only, corrections into the record). `CREATIVE_DIRECTOR.md`'s Redesign row
 starts from a `generate_figma_design` capture into the surface's recorded file.
-The description carries «…», «…», «…», «…».
+The description carries «сделай дашборд», «админка», «анимации», «макеты».
 Gates: `validate_figma_contract()`, `validate_routing_forms_lead()`, four plants.
 Receipts: the 1.64.0 section of [verification.md](evidence/verification.md) and
 the CHANGELOG.

@@ -32,7 +32,7 @@ report:
 
 # Modern interface guidelines 2025-2026 for simple, grouped, novice-friendly screens
 
-The full research, with 61 numbered sources, the 30-row screen checklist and the verified or
+The full research, with 62 numbered sources, the 30-row screen checklist and the verified or
 UNVERIFIED mark on each source, is [guidelines.md](guidelines.md). This page holds the findings that
 changed the design-skills family.
 
@@ -59,7 +59,7 @@ changed the design-skills family.
 7. **iPadOS 26.** Windows resize freely, every app has a menu bar (ordered by frequency, items never
    hidden), and functions stay the same at every window size ([A12]).
 8. **Material 3 Expressive.** Google reports 46 studies with over 18,000 participants and key elements
-   found "up to 4x faster". The peer-reviewed CHI 2026 paper measured 33% faster fixation and 20% faster
+   found "up to four times faster". The peer-reviewed CHI 2026 paper measured 33% faster fixation and 20% faster
    tasks with 48 participants. Google's own caveats: a strong minority prefers calmer designs, and
    dropping labels or breaking standard patterns hurt usability ([G1], [G2], [G3]).
 9. **Choice.** The jam study (6 against 24 jams, 30% against 3% bought) does not generalise on its own:

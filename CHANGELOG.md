@@ -14,7 +14,7 @@ Operator order 2026-11-23 00:47 Europe/Warsaw (Telegram, relayed by the Fabric C
 - **`CREATIVE_DIRECTOR.md`**: two checks, the signature survives simplification (UIM-24) and an unusual control
   with proof (UIM-25). **`ACCESSIBILITY_EVIDENCE.md`**: target profiles as a labelled house level.
   **`ADA_RUBRIC.md`** R17 points at the profiles. **`KNOWLEDGE_PROVENANCE.md`** rows W8 to W12.
-- Research report `docs/reports/2026-11-23-ui-guidelines/` (61 sources with author and date) and the
+- Research report `docs/reports/2026-11-23-ui-guidelines/` (62 sources, each with its author or organisation and date) and the
   packaged doctrine `doctrine.md` (UIM-01 to UIM-34).
 
 ## 1.67.1 (2026-11-18): the ledger records the shipped version
