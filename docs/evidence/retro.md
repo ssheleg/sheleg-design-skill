@@ -224,6 +224,7 @@ Moved out: 2 loose paragraphs, verbatim in retro/2026-Q4.md sha256:1ee1d7532414
 
 | Date | Commit | Task | Diverged? |
 |---|---|---|---|
+| 2026-11-23 | `4c0accc` | **1.68.0** UI mechanics (control profiles, iPad, screen ceilings), sibling of super-ux 0.68.0 and task-pipeline 1.112.1; research, Fable package (USD 5.45), three trial runs | **yes**: thirteen blind review rounds before two clean ones in a row; the sibling task-pipeline tag v1.112.0 was refused by its release run (retro declaration missing) and shipped as v1.112.1; one force-push to an own unreviewed docs branch (super-ux), against the operator's rule |
 | 2026-10-13 | working tree | **1.64.2** packaging of reviewed FW05 source merged as ab7d82e; version and card sync only | no |
 | 2026-10-13 | working tree, FW05 | Source-derived dark palettes, pairwise disclosures, documented calm contract. | yes — historical board counts were stale; marker removal initially bypassed the derived check; exact legacy set and negative plants added. See FW05 receipt. |
 | 2026-09-06 | working tree | **1.59.4** — the same change as 1.59.3, tagged on the verified merge commit. The v1.59.3 tag was pushed against `origin/main` before the release PR had merged — it names the v1.59.2 tree, the version-sync… | yes — see left · moved: retro/2026-Q4.md sha256:b870498a0ca9 |
