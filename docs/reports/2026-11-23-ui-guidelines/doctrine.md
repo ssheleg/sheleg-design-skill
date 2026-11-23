@@ -20,8 +20,8 @@ shipped text; where they differ, the shipped files win:
   overflow (the draft keyed it on main-path steps of a scenario, which the map does not mark), in several
   spellings; U104 also fires on a visible row with no quoted word of three or more characters; U106 spans the
   screen and lets `hint`, `receipt` and `recovery` rows repeat labels; the draft's "an action has two labels"
-  half of U106 is not shipped. Labels are read in double quotes or guillemets only. Uncounted rows are written
-  as a backticked flag or a leading `flag:`; tab-bar rows carry `tab`.
+  half of U106 is not shipped. Labels are read in double quotes or guillemets only. Flags (uncounted kinds,
+  `irreversible`) are a backticked word or the cell's first word; tab-bar rows carry `tab`.
 - **Receipts and tabs.** A receipt is an uncounted row flagged `receipt`, not an exit row as UIM-33 says; tab-bar
   destinations carry the flag `tab`; an icon-only container in a path is named by its glyph.
 - **The expert's `slower` check** follows amendment 24 in the shipped test panel: no `every visit` action costs
@@ -32,7 +32,6 @@ shipped text; where they differ, the shipped files win:
   form.
 - **The performance cap** counts actions, not rows: at most 3 distinct actions per screen across its states (a start
   control that becomes stop is one action). The draft's UIM-18 check, amendment 19(a) and its U105 row say rows.
-- **Flags** may be written bare as the first word of the cell, as well as in backticks.
 - **Recipe 1 (performance tool)** shipped in MOBILE_SURFACES as one lamp miniature with three read-out chips,
   not the draft's separate 60 pt dots and one read-out row (amendment 21).
 - **Target profiles.** The web value of the standard profile (44 CSS px) is a labelled house level, not FACT;
