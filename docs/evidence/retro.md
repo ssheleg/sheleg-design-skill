@@ -216,15 +216,15 @@ Cap 10, current 10, none retired.
 
 ## Run stamps
 
-**3 rows below are marked *unrecorded* in the `Diverged?` column**; `validate_reconstructed_stamp_count()` recomputes the count on every run. The history of that count and the older stamps are in the archive below.
+Rotated out: 64 oldest run stamps, verbatim in retro/2026-Q4.md sha256:5d62fbd83637
 
-Rotated out: 63 oldest run stamps, verbatim in retro/2026-Q4.md sha256:08dcbb558c22
+**3 rows below are marked *unrecorded* in the `Diverged?` column**; `validate_reconstructed_stamp_count()` recomputes the count on every run. The history of that count and the older stamps are in the archive below.
 
 Moved out: 2 loose paragraphs, verbatim in retro/2026-Q4.md sha256:1ee1d7532414
 
 | Date | Commit | Task | Diverged? |
 |---|---|---|---|
-| 2026-11-23 | `4c0accc` | **1.68.0** UI mechanics (control profiles, iPad, screen ceilings), sibling of super-ux 0.68.0 and task-pipeline 1.112.1; research, Fable package (USD 5.45), three trial runs | **yes**: thirteen blind review rounds before two clean ones in a row; the sibling task-pipeline tag v1.112.0 was refused by its release run (retro declaration missing) and shipped as v1.112.1; one force-push to an own unreviewed docs branch (super-ux), against the operator's rule |
+| 2026-11-23 | `4c0accc` | **1.68.0** UI mechanics, with super-ux 0.68.0 and task-pipeline 1.112.1 | **yes**: 13 review rounds; tag v1.112.0 refused, shipped as v1.112.1; one force-push to an own docs branch |
 | 2026-10-13 | working tree | **1.64.2** packaging of reviewed FW05 source merged as ab7d82e; version and card sync only | no |
 | 2026-10-13 | working tree, FW05 | Source-derived dark palettes, pairwise disclosures, documented calm contract. | yes — historical board counts were stale; marker removal initially bypassed the derived check; exact legacy set and negative plants added. See FW05 receipt. |
 | 2026-09-06 | working tree | **1.59.4** — the same change as 1.59.3, tagged on the verified merge commit. The v1.59.3 tag was pushed against `origin/main` before the release PR had merged — it names the v1.59.2 tree, the version-sync… | yes — see left · moved: retro/2026-Q4.md sha256:b870498a0ca9 |
@@ -234,7 +234,6 @@ Moved out: 2 loose paragraphs, verbatim in retro/2026-Q4.md sha256:1ee1d7532414
 | 2026-09-03 | working tree | **1.59.0** — the skill gains a decision layer above its craft references. `CREATIVE_DIRECTOR.md` is now the first read: a brief whose fourth line is a falsifier, a mode table where a redesign enters by me… | yes — see left · moved: retro/2026-Q4.md sha256:1a5e40789e5d |
 | 2026-09-03 | working tree | **1.58.4** — the committed card is the umbrella's own render, byte for byte, with the corrected fit metric; the install line no longer overruns the padding box. The pixels are committed here and byte-checked from the… | no · moved: retro/2026-Q4.md sha256:d38660defa7f |
 | 2026-09-01 | working tree | **1.58.3** — the registry card stopped being six releases stale. `SKILL-CARD.md` said `1.52.0` against a shipped `1.58.2`; nothing read it, because the version moves in three manifests on every release and the card w… | no · moved: retro/2026-Q4.md sha256:f8ba45169af4 |
-| 2026-08-31 | working tree | wave-3 family-audit closures SHD-02/04/08 — `$schema` added to both manifests (marketplace → `json.schemastore.org/claude-code-marketplace.json`, plugin → `…/claude-code-plugin-manifest.json`; `claude plugin val… | **yes** · moved: retro/2026-Q4.md sha256:bc94b6ac63ce |
 
 | 2026-08-20 | `94c1774` | four packs contradicted their own token layers; six sweeps added, which found 24 more defects on their first run (v1.45.0) | *unrecorded* |
 | 2026-08-20 | `0f8fa82` | B-001/B-002: three packs stay core by decision, and `core` must name what it declines | *unrecorded* |
