@@ -1,3 +1,25 @@
+## Unreleased: UI mechanics doctrine, sheleg-design part (2026-11-23)
+
+- **Objective.** The operator's order of 2026-11-23 00:47 (request dcc725be): screens that are beautiful and
+  simple, grouped, with few actions, clear to a user new to the app but not stupid, and a pipeline that checks it.
+- **Siblings.** sheleg-design, super-ux and task-pipeline branches `feat/ui-mechanics-2026-11-23`, one PR each.
+  Research and doctrine: sheleg-design `docs/reports/2026-11-23-ui-guidelines/` (README, guidelines.md,
+  doctrine.md). Private material (captures, audits, trial plans of the two apps) stays in those apps' repos and
+  in `~/DATA/_artifacts/ui-mechanics-2026-11-23/` on the operator machine.
+- **Trial run.** Two app teams took the rules: the Dissy session builds wave-3 mockups of «Текст и бит» on the
+  target action map (due 2026-11-25), the PlaySing session builds the metronome after into 0.9.0 (estimate
+  2026-12-04). The after scorecards close when their captures arrive.
+- **Release.** Hold the merge and tags until the trial's first after captures are read (the operator: release
+  the skills after the trial, from 2026-11-27); then merge super-ux, sheleg-design, task-pipeline in that order,
+  tag, publish, bump the sshlg-skills pins and update the local install.
+- **Done here.** MOBILE_SURFACES control profiles, iPad, materials, recipes; LAYOUT_CRAFT screen ceilings;
+  CREATIVE_DIRECTOR UIM-24, UIM-25; ACCESSIBILITY_EVIDENCE profiles; ADA R17; provenance W8 to W12; the report.
+  Gate: `npm test` exit 0 on the branch.
+- **Open.** Product records owing `Signature` (and an `Anchor` line) is not enforced by `bin/record.js` yet:
+  staged as a warning first in a later release (backlog row).
+- **Next task.** Read the Dissy wave-3 SCR-78 mockups (2026-11-25) with the novice walk and the scorecard, then
+  release.
+
 ## v1.67.1: the ledger records the shipped version (2026-11-18)
 
 - **Objective.** Record the shipped version in the verification ledger (the sshlg-skills validator reads it and

@@ -1,3 +1,22 @@
+## Unreleased: UI mechanics (control profiles, iPad, screen ceilings)
+
+Operator order 2026-11-23 00:47 Europe/Warsaw (Telegram, relayed by the Fabric CEO, request dcc725be): simple, grouped screens with few actions that a user new to the app understands, checked by the pipeline. Research: https://github.com/ssheleg/sheleg-design-skill/tree/main/docs/reports/2026-11-23-ui-guidelines
+
+- **`MOBILE_SURFACES.md`** gains *Control profiles and spacing* (UIM-18 to UIM-21: standard 44, frequent 60,
+  performance 72 pt; spacing; reach without the thumb-zone chart; position targets; read-out opens an editor,
+  a miniature is one target; a continuous control on a display moves only on a drag that starts on it),
+  *iPad and regular width* (UIM-26 to UIM-28, iPadOS 26 facts, a mandatory iPad pair in the axes matrix),
+  *Materials and motion limits* (UIM-22, UIM-23) and two layout recipes (a performance tool, content plus
+  transport).
+- **`LAYOUT_CRAFT.md`** gains *Screen ceilings* (UIM-15 to UIM-17): one dominant control, at most five groups
+  per compact viewport, three text sizes plus one display size; a panel with novices reads the trust-first
+  density row.
+- **`CREATIVE_DIRECTOR.md`**: two checks, the signature survives simplification (UIM-24) and an unusual control
+  with proof (UIM-25). **`ACCESSIBILITY_EVIDENCE.md`**: target profiles as a labelled house level.
+  **`ADA_RUBRIC.md`** R17 points at the profiles. **`KNOWLEDGE_PROVENANCE.md`** rows W8 to W12.
+- Research report `docs/reports/2026-11-23-ui-guidelines/` (61 sources with author and date) and the
+  packaged doctrine `doctrine.md` (UIM-01 to UIM-34).
+
 ## 1.67.1 (2026-11-18): the ledger records the shipped version
 
 - The verification ledger records this version: 1.67.0 shipped with the ledger still headed by 1.66.6, so the

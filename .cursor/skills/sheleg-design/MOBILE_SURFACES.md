@@ -13,6 +13,10 @@ pack's `## Responsive` section covers that, and this file does not repeat it.
 - Platform target and prototype renderer are two decisions, not one
 - The native state matrix — what each surface owes, and how it is verified
 - The axes matrix — every surface, every state, every axis
+- Control profiles and spacing (UIM-18 to UIM-21)
+- iPad and regular width (UIM-26 to UIM-28)
+- Materials and motion limits (UIM-22, UIM-23)
+- Two layout recipes
 - Reference sweeps — structure crosses, identity does not
 
 ## What a pack decides here, and what it does not
@@ -192,6 +196,114 @@ as above.
 fills the web cells; it leaves every native cell `unverified` until a simulator
 or a device sets it. The items of [`ADA_RUBRIC.md`](./ADA_RUBRIC.md) that read
 the matrix (R5, R12, R15, R19, R20, R23, R25) are NOT_RUN where their cells are.
+
+## Control profiles and spacing (UIM-18 to UIM-21)
+
+A screen's action map (super-ux, `scenario-format.md`, the `Actions:` table) names a profile for every
+action; this section says what each profile measures. Measure the short side of the hit region, not the
+drawn shape. FACT marks a platform or research figure; HOUSE DEFAULT marks our choice, revised by the
+trial's hands test (research report: https://github.com/ssheleg/sheleg-design-skill/tree/main/docs/reports/2026-11-23-ui-guidelines).
+
+| Profile | iOS | Android | Web | Gap to a neighbour | Who gets it |
+|---|---|---|---|---|---|
+| Standard | 44 pt (FACT, Apple HIG Accessibility) | 48 dp (FACT) | 44 CSS px for visible tiers; a hidden tier may use 24 CSS px with spacing (WCAG 2.2 SC 2.5.8 is the AA floor) | about 12 pt around bezelled, about 24 pt around unbezelled controls (FACT, HIG) | Every control by default |
+| Frequent | 60 pt | 64 dp | 60 CSS px | 12 pt | The primary action, actions used on every visit, targets in a corner, controls inside an editor (HOUSE DEFAULT, about 1 cm, NN/g's physical floor) |
+| Performance | 72 pt | 76 dp | 72 CSS px | 16 pt | Controls used with an instrument in the hands or the device on a stand; at most 3 per screen (HOUSE DEFAULT, about 12 mm, Hoober's corner figure) |
+
+- **UIM-18, the profile square test.** A square of the profile size centred on each target stays on the
+  screen, and the primary action is the largest target by area. Fail: any square leaves the screen, or a
+  secondary action outsizes the primary, or more than 3 rows are `performance` (one row may hold up to 3
+  controls). **Position targets** (lines of text, timeline cells: tapping places a cursor or playhead) may be
+  as small as 24 pt high (the web floor of SC 2.5.8, used here as a HOUSE DEFAULT on touch) only when a miss
+  changes nothing in the work and a 44 pt path reaches the same place.
+- **UIM-19, spacing.** Profile squares of neighbours never overlap. A destructive control keeps at least
+  24 pt from any frequent or performance target (HOUSE DEFAULT). Segments of one connected control share
+  an edge and are exempt from the gap, not from the size. On the web the 24 px circle test of SC 2.5.8 is
+  the floor.
+- **UIM-20, reach.** On compact width the primary sits in the lower half, no primary or every-visit action
+  sits in a top corner, and a counted action in any corner takes the frequent profile. People reach the
+  whole screen and lose accuracy at the edges (Hoober): the popular thumb-zone chart is not a reason to
+  hide a top control, and this file never cites it as a law.
+- **UIM-21, read-out opens an editor; a miniature is one target.** A parameter that is not changed during
+  the screen's main activity shows as a compact read-out with its current value in text of 13 pt or more
+  (a 44 pt target). Tapping it opens a large editor whose controls take the frequent profile. Detail finer
+  than a target may be drawn (a beat strip, a waveform, a lamp row), but the whole miniature is one target
+  that opens its editor. This is how small detail survives on a small phone without small targets. A row of
+  more than 6 repeating items on compact width is a miniature (7 items at 60 pt exceed a 370 pt row).
+  A continuous control drawn on a display (a wheel on a numeral, a scrubbed value) moves only on a drag that
+  starts on it; a tap on the display stays exact entry, so a resting finger never changes the value.
+- **Text floor.** Labels, read-outs and state text are 13 pt or more at the default text size, and nothing
+  is under 11 pt (HOUSE DEFAULT). Content keeps 16 pt from the screen edge on compact width and 24 pt on
+  regular width (HOUSE DEFAULT).
+
+## iPad and regular width (UIM-26 to UIM-28)
+
+Layout follows the size class, never the device name or the orientation, and every function stays the
+same in every class; only how much is visible changes (HIG Layout; WWDC25 session 208).
+
+| Context | Width class | Layout |
+|---|---|---|
+| iPhone portrait | compact | One pane: bars, content, bottom controls |
+| iPhone landscape | compact height | Two columns: read-out and content on the leading side, controls on the trailing side |
+| iPad full screen, any orientation | regular | Two or three panes |
+| iPad narrow window | compact | The phone layout; the inspector becomes a sheet |
+
+The row-to-class mapping is working knowledge: verify it against HIG Layout before a project writes it
+into a contract (the numeric-norm rule above).
+
+- **UIM-26, a second pane.** At regular width the screen shows a sidebar, a second column or an inspector,
+  and the inspector shows the first disclosure level already open (the `hidden` rows of the compact map, in
+  labelled groups). Fail: a regular-width capture is one centred phone column, or the second pane holds
+  anything but those rows.
+- **UIM-27, controls keep their size.** Wider screens get more panes and more visible content, not wider
+  buttons: no button or stepper wider than 400 pt, no text column wider than 680 pt (HOUSE DEFAULT).
+  Timelines, sliders, waveforms and media may span their pane.
+- **UIM-28, any window keeps every function.** The smallest and the largest window reach every row of the
+  action map; a compact window uses the phone layout; resizing back restores the layout (FACT, iPadOS 26).
+- **iPadOS 26 facts** (WWDC25 session 208): windows resize freely; window controls sit at the leading edge
+  of the toolbar, which wraps around them; one window per document, named by its title; every app has a
+  menu bar ordered by frequency whose items are dimmed, never removed (super-ux owns the rule that the
+  menu bar mirrors the action map, UIM-29); the pointer tracks one to one and no longer snaps, so hover
+  states are designed and tested.
+- **The axes matrix gains a pair.** When the platform includes iPad, *iPad regular width x default state*
+  joins the two mandatory pairs above.
+
+## Materials and motion limits (UIM-22, UIM-23)
+
+- **UIM-22.** Glass or any translucent material appears only on bars and floating controls: never on
+  content, never on other glass, and the clear variant only over media with a dimming layer (HIG
+  Materials; WWDC25 session 219). Text on material reaches 4.5:1 in light, dark and Reduce Transparency
+  captures. NN/g's critique of Liquid Glass legibility (Raluca Budiu, 2025-10-10) is the reason the check
+  runs on all three.
+- **UIM-23.** Oversize, special shape and spring motion are spent on the primary action and the signature
+  element (two elements at most, HOUSE DEFAULT). Persistent controls keep their frame between states:
+  overlay two state captures and nothing persistent moves or resizes. Motion respects Reduce Motion.
+  Google's own Material 3 Expressive research found the gain in emphasising the key action and a loss when
+  labels were dropped or standard patterns broken; that is the whole of what we take from it.
+
+## Two layout recipes
+
+**A performance tool (metronome-like).** iPhone portrait, top to bottom: the bar (Back, title); the beat
+lamps as one miniature target at least 60 pt high that flashes on the beat, with three two-line read-out
+chips under it (name over value: meter, sound, trainer), each opening its own sheet; the tempo numeral in
+the display size, the signature, which opens typed entry on tap; one row of minus, "Tap tempo" and plus at
+the performance profile with 16 pt gaps; a state line; the "Start" pill at the performance profile in the
+lower third, which becomes "Stop" in the same frame. Nothing scrolls, so nothing rests under the button. iPhone landscape: numeral and lamps leading, tempo row and Start trailing. iPad landscape: the
+app's sidebar leading; the main block centred and at most 560 pt wide with the same control sizes and Start
+capped at 400 pt; a trailing inspector of about 320 to 360 pt with the meter, sound and trainer sections
+open in place of the chips, and every sound previewed on tap; Space starts and stops, arrows change the tempo (HOUSE DEFAULTS).
+
+**Content plus transport (lyrics-and-beat-like).** iPhone portrait: the bar (Back, title, Undo; no bare
+badge or dot); the content layer with no glass and a 16 to 20 pt inset, its signature kept, one line always marked
+as current; the miniature (a beat strip) at least 56 pt high, one seek target, inner text 11 pt or more or
+dropped; a fixed status slot of one line (where play starts, the count-in in beats, elapsed time, or the
+receipt of the last change with its Undo); a bottom row at 60 pt: play, then menus named after the object
+they change (no generic "More"), then the record control as the only filled and largest target. A
+generating action opens a candidate tray (two or three candidates plus the unchanged work marked as
+current) and changes nothing before "Use". While recording the label reads the state with elapsed time and
+a level meter, and the record control becomes Stop in place. iPad landscape: sections and versions in the sidebar; the content column at most 680 pt;
+the miniature's editor open as a bottom lane with rows of 44 pt or more; variants in the inspector with
+preview in place and the current one marked; one transport capsule at the same sizes as on the phone.
 
 ## Reference sweeps — structure crosses, identity does not
 
