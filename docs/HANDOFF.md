@@ -23,8 +23,13 @@
   staged as a warning first in a later release (backlog row).
 - **Trial, second and third runs (2026-11-23).** App D's wave-3 frames (revisions 2 to 5) were judged twice more; every
   finding was closed in the frames before code. App P's metronome after is in its next build (estimate 2026-12-04).
-- **Next task.** After merge: tag `v1.68.0` (annotated) on the merge commit, watch the release, then the sshlg-skills pin
-  bump; then the pass-B check on app D's build captures when they arrive.
+- **Shipped.** 1.68.0: tag `v1.68.0` on 4c0accc, release run 45114517448 success, npm `sheleg-design-skill` 1.68.0.
+- **Run stamp held.** The stamp would be the eleventh row against a cap of ten; `retro_budget.py migrate --write`
+  (task-pipeline 1.111.0) then copied the 63 already archived stamps into the archive a second time, which hid a planted
+  defect from the self-test. The change was reverted and the finding filed with task-pipeline; stamp this run once the tool
+  rotates one row without re-copying.
+- **Next task.** The sshlg-skills pin bump (with super-ux 0.68.0 and task-pipeline 1.112.1); then the pass-B check on app D's
+  build captures when they arrive.
 
 ## v1.67.1: the ledger records the shipped version (2026-11-18)
 
