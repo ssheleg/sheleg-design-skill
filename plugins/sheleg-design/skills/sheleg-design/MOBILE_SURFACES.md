@@ -212,8 +212,8 @@ trial's hands test (research report: https://github.com/ssheleg/sheleg-design-sk
 
 - **UIM-18, the profile square test.** A square of the profile size centred on each target stays on the
   screen, and the primary action is the largest target by area. Fail: any square leaves the screen, or a
-  secondary action outsizes the primary, or more than 3 rows are `performance` (one row may hold up to 3
-  controls). **Position targets** (lines of text, timeline cells: tapping places a cursor or playhead) may be
+  secondary action outsizes the primary, or more than 3 actions are `performance` (one action may hold up
+  to 3 controls; a start control that becomes stop in place is one action). **Position targets** (lines of text, timeline cells: tapping places a cursor or playhead) may be
   as small as 24 pt high (the web floor of SC 2.5.8, used here as a HOUSE DEFAULT on touch) only when a miss
   changes nothing in the work and a 44 pt path reaches the same place.
 - **UIM-19, spacing.** Profile squares of neighbours never overlap. A destructive control keeps at least

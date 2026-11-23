@@ -14,11 +14,14 @@ shipped text; where they differ, the shipped files win:
   novice-persona.md, ipad-and-controls.md, pipeline-changes.md, trial-protocol.md): each is the section of this
   document with that name.
 - **Lint codes.** The shipped linter is super-ux `ux_lint.py` U096 to U106 and its contract table in
-  `scenario-format.md`. Differences from the draft table: U099 also fires on an empty `Scenarios:`; U100 also
-  fires on a fourth visible exit; U103 reads «More…», its Russian equivalent and «More options» as generic; U104 also fires on a
-  visible row with no readable word; U106 spans the screen and lets `hint` and `receipt` rows repeat labels; the
-  draft's "an action has two labels" half of U106 is not shipped. Uncounted rows are written as a backticked
-  flag or a leading `flag:`.
+  `scenario-format.md`. Differences from the draft table: U099 fires when a scenario listed in `Scenarios:` has
+  no row at all (the draft also wanted a row per UI element a scenario step uses, which the linter cannot read);
+  U100 also fires on a fourth visible exit; U103 fires on an `every visit` or `often` row behind a generic
+  overflow (the draft keyed it on main-path steps of a scenario, which the map does not mark), in several
+  spellings; U104 also fires on a visible row with no quoted word of three or more characters; U106 spans the
+  screen and lets `hint`, `receipt` and `recovery` rows repeat labels; the draft's "an action has two labels"
+  half of U106 is not shipped. Labels are read in double quotes or guillemets only. Uncounted rows are written
+  as a backticked flag or a leading `flag:`; tab-bar rows carry `tab`.
 - **Receipts and tabs.** A receipt is an uncounted row flagged `receipt`, not an exit row as UIM-33 says; tab-bar
   destinations carry the flag `tab`; an icon-only container in a path is named by its glyph.
 - **The expert's `slower` check** follows amendment 24 in the shipped test panel: no `every visit` action costs
@@ -27,6 +30,8 @@ shipped text; where they differ, the shipped files win:
 - **The metronome example in the action-map section** predates amendments 4 to 6 (one parameter folds up to
   three controls; three chips; depth counts containers only): read the plan in the amendments for the current
   form.
+- **Recipe 1 (performance tool)** shipped in MOBILE_SURFACES as one lamp miniature with three read-out chips,
+  not the draft's separate 60 pt dots and one read-out row (amendment 21).
 - **Target profiles.** The web value of the standard profile (44 CSS px) is a labelled house level, not FACT;
   WCAG 2.2 SC 2.5.8 is 24 CSS px (sheleg-design `ACCESSIBILITY_EVIDENCE.md`).
 - **Line citations** of `MOBILE_SURFACES.md` in the draft predate its new contents list; the numeric-norm rule
