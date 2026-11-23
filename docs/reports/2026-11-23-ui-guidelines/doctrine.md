@@ -30,6 +30,9 @@ shipped text; where they differ, the shipped files win:
 - **The metronome example in the action-map section** predates amendments 4 to 6 (one parameter folds up to
   three controls; three chips; depth counts containers only): read the plan in the amendments for the current
   form.
+- **The performance cap** counts actions, not rows: at most 3 distinct actions per screen across its states (a start
+  control that becomes stop is one action). The draft's UIM-18 check, amendment 19(a) and its U105 row say rows.
+- **Flags** may be written bare as the first word of the cell, as well as in backticks.
 - **Recipe 1 (performance tool)** shipped in MOBILE_SURFACES as one lamp miniature with three read-out chips,
   not the draft's separate 60 pt dots and one read-out row (amendment 21).
 - **Target profiles.** The web value of the standard profile (44 CSS px) is a labelled house level, not FACT;
