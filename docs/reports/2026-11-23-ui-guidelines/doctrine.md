@@ -19,6 +19,11 @@ shipped text; where they differ, the shipped files win:
   visible row with no readable word; U106 spans the screen and lets `hint` and `receipt` rows repeat labels; the
   draft's "an action has two labels" half of U106 is not shipped. Uncounted rows are written as a backticked
   flag or a leading `flag:`.
+- **Receipts and tabs.** A receipt is an uncounted row flagged `receipt`, not an exit row as UIM-33 says; tab-bar
+  destinations carry the flag `tab`; an icon-only container in a path is named by its glyph.
+- **The expert's `slower` check** follows amendment 24 in the shipped test panel: no `every visit` action costs
+  more taps, an `often` action at most one more when it moved into a named container, and a `generates`
+  preview step is not a slowdown.
 - **The metronome example in the action-map section** predates amendments 4 to 6 (one parameter folds up to
   three controls; three chips; depth counts containers only): read the plan in the amendments for the current
   form.
