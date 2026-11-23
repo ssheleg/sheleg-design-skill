@@ -70,11 +70,13 @@ Contradictions: the app P session's unmeasured 60/44 pt rule against the doctrin
 - [x] 4 Plan (pipeline-changes.md, amended)
 
 REQ-7: rough cut, audits and trial plans delivered to the app D session and the app P session on 2026-11-23 about 01:30 (SendMessage receipts 22ca4b6e, fe39a14b).
-- [ ] 5 Dev
-- [ ] 6 Tests
+- [x] 5 Dev (sheleg-design PR #67, super-ux PR #67, task-pipeline PR #184)
+- [x] 6 Tests (all three `npm test` exit 0; blind review round 1: 1 blocker fixed in super-ux 143286f; round 2: 3 blockers fixed in super-ux 3b16d9f and the HANDOFFs; round 3 running)
 - [ ] 7 Lint and integrate (PRs)
 - [ ] 8 Post-integrate (installed skills read the new text)
 - [ ] 9 Docs and wiki
 - [ ] 10 Acceptance and retro
 
-holds: 0
+REQ-6 first run: app D lyrics-and-beat screen, linter 18 to 0, find-it 2 to 5 of 5 (scorecard on the operator machine, summary in doctrine.md *Read this first*). Second run on app D's additions 2026-11-25 to 26; app P metronome after its build (estimate 2026-12-04).
+
+holds: 2 (merge and release wait on the trial's second run, from 2026-11-27; app P captures)
