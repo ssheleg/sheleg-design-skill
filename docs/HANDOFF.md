@@ -1,3 +1,15 @@
+## v1.69.0: a host design knowledge source is read first (2026-11-27)
+
+- **Objective.** Board request bcee1bf2 (row BX-4, deadline 2026-12-04 18:00 UTC): at the start of a visual task,
+  read the host's design knowledge source (search with the role `designer`, then the dossier for the reference
+  wall); it supplies references and evidence and proposes rules, it never replaces this skill's rules.
+- **Done.** `DESIGN_SYNC_BRIDGE.md` §4 subsection, pointers in `CREATIVE_DIRECTOR.md`, `SKILL.md` and the
+  director-record template; mirror synced. The public text names no private service: the source is found
+  through its `search` door in the session. Gate: `npm test`.
+- **Open.** The reader key per consumer (row BX-3) belongs to the source's owner; until it exists the step
+  records `NOT_RUN`. The super-ux half of the same request is that repository's change.
+- **Next task.** Review and merge the PR, then tag `v1.69.0`, watch the release, then the sshlg-skills pin bump.
+
 ## v1.68.0: UI mechanics doctrine, sheleg-design part (2026-11-23)
 
 - **Objective.** The operator's order of 2026-11-23 00:47 (request dcc725be): screens that are beautiful and

@@ -33,6 +33,12 @@ modes inside this skill, not new global routers or an external command
 dependency. Do not repeat direction selection for an already chosen direction,
 or run every lens for a single local correction.
 
+Both paths start the same way: where the session has a host design knowledge
+source, read it first for references and evidence
+([`DESIGN_SYNC_BRIDGE.md` §4](./DESIGN_SYNC_BRIDGE.md#a-host-design-knowledge-source-read-first-added-1690)).
+It supplies material and proposes rules; it never replaces a rule here, and its
+absence is `NOT_RUN`, not a stop.
+
 | Lens | Question and concrete work | Evidence to keep |
 |---|---|---|
 | **Type** | List the text roles and the faces/weights actually in use. Improve distinctions between those roles through size, weight, spacing and contrast. Keep a single family when it does the job. Check long labels, the target languages, zoom and fallback fonts. | Representative rendered roles; loaded/fallback font status; the specific reading or hierarchy defect fixed. A font name or a universal line-length target is not a quality verdict. |
