@@ -1,6 +1,6 @@
 ---
 name: sheleg-design
-description: 'Use when deciding how a surface looks or moves: landing, particle/WebGL hero, scrubbed motion, drift, dashboard, admin/internal tool UI, mobile screen, deck, tokens, light/dark theme. RU: дизайн лендинга, мобильный экран. Not for structure (ux-flows) or copy. Refusal "no design" / «без дизайна».'
+description: 'Use when deciding how a surface looks or moves: landing, particle/WebGL hero, scrubbed motion, drift, dashboard, admin/internal tool UI, mobile screen, deck, tokens, light/dark theme. RU: «дизайн лендинга», «мобильный экран». Not for structure (ux-flows) or copy. Refusal "no design" / «без дизайна».'
 license: MIT
 compatibility: Kit/lane commands need node>=16, npx, network. Optional siblings — dataviz, shadcn, migrate-radix-to-base. Each has an in-text fallback when absent or unreachable.
 metadata:
@@ -60,7 +60,7 @@ cannot produce a conformance row — a receipt where it did is refused, because
 
 ## Triggers
 
-"build a landing page" / "сделай лендинг", "design a landing" / "дизайн лендинга", "mobile screen" / "мобильный экран", "dashboard style" / "стиль дашборда, сделай дашборд, админка", "scroll animation" / "скролл-анимация, анимации", "design tokens, theme tokens, style pack" / "дизайн-токены, токены темы", "light/dark theme" / "светлая/тёмная тема, тёмная тема, тёмную тему", "figma variables" / "переменные фигмы, фигма в код, макеты", "palette, colors, contrast" / "палитра, цвета, контрастность", "typography, font" / "типографика, шрифт", "how it looks, make it prettier" / "выглядит, красиво, красивее", "visual reference" / "визуальные референсы", "investor deck as a web page" / "веб-презентация", "redesign" / "редизайн, переделай дизайн, свёрстай, вёрстка".
+"build a landing page" / «сделай лендинг», "design a landing" / «дизайн лендинга», "mobile screen" / «мобильный экран», "dashboard style" / «стиль дашборда, сделай дашборд, админка», "scroll animation" / «скролл-анимация, анимации», "design tokens, theme tokens, style pack" / «дизайн-токены, токены темы», "light/dark theme" / «светлая/тёмная тема, тёмная тема, тёмную тему», "figma variables" / «переменные фигмы, фигма в код, макеты», "palette, colors, contrast" / «палитра, цвета, контрастность», "typography, font" / «типографика, шрифт», "how it looks, make it prettier" / «выглядит, красиво, красивее», "visual reference" / «визуальные референсы», "investor deck as a web page" / «веб-презентация», "redesign" / «редизайн, переделай дизайн, свёрстай, вёрстка».
 
 ## When to Use
 

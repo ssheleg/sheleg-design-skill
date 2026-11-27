@@ -35,8 +35,8 @@
 - **Applied a ninth time:** 2026-08-12. The sixteenth pack was extracted from
   `getinboxzero.com` and is named **`pigeonhole`** for the register it encodes (a
   wall of labelled compartments things get sorted into), not `inboxzero`. This is
-  the third run whose opening request named the source and nothing else — *"давай
-  этот сайт в референсы добавим тоже"* — and it was answered by pointing at this
+  the third run whose opening request named the source and nothing else — *«давай
+  этот сайт в референсы добавим тоже»* — and it was answered by pointing at this
   ADR before a file was written. Two alternatives were weighed and rejected on the
   criteria below: `diptych`, accurate about the page's set piece but silent about
   the eleven-hue taxonomy that is the pack's whole contribution, and `mailroom`,
@@ -70,7 +70,7 @@
   from `nautilustrader.io` and is named **`patchbay`** for the register it
   encodes — named ports, drawn cords, and live signal moving between them — not
   `nautilus`. The sixth run whose opening request was an address and a brief to
-  "разобрать дизайн" and put it in the library. Three alternatives were weighed
+  «разобрать дизайн» and put it in the library. Three alternatives were weighed
   and rejected on this ADR's own criteria: **`schematic`**, the most legible of
   the three, rejected because it names a drawing class and `blueprint` already
   occupies that family — two packs named for kinds of technical drawing would
@@ -140,8 +140,8 @@
 - **Applied again:** 2026-08-27. The thirty-sixth pack was extracted from
   `viktor.com` and is named **`deskmate`** for the register it encodes — a product sold
   as a colleague rather than a tool, proven by the conversation it works in — not
-  `viktor`. Another run opening on an address and the words *"разбери сайт и создай
-  новый пак дизайна"*, answered by pointing here before a file was written. Four
+  `viktor`. Another run opening on an address and the words *«разбери сайт и создай
+  новый пак дизайна»*, answered by pointing here before a file was written. Four
   alternatives were weighed and rejected on this ADR's own criteria. **`dayshift`** was
   the closest and names both halves — a work shift and the colour shift that is the
   pack's signature — and it collides with `daylight` on the prefix and inside the
@@ -161,8 +161,8 @@
 - **Applied again:** 2026-08-27. The thirty-seventh pack was extracted from
   `datafa.st` and is named **`test-drive`** for the register it encodes — a page that
   sells by handing the visitor the running product, the way a dealership hands over the
-  keys — not `datafast`. Another run opening on an address and the words *"проработай
-  дизайн и добавь его как пример в мой бандл"*, answered by pointing here before a file
+  keys — not `datafast`. Another run opening on an address and the words *«проработай
+  дизайн и добавь его как пример в мой бандл»*, answered by pointing here before a file
   was written. Four alternatives were weighed and rejected on this ADR's own criteria.
   **`showfloor`** names the room rather than the proof and collides with `showroom` in
   the same retail-space family — the ground `lobby` was rejected on against `atrium`.
@@ -183,8 +183,8 @@
   page that sells a survey of terrain the buyer cannot see directly, drawn in contour
   lines and counted readings — not `visible` and not `seranking`, both of which are
   the source's own live brands and squarely inside the *no trademark surface* clause.
-  Another run opening on an address and the words *"разбор дизайна … и упаковка его в
-  спак"*, answered by pointing here before a file was written. Four alternatives were
+  Another run opening on an address and the words *«разбор дизайна … и упаковка его в
+  спак»*, answered by pointing here before a file was written. Four alternatives were
   weighed and rejected on this ADR's own criteria. **`contour`** names the pack's most
   visible texture, and a texture name routes by wallpaper — the ground `pegboard`,
   `quadrille`, `clerestory` and `marginalia` were all rejected on. **`atlas`** sits in
