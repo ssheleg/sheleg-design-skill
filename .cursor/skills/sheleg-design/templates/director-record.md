@@ -74,6 +74,8 @@ structural trait, not its palette. One line each:
 Or, when the sweep came back empty, say so and say where you looked:
   none found
   Searched: <the reference servers and queries, e.g. Refero "pricing table", Mobbin "usage-based pricing">
+A host design knowledge source read at the start (DESIGN_SYNC_BRIDGE.md §4)
+goes on the Searched line with its queries, or as NOT_RUN with the reason.
 Mandatory for new design and redesign of a brand or flagship surface.
 -->
 

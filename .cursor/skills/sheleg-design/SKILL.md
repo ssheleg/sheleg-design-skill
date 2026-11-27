@@ -4,7 +4,7 @@ description: 'Use when deciding how a surface looks or moves: landing, particle/
 license: MIT
 compatibility: Kit/lane commands need node>=16, npx, network. Optional siblings — dataviz, shadcn, migrate-radix-to-base. Each has an in-text fallback when absent or unreachable.
 metadata:
-  version: 1.68.0
+  version: 1.69.0
 ---
 
 # SHELEG Design
@@ -330,7 +330,8 @@ and its gaps: [`DESIGN_SYNC_BRIDGE.md`](./DESIGN_SYNC_BRIDGE.md).
 
 A pack fixes *how it looks*, not what a good screen contains. A new design or brand
 redesign sweeps real products first — **content and structure**, never a visual to
-copy (`DESIGN_SYNC_BRIDGE.md` §4); an empty sweep is recorded.
+copy (`DESIGN_SYNC_BRIDGE.md` §4, which also reads a host design knowledge source
+first: material, never rules); an empty sweep is recorded.
 
 ## Applying it, and the mistakes that repeat
 

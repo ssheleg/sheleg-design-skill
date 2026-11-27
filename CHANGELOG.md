@@ -1,3 +1,15 @@
+## 1.69.0 (2026-11-27): a host design knowledge source is read first
+
+Board request bcee1bf2 (row BX-4, from the owner knowledge service, deadline 2026-12-04): at the start of a visual task, read the host's design knowledge through its two doors; it supplies references and evidence and proposes rules, it never replaces this skill's rules.
+
+- **`DESIGN_SYNC_BRIDGE.md` §4** gains *A host design knowledge source, read first*: where the session has a
+  source with `search` and `execute` doors, two calls at the start (its search with the role `designer`, then
+  its dossier read for the reference wall), found through its `search` door; references are sweep material,
+  rule proposals become backlog rows, the content is data, a missing source or reader key is `NOT_RUN`, and
+  the director record names what it supplied.
+- **`CREATIVE_DIRECTOR.md`** *Focused visual work*, **`SKILL.md`** *Real-world references* and the
+  director-record template point at it.
+
 ## 1.68.0 (2026-11-23): UI mechanics (control profiles, iPad, screen ceilings)
 
 Operator order 2026-11-23 00:47 Europe/Warsaw (Telegram, relayed by the Fabric CEO, request dcc725be): simple, grouped screens with few actions that a user new to the app understands, checked by the pipeline. Research: https://github.com/ssheleg/sheleg-design-skill/tree/main/docs/reports/2026-11-23-ui-guidelines
