@@ -40,10 +40,17 @@ function freshHome(label) {
   return dir;
 }
 
+// A host's config root may come from its env var (bin/cli.js HOST_ENV). A test run
+// inside an agent session inherits that var and would read the real plugin
+// registry instead of the throwaway HOME, so every case drops them.
+const HOST_ENV_VARS = ["CLAUDE_CONFIG_DIR", "CODEX_HOME", "GEMINI_CONFIG_DIR"];
+
 function run(cmd, args, home) {
+  const env = Object.assign({}, process.env, { HOME: home, USERPROFILE: home });
+  for (const name of HOST_ENV_VARS) delete env[name];
   const r = spawnSync(cmd, args, {
     cwd: home, // never the repo: the auto-detect would find the repo's own .cursor/
-    env: Object.assign({}, process.env, { HOME: home, USERPROFILE: home }),
+    env,
     encoding: "utf8",
     timeout: 120000,
   });

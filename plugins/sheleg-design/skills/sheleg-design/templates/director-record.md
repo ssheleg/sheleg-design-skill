@@ -74,6 +74,10 @@ structural trait, not its palette. One line each:
 Or, when the sweep came back empty, say so and say where you looked:
   none found
   Searched: <the reference servers and queries, e.g. Refero "pricing table", Mobbin "usage-based pricing">
+A design knowledge source the host declares, when read, adds one line each:
+  - Source: <source> "<query>", role <role>: <entries>, take: <what changed>
+or, when it was absent or unreachable:
+  Source: not read (<why>)
 Mandatory for new design and redesign of a brand or flagship surface.
 -->
 

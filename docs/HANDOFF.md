@@ -1,3 +1,17 @@
+## v1.69.0: a host's design knowledge source (2026-11-27)
+
+- **Objective.** Board request bcee1bf2 (row BX-4, deadline 2026-12-04 18:00 UTC), sent to sheleg-design and super-ux:
+  at the start of a visual or flow task read the host's design knowledge source; it supplies references, evidence
+  and rule proposals and never replaces the skills' rules. A reader credential per consumer follows (row BX-3).
+- **Decision.** This repository is public, so the contract is generic: the skill names no service, operation or
+  host. The concrete binding (which server, which operations, which role) belongs to that server's own MCP
+  instructions or the operator's local rules, never this text.
+- **Done.** DESIGN_SYNC_BRIDGE §4 subsection; pointers in SKILL.md and CREATIVE_DIRECTOR.md; the record template's
+  `Source:` line; installer test env isolation; version set 1.69.0. Gate: `npm test` exit 0.
+- **Open.** A live read once the reader credential exists (BX-3); super-ux's half is its own repository's change.
+- **Next task.** Merge the `feat/design-knowledge-source-2026-11-27` PR, tag `v1.69.0` (annotated) on the merge
+  commit, watch the release, then the sshlg-skills pin bump.
+
 ## v1.68.0: UI mechanics doctrine, sheleg-design part (2026-11-23)
 
 - **Objective.** The operator's order of 2026-11-23 00:47 (request dcc725be): screens that are beautiful and

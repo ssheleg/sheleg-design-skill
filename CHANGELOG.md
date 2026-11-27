@@ -1,3 +1,19 @@
+## 1.69.0 (2026-11-27): a host's design knowledge source, read first, never a rule
+
+Board request bcee1bf2 (row BX-4, 2026-11-27, deadline 2026-12-04): at the start of a visual or flow task, read the
+host's design knowledge source for references and evidence; it never replaces the skill's rules.
+
+- **`DESIGN_SYNC_BRIDGE.md` §4** gains *A host's design knowledge source*: where the host declares one (its own MCP
+  server or the operator's local rules; this skill names none and installs none), a visual or flow task searches it
+  under the designer role, reads the dossier with its reference wall first, and cites what it used in the record.
+  Its references obey §4 (layout crosses, identity only through a pack); a contradiction keeps this skill's rule
+  and goes to `Open`; its rule proposals become rules only through a `KNOWLEDGE_PROVENANCE.md` row and a release;
+  absent, unreachable or without a reader credential, the task goes on and the record says why.
+- **`SKILL.md`** (Real-world references) and **`CREATIVE_DIRECTOR.md`** (Focused visual work) point at it;
+  **`templates/director-record.md`** gives the `Source:` line for `References`.
+- **`test/installer_test.js`** drops `CLAUDE_CONFIG_DIR`, `CODEX_HOME` and `GEMINI_CONFIG_DIR` from each case's
+  environment: run inside an agent session, five cases read the session's real plugin registry and failed.
+
 ## 1.68.0 (2026-11-23): UI mechanics (control profiles, iPad, screen ceilings)
 
 Operator order 2026-11-23 00:47 Europe/Warsaw (Telegram, relayed by the Fabric CEO, request dcc725be): simple, grouped screens with few actions that a user new to the app understands, checked by the pipeline. Research: https://github.com/ssheleg/sheleg-design-skill/tree/main/docs/reports/2026-11-23-ui-guidelines
