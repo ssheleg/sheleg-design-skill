@@ -31,7 +31,10 @@ known defects) needs only this section: reuse the existing brief and select the
 relevant lens below. New work and redesigns go on to Act 1. These lenses are
 modes inside this skill, not new global routers or an external command
 dependency. Do not repeat direction selection for an already chosen direction,
-or run every lens for a single local correction.
+or run every lens for a single local correction. Where the host declares a design
+knowledge source, read it before the first edit, as references and evidence that
+never override a rule here ([`DESIGN_SYNC_BRIDGE.md`](./DESIGN_SYNC_BRIDGE.md),
+end of §4).
 
 | Lens | Question and concrete work | Evidence to keep |
 |---|---|---|

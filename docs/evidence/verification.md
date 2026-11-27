@@ -9,6 +9,14 @@ was shipped on the strength of an argument rather than an observation.
 
 Seeded 2026-08-10 by the `2026-08-10-skill-audit` run. **Rows at `never`: 1** (REQ-10, carried to board B-004). Extended 2026-08-12 by the `pigeonhole` run with twenty rows, none of them `never`.
 
+## Release candidate: v1.69.0 (2026-11-27)
+
+A host's design knowledge source (board request bcee1bf2, row BX-4): DESIGN_SYNC_BRIDGE §4 contract, pointers in
+SKILL.md and CREATIVE_DIRECTOR.md, the record template's `Source:` line; the installer test isolates host env vars.
+Evidence: `npm test` exit 0 on the candidate tree inside an agent session (before the test fix, five installer cases
+failed there with `CLAUDE_CONFIG_DIR` set). The contract is text: no read of a live knowledge source was made, since
+the reader credential (row BX-3) does not exist yet.
+
 ## Release candidate: v1.68.0 (2026-11-23)
 
 UI mechanics: MOBILE_SURFACES control profiles, iPad and recipes; LAYOUT_CRAFT screen ceilings; CREATIVE_DIRECTOR UIM-24
